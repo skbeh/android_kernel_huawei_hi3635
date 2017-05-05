@@ -123,8 +123,13 @@ void pipe_wait(struct pipe_inode_info *pipe)
 }
 
 static int
+<<<<<<< HEAD
+pipe_iov_copy_from_user(void *addr, int *offset, struct iovec *iov,
+			size_t *remaining, int atomic)
+=======
 pipe_iov_copy_from_user(void *addr, int *offset, struct iovec *iov, size_t *remaining,
 			int atomic)
+>>>>>>> 2db8e1f... pipe:iovec: Fix typo
 {
 	unsigned long copy;
 
@@ -554,7 +559,7 @@ pipe_write(struct kiocb *iocb, const struct iovec *_iov,
 			iov_fault_in_pages_read(iov, chars);
 redo1:
 			addr = ops->map(pipe, buf, atomic);
-			error = pipe_iov_copy_from_user(addr,&offset, iov,
+			error = pipe_iov_copy_from_user(addr, &offset, iov,
 							&remaining, atomic);
 			ops->unmap(pipe, buf, addr);
 			ret = error;
@@ -590,7 +595,7 @@ redo1:
 			struct page *page = pipe->tmp_page;
 			char *src;
 			int error, atomic = 1;
-			int offset=0;
+			int offset = 0;
 			size_t remaining;
 
 			if (!page) {
