@@ -192,10 +192,15 @@ int fb_cmap_to_user(const struct fb_cmap *from, struct fb_cmap_user *to)
 	printk(KERN_ERR "fbcmap: FBIOGETCMAP not support\n" );
 	return -EINVAL;
 #if 0
+<<<<<<< HEAD
+	int tooff = 0, fromoff = 0;
+	int size;
+=======
 	unsigned int tooff = 0, fromoff = 0;
 	size_t size;
     if (!to || !from || (int)(to->start) < 0)
  return -EINVAL;
+>>>>>>> 51552a5... update to 3.10.106
 
 	if (to->start > from->start)
 		fromoff = to->start - from->start;
