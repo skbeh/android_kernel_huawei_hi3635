@@ -1,9 +1,5 @@
 # android_kernel_huawei_hi3635
-<<<<<<< HEAD
-Custom, upstreamed kernel for devices using hi3635 board (P8, H7).
-=======
-Stock, stable, upstreamed kernel for devices using hi3635 board (P8, H7).
-No heavy modifications.
+A custom and upstreamed kernel for devices using the HI3635 board (Compatible with Huawei P8, Huawei Mate S, Huawei Mediapad M2, Huawei Mediapad X2 and Honor 7).
 
 # Modifications
 * Upstream to 3.10.108
