@@ -767,7 +767,7 @@ void pm_get_active_wakeup_sources(char *pending_wakeup_source, size_t max)
 }
 EXPORT_SYMBOL_GPL(pm_get_active_wakeup_sources);
 
-static void print_active_wakeup_sources(void)
+void print_active_wakeup_sources(void)
 {
 	struct wakeup_source *ws;
 	int active = 0;
@@ -789,16 +789,21 @@ static void print_active_wakeup_sources(void)
 		}
 	}
 
-	if (!active && last_activity_ws) {
+	if (!active && last_activity_ws){
 		pr_info("last active wakeup source: %s\n",
 			last_activity_ws->name);
-
-                power_monitor_report(FREEZING_FAILED,"%s",last_activity_ws->name);
-                
-        }
-
+#ifdef CONFIG_HUAWEI_DUBAI
+		HWDUBAI_LOGE("DUBAI_TAG_FREEZING_FAILED", "name=%s", last_activity_ws->name);
+#endif
+#ifdef CONFIG_HW_PTM
+        power_monitor_report(FREEZING_FAILED,"%s",
+            last_activity_ws->name);
+#endif
+    }
 	rcu_read_unlock();
 }
+
+EXPORT_SYMBOL_GPL(print_active_wakeup_sources);
 
 /**
  * pm_wakeup_pending - Check if power transition in progress should be aborted.
