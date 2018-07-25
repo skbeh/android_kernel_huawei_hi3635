@@ -465,9 +465,6 @@ static bool check_for_block(struct wakeup_source *ws)
 }
 #endif
 
-}
-#endif
-
 /**
  * wakeup_source_report_event - Report wakeup event using the given source.
  * @ws: Wakeup source to report the event for.
