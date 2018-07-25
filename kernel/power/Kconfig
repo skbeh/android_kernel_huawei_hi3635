@@ -320,3 +320,8 @@ config HUAWEI_POWEROFF_RTC
 	default n
 	help
 	  Driver for suspend optimization  for POWEROFF RTC
+
+config	BOEFFLA_WL_BLOCKER
+		bool "Boeffla generic wakelock blocker driver"
+		depends on PM
+		default N
