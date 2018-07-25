@@ -20,6 +20,15 @@
 
 #include "power.h"
 
+
+#ifdef CONFIG_BOEFFLA_WL_BLOCKER
+char list_wl[255];
+char list_wl_search[257];
+bool wl_blocker_active = false;
+bool wl_blocker_debug = false;
+#endif
+
+
 /*
  * If set, the suspend/hibernate code will abort transitions to a sleep state
  * if wakeup events are registered during or immediately before the transition.
