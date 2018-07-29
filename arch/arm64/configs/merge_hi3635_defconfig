@@ -285,7 +285,7 @@ CONFIG_HMP_FAST_CPU_MASK=""
 CONFIG_HMP_SLOW_CPU_MASK=""
 CONFIG_HMP_VARIABLE_SCALE=y
 CONFIG_HMP_FREQUENCY_INVARIANT_SCALE=y
-# CONFIG_SCHED_HMP_LITTLE_PACKING is not set
+CONFIG_SCHED_HMP_LITTLE_PACKING=y
 CONFIG_SCHED_HMP_BOOST=y
 CONFIG_NR_CPUS=8
 CONFIG_HOTPLUG_CPU=y
@@ -422,12 +422,7 @@ CONFIG_CPU_FREQ_GOV_INTERACTIVE=y
 #
 CONFIG_ARM_BIG_LITTLE_CPUFREQ=y
 CONFIG_ARM_DT_BL_CPUFREQ=y
-# CONFIG_ARM_EXYNOS4210_CPUFREQ is not set
-# CONFIG_ARM_EXYNOS4X12_CPUFREQ is not set
-# CONFIG_ARM_EXYNOS5250_CPUFREQ is not set
-# CONFIG_ARM_EXYNOS5440_CPUFREQ is not set
 # CONFIG_ARM_KIRKWOOD_CPUFREQ is not set
-# CONFIG_HI6XXX_CPUFREQ is not set
 CONFIG_HISI_CPUFREQ=y
 CONFIG_ARCH_SUSPEND_POSSIBLE=y
 CONFIG_ARM64_CPU_SUSPEND=y
@@ -2051,11 +2046,8 @@ CONFIG_FB_DEFERRED_IO=y
 # CONFIG_LCD_JDI_LPM070W425C is not set
 # CONFIG_FB_SIMPLE is not set
 # CONFIG_FB_FAKE is not set
-# CONFIG_FB_3630 is not set
 CONFIG_FB_3635=y
-# CONFIG_FB_3650 is not set
 # CONFIG_FASTBOOT_DISP_ENABLE is not set
-# CONFIG_EXYNOS_VIDEO is not set
 # CONFIG_BACKLIGHT_LCD_SUPPORT is not set
 # CONFIG_ADF is not set
 CONFIG_LOGO=y
@@ -2615,7 +2607,6 @@ CONFIG_SYNC=y
 CONFIG_SW_SYNC=y
 CONFIG_SW_SYNC_USER=y
 # CONFIG_BOOTLOADER_LOGGER is not set
-# CONFIG_ION_HI6XXX is not set
 CONFIG_ION_HI3XXX=y
 CONFIG_ION=y
 # CONFIG_ION_TEST is not set
@@ -2643,11 +2634,9 @@ CONFIG_COMMON_CLK_DEBUG=y
 # CONFIG_COMMON_CLK_VERSATILE is not set
 # CONFIG_COMMON_CLK_SI5351 is not set
 # CONFIG_HI3xxx_CLK_CORE is not set
-# CONFIG_HI3620_CLK_MIPI_DSI is not set
 CONFIG_HI3XXX_CLK=y
 # CONFIG_HI3XXX_CLK_ALWAYS_ON is not set
 CONFIG_HI3XXX_CLK_MAILBOX_SUPPORT=y
-# CONFIG_HI6XXX_CLK is not set
 CONFIG_HISI_CLK_DEBUG=y
 CONFIG_HWSPINLOCK=y
 
@@ -2664,7 +2653,6 @@ CONFIG_OF_IOMMU=y
 CONFIG_HISI_IODOMAIN_API=y
 CONFIG_HI3XXX_IOMMU=y
 # CONFIG_HISI_IOMMU_TEST is not set
-# CONFIG_HI6XXX_IOMMU is not set
 
 #
 # Remoteproc drivers
@@ -2689,7 +2677,6 @@ CONFIG_DEVFREQ_GOV_USERSPACE=y
 #
 # DEVFREQ Drivers
 #
-# CONFIG_HI6XXX_DDR_DEVFREQ is not set
 CONFIG_HI3XXX_DDR_DEVFREQ=y
 CONFIG_HI3XXX_DDR_DEVFREQ_DEBUGFS=y
 # CONFIG_EXTCON is not set
@@ -2750,14 +2737,11 @@ CONFIG_HISILICON_PLATFORM_HIFI_DSP=y
 # CONFIG_SND_HIFI_LPP is not set
 # CONFIG_SND_HIFI_LOAD is not set
 # CONFIG_SND_HIFI_SEC_LOAD is not set
-# CONFIG_HI6XXX_EFUSE is not set
 CONFIG_HI3XXX_EFUSE=y
-# CONFIG_HI3630_EFUSE is not set
 # CONFIG_HISILICON_PLATFORM_KEYMASTER is not set
 CONFIG_HISILICON_PLATFORM_MAINTAIN=y
 CONFIG_HISILICON_PLATFORM_HISI_EASYSHELL=y
 CONFIG_HISI_LOWMEM_DBG=y
-# CONFIG_HI6XXX_IPC_MULTICORE is not set
 
 #
 # Hifi mailbox driver
@@ -2907,102 +2891,9 @@ CONFIG_PWC_MNTN_ACORE=y
 CONFIG_PM_OM_BALONG=y
 
 #
-# Hisi Modem
-#
-
-#
-# Modem(HI6930) Drivers
-#
-
-#
-# multicore communication driver
-#
-
-#
-# ipc driver
-#
-
-#
-# sync
-#
-
-#
-# dsp image load driver
-#
-
-#
-# hkadc driver
-#
-
-#
-# get ip base addr
-#
-
-#
-# ccore image load driver
-#
-
-#
-# balong early mount fs
-#
-
-#
-# balong onoff management
-#
-
-#
-# image check driver
-#
-
-#
-# acore image load driver
-#
-
-#
-# cshell driver
-#
-
-#
-# mem driver
-#
-
-#
-# udi adaption layer
-#
-
-#
-# timer driver
-#
-
-#
-# balong cipher-kdf driver
-#
-
-#
-# nv driver
-#
-
-#
-# balong modem reset
-#
-
-#
-# multicore communication driver
-#
-
-#
-# misc driver
-#
-
-#
 # hi3xxx ipc MailBox driver
 #
 CONFIG_HI3XXX_MAILBOX=y
-
-#
-# hi6xxx ipc MailBox driver
-#
-# CONFIG_HI6XXX_MAILBOX is not set
 
 #
 # hisi ipc mailboxes debugfs user
@@ -3020,27 +2911,13 @@ CONFIG_HISI_MAILBOX_DEBUGFS=y
 CONFIG_HI3XXX_RPROC=y
 
 #
-# hi6xxx kernel API about remote processor communication
-#
-# CONFIG_HI6XXX_RPROC is not set
-
-#
-# hi3630 modem reset kernel API about remote processor communication
-#
-# CONFIG_HISI_RPROC is not set
-
-#
 # hisi rproc kernel API debugfs
 #
 CONFIG_HISI_RPROC_DEBUGFS=y
 # CONFIG_HISILICON_PLATFORM_MUTEX_SERVICE is not set
 CONFIG_HISILICON_PLATFORM_NOC=y
 CONFIG_HISI_NOC=y
-# CONFIG_HISI_NOC_HI6220_PLATFORM is not set
 CONFIG_HISI_NOC_HI3635_PLATFORM=y
-# CONFIG_HISI_NOC_HI3650_PLATFORM is not set
-# CONFIG_HISI_NOC_HI3630_PLATFORM is not set
-
 #
 # Kernel run data recorder menu
 #
@@ -3062,7 +2939,6 @@ CONFIG_HIFI_RESET=y
 # socp adapt layer
 #
 # CONFIG_HISILICON_PLATFORM_TELE_MNTN is not set
-# CONFIG_HISILICON_HI6XXX_FREQDUMP is not set
 
 #
 # kernel/driver/hisi/hi3xxx/irq_affinity_debugfs.c
@@ -3127,7 +3003,6 @@ CONFIG_POWERCOLLAPSE=y
 # CONFIG_DUMP_LOGCAT is not set
 CONFIG_SRECORDER_VERSION="0.0.0.1"
 # CONFIG_DEBUG_SRECORDER is not set
-# CONFIG_VIDEO_HI6210_CAMERA_SENSOR is not set
 
 #
 # Bluetooth device drivers
