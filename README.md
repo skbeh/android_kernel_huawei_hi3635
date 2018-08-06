@@ -1,17 +1,12 @@
-# android_kernel_huawei_hi3635
-<<<<<<< HEAD
-Custom, upstreamed kernel for devices using hi3635 board (P8, H7).
-=======
-Stock, stable, upstreamed kernel for devices using hi3635 board (P8, H7).
-No heavy modifications.
+# PEAK KERNEL for HI3635
+We present you PEAK KERNEL for devices using the HI3635 board on LOS 14.1 (Compatible with Huawei P8, Huawei Mate S, Huawei Mediapad M2, Huawei Mediapad X2 and Honor 7 devices). Tested on Huawei P8 and Honor 7.
 
-# Modifications
-* Upstream to 3.10.108
-* Disable ZRAM (01100a6)
-* Disable KSM (01100a6)
-* Update governor_maliondemand.c (43b28df)
-* Optimize kernel for size (136d80a, 6a47ecd)
-* Removing some Huawei modifications to allow SD card be stable (574b3a0)
-* Enable wifi bonding (6dc58a8)
-* Enable F2FS (94efc06)
->>>>>>> nougat-stable
+# Features
+* Upstreamed to 3.10.108
+* ZRAM and KSM are disabled
+* WiFi bonding
+* Higher volume
+* Boeffla wakelock blocker
+* BFQ and Maple scheduler support
+* Otpimised CPU and GPU governors
+* HMP Boost
