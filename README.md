@@ -8,4 +8,5 @@ We present you PEAK KERNEL for devices using the HI3635 board (Compatible with H
 * Higher volume
 * Boeffla wakelock blocker
 * BFQ and Maple scheduler support
-* Otpimised CPU and GPU governors
+* Optimised CPU and GPU governors
+* HMP Boost
