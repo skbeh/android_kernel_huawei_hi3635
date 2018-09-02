@@ -406,7 +406,7 @@ static u64 fiops_dispatch_request(struct fiops_data *fiopsd,
 static inline void fiops_schedule_dispatch(struct fiops_data *fiopsd)
 {
 	if (fiopsd->busy_queues)
-		kblockd_schedule_work(&fiopsd->unplug_work);
+		kblockd_schedule_work(fiopsd->queue, &fiopsd->unplug_work);
 }
  static void fiops_completed_request(struct request_queue *q, struct request *rq)
 {
@@ -426,7 +426,8 @@ fiops_find_rq_fmerge(struct fiops_data *fiopsd, struct bio *bio)
 	struct fiops_ioc *cic;
  	cic = fiops_cic_lookup(fiopsd, tsk->io_context);
  	if (cic) {
-		return elv_rb_find(&cic->sort_list, bio_end_sector(bio));
+		sector_t sector = bio->bi_sector + bio_sectors(bio);
+ 		return elv_rb_find(&cic->sort_list, sector);
 	}
  	return NULL;
 }
