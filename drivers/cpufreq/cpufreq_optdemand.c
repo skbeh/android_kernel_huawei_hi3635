@@ -343,12 +343,6 @@ static void optdemand_dbs_check_cpu(struct dbs_data *dbs_data, int cpu)
 			max_load = load;
 	}
 
-#ifdef CONFIG_SCHED_HMP
-	hmp_slower_domain_avg_load = little_total_load/4;
-	/*hmp_slower_domain_load = min_load;*/
-	hmp_slower_domain_load = hmp_slower_domain_avg_load;
-#endif
-
 	dbs_data->cdata->gov_check_cpu(cpu, max_load);
 }
 
@@ -1306,9 +1300,6 @@ static int cpufreq_governor_optdemand(struct cpufreq_policy *policy,
 
 		cpuinfo->rate_mult = 1;
         cpufreq_optdemand_initialized = 1;
-        #ifdef CONFIG_SCHED_HMP
-        hmp_load_ctrl_flag = 1;
-        #endif
 
 		mutex_unlock(&dbs_data->mutex);
 
@@ -1322,9 +1313,6 @@ static int cpufreq_governor_optdemand(struct cpufreq_policy *policy,
 
 	case CPUFREQ_GOV_STOP:
         cpufreq_optdemand_initialized = 0;
-        #ifdef CONFIG_SCHED_HMP
-        hmp_load_ctrl_flag = 0;
-        #endif
 		gov_cancel_work(dbs_data, policy);
 
 		mutex_lock(&dbs_data->mutex);
