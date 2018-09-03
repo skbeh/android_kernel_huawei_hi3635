@@ -73,6 +73,11 @@ config DEVFREQ_GOV_PM_QOS
 	help
 	  Sets the frequency based on pm_qos throughput constraints.
 
+config DEVFREQ_GOV_GPU_SCENE_AWARE
+    tristate "Hisilicon GPU Scene Aware"
+    depends on ARCH_HISI && PM_DEVFREQ
+    select PM_OPP
+
 comment "DEVFREQ Drivers"
 
 config ARM_EXYNOS4_BUS_DEVFREQ
