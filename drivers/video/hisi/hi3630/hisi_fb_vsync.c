@@ -24,9 +24,6 @@
 
 #define VSYNC_CTRL_EXPIRE_COUNT	(4)
 
-#ifdef CONFIG_REPORT_VSYNC
-extern void mali_kbase_pm_report_vsync(int);
-#endif
 extern int mipi_dsi_ulps_cfg(struct hisi_fb_data_type *hisifd, int enable);
 
 void hisifb_vsync_isr_handler(struct hisi_fb_data_type *hisifd)
@@ -286,11 +283,6 @@ void hisifb_vsync_register(struct platform_device *pdev)
 	mutex_init(&(vsync_ctrl->vsync_lock));
 
 	atomic_set(&(vsync_ctrl->buffer_updated), 1);
-#ifdef CONFIG_REPORT_VSYNC
-	vsync_ctrl->vsync_report_fnc = mali_kbase_pm_report_vsync;
-#else
-	vsync_ctrl->vsync_report_fnc = NULL;
-#endif
 
 #ifdef CONFIG_FAKE_VSYNC_USED
 	/* hrtimer for fake vsync timing */

@@ -202,8 +202,6 @@ void kbase_pm_get_dvfs_action(struct kbase_device *kbdev)
 	util_gl_share = (100 * diff->busy_gl) / busy;
 	util_cl_share[0] = (100 * diff->busy_cl[0]) / busy;
 	util_cl_share[1] = (100 * diff->busy_cl[1]) / busy;
-
-	kbase_platform_dvfs_event(kbdev, utilisation, util_gl_share, util_cl_share);
 }
 
 bool kbase_pm_metrics_is_active(struct kbase_device *kbdev)
