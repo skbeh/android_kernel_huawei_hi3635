@@ -52,7 +52,7 @@ unsigned int cur_cpu;
 #define MICRO_FREQUENCY_MIN_SAMPLE_RATE		(10000)
 #define DEF_BOOST_PULSE_DURATION        (80000)
 #define DEF_GO_HISPEED_LOAD         (95)
-#define DEF_HISPEED_FREQ            (960000)
+#define DEF_HISPEED_FREQ            (1209600)
 #define DEF_UP_THRESHOLD		    (40)
 #define DEF_DOWN_THRESHOLD          (30)
 
