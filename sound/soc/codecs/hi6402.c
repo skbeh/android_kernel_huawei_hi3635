@@ -567,28 +567,28 @@ static DECLARE_TLV_DB_SCALE(lineinl_mic_tlv, -2000, 400, 0);
 * from -21 to 6 dB in 1.5 dB steps
 * MAX VALUE is 18
 */
-static DECLARE_TLV_DB_SCALE(lol_pga_tlv, -2100, 300, 0);
+static DECLARE_TLV_DB_SCALE(lol_pga_tlv, -2100, 400, 0);
 
 /*
 * LOR PGA GAIN volume control:
 * from -21 to 6 dB in 1.5 dB steps
 * MAX VALUE is 18
 */
-static DECLARE_TLV_DB_SCALE(lor_pga_tlv, -2100, 300, 0);
+static DECLARE_TLV_DB_SCALE(lor_pga_tlv, -2100, 400, 0);
 
 /*
 * HPL PGA GAIN volume control:
 * from -32 to 6 dB in 1.5 dB steps
 * MAX VALUE is 18
 */
-//static DECLARE_TLV_DB_SCALE(hpl_pga_tlv, -3200, 100, 0);
+//static DECLARE_TLV_DB_SCALE(hpl_pga_tlv, -3200, 120, 0);
 
 /*
 * HPR PGA GAIN volume control:
 * from -32 to 6 dB in 1.5 dB steps
 * MAX VALUE is 18
 */
-//static DECLARE_TLV_DB_SCALE(hpr_pga_tlv, -3200, 100, 0);
+//static DECLARE_TLV_DB_SCALE(hpr_pga_tlv, -3200, 120, 0);
 
 /*
 * EP PGA GAIN volume control:
@@ -1819,13 +1819,13 @@ static const struct snd_kcontrol_new hi6402_snd_controls[] = {
 
 	/* lol pga gain kcontrol */
 	SOC_SINGLE_TLV("LOL PGA GAIN",
-		HI6402_LOL_PGA_CFG_REG, HI6402_LOL_PGA_GAIN_BIT, 18, 0, lol_pga_tlv),
+		HI6402_LOL_PGA_CFG_REG, HI6402_LOL_PGA_GAIN_BIT, 25, 0, lol_pga_tlv),
 	SOC_SINGLE("LOL PGA MUTE",
 		HI6402_LOL_PGA_CFG_REG, HI6402_LOL_PGA_MUTE_BIT, 1, 1),
 
 	/* lor pga gain kcontrol */
 	SOC_SINGLE_TLV("LOR PGA GAIN",
-		HI6402_LOR_PGA_CFG_REG, HI6402_LOR_PGA_GAIN_BIT, 18, 0, lor_pga_tlv),
+		HI6402_LOR_PGA_CFG_REG, HI6402_LOR_PGA_GAIN_BIT, 25, 0, lor_pga_tlv),
 	SOC_SINGLE("LOR PGA MUTE",
 		HI6402_LOR_PGA_CFG_REG, HI6402_LOR_PGA_MUTE_BIT, 1, 1),
 
@@ -1843,7 +1843,7 @@ static const struct snd_kcontrol_new hi6402_snd_controls[] = {
 
 	/* ep pga gain kcontrol */
 	SOC_SINGLE_TLV("EP PGA GAIN",
-		HI6402_EP_PGA_CFG_REG, HI6402_EP_PGA_GAIN_BIT, 50, 0, ep_pga_tlv),
+		HI6402_EP_PGA_CFG_REG, HI6402_EP_PGA_GAIN_BIT, 60, 0, ep_pga_tlv),
 	SOC_SINGLE("EP PGA MUTE",
 		HI6402_EP_PGA_CFG_REG, HI6402_EP_PGA_MUTE_BIT, 1, 1),
 
