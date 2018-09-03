@@ -7,9 +7,9 @@ endif
 endif
 
 ifdef CONFIG_HISI_3635
-obj-y                   += r8p0-01dev0/
+obj-y                   += r26p0-01rel0/
 endif
 
 ifdef CONFIG_ARCH_HI3630
-obj-y                   += r8p0-01dev0/
+obj-y                   += r26p0-01rel0/
 endif
