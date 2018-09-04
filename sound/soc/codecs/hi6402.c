@@ -536,63 +536,63 @@ static const struct file_operations hi6402_list_fops = {
 /* VOLUME CONTROLS */
 /*
 * MAIN MIC GAIN volume control:
-* from 0 to 36 dB in 2 dB steps
+* from 0 to 36 dB in 4 dB steps
 * MAX VALUE is 18
 */
 static DECLARE_TLV_DB_SCALE(main_mic_tlv, 0, 400, 0);
 
 /*
 * AUX MIC GAIN volume control:
-* from 0 to 36 dB in 2 dB steps
+* from 0 to 36 dB in 4 dB steps
 * MAX VALUE is 18
 */
 static DECLARE_TLV_DB_SCALE(aux_mic_tlv, 0, 400, 0);
 
 /*
 * LINEINR MIC GAIN volume control:
-* from -20 to 36 dB in 2 dB steps
+* from -20 to 36 dB in 4 dB steps
 * MAX VALUE is 18
 */
 static DECLARE_TLV_DB_SCALE(lineinr_mic_tlv, -2000, 400, 0);
 
 /*
 * LINEINL MIC GAIN volume control:
-* from -20 to 36 dB in 2 dB steps
+* from -20 to 36 dB in 4 dB steps
 * MAX VALUE is 18
 */
 static DECLARE_TLV_DB_SCALE(lineinl_mic_tlv, -2000, 400, 0);
 
 /*
 * LOL PGA GAIN volume control:
-* from -21 to 6 dB in 1.5 dB steps
+* from -21 to 6 dB in 4 dB steps
 * MAX VALUE is 18
 */
 static DECLARE_TLV_DB_SCALE(lol_pga_tlv, -2100, 400, 0);
 
 /*
 * LOR PGA GAIN volume control:
-* from -21 to 6 dB in 1.5 dB steps
+* from -21 to 6 dB in 4 dB steps
 * MAX VALUE is 18
 */
 static DECLARE_TLV_DB_SCALE(lor_pga_tlv, -2100, 400, 0);
 
 /*
 * HPL PGA GAIN volume control:
-* from -32 to 6 dB in 1.5 dB steps
+* from -32 to 6 dB in 2 dB steps
 * MAX VALUE is 18
 */
-//static DECLARE_TLV_DB_SCALE(hpl_pga_tlv, -3200, 120, 0);
+//static DECLARE_TLV_DB_SCALE(hpl_pga_tlv, -3200, 200, 0);
 
 /*
 * HPR PGA GAIN volume control:
-* from -32 to 6 dB in 1.5 dB steps
+* from -32 to 6 dB in 2 dB steps
 * MAX VALUE is 18
 */
-//static DECLARE_TLV_DB_SCALE(hpr_pga_tlv, -3200, 120, 0);
+//static DECLARE_TLV_DB_SCALE(hpr_pga_tlv, -3200, 200, 0);
 
 /*
 * EP PGA GAIN volume control:
-* from -21to 6 dB in 1.5 dB steps
+* from -21to 6 dB in 3 dB steps
 * MAX VALUE is 18
 */
 static DECLARE_TLV_DB_SCALE(ep_pga_tlv, -2100, 300, 0);
