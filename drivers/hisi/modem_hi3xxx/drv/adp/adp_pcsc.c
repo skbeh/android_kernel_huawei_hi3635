@@ -7,16 +7,16 @@
 
 
 /*****************************************************************************
-* º¯ Êý Ãû  : pcsc_usim_ctrl_cmd
+* å‡½ æ•° å  : pcsc_usim_ctrl_cmd
 *
-* ¹¦ÄÜÃèÊö  : USIMMÄ£¿é´¦ÀíPCSCÏÂ·¢ÃüÁî£¬Íê³Éºó£¬µ÷´Ëº¯ÊýÍ¨ÖªPCSC
+* åŠŸèƒ½æè¿°  : USIMMæ¨¡å—å¤„ç†PCSCä¸‹å‘å‘½ä»¤ï¼Œå®ŒæˆåŽï¼Œè°ƒæ­¤å‡½æ•°é€šçŸ¥PCSC
 *
-* ÊäÈë²ÎÊý  : cmd_type:USIMM´¦ÀíÃüÁî
-*             status:  ´¦ÀíµÄ´¦Àí½á¹û£¬ÊÇ·ñ³É¹¦
-*             buf:   ÃüÁî´¦ÀíºóµÄ»ØÓ¦Êý¾Ý
-*             length:»ØÓ¦Êý¾ÝµÄ³¤¶È
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : 0:ÃüÁî´¦ÀíÍê³É; <0:ÃüÁî´¦Àí´íÎó
+* è¾“å…¥å‚æ•°  : cmd_type:USIMMå¤„ç†å‘½ä»¤
+*             status:  å¤„ç†çš„å¤„ç†ç»“æžœï¼Œæ˜¯å¦æˆåŠŸ
+*             buf:   å‘½ä»¤å¤„ç†åŽçš„å›žåº”æ•°æ®
+*             length:å›žåº”æ•°æ®çš„é•¿åº¦
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : 0:å‘½ä»¤å¤„ç†å®Œæˆ; <0:å‘½ä»¤å¤„ç†é”™è¯¯
 *****************************************************************************/
 unsigned long pcsc_usim_ctrl_cmd(unsigned long cmd_type, unsigned long status, 
                 unsigned char *buf, unsigned long length)
@@ -29,13 +29,13 @@ unsigned long pcsc_usim_ctrl_cmd(unsigned long cmd_type, unsigned long status,
 
 
 /*****************************************************************************
-* º¯ Êý Ãû  : pcsc_usim_int
+* å‡½ æ•° å  : pcsc_usim_int
 *
-* ¹¦ÄÜÃèÊö  : USIMÄ£¿é×¢²á»Øµ÷º¯Êý½Ó¿Ú
+* åŠŸèƒ½æè¿°  : USIMæ¨¡å—æ³¨å†Œå›žè°ƒå‡½æ•°æŽ¥å£
 *
-* ÊäÈë²ÎÊý  : pFun: USIMMÄ£¿é´¦Àíº¯ÊýÖ¸Õë
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : ÎÞ
+* è¾“å…¥å‚æ•°  : pFun: USIMMæ¨¡å—å¤„ç†å‡½æ•°æŒ‡é’ˆ
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : æ— 
 *****************************************************************************/
 void pcsc_usim_int(pFunAPDUProcess pFun1, GetCardStatus pFun2)
 {

@@ -94,7 +94,7 @@ s32 ipc_test_case01(void)
 		return ERROR;
 	}	
 }
-/*测试多次take和give同一个信号量*/
+/*娴嬭瘯澶氭take鍜実ive鍚屼竴涓俊鍙烽噺*/
 s32 ipc_test_case02(void)
 {
 	s32 ret = 0,i = 0;
@@ -133,7 +133,7 @@ s32 ipc_test_case02(void)
 	}
 	return OK;
 }
-/*测试bsp_ipc_spin_lock和bsp_ipc_spin_unlock函数实现*/
+/*娴嬭瘯bsp_ipc_spin_lock鍜宐sp_ipc_spin_unlock鍑芥暟瀹炵幇*/
 
 s32 ipc_test_case03(void)
 {
@@ -209,7 +209,7 @@ int ipc_func1(void*data)
 		}	
 	}
 }
-/*A核和C核各启动一个任务，同时抢占同一个信号量*/
+/*A鏍稿拰C鏍稿悇鍚姩涓�涓换鍔★紝鍚屾椂鎶㈠崰鍚屼竴涓俊鍙烽噺*/
 s32 test_take_ipc_sem(void)
 {
 	struct task_struct *task1;
@@ -220,7 +220,7 @@ s32 test_take_ipc_sem(void)
 	}
 	return OK;
 }
-/*****************************begin:测试A核和M3交互************************************************/
+/*****************************begin:娴嬭瘯A鏍稿拰M3浜や簰************************************************/
 void bsp_for_test_mcore(u32 n)
 {
 	bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"test_mcore n = %d\n",n);
@@ -242,7 +242,7 @@ s32 ipc_test_spinlock(void)
 	s32 ret = 0;
 	unsigned long flags = 0;
 	local_irq_save(flags);
-	ret = bsp_ipc_spin_lock(IPC_SEM1_IPC_TEST);/*复用此信号量，测试与m3争用*/
+	ret = bsp_ipc_spin_lock(IPC_SEM1_IPC_TEST);/*澶嶇敤姝や俊鍙烽噺锛屾祴璇曚笌m3浜夌敤*/
 	if(ret != OK)
 	{
 		bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"[%s]:spinlock error\n",__FUNCTION__);
@@ -261,5 +261,5 @@ s32 ipc_test_spinlock(void)
 	return OK;
 }
 
-/*****************************end:测试A核和M3交互************************************************/
+/*****************************end:娴嬭瘯A鏍稿拰M3浜や簰************************************************/
 

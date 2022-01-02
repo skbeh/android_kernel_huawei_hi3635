@@ -1,6 +1,6 @@
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "vos.h"
 #include "AdsInit.h"
@@ -16,7 +16,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 /*lint -e767*/
 #define    THIS_FILE_ID                 PS_FILE_ID_ADS_INIT_C
@@ -24,11 +24,11 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
 
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 
@@ -39,10 +39,10 @@ VOS_INT ADS_UL_CCpuResetCallback(
 {
     ADS_CCPU_RESET_IND_STRU                 *pstMsg = VOS_NULL_PTR;
 
-    /* ����Ϊ0��ʾ��λǰ���� */
+    /* 参数为0表示复位前调用 */
     if (DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam)
     {
-        /* ������Ϣ */
+        /* 构造消息 */
         pstMsg = (ADS_CCPU_RESET_IND_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(ACPU_PID_ADS_UL,
                                                                         sizeof(ADS_CCPU_RESET_IND_STRU));
         if (VOS_NULL_PTR == pstMsg)
@@ -51,18 +51,18 @@ VOS_INT ADS_UL_CCpuResetCallback(
             return VOS_ERROR;
         }
 
-        /* ��д��Ϣͷ */
+        /* 填写消息头 */
         pstMsg->ulReceiverPid               = ACPU_PID_ADS_UL;
         pstMsg->enMsgId                     = ID_ADS_CCPU_RESET_START_IND;
 
-        /* ����Ϣ */
+        /* 发消息 */
         if (VOS_OK != PS_SEND_MSG(ACPU_PID_ADS_UL, pstMsg))
         {
             ADS_ERROR_LOG(ACPU_PID_ADS_UL, "ADS_UL_CCpuResetCallback: Send Msg Failed!\r\n");
             return VOS_ERROR;
         }
 
-        /* �ȴ��ظ��ź�����ʼΪ��״̬���ȴ���Ϣ��������ź��������� */
+        /* 等待回复信号量初始为锁状态，等待消息处理完后信号量解锁。 */
         if (VOS_OK != VOS_SmP(ADS_GetULResetSem(), ADS_RESET_TIMEOUT_LEN))
         {
             ADS_ERROR_LOG(ACPU_PID_ADS_UL, "ADS_UL_CCpuResetCallback: Lock Binary SEM Failed!\r\n");
@@ -73,7 +73,7 @@ VOS_INT ADS_UL_CCpuResetCallback(
 
         return VOS_OK;
     }
-    /* ��λ�� */
+    /* 复位后 */
     else if (DRV_RESET_CALLCBFUN_RESET_AFTER == enParam)
     {
         ADS_UL_DBG_SAVE_CCPU_RESET_SUCCESS_NUM(1);
@@ -95,13 +95,13 @@ VOS_INT ADS_DL_CCpuResetCallback(
 {
     ADS_CCPU_RESET_IND_STRU                *pstMsg = VOS_NULL_PTR;
 
-    /* ����Ϊ0��ʾ��λǰ���� */
+    /* 参数为0表示复位前调用 */
     if (DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam)
     {
-        /* �յ���λָʾʱ����Ҫ�ȳ���һ�ζ�RD�Ķ��� */
+        /* 收到复位指示时，需要先出发一次读RD的动作 */
         ADS_DL_SndEvent(ADS_DL_EVENT_IPF_RD_INT);
 
-        /* ������Ϣ */
+        /* 构造消息 */
         pstMsg = (ADS_CCPU_RESET_IND_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(ACPU_PID_ADS_DL,
                                                                         sizeof(ADS_CCPU_RESET_IND_STRU));
         if (VOS_NULL_PTR == pstMsg)
@@ -110,18 +110,18 @@ VOS_INT ADS_DL_CCpuResetCallback(
             return VOS_ERROR;
         }
 
-        /* ��д��Ϣͷ */
+        /* 填写消息头 */
         pstMsg->ulReceiverPid               = ACPU_PID_ADS_DL;
         pstMsg->enMsgId                     = ID_ADS_CCPU_RESET_START_IND;
 
-        /* ����Ϣ */
+        /* 发消息 */
         if (VOS_OK != PS_SEND_MSG(ACPU_PID_ADS_DL, pstMsg))
         {
             ADS_ERROR_LOG(ACPU_PID_ADS_DL, "ADS_DL_CCpuResetCallback: Send Msg Failed!\r\n");
             return VOS_ERROR;
         }
 
-        /* �ȴ��ظ��ź�����ʼΪ��״̬���ȴ���Ϣ��������ź��������� */
+        /* 等待回复信号量初始为锁状态，等待消息处理完后信号量解锁。 */
         if (VOS_OK != VOS_SmP(ADS_GetDLResetSem(), ADS_RESET_TIMEOUT_LEN))
         {
             ADS_ERROR_LOG(ACPU_PID_ADS_DL, "ADS_DL_CCpuResetCallback: Lock Binary SEM Failed!\r\n");
@@ -132,12 +132,12 @@ VOS_INT ADS_DL_CCpuResetCallback(
 
         return VOS_OK;
     }
-    /* ��λ�� */
+    /* 复位后 */
     else if (DRV_RESET_CALLCBFUN_RESET_AFTER == enParam)
     {
         ADS_DL_DBG_SAVE_CCPU_RESET_SUCCESS_NUM(1);
 
-        /* ������Ϣ */
+        /* 构造消息 */
         pstMsg = (ADS_CCPU_RESET_IND_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(ACPU_PID_ADS_DL,
                                                                         sizeof(ADS_CCPU_RESET_IND_STRU));
         if (VOS_NULL_PTR == pstMsg)
@@ -146,11 +146,11 @@ VOS_INT ADS_DL_CCpuResetCallback(
             return VOS_ERROR;
         }
 
-        /* ��д��Ϣͷ */
+        /* 填写消息头 */
         pstMsg->ulReceiverPid               = ACPU_PID_ADS_DL;
         pstMsg->enMsgId                     = ID_ADS_CCPU_RESET_END_IND;
 
-        /* ����Ϣ */
+        /* 发消息 */
         if (VOS_OK != PS_SEND_MSG(ACPU_PID_ADS_DL, pstMsg))
         {
             ADS_ERROR_LOG(ACPU_PID_ADS_DL, "ADS_DL_CCpuResetCallback: Send Msg Failed!\r\n");
@@ -173,7 +173,7 @@ VOS_UINT32 ADS_UL_PidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
         case VOS_IP_LOAD_CONFIG:
             ADS_InitCtx();
 
-            /* ������ע��ص�����������C�˵�����λ�Ĵ��� */
+            /* 给低软注册回调函数，用于C核单独复位的处理 */
             DRV_CCORERESET_REGCBFUNC(NAS_ADS_UL_FUNC_PROC_NAME,
                                      ADS_UL_CCpuResetCallback,
                                      0,
@@ -231,7 +231,7 @@ VOS_VOID ADS_UL_FidTask(
             continue;
         }
 
-        /*�¼�����*/
+        /*事件处理*/
         if (VOS_MSG_SYNC_EVENT != ulEvent)
         {
             ADS_UL_ProcEvent(ulEvent);
@@ -258,7 +258,7 @@ VOS_UINT32 ADS_UL_FidInit(enum VOS_INIT_PHASE_DEFINE ip)
     {
         case VOS_IP_LOAD_CONFIG:
 
-            /* ����PID��ʼ�� */
+            /* 上行PID初始化 */
             ulRslt = VOS_RegisterPIDInfo(ACPU_PID_ADS_UL,
                                          (Init_Fun_Type)ADS_UL_PidInit,
                                          (Msg_Fun_Type)ADS_UL_ProcMsg);
@@ -275,7 +275,7 @@ VOS_UINT32 ADS_UL_FidInit(enum VOS_INIT_PHASE_DEFINE ip)
                 return ulRslt;
             }
 
-            /* �������ȼ� */
+            /* 任务优先级 */
             ulRslt = VOS_RegisterTaskPrio(ACPU_FID_ADS_UL, ADS_UL_TASK_PRIORITY);
             if( VOS_OK != ulRslt )
             {
@@ -309,11 +309,11 @@ VOS_UINT32 ADS_DL_PidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
     {
         case VOS_IP_LOAD_CONFIG:
 #if (FEATURE_OFF == FEATURE_SKB_EXP)
-            /* ADQ��ʼ�� */
+            /* ADQ初始化 */
             ADS_DL_InitAdq();
 #endif
 
-            /* ������ע��ص�����������C�˵�����λ�Ĵ��� */
+            /* 给低软注册回调函数，用于C核单独复位的处理 */
             DRV_CCORERESET_REGCBFUNC(NAS_ADS_DL_FUNC_PROC_NAME,
                                      ADS_DL_CCpuResetCallback,
                                      0,
@@ -374,10 +374,10 @@ VOS_VOID ADS_DL_FidTask(
             continue;
         }
 
-        /* ͳ�������¼� */
+        /* 统计所有事件 */
         ADS_DBG_DL_PROC_ALL_EVENT_NUM(1);
 
-        /*RD�¼�����*/
+        /*RD事件处理*/
         if (VOS_MSG_SYNC_EVENT != ulEvent)
         {
             ADS_DL_ProcEvent(ulEvent);
@@ -399,7 +399,7 @@ VOS_VOID ADS_DL_FidTask(
         }
         else
         {
-            /* ͳ�ƿ��¼� */
+            /* 统计空事件 */
             ADS_DBG_DL_PROC_EMPTY_EVENT_NUM(1);
         }
 
@@ -414,7 +414,7 @@ VOS_UINT32 ADS_DL_FidInit(enum VOS_INIT_PHASE_DEFINE ip)
     {
         case VOS_IP_LOAD_CONFIG:
 
-            /* ����PID��ʼ�� */
+            /* 下行PID初始化 */
             ulRslt = VOS_RegisterPIDInfo(ACPU_PID_ADS_DL,
                                          (Init_Fun_Type)ADS_DL_PidInit,
                                          (Msg_Fun_Type)ADS_DL_ProcMsg);
@@ -432,7 +432,7 @@ VOS_UINT32 ADS_DL_FidInit(enum VOS_INIT_PHASE_DEFINE ip)
                 return ulRslt;
             }
 
-            /* ����BSP_IPF_RegisterWakeupDlCbע���жϴ������� */
+            /* 调用BSP_IPF_RegisterWakeupDlCb注册中断处理函数 */
             lIpfRslt = BSP_IPF_RegisterWakeupDlCb((BSP_IPF_WakeupDlCb)ADS_DL_IpfIntCB);
 
             if (IPF_SUCCESS != lIpfRslt)
@@ -441,7 +441,7 @@ VOS_UINT32 ADS_DL_FidInit(enum VOS_INIT_PHASE_DEFINE ip)
             }
 
 #if (FEATURE_OFF == FEATURE_SKB_EXP)
-            /* ����ע��AD���жϴ������� */
+            /* 调用注册AD空中断处理函数 */
             lIpfRslt = BSP_IPF_RegisterAdqEmptyDlCb((BSP_IPF_AdqEmptyDlCb)ADS_DL_IpfAdqEmptyCB);
 
             if (IPF_SUCCESS != lIpfRslt)
@@ -451,7 +451,7 @@ VOS_UINT32 ADS_DL_FidInit(enum VOS_INIT_PHASE_DEFINE ip)
 #endif
 
 
-            /* �������ȼ� */
+            /* 任务优先级 */
             ulRslt = VOS_RegisterMsgTaskPrio(ACPU_FID_ADS_DL, VOS_PRIORITY_P6);
             if( VOS_OK != ulRslt )
             {

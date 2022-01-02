@@ -38,7 +38,7 @@
 #define ERROR  (-1)
 #endif
 
-/* Í¨¹ýHKADC±êÊ¾µÄ²úÆ·ÐÎÌ¬£¬(0:E5,1:stick,2:Phone,3:pad,4:cpe,5:mod,6~9:resv)*/
+/* é€šè¿‡HKADCæ ‡ç¤ºçš„äº§å“å½¢æ€ï¼Œ(0:E5,1:stick,2:Phone,3:pad,4:cpe,5:mod,6~9:resv)*/
 enum hkac_product_type
 {
 	HKADC_PRODUCT_TYPE_E5 = 0,
@@ -51,24 +51,24 @@ enum hkac_product_type
 
 /*****************************************************************************
 *
-*¼æÈÝÒÔµÄ½Ó¿Ú
+*å…¼å®¹ä»¥çš„æŽ¥å£
 *
 *****************************************************************************/
 #ifdef __VXWORKS__
 VERSIONINFO  verCheckInfo[ VER_INFO_NUM ];
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_version_memversion_ctrl
- ¹¦ÄÜÃèÊö  : ×é¼þ°æ±¾¶ÁÐ´½Ó¿Ú¡£
- ÊäÈë²ÎÊý  : pcData£ºµ±ModeÎª¶ÁµÄÊ±ºò£¬Îªµ÷ÓÃÕß´ý±£´æ·µ»ØµÄ×é¼þ°æ±¾ÐÅÏ¢µÄÄÚ´æµØÖ·£»
-                     µ±ModeÎªÐ´µÄÊ±ºò£¬Îªµ÷ÓÃÕß×¼±¸Ð´ÈëµÄ×é¼þ°æ±¾ÐÅÏ¢µÄµØÖ·¡£
-             ucLength£ºµ±ModeÎª¶ÁµÄÊ±ºò£¬Îªµ÷ÓÃÕß´ý±£´æ·µ»ØµÄ×é¼þ°æ±¾ÐÅÏ¢µÄÄÚ´æ´óÐ¡£»
-                       µ±ModeÎªÐ´µÄÊ±ºò£¬Îªµ÷ÓÃÕß×¼±¸Ð´ÈëµÄ×é¼þ°æ±¾ÐÅÏ¢µÄ×Ö·ûÊý£¨²»°üÀ¨'\0'£©¡£
-             ucType£º°æ±¾ÐÅÏ¢ID
-             ucMode£º0£º¶ÁÈ¡Ö¸¶¨IDµÄ×é¼þ°æ±¾ÐÅÏ¢£»1£ºÐ´ÈëÖ¸¶¨IDµÄ×é¼þ°æ±¾ÐÅÏ¢¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : 0:  ²Ù×÷³É¹¦£»
-             -1£º²Ù×÷Ê§°Ü¡£
+ å‡½ æ•° å  : bsp_version_memversion_ctrl
+ åŠŸèƒ½æè¿°  : ç»„ä»¶ç‰ˆæœ¬è¯»å†™æŽ¥å£ã€‚
+ è¾“å…¥å‚æ•°  : pcDataï¼šå½“Modeä¸ºè¯»çš„æ—¶å€™ï¼Œä¸ºè°ƒç”¨è€…å¾…ä¿å­˜è¿”å›žçš„ç»„ä»¶ç‰ˆæœ¬ä¿¡æ¯çš„å†…å­˜åœ°å€ï¼›
+                     å½“Modeä¸ºå†™çš„æ—¶å€™ï¼Œä¸ºè°ƒç”¨è€…å‡†å¤‡å†™å…¥çš„ç»„ä»¶ç‰ˆæœ¬ä¿¡æ¯çš„åœ°å€ã€‚
+             ucLengthï¼šå½“Modeä¸ºè¯»çš„æ—¶å€™ï¼Œä¸ºè°ƒç”¨è€…å¾…ä¿å­˜è¿”å›žçš„ç»„ä»¶ç‰ˆæœ¬ä¿¡æ¯çš„å†…å­˜å¤§å°ï¼›
+                       å½“Modeä¸ºå†™çš„æ—¶å€™ï¼Œä¸ºè°ƒç”¨è€…å‡†å¤‡å†™å…¥çš„ç»„ä»¶ç‰ˆæœ¬ä¿¡æ¯çš„å­—ç¬¦æ•°ï¼ˆä¸åŒ…æ‹¬'\0'ï¼‰ã€‚
+             ucTypeï¼šç‰ˆæœ¬ä¿¡æ¯ID
+             ucModeï¼š0ï¼šè¯»å–æŒ‡å®šIDçš„ç»„ä»¶ç‰ˆæœ¬ä¿¡æ¯ï¼›1ï¼šå†™å…¥æŒ‡å®šIDçš„ç»„ä»¶ç‰ˆæœ¬ä¿¡æ¯ã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : 0:  æ“ä½œæˆåŠŸï¼›
+             -1ï¼šæ“ä½œå¤±è´¥ã€‚
 *****************************************************************************/
 /*lint -save -e958*/
 int bsp_version_memversion_ctrl(char *pcData, unsigned char ucLength, COMP_TYPE_I ucType, unsigned char ucMode)
@@ -133,11 +133,11 @@ int bsp_version_memversion_ctrl(char *pcData, unsigned char ucLength, COMP_TYPE_
 
 
 /********************************************************************************************************************
- º¯ Êý Ãû  : bsp_version_init
- ¹¦ÄÜÃèÊö  :
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- ×¢ÒâÊÂÏî  £º
+ å‡½ æ•° å  : bsp_version_init
+ åŠŸèƒ½æè¿°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ æ³¨æ„äº‹é¡¹  ï¼š
 ********************************************************************************************************************/
 void bsp_version_init(void)
 {
@@ -167,12 +167,12 @@ void bsp_version_init(void)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_version_get_verall
- ¹¦ÄÜÃèÊö  : ²éÑ¯ËùÓÐ×é¼þµÄ°æ±¾ºÅ¡£
- ÊäÈë²ÎÊý  : ppVersionInfo£º´ý±£´æµÄ°æ±¾ÐÅÏ¢µØÖ·¡£
- Êä³ö²ÎÊý  : ucLength£º´ý·µ»ØµÄÊý¾ÝµÄ×Ö½ÚÊý¡£
- ·µ »Ø Öµ  : 0:  ²Ù×÷³É¹¦£»
-             -1£º²Ù×÷Ê§°Ü¡£
+ å‡½ æ•° å  : bsp_version_get_verall
+ åŠŸèƒ½æè¿°  : æŸ¥è¯¢æ‰€æœ‰ç»„ä»¶çš„ç‰ˆæœ¬å·ã€‚
+ è¾“å…¥å‚æ•°  : ppVersionInfoï¼šå¾…ä¿å­˜çš„ç‰ˆæœ¬ä¿¡æ¯åœ°å€ã€‚
+ è¾“å‡ºå‚æ•°  : ucLengthï¼šå¾…è¿”å›žçš„æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+ è¿” å›ž å€¼  : 0:  æ“ä½œæˆåŠŸï¼›
+             -1ï¼šæ“ä½œå¤±è´¥ã€‚
 *****************************************************************************/
 int bsp_version_get_verall (void ** ppVersionInfo, unsigned int * ulLength)
 {
@@ -187,11 +187,11 @@ int bsp_version_get_verall (void ** ppVersionInfo, unsigned int * ulLength)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_version_write_chip_version
- ¹¦ÄÜÃèÊö  : ½«Ð¾Æ¬°æ±¾ºÅÐ´ÈëÈ«¾Ö±äÁ¿ÖÐ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : none
- ·µ »Ø Öµ  : void
+ å‡½ æ•° å  : bsp_version_write_chip_version
+ åŠŸèƒ½æè¿°  : å°†èŠ¯ç‰‡ç‰ˆæœ¬å·å†™å…¥å…¨å±€å˜é‡ä¸­
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : none
+ è¿” å›ž å€¼  : void
 *****************************************************************************/
 
 static void bsp_version_write_chip_version(u32 addr,COMP_TYPE_I comp_type)
@@ -212,11 +212,11 @@ static void bsp_version_write_chip_version(u32 addr,COMP_TYPE_I comp_type)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_InitPlatformVerInfo
- ¹¦ÄÜÃèÊö  : ³õÊ¼»¯Ð¾Æ¬µÄ°æ±¾ºÅ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : none
- ·µ »Ø Öµ  : void
+ å‡½ æ•° å  : BSP_InitPlatformVerInfo
+ åŠŸèƒ½æè¿°  : åˆå§‹åŒ–èŠ¯ç‰‡çš„ç‰ˆæœ¬å·
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : none
+ è¿” å›ž å€¼  : void
 *****************************************************************************/
 void BSP_InitPlatformVerInfo(void)
 {
@@ -224,7 +224,7 @@ void BSP_InitPlatformVerInfo(void)
 	u32 product_type=0xff;
 	COMP_TYPE_I comp_type;
 
-	/*»ñÈ¡Ó²¼þ°æ±¾ºÅ*/
+	/*èŽ·å–ç¡¬ä»¶ç‰ˆæœ¬å·*/
 	product_type = bsp_version_get_board_chip_type();
 	if(HW_VER_INVALID==product_type){
 		ver_print_error("get board chip type fail!\n");
@@ -278,11 +278,11 @@ int BSP_GetProductName (char * pProductName, unsigned int ulLength)
 }
 
 /*****************************************************************************
-* º¯Êý	: bsp_get_board_mode_type
-* ¹¦ÄÜ	: get board type(GUL or LTE)
-* ÊäÈë	: void
-* Êä³ö	: void
-* ·µ»Ø	: BOARD_TYPE_E
+* å‡½æ•°	: bsp_get_board_mode_type
+* åŠŸèƒ½	: get board type(GUL or LTE)
+* è¾“å…¥	: void
+* è¾“å‡º	: void
+* è¿”å›ž	: BOARD_TYPE_E
 *****************************************************************************/
 BOARD_TYPE_E bsp_get_board_mode_type(void)
 {
@@ -326,13 +326,13 @@ BSP_S32 BSP_DLOAD_GetISOVer(char *pVersionInfo,BSP_U32 ulLength)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_MNTN_GetProductIdInter
- ¹¦ÄÜÃèÊö  : ²úÆ·Ãû³ÆÍêÕû°æ±¾¶Á½Ó¿Ú¡£
- ÊäÈë²ÎÊý  : pProductIdInter£ºÎªµ÷ÓÃÕß´ý±£´æ·µ»ØµÄ²úÆ·Ãû³ÆÍêÕû°æ±¾µÄÄÚ´æÊ×µØÖ·£»
-             ulLength       £ºÎªµ÷ÓÃÕß´ý±£´æ·µ»ØµÄ²úÆ·Ãû³ÆÍêÕû°æ±¾µÄÄÚ´æ´óÐ¡£»
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : 0:  ²Ù×÷³É¹¦£»
-             -1£º²Ù×÷Ê§°Ü¡£
+ å‡½ æ•° å  : BSP_MNTN_GetProductIdInter
+ åŠŸèƒ½æè¿°  : äº§å“åç§°å®Œæ•´ç‰ˆæœ¬è¯»æŽ¥å£ã€‚
+ è¾“å…¥å‚æ•°  : pProductIdInterï¼šä¸ºè°ƒç”¨è€…å¾…ä¿å­˜è¿”å›žçš„äº§å“åç§°å®Œæ•´ç‰ˆæœ¬çš„å†…å­˜é¦–åœ°å€ï¼›
+             ulLength       ï¼šä¸ºè°ƒç”¨è€…å¾…ä¿å­˜è¿”å›žçš„äº§å“åç§°å®Œæ•´ç‰ˆæœ¬çš„å†…å­˜å¤§å°ï¼›
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : 0:  æ“ä½œæˆåŠŸï¼›
+             -1ï¼šæ“ä½œå¤±è´¥ã€‚
 *****************************************************************************/
 int	BSP_MNTN_GetProductIdInter(char * pProductIdInter, unsigned int ulLength)
 {
@@ -357,13 +357,13 @@ int	BSP_MNTN_GetProductIdInter(char * pProductIdInter, unsigned int ulLength)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_GetProductInnerName
-* ¹¦ÄÜÃèÊö  : »ñÈ¡ÄÚ²¿²úÆ·Ãû³Æ
-* ÊäÈë²ÎÊý  : char* pProductIdInter,    ×Ö·û´®Ö¸Õë
-*             BSP_U32 ulLength,         »º³åÇø³¤¶È
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : 0£ºÕýÈ·£¬·Ç0: Ê§°Ü
-* ÐÞ¸Ä¼ÇÂ¼  :
+* å‡½ æ•° å  : BSP_GetProductInnerName
+* åŠŸèƒ½æè¿°  : èŽ·å–å†…éƒ¨äº§å“åç§°
+* è¾“å…¥å‚æ•°  : char* pProductIdInter,    å­—ç¬¦ä¸²æŒ‡é’ˆ
+*             BSP_U32 ulLength,         ç¼“å†²åŒºé•¿åº¦
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : 0ï¼šæ­£ç¡®ï¼Œéž0: å¤±è´¥
+* ä¿®æ”¹è®°å½•  :
 *****************************************************************************/
 BSP_S32 BSP_GetProductInnerName (char * pProductIdInter, unsigned int ulLength)
 {
@@ -388,12 +388,12 @@ BSP_S32 BSP_GetProductInnerName (char * pProductIdInter, unsigned int ulLength)
 	return OK;
 }
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_HwGetHwVersion
-* ¹¦ÄÜÃèÊö  : »ñÈ¡Ó²¼þ°æ±¾Ãû³Æ
-* ÊäÈë²ÎÊý  : char* pHwVersion,×Ö·û´®Ö¸Õë£¬±£Ö¤²»Ð¡ÓÚ32×Ö½Ú
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : ÎÞ
-* ÐÞ¸Ä¼ÇÂ¼  :
+* å‡½ æ•° å  : BSP_HwGetHwVersion
+* åŠŸèƒ½æè¿°  : èŽ·å–ç¡¬ä»¶ç‰ˆæœ¬åç§°
+* è¾“å…¥å‚æ•°  : char* pHwVersion,å­—ç¬¦ä¸²æŒ‡é’ˆï¼Œä¿è¯ä¸å°äºŽ32å­—èŠ‚
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : æ— 
+* ä¿®æ”¹è®°å½•  :
 *****************************************************************************/
 BSP_S32 BSP_HwGetHwVersion (char* pFullHwVersion, BSP_U32 ulLength)
 {
@@ -418,11 +418,11 @@ BSP_S32 BSP_HwGetHwVersion (char* pFullHwVersion, BSP_U32 ulLength)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_version_get_platform_info
- ¹¦ÄÜÃèÊö  : »ñÈ¡Ð¾Æ¬µÄ°æ±¾ºÅ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : Platform_info:Ð¾Æ¬µÄ°æ±¾ºÅ
- ·µ »Ø Öµ  : void
+ å‡½ æ•° å  : bsp_version_get_platform_info
+ åŠŸèƒ½æè¿°  : èŽ·å–èŠ¯ç‰‡çš„ç‰ˆæœ¬å·
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : Platform_info:èŠ¯ç‰‡çš„ç‰ˆæœ¬å·
+ è¿” å›ž å€¼  : void
 *****************************************************************************/
 static void bsp_version_get_platform_info(unsigned int *platform_info)
 {
@@ -445,11 +445,11 @@ static void bsp_version_get_platform_info(unsigned int *platform_info)
 
 }
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_GET_PLATFORM_INFO
- ¹¦ÄÜÃèÊö  : »ñÈ¡Ð¾Æ¬µÄ°æ±¾ºÅ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : u32PlatformInfo:Ð¾Æ¬µÄ°æ±¾ºÅ
- ·µ »Ø Öµ  : void
+ å‡½ æ•° å  : DRV_GET_PLATFORM_INFO
+ åŠŸèƒ½æè¿°  : èŽ·å–èŠ¯ç‰‡çš„ç‰ˆæœ¬å·
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : u32PlatformInfo:èŠ¯ç‰‡çš„ç‰ˆæœ¬å·
+ è¿” å›ž å€¼  : void
 *****************************************************************************/
 void DRV_GET_PLATFORM_INFO(unsigned int *u32PlatformInfo)
 {
@@ -466,19 +466,19 @@ void DRV_GET_PLATFORM_INFO(unsigned int *u32PlatformInfo)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_OM_GetChipType
+* å‡½ æ•° å  : BSP_OM_GetChipType
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡Ð¾Æ¬ÀàÐÍ
+* åŠŸèƒ½æè¿°  : èŽ·å–èŠ¯ç‰‡ç±»åž‹
 *
-* ÊäÈë²ÎÊý  : void
+* è¾“å…¥å‚æ•°  : void
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : Ð¾Æ¬ÀàÐÍ
-*             PV500_CHIP:PV500Ð¾Æ¬
-*             V7R1_CHIP: V7R1Ð¾Æ¬
+* è¿” å›ž å€¼  : èŠ¯ç‰‡ç±»åž‹
+*             PV500_CHIP:PV500èŠ¯ç‰‡
+*             V7R1_CHIP: V7R1èŠ¯ç‰‡
 *
-* ÆäËüËµÃ÷  : ÎÞ
+* å…¶å®ƒè¯´æ˜Ž  : æ— 
 *
 *****************************************************************************/
 BSP_CHIP_TYPE_E BSP_OM_GetChipType(void)
@@ -487,11 +487,11 @@ BSP_CHIP_TYPE_E BSP_OM_GetChipType(void)
 }
 
 /*************************************************
- º¯ Êý Ãû   : BSP_MNTN_ProductTypeGet
- ¹¦ÄÜÃèÊö: ·µ»Øµ±Ç°²úÆ·ÀàÐÍ
- ÊäÈë²ÎÊý: ÎÞ
- Êä³ö²ÎÊý: ÎÞ
- ·µ »Ø Öµ   :
+ å‡½ æ•° å   : BSP_MNTN_ProductTypeGet
+ åŠŸèƒ½æè¿°: è¿”å›žå½“å‰äº§å“ç±»åž‹
+ è¾“å…¥å‚æ•°: æ— 
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å›ž å€¼   :
  		0:STICK
          1:MOD
          2:E5
@@ -509,13 +509,13 @@ BSP_U32 BSP_MNTN_ProductTypeGet(void)
 		return product_type;
 	}
 
-	/* UDPÄ¬ÈÏ·µ»ØstickÐÎÌ¬ */
+	/* UDPé»˜è®¤è¿”å›žstickå½¢æ€ */
 	if(HW_VER_UDP_MASK == (id & HW_VER_UDP_MASK))
 	{
 		return product_type;
 	}
 
-	/* ÆäËû²úÆ·°æ£¬¸ù¾Ýhakdc»ñÈ¡µÄÐÎÌ¬·µ»Ø */
+	/* å…¶ä»–äº§å“ç‰ˆï¼Œæ ¹æ®hakdcèŽ·å–çš„å½¢æ€è¿”å›ž */
 	switch((enum hkac_product_type)((id & HW_VER_PRODUCT_TYPE_MASK) >> HW_VER_PRODUCT_TYPE_OS))
 	{
 	case HKADC_PRODUCT_TYPE_E5:
@@ -551,11 +551,11 @@ BSP_U32 BSP_MNTN_ProductTypeGet(void)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_MNTN_GetHwGpioInfo
- ¹¦ÄÜÃèÊö  : Get flash infomation
- ÊäÈë²ÎÊý  : ÎÞ¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : ÎÞ¡£
+ å‡½ æ•° å  : BSP_MNTN_GetHwGpioInfo
+ åŠŸèƒ½æè¿°  : Get flash infomation
+ è¾“å…¥å‚æ•°  : æ— ã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : æ— ã€‚
 *****************************************************************************/
 int BSP_MNTN_GetHwGpioInfo(unsigned char *pGpioInfo, unsigned int usLength )
 {
@@ -571,16 +571,16 @@ int BSP_MNTN_GetHwGpioInfo(unsigned char *pGpioInfo, unsigned int usLength )
 #ifdef __KERNEL__
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_GetBuildVersion
+* å‡½ æ•° å  : BSP_GetBuildVersion
 *
-* ¹¦ÄÜÃèÊö  :
+* åŠŸèƒ½æè¿°  :
 *
-* ÊäÈë²ÎÊý  :
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  :
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎÞ
+* è¿” å›ž å€¼  : æ— 
 *
-* ÐÞ¸Ä¼ÇÂ¼  : 2011-3-29 wuzechun creat
+* ä¿®æ”¹è®°å½•  : 2011-3-29 wuzechun creat
 *
 *****************************************************************************/
 UE_SW_BUILD_VER_INFO_STRU* BSP_GetBuildVersion(void)
@@ -713,103 +713,103 @@ UE_SW_BUILD_VER_INFO_STRU* BSP_GetBuildVersion(void)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_GetCurMode
+* å‡½ æ•° å  : BSP_DLOAD_GetCurMode
 *
-* ¹¦ÄÜÃèÊö  : ÉèÖÃµ±Ç°¹¤×÷Ä£Ê½
+* åŠŸèƒ½æè¿°  : è®¾ç½®å½“å‰å·¥ä½œæ¨¡å¼
 *
-* ÊäÈë²ÎÊý  : void
-* Êä³ö²ÎÊý  : DLOAD_MODE_NORMAL     :Õý³£Ä£Ê½
-*             DLOAD_MODE_DATA       :Êý¾ÝÄ£Ê½
-*             DLOAD_MODE_DOWNLOAD   :ÏÂÔØÄ£Ê½
+* è¾“å…¥å‚æ•°  : void
+* è¾“å‡ºå‚æ•°  : DLOAD_MODE_NORMAL     :æ­£å¸¸æ¨¡å¼
+*             DLOAD_MODE_DATA       :æ•°æ®æ¨¡å¼
+*             DLOAD_MODE_DOWNLOAD   :ä¸‹è½½æ¨¡å¼
 *
-* ·µ »Ø Öµ  : ÎÞ
+* è¿” å›ž å€¼  : æ— 
 *
-* ÆäËüËµÃ÷  : ATÄ£¿éµ÷ÓÃ
-*             Õý³£Ä£Ê½Ö§³ÖµÄÓÐ:
+* å…¶å®ƒè¯´æ˜Ž  : ATæ¨¡å—è°ƒç”¨
+*             æ­£å¸¸æ¨¡å¼æ”¯æŒçš„æœ‰:
 *                 BSP_DLOAD_GetCurMode(DLOAD_MODE_DOWNLOAD)
-*             ÏÂÔØÄ£Ê½Ö§³ÖµÄÓÐ:
+*             ä¸‹è½½æ¨¡å¼æ”¯æŒçš„æœ‰:
 *                 BSP_DLOAD_GetCurMode(DLOAD_MODE_DATA)
 *
 *****************************************************************************/
 void BSP_DLOAD_SetCurMode(DLOAD_MODE_E eDloadMode)
 {
-	/*ÏÈ´ò×®£¬ºóÃæ²úÆ·ÏßÊµÏÖ*/
+	/*å…ˆæ‰“æ¡©ï¼ŒåŽé¢äº§å“çº¿å®žçŽ°*/
 	return ;
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_GetCurMode
+* å‡½ æ•° å  : BSP_DLOAD_GetCurMode
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡µ±Ç°¹¤×÷Ä£Ê½
+* åŠŸèƒ½æè¿°  : èŽ·å–å½“å‰å·¥ä½œæ¨¡å¼
 *
-* ÊäÈë²ÎÊý  : void
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : void
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : DLOAD_MODE_NORMAL     :Õý³£Ä£Ê½
-*             DLOAD_MODE_DATA       :Êý¾ÝÄ£Ê½
-*             DLOAD_MODE_DOWNLOAD   :ÏÂÔØÄ£Ê½
+* è¿” å›ž å€¼  : DLOAD_MODE_NORMAL     :æ­£å¸¸æ¨¡å¼
+*             DLOAD_MODE_DATA       :æ•°æ®æ¨¡å¼
+*             DLOAD_MODE_DOWNLOAD   :ä¸‹è½½æ¨¡å¼
 *
-* ÆäËüËµÃ÷  : ÎÞ
+* å…¶å®ƒè¯´æ˜Ž  : æ— 
 *
 *****************************************************************************/
 DLOAD_MODE_E BSP_DLOAD_GetCurMode(void)
 {
-	/*ÔÝÊ±´ò×®£¬ÓÉ²úÆ·ÏßÊµÏÖ*/
+	/*æš‚æ—¶æ‰“æ¡©ï¼Œç”±äº§å“çº¿å®žçŽ°*/
 	return DLOAD_MODE_MAX;
 }
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_SetSoftLoad
+* å‡½ æ•° å  : BSP_DLOAD_SetSoftLoad
 *
-* ¹¦ÄÜÃèÊö  : ÉèÖÃÆô¶¯±êÖ¾
+* åŠŸèƒ½æè¿°  : è®¾ç½®å¯åŠ¨æ ‡å¿—
 *
-* ÊäÈë²ÎÊý  : BSP_BOOL bSoftLoad  :
-*             BSP_FALSE :´ÓvxWorksÆô¶¯
-*             BSP_TRUE  :´ÓbootromÆô¶¯
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : BSP_BOOL bSoftLoad  :
+*             BSP_FALSE :ä»ŽvxWorkså¯åŠ¨
+*             BSP_TRUE  :ä»Žbootromå¯åŠ¨
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎÞ
+* è¿” å›ž å€¼  : æ— 
 *
-* ÆäËüËµÃ÷  : ÎÞ
+* å…¶å®ƒè¯´æ˜Ž  : æ— 
 *
 *****************************************************************************/
 void BSP_DLOAD_SetSoftLoad (BSP_BOOL bSoftLoad)
 {
-	/*TODO:ÏÈ´ò×®£¬ºóÃæ²úÆ·ÏßÊµÏÖ*/
+	/*TODO:å…ˆæ‰“æ¡©ï¼ŒåŽé¢äº§å“çº¿å®žçŽ°*/
 	return;
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_GetSoftLoad
+* å‡½ æ•° å  : BSP_DLOAD_GetSoftLoad
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡Æô¶¯±êÖ¾
+* åŠŸèƒ½æè¿°  : èŽ·å–å¯åŠ¨æ ‡å¿—
 *
-* ÊäÈë²ÎÊý  : void
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : void
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_TRUE  :´ÓbootromÆô¶¯
-*             BSP_FALSE :´ÓvxWorksÆô¶¯
+* è¿” å›ž å€¼  : BSP_TRUE  :ä»Žbootromå¯åŠ¨
+*             BSP_FALSE :ä»ŽvxWorkså¯åŠ¨
 *
-* ÆäËüËµÃ÷  : ÎÞ
+* å…¶å®ƒè¯´æ˜Ž  : æ— 
 *
 *****************************************************************************/
 BSP_BOOL BSP_DLOAD_GetSoftLoad (void)
 {
-	/*TODO:ÏÈ´ò×®£¬ºóÃæ²úÆ·ÏßÊµÏÖ*/
+	/*TODO:å…ˆæ‰“æ¡©ï¼ŒåŽé¢äº§å“çº¿å®žçŽ°*/
 	return BSP_TRUE;
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_SendData
+* å‡½ æ•° å  : BSP_DLOAD_SendData
 *
-* ¹¦ÄÜÃèÊö  : Í¨¹ýÐéÄâ´®¿ÚÏòPC¶Ë·¢ËÍÊý¾Ý
+* åŠŸèƒ½æè¿°  : é€šè¿‡è™šæ‹Ÿä¸²å£å‘PCç«¯å‘é€æ•°æ®
 *
-* ÊäÈë²ÎÊý  : pBuf      :Êý¾Ý»º³åÇø
-*             u32Len    :Êý¾Ý»º³åÇø³¤¶È
-* Êä³ö²ÎÊý  : pBuf      :Êý¾Ý»º³åÇø
+* è¾“å…¥å‚æ•°  : pBuf      :æ•°æ®ç¼“å†²åŒº
+*             u32Len    :æ•°æ®ç¼“å†²åŒºé•¿åº¦
+* è¾“å‡ºå‚æ•°  : pBuf      :æ•°æ®ç¼“å†²åŒº
 *
-* ·µ »Ø Öµ  : ÎÞ
+* è¿” å›ž å€¼  : æ— 
 *
-* ÆäËüËµÃ÷  : pBuf±ØÐë±£Ö¤cache line(32×Ö½Ú)¶ÔÆë
+* å…¶å®ƒè¯´æ˜Ž  : pBufå¿…é¡»ä¿è¯cache line(32å­—èŠ‚)å¯¹é½
 *
 *****************************************************************************/
 BSP_S32 BSP_DLOAD_SendData(char *pBuf, BSP_U32 u32Len)
@@ -819,16 +819,16 @@ BSP_S32 BSP_DLOAD_SendData(char *pBuf, BSP_U32 u32Len)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_AtProcReg
+* å‡½ æ•° å  : BSP_DLOAD_AtProcReg
 *
-* ¹¦ÄÜÃèÊö  : ×¢²áAT´¦Àíº¯Êý
+* åŠŸèƒ½æè¿°  : æ³¨å†ŒATå¤„ç†å‡½æ•°
 *
-* ÊäÈë²ÎÊý  : pFun
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : pFun
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : DLOAD_OK:³É¹¦
+* è¿” å›ž å€¼  : DLOAD_OK:æˆåŠŸ
 *
-* ÆäËüËµÃ÷  : ÎÞ
+* å…¶å®ƒè¯´æ˜Ž  : æ— 
 *
 *****************************************************************************/
 
@@ -838,21 +838,21 @@ BSP_S32 BSP_DLOAD_AtProcReg (BSP_DLOAD_AtCallBack pFun)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_GetDloadVer
+* å‡½ æ•° å  : BSP_DLOAD_GetDloadVer
 *
-* ¹¦ÄÜÃèÊö  : ²éÑ¯ÏÂÔØÐ­Òé°æ±¾ºÅ¡£¸ÃÐÅÏ¢BSP¹Ì¶¨Ð´Îª2.0¡£
+* åŠŸèƒ½æè¿°  : æŸ¥è¯¢ä¸‹è½½åè®®ç‰ˆæœ¬å·ã€‚è¯¥ä¿¡æ¯BSPå›ºå®šå†™ä¸º2.0ã€‚
 *
-* ÊäÈë²ÎÊý  :
-				char *str  :×Ö·û´®»º³åÇø
-*             		BSP_S32 len      :×Ö·û´®³¤¶È
-* Êä³ö²ÎÊý  : BSP_S8 *str   :×Ö·û´®»º³åÇø
+* è¾“å…¥å‚æ•°  :
+				char *str  :å­—ç¬¦ä¸²ç¼“å†²åŒº
+*             		BSP_S32 len      :å­—ç¬¦ä¸²é•¿åº¦
+* è¾“å‡ºå‚æ•°  : BSP_S8 *str   :å­—ç¬¦ä¸²ç¼“å†²åŒº
 *
-* ·µ »Ø Öµ  : DLOAD_ERROR   :ÊäÈë²ÎÊý·Ç·¨
-*             ÆäËü          :·µ»Ø×Ö·û´®³¤¶È
+* è¿” å›ž å€¼  : DLOAD_ERROR   :è¾“å…¥å‚æ•°éžæ³•
+*             å…¶å®ƒ          :è¿”å›žå­—ç¬¦ä¸²é•¿åº¦
 *
-* ÆäËüËµÃ÷  : ATÄ£¿éµ÷ÓÃ
-*             Õý³£Ä£Ê½Ö§³Ö
-*             ÏÂÔØÄ£Ê½Ö§³Ö
+* å…¶å®ƒè¯´æ˜Ž  : ATæ¨¡å—è°ƒç”¨
+*             æ­£å¸¸æ¨¡å¼æ”¯æŒ
+*             ä¸‹è½½æ¨¡å¼æ”¯æŒ
 *****************************************************************************/
 BSP_S32 BSP_DLOAD_GetDloadVer(char *str, BSP_U32 len)
 {
@@ -896,19 +896,19 @@ int BSP_DLOAD_GetDloadInfo(unsigned char atCmdBuf[], unsigned int dloadType)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_GetDloadType
+* å‡½ æ•° å  : BSP_DLOAD_GetDloadType
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡ÏÂÔØÀàÐÍ
+* åŠŸèƒ½æè¿°  : èŽ·å–ä¸‹è½½ç±»åž‹
 *
-* ÊäÈë²ÎÊý  : void
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : void
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : 0 :Õý³£Ä£Ê½
-*             1 :Ç¿ÖÆÄ£Ê½
+* è¿” å›ž å€¼  : 0 :æ­£å¸¸æ¨¡å¼
+*             1 :å¼ºåˆ¶æ¨¡å¼
 *
-* ÆäËüËµÃ÷  : ATÄ£¿éµ÷ÓÃ
-*             Õý³£Ä£Ê½Ö§³Ö
-*             ÏÂÔØÄ£Ê½Ö§³Ö
+* å…¶å®ƒè¯´æ˜Ž  : ATæ¨¡å—è°ƒç”¨
+*             æ­£å¸¸æ¨¡å¼æ”¯æŒ
+*             ä¸‹è½½æ¨¡å¼æ”¯æŒ
 *
 *****************************************************************************/
 BSP_S32 BSP_DLOAD_GetDloadType(void)
@@ -923,21 +923,21 @@ BSP_S32 BSP_DLOAD_GetDloadType(void)
     }
 }
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_GetProductId
+* å‡½ æ•° å  : BSP_DLOAD_GetProductId
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡²úÆ·Ãû³Æ×Ö·û´®
+* åŠŸèƒ½æè¿°  : èŽ·å–äº§å“åç§°å­—ç¬¦ä¸²
 *
-* ÊäÈë²ÎÊý  : BSP_S8 *str   :×Ö·û´®»º³åÇø
-*             BSP_S32 len   :×Ö·û´®³¤¶È
-* Êä³ö²ÎÊý  : BSP_S8 *str   :×Ö·û´®»º³åÇø
+* è¾“å…¥å‚æ•°  : BSP_S8 *str   :å­—ç¬¦ä¸²ç¼“å†²åŒº
+*             BSP_S32 len   :å­—ç¬¦ä¸²é•¿åº¦
+* è¾“å‡ºå‚æ•°  : BSP_S8 *str   :å­—ç¬¦ä¸²ç¼“å†²åŒº
 *
-* ·µ »Ø Öµ  : DLOAD_ERR_INVALID_PARA    :ÊäÈë²ÎÊý·Ç·¨
-*             VER_ERROR                :Ê§°Ü
-*             ÆäËü                      :·µ»Ø×Ö·û´®³¤¶È
+* è¿” å›ž å€¼  : DLOAD_ERR_INVALID_PARA    :è¾“å…¥å‚æ•°éžæ³•
+*             VER_ERROR                :å¤±è´¥
+*             å…¶å®ƒ                      :è¿”å›žå­—ç¬¦ä¸²é•¿åº¦
 *
-* ÆäËüËµÃ÷  : ATÄ£¿éµ÷ÓÃ
-*             Õý³£Ä£Ê½Ö§³Ö
-*             ÏÂÔØÄ£Ê½Ö§³Ö
+* å…¶å®ƒè¯´æ˜Ž  : ATæ¨¡å—è°ƒç”¨
+*             æ­£å¸¸æ¨¡å¼æ”¯æŒ
+*             ä¸‹è½½æ¨¡å¼æ”¯æŒ
 *
 *****************************************************************************/
 BSP_S32 BSP_DLOAD_GetProductId(char *str, BSP_U32 len)
@@ -969,21 +969,21 @@ BSP_S32 BSP_DLOAD_GetProductId(char *str, BSP_U32 len)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  	: BSP_DLOAD_GetSoftwareVer
-* ¹¦ÄÜÃèÊö  	: »ñÈ¡Èí¼þ°æ±¾ºÅ
-* ÊäÈë²ÎÊý  	:
-	BSP_S8 *str   	: ×Ö·û´®»º³åÇø
-*     BSP_S32 len   : ×Ö·û´®³¤¶È
+* å‡½ æ•° å  	: BSP_DLOAD_GetSoftwareVer
+* åŠŸèƒ½æè¿°  	: èŽ·å–è½¯ä»¶ç‰ˆæœ¬å·
+* è¾“å…¥å‚æ•°  	:
+	BSP_S8 *str   	: å­—ç¬¦ä¸²ç¼“å†²åŒº
+*     BSP_S32 len   : å­—ç¬¦ä¸²é•¿åº¦
 
-* Êä³ö²ÎÊý  	:
-	BSP_S8 *str   	: ×Ö·û´®»º³åÇø
+* è¾“å‡ºå‚æ•°  	:
+	BSP_S8 *str   	: å­—ç¬¦ä¸²ç¼“å†²åŒº
 
-* ·µ »Ø Öµ  	:
-	BSP_ERROR    : ÊäÈë²ÎÊý·Ç·¨
-*             ÆäËü 	: ·µ»Ø×Ö·û´®³¤¶È
-* ÆäËüËµÃ÷  	:  ATÄ£¿éµ÷ÓÃ
-*             Õý³£Ä£Ê½Ö§³Ö
-*             ÏÂÔØÄ£Ê½Ö§³Ö
+* è¿” å›ž å€¼  	:
+	BSP_ERROR    : è¾“å…¥å‚æ•°éžæ³•
+*             å…¶å®ƒ 	: è¿”å›žå­—ç¬¦ä¸²é•¿åº¦
+* å…¶å®ƒè¯´æ˜Ž  	:  ATæ¨¡å—è°ƒç”¨
+*             æ­£å¸¸æ¨¡å¼æ”¯æŒ
+*             ä¸‹è½½æ¨¡å¼æ”¯æŒ
 *****************************************************************************/
 BSP_S32 BSP_DLOAD_GetSoftwareVer(char *str, BSP_U32 len)
 {
@@ -1016,16 +1016,16 @@ BSP_S32 BSP_DLOAD_GetSoftwareVer(char *str, BSP_U32 len)
 }
 
 /*****************************************************************
-* º¯ Êý Ãû  	: BSP_OM_SoftReboot
-* ¹¦ÄÜÃèÊö  	: ÖØÆôµ¥°å
-* ÊäÈë²ÎÊý  	:
+* å‡½ æ•° å  	: BSP_OM_SoftReboot
+* åŠŸèƒ½æè¿°  	: é‡å¯å•æ¿
+* è¾“å…¥å‚æ•°  	:
 
-* Êä³ö²ÎÊý  	:
-* ·µ »Ø Öµ  	:
+* è¾“å‡ºå‚æ•°  	:
+* è¿” å›ž å€¼  	:
 
-* ÆäËüËµÃ÷  : ATÄ£¿éµ÷ÓÃ
-*             Õý³£Ä£Ê½Ö§³Ö
-*             ÏÂÔØÄ£Ê½Ö§³Ö
+* å…¶å®ƒè¯´æ˜Ž  : ATæ¨¡å—è°ƒç”¨
+*             æ­£å¸¸æ¨¡å¼æ”¯æŒ
+*             ä¸‹è½½æ¨¡å¼æ”¯æŒ
 ******************************************************************/
 void BSP_OM_SoftReboot(void)
 {
@@ -1034,18 +1034,18 @@ void BSP_OM_SoftReboot(void)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_DLOAD_GetNVBackupFlag
+* å‡½ æ•° å  : BSP_DLOAD_GetNVBackupFlag
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡Éý¼¶Ç°ÊÇ·ñ½øÐÐNV±¸·Ý±êÖ¾
+* åŠŸèƒ½æè¿°  : èŽ·å–å‡çº§å‰æ˜¯å¦è¿›è¡ŒNVå¤‡ä»½æ ‡å¿—
 *
-* ÊäÈë²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_TRUE  :±¸·ÝNV
-*            BSP_FALSE :²»±¸·ÝNV
+* è¿” å›ž å€¼  : BSP_TRUE  :å¤‡ä»½NV
+*            BSP_FALSE :ä¸å¤‡ä»½NV
 *
-* ÆäËüËµÃ÷  : ´Ë½Ó¿ÚÖ»¶Ô·ÇÒ»¼üÊ½Éý¼¶·½Ê½£¨SDÉý¼¶/ÔÚÏßÉý¼¶£©ÓÐÐ§£¬Ò»¼üÊ½Éý¼¶»á·¢ATÃüÁîÉèÖÃ
+* å…¶å®ƒè¯´æ˜Ž  : æ­¤æŽ¥å£åªå¯¹éžä¸€é”®å¼å‡çº§æ–¹å¼ï¼ˆSDå‡çº§/åœ¨çº¿å‡çº§ï¼‰æœ‰æ•ˆï¼Œä¸€é”®å¼å‡çº§ä¼šå‘ATå‘½ä»¤è®¾ç½®
 *
 *****************************************************************************/
 BSP_BOOL BSP_DLOAD_GetNVBackupFlag(void)

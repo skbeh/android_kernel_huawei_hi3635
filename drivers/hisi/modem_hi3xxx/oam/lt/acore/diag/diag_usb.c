@@ -92,7 +92,7 @@ VOS_VOID diag_UsbOpen(VOS_VOID)
 
 	DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_VCOM_INIT, 0, 0, 0);
 
-	/*�� DIAG USB CTRL CNFͨ��*/
+	/*打开 DIAG USB CTRL CNF通道*/
 	ulRet = diag_UsbCtrlOpen();
 	if(ERR_MSP_SUCCESS!=ulRet)
 	{
@@ -100,7 +100,7 @@ VOS_VOID diag_UsbOpen(VOS_VOID)
 		DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_VCOM_INIT_ERR,0, 0, 1);
 	}
 
-	/*�� DIAG USB DATA INDͨ��*/
+	/*打开 DIAG USB DATA IND通道*/
 	ulRet = diag_UsbAppOpen();
 	if(ERR_MSP_SUCCESS!=ulRet)
 	{
@@ -116,14 +116,14 @@ VOS_VOID diag_UsbClose(VOS_VOID)
 
 	DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_VCOM_DISABLE,0, 0, 0);
 
-	/*�ر�DIAG USB CTRLͨ��*/
+	/*关闭DIAG USB CTRL通道*/
 	ulRet = diag_UsbCtrlClose();
 	if(ERR_MSP_SUCCESS!=ulRet)
 	{
 		DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_VCOM_DISABLE_ERR,0, 0, 1);
 	}
 
-	/*�ر�DIAG USB DATAͨ��*/
+	/*关闭DIAG USB DATA通道*/
 	ulRet = diag_UsbAppClose();
 	if(ERR_MSP_SUCCESS!=ulRet)
 	{
@@ -159,7 +159,7 @@ VOS_UINT32 diag_UsbInit(VOS_VOID)
     /*global info init*/
     diag_UsbInfo_Init();
 
-	/* ע��USBͨ������رջص�*/
+	/* 注册USB通道打开与关闭回调*/
 	DRV_USB_REGUDI_ENABLECB(diag_UsbOpen);
     DRV_USB_REGUDI_DISABLECB(diag_UsbClose);
     DIAG_PORT_INIT_STATE_SWITCH(EN_DIAG_USB_BEARER_DIAG_CTRL,EN_PORT_INIT_SUCC);

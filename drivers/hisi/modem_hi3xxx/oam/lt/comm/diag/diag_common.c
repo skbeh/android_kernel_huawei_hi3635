@@ -17,7 +17,7 @@ extern "C" {
 #include  "diag_debug.h"
 #include  "DrvInterface.h"
 /*lint -restore*/
-/*lint -save -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -save -e767 åŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_DIAG_COMMON_C
 /*lint -restore +e767*/
 
@@ -41,7 +41,7 @@ VOS_UINT32 diag_GetAgentPid(VOS_VOID)
     /*lint -restore  +e40*/
 }
 
-/*yuyangyang NV »ñÈ¡imeiºÅ½Ó¿Ú begin*/
+/*yuyangyang NV è·å–imeiå·æ¥å£ begin*/
 
 VOS_UINT32 diag_GetImei(VOS_CHAR szimei [ 16 ])
 {
@@ -71,7 +71,7 @@ VOS_UINT32 diag_GetImei(VOS_CHAR szimei [ 16 ])
 
         for (subscript = 0; subscript < uslen; subscript++)
         {
-            *(szimei + subscript) = *(auctemp + subscript) + 0x30; /*×Ö·û×ª»»*/
+            *(szimei + subscript) = *(auctemp + subscript) + 0x30; /*å­—ç¬¦è½¬æ¢*/
         }
 
         szimei[DIAG_NV_IMEI_LEN - 1] = checkdata + 0x30;
@@ -80,7 +80,7 @@ VOS_UINT32 diag_GetImei(VOS_CHAR szimei [ 16 ])
 
     return 0;
 }
-/*yuyangyang NV »ñÈ¡imeiºÅ½Ó¿Ú end*/
+/*yuyangyang NV è·å–imeiå·æ¥å£ end*/
 
 
 VOS_UINT64 diag_GetFrameTime(VOS_VOID)
@@ -102,15 +102,15 @@ VOS_INT32 diag_RegRead(VOS_UINT32 u32RegAddr,ENADDRTYPE enAddrType, VOS_UINT32 *
     switch(enAddrType)
     {
         case ADDRTYPE8BIT:
-            *pu32Value = *((volatile VOS_UINT8 *)u32RegAddr);/* [false alarm]:ÆÁ±ÎFortify */
+            *pu32Value = *((volatile VOS_UINT8 *)u32RegAddr);/* [false alarm]:å±è”½Fortify */
             return OK;
 
         case ADDRTYPE16BIT:
-            *pu32Value = *((volatile VOS_UINT16 *)u32RegAddr);/* [false alarm]:ÆÁ±ÎFortify */
+            *pu32Value = *((volatile VOS_UINT16 *)u32RegAddr);/* [false alarm]:å±è”½Fortify */
             return OK;
 
         case ADDRTYPE32BIT:
-            *pu32Value = *((volatile VOS_UINT32 *)u32RegAddr);/* [false alarm]:ÆÁ±ÎFortify */
+            *pu32Value = *((volatile VOS_UINT32 *)u32RegAddr);/* [false alarm]:å±è”½Fortify */
             return OK;
 
         default:
@@ -123,11 +123,11 @@ VOS_INT32 diag_RegWrite(VOS_UINT32 u32RegAddr,ENADDRTYPE enAddrType, VOS_UINT32 
     switch(enAddrType)
     {
         case ADDRTYPE8BIT:
-            *((volatile VOS_UINT8 *)u32RegAddr) = (VOS_UINT8)u32Value;/* [false alarm]:ÆÁ±ÎFortify */
+            *((volatile VOS_UINT8 *)u32RegAddr) = (VOS_UINT8)u32Value;/* [false alarm]:å±è”½Fortify */
             return OK;
 
         case ADDRTYPE16BIT:
-            *((volatile VOS_UINT16 *)u32RegAddr) = (VOS_UINT16)u32Value;/* [false alarm]:ÆÁ±ÎFortify */
+            *((volatile VOS_UINT16 *)u32RegAddr) = (VOS_UINT16)u32Value;/* [false alarm]:å±è”½Fortify */
             return OK;
 
         case ADDRTYPE32BIT:
@@ -179,7 +179,7 @@ VOS_UINT32 diag_SendPsTransMsg(VOS_UINT32 ulRecverId, VOS_UINT8* pDta, VOS_UINT3
 
     DIAG_PS_MSG_STRU* pDataMsg = NULL;
 
-	/*´«½øÀ´µÄdtaSizeÒÑ¾­°üº¬ÁËVOS HEADER£¬Òò´ËÉêÇëÊ±ĞèÒª-20*/
+	/*ä¼ è¿›æ¥çš„dtaSizeå·²ç»åŒ…å«äº†VOS HEADERï¼Œå› æ­¤ç”³è¯·æ—¶éœ€è¦-20*/
     /*lint -save -e740*/
     pDataMsg = (DIAG_PS_MSG_STRU*)VOS_AllocMsg(diag_GetAgentPid(),dtaSize -VOS_MSG_HEAD_LENGTH);
     /*lint -restore*/

@@ -24,25 +24,25 @@ static watchpoint_t watchpoint_ctrl_block[MAX_CPU][MAX_DUBUG_MATCHPOINT];
 void show_watchpoint_regs(unsigned int cpu, char *buf);
 void show_watchpoint_info(unsigned int cpu, char *buf);
 
-/* mask·¶Î§ÄÚµÄsize */
+/* maskèŒƒå›´å†…çš„size */
 #define WP_ADDR_MAX_SIZE(wp)    (0x01 << (wp->addr_mask_bits > 2 ? wp->addr_mask_bits : 3))
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : write_watchpoint_register
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : ¸ù¾İwatchpointµÄÀàĞÍºÍ¼à¿ØµØÖ·µÄmaskÖµÀ´¹¹Ôì¼Ä´æÆ÷Êı¾İ£¬²¢Ğ´Èë
- ÊäÈë²ÎÊı  : unsigned int        cpu_idx - cpu±êÊ¶
-             unsigned int        wp_idx - watchpoint±êÊ¶
+ å‡½ æ•° å  : write_watchpoint_register
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : æ ¹æ®watchpointçš„ç±»å‹å’Œç›‘æ§åœ°å€çš„maskå€¼æ¥æ„é€ å¯„å­˜å™¨æ•°æ®ï¼Œå¹¶å†™å…¥
+ è¾“å…¥å‚æ•°  : unsigned int        cpu_idx - cpuæ ‡è¯†
+             unsigned int        wp_idx - watchpointæ ‡è¯†
              watchpoint_t        wp    - watchpoint
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 static inline void write_watchpoint_register(unsigned int cpu_idx, unsigned int wp_idx, watchpoint_t *wp)
@@ -64,19 +64,19 @@ static inline void write_watchpoint_register(unsigned int cpu_idx, unsigned int 
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : direct_enable_monitor_mode
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : Õë¶Ô²»Í¬µÄcpuÉèÖÃmonitor¼Ä´æÆ÷
- ÊäÈë²ÎÊı  : unsigned int        cpu - cpu±êÊ¶
+ å‡½ æ•° å  : direct_enable_monitor_mode
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : é’ˆå¯¹ä¸åŒçš„cpuè®¾ç½®monitorå¯„å­˜å™¨
+ è¾“å…¥å‚æ•°  : unsigned int        cpu - cpuæ ‡è¯†
             
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void direct_enable_monitor_mode(unsigned int cpu)
@@ -98,20 +98,20 @@ void direct_enable_monitor_mode(unsigned int cpu)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : direct_set_all_watchpoints_one_cpu
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : ÆôÓÃÍ¬Ò»¸öcpuÉÏµÄËùÓĞwatchpoint
-             Ö±Ğ´¼Ä´æÆ÷£¬½ö¹©cpu_idle_notifierºÍdo_debug_exceptionÊ¹ÓÃ
-             Á½Õß·Ç²¢·¢Ê¹ÓÃ
- ÊäÈë²ÎÊı  : unsigned int        cpu - cpu±êÊ¶
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : direct_set_all_watchpoints_one_cpu
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : å¯ç”¨åŒä¸€ä¸ªcpuä¸Šçš„æ‰€æœ‰watchpoint
+             ç›´å†™å¯„å­˜å™¨ï¼Œä»…ä¾›cpu_idle_notifierå’Œdo_debug_exceptionä½¿ç”¨
+             ä¸¤è€…éå¹¶å‘ä½¿ç”¨
+ è¾“å…¥å‚æ•°  : unsigned int        cpu - cpuæ ‡è¯†
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void direct_set_all_watchpoints_one_cpu(unsigned int cpu)
@@ -129,19 +129,19 @@ void direct_set_all_watchpoints_one_cpu(unsigned int cpu)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : stop_all_watchpoint_one_cpu
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : Í£Ö¹Í¬Ò»¸öcpuÉÏµÄËùÓĞwatchpoint
- ÊäÈë²ÎÊı  : unsigned int        cpu - cpu±êÊ¶
+ å‡½ æ•° å  : stop_all_watchpoint_one_cpu
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : åœæ­¢åŒä¸€ä¸ªcpuä¸Šçš„æ‰€æœ‰watchpoint
+ è¾“å…¥å‚æ•°  : unsigned int        cpu - cpuæ ‡è¯†
              enum wp_cfg_type    ct  - config type
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 
@@ -165,19 +165,19 @@ void stop_all_watchpoint_one_cpu(unsigned int cpu, enum wp_cfg_type ct)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : start_all_watchpoint_one_cpu
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : Ê¹ÄÜÍ¬Ò»¸öcpuÉÏµÄËùÓĞwatchpoint
- ÊäÈë²ÎÊı  : unsigned int        cpu - cpu±êÊ¶
+ å‡½ æ•° å  : start_all_watchpoint_one_cpu
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : ä½¿èƒ½åŒä¸€ä¸ªcpuä¸Šçš„æ‰€æœ‰watchpoint
+ è¾“å…¥å‚æ•°  : unsigned int        cpu - cpuæ ‡è¯†
              enum wp_cfg_type    ct  - config type
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void start_all_watchpoint_one_cpu(unsigned int cpu, enum wp_cfg_type ct)
@@ -200,19 +200,19 @@ void start_all_watchpoint_one_cpu(unsigned int cpu, enum wp_cfg_type ct)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : find_and_init_one_watchpoint
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : ÔÚcpu¶ÔÓ¦µÄwatchpoint¿ØÖÆ¿éÊı×éÖĞÕÒµ½Ò»¸ö¿ÕÏĞÔªËØ£¬Í¬Ê±ÉèÖÃwatchpoint¼à²âµã
- ÊäÈë²ÎÊı  : unsigned int        cpu - cpu±êÊ¶
+ å‡½ æ•° å  : find_and_init_one_watchpoint
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : åœ¨cpuå¯¹åº”çš„watchpointæ§åˆ¶å—æ•°ç»„ä¸­æ‰¾åˆ°ä¸€ä¸ªç©ºé—²å…ƒç´ ï¼ŒåŒæ—¶è®¾ç½®watchpointç›‘æµ‹ç‚¹
+ è¾“å…¥å‚æ•°  : unsigned int        cpu - cpuæ ‡è¯†
              enum wp_cfg_type    ct  - config type
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : watchpoint¿ØÖÆ¿éµÄË÷ÒıºÅ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : watchpointæ§åˆ¶å—çš„ç´¢å¼•å·
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 unsigned int find_and_init_one_watchpoint(watchpoint_t* wpi, unsigned int cpu, enum wp_cfg_type ct)
@@ -220,7 +220,7 @@ unsigned int find_and_init_one_watchpoint(watchpoint_t* wpi, unsigned int cpu, e
     unsigned int i;
     watchpoint_t *wp;
 
-    /* Êµ¼Ê¼Ä´æÆ÷µÄĞ´ÈëÖ»ÔÚ±¾cpuºÍidle endÊ±½øĞĞ */
+    /* å®é™…å¯„å­˜å™¨çš„å†™å…¥åªåœ¨æœ¬cpuå’Œidle endæ—¶è¿›è¡Œ */
     for (i = 0; i < max_watchpoint; i++) {
         wp = &watchpoint_ctrl_block[cpu][i];
 
@@ -242,22 +242,22 @@ unsigned int find_and_init_one_watchpoint(watchpoint_t* wpi, unsigned int cpu, e
     return i;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : find_and_clear_one_watchpoint
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : ÔÚcpu¶ÔÓ¦µÄwatchpoint¿ØÖÆ¿éÊı×éÖĞÕÒµ½Ò»¸ö¿ÕÏĞÔªËØ£¬Í¬Ê±Çå³ıwatchpoint¼à²âµã
- ÊäÈë²ÎÊı  : unsigned int        cpu - cpu±êÊ¶
+ å‡½ æ•° å  : find_and_clear_one_watchpoint
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : åœ¨cpuå¯¹åº”çš„watchpointæ§åˆ¶å—æ•°ç»„ä¸­æ‰¾åˆ°ä¸€ä¸ªç©ºé—²å…ƒç´ ï¼ŒåŒæ—¶æ¸…é™¤watchpointç›‘æµ‹ç‚¹
+ è¾“å…¥å‚æ•°  : unsigned int        cpu - cpuæ ‡è¯†
              enum wp_cfg_type    ct  - config type
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : watchpoint¿ØÖÆ¿éµÄË÷ÒıºÅ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : watchpointæ§åˆ¶å—çš„ç´¢å¼•å·
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *********************************************************************************/
 unsigned int find_and_clear_one_watchpoint(unsigned int addr, unsigned int cpu, enum wp_cfg_type ct)
 {
     unsigned int i;
     watchpoint_t *wp;
     
-    /* Êµ¼Ê¼Ä´æÆ÷µÄĞ´ÈëÖ»ÔÚ±¾cpuºÍidle endÊ±½øĞĞ */
+    /* å®é™…å¯„å­˜å™¨çš„å†™å…¥åªåœ¨æœ¬cpuå’Œidle endæ—¶è¿›è¡Œ */
     for (i = 0; i < max_watchpoint; i++) {
         wp = &watchpoint_ctrl_block[cpu][i];
 
@@ -270,7 +270,7 @@ unsigned int find_and_clear_one_watchpoint(unsigned int addr, unsigned int cpu, 
             wp->watchpoint_callback = 0;
 
             if (WP_WT == ct) {
-                /* clearÊ±Èç½öÓĞÒ»¸öwp£¬Ôò´Ëwp¿ÉÄÜÎŞ·¨É¾³ı*/
+                /* clearæ—¶å¦‚ä»…æœ‰ä¸€ä¸ªwpï¼Œåˆ™æ­¤wpå¯èƒ½æ— æ³•åˆ é™¤*/
                 write_watchpoint_register(cpu, i, wp);
             }
             break;
@@ -280,19 +280,19 @@ unsigned int find_and_clear_one_watchpoint(unsigned int addr, unsigned int cpu, 
     return i;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : clear_all_watchpoint_one_cpu
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : Çå³ıcpu¶ÔÓ¦µÄwatchpoint¿ØÖÆ¿éÊı×éÖĞµÄÔªËØ£¬Í¬Ê±Çå³ıwatchpoint¼à²âµã
- ÊäÈë²ÎÊı  : unsigned int   cpu - cpu±êÊ¶    
+ å‡½ æ•° å  : clear_all_watchpoint_one_cpu
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : æ¸…é™¤cpuå¯¹åº”çš„watchpointæ§åˆ¶å—æ•°ç»„ä¸­çš„å…ƒç´ ï¼ŒåŒæ—¶æ¸…é™¤watchpointç›‘æµ‹ç‚¹
+ è¾“å…¥å‚æ•°  : unsigned int   cpu - cpuæ ‡è¯†    
              enum wp_cfg_type    ct  - config type
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void clear_all_watchpoint_one_cpu(unsigned int cpu, enum wp_cfg_type ct)
@@ -317,20 +317,20 @@ void clear_all_watchpoint_one_cpu(unsigned int cpu, enum wp_cfg_type ct)
 
 }
 /*****************************************************************************
- º¯ Êı Ãû  : do_watchpoint_callback
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : Çå³ıcpu¶ÔÓ¦µÄwatchpoint¿ØÖÆ¿éÊı×éÖĞµÄÔªËØ£¬Í¬Ê±Çå³ıwatchpoint¼à²âµã
- ÊäÈë²ÎÊı  : unsigned int        addr - Òì³£³öÏÖµÄµØÖ·
-             unsigned int        cpu  - ³öÏÖÒì³£µÄcpu
-             void*               regs - Òì³£Ê±µÄ¼Ä´æÆ÷×éÖ¸Õë
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : watchpoint»Øµ÷º¯ÊıµÄ·µ»ØÖµ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : do_watchpoint_callback
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : æ¸…é™¤cpuå¯¹åº”çš„watchpointæ§åˆ¶å—æ•°ç»„ä¸­çš„å…ƒç´ ï¼ŒåŒæ—¶æ¸…é™¤watchpointç›‘æµ‹ç‚¹
+ è¾“å…¥å‚æ•°  : unsigned int        addr - å¼‚å¸¸å‡ºç°çš„åœ°å€
+             unsigned int        cpu  - å‡ºç°å¼‚å¸¸çš„cpu
+             void*               regs - å¼‚å¸¸æ—¶çš„å¯„å­˜å™¨ç»„æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : watchpointå›è°ƒå‡½æ•°çš„è¿”å›å€¼
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 int do_watchpoint_callback(unsigned int addr, unsigned int cpu, void* regs)
@@ -341,38 +341,38 @@ int do_watchpoint_callback(unsigned int addr, unsigned int cpu, void* regs)
 
     mlog_i("cpu %d, addr=0x%08x", cpu, addr);
 
-    /* callback ÆÚ¼äÍ£Ö¹ */
+    /* callback æœŸé—´åœæ­¢ */
     stop_all_watchpoint_one_cpu(cpu, WP_WT);
 
     for (i = 0; i < max_watchpoint; i++) {
         wp = &watchpoint_ctrl_block[cpu][i];
         if (wp->watchpoint_callback) {
-            /*µØÖ··¶Î§ÅĞ¶¨*/
+            /*åœ°å€èŒƒå›´åˆ¤å®š*/
             if ((addr >= wp->addr) && (addr < wp->addr + WP_ADDR_MAX_SIZE(wp))) {
                 ret = wp->watchpoint_callback(addr, regs, wp->user_param);
             }
         }
     }
 
-    /* callback ÆÚ¼äÍ£Ö¹»Ö¸´, WP_WB: let idle notifier to take effect */
+    /* callback æœŸé—´åœæ­¢æ¢å¤, WP_WB: let idle notifier to take effect */
     start_all_watchpoint_one_cpu(cpu, WP_WB);
 
     return ret;
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : get_max_watchpoint_number
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : »ñÈ¡Ö§³ÖµÄ×î¶àwatchpointÊıÄ¿
- ÊäÈë²ÎÊı  : unsigned int    cpu  - ³öÏÖÒì³£µÄcpu       
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ×î´óÖ§³ÖµÄwatchpointÊı
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : get_max_watchpoint_number
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : è·å–æ”¯æŒçš„æœ€å¤šwatchpointæ•°ç›®
+ è¾“å…¥å‚æ•°  : unsigned int    cpu  - å‡ºç°å¼‚å¸¸çš„cpu       
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æœ€å¤§æ”¯æŒçš„watchpointæ•°
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 
@@ -399,19 +399,19 @@ unsigned int get_max_watchpoint_number(unsigned int cpu)
     
 }
 /*****************************************************************************
- º¯ Êı Ãû  : recover_other_watchpoint_one_cpu
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : »Ö¸´cpuÉÏËùÓĞ³ıaddr¶ÔÓ¦µÄwatchpointÒÔÍâµÄwatchpoint
- ÊäÈë²ÎÊı  : unsigned int        addr - Òì³£³öÏÖµÄµØÖ·
-             unsigned int        cpu  - ³öÏÖÒì³£µÄcpu
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : recover_other_watchpoint_one_cpu
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : æ¢å¤cpuä¸Šæ‰€æœ‰é™¤addrå¯¹åº”çš„watchpointä»¥å¤–çš„watchpoint
+ è¾“å…¥å‚æ•°  : unsigned int        addr - å¼‚å¸¸å‡ºç°çš„åœ°å€
+             unsigned int        cpu  - å‡ºç°å¼‚å¸¸çš„cpu
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 ****************************************************************************
 void recover_other_watchpoint_one_cpu(unsigned int cpu, unsigned int addr)
@@ -422,7 +422,7 @@ void recover_other_watchpoint_one_cpu(unsigned int cpu, unsigned int addr)
     for (i = 0; i < max_watchpoint; i++) {
         wp = &watchpoint_ctrl_block[cpu][i];
         if ((wp->addr != DEBUG_INVALID_ADDR) && 
-            // µØÖ··¶Î§ÍâÅĞ¶¨
+            // åœ°å€èŒƒå›´å¤–åˆ¤å®š
             ((addr < wp->addr) || (addr >= wp->addr + WP_ADDR_MAX_SIZE(wp)))) {
             // enable
             wp->enable = DBGWCR_EN;
@@ -435,19 +435,19 @@ void recover_other_watchpoint_one_cpu(unsigned int cpu, unsigned int addr)
 
 }*/
 /*****************************************************************************
- º¯ Êı Ãû  : show_watchpoint_regs
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : ÓÃÓÚÏÔÊ¾Ïà¹Ø¼Ä´æÆ÷ÄÚÈİ£¬²âÊÔÓÃ
- ÊäÈë²ÎÊı  : unsigned int  scpu - cpu ±êÊ¶      
+ å‡½ æ•° å  : show_watchpoint_regs
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : ç”¨äºæ˜¾ç¤ºç›¸å…³å¯„å­˜å™¨å†…å®¹ï¼Œæµ‹è¯•ç”¨
+ è¾“å…¥å‚æ•°  : unsigned int  scpu - cpu æ ‡è¯†      
              char         *buf - buffer to save info
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void show_watchpoint_regs(unsigned int cpu, char *buf)
@@ -529,10 +529,10 @@ void show_watchpoint_regs(unsigned int cpu, char *buf)
 
 print:
     if (NULL != kmbuf) {
-        /* ´®¿ÚÊä³ö */
+        /* ä¸²å£è¾“å‡º */
         mlog_n("%s", kmbuf);
 
-        /* ×Ô·ÖÅä£¬free */
+        /* è‡ªåˆ†é…ï¼Œfree */
         kfree(kmbuf);
         kmbuf = NULL;
 
@@ -542,19 +542,19 @@ print:
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : show_watchpoint_info
- ½Ó¿ÚÀàĞÍ  : ¶ÔÄÚ½Ó¿Ú
- ¹¦ÄÜÃèÊö  : ÓÃÓÚÏÔÊ¾Ïà¹ØwatchpointµÄĞÅÏ¢,ÓÃÓÚ²âÊÔ
- ÊäÈë²ÎÊı  : unsigned int  cpu - cpu ±êÊ¶
+ å‡½ æ•° å  : show_watchpoint_info
+ æ¥å£ç±»å‹  : å¯¹å†…æ¥å£
+ åŠŸèƒ½æè¿°  : ç”¨äºæ˜¾ç¤ºç›¸å…³watchpointçš„ä¿¡æ¯,ç”¨äºæµ‹è¯•
+ è¾“å…¥å‚æ•°  : unsigned int  cpu - cpu æ ‡è¯†
              char         *buf - buffer to save info
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê3ÔÂ4ÈÕ
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´3æœˆ4æ—¥
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void show_watchpoint_info(unsigned int cpu, char *buf)
@@ -632,10 +632,10 @@ void show_watchpoint_info(unsigned int cpu, char *buf)
 
 print:
     if (NULL != kmbuf) {
-        /* ´®¿ÚÊä³ö */
+        /* ä¸²å£è¾“å‡º */
         mlog_n("%s", kmbuf);
 
-        /* ×Ô·ÖÅä£¬free */
+        /* è‡ªåˆ†é…ï¼Œfree */
         kfree(kmbuf);
         kmbuf = NULL;
 

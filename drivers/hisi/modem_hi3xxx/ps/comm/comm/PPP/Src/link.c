@@ -29,7 +29,7 @@
 
 
 /******************************************************************************
-   Í·ÎÄ¼ş°üº¬
+   å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "ppp_public.h"
 #include "layer.h"
@@ -56,13 +56,13 @@
 #endif
 
 /*****************************************************************************
-   1 Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+   1 åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_LINK_C
 
 #if(FEATURE_ON == FEATURE_PPP)
 /******************************************************************************
-   2 Íâ²¿º¯Êı±äÁ¿ÉùÃ÷
+   2 å¤–éƒ¨å‡½æ•°å˜é‡å£°æ˜
 ******************************************************************************/
 extern struct ppp_mbuf *
 proto_LayerPush(/*struct bundle *b, */struct link *l, struct ppp_mbuf *bp,
@@ -86,14 +86,14 @@ VOS_UINT32 PPP_STUB_ProcUlData(IMM_ZC_STRU *pstData, VOS_UINT8 ucRabId);
 
 #endif
 /*****************************************************************************
-   3 Ë½ÓĞ¶¨Òå
+   3 ç§æœ‰å®šä¹‰
 *****************************************************************************/
 #define PROTO_IN  1                       /* third arg to link_ProtocolRecord */
 #define PROTO_OUT 2
 
 
 /*****************************************************************************
-   4 È«¾Ö±äÁ¿¶¨Òå
+   4 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 struct link*            pgPppLink = VOS_NULL_PTR;
 
@@ -142,7 +142,7 @@ struct  fsm_parent  parent = {
              };
 
 /******************************************************************************
-   5 º¯ÊıÊµÏÖ
+   5 å‡½æ•°å®ç°
 ******************************************************************************/
 #if 0
 static struct protostatheader {
@@ -362,11 +362,11 @@ void link_EmptyStack(struct link *l)
 
 /*****************************************************************************
  Prototype      : ipv4_Input
- Description    : ¶ÔÓÚTE·¢ËÍÀ´µÄÊı¾İ±¨ÎÄ£¬Èç¹û¶ÔÓ¦µÄlinkÖĞÊÇ´¦ÓÚÍøÂç½×¶Î²¢ÇÒ×´
-                  Ì¬Îªopen£¬×ª·¢´Ë±¨ÎÄµ½GGSN¡£
+ Description    : å¯¹äºTEå‘é€æ¥çš„æ•°æ®æŠ¥æ–‡ï¼Œå¦‚æœå¯¹åº”çš„linkä¸­æ˜¯å¤„äºç½‘ç»œé˜¶æ®µå¹¶ä¸”çŠ¶
+                  æ€ä¸ºopenï¼Œè½¬å‘æ­¤æŠ¥æ–‡åˆ°GGSNã€‚
 
  Input          : ---
- Output         : ---·µ»ØÖ¸ÏòmbufµÄÖ¸Õë
+ Output         : ---è¿”å›æŒ‡å‘mbufçš„æŒ‡é’ˆ
  Return Value   : ---
  Calls          : ---
  Called By      : ---
@@ -382,10 +382,10 @@ PPP_ZC_STRU *ipv4_Input(/*struct bundle *bundle, */struct link *l, PPP_ZC_STRU *
         &&l->ipcp.fsm.state == ST_OPENED)
     {
         #if (PPP_FEATURE == PPP_FEATURE_PPP)
-        /*½«ÉÏĞĞÊı¾İ·¢ÍùĞ­ÒéÕ»*/
+        /*å°†ä¸Šè¡Œæ•°æ®å‘å¾€åè®®æ ˆ*/
         PPP_SendPulledData((VOS_UINT16)PPP_LINK_TO_ID(l), bp);
         #else
-        /*µ÷ÓÃPPPoEµÄ·¢ËÍº¯Êı*/
+        /*è°ƒç”¨PPPoEçš„å‘é€å‡½æ•°*/
         PPPoE_PPPSendDataToRABM(PPP_ZC_GET_DATA_PTR(bp), PPP_ZC_GET_DATA_LEN(bp));
         PPP_MemFree(bp);
         #endif
@@ -441,7 +441,7 @@ VOS_VOID link_Init(struct link *l)
     PS_MEM_SET(l->proto_out, '\0', sizeof l->proto_out);
     link_EmptyStack(l);
 
-    /*ÒÀ´ÎÑ¹ÈëPPPĞ­ÒéµÄ¸÷¸ö´¦Àí²ã*/
+    /*ä¾æ¬¡å‹å…¥PPPåè®®çš„å„ä¸ªå¤„ç†å±‚*/
     #if (PPP_FEATURE == PPP_FEATURE_PPP)
     link_Stack(l, &asynclayer);
     link_Stack(l, &hdlclayer);
@@ -453,7 +453,7 @@ VOS_VOID link_Init(struct link *l)
     async_Init(&(l->async));
     hdlc_Init(&(l->hdlc),&(l->lcp));
 
-    /*²ÎÊıconst struct fsm_parent * parent²»ÄÜÎª¿Õ*/
+    /*å‚æ•°const struct fsm_parent * parentä¸èƒ½ä¸ºç©º*/
     lcp_Init(&(l->lcp), l, &parent);
     ipcp_Init(&(l->ipcp), l, &parent);
     pap_Init(&(l->pap));
@@ -467,7 +467,7 @@ void link_PushPacket(struct link *l, struct ppp_mbuf *bp,/* struct bundle *b, */
     PPP_HDLC_CONFIG_STRU   *pstHdlcConfig;
 
 
-    /* °ÑPPPĞ­ÉÌ°ü×÷Îª¿ÉÎ¬¿É²âĞÅÏ¢,IP°ü²»×ö¿ÉÎ¬¿É²âÎ¬»¤*/
+    /* æŠŠPPPåå•†åŒ…ä½œä¸ºå¯ç»´å¯æµ‹ä¿¡æ¯,IPåŒ…ä¸åšå¯ç»´å¯æµ‹ç»´æŠ¤*/
     if (PROTO_IP != proto)
     {
         Ppp_MBufFrameMntnInfo(bp, proto, PPP_SEND_OUT_PROTOCOL_FRAME);
@@ -503,7 +503,7 @@ VOS_VOID PPP_HDLC_ProcIpModeUlData
     VOS_UINT32          f;
     struct ppp_mbuf    *bp;
 
-    /* °ÑPPPĞ­ÉÌ°ü×÷Îª¿ÉÎ¬¿É²âĞÅÏ¢,IP°ü²»×ö¿ÉÎ¬¿É²âÎ¬»¤*/
+    /* æŠŠPPPåå•†åŒ…ä½œä¸ºå¯ç»´å¯æµ‹ä¿¡æ¯,IPåŒ…ä¸åšå¯ç»´å¯æµ‹ç»´æŠ¤*/
     if (PROTO_IP != usProto)
     {
         Ppp_TtfMemFrameMntnInfo(pstMem, usProto, PPP_RECV_IN_PROTOCOL_FRAME);
@@ -518,7 +518,7 @@ VOS_VOID PPP_HDLC_ProcIpModeUlData
         }
     }
 
-    /* Èç¹ûÊÇ²»Ö§³ÖµÄĞ­Òé£¬Ïò¶Ô¶Ë·¢ËÍREJÖ¡ */
+    /* å¦‚æœæ˜¯ä¸æ”¯æŒçš„åè®®ï¼Œå‘å¯¹ç«¯å‘é€REJå¸§ */
     if (VOS_NULL_PTR != pstMem)
     {
         bp = ppp_m_get_from_ttfmem(pstMem);
@@ -576,7 +576,7 @@ VOS_VOID PPP_HDLC_ProcDlData(VOS_UINT16 usPppId, PPP_ZC_STRU *pstMem)
     #ifdef PPP_ST_TEST
     PPP_STUB_ProcDlData(usPppId, pstMem);
     #else
-    /* µ÷ÓÃATÄ£¿éÏÂĞĞÊı¾İ½ÓÊÕ½Ó¿Ú */
+    /* è°ƒç”¨ATæ¨¡å—ä¸‹è¡Œæ•°æ®æ¥æ”¶æ¥å£ */
     AT_SendZcDataToModem(usPppId, pstMem);
     #endif
 
@@ -586,7 +586,7 @@ VOS_VOID PPP_HDLC_ProcDlData(VOS_UINT16 usPppId, PPP_ZC_STRU *pstMem)
 #ifdef WTTF_PC_ST_SWITCH
 /******************************************************************************
  Function:       PPP_STUB_TraceDlData
- Description:    ½ÓÊÕÀ´×ÔGTRµÄÉÏĞĞÊı¾İ
+ Description:    æ¥æ”¶æ¥è‡ªGTRçš„ä¸Šè¡Œæ•°æ®
  Calls:
  Data Accessed:
  Data Updated:
@@ -617,7 +617,7 @@ VOS_VOID PPP_STUB_RcvUlData(PPP_STUB_ZC_DATA_MSG_STRU *pstUlStubDataMsg)
 
 /******************************************************************************
  Function:       PPP_STUB_TraceDlData
- Description:    ½«ÏÂĞĞÊı¾İ·¢ËÍ¸øGTR
+ Description:    å°†ä¸‹è¡Œæ•°æ®å‘é€ç»™GTR
  Calls:
  Data Accessed:
  Data Updated:
@@ -675,7 +675,7 @@ VOS_UINT32 PPP_SendPulledData(VOS_UINT16 usPppId,  PPP_ZC_STRU *pstImmZc)
     #ifdef WTTF_PS_FUSION_PC_ST
     ucRabId = 5;
     #else
-    /* Í¨¹ıusPppId£¬Ñ°ÕÒµ½usRabId */
+    /* é€šè¿‡usPppIdï¼Œå¯»æ‰¾åˆ°usRabId */
     if ( !PPP_PPPID_TO_RAB(usPppId, &ucRabId) )
     {
         g_PppDataQCtrl.stStat.ulUplinkDropCnt++;
@@ -688,7 +688,7 @@ VOS_UINT32 PPP_SendPulledData(VOS_UINT16 usPppId,  PPP_ZC_STRU *pstImmZc)
     }
     #endif
 
-    /* Êı¾İ·¢ËÍ¸øADS£¬Èç¹ûÊ§°ÜÔòÊÍ·ÅÄÚ´æ */
+    /* æ•°æ®å‘é€ç»™ADSï¼Œå¦‚æœå¤±è´¥åˆ™é‡Šæ”¾å†…å­˜ */
     ulResult = ADS_UL_SendPacket(pstImmZc, ucRabId);
 
     if ( VOS_OK != ulResult )
@@ -714,7 +714,7 @@ VOS_UINT32 PPP_SendPushedData(VOS_UINT16 usPppId, VOS_UINT8 *pucDataBuf, VOS_UIN
 
     while ( 0 < usRemainLen)
     {
-        /* Áã¿½±´ÄÚ´æÓĞ×î´óÏŞÖÆ£¬³¬ÏŞ·Ö¶à´Î·¢ËÍ */
+        /* é›¶æ‹·è´å†…å­˜æœ‰æœ€å¤§é™åˆ¶ï¼Œè¶…é™åˆ†å¤šæ¬¡å‘é€ */
         if ( PPP_ZC_MAX_DATA_LEN < usRemainLen)
         {
             pstMem       = PPP_MemCopyAlloc(pucRemainDataBuf, PPP_ZC_MAX_DATA_LEN, PPP_ZC_DL_RESERVE_LEN);

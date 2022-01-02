@@ -4,7 +4,7 @@
   Author       : ---
   Version      : V200R001
   Date         : 2005-11-17
-  Description  : ��C�ļ�������PPPģ���ppp id����������
+  Description  : 该C文件给出了PPP模块的ppp id管理函数。
   Function List:
         ---pppid_init
         ---ppp_get_id
@@ -19,12 +19,12 @@
 #include "ppp_public.h"
 #include "pppid.h"
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_PPPID_C
 
 #if(FEATURE_ON == FEATURE_PPP)
-/*����PPP ID*/
+/*所有PPP ID*/
 PPP_ID* pgPppId     = VOS_NULL_PTR;
 VOS_VOID PppIdInit(VOS_VOID)
 {
@@ -42,8 +42,8 @@ VOS_VOID PppIdInit(VOS_VOID)
 
 /*****************************************************************************
  Prototype      : ppp_get_id
- Description    : PPPģ��ȡ����PPP ID�ĺ���������п��е�δ�������PPP ID
-                  ���ظ�PPP ID�����򷵻�Ϊ0
+ Description    : PPP模块取空闲PPP ID的函数，如果有空闲的未被分配的PPP ID
+                  返回该PPP ID，否则返回为0
  Input          : ---ppp_id
  Output         : ---
  Return Value   : ---VOS_UINT16
@@ -70,8 +70,8 @@ PPP_ID PppGetId(VOS_VOID)
 
 /*****************************************************************************
  Prototype      : ppp_free_id
- Description    : PPPģ���ͷ�PPP ID�ĺ����������PPP ID�ǿ��еģ�ֱ�ӷ��أ�����
-                  ����PPP ID���뵽�������У�Ȼ�󷵻�
+ Description    : PPP模块释放PPP ID的函数，如果该PPP ID是空闲的，直接返回；否则
+                  将该PPP ID插入到空闲链中，然后返回
  Input          : ---ppp_id
                   ---id_be_free
  Output         : ---

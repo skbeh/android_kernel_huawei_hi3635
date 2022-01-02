@@ -5,7 +5,7 @@
 /*lint +e767*/
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "product_config.h"
 #if (FEATURE_ON == FEATURE_AT_HSIC)
@@ -19,22 +19,22 @@
 
 
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
 
-/* ��ӡ���� */
+/* 打印开关 */
 VOS_UINT32                              g_ulMuxPrintFlag   = PS_FALSE;
 
-/* ��Ϣ���ٿ��� */
+/* 消息跟踪开关 */
 VOS_UINT32                              g_ulMuxTraceFlag   = PS_FALSE;
 
 
-/* MUX��ͳ����Ϣ */
+/* MUX的统计信息 */
 MUX_DEV_STATIC_INFO_STRU                g_stMuxStaticInfo;
 
-MUX_UNFRAME_STATE_ST                    g_stMuxUnframeState;  /*Mux��Ӧ�Ľ�������״̬*/
+MUX_UNFRAME_STATE_ST                    g_stMuxUnframeState;  /*Mux对应的接收数据状态*/
 
-TTF_Q_ST                                g_stMuxUlQue;        /*Mux��Ӧ���������ݽ��ն��нṹ*/
+TTF_Q_ST                                g_stMuxUlQue;        /*Mux对应的上行数据接收队列结构*/
 
 MUX_DEV_INFO_STRU                       g_stMuxDevInfo;
 MUX_AT_UL_DLCI_INFO_STRU                g_stMuxAtUlDlciInfo[AT_MUX_DLCI_TYPE_BUTT];
@@ -62,7 +62,7 @@ const VOS_UINT8 gaucMuxcrctable[256] = {
 
 
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 VOS_VOID MUX_PrintLog
@@ -155,25 +155,25 @@ VOS_UINT32 MUX_DlciCheckFcs(VOS_UINT8* pData, VOS_UINT16 usLen, VOS_UINT8 ucFcs)
 
 VOS_UINT8 MUX_DlciGetFcs(VOS_UINT8* pData, VOS_UINT16 usLen)
 {
-    /*��ʼ��*/
+    /*初始化*/
     VOS_UINT8                           ucFCS       = 0xFF;
     VOS_UINT16                          usDatalen   = usLen;
     VOS_UINT8                          *pucBuf      = pData;
 
 
-    /*len �����frame���ֽڳ���, p ָ�����message */
+    /*len 是这个frame的字节长度, p 指向这个message */
     while (usDatalen--)
     {
         ucFCS   = gaucMuxcrctable[ucFCS^*pucBuf++];
     }
-    /*һ��frame��Fcs ��������*/
+    /*一个frame的Fcs 处理结束*/
     ucFCS   = 0xFF - ucFCS;
 
     return ucFCS;
 }
 VOS_UINT32 MUX_DlciIsValid(AT_MUX_DLCI_TYPE_ENUM_UINT8 enDlci)
 {
-    /* Dlci����ЧֵΪ{1,64} */
+    /* Dlci的有效值为{1,64} */
     if ((enDlci < AT_MUX_DLCI1_ID)
      || ( enDlci >= AT_MUX_DLCI_TYPE_BUTT))
     {
@@ -199,7 +199,7 @@ VOS_UINT32 MUX_DlciUlDataToAt(VOS_UINT8* pData)
     RCV_UL_DLCI_DATA_FUNC               pRcvUlDlciDataFunc  = VOS_NULL_PTR;
 
 
-    /* �����������ĺ�����*/
+    /* 检查输入参数的合理性*/
     if (VOS_NULL_PTR == pData)
     {
         MUX_PrintLog(PS_PID_APP_MUX, 0, PS_PRINT_ERROR, "MUX, MUX_DlciUlDataToAt: pData is null.\r\n");
@@ -209,13 +209,13 @@ VOS_UINT32 MUX_DlciUlDataToAt(VOS_UINT8* pData)
     MUX_GET_17_BIT(pFrame->ucLen1, bit1Len1EA, bit7Len1);
     if (1 == bit1Len1EA)
     {
-        /*��ʾ����ֻռ��һ���ֽ�*/
+        /*表示长度只占有一个字节*/
         usFrameLen  = bit7Len1;
         pPayLoad    = (pData + 4);
         usFcsLen    = 3;
         ucFcs       = *(pPayLoad + usFrameLen);
     }
-    else    /*��ʾ�����������ֽ�*/
+    else    /*表示长度有两个字节*/
     {
         usFrameLen  = (VOS_UINT16)(((VOS_UINT16)(pFrame->ucLen2)<<7)+bit7Len1);
         pPayLoad    = (pData + 5);
@@ -223,17 +223,17 @@ VOS_UINT32 MUX_DlciUlDataToAt(VOS_UINT8* pData)
         ucFcs       = *(pPayLoad + usFrameLen);
     }
 
-    /*У���ַ�򣬿�����ͳ�����*/
+    /*校验地址域，控制域和长度域*/
     if (VOS_OK != MUX_DlciCheckFcs(pData + 1, usFcsLen, ucFcs))
     {
         MUX_PrintLog(PS_PID_APP_MUX, 0, PS_PRINT_ERROR, "MUX, MUX_DlciUlDataToAt::MUX_DlciCheckFcs return fail.\r\n");
         return VOS_ERR;
     }
 
-    /*��ȡ��·��DLCI*/
+    /*提取链路的DLCI*/
     MUX_GET_116_BIT(pFrame->ucAddr, bit6AddrDlci);
 
-    /* DLCI�Ϸ��Լ�� */
+    /* DLCI合法性检查 */
     if (VOS_OK != MUX_DlciIsValid(bit6AddrDlci))
     {
         MUX_PrintLog1(PS_PID_APP_MUX, 0, PS_PRINT_WARNING, "MUX, MUX_AtRgstUlPortCallBack: enDlci <1> is", bit6AddrDlci);
@@ -242,7 +242,7 @@ VOS_UINT32 MUX_DlciUlDataToAt(VOS_UINT8* pData)
 
     pRcvUlDlciDataFunc = MUX_AT_UL_DLCI_GET_DATA_CALLBACK_FUNC(bit6AddrDlci);
 
-    /* ������������ */
+    /* 发送上行数据 */
     if (VOS_NULL_PTR != pRcvUlDlciDataFunc)
     {
         (VOS_VOID)pRcvUlDlciDataFunc(bit6AddrDlci, pPayLoad, usFrameLen);
@@ -333,7 +333,7 @@ VOS_UINT32 MUX_DlciUlDataProc(VOS_UINT8* pData, VOS_UINT16 usDataLen)
     VOS_UINT8                          *pucUnframeState;
 
 
-    /*����������*/
+    /*输入参数检查*/
     if ((VOS_NULL_PTR == pData) || (0 == usDataLen))
     {
          MUX_PrintLog2(PS_PID_APP_MUX, 0, PS_PRINT_WARNING,
@@ -345,7 +345,7 @@ VOS_UINT32 MUX_DlciUlDataProc(VOS_UINT8* pData, VOS_UINT16 usDataLen)
     pucHeadBuff     = MUX_GET_UL_RX_HEAD();
     pucUnframeState = MUX_GET_UL_RX_STAT();
 
-    while (usDataLen > 0)       /*�����յ�������*/
+    while (usDataLen > 0)       /*处理收到的数据*/
     {
         switch (*pucUnframeState)
         {
@@ -396,9 +396,9 @@ VOS_UINT32 MUX_DlciUlDataProc(VOS_UINT8* pData, VOS_UINT16 usDataLen)
                 pData++;
                 usDataLen--;
 
-                if (0x01 == (pucHeadBuff[MUX_FRAME_LEN_3] & 0x01))   /* ���EA=1��������ֻ��һ���ֽ� */
+                if (0x01 == (pucHeadBuff[MUX_FRAME_LEN_3] & 0x01))   /* 如果EA=1，长度域只有一个字节 */
                 {
-                    *pusLeftInfoLen     = pucHeadBuff[MUX_FRAME_LEN_3] >> 1;     /* ����Ϊǰ��7������ */
+                    *pusLeftInfoLen     = pucHeadBuff[MUX_FRAME_LEN_3] >> 1;     /* 长度为前面7个比特 */
 
                     pMbuf           = MUX_GET_UL_RX_BUFF();
 
@@ -569,7 +569,7 @@ VOS_UINT32 MUX_DlciUlAcmGetDataBuf(UDI_HANDLE slUdiHsicAcmHdl, VOS_UINT8 **ppucB
     stCtlParam.pPhyAddr = VOS_NULL_PTR;
 	#endif
 
-    /* ��ȡ������������buffer */
+    /* 获取底软上行数据buffer */
     lResult= DRV_UDI_IOCTL(slUdiHsicAcmHdl, ACM_IOCTL_GET_RD_BUFF, &stCtlParam);
     if ( VOS_OK != lResult )
     {
@@ -609,7 +609,7 @@ VOS_UINT32 MUX_DlciUlUsbAcmReadData(VOS_UINT32 ulDeviceId)
         return VOS_ERR;
     }
 
-    /* �������нӿڣ������ȡ�����ݻ�Ӱ����һ�����ݵĽ��� */
+    /* 底软现有接口，如果不取出数据会影响下一个数据的接收 */
     if (VOS_OK != MUX_DlciUlAcmGetDataBuf(slUdiHandle, &pucBuf, &usDataLen))
     {
         MUX_PrintLog(PS_PID_APP_MUX, 0, PS_PRINT_WARNING,
@@ -625,7 +625,7 @@ VOS_UINT32 MUX_DlciUlUsbAcmReadData(VOS_UINT32 ulDeviceId)
 
     MUX_DlciUlQueProc();
 
-    /* ������ϣ��ͷ����л��� */
+    /* 数据完毕，释放上行缓存 */
     if (VOS_OK != MUX_DlciUlHsicFreeDataBuf(slUdiHandle, pucBuf, usDataLen))
     {
          MUX_PrintLog(PS_PID_APP_MUX, 0, PS_PRINT_WARNING,
@@ -661,7 +661,7 @@ VOS_UINT32 MUX_DlciUlHsicFreeDataBuf(
     VOS_INT32                           lResult;
 
 
-    /* ��д��Ҫ�ͷŵ��ڴ�ָ�� */
+    /* 填写需要释放的内存指针 */
 	#ifndef FEATURE_USB_ZERO_COPY
     stCtlParam.pBuffer  = (VOS_CHAR*)pucBuf;
     #else
@@ -705,7 +705,7 @@ VOS_UINT32 MUX_DlciDlUsbAcmWriteData(UDI_HANDLE slUdiHandle, VOS_UINT8 *pucBuf, 
     VOS_INT32                           ulResult;
 
 
-    /* ��д�������ڴ��ַ */
+    /* 待写入数据内存地址 */
     #ifndef FEATURE_USB_ZERO_COPY
     stCtlParam.pBuffer                  = (VOS_CHAR*)pucBuf;
     #else
@@ -715,7 +715,7 @@ VOS_UINT32 MUX_DlciDlUsbAcmWriteData(UDI_HANDLE slUdiHandle, VOS_UINT8 *pucBuf, 
     stCtlParam.u32Size                  = usDataLen;
     stCtlParam.pDrvPriv                 = VOS_NULL_PTR;
 
-    /* �첽��ʽд����*/
+    /* 异步方式写数，*/
     ulResult = DRV_UDI_IOCTL(slUdiHandle, ACM_IOCTL_WRITE_ASYNC, &stCtlParam);
     if ( VOS_OK != ulResult )
     {
@@ -745,7 +745,7 @@ VOS_UINT8  *MUX_DlciAllocPayloadMem(VOS_UINT16 usDataLen)
         return VOS_NULL_PTR;
     }
 
-    /*MUX UIH֡ͷ��Ϊ4��5���ֽڣ�β��Ϊ2�����ֽڣ���7���ֽڣ�Ԥ�������ڴ�ռ䣬������MUXֱ��ʹ�ø��ڴ���֡ */
+    /*MUX UIH帧头部为4或5个字节，尾部为2两个字节，共7个字节，预先申请内存空间，可以让MUX直接使用该内存组帧 */
     pucMuxDlSendBuf = (VOS_UINT8 *)BSP_MALLOC((VOS_UINT32)(usDataLen + MUX_FRAME_LEN_7), MEM_NORM_DDR_POOL);
     if (VOS_NULL_PTR == pucMuxDlSendBuf)
     {
@@ -766,36 +766,36 @@ VOS_UINT32 MUX_DlciDlDataProc (AT_MUX_DLCI_TYPE_ENUM_UINT8 enDlci, VOS_UINT8* pu
 
     ucDlci      = (VOS_UINT8)enDlci;
 
-    /*��д֡�ĳ�����*/
-    if (MUX_FRAME_LEN_128 > usDataLen)/*���Ϊ������Ϊ7λ,ͷ����4���ֽ�*/
+    /*填写帧的长度域*/
+    if (MUX_FRAME_LEN_128 > usDataLen)/*如果为长度域为7位,头部是4个字节*/
     {
         pucSendBuf[MUX_FRAME_LEN_0]   = MUX_FRAME_FLAG;
-        pucSendBuf[MUX_FRAME_LEN_1]   = MUX_SET_116_BIT(1, 1, ucDlci); /*��ַ�����DLCI*/
-        pucSendBuf[MUX_FRAME_LEN_2]   = MUX_CONTROL_UIH;  /*����������Ϊ֡����,��UIH,SABM,UA��*/
+        pucSendBuf[MUX_FRAME_LEN_1]   = MUX_SET_116_BIT(1, 1, ucDlci); /*地址域包含DLCI*/
+        pucSendBuf[MUX_FRAME_LEN_2]   = MUX_CONTROL_UIH;  /*控制域内容为帧类型,如UIH,SABM,UA等*/
         pucSendBuf[MUX_FRAME_LEN_3]   = (VOS_UINT8)(0x01 | (usDataLen << 1));
         usFcsLen        = MUX_FRAME_LEN_3;
 
         *pusSendDataLen = usDataLen + MUX_FRAME_LEN_6;
 
-        /*����ATģ�����������ԭʼ���� */
+        /*拷贝AT模块过来的下行原始数据 */
         VOS_MemCpy(&pucSendBuf[MUX_FRAME_LEN_4], pucBuf, usDataLen);
     }
-    else             /*���Ϊ������Ϊ15λ��ͷ����5���ֽ�*/
+    else             /*如果为长度域为15位，头部是5个字节*/
     {
         pucSendBuf[MUX_FRAME_LEN_0]    = MUX_FRAME_FLAG;
-        pucSendBuf[MUX_FRAME_LEN_1]    = MUX_SET_116_BIT(1, 1, ucDlci); /*��ַ�����DLCI*/
-        pucSendBuf[MUX_FRAME_LEN_2]    = MUX_CONTROL_UIH;  /*����������Ϊ֡����,��UIH,SABM,UA��*/
+        pucSendBuf[MUX_FRAME_LEN_1]    = MUX_SET_116_BIT(1, 1, ucDlci); /*地址域包含DLCI*/
+        pucSendBuf[MUX_FRAME_LEN_2]    = MUX_CONTROL_UIH;  /*控制域内容为帧类型,如UIH,SABM,UA等*/
         pucSendBuf[MUX_FRAME_LEN_3]    = (VOS_UINT8)(((0x7F & usDataLen) << 1) & 0xFE) ;
         pucSendBuf[MUX_FRAME_LEN_4]    = (VOS_UINT8)(usDataLen >> 7);
         usFcsLen        = MUX_FRAME_LEN_4;
 
         *pusSendDataLen = usDataLen + MUX_FRAME_LEN_7;
 
-          /*����ATģ�����������ԭʼ���� */
+          /*拷贝AT模块过来的下行原始数据 */
         VOS_MemCpy(&pucSendBuf[MUX_FRAME_LEN_5], pucBuf, usDataLen);
     }
 
-    ucFcs   = MUX_DlciGetFcs(&pucSendBuf[MUX_FRAME_LEN_1], usFcsLen); /*����FCS�ֽ�*/
+    ucFcs   = MUX_DlciGetFcs(&pucSendBuf[MUX_FRAME_LEN_1], usFcsLen); /*产生FCS字节*/
 
     pucSendBuf[(*pusSendDataLen - MUX_FRAME_LEN_2)] = ucFcs;
 
@@ -834,7 +834,7 @@ VOS_UINT32 MUX_DlciDlDataSend (AT_MUX_DLCI_TYPE_ENUM_UINT8 enDlci, VOS_UINT8* pD
         MUX_DBG_GET_INVALID_UDI_HANDLE_NUM(1);
         MUX_DBG_DL_SEND_FAIL_PKT_NUM(1);
 
-        /*ԭʼ������ATģ���ȫ�ֱ������ʲ��ͷ�����ԭʼ�����ڴ�*/
+        /*原始数据是AT模块的全局变量，故不释放下行原始数据内存*/
 
         return VOS_ERR;
     }
@@ -846,7 +846,7 @@ VOS_UINT32 MUX_DlciDlDataSend (AT_MUX_DLCI_TYPE_ENUM_UINT8 enDlci, VOS_UINT8* pD
             "MUX, MUX_DlciDlDataSend, pucSendDataBuf is null.\r\n");
         MUX_DBG_DL_SEND_FAIL_PKT_NUM(1);
 
-        /*ԭʼ������ATģ���ȫ�ֱ������ʲ��ͷ�����ԭʼ�����ڴ�*/
+        /*原始数据是AT模块的全局变量，故不释放下行原始数据内存*/
 
         return VOS_ERR;
     }
@@ -855,12 +855,12 @@ VOS_UINT32 MUX_DlciDlDataSend (AT_MUX_DLCI_TYPE_ENUM_UINT8 enDlci, VOS_UINT8* pD
 
     MUX_TraceDlData(enDlci, pucSendDataBuf, usSendDataLen);
 
-    /*�����������������*/
+    /*向底软发送下行数据*/
     ulRslt = MUX_DlciDlUsbAcmWriteData(slUdiHandle, pucSendDataBuf, usSendDataLen);
     if (VOS_OK != ulRslt)
     {
         MUX_DBG_DL_SEND_FAIL_PKT_NUM(1);
-        /*�ͷ������ڴ�*/
+        /*释放数据内存*/
         MUX_DlciDlUsbAcmFreeDataCB(pucSendDataBuf);
 
         return VOS_ERR;
@@ -878,7 +878,7 @@ VOS_UINT32 MUX_AtRgstUlPortCallBack (AT_MUX_DLCI_TYPE_ENUM_UINT8 enDlci, RCV_UL_
 {
     MUX_AT_UL_DLCI_INFO_STRU               *pstMuxAtUlDlciInfo;
 
-    /* Dlci�Ϸ��Լ�� */
+    /* Dlci合法性检查 */
     if (VOS_OK != MUX_DlciIsValid(enDlci))
     {
         MUX_PrintLog1(PS_PID_APP_MUX, 0, PS_PRINT_WARNING, "MUX, MUX_AtRgstUlPortCallBack: enDlci <1> is.\r\n", enDlci);
@@ -887,7 +887,7 @@ VOS_UINT32 MUX_AtRgstUlPortCallBack (AT_MUX_DLCI_TYPE_ENUM_UINT8 enDlci, RCV_UL_
 
     pstMuxAtUlDlciInfo = MUX_AT_UL_GET_DLCI_INFO_PTR(enDlci);
 
-    /* ����ADS�������ݻص����� */
+    /* 设置ADS下行数据回调内容 */
     pstMuxAtUlDlciInfo->enDlci              = enDlci;
     pstMuxAtUlDlciInfo->pRcvUlDlciDataFunc  = pFunc;
 
@@ -919,7 +919,7 @@ VOS_UINT32 MUX_OpenDevice(MUX_DEV_INFO_STRU *pstDevInfo)
         return VOS_ERR;
     }
 
-    /* ע��HSIC ACM �û���ͨ���������ݽ��ջص� */
+    /* 注册HSIC ACM 用户面通道上行数据接收回调 */
     if (VOS_OK != DRV_UDI_IOCTL (pstDevInfo->slUdiMuxAcmHdl, ACM_IOCTL_SET_READ_CB, pstDevInfo->pMuxAcmUlRxFunc))
     {
         MUX_DBG_UL_CALLBACK_FAIL_NUM(1);
@@ -928,7 +928,7 @@ VOS_UINT32 MUX_OpenDevice(MUX_DEV_INFO_STRU *pstDevInfo)
         return VOS_ERR;
     }
 
-    /* ע��HSIC ACM �û���ͨ�����������ڴ��ͷŽӿ� */
+    /* 注册HSIC ACM 用户面通道下行数据内存释放接口 */
     if (VOS_OK != DRV_UDI_IOCTL (pstDevInfo->slUdiMuxAcmHdl, ACM_IOCTL_SET_FREE_CB, MUX_DlciDlUsbAcmFreeDataCB))
     {
         MUX_DBG_UL_CALLBACK_FAIL_NUM(1);
@@ -948,7 +948,7 @@ VOS_UINT32 MUX_PortInit( VOS_VOID )
 
     enSupport   = DRV_GET_HSIC_SUPPORT();
 
-    /* ��Ʒ��֧��HSIC���ԣ�ֱ�ӳ�ʼ���ɹ� */
+    /* 产品不支持HSIC特性，直接初始化成功 */
     if (BSP_MODULE_SUPPORT != enSupport)
     {
         MUX_PrintLog1(PS_PID_APP_MUX, 0, PS_PRINT_WARNING,
@@ -957,7 +957,7 @@ VOS_UINT32 MUX_PortInit( VOS_VOID )
         return VOS_OK;
     }
 
-    /* ��ʼ��MUXͨ����Ϣ */
+    /* 初始化MUX通道信息 */
     g_stMuxDevInfo.enUdiDevId           = UDI_ACM_HSIC_ACM14_ID;
     g_stMuxDevInfo.pMuxAcmUlRxFunc      = MUX_DlciUlUsbAcmDataRecv;
     g_stMuxDevInfo.slUdiMuxAcmHdl       = UDI_INVALID_HANDLE;
@@ -983,7 +983,7 @@ VOS_UINT32 MUX_Init( VOS_VOID )
 
     ucMuxSupportFlg = VOS_FALSE;
 
-    /* ��NVʧ�ܣ�ֱ�ӷ��� */
+    /* 读NV失败，直接返回 */
     if (NV_OK != NV_Read(en_NV_Item_Mux_Support_Flg, &ucMuxSupportFlg, sizeof(VOS_UINT8)))
     {
         MUX_PrintLog(PS_PID_APP_MUX, 0, PS_PRINT_ERROR,
@@ -991,7 +991,7 @@ VOS_UINT32 MUX_Init( VOS_VOID )
         return VOS_ERR;
     }
 
-    /* MUX���Բ�֧�֣�ֱ�ӷ��� */
+    /* MUX特性不支持，直接返回 */
     if (VOS_TRUE != ucMuxSupportFlg)
     {
         MUX_PrintLog(PS_PID_APP_MUX, 0, PS_PRINT_ERROR,
@@ -999,7 +999,7 @@ VOS_UINT32 MUX_Init( VOS_VOID )
         return VOS_ERR;
     }
 
-    /* ��ʼ��������·����Ϣ */
+    /* 初始化上行链路号信息 */
     for (ulDlciLoop = 0; ulDlciLoop < AT_MUX_DLCI_TYPE_BUTT; ulDlciLoop++)
     {
         g_stMuxAtUlDlciInfo[ulDlciLoop].enDlci              = AT_MUX_DLCI_TYPE_BUTT;
@@ -1008,11 +1008,11 @@ VOS_UINT32 MUX_Init( VOS_VOID )
 
     VOS_MemSet(&g_stMuxUnframeState, 0, sizeof(MUX_UNFRAME_STATE_ST));
 
-    /* ��ʼ�����ж��� */
+    /* 初始化上行队列 */
     TTF_QInit(PS_PID_APP_MUX, &g_stMuxUlQue);
 
-    /* ���HSICͨ���Ѿ�ö�ٳɹ�������Э��ջִ�г�ʼ�����������򽫳�ʼ������ע����������
-        �ɵ�����HSICö�ٳɹ�������Խ��г�ʼ��*/
+    /* 如果HSIC通道已经枚举成功，则由协议栈执行初始化操作；否则将初始化函数注册至底软，
+        由底软在HSIC枚举成功后调用以进行初始化*/
     if (VOS_TRUE == DRV_GET_HSIC_ENUM_STATUS())
     {
         MUX_PrintLog(PS_PID_APP_MUX, 0, PS_PRINT_INFO,
@@ -1161,12 +1161,12 @@ VOS_VOID MUX_SetLogFlag( VOS_UINT32  ulFlag )
 #else   /* for feature */
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include    "PsMux.h"
 
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 VOS_UINT32 MUX_DlciDlDataSend (AT_MUX_DLCI_TYPE_ENUM_UINT8 enDlci, VOS_UINT8* pData, VOS_UINT16 usDataLen)

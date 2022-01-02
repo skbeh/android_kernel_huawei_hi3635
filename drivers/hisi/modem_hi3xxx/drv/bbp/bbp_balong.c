@@ -7,18 +7,18 @@
 #include "bsp_bbp.h"
 //#include "osl_types.h"
 /*****************************************************************************
-* º¯Êı  : bsp_bbp_getcurtime
-* ¹¦ÄÜ  : ±»PSµ÷ÓÃ£¬ÓÃÀ´»ñÈ¡ÏµÍ³¾«È·Ê±¼ä
-* ÊäÈë  : void
-* Êä³ö  : u64 *pcurtime
-* ·µ»Ø  : u32
+* å‡½æ•°  : bsp_bbp_getcurtime
+* åŠŸèƒ½  : è¢«PSè°ƒç”¨ï¼Œç”¨æ¥è·å–ç³»ç»Ÿç²¾ç¡®æ—¶é—´
+* è¾“å…¥  : void
+* è¾“å‡º  : u64 *pcurtime
+* è¿”å›  : u32
 *****************************************************************************/
 u32 bsp_bbp_getcurtime(unsigned long long *pcurtime)
 {
 	/*lint -save -e958*/
     unsigned long long  timervalue[4];
 	/*lint -restore*/
-/*ÒÅÁô*/
+/*é—ç•™*/
 #if 0
     timervalue[0] = get_hi_bbp_systime_abs_timer_l_abs_timer_l();
     timervalue[1] = get_hi_bbp_systime_abs_timer_h_abs_timer_h();

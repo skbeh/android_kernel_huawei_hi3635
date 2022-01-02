@@ -105,7 +105,7 @@ void anten_handle_work(struct anten_data *data)
     anten_msg.status = data->status;
     anten_print_info("modem id = 0x%x, status = %d.\n", anten_msg.modem_id, anten_msg.status);
 
-    /*Í¨¹ıIFC½«ÏûÏ¢·¢³ö*/
+    /*é€šè¿‡IFCå°†æ¶ˆæ¯å‘å‡º*/
     len = bsp_icc_send(ICC_CPU_MODEM, anten->chan_id, (unsigned char*)&anten_msg, (u32)sizeof(struct anten_msg_stru));
     if(len != sizeof(struct anten_msg_stru))
     {
@@ -154,7 +154,7 @@ static irqreturn_t anten_irq_handle(int irq, void *dev_id)
 	if(data->timer_debounce && (data->status != status) && (0 == data->is_debounce))
     {
         data->is_debounce = 1;
-		mod_timer(&data->timer, jiffies + msecs_to_jiffies(data->timer_debounce));/*¿¼ÂÇfiffiesÊÇ·ñ»áÒç³ö*/
+		mod_timer(&data->timer, jiffies + msecs_to_jiffies(data->timer_debounce));/*è€ƒè™‘fiffiesæ˜¯å¦ä¼šæº¢å‡º*/
     }
     else
     {
@@ -274,7 +274,7 @@ static const struct dev_pm_ops balong_anten_dev_pm_ops ={
 
 #endif
 
-/*ANTENÇı¶¯Ä£ĞÍ*/
+/*ANTENé©±åŠ¨æ¨¡å‹*/
 static struct platform_driver hi_anten_driver = {
     .probe           = hi_anten_probe,
     .remove          = hi_anten_remove,
@@ -288,7 +288,7 @@ static struct platform_driver hi_anten_driver = {
 };
 
 
-/*ANTENÉè±¸ÓµÓĞÆ½Ì¨Êı¾İ*/
+/*ANTENè®¾å¤‡æ‹¥æœ‰å¹³å°æ•°æ®*/
 static struct anten_platform_data anten_plat_data = {
 #ifdef HI_K3_ANTEN
     .modem_gpio[0] = ANTEN_MODEM0_GPIO,
@@ -300,7 +300,7 @@ static struct anten_platform_data anten_plat_data = {
 #endif
 };
 
-/*ANTENÉè±¸Ä£ĞÍ*/
+/*ANTENè®¾å¤‡æ¨¡å‹*/
 static struct platform_device hi_anten_device = {
     .name           = DRIVER_NAME,
     .id             = 1,

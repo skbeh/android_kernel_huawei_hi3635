@@ -1,23 +1,23 @@
 /******************************************************************************
 
-                  ��Ȩ���� (C), 2001-2011, ��Ϊ�������޹�˾
+                  版权所有 (C), 2001-2011, 华为技术有限公司
 
  ******************************************************************************
-  �� �� ��      : OmappOperator.c
-  �� �� ��      : ����
-  ��    ��      : jinni168360
-  ��������      : 2012��08��08��
-  ����޸�      :
-  ��������      : ��C�ļ�������OmappOperatorģ���ʵ��
-  �����б�      :
-  �޸���ʷ      :
-  1.��    ��    : 2012��08��08��
-    ��    ��    : jinni168360
-    �޸�����    : �����ļ�
+  文 件 名      : OmappOperator.c
+  版 本 号      : 初稿
+  作    者      : jinni168360
+  生成日期      : 2012年08月08日
+  最近修改      :
+  功能描述      : 该C文件给出了OmappOperator模块的实现
+  函数列表      :
+  修改历史      :
+  1.日    期    : 2012年08月08日
+    作    者    : jinni168360
+    修改内容    : 创建文件
 
 ******************************************************************************/
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 
 #include "omappoperator.h"
@@ -40,13 +40,13 @@ extern "C"{
 #endif
 #endif
 
-/*lint -e767 �޸���:���� 47350;ԭ��:Log��ӡ */
+/*lint -e767 修改人:甘兰 47350;原因:Log打印 */
 #define    THIS_FILE_ID        PS_FILE_ID_ACPU_OMOPERATOR_C
-/*lint +e767 �޸���:���� 47350;*/
+/*lint +e767 修改人:甘兰 47350;*/
 
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量声明
 *****************************************************************************/
 #if(FEATURE_ON == FEATURE_SOCP_ON_DEMAND)
 OM_SOCPVOTE_INFO_STRU       g_astOmAcpuSocpVoteInfo[OM_SOCPVOTE_INFO_BUTT]= {0};
@@ -57,7 +57,7 @@ extern VOS_UINT32                     g_ulCBTLogEnable;
 #endif
 
 /*****************************************************************************
-  3 ��������
+  3 函数申明
 *****************************************************************************/
 
 VOS_UINT32 OM_AcpuEstablishReq(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
@@ -75,7 +75,7 @@ VOS_UINT32 OM_AcpuEstablishReq(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
     VOS_MemSet(g_aulLogPrintLevPsTable, 0, LOG_PS_MODULE_MAX_NUM*sizeof(LOG_LEVEL_EN));
     VOS_MemSet(g_aulLogPrintLevDrvTable, 0, LOG_DRV_MODULE_MAX_NUM*sizeof(LOG_LEVEL_EN));
 
-    /* �ȶϿ���· */
+    /* 先断开链路 */
     g_ulAcpuOMSwitchOnOff = OM_STATE_IDLE;
 
 #if(FEATURE_ON == FEATURE_SOCP_ON_DEMAND)
@@ -84,13 +84,13 @@ VOS_UINT32 OM_AcpuEstablishReq(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
     OM_AcpuSocpVoteInfoAdd(OM_SOCPVOTE_CALLEND);
 #endif
 
-    /* �Լ���У׼���ߣ������ɹ��ظ�״̬��0x02 */
+    /* 以兼容校准工具，建链成功回复状态字0x02 */
     ulRet = 0x02;
 
-    /* �����߻ظ������ɹ�״̬ */
+    /* 给工具回复建链成功状态 */
     OM_AcpuSendResult(OM_QUERY_FUNC, ulRet, usReturnPrimId);
 
-    /* ������· */
+    /* 激活链路 */
     g_ulAcpuOMSwitchOnOff = OM_STATE_ACTIVE;
 
 #if (FEATURE_ON == FEATURE_CBT_LOG)
@@ -100,10 +100,10 @@ VOS_UINT32 OM_AcpuEstablishReq(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
     }
 #endif
 
-    /* ֪ͨCCPU��·״̬ */
+    /* 通知CCPU链路状态 */
     if(VOS_OK != GU_OamSndPcMsgToCcpu((VOS_UINT8*)pstAppToOmMsg, sizeof(APP_OM_MSG_EX_STRU)))
     {
-        /* ��ӡ���� */
+        /* 打印错误 */
         LogPrint("OM_AcpuEstablishReq: The ICC UDI Write is Error.\n");
     }
 
@@ -117,13 +117,13 @@ VOS_VOID OM_NotifyOtherCpuReleaseLink(VOS_VOID)
 
     ulMsgId                     = APP_OM_RELEASE_REQ;
 
-    /* Ŀǰ����������ͨ�Ż������⣬��˳��˸�CCPU�������˲����Ͷ�����Ϣ������A�˻Ḵλ begin */
-    /* ��HIFI֪ͨ��·�Ͽ���Ϣ */
+    /* 目前底软代码跨核通信还有问题，因此除了给CCPU外其他核不发送断链消息，否则A核会复位 begin */
+    /* 给HIFI通知链路断开消息 */
     OMRL_AcpuSendMsg((VOS_UINT8*)&ulMsgId, sizeof(VOS_UINT32), ACPU_PID_OM, DSP_PID_HIFI_OM);
 
-    /* ��MCU֪ͨ��·�Ͽ���Ϣ */
+    /* 给MCU通知链路断开消息 */
     /* OMRL_AcpuSendMsg((VOS_UINT8*)&ulMsgId, sizeof(VOS_UINT32), ACPU_PID_OM, ACPU_PID_MCU_OM); */
-    /* Ŀǰ����������ͨ�Ż������⣬��˳��˸�CCPU�������˲����Ͷ�����Ϣ������A�˻Ḵλ end */
+    /* 目前底软代码跨核通信还有问题，因此除了给CCPU外其他核不发送断链消息，否则A核会复位 end */
     return;
 }
 VOS_UINT32 OM_AcpuReleaseReq(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
@@ -139,10 +139,10 @@ VOS_UINT32 OM_AcpuReleaseReq(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
 
     g_ulAcpuOMSwitchOnOff       = OM_STATE_IDLE;
 
-    /* ͨ��ICCͨ��֪ͨCCPU��·�Ͽ� */
+    /* 通过ICC通道通知CCPU链路断开 */
     if(VOS_OK != GU_OamSndPcMsgToCcpu((VOS_UINT8*)pstAppToOmMsg, sizeof(APP_OM_MSG_EX_STRU)))
     {
-        /* ��ӡ���� */
+        /* 打印错误 */
         LogPrint("OM_AcpuReleaseReq: The ICC UDI Write is Error.\n");
     }
 
@@ -157,7 +157,7 @@ VOS_UINT32 OM_AcpuReleaseReq(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
 }
 
 /*****************************************************************************
-  4 ��Ϣ��������ӳ���
+  4 消息处理函数映射表
 *****************************************************************************/
 /*Global map table used to find the function according the PrimId.*/
 OM_MSG_FUN_STRU g_astAcpuOmMsgFunTbl[] =
@@ -327,7 +327,7 @@ VOS_VOID OM_ASocpVoteInfoShow(VOS_VOID)
 }
 #else
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量声明
 *****************************************************************************/
 #if(FEATURE_ON == FEATURE_SOCP_ON_DEMAND)
 OM_SOCPVOTE_INFO_STRU       g_astOmAcpuSocpVoteInfo[OM_SOCPVOTE_INFO_BUTT]= {0};
@@ -337,9 +337,9 @@ OM_SOCPVOTE_INFO_STRU       g_astOmAcpuSocpVoteInfo[OM_SOCPVOTE_INFO_BUTT]= {0};
 VOS_UINT32                      g_ulAcpuEstRcvCnt = 0;
 VOS_UINT32                      g_ulAcpuDiscRcvCnt = 0;
 /*****************************************************************************
-  3 ��������
+  3 函数申明
 *****************************************************************************/
-/*��Ҫ���м�Ȩ��NV��*/
+/*需要进行鉴权的NV项*/
 VOS_UINT16                      g_ausAcpuOMNvAuthIdList[] =
 {
     en_NV_Item_IMEI,
@@ -353,7 +353,7 @@ VOS_UINT16                      g_ausAcpuOMNvAuthIdList[] =
     en_NV_Item_AT_SHELL_OPEN_FLAG,
 };
 
-/*��¼��ǰ�û����û�Ȩ��*/
+/*记录当前用户的用户权限*/
 static VOS_UINT32               g_ulAcpuOMPrivilegeLevel = LEVEL_NORMAL;
 
 
@@ -471,7 +471,7 @@ VOS_VOID OM_AcpuInitAuthVariable(VOS_VOID)
     IMEI_STRU                   stIMEI;
     VOS_UINT8                   aucDefaultIMEI[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-    /*����IMEIΪĬ��ֵ������Ҫ��Ȩ*/
+    /*假如IMEI为默认值，则不需要鉴权*/
     if (NV_OK == NV_Read(en_NV_Item_IMEI, (VOS_VOID*)&stIMEI, sizeof(stIMEI)))
     {
         if (0 == VOS_MemCmp((VOS_CHAR*)aucDefaultIMEI, &stIMEI, sizeof(stIMEI)))
@@ -505,7 +505,7 @@ VOS_UINT32 OM_AcpuWriteNv(APP_OM_MSG_EX_STRU *pstAppToOmMsg, VOS_UINT16 usReturn
         usNvLen = *pusAppToOmPara;
         pusAppToOmPara++;
 
-        /*�жϴ�NV���Ƿ���Ҫ���м�Ȩ*/
+        /*判断此NV项是否需要进行鉴权*/
         if (VOS_YES != OM_IsAcpuAuthNv(usNvId))
         {
             OM_AcpuSendResultChannel(pstAppToOmMsg->ucCpuId, pstAppToOmMsg->ucFuncType, OM_NEED_AUTH, usReturnPrimId);
@@ -527,7 +527,7 @@ VOS_UINT32 OM_AcpuWriteNv(APP_OM_MSG_EX_STRU *pstAppToOmMsg, VOS_UINT16 usReturn
 
             return VOS_ERR;
         }
-        /*���ڷ��ص�usNvLen��byteΪ��λ��������Ҫ����ָ��ָ�����͵Ĵ�С*/
+        /*由于返回的usNvLen以byte为单位，所以需要除以指针指向类型的大小*/
         pusAppToOmPara += (usNvLen/sizeof(VOS_UINT16));
     }
 
@@ -571,7 +571,7 @@ VOS_UINT32 OM_AcpuGetNvIdList(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
 
     pstOmGetNvList = (OM_APP_GET_NV_LIST_STRU*)(pstOmToAppMsg->aucPara);
 
-    /*��ȡÿ��NV���ID�ͳ���*/
+    /*获取每个NV项的ID和长度*/
     ulResult = NV_GetNVIdList(pstOmGetNvList->astNvInfo);
     if (NV_OK != ulResult)
     {
@@ -582,11 +582,11 @@ VOS_UINT32 OM_AcpuGetNvIdList(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
         return VOS_ERR;
     }
 
-    /*��дִ�н����NV����Ŀ*/
+    /*填写执行结果和NV项数目*/
     pstOmGetNvList->ulErrorCode     = VOS_OK;
     pstOmGetNvList->usCount         = (VOS_UINT16)ulNvNum;
-    pstOmGetNvList->ucMsgIndex      = 1;    /*�ְ���������Ĭ��Ϊ1*/
-    pstOmGetNvList->ucTotalMsgCnt   = 1;    /*�ְ���������Ĭ��Ϊ1*/
+    pstOmGetNvList->ucMsgIndex      = 1;    /*分包索引，先默认为1*/
+    pstOmGetNvList->ucTotalMsgCnt   = 1;    /*分包总数，先默认为1*/
 
     pstOmToAppMsg->usLength = (VOS_UINT16)(ulTotalLen - VOS_OM_HEADER_LEN);
     OM_AcpuSendContentChannel(pstAppToOmMsg->ucCpuId, pstAppToOmMsg->ucFuncType, (OM_RSP_PACKET_STRU *)pstOmToAppMsg, usReturnPrimId);
@@ -600,22 +600,22 @@ VOS_UINT32 OM_AcpuCbtEstablishProc(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
 {
     VOS_UINT32                          ulRet;
 
-    /* �ȶϿ���· */
+    /* 先断开链路 */
     g_stAcpuCbtCtrlInfo.ulOMSwitchOnOff = OM_STATE_IDLE;
 
-    /* �Լ���У׼���ߣ������ɹ��ظ�״̬��0x02 */
+    /* 以兼容校准工具，建链成功回复状态字0x02 */
     ulRet = 0x02;
 
-    /* �����߻ظ������ɹ�״̬ */
+    /* 给工具回复建链成功状态 */
     OM_AcpuSendResultChannel(OM_LOGIC_CHANNEL_CBT, OM_QUERY_FUNC, ulRet, OM_APP_ESTABLISH_CNF);
 
-    /* ������· */
+    /* 激活链路 */
     g_stAcpuCbtCtrlInfo.ulOMSwitchOnOff = OM_STATE_ACTIVE;
 
-    /* ֪ͨCCPU��·״̬ */
+    /* 通知CCPU链路状态 */
     if(VOS_OK != GU_OamSndPcMsgToCcpu(&g_stAcpuCbtCtrlInfo,(VOS_UINT8*)pstAppToOmMsg, sizeof(APP_OM_MSG_EX_STRU)))
     {
-        /* ��ӡ���� */
+        /* 打印错误 */
     }
 
     return VOS_OK;
@@ -635,31 +635,31 @@ VOS_UINT32 OM_AcpuCnfEstablishProc(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
     VOS_MemSet(g_aulLogPrintLevPsTable, 0, LOG_PS_MODULE_MAX_NUM*sizeof(LOG_LEVEL_EN));
     VOS_MemSet(g_aulLogPrintLevDrvTable, 0, LOG_DRV_MODULE_MAX_NUM*sizeof(LOG_LEVEL_EN));
 
-    /* �ȶϿ���· */
+    /* 先断开链路 */
     g_stAcpuCnfCtrlInfo.ulOMSwitchOnOff = OM_STATE_IDLE;
 
-    /* OM������ͶƱ��ֹ˯�� */
+    /* OM建链后投票禁止睡眠 */
 #if(FEATURE_ON == FEATURE_SOCP_ON_DEMAND)
     OM_AcpuSocpVoteInfoAdd(OM_SOCPVOTE_CALLBEGIN);
     DRV_SOCP_VOTE(SOCP_VOTE_GU_OM_APP, SOCP_VOTE_FOR_WAKE);
     OM_AcpuSocpVoteInfoAdd(OM_SOCPVOTE_CALLEND);
 #endif
 
-    /* �Լ���У׼���ߣ������ɹ��ظ�״̬��0x02 */
+    /* 以兼容校准工具，建链成功回复状态字0x02 */
     ulRet = 0x02;
 
     g_ulAcpuEstRcvCnt++;
 
-    /* �����߻ظ������ɹ�״̬ */
+    /* 给工具回复建链成功状态 */
     OM_AcpuSendResultChannel(OM_LOGIC_CHANNEL_CNF, OM_QUERY_FUNC, ulRet, usReturnPrimId);
 
-    /* ������· */
+    /* 激活链路 */
     g_stAcpuCnfCtrlInfo.ulOMSwitchOnOff = OM_STATE_ACTIVE;
 
-    /* ֪ͨCCPU��·״̬ */
+    /* 通知CCPU链路状态 */
     if(VOS_OK != GU_OamSndPcMsgToCcpu(&g_stAcpuCnfCtrlInfo,(VOS_UINT8*)pstAppToOmMsg, sizeof(APP_OM_MSG_EX_STRU)))
     {
-        /* ��ӡ���� */
+        /* 打印错误 */
     }
 
     return VOS_OK;
@@ -682,13 +682,13 @@ VOS_VOID OM_NotifyOtherCpuReleaseLink(VOS_VOID)
 
     ulMsgId                     = APP_OM_RELEASE_REQ;
 
-    /* Ŀǰ����������ͨ�Ż������⣬��˳��˸�CCPU�������˲����Ͷ�����Ϣ������A�˻Ḵλ begin */
-    /* ��HIFI֪ͨ��·�Ͽ���Ϣ */
+    /* 目前底软代码跨核通信还有问题，因此除了给CCPU外其他核不发送断链消息，否则A核会复位 begin */
+    /* 给HIFI通知链路断开消息 */
     OMRL_AcpuSendMsg((VOS_UINT8*)&ulMsgId, sizeof(VOS_UINT32), ACPU_PID_OM, DSP_PID_HIFI_OM);
 
-    /* ��MCU֪ͨ��·�Ͽ���Ϣ */
+    /* 给MCU通知链路断开消息 */
     /* OMRL_AcpuSendMsg((VOS_UINT8*)&ulMsgId, sizeof(VOS_UINT32), ACPU_PID_OM, ACPU_PID_MCU_OM); */
-    /* Ŀǰ����������ͨ�Ż������⣬��˳��˸�CCPU�������˲����Ͷ�����Ϣ������A�˻Ḵλ end */
+    /* 目前底软代码跨核通信还有问题，因此除了给CCPU外其他核不发送断链消息，否则A核会复位 end */
     return;
 }
 VOS_UINT32 OM_AcpuCbtReleaseProc(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
@@ -707,10 +707,10 @@ VOS_UINT32 OM_AcpuCnfReleaseProc(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
 {
     g_stAcpuCnfCtrlInfo.ulOMSwitchOnOff       = OM_STATE_IDLE;
 
-    /* ͨ��ICCͨ��֪ͨCCPU��·�Ͽ� */
+    /* 通过ICC通道通知CCPU链路断开 */
     if(VOS_OK != GU_OamSndPcMsgToCcpu(&g_stAcpuCnfCtrlInfo, (VOS_UINT8*)pstAppToOmMsg, sizeof(APP_OM_MSG_EX_STRU)))
     {
-        /* ��ӡ���� */
+        /* 打印错误 */
         LogPrint("OM_AcpuReleaseReq: The ICC UDI Write is Error.\n");
     }
 
@@ -720,7 +720,7 @@ VOS_UINT32 OM_AcpuCnfReleaseProc(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
 
     g_ulAcpuDiscRcvCnt++;
 
-    /* GU���ӶϿ�ʱͶƱ����˯�� */
+    /* GU连接断开时投票可以睡眠 */
     OM_SendAcpuSocpVote(SOCP_VOTE_FOR_SLEEP);
 
     g_stAcpuCnfCtrlInfo.stPcToUeSucRecord.stRlsData.ulDataLen = OM_GetSlice();
@@ -744,7 +744,7 @@ VOS_UINT32 OM_AcpuReleaseReq(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
 }
 
 /*****************************************************************************
-  4 ��Ϣ��������ӳ���
+  4 消息处理函数映射表
 *****************************************************************************/
 /*Global map table used to find the function according the PrimId.*/
 OM_MSG_FUN_STRU g_astAcpuOmMsgFunTbl[] =

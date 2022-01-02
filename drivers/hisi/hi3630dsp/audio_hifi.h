@@ -27,80 +27,80 @@ typedef struct HIFI_CHN_CMD_STRUCT
 } HIFI_CHN_CMD;
 
 /*
-    Èë²Î£¬Í¸´«¸øHIFIµÄ²ÎÊı
-    ³ö²Î£¬HIFI·µ»ØµÄ£¬Í¸´«¸øAPµÄ²ÎÊı
+    å…¥å‚ï¼Œé€ä¼ ç»™HIFIçš„å‚æ•°
+    å‡ºå‚ï¼ŒHIFIè¿”å›çš„ï¼Œé€ä¼ ç»™APçš„å‚æ•°
 */
 struct misc_io_async_param {
-	unsigned int			para_in_l;		/*Èë²Îbuffer*/
-	unsigned int			para_in_h;		/*Èë²Îbuffer*/
-	unsigned int			para_size_in;	/*Èë²Îbuffer³¤¶È*/
+	unsigned int			para_in_l;		/*å…¥å‚buffer*/
+	unsigned int			para_in_h;		/*å…¥å‚buffer*/
+	unsigned int			para_size_in;	/*å…¥å‚bufferé•¿åº¦*/
 };
 
 /* misc_io_sync_cmd */
 struct misc_io_sync_param {
-	unsigned int			para_in_l;			 /*Èë²Îbuffer*/
-	unsigned int			para_in_h;			 /*Èë²Îbuffer*/
-	unsigned int			para_size_in;		/*Èë²Îbuffer³¤¶È*/
+	unsigned int			para_in_l;			 /*å…¥å‚buffer*/
+	unsigned int			para_in_h;			 /*å…¥å‚buffer*/
+	unsigned int			para_size_in;		/*å…¥å‚bufferé•¿åº¦*/
 
-	unsigned int			para_out_l; 		  /*³ö²Îbuffer*/
-	unsigned int			para_out_h; 		  /*³ö²Îbuffer*/
-	unsigned int			para_size_out;		/*³ö²Îbuffer³¤¶È*/
+	unsigned int			para_out_l; 		  /*å‡ºå‚buffer*/
+	unsigned int			para_out_h; 		  /*å‡ºå‚buffer*/
+	unsigned int			para_size_out;		/*å‡ºå‚bufferé•¿åº¦*/
 };
 
 /* misc_io_senddata_cmd */
 struct misc_io_senddata_async_param {
-    unsigned int            para_in_l;           /*Èë²Îbuffer*/
-    unsigned int            para_in_h;           /*Èë²Îbuffer*/
-    unsigned int            para_size_in;       /*Èë²Îbuffer³¤¶È*/
+    unsigned int            para_in_l;           /*å…¥å‚buffer*/
+    unsigned int            para_in_h;           /*å…¥å‚buffer*/
+    unsigned int            para_size_in;       /*å…¥å‚bufferé•¿åº¦*/
 
-    unsigned int            data_src_l;           /*´óÊı¾İÔ´µØÖ·*/
-    unsigned int            data_src_h;           /*´óÊı¾İÔ´µØÖ·*/
-    unsigned int            data_src_size;      /*´óÊı¾İÔ´³¤¶È*/
+    unsigned int            data_src_l;           /*å¤§æ•°æ®æºåœ°å€*/
+    unsigned int            data_src_h;           /*å¤§æ•°æ®æºåœ°å€*/
+    unsigned int            data_src_size;      /*å¤§æ•°æ®æºé•¿åº¦*/
 };
 
 /* misc_io_send_recv_data_sync_cmd */
 struct misc_io_senddata_sync_param {
-    unsigned int            para_in_l;          /*Èë²Îbuffer*/
-    unsigned int            para_in_h;          /*Èë²Îbuffer*/
-    unsigned int            para_size_in;       /*Èë²Îbuffer³¤¶È*/
+    unsigned int            para_in_l;          /*å…¥å‚buffer*/
+    unsigned int            para_in_h;          /*å…¥å‚buffer*/
+    unsigned int            para_size_in;       /*å…¥å‚bufferé•¿åº¦*/
 
-    unsigned int            src_l;              /*Êı¾İÔ´µØÖ·*/
-    unsigned int            src_h;              /*Êı¾İÔ´µØÖ·*/
-    unsigned int            src_size;           /*Êı¾İÔ´³¤¶È*/
+    unsigned int            src_l;              /*æ•°æ®æºåœ°å€*/
+    unsigned int            src_h;              /*æ•°æ®æºåœ°å€*/
+    unsigned int            src_size;           /*æ•°æ®æºé•¿åº¦*/
 
-    unsigned int            dst_l;              /*µØÖ·*/
-    unsigned int            dst_h;              /*µØÖ·*/
-    unsigned int            dst_size;           /*³¤¶È*/
+    unsigned int            dst_l;              /*åœ°å€*/
+    unsigned int            dst_h;              /*åœ°å€*/
+    unsigned int            dst_size;           /*é•¿åº¦*/
 
-    unsigned int            para_out_l;         /*³ö²Îbuffer*/
-    unsigned int            para_out_h;         /*³ö²Îbuffer*/
-    unsigned int            para_size_out;      /*³ö²Îbuffer³¤¶È*/
+    unsigned int            para_out_l;         /*å‡ºå‚buffer*/
+    unsigned int            para_out_h;         /*å‡ºå‚buffer*/
+    unsigned int            para_size_out;      /*å‡ºå‚bufferé•¿åº¦*/
 };
 
 struct misc_io_get_phys_param {
 	unsigned int		   flag;			   /**/
-	unsigned int		   phys_addr_l; 		 /*»ñÈ¡µÄÎïÀíµØÖ·*/
-	unsigned int		   phys_addr_h; 		 /*»ñÈ¡µÄÎïÀíµØÖ·*/
+	unsigned int		   phys_addr_l; 		 /*è·å–çš„ç‰©ç†åœ°å€*/
+	unsigned int		   phys_addr_h; 		 /*è·å–çš„ç‰©ç†åœ°å€*/
 };
 
 struct misc_io_dump_buf_param {
-    unsigned int            user_buf_l;           /*ÓÃ»§¿Õ¼ä·ÖÅäµÄÄÚ´æµØÖ·*/
-    unsigned int            user_buf_h;           /*ÓÃ»§¿Õ¼ä·ÖÅäµÄÄÚ´æµØÖ·*/
-    unsigned int            buf_size;           /*ÓÃ»§¿Õ¼ä·ÖÅäµÄÄÚ´æ³¤¶È*/
+    unsigned int            user_buf_l;           /*ç”¨æˆ·ç©ºé—´åˆ†é…çš„å†…å­˜åœ°å€*/
+    unsigned int            user_buf_h;           /*ç”¨æˆ·ç©ºé—´åˆ†é…çš„å†…å­˜åœ°å€*/
+    unsigned int            buf_size;           /*ç”¨æˆ·ç©ºé—´åˆ†é…çš„å†…å­˜é•¿åº¦*/
 };
 
-//ÏÂÃæÊÇAP·¢¸øHiFi MiscÉè±¸µÄioctlÃüÁî£¬ĞèÒªHiFi MiscÉè±¸½øĞĞÏìÓ¦
-#define HIFI_MISC_IOCTL_ASYNCMSG        _IOWR('A', 0x70, struct misc_io_async_param)          //APÏòHiFi´«µİÒì²½ÏûÏ¢
-#define HIFI_MISC_IOCTL_SYNCMSG         _IOW('A', 0x71, struct misc_io_sync_param)            //APÏòHiFi´«µİÍ¬²½ÏûÏ¢
-#define HIFI_MISC_IOCTL_SENDDATA_SYNC   _IOW('A', 0x72, struct misc_io_senddata_sync_param)    //APÏòHiFiÍ¬²½´«µİÊı¾İ
-#define HIFI_MISC_IOCTL_GET_PHYS        _IOWR('A', 0x73, struct misc_io_get_phys_param)        //AP»ñÈ¡ÎïÀíµØÖ·
-#define HIFI_MISC_IOCTL_TEST            _IOWR('A', 0x74, struct misc_io_senddata_sync_param)   //AP²âÊÔÏûÏ¢
-#define HIFI_MISC_IOCTL_WRITE_PARAMS    _IOWR('A', 0x75, struct misc_io_sync_param)            //Ğ´Ëã·¨²ÎÊıµ½HIFI
+//ä¸‹é¢æ˜¯APå‘ç»™HiFi Miscè®¾å¤‡çš„ioctlå‘½ä»¤ï¼Œéœ€è¦HiFi Miscè®¾å¤‡è¿›è¡Œå“åº”
+#define HIFI_MISC_IOCTL_ASYNCMSG        _IOWR('A', 0x70, struct misc_io_async_param)          //APå‘HiFiä¼ é€’å¼‚æ­¥æ¶ˆæ¯
+#define HIFI_MISC_IOCTL_SYNCMSG         _IOW('A', 0x71, struct misc_io_sync_param)            //APå‘HiFiä¼ é€’åŒæ­¥æ¶ˆæ¯
+#define HIFI_MISC_IOCTL_SENDDATA_SYNC   _IOW('A', 0x72, struct misc_io_senddata_sync_param)    //APå‘HiFiåŒæ­¥ä¼ é€’æ•°æ®
+#define HIFI_MISC_IOCTL_GET_PHYS        _IOWR('A', 0x73, struct misc_io_get_phys_param)        //APè·å–ç‰©ç†åœ°å€
+#define HIFI_MISC_IOCTL_TEST            _IOWR('A', 0x74, struct misc_io_senddata_sync_param)   //APæµ‹è¯•æ¶ˆæ¯
+#define HIFI_MISC_IOCTL_WRITE_PARAMS    _IOWR('A', 0x75, struct misc_io_sync_param)            //å†™ç®—æ³•å‚æ•°åˆ°HIFI
 
-#define HIFI_MISC_IOCTL_DUMP_HIFI       _IOWR('A', 0x76, struct misc_io_dump_buf_param)        //¶ÁÈ¡HIFIÔÚDDRÉÏµÄÊı¾İ²¢´«µİÖÁÓÃ»§¿Õ¼ä
-#define HIFI_MISC_IOCTL_DUMP_CODEC      _IOWR('A', 0x77, struct misc_io_dump_buf_param)        //¶ÁÈ¡CODEC¼Ä´æÆ÷²¢´«µİÖÁÓÃ»§¿Õ¼ä
-#define HIFI_MISC_IOCTL_DUMP_MP3_DATA   _IOWR('A', 0x78, unsigned long)        //±£´æDDRÉÏµÄÊı¾İµ½dataÄ¿Â¼ÏÂ
-#define HIFI_MISC_IOCTL_WAKEUP_THREAD   _IOW('A',  0x79, unsigned long)        //»½ĞÑreadÏß³Ì,Õı³£ÍË³ö
+#define HIFI_MISC_IOCTL_DUMP_HIFI       _IOWR('A', 0x76, struct misc_io_dump_buf_param)        //è¯»å–HIFIåœ¨DDRä¸Šçš„æ•°æ®å¹¶ä¼ é€’è‡³ç”¨æˆ·ç©ºé—´
+#define HIFI_MISC_IOCTL_DUMP_CODEC      _IOWR('A', 0x77, struct misc_io_dump_buf_param)        //è¯»å–CODECå¯„å­˜å™¨å¹¶ä¼ é€’è‡³ç”¨æˆ·ç©ºé—´
+#define HIFI_MISC_IOCTL_DUMP_MP3_DATA   _IOWR('A', 0x78, unsigned long)        //ä¿å­˜DDRä¸Šçš„æ•°æ®åˆ°dataç›®å½•ä¸‹
+#define HIFI_MISC_IOCTL_WAKEUP_THREAD   _IOW('A',  0x79, unsigned long)        //å”¤é†’readçº¿ç¨‹,æ­£å¸¸é€€å‡º
 #define INT_TO_ADDR(low,high) (void*) (unsigned long)((unsigned long long)(low) | ((unsigned long long)(high)<<32))
 #define GET_LOW32(x) (unsigned int)(((unsigned long long)(unsigned long)(x))&0xffffffffULL)
 #define GET_HIG32(x) (unsigned int)((((unsigned long long)(unsigned long)(x))>>32)&0xffffffffULL)

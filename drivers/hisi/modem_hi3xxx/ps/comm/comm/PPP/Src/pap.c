@@ -1,8 +1,8 @@
 
 /*
-  1.ÈÕ    ÆÚ   : 2006Äê4ÔÂ4ÈÕ
-    ×÷    Õß   : liuyang id:48197
-    ĞŞ¸ÄÄÚÈİ   : ÎÊÌâµ¥ºÅ:A32D01738
+  1.æ—¥    æœŸ   : 2006å¹´4æœˆ4æ—¥
+    ä½œ    è€…   : liuyang id:48197
+    ä¿®æ”¹å†…å®¹   : é—®é¢˜å•å·:A32D01738
 */
 #if 0
 #include <sys/param.h>
@@ -108,7 +108,7 @@ pap_Req(struct authinfo *authp)
 #endif
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_PAP_C
 
@@ -134,10 +134,10 @@ SendPapCode(struct link *l, VOS_CHAR code, VOS_CHAR *message)
         PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_WARNING, "no mbuf");
     return;
   }
-    /*Ô¤ÁôÍ·²¿*/
+    /*é¢„ç•™å¤´éƒ¨*/
     bp->m_offset = PPP_RECIEVE_RESERVE_FOR_HEAD;
 
-    /*Í·²¿ÓëÎ²²¿¶¼Áô³öÀ´ÁË*/
+    /*å¤´éƒ¨ä¸å°¾éƒ¨éƒ½ç•™å‡ºæ¥äº†*/
     bp->m_len = plen + sizeof(struct fsmheader);
 
   PS_MEM_CPY(PPP_MBUF_CTOP(bp), &lh, sizeof(struct fsmheader));
@@ -170,11 +170,11 @@ pap_Success(struct link *l)
 #endif
     SendPapCode(l, PAP_ACK, "Greetings!!");
 #if 0
-/*ÏÂÃæÕâ¾äÔÚ¸ÄÔìµÄÊ±ºòÒªÌí½øÈ¥*/
+/*ä¸‹é¢è¿™å¥åœ¨æ”¹é€ çš„æ—¶å€™è¦æ·»è¿›å»*/
   authp->physical->link.lcp.auth_ineed = 0;
   if (Enabled(bundle, OPT_UTMP))
     physical_Login(authp->physical, authp->in.name);
-/*ÏÂÃæÕâ¾äÔÚ¸ÄÔìµÄÊ±ºòÒªÌí½øÈ¥*/
+/*ä¸‹é¢è¿™å¥åœ¨æ”¹é€ çš„æ—¶å€™è¦æ·»è¿›å»*/
   if (authp->physical->link.lcp.auth_iwait == 0)
     /*
      * Either I didn't need to authenticate, or I've already been
@@ -273,7 +273,7 @@ pap_Input(/*struct bundle *bundle,*/ struct link *l, PPP_ZC_STRU *pstMem)
 
   if (authp->in.hdr.code == PAP_REQUEST)
   {
-    /*½«config req±¨ÎÄÍ·²¿¿½±´µ½»º´æÖĞ*/
+    /*å°†config reqæŠ¥æ–‡å¤´éƒ¨æ‹·è´åˆ°ç¼“å­˜ä¸­*/
     PS_MEM_CPY(l->pap.RecordData.BufRequest,&(authp->in.hdr),sizeof(authp->in.hdr));
 
     ppp_mbuf_View(bp,(l->pap.RecordData.BufRequest + sizeof(authp->in.hdr)),
@@ -337,7 +337,7 @@ pap_Input(/*struct bundle *bundle,*/ struct link *l, PPP_ZC_STRU *pstMem)
           pap_Failure(authp);
       } else
 #endif
-/*ÏÂÃæÕâ¾äÔÚ¸ÄÔìµÄÊ±ºòÒªÌí½øÈ¥*/
+/*ä¸‹é¢è¿™å¥åœ¨æ”¹é€ çš„æ—¶å€™è¦æ·»è¿›å»*/
       if (auth_Validate(bundle, authp->in.name, key, p))
         pap_Success(authp);
       else

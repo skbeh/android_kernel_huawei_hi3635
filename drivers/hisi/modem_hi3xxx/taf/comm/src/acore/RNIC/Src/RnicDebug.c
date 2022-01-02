@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "RnicDebug.h"
 #include "RnicCtx.h"
@@ -13,17 +13,17 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-  2 Íâ²¿º¯ÊıÉùÃ÷
+  2 å¤–éƒ¨å‡½æ•°å£°æ˜
 *****************************************************************************/
 
 
 /******************************************************************************
-   3 Ë½ÓĞ¶¨Òå
+   3 ç§æœ‰å®šä¹‰
 ******************************************************************************/
 
 
 /******************************************************************************
-   4 È«¾Ö±äÁ¿¶¨Òå
+   4 å…¨å±€å˜é‡å®šä¹‰
 ******************************************************************************/
 
 RNIC_STATS_INFO_STRU                    g_astRnicStats[RNIC_NET_ID_MAX_NUM];
@@ -36,7 +36,7 @@ VOS_UINT32                              g_ulRnicPrintUlDataFlg = VOS_FALSE;
 
 
 /******************************************************************************
-   5 º¯ÊıÊµÏÖ
+   5 å‡½æ•°å®ç°
 ******************************************************************************/
 
 VOS_VOID RNIC_SetPrintUlDataFlg(VOS_UINT32 ulFlg)
@@ -83,36 +83,36 @@ VOS_VOID RNIC_ShowUlProcStats(VOS_UINT8 ucRmNetId)
         return;
     }
 
-    /* ÉÏĞĞÍ³¼ÆÁ¿ */
-    vos_printf("RNIC %dÁ÷¿Ø×´Ì¬                                        %d\n", ucRmNetId, g_stRnicCtx.astSpecCtx[ucRmNetId].enFlowCtrlStatus);
-    vos_printf("RNIC %dÊÕµ½ÉÏĞĞIPV4Êı¾İµÄ¸öÊı                          %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvIpv4PktNum);
-    vos_printf("RNIC %dÊÕµ½ÉÏĞĞIPV6Êı¾İµÄ¸öÊı                          %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvIpv6PktNum);
-    vos_printf("IPV4V6ÀàĞÍ¼¤»îÊ±RNIC %dÊÕµ½ÉÏĞĞÊı¾İµÄ¸öÊıIPV4IPV6      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvIpv4v6PktNum);
-    vos_printf("RNIC %dÎ´¼¤»îÊ±ÊÕµ½ÉÏĞĞÊı¾İµÄ¸öÊı                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvUndiaPktNum);
-    vos_printf("RNIC %dÉÏĞĞ·¢ËÍ¸øADSÊı¾İµÄ¸öÊı                         %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendPktNum);
-    vos_printf("RNIC %dµ÷ADS·¢ËÍÉÏĞĞÊı¾İÊ§°ÜµÄ¸öÊı                     %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendPktFailNum);
-    vos_printf("RNIC %dÎ´²¦ÉÏºÅÇ°ÉÏĞĞÊÕµ½IPV4¹ã²¥°üµÄ¸öÊı              %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlIpv4BrdcstPktNum);
-    vos_printf("RNIC %dÉÏĞĞ×ª»»ÎªIMM_ZCÊ§°ÜµÄ¸öÊı                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlImmzcFailPktNum);
-    vos_printf("RNIC %dÍø¿¨Ë½ÓĞÊı¾İ´íÎó¶ªµôÉÏĞĞÊı¾İ°üµÄ¸öÊı            %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlNetCardDiscardNum);
-    vos_printf("RNIC %dÍø¿¨ID´íÎó¶ªµôÉÏĞĞÊı¾İ°üµÄ¸öÊı                  %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlNetIdDiscardNum);
-    vos_printf("RNIC %dModem ID´íÎó¶ªµôÉÏĞĞÊı¾İ°üµÄ¸öÊı                %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlModemIdDiscardNum);
-    vos_printf("RNIC %dÁ÷¿Ø¶ªµôÉÏĞĞÊı¾İ°üµÄ¸öÊı                        %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlFlowCtrlDiscardNum);
-    vos_printf("RNIC %dÊÕµ½´íÎóÊı¾İ°üµÄ¸öÊı·Çipv4ipv6°ü                %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvErrPktNum);
-    vos_printf("RNIC %d³É¹¦ÉÏ±¨APP°´Ğè²¦ºÅ                             %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendAppDialUpSucc);
-    vos_printf("RNIC %dÉÏ±¨APP°´Ğè²¦ºÅÊ§°Ü                             %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendAppDialUpFail);
-    vos_printf("RNIC %d³É¹¦ÉÏ±¨APP¶Ï¿ª²¦ºÅ                             %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendAppDialDownSucc);
-    vos_printf("RNIC %dÉÏ±¨APP¶Ï¿ª²¦ºÅÊ§°Ü                             %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendAppDialDownFail);
+    /* ä¸Šè¡Œç»Ÿè®¡é‡ */
+    vos_printf("RNIC %dæµæ§çŠ¶æ€                                        %d\n", ucRmNetId, g_stRnicCtx.astSpecCtx[ucRmNetId].enFlowCtrlStatus);
+    vos_printf("RNIC %dæ”¶åˆ°ä¸Šè¡ŒIPV4æ•°æ®çš„ä¸ªæ•°                          %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvIpv4PktNum);
+    vos_printf("RNIC %dæ”¶åˆ°ä¸Šè¡ŒIPV6æ•°æ®çš„ä¸ªæ•°                          %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvIpv6PktNum);
+    vos_printf("IPV4V6ç±»å‹æ¿€æ´»æ—¶RNIC %dæ”¶åˆ°ä¸Šè¡Œæ•°æ®çš„ä¸ªæ•°IPV4IPV6      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvIpv4v6PktNum);
+    vos_printf("RNIC %dæœªæ¿€æ´»æ—¶æ”¶åˆ°ä¸Šè¡Œæ•°æ®çš„ä¸ªæ•°                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvUndiaPktNum);
+    vos_printf("RNIC %dä¸Šè¡Œå‘é€ç»™ADSæ•°æ®çš„ä¸ªæ•°                         %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendPktNum);
+    vos_printf("RNIC %dè°ƒADSå‘é€ä¸Šè¡Œæ•°æ®å¤±è´¥çš„ä¸ªæ•°                     %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendPktFailNum);
+    vos_printf("RNIC %dæœªæ‹¨ä¸Šå·å‰ä¸Šè¡Œæ”¶åˆ°IPV4å¹¿æ’­åŒ…çš„ä¸ªæ•°              %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlIpv4BrdcstPktNum);
+    vos_printf("RNIC %dä¸Šè¡Œè½¬æ¢ä¸ºIMM_ZCå¤±è´¥çš„ä¸ªæ•°                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlImmzcFailPktNum);
+    vos_printf("RNIC %dç½‘å¡ç§æœ‰æ•°æ®é”™è¯¯ä¸¢æ‰ä¸Šè¡Œæ•°æ®åŒ…çš„ä¸ªæ•°            %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlNetCardDiscardNum);
+    vos_printf("RNIC %dç½‘å¡IDé”™è¯¯ä¸¢æ‰ä¸Šè¡Œæ•°æ®åŒ…çš„ä¸ªæ•°                  %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlNetIdDiscardNum);
+    vos_printf("RNIC %dModem IDé”™è¯¯ä¸¢æ‰ä¸Šè¡Œæ•°æ®åŒ…çš„ä¸ªæ•°                %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlModemIdDiscardNum);
+    vos_printf("RNIC %dæµæ§ä¸¢æ‰ä¸Šè¡Œæ•°æ®åŒ…çš„ä¸ªæ•°                        %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlFlowCtrlDiscardNum);
+    vos_printf("RNIC %dæ”¶åˆ°é”™è¯¯æ•°æ®åŒ…çš„ä¸ªæ•°éipv4ipv6åŒ…                %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRecvErrPktNum);
+    vos_printf("RNIC %dæˆåŠŸä¸ŠæŠ¥APPæŒ‰éœ€æ‹¨å·                             %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendAppDialUpSucc);
+    vos_printf("RNIC %dä¸ŠæŠ¥APPæŒ‰éœ€æ‹¨å·å¤±è´¥                             %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendAppDialUpFail);
+    vos_printf("RNIC %dæˆåŠŸä¸ŠæŠ¥APPæ–­å¼€æ‹¨å·                             %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendAppDialDownSucc);
+    vos_printf("RNIC %dä¸ŠæŠ¥APPæ–­å¼€æ‹¨å·å¤±è´¥                             %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlSendAppDialDownFail);
 
     if (RNIC_RM_NET_ID_0 == ucRmNetId)
     {
-        vos_printf("²¦ºÅÄ£Ê½                                           %d\n", g_stRnicCtx.stDialMode.enDialMode);
-        vos_printf("°´Ğè²¦ºÅÊÇ·ñÉÏ±¨ÊÂ¼ş                               %d\n", g_stRnicCtx.stDialMode.enEventReportFlag);
-        vos_printf("°´Ğè²¦ºÅ¶Ï¿ªÊ±¼ä                                   %d\n", g_stRnicCtx.stDialMode.ulIdleTime);
+        vos_printf("æ‹¨å·æ¨¡å¼                                           %d\n", g_stRnicCtx.stDialMode.enDialMode);
+        vos_printf("æŒ‰éœ€æ‹¨å·æ˜¯å¦ä¸ŠæŠ¥äº‹ä»¶                               %d\n", g_stRnicCtx.stDialMode.enEventReportFlag);
+        vos_printf("æŒ‰éœ€æ‹¨å·æ–­å¼€æ—¶é—´                                   %d\n", g_stRnicCtx.stDialMode.ulIdleTime);
     }
 
-    vos_printf("RNIC %d RAB ID´íÎó£¬RNIC¶ªÆúµÄÊı¾İ°ü¸öÊı                %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRabIdErr);
+    vos_printf("RNIC %d RAB IDé”™è¯¯ï¼ŒRNICä¸¢å¼ƒçš„æ•°æ®åŒ…ä¸ªæ•°                %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlRabIdErr);
 
-    vos_printf("RNIC %d PDN ID´íÎó£¬RNIC¶ªÆúµÄÊı¾İ°ü¸öÊı                %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlPdnIdErr);
+    vos_printf("RNIC %d PDN IDé”™è¯¯ï¼ŒRNICä¸¢å¼ƒçš„æ•°æ®åŒ…ä¸ªæ•°                %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulUlPdnIdErr);
 
     vos_printf("\r\n");
 
@@ -126,30 +126,30 @@ VOS_VOID RNIC_ShowDLProcStats(VOS_UINT8 ucRmNetId)
         return;
     }
 
-    /* ÏÂĞĞÍ³¼ÆÁ¿ */
-    vos_printf("RNIC %dÊÕµ½ÏÂĞĞIPV4Êı¾İµÄ¸öÊı                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlRecvIpv4PktNum);
-    vos_printf("RNIC %dÊÕµ½ÏÂĞĞIPV6Êı¾İµÄ¸öÊı                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlRecvIpv6PktNum);
-    vos_printf("RNIC %d·¢ËÍÏÂĞĞÊı¾İµÄ¸öÊı                          %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlSendPktNum);
-    vos_printf("RNIC %d·¢ËÍÏÂĞĞÊı¾İÊ§°ÜµÄ¸öÊı                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlSendPktFailNum);
-    vos_printf("RNIC %dÊÕµ½ÏÂĞĞÊı¾İ°ü´óÓÚMTUµÄ¸öÊı                 %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlRecvBigPktNum);
-    vos_printf("RNIC %dÍø¿¨Î´¼¤»î¶ªÆúµÄÊı¾İ¸öÊı                    %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlDiscardPktNum);
-    vos_printf("RNIC %dÏÂĞĞ¼ÓMACÍ·Ê§°ÜµÄ¸öÊı                       %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlAddMacHdFailNum);
-    vos_printf("RNIC %dÍø¿¨Ë½ÓĞÊı¾İ´íÎó¶ªµôÏÂĞĞÊı¾İ°üµÄ¸öÊı        %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlNetCardDiscardNum);
-    vos_printf("RNIC %dÍø¿¨ID´íÎó¶ªµôÏÂĞĞÊı¾İ°üµÄ¸öÊı              %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlNetIdDiscardNum);
-    vos_printf("RNIC %dÊÕµ½´íÎóÊı¾İ°üµÄ¸öÊı·Çipv4ipv6°ü            %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlRecvErrPktNum);
+    /* ä¸‹è¡Œç»Ÿè®¡é‡ */
+    vos_printf("RNIC %dæ”¶åˆ°ä¸‹è¡ŒIPV4æ•°æ®çš„ä¸ªæ•°                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlRecvIpv4PktNum);
+    vos_printf("RNIC %dæ”¶åˆ°ä¸‹è¡ŒIPV6æ•°æ®çš„ä¸ªæ•°                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlRecvIpv6PktNum);
+    vos_printf("RNIC %då‘é€ä¸‹è¡Œæ•°æ®çš„ä¸ªæ•°                          %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlSendPktNum);
+    vos_printf("RNIC %då‘é€ä¸‹è¡Œæ•°æ®å¤±è´¥çš„ä¸ªæ•°                      %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlSendPktFailNum);
+    vos_printf("RNIC %dæ”¶åˆ°ä¸‹è¡Œæ•°æ®åŒ…å¤§äºMTUçš„ä¸ªæ•°                 %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlRecvBigPktNum);
+    vos_printf("RNIC %dç½‘å¡æœªæ¿€æ´»ä¸¢å¼ƒçš„æ•°æ®ä¸ªæ•°                    %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlDiscardPktNum);
+    vos_printf("RNIC %dä¸‹è¡ŒåŠ MACå¤´å¤±è´¥çš„ä¸ªæ•°                       %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlAddMacHdFailNum);
+    vos_printf("RNIC %dç½‘å¡ç§æœ‰æ•°æ®é”™è¯¯ä¸¢æ‰ä¸‹è¡Œæ•°æ®åŒ…çš„ä¸ªæ•°        %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlNetCardDiscardNum);
+    vos_printf("RNIC %dç½‘å¡IDé”™è¯¯ä¸¢æ‰ä¸‹è¡Œæ•°æ®åŒ…çš„ä¸ªæ•°              %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlNetIdDiscardNum);
+    vos_printf("RNIC %dæ”¶åˆ°é”™è¯¯æ•°æ®åŒ…çš„ä¸ªæ•°éipv4ipv6åŒ…            %d\n", ucRmNetId, g_astRnicStats[ucRmNetId].ulDlRecvErrPktNum);
     vos_printf("\r\n");
 
     return;
 }
 VOS_VOID RNIC_ShowResetStats(VOS_VOID)
 {
-    vos_printf("Ä£¿é³õÊ¼»¯±êÊ¶                              %d\n", g_astRnicStats[0].ulSemInitFlg);
-    vos_printf("µ±Ç°µÄ¶ş½øÖÆĞÅºÅÁ¿                          %p\n", g_stRnicCtx.hResetSem);
-    vos_printf("´´½¨µÄ¶ş½øÖÆĞÅºÅÁ¿                          %p\n", g_astRnicStats[0].hBinarySemId);
-    vos_printf("´´½¨¶ş½øÖÆĞÅºÅÁ¿Ê§°Ü´ÎÊı                    %d\n", g_astRnicStats[0].ulCreateBinarySemFailNum);
-    vos_printf("Ëø¶ş½øÖÆĞÅºÅÁ¿Ê§°Ü´ÎÊı                      %d\n", g_astRnicStats[0].ulLockBinarySemFailNum);
-    vos_printf("×îºóÒ»´ÎËø¶ş½øÖÆĞÅºÅÁ¿Ê§°ÜÔ­Òò              %x\n", g_astRnicStats[0].ulLastBinarySemErrRslt);
-    vos_printf("¸´Î»³É¹¦µÄ´ÎÊı                              %d\n", g_astRnicStats[0].ulResetSucessNum);
+    vos_printf("æ¨¡å—åˆå§‹åŒ–æ ‡è¯†                              %d\n", g_astRnicStats[0].ulSemInitFlg);
+    vos_printf("å½“å‰çš„äºŒè¿›åˆ¶ä¿¡å·é‡                          %p\n", g_stRnicCtx.hResetSem);
+    vos_printf("åˆ›å»ºçš„äºŒè¿›åˆ¶ä¿¡å·é‡                          %p\n", g_astRnicStats[0].hBinarySemId);
+    vos_printf("åˆ›å»ºäºŒè¿›åˆ¶ä¿¡å·é‡å¤±è´¥æ¬¡æ•°                    %d\n", g_astRnicStats[0].ulCreateBinarySemFailNum);
+    vos_printf("é”äºŒè¿›åˆ¶ä¿¡å·é‡å¤±è´¥æ¬¡æ•°                      %d\n", g_astRnicStats[0].ulLockBinarySemFailNum);
+    vos_printf("æœ€åä¸€æ¬¡é”äºŒè¿›åˆ¶ä¿¡å·é‡å¤±è´¥åŸå›               %x\n", g_astRnicStats[0].ulLastBinarySemErrRslt);
+    vos_printf("å¤ä½æˆåŠŸçš„æ¬¡æ•°                              %d\n", g_astRnicStats[0].ulResetSucessNum);
 }
 
 
@@ -171,28 +171,28 @@ VOS_VOID RNIC_ShowRmnetConfigCheckInfo(VOS_VOID)
 VOS_VOID RNIC_Help(VOS_VOID)
 {
 
-    vos_printf("********************RNICµ÷ÊÔĞÅÏ¢************************\n");
-    vos_printf("RNIC_ShowUlProcStats  ucRmNetId                 ÏÔÊ¾Ö¸¶¨RNICÍø¿¨ÉÏĞĞÍ³¼ÆĞÅÏ¢\n");
-    vos_printf("RNIC_ShowDLProcStats  ucRmNetId                 ÏÔÊ¾Ö¸¶¨RNICÍø¿¨ÏÂĞĞÍ³¼ÆĞÅÏ¢\n");
-    vos_printf("RNIC_ShowRnicPdpStats ucRmNetId                 ÏÔÊ¾Ö¸¶¨RNICÍø¿¨PDP¼¤»îĞÅÏ¢\n");
-    vos_printf("RNIC_ShowResetStats                             ÏÔÊ¾Ö¸¶¨RNIC¸´Î»×´Ì¬ĞÅÏ¢\n");
+    vos_printf("********************RNICè°ƒè¯•ä¿¡æ¯************************\n");
+    vos_printf("RNIC_ShowUlProcStats  ucRmNetId                 æ˜¾ç¤ºæŒ‡å®šRNICç½‘å¡ä¸Šè¡Œç»Ÿè®¡ä¿¡æ¯\n");
+    vos_printf("RNIC_ShowDLProcStats  ucRmNetId                 æ˜¾ç¤ºæŒ‡å®šRNICç½‘å¡ä¸‹è¡Œç»Ÿè®¡ä¿¡æ¯\n");
+    vos_printf("RNIC_ShowRnicPdpStats ucRmNetId                 æ˜¾ç¤ºæŒ‡å®šRNICç½‘å¡PDPæ¿€æ´»ä¿¡æ¯\n");
+    vos_printf("RNIC_ShowResetStats                             æ˜¾ç¤ºæŒ‡å®šRNICå¤ä½çŠ¶æ€ä¿¡æ¯\n");
 
     return;
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : RNIC_MNTN_OpenLatency
- ¹¦ÄÜÃèÊö  : ¿ªÆôÓÃ»§ÃæÊı¾İ×·×Ù¹ì¼£
- ÊäÈë²ÎÊı  : VOS_VOID
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : RNIC_MNTN_OpenLatency
+ åŠŸèƒ½æè¿°  : å¼€å¯ç”¨æˆ·é¢æ•°æ®è¿½è¸ªè½¨è¿¹
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê6ÔÂ19ÈÕ
-    ×÷    Õß   : huibo
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´6æœˆ19æ—¥
+    ä½œ    è€…   : huibo
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID RNIC_MNTN_OpenLatency(VOS_VOID)
@@ -203,18 +203,18 @@ VOS_VOID RNIC_MNTN_OpenLatency(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : RNIC_MNTN_CloseLatency
- ¹¦ÄÜÃèÊö  : ¹Ø±ÕÓÃ»§ÃæÊı¾İ×·×Ù¹ì¼£
- ÊäÈë²ÎÊı  : VOS_VOID
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : RNIC_MNTN_CloseLatency
+ åŠŸèƒ½æè¿°  : å…³é—­ç”¨æˆ·é¢æ•°æ®è¿½è¸ªè½¨è¿¹
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê6ÔÂ19ÈÕ
-    ×÷    Õß   : huibo
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´6æœˆ19æ—¥
+    ä½œ    è€…   : huibo
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID RNIC_MNTN_CloseLatency(VOS_VOID)
@@ -225,18 +225,18 @@ VOS_VOID RNIC_MNTN_CloseLatency(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : RNIC_MNTN_TraceRcvUlData
- ¹¦ÄÜÃèÊö  : ×·×ÙÓÃ»§ÃæÉÏĞĞ½ÓÊÕÊı¾İ
- ÊäÈë²ÎÊı  : VOS_VOID
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : RNIC_MNTN_TraceRcvUlData
+ åŠŸèƒ½æè¿°  : è¿½è¸ªç”¨æˆ·é¢ä¸Šè¡Œæ¥æ”¶æ•°æ®
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê6ÔÂ19ÈÕ
-    ×÷    Õß   : huibo
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´6æœˆ19æ—¥
+    ä½œ    è€…   : huibo
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID RNIC_MNTN_TraceRcvUlData(VOS_VOID)
@@ -250,18 +250,18 @@ VOS_VOID RNIC_MNTN_TraceRcvUlData(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : RNIC_MNTN_TraceRcvDlData
- ¹¦ÄÜÃèÊö  : ×·×ÙÓÃ»§ÃæÏÂĞĞ½ÓÊÕÊı¾İ
- ÊäÈë²ÎÊı  : VOS_VOID
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : RNIC_MNTN_TraceRcvDlData
+ åŠŸèƒ½æè¿°  : è¿½è¸ªç”¨æˆ·é¢ä¸‹è¡Œæ¥æ”¶æ•°æ®
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê6ÔÂ19ÈÕ
-    ×÷    Õß   : huibo
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´6æœˆ19æ—¥
+    ä½œ    è€…   : huibo
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID RNIC_MNTN_TraceRcvDlData(VOS_VOID)
@@ -275,18 +275,18 @@ VOS_VOID RNIC_MNTN_TraceRcvDlData(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : RNIC_MNTN_TraceSndDlData
- ¹¦ÄÜÃèÊö  : ×·×ÙÓÃ»§ÃæÏÂĞĞ·¢ËÍÊı¾İ
- ÊäÈë²ÎÊı  : VOS_VOID
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : RNIC_MNTN_TraceSndDlData
+ åŠŸèƒ½æè¿°  : è¿½è¸ªç”¨æˆ·é¢ä¸‹è¡Œå‘é€æ•°æ®
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê6ÔÂ19ÈÕ
-    ×÷    Õß   : huibo
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´6æœˆ19æ—¥
+    ä½œ    è€…   : huibo
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID RNIC_MNTN_TraceSndDlData(VOS_VOID)

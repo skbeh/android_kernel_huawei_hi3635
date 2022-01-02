@@ -5,7 +5,7 @@
 #include <bsp_hardtimer.h>
 #include <osl_irq.h>
 
-/*ºê¶¨Òå*/
+/*å®å®šä¹‰*/
 #ifndef OK
 #define OK 0
 #endif

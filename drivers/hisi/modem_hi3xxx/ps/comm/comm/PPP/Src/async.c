@@ -27,9 +27,9 @@
  *
  */
 /*
-  1.��    ��   : 2006��4��4��
-    ��    ��   : liuyang id:48197
-    �޸�����   : ���ⵥ��:A32D01738
+  1.日    期   : 2006年4月4日
+    作    者   : liuyang id:48197
+    修改内容   : 问题单号:A32D01738
 */
 
 #if 0
@@ -83,7 +83,7 @@ __FBSDID("$FreeBSD: src/usr.sbin/ppp/async.c,v 1.27 2002/08/25 13:30:34 charnier
 
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_ASYNC_C
 
@@ -219,7 +219,7 @@ async_TtfMemLayerPush(struct link *l, VOS_UINT8 *pHdr, VOS_UINT16 usHdrLen, PPP_
 
     *cp++ = HDLC_SYN;
 
-    /* �ȶ�PPPͷ������ת�� */
+    /* 先对PPP头部进行转义 */
     sp = pHdr;
     while (usHdrLen > 0)
     {
@@ -239,10 +239,10 @@ async_TtfMemLayerPush(struct link *l, VOS_UINT8 *pHdr, VOS_UINT16 usHdrLen, PPP_
 
         sp++;
 
-        /*ÿ���ֽڶ�����ջ,������С*/
+        /*每个字节都进出栈,开销不小*/
         /*async_Encode(&l->async, &cp, *sp++, *proto);*/
 
-        /* xbuff��СΪ HDLCSIZE=MAX_MRU*2+6,�㹻�� */
+        /* xbuff大小为 HDLCSIZE=MAX_MRU*2+6,足够大 */
         #if 0
         if (cp >= ep)
         {
@@ -282,7 +282,7 @@ async_TtfMemLayerPush(struct link *l, VOS_UINT8 *pHdr, VOS_UINT16 usHdrLen, PPP_
             sp++;
 
             /*async_Encode(&l->async, &cp, *sp++, *proto);*/
-            /* xbuff��СΪ HDLCSIZE=MAX_MRU*2+6,�㹻�� */
+            /* xbuff大小为 HDLCSIZE=MAX_MRU*2+6,足够大 */
             #if 0
             if (cp >= ep)
             {
@@ -306,7 +306,7 @@ async_TtfMemLayerPush(struct link *l, VOS_UINT8 *pHdr, VOS_UINT16 usHdrLen, PPP_
     cnt = cp - l->async.xbuff;
     PPP_MemFree(bp);
 
-    /* �ѷ�װ�õ�PPP֡�������� */
+    /* 把封装好的PPP帧发往串口 */
     PPP_SendPushedData((VOS_UINT16)PPP_LINK_TO_ID(l), (VOS_UINT8 *)(l->async.xbuff), (VOS_UINT16)cnt);
 
     return VOS_NULL_PTR;
@@ -419,7 +419,7 @@ PPP_ZC_STRU *async_Decode(struct async *async, VOS_CHAR c)
 
 
 
-/*�ú�����û�е���, ����ֱ�ӷ���.....�������е�Pull���������е�bp��������Ϊ�գ���������ײ�ģ���bpΪ��*/
+/*该函数已没有调用, 所以直接返回.....对于所有的Pull函数，其中的bp参数都不为空，但对于最底层的，该bp为空*/
 PPP_ZC_STRU *
 async_LayerPull(/*struct bundle *b, */struct link *l, PPP_ZC_STRU *bp,
                 VOS_UINT16 *proto)

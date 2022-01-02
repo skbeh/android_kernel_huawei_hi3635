@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "omprivate.h"
 #include "omsdlog.h"
@@ -10,7 +10,7 @@
 #include "NVIM_Interface.h"
 #include "DrvInterface.h"
 #include "omnvinterface.h"
-#include "fastlz.h" /* ��Դѹ���㷨 */
+#include "fastlz.h" /* 开源压缩算法 */
 
 #if (VOS_OS_VER == VOS_LINUX)
 #include <linux/scatterlist.h>
@@ -28,31 +28,31 @@ extern "C" {
 
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
 /*****************************************************************************
-2 ȫ�ֱ�������
+2 全局变量定义
 *****************************************************************************/
-/* ���ڻ�����SD����д���trace */
+/* 用于缓存在SD卡中写入的trace */
 OM_SD_BUFFER_INNER_DATA_STRU       *g_pstSdBuffer;
 
-/* дSD���ı�־����PC�ർ��SD��traceʱ�ñ�־��Ϊ����д */
+/* 写SD卡的标志，在PC侧导出SD卡trace时该标志置为不可写 */
 VOS_UINT32                          g_ulWriteSDLogFlag = VOS_OK;
 
-/* ��¼��ȡSD��trace�Ĵ��� */
+/* 记录读取SD卡trace的错误 */
 VOS_UINT32                          g_ulReadSDErrType  = OM_SD_OK;
 
-/* ��¼дSD��trace�Ĵ��� */
+/* 记录写SD卡trace的错误 */
 VOS_UINT32                          g_ulWriteSDErrType = OM_SD_OK;
 
-/* ��¼��SD��cluster����Ŀ�����Ǹ�cluster��ʼ�� */
+/* 记录读SD卡cluster的数目及从那个cluster开始读 */
 OM_SD_READ_INFO_STRU                g_stReadInfo;
 
-/* ����SD����ͷ��������Ϣ */
+/* 保存SD卡的头部控制信息 */
 OM_SD_HEAD_STRU                     *g_pstHeadInfo;
 
 VOS_UINT32                          g_ulInterval = 10;
 
 VOS_UINT8*                          g_pucBuffer;
 
-/* ����SD����Debug ��Ϣ */
+/* 保存SD卡的Debug 信息 */
 OM_SD_DEBUG_INFO                    g_stOmSDDebugInfo;
 
 #if (VOS_LINUX == VOS_OS_VER)
@@ -92,18 +92,18 @@ VOS_UINT32                          g_ulFSlogStatus;
 VOS_UINT32                          g_ulFSLogErrFlag = LOG_OPERATION_OK;
 
 #if (FEATURE_ON == FEATURE_COMPRESS_WRITE_LOG_FILE)
-/* ���ѹ�������ݣ������ָ����Լ�ѹ�������ݳ��� */
+/* 存放压缩后数据，包括分隔符以及压缩完数据长度 */
 OM_UCMX_DATA_INFO_STRU              g_stCompressData;
 
-/* ���������� */
+/* 存放组包数据 */
 VOS_UINT8                           g_aucPackData[OM_MAX_PACK_DATA_LEN];
 VOS_UINT32                          g_ulPackLen = 0;
 
-/* ��ν�ɲ� */
+/* 可谓可测 */
 OM_COMPRESS_DEBUG_OG_STRU           g_stCompressDebugLog;
 #endif
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 
@@ -132,7 +132,7 @@ VOS_UINT32 OM_SDInit(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ��ʼ����������ʼֵ */
+    /* 初始化缓冲区初始值 */
     g_pstSdBuffer->ulDataLen = 0;
 
     return VOS_OK;
@@ -142,7 +142,7 @@ VOS_UINT32 OM_SDReadHeadInfo(VOS_VOID)
     VOS_INT          lRet;
     VOS_UINT         ulSize;
 
-    /* ���õ����ӿڶ�ȡSD����ͷ��������Ϣ��ͷ��������Ϣ�洢�ڵ�0��block */
+    /* 调用底软接口读取SD卡的头部控制信息，头部控制信息存储在第0个block */
     DRV_SD_SG_INIT_TABLE((void *)g_pstHeadInfo, OM_SD_BLOCK_SIZE);
 
     lRet = DRV_SD_MULTI_TRANSFER(0, 1, OM_SD_BLOCK_SIZE, RDFlAG);
@@ -156,11 +156,11 @@ VOS_UINT32 OM_SDReadHeadInfo(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ���SD��Ϊ�¿�,��ʼ��ͷ��������Ϣ */
+    /* 如果SD卡为新卡,初始化头部控制信息 */
     if((OM_SD_MAGIC_NUMBER != g_pstHeadInfo->ulMagicNum)
         || (OM_SD_OPPOSITE_MAGIC_NUMBER != g_pstHeadInfo->ulOppositeMagicNum))
     {
-        /* ��ȡSD������ */
+        /* 获取SD卡容量 */
         ulSize = (VOS_UINT32)DRV_SD_GET_CAPACITY();
 
         if(0 == ulSize)
@@ -172,7 +172,7 @@ VOS_UINT32 OM_SDReadHeadInfo(VOS_VOID)
             return VOS_ERR;
         }
 
-        /* ����SD���ܵ�cluster��Ŀ��Ԥ��10%������ */
+        /* 计算SD卡总的cluster数目，预留10%的余量 */
         g_pstHeadInfo->ulTotalCNum = (ulSize - (ulSize/10)) / OM_SD_BLOCK_NUM_ONE_CLUSTER;
 
         g_pstHeadInfo->ulMagicNum = OM_SD_MAGIC_NUMBER;
@@ -183,7 +183,7 @@ VOS_UINT32 OM_SDReadHeadInfo(VOS_VOID)
 
         g_pstHeadInfo->ulNextCid = 1;
 
-        /* ��ʼ��SD��ͷ��������Ϣ */
+        /* 初始化SD卡头部控制信息 */
         DRV_SD_SG_INIT_TABLE((void *)g_pstHeadInfo, OM_SD_BLOCK_SIZE);
         lRet = DRV_SD_MULTI_TRANSFER(0, 1, OM_SD_BLOCK_SIZE, WRFlAG);
 
@@ -207,7 +207,7 @@ VOS_UINT32 OM_SDFlushHeadInfo(VOS_VOID)
 
     g_pstHeadInfo->ulNextCid++;
 
-    /* nextCID�ķ�Χʼ���� 1��(g_stHeadInfo.ulTotalCNum -1)֮�䣬��0��cluster���ڱ���ͷ��������Ϣ*/
+    /* nextCID的范围始终在 1－(g_stHeadInfo.ulTotalCNum -1)之间，第0个cluster用于保存头部控制信息*/
     if(0 == (g_pstHeadInfo->ulNextCid % g_pstHeadInfo->ulTotalCNum))
     {
         g_pstHeadInfo->ulNextCid = 1;
@@ -215,7 +215,7 @@ VOS_UINT32 OM_SDFlushHeadInfo(VOS_VOID)
         g_pstHeadInfo->ulLoopOutFlag = 1;
     }
 
-    /* ����ͷ��������Ϣ */
+    /* 更新头部控制信息 */
 
     DRV_SD_SG_INIT_TABLE((void *)g_pstHeadInfo, OM_SD_BLOCK_SIZE);
 
@@ -243,7 +243,7 @@ VOS_UINT32 OM_SDWriteCard(VOS_UINT8* pucData, VOS_UINT16 usLen)
 
     ulCurBufDataLen = g_pstSdBuffer->ulDataLen;
 
-    /* ���Ŀ��bufferʣ��ռ䲻���洢����TRACE */
+    /* 如果目标buffer剩余空间不够存储本次TRACE */
     if(OM_SD_BUFFER_MAX_DATA_LEN < (ulCurBufDataLen + usLen))
     {
         if(VOS_ERR == OM_SDReadHeadInfo())
@@ -254,14 +254,14 @@ VOS_UINT32 OM_SDWriteCard(VOS_UINT8* pucData, VOS_UINT16 usLen)
             return VOS_ERR;
         }
 
-        /* ����дSD������ʼblock */
+        /* 计算写SD卡的起始block */
         ulSecAddr                        = g_pstHeadInfo->ulNextCid * OM_SD_BLOCK_NUM_ONE_CLUSTER;
 
         g_pstSdBuffer->ulClusterId         = g_pstHeadInfo->ulNextCid;
 
         g_pstSdBuffer->ulOppositeClusterId = ~g_pstHeadInfo->ulNextCid;
 
-        /* дSD��ʧ��ʱ��¼���������˳� */
+        /* 写SD卡失败时记录错误，立即退出 */
         DRV_SD_SG_INIT_TABLE((void *)g_pstSdBuffer, OM_SD_BLOCK_NUM_ONE_CLUSTER*OM_SD_BLOCK_SIZE);
         lRet = DRV_SD_MULTI_TRANSFER(ulSecAddr, OM_SD_BLOCK_NUM_ONE_CLUSTER, OM_SD_BLOCK_SIZE, WRFlAG);
 
@@ -284,7 +284,7 @@ VOS_UINT32 OM_SDWriteCard(VOS_UINT8* pucData, VOS_UINT16 usLen)
             return VOS_ERR;
         }
 
-        /* ������д��SD����buffer��д����־�������ֶ���� */
+        /* 将数据写到SD卡后将buffer的写满标志及长度字段清空 */
         g_pstSdBuffer->ulDataLen = 0;
 
         OM_SDFlushHeadInfo();
@@ -292,10 +292,10 @@ VOS_UINT32 OM_SDWriteCard(VOS_UINT8* pucData, VOS_UINT16 usLen)
         ulCurBufDataLen = 0;
     }
 
-    /* copy���� */
+    /* copy数据 */
     VOS_MemCpy((g_pstSdBuffer->aucBuffer + ulCurBufDataLen), pucData, usLen);
 
-    /* ���³��� */
+    /* 更新长度 */
     g_pstSdBuffer->ulDataLen += (VOS_UINT32)usLen;
 
     g_stOmSDDebugInfo.ulRemainLenth = g_pstSdBuffer->ulDataLen;
@@ -315,7 +315,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
     VOS_UINT32                  ulMinValue = g_ulInterval;
     VOS_UINT32                  i;
 
-    /* PC����������ݰ���ų�����Ҫ�������ʱ */
+    /* PC侧请求的数据包序号超过需要读的序号时 */
     if(ulPacketSn > (g_stReadInfo.ulTotalNeedCNum - 1))
     {
         g_ulReadSDErrType = OM_ERR_VALIDPARA;
@@ -327,7 +327,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
         return;
     }
 
-    /* ���㱾�η��͸�PC���IND���� */
+    /* 计算本次发送给PC侧的IND个数 */
     if(ulMinValue > (g_stReadInfo.ulTotalNeedCNum - ulPacketSn))
     {
        ulMinValue = g_stReadInfo.ulTotalNeedCNum - ulPacketSn;
@@ -337,7 +337,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
     {
         ulCurReadCID = g_stReadInfo.ulStartCID + ulPacketSn;
 
-        /* ������0��cluster��ͷ��������Ϣ��ȡ */
+        /* 跳过第0个cluster的头部控制信息读取 */
         if(ulCurReadCID > (g_pstHeadInfo->ulTotalCNum - 1))
         {
             ulSecAddr = ((ulCurReadCID % g_pstHeadInfo->ulTotalCNum) + 1) * OM_SD_BLOCK_NUM_ONE_CLUSTER;
@@ -347,7 +347,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
             ulSecAddr = ulCurReadCID * OM_SD_BLOCK_NUM_ONE_CLUSTER;
         }
 
-        /* ��SD���е����� */
+        /* 读SD卡中的数据 */
         DRV_SD_SG_INIT_TABLE((void *)g_pstSdBuffer, OM_SD_BLOCK_NUM_ONE_CLUSTER*OM_SD_BLOCK_SIZE);
 
         lRet =  DRV_SD_MULTI_TRANSFER(ulSecAddr, OM_SD_BLOCK_NUM_ONE_CLUSTER, OM_SD_BLOCK_SIZE, RDFlAG);
@@ -371,7 +371,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
 
         pstOmReadSD->ulSn = ulPacketSn;
 
-        /* ���cluster��CID�ֶκ�~CID�ֶβ���ȡ���Ĺ�ϵ�Ļ�������Ϊ��ǰcluster������ */
+        /* 如果cluster的CID字段和~CID字段不是取反的关系的话，则认为当前cluster数据损坏 */
         if(g_pstSdBuffer->ulClusterId != (~g_pstSdBuffer->ulOppositeClusterId))
         {
             g_ulReadSDErrType = OM_ERR_DATAERR;
@@ -411,7 +411,7 @@ VOS_UINT32 OM_SDGetReadPosition(VOS_UINT32 ulNeedSize, VOS_UINT32 ulOffsetSize)
 
     if (0 == g_pstHeadInfo->ulLoopOutFlag)
     {
-        /* �û�ƫ�Ƶ����ݴ���SD������������ */
+        /* 用户偏移的数据大于SD卡中已有数据 */
         if (ulOffsetClusterNum >= (g_pstHeadInfo->ulNextCid - 1))
         {
             g_stReadInfo.ulTotalNeedCNum = 0;
@@ -421,7 +421,7 @@ VOS_UINT32 OM_SDGetReadPosition(VOS_UINT32 ulNeedSize, VOS_UINT32 ulOffsetSize)
             return OM_ERR_EMPTY;
         }
 
-        /* �û���Ҫ�����ݴ���SD������������ */
+        /* 用户需要的数据大于SD卡中已有数据 */
         if(ulTotalClusterNum > (g_pstHeadInfo->ulNextCid - 1))
         {
             g_stReadInfo.ulStartCID = 1;
@@ -433,14 +433,14 @@ VOS_UINT32 OM_SDGetReadPosition(VOS_UINT32 ulNeedSize, VOS_UINT32 ulOffsetSize)
             return OM_SD_OK;
         }
 
-        /* �û���Ҫ������С��SD������������ */
+        /* 用户需要的数据小于SD卡中已有数据 */
         g_stReadInfo.ulStartCID = g_pstHeadInfo->ulNextCid - ulTotalClusterNum;
 
         return OM_SD_OK;
 
     }
 
-    /* ����SD�������з�ת�������û�ƫ�Ƶ����ݴ���SD������������*/
+    /* 保存SD卡数据有翻转，并且用户偏移的数据大于SD卡中已有数据*/
     if (ulOffsetClusterNum >= (g_pstHeadInfo->ulTotalCNum - 1))
     {
         g_stReadInfo.ulTotalNeedCNum = 0;
@@ -450,18 +450,18 @@ VOS_UINT32 OM_SDGetReadPosition(VOS_UINT32 ulNeedSize, VOS_UINT32 ulOffsetSize)
         return OM_ERR_EMPTY;
     }
 
-    /* ��0��cluster���ڱ���ͷ��������Ϣ */
+    /* 第0个cluster用于保存头部控制信息 */
     if(ulTotalClusterNum > (g_pstHeadInfo->ulTotalCNum - 1))
     {
         g_stReadInfo.ulTotalNeedCNum = (g_pstHeadInfo->ulTotalCNum - 1) - ulOffsetClusterNum;
 
-        /* SD��������תʱ���洢���������Ϊ��һ����д���cluster���� */
+        /* SD卡发生翻转时，存储最早的数据为下一个待写入的cluster数据 */
         g_stReadInfo.ulStartCID = g_pstHeadInfo->ulNextCid;
 
         return OM_SD_OK;
     }
 
-    /* ʵ����Ҫ������С��SD���е����� */
+    /* 实际需要的数据小于SD卡中的数据 */
     if(g_pstHeadInfo->ulNextCid > ulTotalClusterNum)
     {
         g_stReadInfo.ulStartCID = g_pstHeadInfo->ulNextCid - ulTotalClusterNum;
@@ -484,7 +484,7 @@ VOS_UINT32 OM_SDParaCheck(VOS_UINT32 ulDataSize, VOS_UINT32 *pulErrNo)
         return VOS_ERR;
     }
 
-    /* ���õ����ӿڶ�ȡSD����ͷ��������Ϣ��ͷ��������Ϣ�洢�ڵ�0��block */
+    /* 调用底软接口读取SD卡的头部控制信息，头部控制信息存储在第0个block */
     DRV_SD_SG_INIT_TABLE((void *)g_pstHeadInfo, OM_SD_BLOCK_SIZE);
 
     lRet = DRV_SD_MULTI_TRANSFER(0, 1, OM_SD_BLOCK_SIZE, RDFlAG);
@@ -500,7 +500,7 @@ VOS_UINT32 OM_SDParaCheck(VOS_UINT32 ulDataSize, VOS_UINT32 *pulErrNo)
         return VOS_ERR;
     }
 
-    /* ���SD��Ϊ�¿�,��ʼ��ͷ��������Ϣ */
+    /* 如果SD卡为新卡,初始化头部控制信息 */
     if((OM_SD_MAGIC_NUMBER != g_pstHeadInfo->ulMagicNum)
         || (OM_SD_OPPOSITE_MAGIC_NUMBER != g_pstHeadInfo->ulOppositeMagicNum))
     {
@@ -533,10 +533,10 @@ VOS_VOID OM_SDReadReqProc(APP_OM_READ_SD_REQ_STRU * pstReadSDReq)
         return;
     }
 
-    /* ��ȡʵ����Ҫ����cluster��Ŀ����ʼ����λ�� */
+    /* 获取实际需要读得cluster数目及起始读的位置 */
     ulRet = OM_SDGetReadPosition(pstReadSDReq->ulTotalSize, pstReadSDReq->ulOffsetSize);
 
-    /*���㷢�͸����߲���Ϣ�����ܳ���*/
+    /*计算发送给工具侧消息包的总长度*/
     pstOmToAppMsg = (OM_APP_MSG_EX_STRU*)VOS_MemAlloc(WUEPS_PID_OM, DYNAMIC_MEM_PT, OM_APP_MSG_EX_LEN + sizeof(OM_APP_READ_SD_CNF_STRU));
 
     if(VOS_NULL_PTR == pstOmToAppMsg)
@@ -548,7 +548,7 @@ VOS_VOID OM_SDReadReqProc(APP_OM_READ_SD_REQ_STRU * pstReadSDReq)
         return;
     }
 
-    /* �����Ϣ�ֶβ�����Ϣ���͸�PC�� */
+    /* 填充消息字段并将消息发送给PC侧 */
     pstOmToAppMsg->usLength = (OM_APP_MSG_EX_LEN + sizeof(OM_APP_READ_SD_CNF_STRU) - VOS_OM_HEADER_LEN);
 
     pstOmToAppCnf = (OM_APP_READ_SD_CNF_STRU*)(pstOmToAppMsg->aucPara);
@@ -577,7 +577,7 @@ VOS_VOID OM_ReadSdMsgProc(OM_REQ_PACKET_STRU *pstRspPacket, OM_RSP_FUNC *pstRspF
 {
     APP_OM_MSG_EX_STRU              *pstAppToOmMsg;
 
-   /* ���SD���Ƿ���λ */
+   /* 检测SD卡是否在位 */
     if(VOS_OK != DRV_SD_GET_STATUS())
     {
         g_ulReadSDErrType = OM_ERR_NOCARD;
@@ -591,7 +591,7 @@ VOS_VOID OM_ReadSdMsgProc(OM_REQ_PACKET_STRU *pstRspPacket, OM_RSP_FUNC *pstRspF
 
     pstAppToOmMsg   = (APP_OM_MSG_EX_STRU*)pstRspPacket;
 
-    /* ����PC�ർ��SD�����ݵ���Ϣ */
+    /* 处理PC侧导出SD卡数据的消息 */
     if(APP_OM_READ_SD_DATA_REQ == pstAppToOmMsg->usPrimId)
     {
         OM_SDReadReqProc((APP_OM_READ_SD_REQ_STRU *)(pstAppToOmMsg->aucPara));
@@ -669,16 +669,16 @@ VOS_UINT32 OM_FSInitCfgFile(VOS_VOID)
     sd_fs = SD_FS_GETFS();
     SD_FS_SETFS(KERNEL_DS);
 
-    /* ��Config�ļ� */
+    /* 打开Config文件 */
     lCfgFile = SD_FS_OPEN(g_acFSLogCfgPath, O_RDONLY, OM_SD_FILE_MODE);
 
-    /* �ļ������� */
+    /* 文件不存在 */
     if (lCfgFile < 0)
     {
-        /* �ж�LOGĿ¼�Ƿ��Ѿ����� */
+        /* 判断LOG目录是否已经存在 */
         if (VOS_OK != SD_FS_ACCESS(g_acFSLogDir, 0))
         {
-            /* ���Ŀ¼�������򴴽�LOGĿ¼ */
+            /* 如果目录不存在则创建LOG目录 */
             if(SD_FS_MKDIR(g_acFSLogDir, 0) < 0)
             {
                 SD_FS_SETFS(sd_fs);
@@ -686,7 +686,7 @@ VOS_UINT32 OM_FSInitCfgFile(VOS_VOID)
             }
         }
 
-        /* ��������ļ������ڣ��򴴽����ļ�����ʼ������ */
+        /* 如果配置文件不存在，则创建新文件并初始化内容 */
         lCfgFile = SD_FS_OPEN(g_acFSLogCfgPath, O_CREAT|O_TRUNC|O_RDWR, OM_SD_FILE_MODE);
 
         if (lCfgFile < 0)
@@ -718,7 +718,7 @@ VOS_UINT32 OM_FSCheckSpace(VOS_VOID)
     VOS_CHAR                            acFilePath[OM_SD_LOG_PATH_MAX_LENGTH] = {0};
     VOS_UINT32                          sd_fs = 0;
 
-    /* �Ƚϵ�ǰ�ļ��洢�Ƿ�ﵽ���� */
+    /* 比较当前文件存储是否达到上限 */
     if ((g_stFSCfgFileInfo.ulFileMaxId - g_stFSCfgFileInfo.ulFileMinId) < g_stFlashLogCfg.ulGULogFileSize)
     {
         return VOS_OK;
@@ -727,7 +727,7 @@ VOS_UINT32 OM_FSCheckSpace(VOS_VOID)
     sd_fs = SD_FS_GETFS();
     SD_FS_SETFS(KERNEL_DS);
 
-    /* ɾ�����ļ��Ա�֤�ռ���� */
+    /* 删除旧文件以保证空间可用 */
     while (g_stFSCfgFileInfo.ulFileMinId < g_stFSCfgFileInfo.ulFileMaxId)
     {
         VOS_sprintf((VOS_CHAR *)acFilePath, "%s_%04d.%s",
@@ -762,19 +762,19 @@ VOS_UINT32 OM_AddHeadInfoToFile(OM_UCMX_HEAD_INFO_STRU *pstOmUcmxHeadInfo)
 {
     pstOmUcmxHeadInfo->usFileTag         = UCMX_FILE_HEAD_TAG;
     pstOmUcmxHeadInfo->ucFileVersion     = 1;
-    pstOmUcmxHeadInfo->ucHeadSegNum      = 1;                               /* �ļ�ͷ���� */
-    pstOmUcmxHeadInfo->ulSn              = g_stFSCfgFileInfo.ulFileMaxId;   /* �ļ�����ʱ���ļ���� */
+    pstOmUcmxHeadInfo->ucHeadSegNum      = 1;                               /* 文件头个数 */
+    pstOmUcmxHeadInfo->ulSn              = g_stFSCfgFileInfo.ulFileMaxId;   /* 文件分组时的文件编号 */
 
     pstOmUcmxHeadInfo->enSEGType3        = OM_LOG_HEAD_SEG_UE_INFO;
     pstOmUcmxHeadInfo->ucHeadLength3     = 48;
-    /* IMEI �� */
+    /* IMEI 号 */
     if (VOS_OK != NV_Read(en_NV_Item_IMEI, pstOmUcmxHeadInfo->aucImei, OM_IMEI_NV_LEN))
     {
         vos_printf("OM_AddHeadInfoToFile: read Imei fail");
         return VOS_ERR;
     }
 
-    /* �汾���� */
+    /* 版本类型 */
 #if (VOS_WIN32 == VOS_OS_VER)
     pstOmUcmxHeadInfo->ucUEBoardType = OM_WIN32_PLATFORM;
 #else
@@ -785,7 +785,7 @@ VOS_UINT32 OM_AddHeadInfoToFile(OM_UCMX_HEAD_INFO_STRU *pstOmUcmxHeadInfo)
 #endif
 #endif  /*(VOS_WIN32 == VOS_OS_VER)*/
 
-    /* ���汾���� 30 �ַ�+ \0 */
+    /* 最大版本长度 30 字符+ \0 */
     VOS_MemCpy((VOS_CHAR*)pstOmUcmxHeadInfo->aucUEVersion, PRODUCT_CFG_FULL_VERSION_STR, (VER_MAX_LENGTH+1));
 
     return VOS_OK;
@@ -805,7 +805,7 @@ VOS_UINT32 OM_FSCheckFileIsFull(VOS_UINT32 ulLength)
     VOS_INT                             lReturnLen;
 #endif
 
-    /*�жϵ�ǰд�볤���Ƿ�ʹ��LOG���*/
+    /*判断当前写入长度是否使得LOG溢出*/
     if (g_stFSLogFileInfo.ulFileMaxSize >=
             ((VOS_INT)ulLength + g_stFSLogFileInfo.ulFileSize))
     {
@@ -815,7 +815,7 @@ VOS_UINT32 OM_FSCheckFileIsFull(VOS_UINT32 ulLength)
     sd_fs = SD_FS_GETFS();
     SD_FS_SETFS(KERNEL_DS);
 
-    /* �ر�����д���ļ� */
+    /* 关闭正在写的文件 */
     SD_FS_CLOSE(g_stFSLogFileInfo.lFileHandle);
 
     if (VOS_OK != OM_FSCheckSpace())
@@ -830,10 +830,10 @@ VOS_UINT32 OM_FSCheckFileIsFull(VOS_UINT32 ulLength)
                 g_stFSCfgFileInfo.ulFileMaxId,
                 g_acFSLogType);
 
-    /*��LOG�ļ������ҳ�ʼ��Ϊ�գ�������ļ������ڣ��򴴽����ļ�*/
+    /*打开LOG文件，并且初始化为空，如果此文件不存在，则创建此文件*/
     lTempHandle = SD_FS_OPEN(acFilePath, O_CREAT|O_RDWR|O_TRUNC, OM_SD_FILE_MODE);
 
-    /*��ʧ��*/
+    /*打开失败*/
     if (lTempHandle < 0)
     {
         g_stFSLogFileInfo.bIsWritten    = VOS_FALSE;
@@ -850,13 +850,13 @@ VOS_UINT32 OM_FSCheckFileIsFull(VOS_UINT32 ulLength)
     g_stFSLogFileInfo.ulFileSize    = 0;
 
 #if (FEATURE_ON == FEATURE_COMPRESS_WRITE_LOG_FILE)
-    /* LOGѹ���㷨��������Ҫ����ͷ�ļ���Ϣ */
+    /* LOG压缩算法开启，需要增加头文件信息 */
     if(VOS_OK != OM_AddHeadInfoToFile(&stOmUcmxHeadInfo))
     {
         return VOS_ERR;
     }
 
-    /*д��LOG����*/
+    /*写入LOG内容*/
     lReturnLen = SD_FS_WRITE(g_stFSLogFileInfo.lFileHandle, (VOS_CHAR*)&stOmUcmxHeadInfo, sizeof(stOmUcmxHeadInfo));
 
     if (lReturnLen != sizeof(stOmUcmxHeadInfo))
@@ -887,7 +887,7 @@ VOS_UINT32 OM_FSCheckWriteCount(VOS_VOID)
     VOS_INT                             lTempHandle;
     VOS_UINT32                          sd_fs = 0;
 
-    /* ��������ʱ�����ļ��رգ������´��ļ� */
+    /* 当计数到时，将文件关闭，并重新打开文件 */
     if (0 != g_stFSLogFileInfo.ulRemainCount)
     {
         return VOS_OK;
@@ -904,7 +904,7 @@ VOS_UINT32 OM_FSCheckWriteCount(VOS_VOID)
 
     lTempHandle = SD_FS_OPEN(acFilePath,O_CREAT|O_RDWR|O_APPEND, OM_SD_FILE_MODE);
 
-    /*��ʧ��*/
+    /*打开失败*/
     if (lTempHandle < 0)
     {
         g_stFSLogFileInfo.bIsWritten    = VOS_FALSE;
@@ -930,13 +930,13 @@ VOS_UINT32 OM_FSWriteLogFile(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
     VOS_INT                             lReturnLen;
     VOS_UINT32                          sd_fs = 0;
 
-    /*�жϵ�ǰ�ļ��Ƿ��д*/
+    /*判断当前文件是否可写*/
     if (VOS_FALSE == g_stFSLogFileInfo.bIsWritten)
     {
         return VOS_ERR;
     }
 
-    /*�ж�д�볤���Ƿ񳬹����ļ�����󳤶�*/
+    /*判断写入长度是否超过了文件的最大长度*/
     if (g_stFSLogFileInfo.ulFileMaxSize < ulLength)
     {
         g_stFSLogFileInfo.ulErrLog  = LOG_OPERATION_LENGTH_TOOBIG;
@@ -956,7 +956,7 @@ VOS_UINT32 OM_FSWriteLogFile(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
     sd_fs = SD_FS_GETFS();
     SD_FS_SETFS(KERNEL_DS);
 
-    /*д��LOG����*/
+    /*写入LOG内容*/
     lReturnLen = SD_FS_WRITE(g_stFSLogFileInfo.lFileHandle, pcLogData, ulLength);
 
     if (ulLength != lReturnLen)
@@ -969,7 +969,7 @@ VOS_UINT32 OM_FSWriteLogFile(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
         return VOS_ERR;
     }
 
-    /* ����LOG�ļ�д�Ĵ�����ʵ�ʴ�С */
+    /* 更新LOG文件写的次数和实际大小 */
     g_stFSLogFileInfo.ulFileSize += ulLength;
 
     SD_FS_FILE_SYNC(g_stFSLogFileInfo.lFileHandle);
@@ -983,19 +983,19 @@ VOS_UINT32 OM_FSWriteLogFile(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
 VOS_UINT32 OM_CompressRcvLog(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
 {
     VOS_UINT32                          ulCompressDataLen = 0;
-    VOS_UINT32                          ulTempPackLen     = 0; /* ��ʱ���δѹ�����ݳ��� */
-    VOS_UINT32                          ulRemainLen       = 0; /* �������� */
-    VOS_UINT32                          ulNextPackLen     = 0; /* ������һ��ѹ������ */
+    VOS_UINT32                          ulTempPackLen     = 0; /* 临时存放未压缩数据长度 */
+    VOS_UINT32                          ulRemainLen       = 0; /* 余数长度 */
+    VOS_UINT32                          ulNextPackLen     = 0; /* 留作下一包压缩数据 */
     VOS_UINT32                          ulIndexMax        = 0;
     VOS_UINT32                          ulIndex           = 0;
 
     g_stCompressDebugLog.ulRcvNum++;
     g_stCompressDebugLog.ulRcvLen += ulLength;
 
-    /* �ָ���� */
+    /* 分隔标记 */
     g_stCompressData.ulDataTag    = UCMX_DATA_TAG;
 
-    /* ÿ��ѹ���ݴ�С�̶����������ѹ���� */
+    /* 每次压数据大小固定，算出余数压缩量 */
     ulRemainLen = ((ulLength + g_ulPackLen) % OM_MAX_PACK_DATA_LEN);
     ulIndexMax  = (ulLength + g_ulPackLen)/OM_MAX_PACK_DATA_LEN;
 
@@ -1006,7 +1006,7 @@ VOS_UINT32 OM_CompressRcvLog(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
 
         if (0 == ulIndex)
         {
-            /* �Ѿ�������ݳ��� */
+            /* 已经组包内容长度 */
             ulTempPackLen = g_ulPackLen;
         }
 
@@ -1017,12 +1017,12 @@ VOS_UINT32 OM_CompressRcvLog(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
         g_stCompressData.ulDataLength = ulCompressDataLen;
         OM_FSWriteLogFile((VOS_CHAR *)&g_stCompressData, (ulCompressDataLen + (2*sizeof(VOS_UINT32))));
 
-        /* ����������� */
+        /* 组包长度清零 */
         g_ulPackLen   = 0;
 
     }
 
-    /* ������һ��ѹ�� */
+    /* 留作下一包压缩 */
     ulNextPackLen = (ulRemainLen - g_ulPackLen);
     VOS_MemCpy(g_aucPackData + g_ulPackLen, pcLogData + (ulLength - ulNextPackLen), ulNextPackLen);
     g_ulPackLen += ulNextPackLen;
@@ -1045,7 +1045,7 @@ VOS_UINT32 OM_FSWriteLogProc(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
 
 VOS_UINT32 OM_FSStartLog(VOS_VOID)
 {
-    /*���GU���ñ���ռ�����Ϊ0������Ҫ���б���*/
+    /*如果GU配置保存空间配置为0，则不需要进行保存*/
     if (0 == g_stFlashLogCfg.ulGULogFileSize)
     {
         return VOS_OK;
@@ -1071,7 +1071,7 @@ VOS_UINT32 OM_FSStartLog(VOS_VOID)
 }
 VOS_UINT32 OM_FSInitLogFile(VOS_VOID)
 {
-    /*��ȡFlash����trace����*/
+    /*读取Flash保存trace配置*/
     if(NV_OK != NV_Read(en_NV_Item_FLASH_Log_Record_CFG, &g_stFlashLogCfg, sizeof(NV_FLASH_LOG_RECORD_STRU)))
     {
         PS_LOG(WUEPS_PID_OM, 0, PS_PRINT_ERROR, "OM_FSInitLogFile:Read NV Config fail!");
@@ -1081,7 +1081,7 @@ VOS_UINT32 OM_FSInitLogFile(VOS_VOID)
 
     g_stFSLogFileInfo.bIsWritten    = VOS_FALSE;
 
-    /*���GU���ñ���ռ�����Ϊ0������Ҫ���б���*/
+    /*如果GU配置保存空间配置为0，则不需要进行保存*/
     if (0 == g_stFlashLogCfg.ulGULogFileSize)
     {
         return VOS_OK;
@@ -1103,7 +1103,7 @@ VOS_UINT32 OM_LogFileInit(VOS_VOID)
 {
     OM_CHANNLE_PORT_CFG_STRU            stPortCfg;
 
-    /*��ȡSD Log��NV�е�����*/
+    /*读取SD Log在NV中的配置*/
     if(NV_OK != NV_Read(en_NV_Item_Om_Port_Type, &stPortCfg, sizeof(OM_CHANNLE_PORT_CFG_STRU)))
     {
         PS_LOG(WUEPS_PID_OM, 0, PS_PRINT_ERROR, "OM_LogFileInit:Read NV Config fail!");
@@ -1113,7 +1113,7 @@ VOS_UINT32 OM_LogFileInit(VOS_VOID)
 
     stPortCfg.enPortNum += CPM_APP_PORT;
 
-    /*��ȡSD Log��NV�е�����Ϊ1��ʱ���ʹ��*/
+    /*读取SD Log在NV中的配置为1的时候才使能*/
     if(CPM_SD_PORT == stPortCfg.enPortNum)
     {
         OM_SDInit();
@@ -1161,31 +1161,31 @@ VOS_VOID OM_FSShowInfo(VOS_VOID)
 #else
 
 /*****************************************************************************
-2 ȫ�ֱ�������
+2 全局变量定义
 *****************************************************************************/
-/* ���ڻ�����SD����д���trace */
+/* 用于缓存在SD卡中写入的trace */
 OM_SD_BUFFER_INNER_DATA_STRU       *g_pstSdBuffer;
 
-/* дSD���ı�־����PC�ർ��SD��traceʱ�ñ�־��Ϊ����д */
+/* 写SD卡的标志，在PC侧导出SD卡trace时该标志置为不可写 */
 VOS_UINT32                          g_ulWriteSDLogFlag = VOS_OK;
 
-/* ��¼��ȡSD��trace�Ĵ��� */
+/* 记录读取SD卡trace的错误 */
 VOS_UINT32                          g_ulReadSDErrType  = OM_SD_OK;
 
-/* ��¼дSD��trace�Ĵ��� */
+/* 记录写SD卡trace的错误 */
 VOS_UINT32                          g_ulWriteSDErrType = OM_SD_OK;
 
-/* ��¼��SD��cluster����Ŀ�����Ǹ�cluster��ʼ�� */
+/* 记录读SD卡cluster的数目及从那个cluster开始读 */
 OM_SD_READ_INFO_STRU                g_stReadInfo;
 
-/* ����SD����ͷ��������Ϣ */
+/* 保存SD卡的头部控制信息 */
 OM_SD_HEAD_STRU                     *g_pstHeadInfo;
 
 VOS_UINT32                          g_ulInterval = 10;
 
 VOS_UINT8*                          g_pucBuffer;
 
-/* ����SD����Debug ��Ϣ */
+/* 保存SD卡的Debug 信息 */
 OM_SD_DEBUG_INFO                    g_stOmSDDebugInfo;
 
 #if (VOS_LINUX == VOS_OS_VER)
@@ -1225,18 +1225,18 @@ VOS_UINT32                          g_ulFSlogStatus;
 VOS_UINT32                          g_ulFSLogErrFlag = LOG_OPERATION_OK;
 
 #if (FEATURE_ON == FEATURE_COMPRESS_WRITE_LOG_FILE)
-/* ���ѹ�������ݣ������ָ����Լ�ѹ�������ݳ��� */
+/* 存放压缩后数据，包括分隔符以及压缩完数据长度 */
 OM_UCMX_DATA_INFO_STRU              g_stCompressData;
 
-/* ���������� */
+/* 存放组包数据 */
 VOS_UINT8                           g_aucPackData[OM_MAX_PACK_DATA_LEN];
 VOS_UINT32                          g_ulPackLen = 0;
 
-/* ��ν�ɲ� */
+/* 可谓可测 */
 OM_COMPRESS_DEBUG_OG_STRU           g_stCompressDebugLog;
 #endif
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 
@@ -1265,7 +1265,7 @@ VOS_UINT32 OM_SDInit(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ��ʼ����������ʼֵ */
+    /* 初始化缓冲区初始值 */
     g_pstSdBuffer->ulDataLen = 0;
 
     return VOS_OK;
@@ -1275,7 +1275,7 @@ VOS_UINT32 OM_SDReadHeadInfo(VOS_VOID)
     VOS_INT          lRet;
     VOS_UINT         ulSize;
 
-    /* ���õ����ӿڶ�ȡSD����ͷ��������Ϣ��ͷ��������Ϣ�洢�ڵ�0��block */
+    /* 调用底软接口读取SD卡的头部控制信息，头部控制信息存储在第0个block */
     DRV_SD_SG_INIT_TABLE((void *)g_pstHeadInfo, OM_SD_BLOCK_SIZE);
 
     lRet = DRV_SD_MULTI_TRANSFER(0, 1, OM_SD_BLOCK_SIZE, RDFlAG);
@@ -1289,11 +1289,11 @@ VOS_UINT32 OM_SDReadHeadInfo(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ���SD��Ϊ�¿�,��ʼ��ͷ��������Ϣ */
+    /* 如果SD卡为新卡,初始化头部控制信息 */
     if((OM_SD_MAGIC_NUMBER != g_pstHeadInfo->ulMagicNum)
         || (OM_SD_OPPOSITE_MAGIC_NUMBER != g_pstHeadInfo->ulOppositeMagicNum))
     {
-        /* ��ȡSD������ */
+        /* 获取SD卡容量 */
         ulSize = (VOS_UINT32)DRV_SD_GET_CAPACITY();
 
         if(0 == ulSize)
@@ -1305,7 +1305,7 @@ VOS_UINT32 OM_SDReadHeadInfo(VOS_VOID)
             return VOS_ERR;
         }
 
-        /* ����SD���ܵ�cluster��Ŀ��Ԥ��10%������ */
+        /* 计算SD卡总的cluster数目，预留10%的余量 */
         g_pstHeadInfo->ulTotalCNum = (ulSize - (ulSize/10)) / OM_SD_BLOCK_NUM_ONE_CLUSTER;
 
         g_pstHeadInfo->ulMagicNum = OM_SD_MAGIC_NUMBER;
@@ -1316,7 +1316,7 @@ VOS_UINT32 OM_SDReadHeadInfo(VOS_VOID)
 
         g_pstHeadInfo->ulNextCid = 1;
 
-        /* ��ʼ��SD��ͷ��������Ϣ */
+        /* 初始化SD卡头部控制信息 */
         DRV_SD_SG_INIT_TABLE((void *)g_pstHeadInfo, OM_SD_BLOCK_SIZE);
         lRet = DRV_SD_MULTI_TRANSFER(0, 1, OM_SD_BLOCK_SIZE, WRFlAG);
 
@@ -1340,7 +1340,7 @@ VOS_UINT32 OM_SDFlushHeadInfo(VOS_VOID)
 
     g_pstHeadInfo->ulNextCid++;
 
-    /* nextCID�ķ�Χʼ���� 1��(g_stHeadInfo.ulTotalCNum -1)֮�䣬��0��cluster���ڱ���ͷ��������Ϣ*/
+    /* nextCID的范围始终在 1－(g_stHeadInfo.ulTotalCNum -1)之间，第0个cluster用于保存头部控制信息*/
     if(0 == (g_pstHeadInfo->ulNextCid % g_pstHeadInfo->ulTotalCNum))
     {
         g_pstHeadInfo->ulNextCid = 1;
@@ -1348,7 +1348,7 @@ VOS_UINT32 OM_SDFlushHeadInfo(VOS_VOID)
         g_pstHeadInfo->ulLoopOutFlag = 1;
     }
 
-    /* ����ͷ��������Ϣ */
+    /* 更新头部控制信息 */
 
     DRV_SD_SG_INIT_TABLE((void *)g_pstHeadInfo, OM_SD_BLOCK_SIZE);
 
@@ -1376,7 +1376,7 @@ VOS_UINT32 OM_SDWriteCard(VOS_UINT8* pucVirAddr, VOS_UINT8 *pucPhyAddr, VOS_UINT
 
     ulCurBufDataLen = g_pstSdBuffer->ulDataLen;
 
-    /* ���Ŀ��bufferʣ��ռ䲻���洢����TRACE */
+    /* 如果目标buffer剩余空间不够存储本次TRACE */
     if(OM_SD_BUFFER_MAX_DATA_LEN < (ulCurBufDataLen + usLen))
     {
         if(VOS_ERR == OM_SDReadHeadInfo())
@@ -1387,14 +1387,14 @@ VOS_UINT32 OM_SDWriteCard(VOS_UINT8* pucVirAddr, VOS_UINT8 *pucPhyAddr, VOS_UINT
             return VOS_ERR;
         }
 
-        /* ����дSD������ʼblock */
+        /* 计算写SD卡的起始block */
         ulSecAddr                        = g_pstHeadInfo->ulNextCid * OM_SD_BLOCK_NUM_ONE_CLUSTER;
 
         g_pstSdBuffer->ulClusterId         = g_pstHeadInfo->ulNextCid;
 
         g_pstSdBuffer->ulOppositeClusterId = ~g_pstHeadInfo->ulNextCid;
 
-        /* дSD��ʧ��ʱ��¼���������˳� */
+        /* 写SD卡失败时记录错误，立即退出 */
         DRV_SD_SG_INIT_TABLE((void *)g_pstSdBuffer, OM_SD_BLOCK_NUM_ONE_CLUSTER*OM_SD_BLOCK_SIZE);
         lRet = DRV_SD_MULTI_TRANSFER(ulSecAddr, OM_SD_BLOCK_NUM_ONE_CLUSTER, OM_SD_BLOCK_SIZE, WRFlAG);
 
@@ -1417,7 +1417,7 @@ VOS_UINT32 OM_SDWriteCard(VOS_UINT8* pucVirAddr, VOS_UINT8 *pucPhyAddr, VOS_UINT
             return VOS_ERR;
         }
 
-        /* ������д��SD����buffer��д����־�������ֶ���� */
+        /* 将数据写到SD卡后将buffer的写满标志及长度字段清空 */
         g_pstSdBuffer->ulDataLen = 0;
 
         OM_SDFlushHeadInfo();
@@ -1425,10 +1425,10 @@ VOS_UINT32 OM_SDWriteCard(VOS_UINT8* pucVirAddr, VOS_UINT8 *pucPhyAddr, VOS_UINT
         ulCurBufDataLen = 0;
     }
 
-    /* copy���� */
+    /* copy数据 */
     VOS_MemCpy((g_pstSdBuffer->aucBuffer + ulCurBufDataLen), pucVirAddr, usLen);
 
-    /* ���³��� */
+    /* 更新长度 */
     g_pstSdBuffer->ulDataLen += (VOS_UINT32)usLen;
 
     g_stOmSDDebugInfo.ulRemainLenth = g_pstSdBuffer->ulDataLen;
@@ -1448,7 +1448,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
     VOS_UINT32                  ulMinValue = g_ulInterval;
     VOS_UINT32                  i;
 
-    /* PC����������ݰ���ų�����Ҫ�������ʱ */
+    /* PC侧请求的数据包序号超过需要读的序号时 */
     if(ulPacketSn > (g_stReadInfo.ulTotalNeedCNum - 1))
     {
         g_ulReadSDErrType = OM_ERR_VALIDPARA;
@@ -1460,7 +1460,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
         return;
     }
 
-    /* ���㱾�η��͸�PC���IND���� */
+    /* 计算本次发送给PC侧的IND个数 */
     if(ulMinValue > (g_stReadInfo.ulTotalNeedCNum - ulPacketSn))
     {
        ulMinValue = g_stReadInfo.ulTotalNeedCNum - ulPacketSn;
@@ -1470,7 +1470,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
     {
         ulCurReadCID = g_stReadInfo.ulStartCID + ulPacketSn;
 
-        /* ������0��cluster��ͷ��������Ϣ��ȡ */
+        /* 跳过第0个cluster的头部控制信息读取 */
         if(ulCurReadCID > (g_pstHeadInfo->ulTotalCNum - 1))
         {
             ulSecAddr = ((ulCurReadCID % g_pstHeadInfo->ulTotalCNum) + 1) * OM_SD_BLOCK_NUM_ONE_CLUSTER;
@@ -1480,7 +1480,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
             ulSecAddr = ulCurReadCID * OM_SD_BLOCK_NUM_ONE_CLUSTER;
         }
 
-        /* ��SD���е����� */
+        /* 读SD卡中的数据 */
         DRV_SD_SG_INIT_TABLE((void *)g_pstSdBuffer, OM_SD_BLOCK_NUM_ONE_CLUSTER*OM_SD_BLOCK_SIZE);
 
         lRet =  DRV_SD_MULTI_TRANSFER(ulSecAddr, OM_SD_BLOCK_NUM_ONE_CLUSTER, OM_SD_BLOCK_SIZE, RDFlAG);
@@ -1504,7 +1504,7 @@ VOS_VOID OM_SDReadCluster(VOS_UINT32 ulPacketSn)
 
         pstOmReadSD->ulSn = ulPacketSn;
 
-        /* ���cluster��CID�ֶκ�~CID�ֶβ���ȡ���Ĺ�ϵ�Ļ�������Ϊ��ǰcluster������ */
+        /* 如果cluster的CID字段和~CID字段不是取反的关系的话，则认为当前cluster数据损坏 */
         if(g_pstSdBuffer->ulClusterId != (~g_pstSdBuffer->ulOppositeClusterId))
         {
             g_ulReadSDErrType = OM_ERR_DATAERR;
@@ -1544,7 +1544,7 @@ VOS_UINT32 OM_SDGetReadPosition(VOS_UINT32 ulNeedSize, VOS_UINT32 ulOffsetSize)
 
     if (0 == g_pstHeadInfo->ulLoopOutFlag)
     {
-        /* �û�ƫ�Ƶ����ݴ���SD������������ */
+        /* 用户偏移的数据大于SD卡中已有数据 */
         if (ulOffsetClusterNum >= (g_pstHeadInfo->ulNextCid - 1))
         {
             g_stReadInfo.ulTotalNeedCNum = 0;
@@ -1554,7 +1554,7 @@ VOS_UINT32 OM_SDGetReadPosition(VOS_UINT32 ulNeedSize, VOS_UINT32 ulOffsetSize)
             return OM_ERR_EMPTY;
         }
 
-        /* �û���Ҫ�����ݴ���SD������������ */
+        /* 用户需要的数据大于SD卡中已有数据 */
         if(ulTotalClusterNum > (g_pstHeadInfo->ulNextCid - 1))
         {
             g_stReadInfo.ulStartCID = 1;
@@ -1566,14 +1566,14 @@ VOS_UINT32 OM_SDGetReadPosition(VOS_UINT32 ulNeedSize, VOS_UINT32 ulOffsetSize)
             return OM_SD_OK;
         }
 
-        /* �û���Ҫ������С��SD������������ */
+        /* 用户需要的数据小于SD卡中已有数据 */
         g_stReadInfo.ulStartCID = g_pstHeadInfo->ulNextCid - ulTotalClusterNum;
 
         return OM_SD_OK;
 
     }
 
-    /* ����SD�������з�ת�������û�ƫ�Ƶ����ݴ���SD������������*/
+    /* 保存SD卡数据有翻转，并且用户偏移的数据大于SD卡中已有数据*/
     if (ulOffsetClusterNum >= (g_pstHeadInfo->ulTotalCNum - 1))
     {
         g_stReadInfo.ulTotalNeedCNum = 0;
@@ -1583,18 +1583,18 @@ VOS_UINT32 OM_SDGetReadPosition(VOS_UINT32 ulNeedSize, VOS_UINT32 ulOffsetSize)
         return OM_ERR_EMPTY;
     }
 
-    /* ��0��cluster���ڱ���ͷ��������Ϣ */
+    /* 第0个cluster用于保存头部控制信息 */
     if(ulTotalClusterNum > (g_pstHeadInfo->ulTotalCNum - 1))
     {
         g_stReadInfo.ulTotalNeedCNum = (g_pstHeadInfo->ulTotalCNum - 1) - ulOffsetClusterNum;
 
-        /* SD��������תʱ���洢���������Ϊ��һ����д���cluster���� */
+        /* SD卡发生翻转时，存储最早的数据为下一个待写入的cluster数据 */
         g_stReadInfo.ulStartCID = g_pstHeadInfo->ulNextCid;
 
         return OM_SD_OK;
     }
 
-    /* ʵ����Ҫ������С��SD���е����� */
+    /* 实际需要的数据小于SD卡中的数据 */
     if(g_pstHeadInfo->ulNextCid > ulTotalClusterNum)
     {
         g_stReadInfo.ulStartCID = g_pstHeadInfo->ulNextCid - ulTotalClusterNum;
@@ -1617,7 +1617,7 @@ VOS_UINT32 OM_SDParaCheck(VOS_UINT32 ulDataSize, VOS_UINT32 *pulErrNo)
         return VOS_ERR;
     }
 
-    /* ���õ����ӿڶ�ȡSD����ͷ��������Ϣ��ͷ��������Ϣ�洢�ڵ�0��block */
+    /* 调用底软接口读取SD卡的头部控制信息，头部控制信息存储在第0个block */
     DRV_SD_SG_INIT_TABLE((void *)g_pstHeadInfo, OM_SD_BLOCK_SIZE);
 
     lRet = DRV_SD_MULTI_TRANSFER(0, 1, OM_SD_BLOCK_SIZE, RDFlAG);
@@ -1633,7 +1633,7 @@ VOS_UINT32 OM_SDParaCheck(VOS_UINT32 ulDataSize, VOS_UINT32 *pulErrNo)
         return VOS_ERR;
     }
 
-    /* ���SD��Ϊ�¿�,��ʼ��ͷ��������Ϣ */
+    /* 如果SD卡为新卡,初始化头部控制信息 */
     if((OM_SD_MAGIC_NUMBER != g_pstHeadInfo->ulMagicNum)
         || (OM_SD_OPPOSITE_MAGIC_NUMBER != g_pstHeadInfo->ulOppositeMagicNum))
     {
@@ -1666,10 +1666,10 @@ VOS_VOID OM_SDReadReqProc(APP_OM_READ_SD_REQ_STRU * pstReadSDReq)
         return;
     }
 
-    /* ��ȡʵ����Ҫ����cluster��Ŀ����ʼ����λ�� */
+    /* 获取实际需要读得cluster数目及起始读的位置 */
     ulRet = OM_SDGetReadPosition(pstReadSDReq->ulTotalSize, pstReadSDReq->ulOffsetSize);
 
-    /*���㷢�͸����߲���Ϣ�����ܳ���*/
+    /*计算发送给工具侧消息包的总长度*/
     pstOmToAppMsg = (OM_APP_MSG_EX_STRU*)VOS_MemAlloc(WUEPS_PID_OM, DYNAMIC_MEM_PT, OM_APP_MSG_EX_LEN + sizeof(OM_APP_READ_SD_CNF_STRU));
 
     if(VOS_NULL_PTR == pstOmToAppMsg)
@@ -1681,7 +1681,7 @@ VOS_VOID OM_SDReadReqProc(APP_OM_READ_SD_REQ_STRU * pstReadSDReq)
         return;
     }
 
-    /* �����Ϣ�ֶβ�����Ϣ���͸�PC�� */
+    /* 填充消息字段并将消息发送给PC侧 */
     pstOmToAppMsg->usLength = (OM_APP_MSG_EX_LEN + sizeof(OM_APP_READ_SD_CNF_STRU) - VOS_OM_HEADER_LEN);
 
     pstOmToAppCnf = (OM_APP_READ_SD_CNF_STRU*)(pstOmToAppMsg->aucPara);
@@ -1710,7 +1710,7 @@ VOS_VOID OM_ReadSdMsgProc(OM_REQ_PACKET_STRU *pstRspPacket, OM_RSP_FUNC *pstRspF
 {
     APP_OM_MSG_EX_STRU              *pstAppToOmMsg;
 
-   /* ���SD���Ƿ���λ */
+   /* 检测SD卡是否在位 */
     if(VOS_OK != DRV_SD_GET_STATUS())
     {
         g_ulReadSDErrType = OM_ERR_NOCARD;
@@ -1724,7 +1724,7 @@ VOS_VOID OM_ReadSdMsgProc(OM_REQ_PACKET_STRU *pstRspPacket, OM_RSP_FUNC *pstRspF
 
     pstAppToOmMsg   = (APP_OM_MSG_EX_STRU*)pstRspPacket;
 
-    /* ����PC�ർ��SD�����ݵ���Ϣ */
+    /* 处理PC侧导出SD卡数据的消息 */
     if(APP_OM_READ_SD_DATA_REQ == pstAppToOmMsg->usPrimId)
     {
         OM_SDReadReqProc((APP_OM_READ_SD_REQ_STRU *)(pstAppToOmMsg->aucPara));
@@ -1802,16 +1802,16 @@ VOS_UINT32 OM_FSInitCfgFile(VOS_VOID)
     sd_fs = SD_FS_GETFS();
     SD_FS_SETFS(KERNEL_DS);
 
-    /* ��Config�ļ� */
+    /* 打开Config文件 */
     lCfgFile = SD_FS_OPEN(g_acFSLogCfgPath, O_RDONLY, OM_SD_FILE_MODE);
 
-    /* �ļ������� */
+    /* 文件不存在 */
     if (lCfgFile < 0)
     {
-        /* �ж�LOGĿ¼�Ƿ��Ѿ����� */
+        /* 判断LOG目录是否已经存在 */
         if (VOS_OK != SD_FS_ACCESS(g_acFSLogDir, 0))
         {
-            /* ���Ŀ¼�������򴴽�LOGĿ¼ */
+            /* 如果目录不存在则创建LOG目录 */
             if(SD_FS_MKDIR(g_acFSLogDir, 0) < 0)
             {
                 SD_FS_SETFS(sd_fs);
@@ -1819,7 +1819,7 @@ VOS_UINT32 OM_FSInitCfgFile(VOS_VOID)
             }
         }
 
-        /* ��������ļ������ڣ��򴴽����ļ�����ʼ������ */
+        /* 如果配置文件不存在，则创建新文件并初始化内容 */
         lCfgFile = SD_FS_OPEN(g_acFSLogCfgPath, O_CREAT|O_TRUNC|O_RDWR, OM_SD_FILE_MODE);
 
         if (lCfgFile < 0)
@@ -1851,7 +1851,7 @@ VOS_UINT32 OM_FSCheckSpace(VOS_VOID)
     VOS_CHAR                            acFilePath[OM_SD_LOG_PATH_MAX_LENGTH] = {0};
     VOS_UINT32                          sd_fs = 0;
 
-    /* �Ƚϵ�ǰ�ļ��洢�Ƿ�ﵽ���� */
+    /* 比较当前文件存储是否达到上限 */
     if ((g_stFSCfgFileInfo.ulFileMaxId - g_stFSCfgFileInfo.ulFileMinId) < g_stFlashLogCfg.ulGULogFileSize)
     {
         return VOS_OK;
@@ -1860,7 +1860,7 @@ VOS_UINT32 OM_FSCheckSpace(VOS_VOID)
     sd_fs = SD_FS_GETFS();
     SD_FS_SETFS(KERNEL_DS);
 
-    /* ɾ�����ļ��Ա�֤�ռ���� */
+    /* 删除旧文件以保证空间可用 */
     while (g_stFSCfgFileInfo.ulFileMinId < g_stFSCfgFileInfo.ulFileMaxId)
     {
         VOS_sprintf((VOS_CHAR *)acFilePath, "%s_%04d.%s",
@@ -1895,19 +1895,19 @@ VOS_UINT32 OM_AddHeadInfoToFile(OM_UCMX_HEAD_INFO_STRU *pstOmUcmxHeadInfo)
 {
     pstOmUcmxHeadInfo->usFileTag         = UCMX_FILE_HEAD_TAG;
     pstOmUcmxHeadInfo->ucFileVersion     = 1;
-    pstOmUcmxHeadInfo->ucHeadSegNum      = 1;                               /* �ļ�ͷ���� */
-    pstOmUcmxHeadInfo->ulSn              = g_stFSCfgFileInfo.ulFileMaxId;   /* �ļ�����ʱ���ļ���� */
+    pstOmUcmxHeadInfo->ucHeadSegNum      = 1;                               /* 文件头个数 */
+    pstOmUcmxHeadInfo->ulSn              = g_stFSCfgFileInfo.ulFileMaxId;   /* 文件分组时的文件编号 */
 
     pstOmUcmxHeadInfo->enSEGType3        = OM_LOG_HEAD_SEG_UE_INFO;
     pstOmUcmxHeadInfo->ucHeadLength3     = 48;
-    /* IMEI �� */
+    /* IMEI 号 */
     if (VOS_OK != NV_Read(en_NV_Item_IMEI, pstOmUcmxHeadInfo->aucImei, OM_IMEI_NV_LEN))
     {
         vos_printf("OM_AddHeadInfoToFile: read Imei fail");
         return VOS_ERR;
     }
 
-    /* �汾���� */
+    /* 版本类型 */
 #if (VOS_WIN32 == VOS_OS_VER)
     pstOmUcmxHeadInfo->ucUEBoardType = OM_WIN32_PLATFORM;
 #else
@@ -1918,7 +1918,7 @@ VOS_UINT32 OM_AddHeadInfoToFile(OM_UCMX_HEAD_INFO_STRU *pstOmUcmxHeadInfo)
 #endif
 #endif  /*(VOS_WIN32 == VOS_OS_VER)*/
 
-    /* ���汾���� 30 �ַ�+ \0 */
+    /* 最大版本长度 30 字符+ \0 */
     VOS_MemCpy((VOS_CHAR*)pstOmUcmxHeadInfo->aucUEVersion, PRODUCT_CFG_FULL_VERSION_STR, (VER_MAX_LENGTH+1));
 
     return VOS_OK;
@@ -1938,7 +1938,7 @@ VOS_UINT32 OM_FSCheckFileIsFull(VOS_UINT32 ulLength)
     VOS_INT                             lReturnLen;
 #endif
 
-    /*�жϵ�ǰд�볤���Ƿ�ʹ��LOG���*/
+    /*判断当前写入长度是否使得LOG溢出*/
     if (g_stFSLogFileInfo.ulFileMaxSize >=
             ((VOS_INT)ulLength + g_stFSLogFileInfo.ulFileSize))
     {
@@ -1948,7 +1948,7 @@ VOS_UINT32 OM_FSCheckFileIsFull(VOS_UINT32 ulLength)
     sd_fs = SD_FS_GETFS();
     SD_FS_SETFS(KERNEL_DS);
 
-    /* �ر�����д���ļ� */
+    /* 关闭正在写的文件 */
     SD_FS_CLOSE(g_stFSLogFileInfo.lFileHandle);
 
     if (VOS_OK != OM_FSCheckSpace())
@@ -1963,10 +1963,10 @@ VOS_UINT32 OM_FSCheckFileIsFull(VOS_UINT32 ulLength)
                 g_stFSCfgFileInfo.ulFileMaxId,
                 g_acFSLogType);
 
-    /*��LOG�ļ������ҳ�ʼ��Ϊ�գ�������ļ������ڣ��򴴽����ļ�*/
+    /*打开LOG文件，并且初始化为空，如果此文件不存在，则创建此文件*/
     lTempHandle = SD_FS_OPEN(acFilePath, O_CREAT|O_RDWR|O_TRUNC, OM_SD_FILE_MODE);
 
-    /*��ʧ��*/
+    /*打开失败*/
     if (lTempHandle < 0)
     {
         g_stFSLogFileInfo.bIsWritten    = VOS_FALSE;
@@ -1983,13 +1983,13 @@ VOS_UINT32 OM_FSCheckFileIsFull(VOS_UINT32 ulLength)
     g_stFSLogFileInfo.ulFileSize    = 0;
 
 #if (FEATURE_ON == FEATURE_COMPRESS_WRITE_LOG_FILE)
-    /* LOGѹ���㷨��������Ҫ����ͷ�ļ���Ϣ */
+    /* LOG压缩算法开启，需要增加头文件信息 */
     if(VOS_OK != OM_AddHeadInfoToFile(&stOmUcmxHeadInfo))
     {
         return VOS_ERR;
     }
 
-    /*д��LOG����*/
+    /*写入LOG内容*/
     lReturnLen = SD_FS_WRITE(g_stFSLogFileInfo.lFileHandle, (VOS_CHAR*)&stOmUcmxHeadInfo, sizeof(stOmUcmxHeadInfo));
 
     if (lReturnLen != sizeof(stOmUcmxHeadInfo))
@@ -2022,7 +2022,7 @@ VOS_UINT32 OM_FSCheckWriteCount(VOS_VOID)
     VOS_INT                             lTempHandle;
     VOS_UINT32                          sd_fs = 0;
 
-    /* ��������ʱ�����ļ��رգ������´��ļ� */
+    /* 当计数到时，将文件关闭，并重新打开文件 */
     if (0 != g_stFSLogFileInfo.ulRemainCount)
     {
         return VOS_OK;
@@ -2039,7 +2039,7 @@ VOS_UINT32 OM_FSCheckWriteCount(VOS_VOID)
 
     lTempHandle = SD_FS_OPEN(acFilePath,O_CREAT|O_RDWR|O_APPEND, OM_SD_FILE_MODE);
 
-    /*��ʧ��*/
+    /*打开失败*/
     if (lTempHandle < 0)
     {
         g_stFSLogFileInfo.bIsWritten    = VOS_FALSE;
@@ -2065,13 +2065,13 @@ VOS_UINT32 OM_FSWriteLogFile(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
     VOS_INT                             lReturnLen;
     VOS_UINT32                          sd_fs = 0;
 
-    /*�жϵ�ǰ�ļ��Ƿ��д*/
+    /*判断当前文件是否可写*/
     if (VOS_FALSE == g_stFSLogFileInfo.bIsWritten)
     {
         return VOS_ERR;
     }
 
-    /*�ж�д�볤���Ƿ񳬹����ļ�����󳤶�*/
+    /*判断写入长度是否超过了文件的最大长度*/
     if (g_stFSLogFileInfo.ulFileMaxSize < ulLength)
     {
         g_stFSLogFileInfo.ulErrLog  = LOG_OPERATION_LENGTH_TOOBIG;
@@ -2091,7 +2091,7 @@ VOS_UINT32 OM_FSWriteLogFile(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
     sd_fs = SD_FS_GETFS();
     SD_FS_SETFS(KERNEL_DS);
 
-    /*д��LOG����*/
+    /*写入LOG内容*/
     lReturnLen = SD_FS_WRITE(g_stFSLogFileInfo.lFileHandle, pcLogData, ulLength);
 
     if (ulLength != lReturnLen)
@@ -2104,7 +2104,7 @@ VOS_UINT32 OM_FSWriteLogFile(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
         return VOS_ERR;
     }
 
-    /* ����LOG�ļ�д�Ĵ�����ʵ�ʴ�С */
+    /* 更新LOG文件写的次数和实际大小 */
     g_stFSLogFileInfo.ulFileSize += ulLength;
 
     SD_FS_FILE_SYNC(g_stFSLogFileInfo.lFileHandle);
@@ -2118,19 +2118,19 @@ VOS_UINT32 OM_FSWriteLogFile(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
 VOS_UINT32 OM_CompressRcvLog(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
 {
     VOS_UINT32                          ulCompressDataLen = 0;
-    VOS_UINT32                          ulTempPackLen     = 0; /* ��ʱ���δѹ�����ݳ��� */
-    VOS_UINT32                          ulRemainLen       = 0; /* �������� */
-    VOS_UINT32                          ulNextPackLen     = 0; /* ������һ��ѹ������ */
+    VOS_UINT32                          ulTempPackLen     = 0; /* 临时存放未压缩数据长度 */
+    VOS_UINT32                          ulRemainLen       = 0; /* 余数长度 */
+    VOS_UINT32                          ulNextPackLen     = 0; /* 留作下一包压缩数据 */
     VOS_UINT32                          ulIndexMax        = 0;
     VOS_UINT32                          ulIndex           = 0;
 
     g_stCompressDebugLog.ulRcvNum++;
     g_stCompressDebugLog.ulRcvLen += ulLength;
 
-    /* �ָ���� */
+    /* 分隔标记 */
     g_stCompressData.ulDataTag    = UCMX_DATA_TAG;
 
-    /* ÿ��ѹ���ݴ�С�̶����������ѹ���� */
+    /* 每次压数据大小固定，算出余数压缩量 */
     ulRemainLen = ((ulLength + g_ulPackLen) % OM_MAX_PACK_DATA_LEN);
     ulIndexMax  = (ulLength + g_ulPackLen)/OM_MAX_PACK_DATA_LEN;
 
@@ -2141,7 +2141,7 @@ VOS_UINT32 OM_CompressRcvLog(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
 
         if (0 == ulIndex)
         {
-            /* �Ѿ�������ݳ��� */
+            /* 已经组包内容长度 */
             ulTempPackLen = g_ulPackLen;
         }
 
@@ -2152,12 +2152,12 @@ VOS_UINT32 OM_CompressRcvLog(VOS_CHAR *pcLogData, VOS_UINT32 ulLength)
         g_stCompressData.ulDataLength = ulCompressDataLen;
         OM_FSWriteLogFile((VOS_CHAR *)&g_stCompressData, (ulCompressDataLen + (2*sizeof(VOS_UINT32))));
 
-        /* ����������� */
+        /* 组包长度清零 */
         g_ulPackLen   = 0;
 
     }
 
-    /* ������һ��ѹ�� */
+    /* 留作下一包压缩 */
     ulNextPackLen = (ulRemainLen - g_ulPackLen);
     VOS_MemCpy(g_aucPackData + g_ulPackLen, pcLogData + (ulLength - ulNextPackLen), ulNextPackLen);
     g_ulPackLen += ulNextPackLen;

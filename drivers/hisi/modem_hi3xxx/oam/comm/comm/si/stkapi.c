@@ -20,23 +20,23 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 #define    THIS_FILE_ID PS_FILE_ID_STK_API_C
 
 /*****************************************************************************
-º¯ Êý Ãû  : GetMainMenu
-¹¦ÄÜÃèÊö  : »ñÈ¡STK¹¦ÄÜµÄÖ÷²Ëµ¥
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : GetMainMenu
+åŠŸèƒ½æè¿°  : èŽ·å–STKåŠŸèƒ½çš„ä¸»èœå•
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2009Äê7ÔÂ6ÈÕ
-  ×÷    Õß  : H9254
-  ÐÞ¸ÄÄÚÈÝ  : Create
+1.æ—¥    æœŸ  : 2009å¹´7æœˆ6æ—¥
+  ä½œ    è€…  : H9254
+  ä¿®æ”¹å†…å®¹  : Create
 *****************************************************************************/
 SI_UINT32 SI_STK_SendReqMsg(MN_CLIENT_ID_T ClientId,MN_OPERATION_ID_T OpId, SI_UINT32 MsgName,
                                     SI_UINT32 CmdType, SI_UINT32 DataLen, SI_UINT8 *pData)
@@ -52,7 +52,7 @@ SI_UINT32 SI_STK_SendReqMsg(MN_CLIENT_ID_T ClientId,MN_OPERATION_ID_T OpId, SI_U
     ulSendPid = WUEPS_PID_AT;
 
 #if ( FEATURE_MULTI_MODEM == FEATURE_ON )
-    /* µ÷ÓÃ½Ó¿Ú»ñÈ¡Modem ID */
+    /* è°ƒç”¨æŽ¥å£èŽ·å–Modem ID */
     if(VOS_OK != AT_GetModemIdFromClient(ClientId,&enModemID))
     {
       STK_ERROR_LOG("SI_STK_SendReqMsg: AT_GetModemIdFromClient Return Error");
@@ -106,17 +106,17 @@ SI_UINT32 SI_STK_SendReqMsg(MN_CLIENT_ID_T ClientId,MN_OPERATION_ID_T OpId, SI_U
 
 #if  ((OSA_CPU_ACPU == VOS_OSA_CPU) || (defined(DMT)))
 /*****************************************************************************
-º¯ Êý Ãû  : GetMainMenu
-¹¦ÄÜÃèÊö  : »ñÈ¡STK¹¦ÄÜµÄÖ÷²Ëµ¥
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : GetMainMenu
+åŠŸèƒ½æè¿°  : èŽ·å–STKåŠŸèƒ½çš„ä¸»èœå•
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2009Äê7ÔÂ6ÈÕ
-  ×÷    Õß  : H9254
-  ÐÞ¸ÄÄÚÈÝ  : Create
+1.æ—¥    æœŸ  : 2009å¹´7æœˆ6æ—¥
+  ä½œ    è€…  : H9254
+  ä¿®æ”¹å†…å®¹  : Create
 *****************************************************************************/
 SI_UINT32 SI_STK_GetMainMenu(MN_CLIENT_ID_T ClientId,MN_OPERATION_ID_T OpId)
 {
@@ -218,7 +218,7 @@ VOS_UINT32 SI_STKIsDualImsiSupport(VOS_VOID)
         STK_WARNING_LOG("STK_InitGobal: Read en_NV_Item_NV_HUAWEI_DOUBLE_IMSI_CFG_I Fail");
     }
 
-    /* Ç°ºóÁ½¸ö×Ô½Ú¾ùÎª1£¬Dual IMSI¹¦ÄÜ²Å¿ªÆô£¬µÚÒ»¸ö×Ö½ÚÎªNV¼¤»î±êÖ¾£¬µÚ¶þ¸öÎªÊ¹ÄÜÎ» */
+    /* å‰åŽä¸¤ä¸ªè‡ªèŠ‚å‡ä¸º1ï¼ŒDual IMSIåŠŸèƒ½æ‰å¼€å¯ï¼Œç¬¬ä¸€ä¸ªå­—èŠ‚ä¸ºNVæ¿€æ´»æ ‡å¿—ï¼Œç¬¬äºŒä¸ªä¸ºä½¿èƒ½ä½ */
     if ( STK_NV_ENABLED == usDualIMSIFlag )
     {
         return VOS_TRUE;
@@ -249,7 +249,7 @@ SI_UINT32 SI_STK_MenuSelection(MN_CLIENT_ID_T        ClientId,
 
 VOS_UINT32 SI_STK_SetUpCallConfirm(MN_CLIENT_ID_T ClientId, SI_STK_SETUPCALLCONFIRM_ENUM_UINT32 enAction)
 {
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (SI_STK_SETUPCALL_BUTT <= enAction)
     {
         STK_ERROR_LOG("SI_STK_SetUpCallConfirm: The Input Para is Error");
@@ -271,7 +271,7 @@ VOS_VOID SI_STKGetCurImsiSign(VOS_UINT16 *pusDualIMSIEnable, VOS_UINT32 *pulCurI
 
     *pusDualIMSIEnable = VOS_FALSE;
 
-    /* ÅÐ¶ÏÊÇ·ñ´æÔÚÖ÷²Ëµ¥ */
+    /* åˆ¤æ–­æ˜¯å¦å­˜åœ¨ä¸»èœå• */
     if (SI_STK_MENU_EXIST != gstSetUpMenuData.ucUsatTag)
     {
         STK_WARNING_LOG("SI_STKGetCurImsiSign: There is any Main Menu Content");
@@ -279,7 +279,7 @@ VOS_VOID SI_STKGetCurImsiSign(VOS_UINT16 *pusDualIMSIEnable, VOS_UINT32 *pulCurI
         return;
     }
 
-    /* ÔÚÖ÷²Ëµ¥ÖÐÆ¥Åä£¬Èç¹ûÆ¥ÅäÊ§°ÜpusDualIMSIEnableÉèÖÃÎªDisable£¬*/
+    /* åœ¨ä¸»èœå•ä¸­åŒ¹é…ï¼Œå¦‚æžœåŒ¹é…å¤±è´¥pusDualIMSIEnableè®¾ç½®ä¸ºDisableï¼Œ*/
     for (i = 0; i < gstSetUpMenuData.stSetUpMenu.ulItemNum; i++)
     {
         for (j = 0; j < gstSTKIMSIMatch.usMatchStrCnt; j++)
@@ -327,7 +327,7 @@ VOS_VOID SI_STK_CCResultInd(SI_STK_ENVELOPE_RSP_STRU    *pstRspData)
         return;
     }
 
-    /* COPY aplhaid ×Ö¶Î */
+    /* COPY aplhaid å­—æ®µ */
     if (VOS_TRUE == pstRspData->uResp.CallCtrlRsp.OP_Alaph)
     {
         stEvent.STKCmdStru.CmdStru.STKCcIndInfo.stAlphaIdInfo.ulAlphaLen
@@ -339,10 +339,10 @@ VOS_VOID SI_STK_CCResultInd(SI_STK_ENVELOPE_RSP_STRU    *pstRspData)
 
     if (VOS_TRUE == pstRspData->uResp.CallCtrlRsp.OP_SepcialData)
     {
-        /* ½âÎöÀàÐÍ×Ö¶Î */
+        /* è§£æžç±»åž‹å­—æ®µ */
         stEvent.STKCmdStru.CmdStru.STKCcIndInfo.uInfo.stCtrlDataInfo.ucDataType
                                                        = pstRspData->uResp.CallCtrlRsp.SpecialData.pValue[0];
-        /* Êý¾Ý×Ö¶Îcopy */
+        /* æ•°æ®å­—æ®µcopy */
         stEvent.STKCmdStru.CmdStru.STKCcIndInfo.uInfo.stCtrlDataInfo.usDataLen
                                                         = pstRspData->uResp.CallCtrlRsp.SpecialData.ucLen - 1;
 
@@ -357,7 +357,7 @@ VOS_VOID SI_STK_CCResultInd(SI_STK_ENVELOPE_RSP_STRU    *pstRspData)
 }
 VOS_VOID SI_STK_SMSCtrlResultInd(SI_STK_ENVELOPE_RSP_STRU *pstRspData)
 {
-    //ÐèÒªÈ·ÈÏaddr1ÊÇÄ¿µÄµØÖ·»¹ÊÇaddr2
+    //éœ€è¦ç¡®è®¤addr1æ˜¯ç›®çš„åœ°å€è¿˜æ˜¯addr2
     SI_STK_EVENT_INFO_STRU              stEvent;
 
     VOS_MemSet(&stEvent, 0, sizeof(stEvent));
@@ -368,7 +368,7 @@ VOS_VOID SI_STK_SMSCtrlResultInd(SI_STK_ENVELOPE_RSP_STRU *pstRspData)
     stEvent.STKCmdStru.CmdStru.STKCcIndInfo.ucType      = SI_STK_SMS_CTRL;
 
 
-    /* COPY aplhaid ×Ö¶Î */
+    /* COPY aplhaid å­—æ®µ */
     if (VOS_TRUE == pstRspData->uResp.MoSmsCtrlRsp.OP_Alaph)
     {
 
@@ -381,10 +381,10 @@ VOS_VOID SI_STK_SMSCtrlResultInd(SI_STK_ENVELOPE_RSP_STRU *pstRspData)
 
     if (VOS_TRUE == pstRspData->uResp.MoSmsCtrlRsp.OP_Addr1)
     {
-        /* ½âÎöÄ¿µÄµØÖ·ÀàÐÍ×Ö¶Î */
+        /* è§£æžç›®çš„åœ°å€ç±»åž‹å­—æ®µ */
         stEvent.STKCmdStru.CmdStru.STKCcIndInfo.uInfo.stMoSmsCtrlInfo.stDstAddrInfo.ucNumType
                                                             = pstRspData->uResp.MoSmsCtrlRsp.Addr1.ucNumType;
-        /* copyÄ¿µÄµØÖ· */
+        /* copyç›®çš„åœ°å€ */
         stEvent.STKCmdStru.CmdStru.STKCcIndInfo.uInfo.stMoSmsCtrlInfo.stDstAddrInfo.ucAddrLen
                                                             = pstRspData->uResp.MoSmsCtrlRsp.Addr1.ucLen;
 
@@ -396,11 +396,11 @@ VOS_VOID SI_STK_SMSCtrlResultInd(SI_STK_ENVELOPE_RSP_STRU *pstRspData)
 
     if (VOS_TRUE == pstRspData->uResp.MoSmsCtrlRsp.OP_Addr2)
     {
-        /* ½âÎö·þÎñÖÐÐÄµØÖ·ÀàÐÍ×Ö¶Î */
+        /* è§£æžæœåŠ¡ä¸­å¿ƒåœ°å€ç±»åž‹å­—æ®µ */
         stEvent.STKCmdStru.CmdStru.STKCcIndInfo.uInfo.stMoSmsCtrlInfo.stSerCenterAddrInfo.ucNumType
                                                           = pstRspData->uResp.MoSmsCtrlRsp.Addr2.ucNumType;
 
-        /* copy·þÎñÖÐÐÄºÅÂë */
+        /* copyæœåŠ¡ä¸­å¿ƒå·ç  */
         stEvent.STKCmdStru.CmdStru.STKCcIndInfo.uInfo.stMoSmsCtrlInfo.stSerCenterAddrInfo.ucAddrLen
                                                             =pstRspData->uResp.MoSmsCtrlRsp.Addr2.ucLen;
 
@@ -514,7 +514,7 @@ VOS_UINT32 SI_STK_EnvelopeRsp_Decode(SI_STK_ENVELOPE_TYPE         enDataType,
     pstRspData->EnvelopeType    = enDataType;
     pstRspData->Result          = pucCmdData[0];
 
-    if(pucCmdData[0] > 0x80)/*È·¶¨Ö÷¶¯ÃüÁîµÄ³¤¶È×Ö½Ú*/
+    if(pucCmdData[0] > 0x80)/*ç¡®å®šä¸»åŠ¨å‘½ä»¤çš„é•¿åº¦å­—èŠ‚*/
     {
         ulOffset = 0x02;
     }

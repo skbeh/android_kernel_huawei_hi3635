@@ -2,12 +2,12 @@
 #include <osl_types.h>
 #include "drv_chg.h"
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_CHG_ChargingStatus
- ¹¦ÄÜÃèÊö  :²éÑ¯Ä¿Ç°ÊÇ·ñÕýÔÚ³äµçÖÐ
- ÊäÈë²ÎÊý  :ÎÞ
- Êä³ö²ÎÊý  :ÎÞ
- ·µ»ØÖµ£º   0 Î´³äµç
-                          1 ³äµçÖÐ
+ å‡½ æ•° å  : BSP_CHG_ChargingStatus
+ åŠŸèƒ½æè¿°  :æŸ¥è¯¢ç›®å‰æ˜¯å¦æ­£åœ¨å……ç”µä¸­
+ è¾“å…¥å‚æ•°  :æ— 
+ è¾“å‡ºå‚æ•°  :æ— 
+ è¿”å›žå€¼ï¼š   0 æœªå……ç”µ
+                          1 å……ç”µä¸­
 *****************************************************************************/
 int DRV_CHG_GET_CHARGING_STATUS(void)
 {
@@ -15,25 +15,25 @@ int DRV_CHG_GET_CHARGING_STATUS(void)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_CHG_StateGet
- ¹¦ÄÜÃèÊö  :chg_state_set(UINT32 ulstate)ÔÚAºËµÄÓ³Éäº¯Êý,²éÑ¯ÊÇ·ñÐèÒª²¹µç
- ÊäÈë²ÎÊý  :
- Êä³ö²ÎÊý  :
- ·µ»ØÖµ£º
+ å‡½ æ•° å  : BSP_CHG_StateGet
+ åŠŸèƒ½æè¿°  :chg_state_set(UINT32 ulstate)åœ¨Aæ ¸çš„æ˜ å°„å‡½æ•°,æŸ¥è¯¢æ˜¯å¦éœ€è¦è¡¥ç”µ
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿”å›žå€¼ï¼š
 *****************************************************************************/
 int BSP_CHG_StateGet(void)
 {
     return -1;
 }
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_CHG_GetCbcState
- ¹¦ÄÜÃèÊö  : ·µ»Øµç³Ø×´Ì¬ºÍµçÁ¿
- ÊäÈë²ÎÊý  : pusBcs 0:µç³ØÔÚ¹©µç 1:Óëµç³ØÁ¬½Óµç³ØÎ´¹©µç 2:Ã»ÓÐÓëµç³ØÁ¬½Ó
-             pucBcl  0:µçÁ¿²»×ã»òÃ»ÓÐÓëµç³ØÁ¬½Ó
- Êä³ö²ÎÊý  : pusBcs 0:µç³ØÔÚ¹©µç 1:Óëµç³ØÁ¬½Óµç³ØÎ´¹©µç 2:Ã»ÓÐÓëµç³ØÁ¬½Ó
-             pucBcl  0:µçÁ¿²»×ã»òÃ»ÓÐÓëµç³ØÁ¬½Ó
- ·µ»ØÖµ£º    0 ²Ù×÷³É¹¦
-             -1²Ù×÷Ê§°Ü
+ å‡½ æ•° å  : BSP_CHG_GetCbcState
+ åŠŸèƒ½æè¿°  : è¿”å›žç”µæ± çŠ¶æ€å’Œç”µé‡
+ è¾“å…¥å‚æ•°  : pusBcs 0:ç”µæ± åœ¨ä¾›ç”µ 1:ä¸Žç”µæ± è¿žæŽ¥ç”µæ± æœªä¾›ç”µ 2:æ²¡æœ‰ä¸Žç”µæ± è¿žæŽ¥
+             pucBcl  0:ç”µé‡ä¸è¶³æˆ–æ²¡æœ‰ä¸Žç”µæ± è¿žæŽ¥
+ è¾“å‡ºå‚æ•°  : pusBcs 0:ç”µæ± åœ¨ä¾›ç”µ 1:ä¸Žç”µæ± è¿žæŽ¥ç”µæ± æœªä¾›ç”µ 2:æ²¡æœ‰ä¸Žç”µæ± è¿žæŽ¥
+             pucBcl  0:ç”µé‡ä¸è¶³æˆ–æ²¡æœ‰ä¸Žç”µæ± è¿žæŽ¥
+ è¿”å›žå€¼ï¼š    0 æ“ä½œæˆåŠŸ
+             -1æ“ä½œå¤±è´¥
 *****************************************************************************/
 int DRV_CHG_GET_CBC_STATE(unsigned char *pusBcs,unsigned char *pucBcl)
 {
@@ -42,12 +42,12 @@ int DRV_CHG_GET_CBC_STATE(unsigned char *pusBcs,unsigned char *pucBcl)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_CHG_GET_BATTERY_STATE
- ¹¦ÄÜÃèÊö  : »ñÈ¡µ×²ãµç³Ø×´Ì¬ÐÅÏ¢
- ÊäÈë²ÎÊý  : battery_state µçÁ¿ÐÅÏ¢
- Êä³ö²ÎÊý  : battery_state µçÁ¿ÐÅÏ¢
- ·µ»ØÖµ£º    0 ²Ù×÷³É¹¦
-             -1²Ù×÷Ê§°Ü
+ å‡½ æ•° å  : DRV_CHG_GET_BATTERY_STATE
+ åŠŸèƒ½æè¿°  : èŽ·å–åº•å±‚ç”µæ± çŠ¶æ€ä¿¡æ¯
+ è¾“å…¥å‚æ•°  : battery_state ç”µé‡ä¿¡æ¯
+ è¾“å‡ºå‚æ•°  : battery_state ç”µé‡ä¿¡æ¯
+ è¿”å›žå€¼ï¼š    0 æ“ä½œæˆåŠŸ
+             -1æ“ä½œå¤±è´¥
 *****************************************************************************/
 int DRV_CHG_GET_BATTERY_STATE(BATT_STATE_T *bttery_state)
 {
@@ -55,11 +55,11 @@ int DRV_CHG_GET_BATTERY_STATE(BATT_STATE_T *bttery_state)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_CHG_Sply
- ¹¦ÄÜÃèÊö  :chg_state_set(UINT32 ulstate)ÔÚAºËµÄÓ³Éäº¯Êý,²éÑ¯ÊÇ·ñÐèÒª²¹µç
- ÊäÈë²ÎÊý  :
- Êä³ö²ÎÊý  :
- ·µ»ØÖµ£º
+ å‡½ æ•° å  : BSP_CHG_Sply
+ åŠŸèƒ½æè¿°  :chg_state_set(UINT32 ulstate)åœ¨Aæ ¸çš„æ˜ å°„å‡½æ•°,æŸ¥è¯¢æ˜¯å¦éœ€è¦è¡¥ç”µ
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿”å›žå€¼ï¼š
 *****************************************************************************/
 int BSP_CHG_Sply( void)
 {
@@ -67,12 +67,12 @@ int BSP_CHG_Sply( void)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_CHG_STATE_SET
- ¹¦ÄÜÃèÊö  : Ê¹ÄÜ»òÕß½ûÖ¹³äµç
- ÊäÈë²ÎÊý  : ulState    0:½ûÖ¹³äµç
- 						1:Ê¹ÄÜ³äµç
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ£º    ÎÞ
+ å‡½ æ•° å  : DRV_CHG_STATE_SET
+ åŠŸèƒ½æè¿°  : ä½¿èƒ½æˆ–è€…ç¦æ­¢å……ç”µ
+ è¾“å…¥å‚æ•°  : ulState    0:ç¦æ­¢å……ç”µ
+ 						1:ä½¿èƒ½å……ç”µ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼ï¼š    æ— 
 *****************************************************************************/
 void  DRV_CHG_STATE_SET(unsigned int ulState)
 {

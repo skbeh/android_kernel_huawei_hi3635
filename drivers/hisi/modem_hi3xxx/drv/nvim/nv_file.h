@@ -65,7 +65,7 @@ enum
 
 struct nv_file_info_stru
 {
-    u32 magic_num;      /*±êÊ¶ÎÄ¼ş   0x766e(nv): ÓĞ*/
+    u32 magic_num;      /*æ ‡è¯†æ–‡ä»¶   0x766e(nv): æœ‰*/
     u32 off;            /*file offset in one section*/
     u32 len;            /*file lenght */
 };
@@ -74,10 +74,10 @@ struct nv_file_info_stru
 struct nv_dload_packet_head_stru
 {
 
-    struct nv_file_info_stru nv_bin;     /*nv.binÎÄ¼şĞÅÏ¢*/
-    struct nv_file_info_stru xnv_xml[2]; /*Ë«¿¨xnv.xmlÎÄ¼şĞÅÏ¢*/
-    struct nv_file_info_stru cust_xml[2];/*Ë«¿¨cust.xmlÎÄ¼şĞÅÏ¢*/
-    struct nv_file_info_stru xnv_map[2];/*Ë«¿¨xnv.xml mapÎÄ¼şĞÅÏ¢*/
+    struct nv_file_info_stru nv_bin;     /*nv.binæ–‡ä»¶ä¿¡æ¯*/
+    struct nv_file_info_stru xnv_xml[2]; /*åŒå¡xnv.xmlæ–‡ä»¶ä¿¡æ¯*/
+    struct nv_file_info_stru cust_xml[2];/*åŒå¡cust.xmlæ–‡ä»¶ä¿¡æ¯*/
+    struct nv_file_info_stru xnv_map[2];/*åŒå¡xnv.xml mapæ–‡ä»¶ä¿¡æ¯*/
 };
 
 
@@ -86,8 +86,8 @@ struct nv_dload_packet_head_stru
 #define NV_FLASH_FILL                        (0xff)    /*mtd write one page,need to fill invality data*/
 
 /*8bit nand,blocksize = 128k*/
-#define NV_BIN_FILE_BLOCK_NUM         8            /*binÎÄ¼ş³¤¶Èµ±Ç°×î´ó896k*/
-#define NV_DLOAD_FILE_BLOCK_NUM       16           /*dload ·ÖÇø³¤¶È2M,¿éÊı×î¶à16¿é*/
+#define NV_BIN_FILE_BLOCK_NUM         8            /*binæ–‡ä»¶é•¿åº¦å½“å‰æœ€å¤§896k*/
+#define NV_DLOAD_FILE_BLOCK_NUM       16           /*dload åˆ†åŒºé•¿åº¦2M,å—æ•°æœ€å¤š16å—*/
 
 struct nv_sec_file_block_info
 {

@@ -66,7 +66,7 @@ int ipc_msg_send(unsigned int processor_id, struct ipc_msg *msg, unsigned int mo
 	is_sync_msg = (SYNC_CMD == msg->mode) ? SYNC_MSG : ASYNC_MSG;
 
 	if (SYNC_MODE == mode) {
-		/*ack buffer Óëdata buffer ¸´ÓÃ*/
+		/*ack buffer ä¸data buffer å¤ç”¨*/
 		ret = RPROC_SYNC_SEND(msg->mailbox_id,
 							msg->data,
 							ARRY_SIZE(msg->data),
@@ -74,7 +74,7 @@ int ipc_msg_send(unsigned int processor_id, struct ipc_msg *msg, unsigned int mo
 							msg->data,
 							ARRY_SIZE(msg->data));
 	} else if (ASYNC_MODE == mode) {
-		/*Òì²½·¢ËÍÔİÊ±²»¿¼ÂÇcomplete ´¦Àí*/
+		/*å¼‚æ­¥å‘é€æš‚æ—¶ä¸è€ƒè™‘complete å¤„ç†*/
 		ret = RPROC_ASYNC_SEND(msg->mailbox_id,
 							msg->data,
 							ARRY_SIZE(msg->data),

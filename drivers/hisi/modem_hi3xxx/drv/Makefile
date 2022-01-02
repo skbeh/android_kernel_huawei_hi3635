@@ -23,7 +23,7 @@ endif
 ifeq ($(strip $(CFG_CONFIG_HI6559_RTC)),YES)
 obj-y	+= rtc/
 endif
-# ÎÂ¶È±£»¤ĞèÒª·ÅÔÚccore¼ÓÔØÖ®Ç°£¬ÇëÎğÒÆ¶¯¡£ 
+# æ¸©åº¦ä¿æŠ¤éœ€è¦æ”¾åœ¨ccoreåŠ è½½ä¹‹å‰ï¼Œè¯·å‹¿ç§»åŠ¨ã€‚ 
 ifeq ($(strip $(CFG_CONFIG_TEMPERATURE_PROTECT)),YES)
 obj-y				+= temperature/
 endif

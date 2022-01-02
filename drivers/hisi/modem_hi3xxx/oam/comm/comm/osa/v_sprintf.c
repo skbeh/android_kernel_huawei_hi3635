@@ -32,7 +32,7 @@ extern "C"{
 #include "v_IO.h"
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_V_SPRINTF_C
 
@@ -154,7 +154,7 @@ VOS_INT32 _C_formatter(const VOS_CHAR *format,
             if (!format_flag)
             {
                 *(str+*((VOS_INT32 *)secret_pointer))='\0';
-                /*nr_of_chars¼ÆÊıÓĞ´í,µ±\nÊ±,Êµ¼ÊÊÇ2¸ö×Ö·û,nr_of_charsÖ»¼ÇÁËÒ»´Î*/
+                /*nr_of_charsè®¡æ•°æœ‰é”™,å½“\næ—¶,å®é™…æ˜¯2ä¸ªå­—ç¬¦,nr_of_charsåªè®°äº†ä¸€æ¬¡*/
                 return *((VOS_INT32 *)secret_pointer);
             }
             put_one_char ((VOS_UINT8)format_flag, secret_pointer,str);
@@ -319,7 +319,7 @@ VOS_INT32 _C_formatter(const VOS_CHAR *format,
         case 'X':
         case 'x':
             if (format_flag == 'p')
-            { /* huyong ??? ---- %pºÍ±ê×¼µÄÊä³ö²»Í¬ */
+            { /* huyong ??? ---- %på’Œæ ‡å‡†çš„è¾“å‡ºä¸åŒ */
                 if (length)
                 {
                     ulong = (VOS_UINT_PTR)va_arg(ap,VOS_CHAR *);
@@ -422,7 +422,7 @@ VOS_INT32 _C_formatter(const VOS_CHAR *format,
             break;
                 
         case 'f':
-            format_flag = 0; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+            format_flag = 0; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
             /*fall though*/
         case 'e':
             /*fall though*/

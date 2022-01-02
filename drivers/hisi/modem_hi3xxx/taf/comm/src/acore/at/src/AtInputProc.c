@@ -4,7 +4,7 @@
   Author       : ---
   Version      : V100R001
   Date         : 2005-04-19
-  Description  : ��C�ļ�������ATģ��˿ڹ�������
+  Description  : 该C文件给出了AT模块端口管理功能
   Function List:
 
   History      :
@@ -15,7 +15,7 @@
 ************************************************************************/
 
 /*****************************************************************************
-   1 ͷ�ļ�����
+   1 头文件包含
 *****************************************************************************/
 #include "ATCmdProc.h"
 #include "om.h"
@@ -51,12 +51,12 @@
 #endif
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_AT_INPUTPROC_C
 
 /*****************************************************************************
-   2 ȫ�ֱ�������
+   2 全局变量定义
 *****************************************************************************/
 VOS_UINT32                              g_ulAtUsbDebugFlag = VOS_FALSE;
 
@@ -94,16 +94,16 @@ AT_HSIC_CONTEXT_STRU                    g_astAtHsicCtx[] =
 };
 #endif
 
-/* AT/DIAGͨ������·���� */
+/* AT/DIAG通道的链路索引 */
 VOS_UINT8                               gucOmDiagIndex    = AT_MAX_CLIENT_NUM;
 
-/* USB NCM��UDI��� */
+/* USB NCM的UDI句柄 */
 UDI_HANDLE                              g_ulAtUdiNdisHdl  = UDI_INVALID_HANDLE;
 
-/* �ñ���Ŀǰֻ����USB-MODEM, HSIC-MODEM��HS-UART�ľ����������Ҫ������Ҫ��PL���� */
+/* 该变量目前只保存USB-MODEM, HSIC-MODEM和HS-UART的句柄，后续需要添加需要与PL讨论 */
 UDI_HANDLE                              g_alAtUdiHandle[AT_CLIENT_BUTT] = {UDI_INVALID_HANDLE};
 
-/* AT֡�ṹ��DRV ֵ֮��Ķ�Ӧ��ϵ */
+/* AT帧结构与DRV 值之间的对应关系 */
 AT_UART_FORMAT_PARAM_STRU               g_astAtUartFormatTab[] =
 {
     /* auto detect */
@@ -137,11 +137,11 @@ AT_UART_FORMAT_PARAM_STRU               g_astAtUartFormatTab[] =
 
 
 /*****************************************************************************
-   3 ��������������
+   3 函数、变量声明
 *****************************************************************************/
 
 /*****************************************************************************
-   4 ����ʵ��
+   4 函数实现
 *****************************************************************************/
 
 
@@ -192,7 +192,7 @@ VOS_VOID AT_DisplayVcomInputData(
 
     pucSystemAppConfig                  = AT_GetSystemAppConfigAddr();
 
-    /* E5������� */
+    /* E5无需回显 */
     if (SYSTEM_APP_WEBUI != *pucSystemAppConfig)
     {
         if ((usLen > 2) && (ucAtS3 == pData[usLen - 2]) && (ucAtS4 == pData[usLen - 1]))
@@ -239,11 +239,11 @@ VOS_UINT32 At_CmdStreamPreProc(VOS_UINT8 ucIndex, VOS_UINT8* pData, VOS_UINT16 u
     {
         if(AT_USBCOM_USER == gastAtClientTab[ucIndex].UserType)
         {
-            /*��USB COM�ڷ�������*/
-            /* �ж�pData�����Ľ�β�Ƿ�Ϊ<CR><LF>��ʽ��������2Ϊ�س����������ַ����� */
+            /*向USB COM口发送数据*/
+            /* 判断pData码流的结尾是否为<CR><LF>形式，代码中2为回车换行两个字符长度 */
             if ((usLen > 2) && (ucAtS3 == pData[usLen - 2]) && (ucAtS4 == pData[usLen - 1]))
             {
-                /* ɾȥ��β��<LF>�ַ� */
+                /* 删去结尾的<LF>字符 */
                 DMS_COM_SEND(AT_USB_COM_PORT_NO, pData, usLen - 1);
                 AT_MNTN_TraceCmdResult(ucIndex, pData, usLen - 1);
             }
@@ -256,10 +256,10 @@ VOS_UINT32 At_CmdStreamPreProc(VOS_UINT8 ucIndex, VOS_UINT8* pData, VOS_UINT16 u
         }
         else if (AT_CTR_USER == gastAtClientTab[ucIndex].UserType)
         {
-            /* �ж�pData�����Ľ�β�Ƿ�Ϊ<CR><LF>��ʽ */
+            /* 判断pData码流的结尾是否为<CR><LF>形式 */
             if ((usLen > 2) && (ucAtS3 == pData[usLen - 2]) && (ucAtS4 == pData[usLen - 1]))
             {
-                /* ɾȥ��β��<LF>�ַ� */
+                /* 删去结尾的<LF>字符 */
                 DMS_COM_SEND(AT_CTR_PORT_NO, pData, usLen - 1);
                 AT_MNTN_TraceCmdResult(ucIndex, pData, usLen - 1);
             }
@@ -281,7 +281,7 @@ VOS_UINT32 At_CmdStreamPreProc(VOS_UINT8 ucIndex, VOS_UINT8* pData, VOS_UINT16 u
                 AT_SendDataToModem(ucIndex, pData,usLen);
             }
         }
-        /* VCOM AT�ڵĻ��Դ��� */
+        /* VCOM AT口的回显处理 */
         else if (AT_APP_USER == gastAtClientTab[ucIndex].UserType)
         {
 #if (FEATURE_ON == FEATURE_VCOM_EXT)
@@ -320,16 +320,16 @@ VOS_UINT32 At_CmdStreamPreProc(VOS_UINT8 ucIndex, VOS_UINT8* pData, VOS_UINT16 u
         }
         else if (AT_NDIS_USER == gastAtClientTab[ucIndex].UserType)
         {
-            /* NDIS AT��������� */
+            /* NDIS AT口无需回显 */
             AT_WARN_LOG("At_CmdStreamPreProc:WARNING: NDIS AT");
         }
         else if (VOS_TRUE == ulHsicUserFlg)
         {
 #if (FEATURE_ON == FEATURE_AT_HSIC)
-            /* �ж�pData�����Ľ�β�Ƿ�Ϊ<CR><LF>��ʽ */
+            /* 判断pData码流的结尾是否为<CR><LF>形式 */
             if ((usLen > 2) && (ucAtS3 == pData[usLen - 2]) && (ucAtS4 == pData[usLen - 1]))
             {
-                /* ɾȥ��β��<LF>�ַ� */
+                /* 删去结尾的<LF>字符 */
                 AT_SendDataToHsic(ucIndex, pData, (usLen - 1));
                 AT_MNTN_TraceCmdResult(ucIndex, pData, usLen - 1);
             }
@@ -351,12 +351,12 @@ VOS_UINT32 At_CmdStreamPreProc(VOS_UINT8 ucIndex, VOS_UINT8* pData, VOS_UINT16 u
         }
     }
 
-    /* MACϵͳ�ϵ�MP��̨����:AT+CMGS=**<CR><^z><Z>(��AT+CMGW=**<CR><^z><Z>)
-       Ϊ�˹�ܸ����⣬��Ҫ�ڽ��յ�������ʽ��������
-       ��Ҫ����������Ч�ַ�<^z><Z>ɾȥ */
+    /* MAC系统上的MP后台问题:AT+CMGS=**<CR><^z><Z>(或AT+CMGW=**<CR><^z><Z>)
+       为了规避该问题，需要在接收到如上形式的码流后，
+       需要将命令后的无效字符<^z><Z>删去 */
     AT_DiscardInvalidCharForSms(pData, &usLen);
 
-    /* �����������ַ��Ž���������Ϣ��ʽ���͵�AT����Ϣ������: <CR>/<ctrl-z>/<ESC> */
+    /* 解析到如下字符才将码流以消息方式发送到AT的消息队列中: <CR>/<ctrl-z>/<ESC> */
     while(usCount++ < usLen)
     {
         /*lint -e960 Note -- Violates MISRA 2004 Required Rule 4.1, Prohibited escape sequence used (hexadecimal)*/
@@ -428,7 +428,7 @@ VOS_UINT32 At_OmDataProc (
 {
     VOS_UINT32                          ulRst;
 
-    /*OMֻ����UART PCUI CTRL�ڵ�����*/
+    /*OM只处理UART PCUI CTRL口的数据*/
     switch(ucPortNo)
     {
         case AT_UART_PORT_NO:
@@ -485,12 +485,12 @@ TAF_UINT32 At_DataStreamPreProc (TAF_UINT8 ucIndex,TAF_UINT8 DataMode,TAF_UINT8*
     AT_LOG1("At_DataStreamPreProc usLen:",usLen);
     AT_LOG1("At_DataStreamPreProc DataMode:",DataMode);
 
-    switch(DataMode)    /* ��ǰ�û����������� */
+    switch(DataMode)    /* 当前用户的数传类型 */
     {
         case AT_CSD_DATA_MODE:
             break;
 
-        /*����OM�ṩ�ĸ��˿ڽ������ݺ����������ݣ�����Ҫ����������ģʽ*/
+        /*调用OM提供的各端口接收数据函数发送数据，不需要再区分数据模式*/
         case AT_DIAG_DATA_MODE:
         case AT_OM_DATA_MODE:
             At_OmDataProc(gastAtClientTab[ucIndex].ucPortNo, pData,usLen);
@@ -517,8 +517,8 @@ VOS_UINT32  AT_CsdDataModeRcvModemMsc(
     PS_MEM_SET(astCallInfos, 0x00, sizeof(astCallInfos));
 
 
-    /* ��ѯ��ǰ�ĺ���״̬��Ϣ�������VIDEO���͵ĺ��У���Ҷϸú��У�Ŀǰ���ڲ�����ڶ��VIDEO���У�
-       ����ҵ�һ��VIDEO���͵ĺ���ִ����Ϻ󣬼����˳� */
+    /* 查询当前的呼叫状态信息，如果有VIDEO类型的呼叫，则挂断该呼叫，目前由于不会存在多个VIDEO呼叫，
+       因此找到一个VIDEO类型的呼叫执行完毕后，即可退出 */
 
     ulRlst          = TAF_AGENT_GetCallInfoReq(ucIndex, &ucNumOfCalls, astCallInfos);
 
@@ -528,7 +528,7 @@ VOS_UINT32  AT_CsdDataModeRcvModemMsc(
         {
             if (MN_CALL_TYPE_VIDEO == astCallInfos[i].enCallType)
             {
-                /* δ�ҶϹ��绰 */
+                /* 未挂断过电话 */
                 if (gastAtClientTab[ucIndex].CmdCurrentOpt != AT_CMD_END_SET)
                 {
                     PS_LOG1(WUEPS_PID_AT, 0, PS_PRINT_INFO, "At_SetHPara: ulNumOfCalls is ",(TAF_INT32)ucNumOfCalls);
@@ -548,7 +548,7 @@ VOS_UINT32  AT_CsdDataModeRcvModemMsc(
                 }
                 else
                 {
-                    /* ֮ǰ�������Ҷϵ绰���������յ�����DTR�ܽ��ź���Ϣ���������� */
+                    /* 之前已做过挂断电话操作，又收到拉低DTR管脚信号消息，不做处理 */
                     return AT_SUCCESS;
                 }
             }
@@ -565,11 +565,11 @@ VOS_UINT32  AT_PppDataModeRcvModemMsc(
     AT_DCE_MSC_STRU                     *pMscStru
 )
 {
-    /* 1.�ж�(AT_CMD_PS_DATA_CALL_END_SET != gastAtClientTab[ucIndex].CmdCurrentOpt)
-         ��Ŀ��:�������Ͽ�����֮ǰ�Ѿ�ִ����PDP DEACTIVE���̣���ʱ��������DTR����
-         ������ִ�и��쳣����
-        2.�÷�֧�Ĵ�������:����������״̬��,�û�����PPP�Ͽ�����ʱPPP�����޷�������
-          ֻ�����������DTR�źŵ�ʱ��ִ��PPP�Ͽ�����
+    /* 1.判断(AT_CMD_PS_DATA_CALL_END_SET != gastAtClientTab[ucIndex].CmdCurrentOpt)
+         的目的:若正常断开，则之前已经执行了PDP DEACTIVE流程，此时若再拉低DTR，则
+         无需再执行该异常流程
+        2.该分支的处理场景:若出于流控状态下,用户发起PPP断开，此时PPP报文无法交互，
+          只能在最后拉低DTR信号的时候，执行PPP断开操作
     */
     if (pMscStru->OP_Dtr && (0 == pMscStru->ucDtr))
     {
@@ -579,20 +579,20 @@ VOS_UINT32  AT_PppDataModeRcvModemMsc(
             return AT_SUCCESS;
         }
 
-        /* ����������״̬�£���PPP�Ͽ���Э�̱������޷�����UE��ģ�
-           UEֻ����DTR�ź����͵�ʱ��,ִ��PPP���ŶϿ�����*/
+        /* 若处于流控状态下，则PPP断开的协商报文是无法传到UE侧的，
+           UE只能在DTR信号拉低的时候,执行PPP拨号断开操作*/
         if (0 == (gastAtClientTab[ucIndex].ModemStatus & IO_CTRL_CTS))
         {
             AT_StopFlowCtrl((TAF_UINT8)ucIndex);
         }
 
-        /*��PPP�����ͷ�PPP����*/
+        /*向PPP发送释放PPP操作*/
         PPP_RcvAtCtrlOperEvent(gastAtClientTab[ucIndex].usPppId, PPP_AT_CTRL_REL_PPP_REQ);
 
-        /*��PPP����HDLCȥʹ�ܲ���*/
+        /*向PPP发送HDLC去使能操作*/
         PPP_RcvAtCtrlOperEvent(gastAtClientTab[ucIndex].usPppId, PPP_AT_CTRL_HDLC_DISABLE);
 
-        /* ֹͣModem�ڵ�AT��ʱ���Լ�AT��·�ĵ�ǰ����ָʾ */
+        /* 停止Modem口的AT定时器以及AT链路的当前操作指示 */
         AT_STOP_TIMER_CMD_READY(ucIndex);
 
         /*EVENT - RCV Down DTR to Disconnect PPP in Abnormal procedure(PDP type:IP) ;index*/
@@ -604,14 +604,14 @@ VOS_UINT32  AT_PppDataModeRcvModemMsc(
                                       0,
                                       gastAtClientTab[ucIndex].ucCid) )
         {
-            /* ����ʱ�� */
+            /* 开定时器 */
             if (AT_SUCCESS != At_StartTimer(AT_SET_PARA_TIME, ucIndex))
             {
                 AT_ERR_LOG("At_UsbModemStatusPreProc:ERROR:Start Timer");
                 return AT_FAILURE;
             }
 
-            /* ���õ�ǰ�������� */
+            /* 设置当前操作类型 */
             gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_PS_DATA_CALL_END_SET;
         }
         else
@@ -631,7 +631,7 @@ VOS_UINT32  AT_IpDataModeRcvModemMsc(
 {
     if (pMscStru->OP_Dtr && (0 == pMscStru->ucDtr))
     {
-        /*��ԭ�ȿ��������أ�����ֹͣ����*/
+        /*若原先开启了流控，则需停止流控*/
         if (0 == (gastAtClientTab[ucIndex].ModemStatus & IO_CTRL_CTS))
         {
             AT_StopFlowCtrl((TAF_UINT8)ucIndex);
@@ -639,10 +639,10 @@ VOS_UINT32  AT_IpDataModeRcvModemMsc(
 
         PPP_RcvAtCtrlOperEvent(gastAtClientTab[ucIndex].usPppId, PPP_AT_CTRL_REL_PPP_RAW_REQ);
 
-        /*��PPP����HDLCȥʹ�ܲ���*/
+        /*向PPP发送HDLC去使能操作*/
         PPP_RcvAtCtrlOperEvent(gastAtClientTab[ucIndex].usPppId, PPP_AT_CTRL_HDLC_DISABLE);
 
-        /* ֹͣModem�ڵ�AT��ʱ���Լ�AT��·�ĵ�ǰ����ָʾ */
+        /* 停止Modem口的AT定时器以及AT链路的当前操作指示 */
         AT_STOP_TIMER_CMD_READY(ucIndex);;
 
         /*EVENT - RCV Down DTR to Disconnect PPP in Abnormal procedure(PDP type:PPP) ;index*/
@@ -674,15 +674,15 @@ VOS_VOID AT_MODEM_ProcDtrChange(
 {
     if (1 == pstDceMsc->ucDtr)
     {
-        /*����DSR��CTS�ź�*/
+        /*拉高DSR、CTS信号*/
         AT_CtrlDSR(ucIndex, AT_IO_LEVEL_HIGH);
         AT_StopFlowCtrl(ucIndex);
     }
     else
     {
-        /* �ο�Qʵ�֣�DSR�ź����ϵ��һֱ��������״̬����ʹ�յ�DTRҲ������DSR��
-           ͬʱ��PC������������һ�㲻������DTR�źţ����쳣�����лὫ֮���ͣ�
-           ����UE���յ�DTR���� ��ʱ����Ҫ��DCD���� */
+        /* 参考Q实现，DSR信号在上电后一直保持拉高状态，即使收到DTR也不拉低DSR；
+           同时，PC在正常流程中一般不会拉低DTR信号，在异常流程中会将之拉低，
+           所以UE在收到DTR拉低 的时候，需要将DCD拉低 */
         if ( (AT_DATA_MODE == gastAtClientTab[ucIndex].Mode)
           && (AT_CSD_DATA_MODE == gastAtClientTab[ucIndex].DataMode) )
         {
@@ -703,7 +703,7 @@ VOS_UINT32 AT_MODEM_WriteMscCmd(
     UDI_HANDLE                          lUdiHandle;
     VOS_INT32                           lResult;
 
-    /* ���UDI�����Ч�� */
+    /* 检查UDI句柄有效性 */
     lUdiHandle = g_alAtUdiHandle[ucIndex];
     if (UDI_INVALID_HANDLE == lUdiHandle)
     {
@@ -711,7 +711,7 @@ VOS_UINT32 AT_MODEM_WriteMscCmd(
         return AT_FAILURE;
     }
 
-    /* д�ܽ��ź� */
+    /* 写管脚信号 */
     lResult = DRV_UDI_IOCTL(lUdiHandle, ACM_MODEM_IOCTL_MSC_WRITE_CMD, pstDceMsc);
     if (VOS_OK != lResult)
     {
@@ -818,7 +818,7 @@ VOS_UINT32 AT_ModemStatusPreProc(
 #endif
     }
 
-    /* ����ģʽ��ӦMSC���� */
+    /* 数传模式响应MSC处理 */
     if ( (AT_DATA_MODE == gastAtClientTab[ucIndex].Mode)
       || (AT_ONLINE_CMD_MODE == gastAtClientTab[ucIndex].Mode) )
     {
@@ -844,8 +844,8 @@ VOS_UINT32 AT_ModemStatusPreProc(
     }
     else
     {
-         /* �п����ڻ�û������ʱ�����͹ܽ��źţ���ʱ����������״̬��
-            Ŀǰ��˵ֻ��CSDģʽ�»������������ */
+         /* 有可能在还没接听的时候，拉低管脚信号，此时还处于命令状态，
+            目前来说只有CSD模式下会有这样的情况 */
          if ((pMscStru->OP_Dtr) && (0 == pMscStru->ucDtr))
          {
              AT_CsdDataModeRcvModemMsc(ucIndex);
@@ -866,7 +866,7 @@ VOS_VOID AT_ModemSetCtlStatus(
         return;
     }
 
-    /*����dsr�ź�*/
+    /*更新dsr信号*/
     if ( pMscStru->OP_Dsr )
     {
         if ( 1 == pMscStru->ucDsr )
@@ -879,7 +879,7 @@ VOS_VOID AT_ModemSetCtlStatus(
         }
     }
 
-    /*����CTS�ź�*/
+    /*更新CTS信号*/
     if ( pMscStru->OP_Cts )
     {
         if ( 1 == pMscStru->ucCts )
@@ -892,7 +892,7 @@ VOS_VOID AT_ModemSetCtlStatus(
         }
     }
 
-    /*����RI�ź�*/
+    /*更新RI信号*/
     if ( pMscStru->OP_Ri )
     {
         if ( 1 == pMscStru->ucRi )
@@ -905,7 +905,7 @@ VOS_VOID AT_ModemSetCtlStatus(
         }
     }
 
-    /*����DCD�ź�*/
+    /*更新DCD信号*/
     if ( pMscStru->OP_Dcd )
     {
         if ( 1 == pMscStru->ucDcd )
@@ -918,7 +918,7 @@ VOS_VOID AT_ModemSetCtlStatus(
         }
     }
 
-    /*����FC�ź�*/
+    /*更新FC信号*/
     if ( pMscStru->OP_Fc )
     {
         if ( 1 == pMscStru->ucFc )
@@ -949,13 +949,13 @@ VOS_UINT32 AT_SetModemStatus(
         return AT_FAILURE;
     }
 
-    /* ���±��عܽ��ź�*/
+    /* 更新本地管脚信号*/
     AT_ModemSetCtlStatus(ucIndex, pstMsc);
 
-    /* ����ܽ��źſ�ά�ɲ� */
+    /* 输出管脚信号可维可测 */
     AT_MNTN_TraceOutputMsc(ucIndex, pstMsc);
 
-    /* д��ܽ��źŲ��� */
+    /* 写入管脚信号参数 */
     switch (gastAtClientTab[ucIndex].UserType)
     {
         case AT_MODEM_USER:
@@ -976,7 +976,7 @@ VOS_UINT32 AT_SetModemStatus(
     return ulResult;
 }
 
-/* ɾ��At_SetModemStatusForFC����, ���ܺ�At_SetModemStatus�ظ� */
+/* 删除At_SetModemStatusForFC函数, 功能和At_SetModemStatus重复 */
 
 
 VOS_UINT32 At_ModemEst (
@@ -986,10 +986,10 @@ VOS_UINT32 At_ModemEst (
 )
 {
 
-    /* ��ն�Ӧ���� */
+    /* 清空对应表项 */
     PS_MEM_SET(&gastAtClientTab[ucIndex], 0x00, sizeof(AT_CLIENT_MANAGE_STRU));
 
-    /* ��д�û����� */
+    /* 填写用户表项 */
     gastAtClientTab[ucIndex].usClientId      = usClientId;
     gastAtClientTab[ucIndex].ucPortType      = ucPortNo;
     gastAtClientTab[ucIndex].ucDlci          = AT_MODEM_USER_DLCI;
@@ -997,7 +997,7 @@ VOS_UINT32 At_ModemEst (
     gastAtClientTab[ucIndex].UserType        = AT_MODEM_USER;
     gastAtClientTab[ucIndex].ucUsed          = AT_CLIENT_USED;
 
-    /* ���¿��Բ�����д��ǰ��PS_MEMSET�Ѿ���ʼ����ֻΪ�ɿ���� */
+    /* 以下可以不用填写，前面PS_MEMSET已经初始化，只为可靠起见 */
     gastAtClientTab[ucIndex].Mode            = AT_CMD_MODE;
     gastAtClientTab[ucIndex].IndMode         = AT_IND_MODE;
     gastAtClientTab[ucIndex].DataMode        = AT_DATA_BUTT_MODE;
@@ -1025,12 +1025,12 @@ VOS_UINT32 At_ModemMscInd (
     pMsg = ( AT_PPP_MODEM_MSC_IND_MSG_STRU * )PS_ALLOC_MSG( PS_PID_APP_PPP, ulLength );
     if ( VOS_NULL_PTR == pMsg )
     {
-        /*��ӡ������Ϣ---������Ϣ��ʧ��:*/
+        /*打印出错信息---申请消息包失败:*/
         AT_WARN_LOG("At_ModemMscInd: Alloc AT_PPP_MODEM_MSC_IND_MSG_STRU msg fail!");
         return AT_FAILURE;
     }
 
-    /*��д��Ϣͷ:*/
+    /*填写消息头:*/
     pMsg->MsgHeader.ulSenderCpuId   = VOS_LOCAL_CPUID;
     pMsg->MsgHeader.ulSenderPid     = PS_PID_APP_PPP;
     pMsg->MsgHeader.ulReceiverCpuId = VOS_LOCAL_CPUID;
@@ -1038,19 +1038,19 @@ VOS_UINT32 At_ModemMscInd (
     pMsg->MsgHeader.ulLength        = ulLength;
     pMsg->MsgHeader.ulMsgName       = AT_PPP_MODEM_MSC_IND_MSG;
 
-    /*��д��Ϣ��*/
+    /*填写消息体*/
     pMsg->ucIndex                   = ucIndex;
     pMsg->ucDlci                    = ucDlci;
 
-    /* ��д�ܽ����� */
+    /* 填写管脚数据 */
     ulTmpAddr = (VOS_UINT_PTR)(pMsg->aucMscInd);
 
     PS_MEM_CPY((VOS_VOID *)ulTmpAddr, (VOS_UINT8 *)pMscStru, sizeof(AT_DCE_MSC_STRU));
 
-    /* ������Ϣ */
+    /* 发送消息 */
     if ( VOS_OK != PS_SEND_MSG( PS_PID_APP_PPP, pMsg ) )
     {
-        /*��ӡ������Ϣ---������Ϣʧ��:*/
+        /*打印警告信息---发送消息失败:*/
         AT_WARN_LOG( "At_ModemMscInd:WARNING:SEND AT_PPP_MODEM_MSC_IND_MSG_STRU msg FAIL!" );
         return AT_FAILURE;
     }
@@ -1072,7 +1072,7 @@ VOS_UINT32 AT_ModemGetUlDataBuf(
 
 
 
-    /* ��ȡ������������buffer */
+    /* 获取底软上行数据buffer */
     ulResult = DRV_UDI_IOCTL(g_alAtUdiHandle[ucIndex], ACM_IOCTL_GET_RD_BUFF, &stCtlParam);
 
     if ( VOS_OK != ulResult )
@@ -1112,12 +1112,12 @@ VOS_UINT32 At_ModemDataInd(
 {
     AT_DCE_MSC_STRU                     stMscStru;
     VOS_UINT32                          ulRet;
-    /* pDataΪ��������ָ�� */
+    /* pData为数据内容指针 */
     VOS_UINT8                          *pData;
-    /* usLenΪ�������ݵĳ��� */
+    /* usLen为数据内容的长度 */
     VOS_UINT16                          usLen;
 
-    /* ���index��Dlci�Ƿ���ȷ */
+    /* 检查index和Dlci是否正确 */
 #if (FEATURE_ON == FEATURE_AT_HSIC)
     if ((AT_CLIENT_TAB_MODEM_INDEX != ucIndex)
      && (AT_CLIENT_TAB_HSIC_MODEM_INDEX != ucIndex))
@@ -1125,45 +1125,45 @@ VOS_UINT32 At_ModemDataInd(
     if (AT_CLIENT_TAB_MODEM_INDEX != ucIndex)
 #endif
     {
-        /*�ͷ��ڴ�*/
+        /*释放内存*/
         AT_ModemFreeUlDataBuf(ucIndex, pstData);
         return AT_FAILURE;
     }
 
-    /* ��pstData(IMM_ZC_STRU����)��ȡ���������ݺͳ��ȣ��ֱ𱣴���pData��usLen�� */
+    /* 从pstData(IMM_ZC_STRU类型)中取出数据内容和长度，分别保存在pData和usLen中 */
     pData = pstData->data;
     usLen = (VOS_UINT16)pstData->len;
 
     if ( AT_CMD_MODE == gastAtClientTab[ucIndex].Mode )
     {
-        /*��Modemͨ���Ѿ���������̬������ʱ��Ȼ�յ�PPP֡����ֱ�Ӷ���*/
+        /*若Modem通道已经切入命令态，但此时仍然收到PPP帧，则直接丢弃*/
         if ((usLen > 0) && (0x7e == pData[0]) && (0x7e == pData[usLen - 1]))
         {
-            /*�ͷ�BSP�ڴ�*/
+            /*释放BSP内存*/
             AT_ModemFreeUlDataBuf(ucIndex, pstData);
             return AT_SUCCESS;
         }
 
         ulRet = At_CmdStreamPreProc(ucIndex,pData,usLen);
 
-        /*�ͷ�BSP�ڴ�*/
+        /*释放BSP内存*/
         AT_ModemFreeUlDataBuf(ucIndex, pstData);
         return ulRet;
     }
 
-    /* ����modem�ڵ�״̬���зַ�*/
+    /* 根据modem口的状态进行分发*/
     switch ( gastAtClientTab[ucIndex].DataMode )
     {
         case AT_PPP_DATA_MODE:
 
-            /* (AT2D17549)���MAC 10.6.2ϵͳ���ŹҶ�ʧ������.���ձ�˵ķ�ʽ��
-               ����������Ϊ"+++"����ģ������DTR�źŵĴ�����ʽ
+            /* (AT2D17549)规避MAC 10.6.2系统拨号挂断失败问题.参照标杆的方式，
+               若接收数据为"+++"，则模拟拉底DTR信号的处理方式
             */
             if (3 == usLen)
             {
                 if (('+' == pData[0]) && ('+' == pData[1]) && ('+' == pData[2]))
                 {
-                    /*ģ������DTR�ź�*/
+                    /*模拟拉底DTR信号*/
                     VOS_MemSet(&stMscStru, 0x00, sizeof(stMscStru));
                     stMscStru.OP_Dtr = 1;
                     stMscStru.ucDtr  = 0;
@@ -1171,7 +1171,7 @@ VOS_UINT32 At_ModemDataInd(
                     break;
                 }
             }
-            /* PPP�����ͷ������ڴ� */
+            /* PPP负责释放上行内存 */
             PPP_PullPacketEvent(gastAtClientTab[ucIndex].usPppId, pstData);
             return AT_SUCCESS;
 
@@ -1180,7 +1180,7 @@ VOS_UINT32 At_ModemDataInd(
             {
                 if (('+' == pData[0]) && ('+' == pData[1]) && ('+' == pData[2]))
                 {
-                    /*ģ������DTR�ź�*/
+                    /*模拟拉底DTR信号*/
                     VOS_MemSet(&stMscStru, 0x00, sizeof(stMscStru));
                     stMscStru.OP_Dtr = 1;
                     stMscStru.ucDtr  = 0;
@@ -1188,7 +1188,7 @@ VOS_UINT32 At_ModemDataInd(
                     break;
                 }
             }
-            /* PPP�����ͷ������ڴ� */
+            /* PPP负责释放上行内存 */
             PPP_PullRawDataEvent(gastAtClientTab[ucIndex].usPppId, pstData);
             return AT_SUCCESS;
 
@@ -1203,7 +1203,7 @@ VOS_UINT32 At_ModemDataInd(
             break;
     }
 
-    /*�ͷ��ڴ�*/
+    /*释放内存*/
     AT_ModemFreeUlDataBuf(ucIndex, pstData);
     return AT_SUCCESS;
 }
@@ -1217,7 +1217,7 @@ VOS_UINT32 AT_ModemInitUlDataBuf(
     VOS_INT32                           ulResult;
 
 
-    /* ��д��Ҫ�ͷŵ��ڴ�ָ�� */
+    /* 填写需要释放的内存指针 */
     stReadBuffInfo.u32BuffSize = ulEachBuffSize;
     stReadBuffInfo.u32BuffNum  = ulTotalBuffNum;
 
@@ -1241,7 +1241,7 @@ VOS_UINT32 AT_ModemFreeUlDataBuf(
     ACM_WR_ASYNC_INFO                   stCtlParam;
     VOS_INT32                           ulResult;
 
-    /* ��д��Ҫ�ͷŵ��ڴ�ָ�� */
+    /* 填写需要释放的内存指针 */
 #ifdef FEATURE_USB_ZERO_COPY
     stCtlParam.pVirAddr = (VOS_CHAR*)pstBuf;
     stCtlParam.pPhyAddr = VOS_NULL_PTR;
@@ -1271,7 +1271,7 @@ VOS_VOID AT_ModemFreeDlDataBuf(
 {
     AT_MODEM_DBG_DL_FREE_BUFF_NUM(1);
 
-    /* �ͷ�pstBuf */
+    /* 释放pstBuf */
     IMM_ZcFree(pstBuf);
     return;
 }
@@ -1283,7 +1283,7 @@ VOS_UINT32 AT_ModemWriteData(
     ACM_WR_ASYNC_INFO                   stCtlParam;
     VOS_INT32                           ulResult;
 
-    /* ��д�������ڴ��ַ */
+    /* 待写入数据内存地址 */
 #ifdef FEATURE_USB_ZERO_COPY
     stCtlParam.pVirAddr                 = (VOS_CHAR*)pstBuf;
     stCtlParam.pPhyAddr                 = VOS_NULL_PTR;
@@ -1299,7 +1299,7 @@ VOS_UINT32 AT_ModemWriteData(
         return AT_FAILURE;
     }
 
-    /* �첽��ʽд����*/
+    /* 异步方式写数，*/
     ulResult = DRV_UDI_IOCTL(g_alAtUdiHandle[ucIndex], ACM_IOCTL_WRITE_ASYNC, &stCtlParam);
 
     if (VOS_OK != ulResult)
@@ -1334,12 +1334,12 @@ VOS_UINT32 AT_SendDataToModem(
         return AT_FAILURE;
     }
 
-    /*�˲��費���٣�����ƫ������βָ��*/
+    /*此步骤不能少，用来偏移数据尾指针*/
     pstZcPutData = (VOS_CHAR *)IMM_ZcPut(pstData, usLen);
 
     PS_MEM_CPY(pstZcPutData, pucDataBuf, usLen);
 
-    /*������д��MODEM�豸��д�ɹ����ڴ��ɵ��������ͷ�*/
+    /*将数据写往MODEM设备，写成功后内存由底软负责释放*/
     if (AT_SUCCESS != AT_ModemWriteData(ucIndex, pstData))
     {
         return AT_FAILURE;
@@ -1389,7 +1389,7 @@ VOS_UINT32 AT_SendCsdZcDataToModem(
     IMM_ZC_STRU                        *pstDataBuf
 )
 {
-    /*������д��MODEM�豸��д�ɹ����ڴ��ɵ��������ͷ�*/
+    /*将数据写往MODEM设备，写成功后内存由底软负责释放*/
     if (AT_SUCCESS != AT_ModemWriteData(ucIndex, pstDataBuf))
     {
         return AT_FAILURE;
@@ -1417,7 +1417,7 @@ VOS_VOID AT_UsbModemReadDataCB( VOS_VOID )
 
     pstBuf          = VOS_NULL_PTR;
 
-    /* HSIC MODEM������ */
+    /* HSIC MODEM索引号 */
     ucIndex     = AT_CLIENT_TAB_MODEM_INDEX;
 
     AT_MODEM_DBG_UL_DATA_READ_CB_NUM(1);
@@ -1425,10 +1425,10 @@ VOS_VOID AT_UsbModemReadDataCB( VOS_VOID )
     if (AT_SUCCESS == AT_ModemGetUlDataBuf(ucIndex, &pstBuf))
     {
 
-        /*MODEM��·�� */
+        /*MODEM链路号 */
         ucDlci      = AT_MODEM_USER_DLCI;
 
-        /* �����豸��ǰģʽ���ַ��������� */
+        /* 根据设备当前模式，分发上行数据 */
         At_ModemDataInd(ucIndex, ucDlci, pstBuf);
     }
 
@@ -1446,13 +1446,13 @@ VOS_VOID AT_UsbModemReadMscCB(AT_DCE_MSC_STRU *pstRcvedMsc)
         return;
     }
 
-    /* MODEM������ */
+    /* MODEM索引号 */
     ucIndex     = AT_CLIENT_TAB_MODEM_INDEX;
 
-    /*MODEM��·�� */
+    /*MODEM链路号 */
     ucDlci      = AT_MODEM_USER_DLCI;
 
-     /* ����ܽ��źſ�ά�ɲ� */
+     /* 输入管脚信号可维可测 */
     AT_MNTN_TraceInputMsc(ucIndex, pstRcvedMsc);
 
     At_ModemMscInd(ucIndex, ucDlci, pstRcvedMsc);
@@ -1467,7 +1467,7 @@ VOS_VOID AT_UsbModemInit( VOS_VOID )
     ucIndex         = AT_CLIENT_TAB_MODEM_INDEX;
     stParam.devid   = UDI_ACM_MODEM_ID;
 
-    /* ��Device�����ID */
+    /* 打开Device，获得ID */
     g_alAtUdiHandle[ucIndex] = DRV_UDI_OPEN(&stParam);
 
     if (UDI_INVALID_HANDLE == g_alAtUdiHandle[ucIndex])
@@ -1477,7 +1477,7 @@ VOS_VOID AT_UsbModemInit( VOS_VOID )
         return;
     }
 
-    /* ע��MODEM�豸�������ݽ��ջص� */
+    /* 注册MODEM设备上行数据接收回调 */
     if (VOS_OK != DRV_UDI_IOCTL (g_alAtUdiHandle[ucIndex], ACM_IOCTL_SET_READ_CB, AT_UsbModemReadDataCB))
     {
         AT_ERR_LOG("AT_UsbModemInit, ERROR, Set data read callback for modem failed!");
@@ -1485,7 +1485,7 @@ VOS_VOID AT_UsbModemInit( VOS_VOID )
         return;
     }
 
-    /* ע��MODEM���������ڴ��ͷŽӿ� */
+    /* 注册MODEM下行数据内存释放接口 */
     if (VOS_OK != DRV_UDI_IOCTL (g_alAtUdiHandle[ucIndex], ACM_IOCTL_SET_FREE_CB, AT_ModemFreeDlDataBuf))
     {
         AT_ERR_LOG("AT_UsbModemInit, ERROR, Set memory free callback for modem failed!");
@@ -1493,7 +1493,7 @@ VOS_VOID AT_UsbModemInit( VOS_VOID )
         return;
     }
 
-    /* ע��ܽ��ź�֪ͨ�ص� */
+    /* 注册管脚信号通知回调 */
     if (VOS_OK != DRV_UDI_IOCTL (g_alAtUdiHandle[ucIndex], ACM_MODEM_IOCTL_SET_MSC_READ_CB, AT_UsbModemReadMscCB))
     {
         AT_ERR_LOG("AT_UsbModemInit, ERROR, Set msc read callback for modem failed!");
@@ -1501,7 +1501,7 @@ VOS_VOID AT_UsbModemInit( VOS_VOID )
         return;
     }
 
-    /* ע��MODEM�豸ʹ�ܡ�ȥʹ��֪ͨ�ص� */
+    /* 注册MODEM设备使能、去使能通知回调 */
     if (VOS_OK != DRV_UDI_IOCTL (g_alAtUdiHandle[ucIndex], ACM_MODEM_IOCTL_SET_REL_IND_CB, AT_UsbModemEnableCB))
     {
         AT_ERR_LOG("AT_UsbModemInit, ERROR, Set enable callback for modem failed!");
@@ -1509,13 +1509,13 @@ VOS_VOID AT_UsbModemInit( VOS_VOID )
         return;
     }
 
-    /* ����MODEM�豸��������buffer��� */
+    /* 设置MODEM设备上行数据buffer规格 */
     AT_ModemInitUlDataBuf(ucIndex, AT_MODEM_UL_DATA_BUFF_SIZE, AT_MODEM_UL_DATA_BUFF_NUM);
 
-    /* ��ʼ��MODMEͳ����Ϣ */
+    /* 初始化MODME统计信息 */
     AT_InitModemStats();
 
-    /*ע��client id*/
+    /*注册client id*/
     At_ModemEst(ucIndex, AT_CLIENT_ID_MODEM, AT_USB_MODEM_PORT_NO);
 
     AT_ConfigTraceMsg(ucIndex, ID_AT_CMD_MODEM, ID_AT_MNTN_RESULT_MODEM);
@@ -1530,7 +1530,7 @@ VOS_VOID AT_UsbModemClose(VOS_VOID)
 
     ucIndex = AT_CLIENT_TAB_MODEM_INDEX;
 
-    /* ȥע��MODEM���ص�(��TTFȷ��δע�����ص�Ҳ����ȥע�����ص�)�� */
+    /* 去注册MODEM流控点(经TTF确认未注册流控点也可以去注册流控点)。 */
     AT_DeRegModemPsDataFCPoint(ucIndex, gastAtClientTab[ucIndex].ucPsRabId);
 
     if (UDI_INVALID_HANDLE != g_alAtUdiHandle[ucIndex])
@@ -1579,7 +1579,7 @@ VOS_INT At_RcvFromUsbCom(
         return AT_DRV_FAILURE;
     }
 
-    /*PCUI��CTRL����*/
+    /*PCUI和CTRL共用*/
     for (ucIndex = 0; ucIndex < AT_MAX_CLIENT_NUM; ucIndex++)
     {
         ulMuxUserFlg = AT_CheckMuxUser(ucIndex);
@@ -1647,18 +1647,18 @@ VOS_UINT32 At_UsbPcuiEst(VOS_UINT8 ucPortNo)
 
     ucIndex = AT_CLIENT_TAB_PCUI_INDEX;
 
-    /* ��ն�Ӧ���� */
+    /* 清空对应表项 */
     PS_MEM_SET(&gastAtClientTab[ucIndex],0x00,sizeof(AT_CLIENT_MANAGE_STRU));
 
     AT_ConfigTraceMsg(ucIndex, ID_AT_CMD_PCUI, ID_AT_MNTN_RESULT_PCUI);
 
-    /* ��д�û����� */
+    /* 填写用户表项 */
     gastAtClientTab[ucIndex].usClientId      = AT_CLIENT_ID_PCUI;
     gastAtClientTab[ucIndex].ucPortNo        = ucPortNo;
     gastAtClientTab[ucIndex].UserType        = AT_USBCOM_USER;
     gastAtClientTab[ucIndex].ucUsed          = AT_CLIENT_USED;
 
-    /* ���¿��Բ�����д��ǰ��PS_MEMSET�Ѿ���ʼ����ֻΪ�ɿ���� */
+    /* 以下可以不用填写，前面PS_MEMSET已经初始化，只为可靠起见 */
     gastAtClientTab[ucIndex].Mode            = AT_CMD_MODE;
     gastAtClientTab[ucIndex].IndMode         = AT_IND_MODE;
     gastAtClientTab[ucIndex].DataMode        = AT_DATA_BUTT_MODE;
@@ -1669,12 +1669,12 @@ VOS_UINT32 At_UsbPcuiEst(VOS_UINT8 ucPortNo)
     #if (VOS_WIN32 == VOS_OS_VER)
     Sock_RecvCallbackRegister(ucPortNo, (pComRecv)At_RcvFromUsbCom);
     #else
-    /*��DMSע��Ӵ����л�ȡ���ݵĻص�����*/
+    /*向DMS注册从串口中获取数据的回调函数*/
     (VOS_VOID)DMS_COM_RCV_CALLBACK_REGI(ucPortNo, (pComRecv)At_RcvFromUsbCom);
     #endif
 
 #if 0
-    /* ��DMSע�ᴮ�ڴ�ʹ�ܵ�ȥʹ��״̬ʱ֪ͨ�ϲ�Ļص����� */
+    /* 向DMS注册串口从使能到去使能状态时通知上层的回调函数 */
     DMS_COM_STATUS_CALLBACK_REGI(AT_USB_COM_PORT_NO, (pComStatusNotify)At_NotifyStatusChgFromUsbCom);
 #endif
 
@@ -1699,18 +1699,18 @@ VOS_UINT32 At_UsbCtrEst(VOS_UINT8 ucPortNo)
 
     ucIndex = AT_CLIENT_TAB_CTRL_INDEX;
 
-    /* ��ն�Ӧ���� */
+    /* 清空对应表项 */
     PS_MEM_SET(&gastAtClientTab[ucIndex], 0x00, sizeof(AT_CLIENT_MANAGE_STRU));
 
     AT_ConfigTraceMsg(ucIndex, ID_AT_CMD_CTRL, ID_AT_MNTN_RESULT_CTRL);
 
-    /* ��д�û����� */
+    /* 填写用户表项 */
     gastAtClientTab[ucIndex].usClientId      = AT_CLIENT_ID_CTRL;
     gastAtClientTab[ucIndex].ucPortNo        = ucPortNo;
     gastAtClientTab[ucIndex].UserType        = AT_CTR_USER;
     gastAtClientTab[ucIndex].ucUsed          = AT_CLIENT_USED;
 
-    /* ���¿��Բ�����д��ǰ��PS_MEMSET�Ѿ���ʼ����ֻΪ�ɿ���� */
+    /* 以下可以不用填写，前面PS_MEMSET已经初始化，只为可靠起见 */
     gastAtClientTab[ucIndex].Mode            = AT_CMD_MODE;
     gastAtClientTab[ucIndex].IndMode         = AT_IND_MODE;
     gastAtClientTab[ucIndex].DataMode        = AT_DATA_BUTT_MODE;
@@ -1719,7 +1719,7 @@ VOS_UINT32 At_UsbCtrEst(VOS_UINT8 ucPortNo)
     g_stParseContext[ucIndex].ucClientStatus = AT_FW_CLIENT_STATUS_READY;
 
 
-    /*�����DMS�Ӵ����л�ȡ���ݵĻص�����*/
+    /*向底软DMS从串口中获取数据的回调函数*/
     (VOS_VOID)DMS_COM_RCV_CALLBACK_REGI(ucPortNo, (pComRecv)At_RcvFromUsbCom);
 
     return VOS_OK;
@@ -1743,7 +1743,7 @@ VOS_UINT32 AT_UART_GetUlDataBuff(
         return AT_FAILURE;
     }
 
-    /* ��ȡ������������BUFFER */
+    /* 获取底软上行数据BUFFER */
 #ifdef FEATURE_USB_ZERO_COPY
     stCtlParam.pVirAddr = VOS_NULL_PTR;
     stCtlParam.pPhyAddr = VOS_NULL_PTR;
@@ -1790,7 +1790,7 @@ VOS_UINT32 AT_UART_WriteDataSync(
     UDI_HANDLE                          lUdiHandle;
     VOS_INT32                           lResult;
 
-    /* ���UDI�����Ч�� */
+    /* 检查UDI句柄有效性 */
     lUdiHandle = g_alAtUdiHandle[ucIndex];
     if (UDI_INVALID_HANDLE == lUdiHandle)
     {
@@ -1798,7 +1798,7 @@ VOS_UINT32 AT_UART_WriteDataSync(
         return AT_FAILURE;
     }
 
-    /* ���������Ч�� */
+    /* 检查数据有效性 */
     if ((VOS_NULL_PTR == pucData) || (0 == ulLen))
     {
         AT_ERR_LOG("AT_UART_WriteDataSync: DATA is invalid!\r\n");
@@ -1823,7 +1823,7 @@ VOS_UINT32 AT_UART_SendDlData(
     VOS_UINT16                          usLen
 )
 {
-    /* ͬ��дUART�豸, ���������ͷ� */
+    /* 同步写UART设备, 数据无需释放 */
     return AT_UART_WriteDataSync(ucIndex, pucData, usLen);
 }
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
@@ -1865,18 +1865,18 @@ VOS_UINT32 AT_UART_SendRawDataFromOm(
 #endif
 
 /*****************************************************************************
- �� �� ��  : AT_HSUART_UlDataReadCB
- ��������  : UART�豸���ݶ��ص���ע�������
- �������  : VOS_VOID
- �������  : ��
- �� �� ֵ  : VOS_VOID
- ���ú���  :
- ��������  :
+ 函 数 名  : AT_HSUART_UlDataReadCB
+ 功能描述  : UART设备数据读回调，注册给底软
+ 输入参数  : VOS_VOID
+ 输出参数  : 无
+ 返 回 值  : VOS_VOID
+ 调用函数  :
+ 被调函数  :
 
- �޸���ʷ      :
-  1.��    ��   : 2011��10��18��
-    ��    ��   : sunshaohua
-    �޸�����   : �����ɺ���
+ 修改历史      :
+  1.日    期   : 2011年10月18日
+    作    者   : sunshaohua
+    修改内容   : 新生成函数
 *****************************************************************************/
 VOS_VOID AT_UART_UlDataReadCB(VOS_VOID)
 {
@@ -1889,7 +1889,7 @@ VOS_VOID AT_UART_UlDataReadCB(VOS_VOID)
 
     if (AT_SUCCESS == AT_UART_GetUlDataBuff(ucIndex, &pucData, &ulLen))
     {
-        /* �����豸��ǰģʽ���ַ��������� */
+        /* 根据设备当前模式，分发上行数据 */
         At_RcvFromUsbCom(AT_UART_PORT_NO, pucData, (VOS_UINT16)ulLen);
     }
 
@@ -1903,7 +1903,7 @@ VOS_VOID AT_UART_InitLink(VOS_UINT8 ucIndex)
     stDefaultLinkType.enUartLinkType = AT_UART_LINK_TYPE_BUTT;
 
 
-    /* ��ն�Ӧ���� */
+    /* 清空对应表项 */
     PS_MEM_SET(&gastAtClientTab[ucIndex],0x00,sizeof(AT_CLIENT_MANAGE_STRU));
 
     gastAtClientTab[ucIndex].ucPortNo  = AT_UART_PORT_NO;
@@ -1911,24 +1911,24 @@ VOS_VOID AT_UART_InitLink(VOS_UINT8 ucIndex)
     gastAtClientTab[ucIndex].ucUsed    = AT_CLIENT_USED;
 
 
-    /* ��ȡUART�˿�Ĭ�Ϲ���ģʽNV�� */
+    /* 读取UART端口默认工作模式NV项 */
     if (NV_OK != NV_ReadEx(MODEM_ID_0, en_NV_Item_DEFAULT_LINK_OF_UART,
                         &stDefaultLinkType.enUartLinkType,
                         sizeof(stDefaultLinkType.enUartLinkType)))
     {
-        /* NV���ȡʧ�ܣ���UART�˿ڵĹ���ģʽ����ΪOMģʽ */
+        /* NV项读取失败，将UART端口的工作模式设置为OM模式 */
         AT_ERR_LOG("AT_UART_InitLink:Read NV failed!");
 
-        /*��¼AT/OMͨ������Ӧ��������*/
+        /*记录AT/OM通道所对应的索引号*/
         gucAtOmIndex = ucIndex;
 
-        /* �л���OM����ģʽ */
+        /* 切换至OM数传模式 */
         At_SetMode(ucIndex, AT_DATA_MODE, AT_OM_DATA_MODE);
         gastAtClientTab[ucIndex].DataState = AT_DATA_START_STATE;
 
         AT_AddUsedClientId2Tab(AT_CLIENT_TAB_UART_INDEX);
 
-        /* ֪ͨOAM�л�UART��OMģʽ */
+        /* 通知OAM切换UART至OM模式 */
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)		
         CPM_NotifyChangePort(AT_UART_PORT, CPM_OM_COMM);
 #else
@@ -1937,21 +1937,21 @@ VOS_VOID AT_UART_InitLink(VOS_UINT8 ucIndex)
     }
     else
     {
-        /* NV��ȡ�ɹ������UART�˿ڵ�Ĭ�Ϲ���ģʽ */
+        /* NV读取成功，检查UART端口的默认工作模式 */
         if (AT_UART_LINK_TYPE_AT != stDefaultLinkType.enUartLinkType)
         {
             AT_NORM_LOG("AT_UART_InitLink:DEFAULT UART LINK TYPE is OM!");
 
-            /*��¼AT/OMͨ������Ӧ��������*/
+            /*记录AT/OM通道所对应的索引号*/
             gucAtOmIndex = ucIndex;
 
-            /* �л���OM����ģʽ */
+            /* 切换至OM数传模式 */
             At_SetMode(ucIndex, AT_DATA_MODE, AT_OM_DATA_MODE);
             gastAtClientTab[ucIndex].DataState = AT_DATA_START_STATE;
 
             AT_AddUsedClientId2Tab(AT_CLIENT_TAB_UART_INDEX);
 
-            /* ֪ͨOAM�л�UART��OMģʽ */
+            /* 通知OAM切换UART至OM模式 */
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)			
             CPM_NotifyChangePort(AT_UART_PORT, CPM_OM_COMM);
 #else
@@ -1960,10 +1960,10 @@ VOS_VOID AT_UART_InitLink(VOS_UINT8 ucIndex)
         }
         else
         {
-            /* ��д�û����� */
+            /* 填写用户表项 */
             gastAtClientTab[ucIndex].usClientId      = AT_CLIENT_ID_UART;
 
-            /* ���¿��Բ�����д��ǰ��PS_MEMSET�Ѿ���ʼ����ֻΪ�ɿ���� */
+            /* 以下可以不用填写，前面PS_MEMSET已经初始化，只为可靠起见 */
             gastAtClientTab[ucIndex].Mode            = AT_CMD_MODE;
             gastAtClientTab[ucIndex].IndMode         = AT_IND_MODE;
             gastAtClientTab[ucIndex].DataMode        = AT_DATA_BUTT_MODE;
@@ -1991,13 +1991,13 @@ VOS_VOID AT_UART_InitPort(VOS_VOID)
     lUdiHandle = DRV_UDI_OPEN(&stParam);
     if (UDI_INVALID_HANDLE != lUdiHandle)
     {
-        /* ע��UART�豸�������ݽ��ջص� */
+        /* 注册UART设备上行数据接收回调 */
         if (VOS_OK != DRV_UDI_IOCTL (lUdiHandle, UART_IOCTL_SET_READ_CB, AT_UART_UlDataReadCB))
         {
             AT_ERR_LOG("AT_UART_InitPort: Reg data read callback failed!\r\n");
         }
 
-        /* ��ʼ��UART��· */
+        /* 初始化UART链路 */
         AT_UART_InitLink(ucIndex);
         g_alAtUdiHandle[ucIndex] = lUdiHandle;
     }
@@ -2120,13 +2120,13 @@ VOS_UINT32 AT_HSUART_GetUdiValueByDataLen(
     VOS_UINT32                         *pulUdiValue
 )
 {
-    /* ָ��ǿռ�� */
+    /* 指针非空检测 */
     if (VOS_NULL_PTR == pulUdiValue)
     {
         return VOS_ERR;
     }
 
-    /* ӳ�����UDI VALUE */
+    /* 映射底软UDI VALUE */
     switch (enDataLen)
     {
         case AT_UART_DATA_LEN_5_BIT:
@@ -2158,13 +2158,13 @@ VOS_UINT32 AT_HSUART_GetUdiValueByStopLen(
     VOS_UINT32                         *pulUdiValue
 )
 {
-    /* ָ��ǿռ�� */
+    /* 指针非空检测 */
     if (VOS_NULL_PTR == pulUdiValue)
     {
         return VOS_ERR;
     }
 
-    /* ӳ�����UDI VALUE */
+    /* 映射底软UDI VALUE */
     switch (enStopLen)
     {
         case AT_UART_STOP_LEN_1_BIT:
@@ -2188,13 +2188,13 @@ VOS_UINT32 AT_HSUART_GetUdiValueByParity(
     VOS_UINT32                         *pulUdiValue
 )
 {
-    /* ָ��ǿռ�� */
+    /* 指针非空检测 */
     if (VOS_NULL_PTR == pulUdiValue)
     {
         return VOS_ERR;
     }
 
-    /* ӳ�����UDI VALUE */
+    /* 映射底软UDI VALUE */
     switch (enParity)
     {
         case AT_UART_PARITY_ODD:
@@ -2233,7 +2233,7 @@ VOS_UINT32 AT_HSUART_WriteMscCmd(
     UDI_HANDLE                          lUdiHandle;
     VOS_INT32                           lResult;
 
-    /* ���UDI�����Ч�� */
+    /* 检查UDI句柄有效性 */
     lUdiHandle = g_alAtUdiHandle[ucIndex];
     if (UDI_INVALID_HANDLE == lUdiHandle)
     {
@@ -2241,7 +2241,7 @@ VOS_UINT32 AT_HSUART_WriteMscCmd(
         return AT_FAILURE;
     }
 
-    /* д�ܽ��ź� */
+    /* 写管脚信号 */
     lResult = DRV_UDI_IOCTL(lUdiHandle, UART_IOCTL_MSC_WRITE_CMD, pstDceMsc);
     if (VOS_OK != lResult)
     {
@@ -2264,7 +2264,7 @@ VOS_UINT32 AT_HSUART_FreeUlDataBuff(
     UDI_HANDLE                          lUdiHandle;
     VOS_INT32                           lResult;
 
-    /* ���UDI�����Ч�� */
+    /* 检查UDI句柄有效性 */
     lUdiHandle = g_alAtUdiHandle[ucIndex];
     if (UDI_INVALID_HANDLE == lUdiHandle)
     {
@@ -2272,7 +2272,7 @@ VOS_UINT32 AT_HSUART_FreeUlDataBuff(
         return AT_FAILURE;
     }
 
-    /* ��д���ͷŵ��ڴ��ַ */
+    /* 填写待释放的内存地址 */
 #ifdef FEATURE_USB_ZERO_COPY
     stCtlParam.pVirAddr = (VOS_CHAR *)pstImmZc;
     stCtlParam.pPhyAddr = VOS_NULL_PTR;
@@ -2282,7 +2282,7 @@ VOS_UINT32 AT_HSUART_FreeUlDataBuff(
     stCtlParam.u32Size  = 0;
     stCtlParam.pDrvPriv = VOS_NULL_PTR;
 
-    /* ����ִ���ͷ��ڴ���� */
+    /* 底软执行释放内存操作 */
     lResult = DRV_UDI_IOCTL(lUdiHandle, UART_IOCTL_RETURN_BUFF, &stCtlParam);
     if (VOS_OK != lResult)
     {
@@ -2317,7 +2317,7 @@ VOS_UINT32 AT_HSUART_GetUlDataBuff(
     UDI_HANDLE                          lUdiHandle;
     VOS_INT32                           lResult;
 
-    /* ���UDI�����Ч�� */
+    /* 检查UDI句柄有效性 */
     lUdiHandle = g_alAtUdiHandle[ucIndex];
     if (UDI_INVALID_HANDLE == lUdiHandle)
     {
@@ -2325,7 +2325,7 @@ VOS_UINT32 AT_HSUART_GetUlDataBuff(
         return AT_FAILURE;
     }
 
-    /* ��ȡ������������BUFFER */
+    /* 获取底软上行数据BUFFER */
 #ifdef FEATURE_USB_ZERO_COPY
     stCtlParam.pVirAddr = VOS_NULL_PTR;
     stCtlParam.pPhyAddr = VOS_NULL_PTR;
@@ -2343,7 +2343,7 @@ VOS_UINT32 AT_HSUART_GetUlDataBuff(
         return AT_FAILURE;
     }
 
-    /* ������Ч�Լ�� */
+    /* 数据有效性检查 */
 #ifdef FEATURE_USB_ZERO_COPY
     if ( (VOS_NULL_PTR == stCtlParam.pVirAddr)
       || (AT_INIT_DATA_LEN == stCtlParam.u32Size) )
@@ -2377,7 +2377,7 @@ VOS_UINT32 AT_HSUART_WriteDataAsync(
     UDI_HANDLE                          lUdiHandle;
     VOS_INT32                           ulResult;
 
-    /* ���UDI�����Ч�� */
+    /* 检查UDI句柄有效性 */
     lUdiHandle = g_alAtUdiHandle[ucIndex];
     if (UDI_INVALID_HANDLE == lUdiHandle)
     {
@@ -2386,7 +2386,7 @@ VOS_UINT32 AT_HSUART_WriteDataAsync(
         return AT_FAILURE;
     }
 
-    /* ��д�������ڴ��ַ */
+    /* 待写入数据内存地址 */
 #ifdef FEATURE_USB_ZERO_COPY
     stCtlParam.pVirAddr = (VOS_CHAR *)pstImmZc;
     stCtlParam.pPhyAddr = VOS_NULL_PTR;
@@ -2396,7 +2396,7 @@ VOS_UINT32 AT_HSUART_WriteDataAsync(
     stCtlParam.u32Size  = 0;
     stCtlParam.pDrvPriv = VOS_NULL_PTR;
 
-    /* �첽��ʽд�� */
+    /* 异步方式写数 */
     ulResult = DRV_UDI_IOCTL(g_alAtUdiHandle[ucIndex], UART_IOCTL_WRITE_ASYNC, &stCtlParam);
     if (VOS_OK != ulResult)
     {
@@ -2421,20 +2421,20 @@ VOS_UINT32 AT_HSUART_SendDlData(
     VOS_CHAR                           *pcPutData = VOS_NULL_PTR;
     VOS_UINT32                          ulResult;
 
-    /* ��A�������ڴ��з���ռ� */
+    /* 从A核数传内存中分配空间 */
     pstImmZc = IMM_ZcStaticAlloc((VOS_UINT16)usLen);
     if (VOS_NULL_PTR == pstImmZc)
     {
         return AT_FAILURE;
     }
 
-    /* ƫ������βָ�� */
+    /* 偏移数据尾指针 */
     pcPutData = (VOS_CHAR *)IMM_ZcPut(pstImmZc, usLen);
 
-    /* �������� */
+    /* 拷贝数据 */
     PS_MEM_CPY(pcPutData, pucData, usLen);
 
-    /* �첽дHSUART�豸, д�ɹ����ڴ��ɵ��������ͷ� */
+    /* 异步写HSUART设备, 写成功后内存由底软负责释放 */
     ulResult = AT_HSUART_WriteDataAsync(ucIndex, pstImmZc);
 
     return ulResult;
@@ -2450,15 +2450,15 @@ VOS_VOID AT_HSUART_ProcUlData(
     VOS_UINT8                          *pucData = VOS_NULL_PTR;
     VOS_UINT16                          usLen;
 
-    /* ��pstData(IMM_ZC_STRU����)��ȡ���������ݺͳ��ȣ��ֱ𱣴���pData��usLen�� */
+    /* 从pstData(IMM_ZC_STRU类型)中取出数据内容和长度，分别保存在pData和usLen中 */
     pucData = pstImmZc->data;
     usLen   = (VOS_UINT16)pstImmZc->len;
 
-    /* �����ǰ��������ģʽ ������ online_commandģʽ */
+    /* 如果当前处于命令模式 或者是 online_command模式 */
     if ( (AT_CMD_MODE == gastAtClientTab[ucIndex].Mode)
       || (AT_ONLINE_CMD_MODE == gastAtClientTab[ucIndex].Mode) )
     {
-        /* ��UARTͨ���Ѿ���������̬������ʱ��Ȼ�յ�PPP֡����OM���ݣ���ֱ�Ӷ��� */
+        /* 若UART通道已经切入命令态，但此时仍然收到PPP帧或者OM数据，则直接丢弃 */
         if ((usLen > 0) && (0x7e == pucData[0]) && (0x7e == pucData[usLen - 1]))
         {
             AT_HSUART_DBG_UL_INVALID_CMD_DATA_NUM(1);
@@ -2468,7 +2468,7 @@ VOS_VOID AT_HSUART_ProcUlData(
 
         AT_HSUART_DBG_UL_VALID_CMD_DATA_NUM(1);
 
-        /* ����AT�����ַ��͸� AT */
+        /* 若是AT命令，则分发送给 AT */
         if (AT_SUCCESS != At_CmdStreamPreProc(ucIndex, pucData, usLen))
         {
             AT_WARN_LOG("AT_HSUART_ProcUlData: At_CmdStreamPreProc fail!");
@@ -2478,40 +2478,40 @@ VOS_VOID AT_HSUART_ProcUlData(
         return;
     }
 
-    /* ����UART�ڵ�״̬���зַ�*/
+    /* 根据UART口的状态进行分发*/
     switch (gastAtClientTab[ucIndex].DataMode)
     {
-        /* ����PPP data���� */
+        /* 处理PPP data数据 */
         case AT_PPP_DATA_MODE:
 
-            /* PPP�����ͷ������ڴ� */
+            /* PPP负责释放上行内存 */
             PPP_PullPacketEvent(gastAtClientTab[ucIndex].usPppId, pstImmZc);
 
-            /* ��¼��ά�ɲ� */
+            /* 记录可维可测 */
             AT_HSUART_DBG_UL_IP_DATA_NUM(1);
             return;
 
-        /* ����IP data ���� */
+        /* 处理IP data 数据 */
         case AT_IP_DATA_MODE:
 
-            /* PPP�����ͷ������ڴ� */
+            /* PPP负责释放上行内存 */
             PPP_PullRawDataEvent(gastAtClientTab[ucIndex].usPppId, pstImmZc);
 
-            /* ��¼��ά�ɲ� */
+            /* 记录可维可测 */
             AT_HSUART_DBG_UL_PPP_DATA_NUM(1);
             return;
 
-        /* ����OM���� */
+        /* 处理OM数据 */
         case AT_DIAG_DATA_MODE:
         case AT_OM_DATA_MODE:
             At_OmDataProc(gastAtClientTab[ucIndex].ucPortNo, pucData, usLen);
 
-            /* ��¼��ά�ɲ� */
+            /* 记录可维可测 */
             AT_HSUART_DBG_UL_OM_DATA_NUM(1);
             break;
 
 #if(FEATURE_ON == FEATURE_CSD)
-        /* ����CSD���� �ݲ�ʵ��*/
+        /* 处理CSD数据 暂不实现*/
         case AT_CSD_DATA_MODE:
 #endif
         default:
@@ -2539,19 +2539,19 @@ VOS_UINT32 AT_UART_ProcDtrChange(
 
     if (1 == pstDceMsc->ucDtr)
     {
-        /* �ж�&S[<value>] */
+        /* 判断&S[<value>] */
         if (AT_UART_DSR_MODE_ALWAYS_ON == pstLineCtrl->enDsrMode)
         {
             AT_CtrlDSR(ucIndex, AT_IO_LEVEL_HIGH);
         }
 
-        /* �ж�&C[<value>] */
+        /* 判断&C[<value>] */
         if (AT_UART_DCD_MODE_ALWAYS_ON == pstLineCtrl->enDcdMode)
         {
             AT_CtrlDCD(ucIndex, AT_IO_LEVEL_HIGH);
         }
 
-        /* ֹͣ���� */
+        /* 停止流控 */
         AT_StopFlowCtrl(ucIndex);
     }
     else
@@ -2577,7 +2577,7 @@ VOS_UINT32 AT_UART_ProcDtrCtrlMode(VOS_VOID)
             break;
 
         case AT_UART_DTR_MODE_SWITCH_CMD_MODE:
-            /* Ŀǰֻ֧��PPP��IPģʽ���л�ΪONLINE-COMMANDģʽ */
+            /* 目前只支持PPP和IP模式下切换为ONLINE-COMMAND模式 */
             if ( (AT_DATA_MODE == gastAtClientTab[ucIndex].Mode)
               && ( (AT_PPP_DATA_MODE == gastAtClientTab[ucIndex].DataMode)
                 || (AT_IP_DATA_MODE == gastAtClientTab[ucIndex].DataMode) ) )
@@ -2661,7 +2661,7 @@ VOS_VOID AT_HSUART_UlDataReadCB(VOS_VOID)
 
     if (AT_SUCCESS == AT_HSUART_GetUlDataBuff(ucIndex, &pstImmZc, &ulLen))
     {
-        /* �����豸��ǰģʽ���ַ��������� */
+        /* 根据设备当前模式，分发上行数据 */
         AT_HSUART_ProcUlData(ucIndex, pstImmZc);
     }
 
@@ -2719,17 +2719,17 @@ VOS_VOID AT_HSUART_MscReadCB(AT_DCE_MSC_STRU *pstDceMsc)
 
     ucIndex = AT_CLIENT_TAB_HSUART_INDEX;
 
-    /* ��μ�� */
+    /* 入参检查 */
     if (VOS_NULL_PTR == pstDceMsc)
     {
         AT_ERR_LOG("AT_HSUART_MscReadCB: pstDceMsc is NULL!");
         return;
     }
 
-    /* ����ܽ��źſ�ά�ɲ� */
+    /* 输入管脚信号可维可测 */
     AT_HSUART_DBG_IOCTL_MSC_READ_CB_NUM(1);
 
-    /* ���ܽ���Ϣ���ͳ�ȥ */
+    /* 将管脚信息发送出去 */
     At_ModemMscInd(ucIndex, AT_MODEM_USER_DLCI, pstDceMsc);
 
     return;
@@ -2738,10 +2738,10 @@ VOS_VOID AT_HSUART_SwitchCmdDetectCB(VOS_VOID)
 {
     AT_MSG_STRU                        *pstMsg = VOS_NULL_PTR;
 
-    /* ��¼��ά�ɲ� */
+    /* 记录可维可测 */
     AT_HSUART_DBG_IOCTL_SWITCH_CB_NUM(1);
 
-    /* ������Ϣ */
+    /* 构造消息 */
     pstMsg = (AT_MSG_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                 WUEPS_PID_AT,
                                 sizeof(AT_MSG_STRU));
@@ -2752,21 +2752,21 @@ VOS_VOID AT_HSUART_SwitchCmdDetectCB(VOS_VOID)
         return;
     }
 
-    /* ��ʼ����Ϣ */
+    /* 初始化消息 */
     PS_MEM_SET((VOS_CHAR *)pstMsg + VOS_MSG_HEAD_LENGTH,
                0x00,
                sizeof(AT_MSG_STRU) - VOS_MSG_HEAD_LENGTH);
 
-    /* ��д��Ϣͷ */
+    /* 填写消息头 */
     pstMsg->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstMsg->ulReceiverPid   = WUEPS_PID_AT;
     pstMsg->enMsgId         = ID_AT_SWITCH_CMD_MODE;
 
-    /* ��д��Ϣ���� */
+    /* 填写消息内容 */
     pstMsg->ucType          = AT_SWITCH_CMD_MODE_MSG;
     pstMsg->ucIndex         = AT_CLIENT_TAB_HSUART_INDEX;
 
-    /* ������Ϣ */
+    /* 发送消息 */
     if (VOS_OK != PS_SEND_MSG(WUEPS_PID_AT, pstMsg))
     {
         AT_ERR_LOG("AT_HSUART_SwitchCmdDetectCB: Send message failed!");
@@ -2794,22 +2794,22 @@ VOS_VOID AT_HSUART_ConfigPort(UDI_HANDLE lUartHdl)
 
     if (VOS_NULL_PTR != pstFormatParam)
     {
-        /* ���������м�¼������λ��ת����DRV����λ�� */
+        /* 将上下文中记录的数据位宽转换成DRV数据位宽 */
         if (VOS_OK != AT_HSUART_GetUdiValueByDataLen(pstFormatParam->enDataBitLength, &ulDataLen))
         {
             AT_ERR_LOG("AT_HSUART_ConfigPort, Trans Data Length Err!");
         }
 
-        /* ���������м�¼��ֹͣλ��ת����DRVֹͣλ�� */
+        /* 将上下文中记录的停止位宽转换成DRV停止位宽 */
         if (VOS_OK != AT_HSUART_GetUdiValueByStopLen(pstFormatParam->enStopBitLength, &ulStopLen))
         {
             AT_ERR_LOG("AT_HSUART_ConfigPort, Trans Stop Length Err!");
         }
 
-        /* �ж��Ƿ���У�� */
+        /* 判断是否有校验 */
         if (AT_UART_PARITY_LEN_1_BIT == pstFormatParam->enParityBitLength)
         {
-            /* ���������м�¼��У�鷽ʽת����DRVУ�鷽ʽ */
+            /* 将上下文中记录的校验方式转换成DRV校验方式 */
             if (VOS_OK != AT_HSUART_GetUdiValueByParity(pstUartCtx->stPhyConfig.stFrame.enParity, &ulParity))
             {
                 AT_ERR_LOG("AT_HSUART_ConfigPort, Trans Parity Err!");
@@ -2817,25 +2817,25 @@ VOS_VOID AT_HSUART_ConfigPort(UDI_HANDLE lUartHdl)
         }
     }
 
-    /* ����DRV�������ô��ڵĲ����� */
+    /* 调用DRV函数设置串口的波特率 */
     if (VOS_OK != DRV_UDI_IOCTL(lUartHdl, UART_IOCTL_SET_BAUD, (VOS_VOID *)&ulBaudRate))
     {
         AT_HSUART_DBG_IOCTL_SET_BAUD_FAIL_NUM(1);
     }
 
-    /* ����DRV�������ô�������λ���� */
+    /* 调用DRV函数设置串口数据位长度 */
     if (VOS_OK != DRV_UDI_IOCTL(lUartHdl, UART_IOCTL_SET_WLEN, (VOS_VOID *)&ulDataLen))
     {
         AT_HSUART_DBG_IOCTL_SET_WLEN_FAIL_NUM(1);
     }
 
-    /* ����DRV�������ô���ֹͣλ���� */
+    /* 调用DRV函数设置串口停止位长度 */
     if (VOS_OK != DRV_UDI_IOCTL(lUartHdl, UART_IOCTL_SET_STP2, (VOS_VOID *)&ulStopLen))
     {
         AT_HSUART_DBG_IOCTL_SET_STP_FAIL_NUM(1);
     }
 
-    /* ����DRV�������ô���У��λ���� */
+    /* 调用DRV函数设置串口校验位长度 */
     if (VOS_OK != DRV_UDI_IOCTL(lUartHdl, UART_IOCTL_SET_EPS, (VOS_VOID *)&ulParity))
     {
         AT_HSUART_DBG_IOCTL_SET_PARITY_FAIL_NUM(1);
@@ -2876,47 +2876,47 @@ VOS_VOID AT_HSUART_InitPort(VOS_VOID)
     stReadBuffInfo.u32BuffNum  = AT_UART_UL_DATA_BUFF_NUM;
     ucIndex                    = AT_CLIENT_TAB_HSUART_INDEX;
 
-    /* ����HSUART�˿���Ϣӳ�� */
+    /* 配置HSUART端口消息映射 */
     AT_ConfigTraceMsg(ucIndex, ID_AT_CMD_HSUART, ID_AT_MNTN_RESULT_HSUART);
 
-    /* ��Device�����ID */
+    /* 打开Device，获得ID */
     lUdiHandle = DRV_UDI_OPEN(&stParam);
     if (UDI_INVALID_HANDLE != lUdiHandle)
     {
-        /* ����UART�� */
+        /* 配置UART口 */
         AT_HSUART_ConfigPort(lUdiHandle);
 
-        /* ע��UART�豸�������ݽ��ջص� */
+        /* 注册UART设备上行数据接收回调 */
         if (VOS_OK != DRV_UDI_IOCTL(lUdiHandle, UART_IOCTL_SET_READ_CB, AT_HSUART_UlDataReadCB))
         {
             AT_HSUART_DBG_IOCTL_SET_READ_CB_ERR(1);
         }
 
-        /* ����UART�豸�������ݻ����� */
+        /* 设置UART设备上行数据缓存规格 */
         if (VOS_OK != DRV_UDI_IOCTL(lUdiHandle, UART_IOCTL_RELLOC_READ_BUFF, &stReadBuffInfo))
         {
             AT_HSUART_DBG_IOCTL_RELLOC_READ_BUFF_ERR(1);
         }
 
-        /* ע��UART���������ڴ��ͷŽӿ� */
+        /* 注册UART下行数据内存释放接口 */
         if (VOS_OK != DRV_UDI_IOCTL(lUdiHandle, UART_IOCTL_SET_FREE_CB, AT_HSUART_FreeDlDataBuff))
         {
             AT_HSUART_DBG_IOCTL_SET_FREE_CB_ERR(1);
         }
 
-        /* ע��ܽ��ź�֪ͨ�ص� */
+        /* 注册管脚信号通知回调 */
         if (VOS_OK != DRV_UDI_IOCTL(lUdiHandle, UART_IOCTL_SET_MSC_READ_CB, AT_HSUART_MscReadCB))
         {
             AT_HSUART_DBG_IOCTL_SET_MSC_READ_CB_ERR(1);
         }
 
-        /* ע��"+++"������ص� */
+        /* 注册"+++"命令检测回调 */
         if (VOS_OK != DRV_UDI_IOCTL(lUdiHandle, UART_IOCTL_SWITCH_MODE_CB, AT_HSUART_SwitchCmdDetectCB))
         {
             AT_HSUART_DBG_IOCTL_SET_SWITCH_CB_ERR(1);
         }
 
-        /* ��ʼ��HSUART��· */
+        /* 初始化HSUART链路 */
         AT_HSUART_InitLink(ucIndex);
         g_alAtUdiHandle[ucIndex] = lUdiHandle;
     }
@@ -3064,19 +3064,19 @@ AT_IO_LEVEL_ENUM_UINT8 AT_GetIoLevel(
 }
 
 /*****************************************************************************
- �� �� ��  : App_VcomRecvCallbackRegister
- ��������  : ע��ص�����
- �������  : uPortNo
+ 函 数 名  : App_VcomRecvCallbackRegister
+ 功能描述  : 注册回调函数
+ 输入参数  : uPortNo
              pCallback
- �������  : ��
- �� �� ֵ  : int
- ���ú���  :
- ��������  :
+ 输出参数  : 无
+ 返 回 值  : int
+ 调用函数  :
+ 被调函数  :
 
- �޸���ʷ      :
-  1.��    ��   : 2011��10��17��
-    ��    ��   : sunshaohua
-    �޸�����   : �����ɺ���
+ 修改历史      :
+  1.日    期   : 2011年10月17日
+    作    者   : sunshaohua
+    修改内容   : 新生成函数
 *****************************************************************************/
 int  App_VcomRecvCallbackRegister(unsigned char  uPortNo, pComRecv pCallback)
 {
@@ -3098,7 +3098,7 @@ VOS_INT AT_RcvFromAppCom(
         AT_WARN_LOG("AT_RcvFromAppCom: Port No ERR!");
         return VOS_ERR;
     }
-    /* APPVCOM��󼸸�����ATͨ�� */
+    /* APPVCOM最后几个不是AT通道 */
     if (ucVcomId >= AT_VCOM_AT_CHANNEL_MAX)
     {
         AT_WARN_LOG("AT_RcvFromAppCom: Port No ERR!");
@@ -3116,10 +3116,10 @@ VOS_INT AT_RcvFromAppCom(
         return VOS_ERR;
     }
 
-    /* ���ݶ˿ں�ȷ��Index��ֵ */
+    /* 根据端口号确定Index的值 */
     ucIndex = AT_CLIENT_TAB_APP_INDEX + ucVcomId;
 
-    /* �ж��Ƿ���APPͨ�� */
+    /* 判断是否是APP通道 */
     if ((AT_APP_USER != gastAtClientTab[ucIndex].UserType)
      || (AT_CLIENT_NULL == gastAtClientTab[ucIndex].ucUsed))
     {
@@ -3154,14 +3154,14 @@ VOS_INT32 AT_AppComEst(VOS_VOID)
     {
         ucIndex = AT_CLIENT_TAB_APP_INDEX + ucLoop;
 
-        /* ��ն�Ӧ���� */
+        /* 清空对应表项 */
         PS_MEM_SET(&gastAtClientTab[ucIndex], 0x00, sizeof(AT_CLIENT_MANAGE_STRU));
 
         AT_ConfigTraceMsg(ucIndex, (ID_AT_CMD_APP + ucLoop), (ID_AT_MNTN_RESULT_APP + ucLoop));
 
         gastAtClientTab[ucIndex].usClientId     = AT_CLIENT_ID_APP + ucLoop;
 
-        /* ��д�û����� */
+        /* 填写用户表项 */
         gastAtClientTab[ucIndex].ucPortNo        = APP_VCOM_DEV_INDEX_0 + ucLoop;
         gastAtClientTab[ucIndex].UserType        = AT_APP_USER;
         gastAtClientTab[ucIndex].ucUsed          = AT_CLIENT_USED;
@@ -3172,7 +3172,7 @@ VOS_INT32 AT_AppComEst(VOS_VOID)
         gastAtClientTab[ucIndex].CmdCurrentOpt   = AT_CMD_CURRENT_OPT_BUTT;
         g_stParseContext[ucIndex].ucClientStatus = AT_FW_CLIENT_STATUS_READY;
 
-        /* ע��ص����� */
+        /* 注册回调函数 */
         APP_VCOM_RegDataCallback(gastAtClientTab[ucIndex].ucPortNo, (SEND_UL_AT_FUNC)AT_RcvFromAppCom);
 
     }
@@ -3254,7 +3254,7 @@ VOS_INT32 AT_SockComEst(VOS_UINT8 ucPortNo)
     gastAtClientTab[ucIndex].CmdCurrentOpt   = AT_CMD_CURRENT_OPT_BUTT;
     g_stParseContext[ucIndex].ucClientStatus = AT_FW_CLIENT_STATUS_READY;
 
-    /*��DMSע��Ӵ����л�ȡ���ݵĻص�����*/
+    /*向DMS注册从串口中获取数据的回调函数*/
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)	
     (VOS_VOID)CPM_LogicRcvReg(CPM_AT_COMM,(CPM_FUNC)AT_RcvFromSock);
 #else
@@ -3333,10 +3333,10 @@ VOS_INT32 AT_AppSockComEst(VOS_UINT8 ucPortNo)
 
     AT_ConfigTraceMsg(ucIndex, ID_AT_CMD_APPSOCK, ID_AT_MNTN_RESULT_APPSOCK);
 
-    /* ��ն�Ӧ���� */
+    /* 清空对应表项 */
     PS_MEM_SET(&gastAtClientTab[ucIndex], 0x00, sizeof(AT_CLIENT_MANAGE_STRU));
 
-    /* ��д�û����� */
+    /* 填写用户表项 */
     gastAtClientTab[ucIndex].usClientId      = AT_CLIENT_ID_APPSOCK;
     gastAtClientTab[ucIndex].ucPortNo        = ucPortNo;
     gastAtClientTab[ucIndex].UserType        = AT_APP_SOCK_USER;
@@ -3348,7 +3348,7 @@ VOS_INT32 AT_AppSockComEst(VOS_UINT8 ucPortNo)
     gastAtClientTab[ucIndex].CmdCurrentOpt   = AT_CMD_CURRENT_OPT_BUTT;
     g_stParseContext[ucIndex].ucClientStatus = AT_FW_CLIENT_STATUS_READY;
 
-    /*��DMSע��Ӵ����л�ȡ���ݵĻص�����*/
+    /*向DMS注册从串口中获取数据的回调函数*/
     (VOS_VOID)App_VcomRecvCallbackRegister(ucPortNo, (pComRecv)AT_RcvFromAppSock);
 
 
@@ -3362,7 +3362,7 @@ VOS_UINT32 At_UsbGetWwanMode(VOS_VOID)
 
 VOS_INT AT_UsbCtrlBrkReqCB(VOS_VOID)
 {
-    /* ������е�PDP������IDLE������OK; �����һ������DEACTINGҲ����OK */
+    /* 如果所有的PDP都处于IDLE，返回OK; 如果有一个处于DEACTING也返回OK */
     if (VOS_TRUE == AT_NdisCheckPdpIdleState())
     {
         AT_WARN_LOG("AT_UsbCtrlBrkReqCB: the state is already IDLE.");
@@ -3417,14 +3417,14 @@ VOS_INT AT_RcvFromNdisCom(
     VOS_UINT8                           ucIndex;
     VOS_UINT32                          ulRet;
 
-    /* ������� */
+    /* 参数检查 */
     if (VOS_NULL_PTR == pucData)
     {
         AT_WARN_LOG("At_RcvFromNdisCom: pData is NULL PTR!");
         return VOS_ERR;
     }
 
-    /* ������� */
+    /* 参数检查 */
     if (0 == uslength)
     {
         AT_WARN_LOG("At_RcvFromNdisCom: uslength is 0!");
@@ -3433,7 +3433,7 @@ VOS_INT AT_RcvFromNdisCom(
 
     ucIndex = AT_CLIENT_TAB_NDIS_INDEX;
 
-    /* NDIS��·û�н��� */
+    /* NDIS链路没有建立 */
     if ( (AT_NDIS_USER != gastAtClientTab[ucIndex].UserType)
        ||(AT_CLIENT_NULL == gastAtClientTab[ucIndex].ucUsed))
     {
@@ -3441,7 +3441,7 @@ VOS_INT AT_RcvFromNdisCom(
         return VOS_ERR;
     }
 
-    /*����NDISͨ��״̬Ϊ���ϱ�����*/
+    /*设置NDIS通道状态为可上报数据*/
     DMS_SetNdisChanStatus(ACM_EVT_DEV_READY);
 
     if (AT_CMD_MODE == gastAtClientTab[ucIndex].Mode)
@@ -3470,18 +3470,18 @@ VOS_UINT32 AT_UsbNdisEst(VOS_VOID)
 
     ucIndex = AT_CLIENT_TAB_NDIS_INDEX;
 
-    /* ��ն�Ӧ���� */
+    /* 清空对应表项 */
     PS_MEM_SET(&gastAtClientTab[ucIndex],0x00,sizeof(AT_CLIENT_MANAGE_STRU));
 
     AT_ConfigTraceMsg(ucIndex, ID_AT_CMD_NDIS, ID_AT_MNTN_RESULT_NDIS);
 
-    /* ��д�û����� */
+    /* 填写用户表项 */
     gastAtClientTab[ucIndex].usClientId      = AT_CLIENT_ID_NDIS;
     gastAtClientTab[ucIndex].ucPortNo        = AT_NDIS_PORT_NO;
     gastAtClientTab[ucIndex].UserType        = AT_NDIS_USER;
     gastAtClientTab[ucIndex].ucUsed          = AT_CLIENT_USED;
 
-    /* ���¿��Բ�����д��ǰ��PS_MEMSET�Ѿ���ʼ����ֻΪ�ɿ���� */
+    /* 以下可以不用填写，前面PS_MEMSET已经初始化，只为可靠起见 */
     gastAtClientTab[ucIndex].Mode            = AT_CMD_MODE;
     gastAtClientTab[ucIndex].IndMode         = AT_IND_MODE;
     gastAtClientTab[ucIndex].DataMode        = AT_DATA_BUTT_MODE;
@@ -3489,7 +3489,7 @@ VOS_UINT32 AT_UsbNdisEst(VOS_VOID)
     gastAtClientTab[ucIndex].CmdCurrentOpt   = AT_CMD_CURRENT_OPT_BUTT;
     g_stParseContext[ucIndex].ucClientStatus = AT_FW_CLIENT_STATUS_READY;
 
-    /*��ʼ��NDIS ADDR����*/
+    /*初始化NDIS ADDR参数*/
     PS_MEM_SET(&gstAtNdisAddParam, 0, sizeof(AT_DIAL_PARAM_STRU));
 
     return VOS_OK;
@@ -3503,7 +3503,7 @@ VOS_VOID AT_OpenUsbNdis(VOS_VOID)
 
     stParam.devid   = UDI_NCM_NDIS_ID;
 
-    /* ��Device�����ID */
+    /* 打开Device，获得ID */
     g_ulAtUdiNdisHdl = DRV_UDI_OPEN(&stParam);
 
     if (UDI_INVALID_HANDLE == g_ulAtUdiNdisHdl)
@@ -3513,8 +3513,8 @@ VOS_VOID AT_OpenUsbNdis(VOS_VOID)
         return;
     }
 
-    /* ע��DMS�ص�����ָ�� */
-    /*lint -e732   ���Ͳ�ͳһ����ʱע����ȷ�Ͻӿ��ٽ��*/
+    /* 注册DMS回调函数指针 */
+    /*lint -e732   类型不统一，暂时注掉，确认接口再解决*/
     ulRst =  DMS_USB_NAS_REGFUNC((USB_NAS_BRK)AT_UsbCtrlBrkReqCB,
                                  (USB_NAS_AT_CMD_RECV)AT_RcvFromNdisCom,
                                  (USB_NAS_GET_WWAN_MODE)At_UsbGetWwanMode);
@@ -3532,7 +3532,7 @@ VOS_VOID AT_OpenUsbNdis(VOS_VOID)
 
 VOS_VOID AT_CloseUsbNdis(VOS_VOID)
 {
-    /* �����PDP����,����Ҫȥ���� */
+    /* 如果有PDP激活,则需要去激活 */
     AT_UsbCtrlBrkReqCB();
 
     if (UDI_INVALID_HANDLE != g_ulAtUdiNdisHdl)
@@ -3562,7 +3562,7 @@ VOS_VOID AT_SetMuxSupportFlg(VOS_UINT8 ucMuxSupportFlg)
 
 VOS_UINT32 AT_CheckMuxDlci(AT_MUX_DLCI_TYPE_ENUM_UINT8 enDlci)
 {
-    /* �˴ο���ֻ֧��8��ͨ����DLCI��1��8����1-8��Χ�ķ���VOS_OK�����򷵻�VOS_ERR */
+    /* 此次开发只支持8个通道，DLCI从1到8。在1-8范围的返回VOS_OK，否则返回VOS_ERR */
     if ((enDlci >= AT_MUX_DLCI1_ID)
      && (enDlci < (AT_MUX_DLCI1_ID + AT_MUX_AT_CHANNEL_MAX)))
     {
@@ -3595,7 +3595,7 @@ VOS_UINT32 AT_IsHsicOrMuxUser(VOS_UINT8 ucIndex)
     ulHsicUserFlg = AT_CheckHsicUser(ucIndex);
     ulMuxUserFlg  = AT_CheckMuxUser(ucIndex);
 
-    /* �Ȳ���HSIC�˿ڣ�Ҳ����MUX�˿� */
+    /* 既不是HSIC端口，也不是MUX端口 */
     if ((VOS_FALSE == ulHsicUserFlg)
      && (VOS_FALSE == ulMuxUserFlg))
     {
@@ -3666,7 +3666,7 @@ VOS_UINT32 AT_IsConcurrentPorts(
     VOS_UINT32                          ulHsicUserFlg2;
     VOS_UINT32                          ulAppUserFlg2;
 
-    /* ͬһ��ͨ����֧�ֲ���������㺯����֤ */
+    /* 同一个通道不支持并发，由外层函数保证 */
     ulMuxUserFlg1  = AT_CheckMuxUser(ucIndexOne);
     ulHsicUserFlg1 = AT_CheckHsicUser(ucIndexOne);
     ulAppUserFlg1  = AT_CheckAppUser(ucIndexOne);
@@ -3675,7 +3675,7 @@ VOS_UINT32 AT_IsConcurrentPorts(
     ulHsicUserFlg2 = AT_CheckHsicUser(ucIndexTwo);
     ulAppUserFlg2  = AT_CheckAppUser(ucIndexTwo);
 
-    /* ͨ��1��HSICͨ����MUXͨ��,ͨ��2Ҳ��HSICͨ����MUXͨ�� */
+    /* 通道1是HSIC通道或MUX通道,通道2也是HSIC通道或MUX通道 */
     if ((VOS_TRUE == ulMuxUserFlg1)
      || (VOS_TRUE == ulHsicUserFlg1))
     {
@@ -3686,7 +3686,7 @@ VOS_UINT32 AT_IsConcurrentPorts(
         }
     }
 
-    /* ͨ��1��APPͨ��,ͨ��2Ҳ��APPͨ�� */
+    /* 通道1是APP通道,通道2也是APP通道 */
     if (VOS_TRUE == ulAppUserFlg1)
     {
         if (VOS_TRUE == ulAppUserFlg2)
@@ -3695,7 +3695,7 @@ VOS_UINT32 AT_IsConcurrentPorts(
         }
     }
 
-    /* PCUI��CTRL�ڲ����жϣ����������� */
+    /* PCUI和CTRL口并发判断，仅供测试用 */
     if (VOS_TRUE == AT_GetPcuiCtrlConcurrentFlag())
     {
         if (VOS_TRUE == AT_CheckPcuiCtrlConcurrent(ucIndexOne, ucIndexTwo))
@@ -3726,12 +3726,12 @@ VOS_VOID AT_RcvMuxCmdStream_PreProc(
         return;
     }
 
-    /* �ж�pData�����Ľ�β�Ƿ�Ϊ<CR><LF>��ʽ */
+    /* 判断pData码流的结尾是否为<CR><LF>形式 */
     if ((usLen > 2)
      && (ucAtS3 == pData[usLen - 2])
      && (ucAtS4 == pData[usLen - 1]))
     {
-        /* ɾȥ��β��<LF>�ַ� */
+        /* 删去结尾的<LF>字符 */
         MUX_DlciDlDataSend(enDlci, pData, (usLen - 1));
         AT_MNTN_TraceCmdResult(ucIndex, pData, (usLen - 1));
     }
@@ -3745,18 +3745,18 @@ VOS_VOID AT_RcvMuxCmdStream_PreProc(
 }
 
 /*****************************************************************************
- �� �� ��  : AT_MemSingleCopy
- ��������  : ��ȡ�����ڴ浥Ԫʵ��ʹ�õ����ֽ�������������������
- �������  : pMemSrc  -- Ҫ��ȡ���ݵ�TTF�ڴ��ͷָ��
- �������  : ��
- �� �� ֵ  : ��
- ���ú���  :
- ��������  :
+ 函 数 名  : AT_MemSingleCopy
+ 功能描述  : 获取给定内存单元实际使用的总字节数，包括整个数据链
+ 输入参数  : pMemSrc  -- 要获取数据的TTF内存块头指针
+ 输出参数  : 无
+ 返 回 值  : 无
+ 调用函数  :
+ 被调函数  :
 
- �޸���ʷ      :
-  1.��    ��   : 2011��10��17��
-    ��    ��   : sunshaohua
-    �޸�����   : �����ɺ���
+ 修改历史      :
+  1.日    期   : 2011年10月17日
+    作    者   : sunshaohua
+    修改内容   : 新生成函数
 
 *****************************************************************************/
 VOS_VOID AT_MemSingleCopy(
@@ -3765,7 +3765,7 @@ VOS_VOID AT_MemSingleCopy(
     VOS_UINT32                          ulLen
 )
 {
-    /* ʹ�õ��ڴ����Ϊ����Cache������ʹ��DM */
+    /* 使用的内存可能为不可Cache，不能使用DM */
     DRV_RT_MEMCPY(pucDest, pucSrc, ulLen);
 
     return;
@@ -3783,7 +3783,7 @@ VOS_VOID AT_InitMuxCtx(VOS_VOID)
 
     pCommCtx = AT_GetCommCtxAddr();
 
-    /* ��NV�ж�ȡMUXͨ�������ϱ�����״̬����ȡʧ��Ĭ��ȫ���ϱ� */
+    /* 从NV中读取MUX通道主动上报命令状态，读取失败默认全部上报 */
     if (NV_OK != NV_ReadEx(MODEM_ID_0, en_NV_Item_MUX_REPORT_CFG,
                          &stMuxReportCfg,
                          sizeof(stMuxReportCfg)))
@@ -3800,12 +3800,12 @@ VOS_VOID AT_InitMuxCtx(VOS_VOID)
         pCommCtx->stMuxCtx.astMuxClientTab[ucLoop].ucMuxPort        = AT_MUX1_PORT_NO + ucLoop;
         pCommCtx->stMuxCtx.astMuxClientTab[ucLoop].enDlci           = AT_MUX_DLCI1_ID + ucLoop;
 
-        /* ��λȡ��NV�����õ�MUX�˿������ϱ�״̬ */
-        /* Bitֵ��MUX�˿ڵĶ�Ӧ��ϵ���±�
+        /* 按位取出NV中配置的MUX端口主动上报状态 */
+        /* Bit值与MUX端口的对应关系见下表
                  |-------------1 Oct-------------|------------1 Oct----------|
             Bit  15  14  13  12  11  10  9   8   7   6   5   4   3   2   1   0
             MUX                                  8   7   6   5   4   3   2   1
-            ע��Bitλȡ0��ʾ�����ϱ���1��ʾ�������ϱ��� */
+            注：Bit位取0表示主动上报，1表示不主动上报。 */
         if ((1 << ucLoop) == (stMuxReportCfg.ulMuxReportCfg & (1 << ucLoop)))
         {
             pCommCtx->stMuxCtx.astMuxClientTab[ucLoop].enRptType    = AT_HSIC_REPORT_OFF;
@@ -3834,31 +3834,31 @@ VOS_VOID AT_MuxInit(VOS_VOID)
 
     NV_GetLength(en_NV_Item_Mux_Support_Flg, &ulLength);
 
-    /* ��NVʧ�ܣ�ֱ�ӷ��� */
+    /* 读NV失败，直接返回 */
     if (NV_OK != NV_ReadEx(MODEM_ID_0, en_NV_Item_Mux_Support_Flg, &stMuxSupportFlg, ulLength))
     {
         AT_SetMuxSupportFlg(stMuxSupportFlg.ucMuxSupportFlg);
         return;
     }
 
-    /* MUX���Բ�֧�֣�ֱ�ӷ��� */
+    /* MUX特性不支持，直接返回 */
     if (VOS_TRUE != stMuxSupportFlg.ucMuxSupportFlg)
     {
         AT_SetMuxSupportFlg(stMuxSupportFlg.ucMuxSupportFlg);
         return;
     }
 
-    /* ��ʼ��MUX������ */
+    /* 初始化MUX上下文 */
     AT_InitMuxCtx();
 
     AT_SetMuxSupportFlg(stMuxSupportFlg.ucMuxSupportFlg);
 
     for (ucLoop = 0; ucLoop < AT_MUX_AT_CHANNEL_MAX; ucLoop++)
     {
-        /* ע��Mux ATͨ���������ݽ��ջص� */
+        /* 注册Mux AT通道上行数据接收回调 */
         MUX_AtRgstUlPortCallBack(pCommCtx->stMuxCtx.astMuxClientTab[ucLoop].enDlci, (RCV_UL_DLCI_DATA_FUNC)(pCommCtx->stMuxCtx.astMuxClientTab[ucLoop].pReadDataCB));
 
-        /* ע��Mux ATͨ��client id */
+        /* 注册Mux AT通道client id */
         AT_MuxEst(ucLoop);
     }
 
@@ -3873,12 +3873,12 @@ VOS_UINT32 AT_MuxEst(VOS_UINT8 ucMuxAtCtxId)
 
     ucIndex = pCommCtx->stMuxCtx.astMuxClientTab[ucMuxAtCtxId].enAtClientTabIdx;
 
-    /* ��ն�Ӧ���� */
+    /* 清空对应表项 */
     PS_MEM_SET(&gastAtClientTab[ucIndex], 0x00, sizeof(AT_CLIENT_MANAGE_STRU));
 
     AT_ConfigTraceMsg(ucIndex, (ID_AT_CMD_MUX1 + ucMuxAtCtxId), (ID_AT_MNTN_RESULT_MUX1 + ucMuxAtCtxId));
 
-    /* ��д�û����� */
+    /* 填写用户表项 */
     gastAtClientTab[ucIndex].usClientId      = pCommCtx->stMuxCtx.astMuxClientTab[ucMuxAtCtxId].enAtClientId;
     gastAtClientTab[ucIndex].ucPortNo        = pCommCtx->stMuxCtx.astMuxClientTab[ucMuxAtCtxId].ucMuxPort;
     gastAtClientTab[ucIndex].UserType        = pCommCtx->stMuxCtx.astMuxClientTab[ucMuxAtCtxId].ucMuxUser;
@@ -3907,7 +3907,7 @@ VOS_UINT32 AT_MuxReadDataCB(
 
     pCommCtx = AT_GetCommCtxAddr();
 
-    /* ��κϷ��Լ�� */
+    /* 入参合法性检查 */
     if ((VOS_NULL_PTR == pData)
      || (0 == usDataLen))
     {
@@ -3915,14 +3915,14 @@ VOS_UINT32 AT_MuxReadDataCB(
         return VOS_ERR;
     }
 
-    /* ��·�źϷ��Լ�� */
+    /* 链路号合法性检查 */
     if (VOS_OK != AT_CheckMuxDlci(enDlci))
     {
         AT_ERR_LOG("AT_MuxReadDataCB: DLCI Error!");
         return VOS_ERR;
     }
 
-    /* ������·�Ż�ȡAT�˿ں� */
+    /* 根据链路号获取AT端口号 */
     for (ucLoop = 0; ucLoop < AT_MUX_AT_CHANNEL_MAX; ucLoop++)
     {
         if (enDlci == pCommCtx->stMuxCtx.astMuxClientTab[ucLoop].enDlci)
@@ -3939,7 +3939,7 @@ VOS_UINT32 AT_MuxReadDataCB(
 
     ucPortNo = pCommCtx->stMuxCtx.astMuxClientTab[ucLoop].ucMuxPort;
 
-    /* �ַ��������� */
+    /* 分发上行数据 */
     At_RcvFromUsbCom(ucPortNo, pData, usDataLen);
 
     return VOS_OK;
@@ -3952,7 +3952,7 @@ VOS_UINT32 AT_HsicInit( VOS_VOID )
     UDI_OPEN_PARAM                      stParam;
     VOS_UINT8                           ucLoop;
 
-    /*  ��Ʒ��֧��HSIC���ԣ�ֱ�ӳ�ʼ���ɹ� */
+    /*  产品不支持HSIC特性，直接初始化成功 */
     if (BSP_MODULE_SUPPORT != DRV_GET_HSIC_SUPPORT())
     {
         return AT_SUCCESS;
@@ -3962,7 +3962,7 @@ VOS_UINT32 AT_HsicInit( VOS_VOID )
     {
         stParam.devid   = (UDI_DEVICE_ID)g_astAtHsicCtx[ucLoop].enAcmChannelId;
 
-        /* ��UDI�豸 */
+        /* 打开UDI设备 */
         g_astAtHsicCtx[ucLoop].lHdlId = DRV_UDI_OPEN(&stParam);
         if (UDI_INVALID_HANDLE == g_astAtHsicCtx[ucLoop].lHdlId)
         {
@@ -3970,28 +3970,28 @@ VOS_UINT32 AT_HsicInit( VOS_VOID )
             return AT_FAILURE;
         }
 
-        /* ע��HSIC ATͨ���������ݽ��ջص� */
+        /* 注册HSIC AT通道上行数据接收回调 */
         if (VOS_OK != DRV_UDI_IOCTL (g_astAtHsicCtx[ucLoop].lHdlId, ACM_IOCTL_SET_READ_CB, g_astAtHsicCtx[ucLoop].pReadDataCB))
         {
             AT_ERR_LOG1("AT_HsicInit, ERROR, Set data read callback for HSIC device %d failed!", ucLoop);
             return AT_FAILURE;
         }
 
-        /* ע��HSIC ATͨ�����������ڴ��ͷŽӿ� */
+        /* 注册HSIC AT通道下行数据内存释放接口 */
         if (VOS_OK != DRV_UDI_IOCTL (g_astAtHsicCtx[ucLoop].lHdlId, ACM_IOCTL_SET_FREE_CB, g_astAtHsicCtx[ucLoop].pFreeDlDataCB))
         {
             AT_ERR_LOG1("AT_HsicInit, ERROR, Set memory free callback for HSIC device %d failed!", ucLoop);
             return AT_FAILURE;
         }
 
-        /* ����HSIC ATͨ����������buffer��� */
+        /* 设置HSIC AT通道上行数据buffer规格 */
         if(AT_SUCCESS != AT_HsicInitUlDataBuf(g_astAtHsicCtx[ucLoop].lHdlId, AT_HSIC_UL_DATA_BUFF_SIZE, AT_HSIC_UL_DATA_BUFF_NUM))
         {
             AT_ERR_LOG1("AT_HsicInit, ERROR, AT_HsicInitUlDataBuf for HSIC device %d failed!", ucLoop);
             return AT_FAILURE;
         }
 
-        /* ע��HSIC ATͨ��client id */
+        /* 注册HSIC AT通道client id */
         AT_HsicEst(ucLoop);
     }
 
@@ -4005,12 +4005,12 @@ VOS_UINT32 AT_HsicEst ( VOS_UINT8   ucHsicAtCtxId )
 
     ucIndex = g_astAtHsicCtx[ucHsicAtCtxId].ucAtClientTabIdx;
 
-    /* ��ն�Ӧ���� */
+    /* 清空对应表项 */
     PS_MEM_SET(&gastAtClientTab[ucIndex],0x00,sizeof(AT_CLIENT_MANAGE_STRU));
 
     AT_ConfigTraceMsg(ucIndex, (ID_AT_CMD_HSIC1 + ucHsicAtCtxId), (ID_AT_MNTN_RESULT_HSIC1 + ucHsicAtCtxId));
 
-    /* ��д�û����� */
+    /* 填写用户表项 */
     gastAtClientTab[ucIndex].usClientId      = g_astAtHsicCtx[ucHsicAtCtxId].enAtClientId;
     gastAtClientTab[ucIndex].ucPortNo        = g_astAtHsicCtx[ucHsicAtCtxId].ucHsicPort;
     gastAtClientTab[ucIndex].UserType        = g_astAtHsicCtx[ucHsicAtCtxId].ucHsicUser;
@@ -4037,16 +4037,16 @@ VOS_VOID AT_HsicOneReadDataCB( VOS_VOID )
     ulLen   = 0;
 
 
-    /* ��ȡ�������ݻ��� */
+    /* 获取上行数据缓存 */
     if ( AT_SUCCESS == AT_HsicGetUlDataBuf(g_astAtHsicCtx[AT_HSIC_AT_CHANNEL_INDEX_ONE].lHdlId, &pucBuf, &ulLen) )
     {
-        /*HSIC AT�˿ں� */
+        /*HSIC AT端口号 */
         ucPortNo  = AT_HSIC1_PORT_NO;
 
-        /* �����豸��ǰģʽ���ַ��������� */
+        /* 根据设备当前模式，分发上行数据 */
         At_RcvFromUsbCom(ucPortNo, pucBuf, (VOS_UINT16)ulLen);
 
-        /* AT�������ϣ��ͷ����л��� */
+        /* AT命令处理完毕，释放上行缓存 */
         if (AT_SUCCESS != AT_HsicFreeUlDataBuf(g_astAtHsicCtx[AT_HSIC_AT_CHANNEL_INDEX_ONE].lHdlId, pucBuf, ulLen))
         {
             AT_ERR_LOG("AT_HsicOneReadDataCB, WARNING, Free UL HSIC AT buffer failed !");
@@ -4072,16 +4072,16 @@ VOS_VOID AT_HsicTwoReadDataCB( VOS_VOID )
     ulLen   = 0;
 
 
-    /* ��ȡ�������ݻ��� */
+    /* 获取上行数据缓存 */
     if ( AT_SUCCESS == AT_HsicGetUlDataBuf(g_astAtHsicCtx[AT_HSIC_AT_CHANNEL_INDEX_TWO].lHdlId, &pucBuf, &ulLen) )
     {
-        /*HSIC AT�˿ں� */
+        /*HSIC AT端口号 */
         ucPortNo  = AT_HSIC2_PORT_NO;
 
-        /* �����豸��ǰģʽ���ַ��������� */
+        /* 根据设备当前模式，分发上行数据 */
         At_RcvFromUsbCom(ucPortNo, pucBuf, (VOS_UINT16)ulLen);
 
-        /* AT�������ϣ��ͷ����л��� */
+        /* AT命令处理完毕，释放上行缓存 */
         if (AT_SUCCESS != AT_HsicFreeUlDataBuf(g_astAtHsicCtx[AT_HSIC_AT_CHANNEL_INDEX_TWO].lHdlId, pucBuf, ulLen))
         {
             AT_ERR_LOG("AT_HsicTwoReadDataCB, WARNING, Free UL HSIC AT buffer failed !");
@@ -4107,16 +4107,16 @@ VOS_VOID AT_HsicThreeReadDataCB( VOS_VOID )
     ulLen   = 0;
 
 
-    /* ��ȡ�������ݻ��� */
+    /* 获取上行数据缓存 */
     if ( AT_SUCCESS == AT_HsicGetUlDataBuf(g_astAtHsicCtx[AT_HSIC_AT_CHANNEL_INDEX_THREE].lHdlId, &pucBuf, &ulLen) )
     {
-        /*HSIC AT�˿ں� */
+        /*HSIC AT端口号 */
         ucPortNo  = AT_HSIC3_PORT_NO;
 
-        /* �����豸��ǰģʽ���ַ��������� */
+        /* 根据设备当前模式，分发上行数据 */
         At_RcvFromUsbCom(ucPortNo, pucBuf, (VOS_UINT16)ulLen);
 
-        /* AT�������ϣ��ͷ����л��� */
+        /* AT命令处理完毕，释放上行缓存 */
         if (AT_SUCCESS != AT_HsicFreeUlDataBuf(g_astAtHsicCtx[AT_HSIC_AT_CHANNEL_INDEX_THREE].lHdlId, pucBuf, ulLen))
         {
             AT_ERR_LOG("AT_HsicThreeReadDataCB, WARNING, Free UL HSIC AT buffer failed !");
@@ -4141,16 +4141,16 @@ VOS_VOID AT_HsicFourReadDataCB( VOS_VOID )
     ulLen   = 0;
 
 
-    /* ��ȡ�������ݻ��� */
+    /* 获取上行数据缓存 */
     if ( AT_SUCCESS == AT_HsicGetUlDataBuf(g_astAtHsicCtx[AT_HSIC_AT_CHANNEL_INDEX_FOUR].lHdlId, &pucBuf, &ulLen) )
     {
-        /*HSIC AT�˿ں� */
+        /*HSIC AT端口号 */
         ucPortNo  = AT_HSIC4_PORT_NO;
 
-        /* �����豸��ǰģʽ���ַ��������� */
+        /* 根据设备当前模式，分发上行数据 */
         At_RcvFromUsbCom(ucPortNo, pucBuf, (VOS_UINT16)ulLen);
 
-        /* AT�������ϣ��ͷ����л��� */
+        /* AT命令处理完毕，释放上行缓存 */
         if (AT_SUCCESS != AT_HsicFreeUlDataBuf(g_astAtHsicCtx[AT_HSIC_AT_CHANNEL_INDEX_FOUR].lHdlId, pucBuf, ulLen))
         {
             AT_ERR_LOG("AT_HsicFourReadDataCB, WARNING, Free UL HSIC AT buffer failed !");
@@ -4166,25 +4166,25 @@ VOS_VOID AT_HsicFourReadDataCB( VOS_VOID )
 
 VOS_VOID AT_HsicOneFreeDlDataBuf(VOS_UINT8 *pucBuf)
 {
-    /* ����BSP�ͷ��ڴ�Ľӿ� */
+    /* 调用BSP释放内存的接口 */
     BSP_FREE(pucBuf);
     return;
 }
 VOS_VOID AT_HsicTwoFreeDlDataBuf(VOS_UINT8 *pucBuf)
 {
-    /* ����BSP�ͷ��ڴ�Ľӿ� */
+    /* 调用BSP释放内存的接口 */
     BSP_FREE(pucBuf);
     return;
 }
 VOS_VOID AT_HsicThreeFreeDlDataBuf(VOS_UINT8 *pucBuf)
 {
-    /* ����BSP�ͷ��ڴ�Ľӿ� */
+    /* 调用BSP释放内存的接口 */
     BSP_FREE(pucBuf);
     return;
 }
 VOS_VOID AT_HsicFourFreeDlDataBuf(VOS_UINT8 *pucBuf)
 {
-    /* ����BSP�ͷ��ڴ�Ľӿ� */
+    /* 调用BSP释放内存的接口 */
     BSP_FREE(pucBuf);
     return;
 }
@@ -4204,7 +4204,7 @@ VOS_UINT32 AT_HsicGetUlDataBuf(
     PS_MEM_SET(&stCtlParam, 0x00, sizeof(stCtlParam));
 
 
-    /* ��ȡ������������*/
+    /* 获取底软上行数据*/
     lResult = DRV_UDI_IOCTL(ulUdiHdl, ACM_IOCTL_GET_RD_BUFF, &stCtlParam);
     if ( VOS_OK != lResult )
     {
@@ -4247,7 +4247,7 @@ VOS_UINT32 AT_HsicFreeUlDataBuf(
     ACM_WR_ASYNC_INFO                   stCtlParam;
     VOS_INT32                           lResult;
 
-    /* ��д��Ҫ�ͷŵ��ڴ�ָ�� */
+    /* 填写需要释放的内存指针 */
 #ifdef FEATURE_USB_ZERO_COPY
     stCtlParam.pVirAddr = (VOS_CHAR*)pucBuf;
     stCtlParam.pPhyAddr = VOS_NULL_PTR;
@@ -4277,11 +4277,11 @@ VOS_UINT32 AT_HsicInitUlDataBuf(
     ACM_READ_BUFF_INFO                  stReadBuffInfo;
     VOS_INT32                           lResult;
 
-    /* ��д��Ҫ�����������ڴ�ָ�� */
+    /* 填写需要向底软申请的内存指针 */
     stReadBuffInfo.u32BuffSize = ulEachBuffSize;
     stReadBuffInfo.u32BuffNum  = ulTotalBuffNum;
 
-    /* ���õ����ӿڻ�ȡ���� */
+    /* 调用底软接口获取缓存 */
     lResult = DRV_UDI_IOCTL(ulUdiHdl, ACM_IOCTL_RELLOC_READ_BUFF, &stReadBuffInfo);
 
     if ( VOS_OK != lResult )
@@ -4321,13 +4321,13 @@ VOS_UINT32 AT_HsicWriteData(
         return AT_FAILURE;
     }
 
-    /* ��������Ч��ֱ�ӷ��� */
+    /* 如果句柄无效则直接返回 */
     if (UDI_INVALID_HANDLE == g_astAtHsicCtx[ucLoop].lHdlId)
     {
         return AT_FAILURE;
     }
 
-    /* ��д�������ڴ��ַ���������ACM_WR_ASYNC_INFO�ṹ���� */
+    /* 将写入数据内存地址放入底软的ACM_WR_ASYNC_INFO结构体中 */
 #ifdef FEATURE_USB_ZERO_COPY
     stCtlParam.pVirAddr                 = (VOS_CHAR*)pucBuf;
     stCtlParam.pPhyAddr                 = VOS_NULL_PTR;
@@ -4337,10 +4337,10 @@ VOS_UINT32 AT_HsicWriteData(
     stCtlParam.u32Size                  = ulLen;
     stCtlParam.pDrvPriv                 = VOS_NULL_PTR;
 
-    /* ���õ����Ľӿڣ�ʹ���첽��ʽ��������д���� */
+    /* 调用底软的接口，使用异步方式进行数据写操作 */
     lResult = DRV_UDI_IOCTL(g_astAtHsicCtx[ucLoop].lHdlId, ACM_IOCTL_WRITE_ASYNC, &stCtlParam);
 
-    /* д��ʧ�� */
+    /* 写入失败 */
     if ( VOS_OK != lResult )
     {
         AT_WARN_LOG1("AT_HsicWriteData, WARNING, Write data failed with code!",
@@ -4373,15 +4373,15 @@ VOS_VOID AT_HsicModemReadDataCB( VOS_VOID )
 
     pstBuf          = VOS_NULL_PTR;
 
-    /* HSIC MODEM������ */
+    /* HSIC MODEM索引号 */
     ucIndex     = AT_CLIENT_TAB_HSIC_MODEM_INDEX;
 
     if (AT_SUCCESS == AT_ModemGetUlDataBuf(ucIndex, &pstBuf))
     {
-        /*MODEM��·�� */
+        /*MODEM链路号 */
         ucDlci      = AT_MODEM_USER_DLCI;
 
-        /* �����豸��ǰģʽ���ַ��������� */
+        /* 根据设备当前模式，分发上行数据 */
         At_ModemDataInd(ucIndex, ucDlci, pstBuf);
     }
 
@@ -4400,13 +4400,13 @@ VOS_VOID AT_HsicModemReadMscCB(AT_DCE_MSC_STRU *pstRcvedMsc)
         return;
     }
 
-    /* HSIC MODEM������ */
+    /* HSIC MODEM索引号 */
     ucIndex     = AT_CLIENT_TAB_HSIC_MODEM_INDEX;
 
-    /*MODEM��·�� */
+    /*MODEM链路号 */
     ucDlci      = AT_MODEM_USER_DLCI;
 
-     /* ����ܽ��źſ�ά�ɲ� */
+     /* 输入管脚信号可维可测 */
     AT_MNTN_TraceInputMsc(ucIndex, pstRcvedMsc);
 
     At_ModemMscInd(ucIndex, ucDlci, pstRcvedMsc);
@@ -4422,7 +4422,7 @@ VOS_VOID AT_HsicModemInit(VOS_VOID)
     ucIndex         = AT_CLIENT_TAB_HSIC_MODEM_INDEX;
     stParam.devid   = UDI_ACM_HSIC_MODEM0_ID;
 
-    /* ��Device�����ID */
+    /* 打开Device，获得ID */
     g_alAtUdiHandle[ucIndex] = DRV_UDI_OPEN(&stParam);
 
     if (UDI_INVALID_HANDLE == g_alAtUdiHandle[ucIndex])
@@ -4432,7 +4432,7 @@ VOS_VOID AT_HsicModemInit(VOS_VOID)
         return;
     }
 
-    /* ע��MODEM�豸�������ݽ��ջص� */
+    /* 注册MODEM设备上行数据接收回调 */
     if (VOS_OK != DRV_UDI_IOCTL (g_alAtUdiHandle[ucIndex], ACM_IOCTL_SET_READ_CB, AT_HsicModemReadDataCB))
     {
         AT_ERR_LOG("AT_HsicModemInit, ERROR, Set data read callback for modem failed!");
@@ -4440,7 +4440,7 @@ VOS_VOID AT_HsicModemInit(VOS_VOID)
         return;
     }
 
-    /* ע��MODEM���������ڴ��ͷŽӿ� */
+    /* 注册MODEM下行数据内存释放接口 */
     if (VOS_OK != DRV_UDI_IOCTL (g_alAtUdiHandle[ucIndex], ACM_IOCTL_SET_FREE_CB, AT_ModemFreeDlDataBuf))
     {
         AT_ERR_LOG("AT_HsicModemInit, ERROR, Set memory free callback for modem failed!");
@@ -4448,7 +4448,7 @@ VOS_VOID AT_HsicModemInit(VOS_VOID)
         return;
     }
 
-    /* ע��ܽ��ź�֪ͨ�ص� */
+    /* 注册管脚信号通知回调 */
     if (VOS_OK != DRV_UDI_IOCTL (g_alAtUdiHandle[ucIndex], ACM_MODEM_IOCTL_SET_MSC_READ_CB, AT_HsicModemReadMscCB))
     {
         AT_ERR_LOG("AT_HsicModemInit, ERROR, Set msc read callback for modem failed!");
@@ -4456,7 +4456,7 @@ VOS_VOID AT_HsicModemInit(VOS_VOID)
         return;
     }
 
-    /* ע��MODEM�豸ʹ�ܡ�ȥʹ��֪ͨ�ص� */
+    /* 注册MODEM设备使能、去使能通知回调 */
     if (VOS_OK != DRV_UDI_IOCTL (g_alAtUdiHandle[ucIndex], ACM_MODEM_IOCTL_SET_REL_IND_CB, AT_HsicModemEnableCB))
     {
         AT_ERR_LOG("AT_HsicModemInit, ERROR, Set enable callback for modem failed!");
@@ -4464,13 +4464,13 @@ VOS_VOID AT_HsicModemInit(VOS_VOID)
         return;
     }
 
-    /* ����HSIC MODEM�豸��������buffer��� */
+    /* 设置HSIC MODEM设备上行数据buffer规格 */
     AT_ModemInitUlDataBuf(ucIndex, AT_MODEM_UL_DATA_BUFF_SIZE, AT_MODEM_UL_DATA_BUFF_NUM);
 
-    /* ��ʼ��MODMEͳ����Ϣ */
+    /* 初始化MODME统计信息 */
     AT_InitModemStats();
 
-    /*ע��client id*/
+    /*注册client id*/
     At_ModemEst(ucIndex, AT_CLIENT_ID_HSIC_MODEM, AT_HSIC_MODEM_PORT_NO);
 
     AT_ConfigTraceMsg(ucIndex, ID_AT_CMD_HSIC_MODEM, ID_AT_MNTN_RESULT_HSIC_MODEM);
@@ -4485,7 +4485,7 @@ VOS_VOID AT_HsicModemClose(VOS_VOID)
 
     ucIndex = AT_CLIENT_TAB_HSIC_MODEM_INDEX;
 
-    /* ȥע��MODEM���ص�(��TTFȷ��δע�����ص�Ҳ����ȥע�����ص�)�� */
+    /* 去注册MODEM流控点(经TTF确认未注册流控点也可以去注册流控点)。 */
     AT_DeRegModemPsDataFCPoint(ucIndex, gastAtClientTab[ucIndex].ucPsRabId);
 
     if (UDI_INVALID_HANDLE != g_alAtUdiHandle[ucIndex])
@@ -4509,7 +4509,7 @@ VOS_UINT32 AT_SendDataToHsic(
 
     pucData = VOS_NULL_PTR;
 
-    /* �����ڴ棬���ڴ洢�������� */
+    /* 申请内存，用于存储下行数据 */
     pucData = (VOS_UINT8 *)BSP_MALLOC((VOS_UINT32)usLen, MEM_NORM_DDR_POOL);
     if ( VOS_NULL_PTR == pucData )
     {
@@ -4518,10 +4518,10 @@ VOS_UINT32 AT_SendDataToHsic(
         return AT_FAILURE;
     }
 
-    /* ���������ݴ��ֽ�����Ϣ�п��� */
+    /* 将下行数据从字节流消息中拷出 */
     AT_MemSingleCopy(pucData, pucDataBuf, usLen);
 
-    /* ������д��HSIC AT�豸��д�ɹ����ڴ��ɵ��������ͷ� */
+    /* 将数据写往HSIC AT设备，写成功后内存由底软负责释放 */
     if ( AT_SUCCESS != AT_HsicWriteData(ucIndex, pucData, usLen) )
     {
         BSP_FREE(pucData);
@@ -4544,7 +4544,7 @@ VOS_UINT32 AT_SendMuxSelResultData(
 
     pCommCtx = AT_GetCommCtxAddr();
 
-    /* ƥ���Ƿ�ΪMUX��index */
+    /* 匹配是否为MUX的index */
     for (ucLoop = 0; ucLoop < AT_MUX_AT_CHANNEL_MAX; ucLoop++)
     {
         if (ucIndex == pCommCtx->stMuxCtx.astMuxClientTab[ucLoop].enAtClientTabIdx)
@@ -4558,7 +4558,7 @@ VOS_UINT32 AT_SendMuxSelResultData(
         return VOS_ERR;
     }
 
-    /* ��ͨ�������������ϱ�AT���� */
+    /* 该通道不允许主动上报AT命令 */
     if (AT_HSIC_REPORT_OFF == pCommCtx->stMuxCtx.astMuxClientTab[ucLoop].enRptType)
     {
         return VOS_ERR;
@@ -4582,13 +4582,13 @@ VOS_UINT32 AT_SendMuxResultData(
 
     enDlci = AT_MUX_DLCI_TYPE_BUTT;
 
-    /* MUX�����Ƿ�֧�֣���֧��ֱ�ӷ���ʧ�� */
+    /* MUX特性是否支持，不支持直接返回失败 */
     if (VOS_TRUE != AT_GetMuxSupportFlg())
     {
         return AT_FAILURE;
     }
 
-    /* ��ȡDlci */
+    /* 获取Dlci */
     ulRslt = AT_GetMuxDlciFromClientIdx(ucIndex, &enDlci);
 
     if (VOS_TRUE != ulRslt)
@@ -4598,7 +4598,7 @@ VOS_UINT32 AT_SendMuxResultData(
 
     AT_MNTN_TraceCmdResult(ucIndex, pData, usLen);
 
-    /* ��MUX�������� */
+    /* 向MUX发送数据 */
     MUX_DlciDlDataSend(enDlci, pData, usLen);
 
     return AT_SUCCESS;
@@ -4618,28 +4618,28 @@ VOS_VOID AT_SndDipcPdpActInd(
 
     if ( VOS_NULL_PTR == pstAtDipcPdpAct )
     {
-        /*��ӡ������Ϣ---������Ϣ��ʧ��:*/
+        /*打印出错信息---申请消息包失败:*/
         AT_WARN_LOG( "AT_SndDipcPdpActInd:ERROR:Allocates a message packet for AT_DIPC_PDP_ACT_STRU FAIL!" );
         return;
     }
 
     pstPsModemCtx = AT_GetModemPsCtxAddrFromClientId(usClientId);
 
-    /*��д��Ϣͷ:*/
+    /*填写消息头:*/
     pstAtDipcPdpAct->ulSenderCpuId   = VOS_LOCAL_CPUID;
     pstAtDipcPdpAct->ulSenderPid     = WUEPS_PID_AT;
     pstAtDipcPdpAct->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstAtDipcPdpAct->ulReceiverPid   = PS_PID_APP_DIPC;
     pstAtDipcPdpAct->ulLength        = ulLength;
-    /*��д��Ϣ��:*/
+    /*填写消息体:*/
     pstAtDipcPdpAct->enMsgType       = ID_AT_DIPC_PDP_ACT_IND;
     pstAtDipcPdpAct->ucRabId         = ucRabId;
     pstAtDipcPdpAct->enUdiDevId      = (UDI_DEVICE_ID)pstPsModemCtx->astChannelCfg[ucCid].ulRmNetId;
 
-    /*���͸���Ϣ:*/
+    /*发送该消息:*/
     if ( VOS_OK != PS_SEND_MSG( WUEPS_PID_AT, pstAtDipcPdpAct ) )
     {
-        /*��ӡ������Ϣ---������Ϣʧ��:*/
+        /*打印警告信息---发送消息失败:*/
         AT_WARN_LOG( "AT_SndDipcPdpActInd:WARNING:SEND AT_DIPC_PDP_ACT_STRU msg FAIL!" );
     }
 
@@ -4657,25 +4657,25 @@ VOS_VOID AT_SndDipcPdpDeactInd(
 
     if ( VOS_NULL_PTR == pstAtDipcPdpDeact )
     {
-        /*��ӡ������Ϣ---������Ϣ��ʧ��:*/
+        /*打印出错信息---申请消息包失败:*/
         AT_WARN_LOG( "AT_SndDipcPdpDeactInd:ERROR:Allocates a message packet for AT_DIPC_PDP_DEACT_STRU FAIL!" );
         return;
     }
 
-    /*��д��Ϣͷ:*/
+    /*填写消息头:*/
     pstAtDipcPdpDeact->ulSenderCpuId   = VOS_LOCAL_CPUID;
     pstAtDipcPdpDeact->ulSenderPid     = WUEPS_PID_AT;
     pstAtDipcPdpDeact->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstAtDipcPdpDeact->ulReceiverPid   = PS_PID_APP_DIPC;
     pstAtDipcPdpDeact->ulLength        = ulLength;
-    /*��д��Ϣ��:*/
+    /*填写消息体:*/
     pstAtDipcPdpDeact->enMsgType       = ID_AT_DIPC_PDP_REL_IND;
     pstAtDipcPdpDeact->ucRabId         = ucRabId;
 
-    /*���͸���Ϣ:*/
+    /*发送该消息:*/
     if ( VOS_OK != PS_SEND_MSG( WUEPS_PID_AT, pstAtDipcPdpDeact ) )
     {
-        /*��ӡ������Ϣ---������Ϣʧ��:*/
+        /*打印警告信息---发送消息失败:*/
         AT_WARN_LOG( "AT_SndDipcPdpDeactInd:WARNING:SEND AT_DIPC_PDP_DEACT_STRU msg FAIL!" );
     }
 
@@ -4689,7 +4689,7 @@ VOS_VOID AT_SetAtChdataCidActStatus(
 {
     AT_MODEM_PS_CTX_STRU               *pstPsModemCtx = VOS_NULL_PTR;
 
-    /* ���CID�Ϸ��� */
+    /* 检查CID合法性 */
     if ( ucCid > TAF_MAX_CID_NV)
     {
         AT_ERR_LOG1("AT_SetAtChdataCidActStatus, WARNING, CID error:%d\r\n", ucCid);
@@ -4698,7 +4698,7 @@ VOS_VOID AT_SetAtChdataCidActStatus(
 
     pstPsModemCtx = AT_GetModemPsCtxAddrFromClientId(usClientId);
 
-    /* ���CID������ͨ����ӳ���ϵ */
+    /* 清除CID与数传通道的映射关系 */
     pstPsModemCtx->astChannelCfg[ucCid].ulRmNetActFlg = ulIsCidAct;
 
     return;
@@ -4714,7 +4714,7 @@ VOS_VOID AT_CleanAtChdataCfg(
 {
     AT_MODEM_PS_CTX_STRU               *pstPsModemCtx = VOS_NULL_PTR;
 
-    /* ���CID�Ϸ��� */
+    /* 检查CID合法性 */
     if ( ucCid > TAF_MAX_CID_NV)
     {
         AT_ERR_LOG1("AT_CleanAtChdataCfg, WARNING, CID error:%d\r\n", ucCid);
@@ -4723,11 +4723,11 @@ VOS_VOID AT_CleanAtChdataCfg(
 
     pstPsModemCtx = AT_GetModemPsCtxAddrFromClientId(usClientId);
 
-    /* ���CID������ͨ����ӳ���ϵ */
+    /* 清除CID与数传通道的映射关系 */
     pstPsModemCtx->astChannelCfg[ucCid].ulUsed     = VOS_FALSE;
     pstPsModemCtx->astChannelCfg[ucCid].ulRmNetId  = AT_PS_INVALID_RMNET_ID;
 
-    /* ��ָ��CID��PDP�ļ���״̬����Ϊδ����̬ */
+    /* 将指定CID的PDP的激活状态设置为未激活态 */
     pstPsModemCtx->astChannelCfg[ucCid].ulRmNetActFlg = VOS_FALSE;
 
     return;
@@ -4823,7 +4823,7 @@ VOS_VOID AT_InitFcMap(VOS_VOID)
 {
     VOS_UINT8       ucLoop;
 
-    /* ��ʼ��g_stFcIdMaptoFcPri */
+    /* 初始化g_stFcIdMaptoFcPri */
     for (ucLoop = 0; ucLoop < FC_ID_BUTT; ucLoop++)
     {
         g_stFcIdMaptoFcPri[ucLoop].ulUsed  = VOS_FALSE;
@@ -4974,7 +4974,7 @@ TAF_UINT32 At_SendCmdMsg (TAF_UINT8 ucIndex,TAF_UINT8* pData, TAF_UINT16 usLen,T
         return AT_FAILURE;
     }
 
-    /* �����Զ����ITEM����4���ֽ� */
+    /* 增加自定义的ITEM，共4个字节 */
     AT_GetAtMsgStruMsgLength(usLen, &ulLength);
     pMsg = (AT_MSG_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT, ulLength);
     if ( pMsg == TAF_NULL_PTR )
@@ -4983,7 +4983,7 @@ TAF_UINT32 At_SendCmdMsg (TAF_UINT8 ucIndex,TAF_UINT8* pData, TAF_UINT16 usLen,T
         return AT_FAILURE;
     }
 
-    /* �������ػ����ʵ��������pMsg->aucValue;*/
+    /* 拷贝本地缓存和实体索引到pMsg->aucValue;*/
     pMsg->ulReceiverCpuId   = VOS_LOCAL_CPUID;
     pMsg->ulSenderPid       = WUEPS_PID_AT;
     pMsg->ulReceiverPid     = WUEPS_PID_AT;
@@ -4997,19 +4997,19 @@ TAF_UINT32 At_SendCmdMsg (TAF_UINT8 ucIndex,TAF_UINT8* pData, TAF_UINT16 usLen,T
         pMsg->enMsgId = AT_GetCmdMsgID(ucIndex);
     }
 
-    pMsg->ucType            = ucType;     /* ���� */
-    pMsg->ucIndex           = ucIndex;    /* ���� */
-    pMsg->usLen             = usLen;    /* ���� */
+    pMsg->ucType            = ucType;     /* 类型 */
+    pMsg->ucIndex           = ucIndex;    /* 索引 */
+    pMsg->usLen             = usLen;    /* 长度 */
 
     PS_MEM_SET(pMsg->aucValue, 0, sizeof(pMsg->aucValue));
     AT_GetUserTypeFromIndex(ucIndex, &pMsg->ucUserType);
     PS_MEM_SET(pMsg->aucReserved, 0x00, sizeof(pMsg->aucReserved));
 
-    /* ��д����Ϣ���� */
+    /* 填写新消息内容 */
     ulTmpAddr = (VOS_UINT_PTR)(pMsg->aucValue);
-    PS_MEM_CPY((VOS_VOID*)ulTmpAddr, pData, usLen);  /* ���� */
+    PS_MEM_CPY((VOS_VOID*)ulTmpAddr, pData, usLen);  /* 内容 */
 
-    /*������Ϣ��AT_PID;*/
+    /*发送消息到AT_PID;*/
     if ( 0 != PS_SEND_MSG( WUEPS_PID_AT, pMsg ) )
     {
         AT_ERR_LOG("At_SendCmdMsg:ERROR:VOS_SendMsg");
@@ -5028,7 +5028,7 @@ VOS_UINT32 AT_IsApPort(VOS_UINT8 ucIndex)
 
     if (0 == g_stAtDebugInfo.ucUnCheckApPortFlg)
     {
-        /* ��ʼ�� */
+        /* 初始化 */
         pucSystemAppConfig                  = AT_GetSystemAppConfigAddr();
 
         ulHsicUserFlg = AT_CheckHsicUser(ucIndex);
@@ -5037,7 +5037,7 @@ VOS_UINT32 AT_IsApPort(VOS_UINT8 ucIndex)
 
         if (SYSTEM_APP_ANDROID == *pucSystemAppConfig)
         {
-            /* ������ֻ���̬����Ҫ�ж�HSIC�˿ڣ�MUX�˿ڣ�VCOM�˿� */
+            /* 如果是手机形态，需要判断HSIC端口，MUX端口，VCOM端口 */
             if ((VOS_FALSE == ulHsicUserFlg)
              && (VOS_FALSE == ulMuxUserFlg)
              && (VOS_FALSE == ulVcomUserFlg))
@@ -5047,7 +5047,7 @@ VOS_UINT32 AT_IsApPort(VOS_UINT8 ucIndex)
         }
         else
         {
-            /* ������ֻ���̬����Ҫ�ж�HSIC�˿ڣ�MUX�˿� */
+            /* 如果非手机形态，需要判断HSIC端口，MUX端口 */
             if ((VOS_FALSE == ulHsicUserFlg)
              && (VOS_FALSE == ulMuxUserFlg))
             {
@@ -5062,13 +5062,13 @@ VOS_INT AT_ProcCCpuResetBefore(VOS_VOID)
 {
     AT_MSG_STRU                        *pstMsg = VOS_NULL_PTR;
 
-    /* ���ô��ڸ�λǰ�ı�־ */
+    /* 设置处于复位前的标志 */
     AT_SetResetFlag(VOS_TRUE);
 
-    /* ���TAFAGENT���е��ź��� */
+    /* 清除TAFAGENT所有的信号量 */
     TAF_AGENT_ClearAllSem();
 
-    /* ������Ϣ */
+    /* 构造消息 */
     pstMsg = (AT_MSG_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(WUEPS_PID_AT,
                                                          sizeof(AT_MSG_STRU));
     if (VOS_NULL_PTR == pstMsg)
@@ -5077,26 +5077,26 @@ VOS_INT AT_ProcCCpuResetBefore(VOS_VOID)
         return VOS_ERROR;
     }
 
-    /* ��ʼ����Ϣ */
+    /* 初始化消息 */
     PS_MEM_SET((VOS_CHAR *)pstMsg + VOS_MSG_HEAD_LENGTH,
                0x00,
                (VOS_SIZE_T)(sizeof(AT_MSG_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ��д��Ϣͷ */
+    /* 填写消息头 */
     pstMsg->ulReceiverCpuId             = VOS_LOCAL_CPUID;
     pstMsg->ulReceiverPid               = WUEPS_PID_AT;
     pstMsg->ucType                      = ID_CCPU_AT_RESET_START_IND;
 
     pstMsg->enMsgId                     = ID_AT_COMM_CCPU_RESET_START;
 
-    /* ����Ϣ */
+    /* 发消息 */
     if (VOS_OK != PS_SEND_MSG(WUEPS_PID_AT, pstMsg))
     {
         AT_ERR_LOG("AT_ProcCCpuResetBefore: Send Msg Failed!\r\n");
         return VOS_ERROR;
     }
 
-    /* �ȴ��ظ��ź�����ʼΪ��״̬���ȴ���Ϣ��������ź��������� */
+    /* 等待回复信号量初始为锁状态，等待消息处理完后信号量解锁。 */
     if (VOS_OK != VOS_SmP(AT_GetResetSem(), AT_RESET_TIMEOUT_LEN))
     {
         AT_ERR_LOG("AT_ProcCCpuResetBefore: Lock Binary SEM Failed!\r\n");
@@ -5105,7 +5105,7 @@ VOS_INT AT_ProcCCpuResetBefore(VOS_VOID)
         return VOS_ERROR;
     }
 
-    /* ��¼��λǰ�Ĵ��� */
+    /* 记录复位前的次数 */
     AT_DBG_SAVE_CCPU_RESET_BEFORE_NUM(1);
 
     return VOS_OK;
@@ -5116,7 +5116,7 @@ VOS_INT AT_ProcCCpuResetAfter(VOS_VOID)
 {
     AT_MSG_STRU                        *pstMsg = VOS_NULL_PTR;
 
-    /* ������Ϣ */
+    /* 构造消息 */
     pstMsg = (AT_MSG_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(WUEPS_PID_AT,
                                                          sizeof(AT_MSG_STRU));
     if (VOS_NULL_PTR == pstMsg)
@@ -5125,26 +5125,26 @@ VOS_INT AT_ProcCCpuResetAfter(VOS_VOID)
         return VOS_ERROR;
     }
 
-    /* ��ʼ����Ϣ */
+    /* 初始化消息 */
     PS_MEM_SET((VOS_CHAR *)pstMsg + VOS_MSG_HEAD_LENGTH,
                0x00,
                (VOS_SIZE_T)(sizeof(AT_MSG_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ��д��Ϣͷ */
+    /* 填写消息头 */
     pstMsg->ulReceiverCpuId             = VOS_LOCAL_CPUID;
     pstMsg->ulReceiverPid               = WUEPS_PID_AT;
     pstMsg->ucType                      = ID_CCPU_AT_RESET_END_IND;
 
     pstMsg->enMsgId                     = ID_AT_COMM_CCPU_RESET_END;
 
-    /* ����Ϣ */
+    /* 发消息 */
     if (VOS_OK != PS_SEND_MSG(WUEPS_PID_AT, pstMsg))
     {
         AT_ERR_LOG("AT_ProcCCpuResetAfter: Send Msg Failed!\r\n");
         return VOS_ERROR;
     }
 
-    /* ��¼��λ��Ĵ��� */
+    /* 记录复位后的次数 */
     AT_DBG_SAVE_CCPU_RESET_AFTER_NUM(1);
 
     return VOS_OK;
@@ -5154,12 +5154,12 @@ VOS_INT AT_CCpuResetCallback(
     VOS_INT                             iUserData
 )
 {
-    /* ��λǰ */
+    /* 复位前 */
     if (DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam)
     {
         return AT_ProcCCpuResetBefore();
     }
-    /* ��λ�� */
+    /* 复位后 */
     else if (DRV_RESET_CALLCBFUN_RESET_AFTER == enParam)
     {
         return AT_ProcCCpuResetAfter();
@@ -5178,10 +5178,10 @@ VOS_INT AT_HifiResetCallback(
 {
     AT_MSG_STRU                        *pstMsg = VOS_NULL_PTR;
 
-    /* ����Ϊ0��ʾ��λǰ���� */
+    /* 参数为0表示复位前调用 */
     if (DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam)
     {
-        /* ������Ϣ */
+        /* 构造消息 */
         pstMsg = (AT_MSG_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(WUEPS_PID_AT,
                                                              sizeof(AT_MSG_STRU));
         if (VOS_NULL_PTR == pstMsg)
@@ -5190,19 +5190,19 @@ VOS_INT AT_HifiResetCallback(
             return VOS_ERROR;
         }
 
-        /* ��ʼ����Ϣ */
+        /* 初始化消息 */
         PS_MEM_SET((VOS_CHAR *)pstMsg + VOS_MSG_HEAD_LENGTH,
                    0x00,
                    (VOS_SIZE_T)(sizeof(AT_MSG_STRU) - VOS_MSG_HEAD_LENGTH));
 
-        /* ��д��Ϣͷ */
+        /* 填写消息头 */
         pstMsg->ulReceiverCpuId             = VOS_LOCAL_CPUID;
         pstMsg->ulReceiverPid               = WUEPS_PID_AT;
         pstMsg->ucType                      = ID_HIFI_AT_RESET_START_IND;
 
         pstMsg->enMsgId                     = ID_AT_COMM_HIFI_RESET_START;
 
-        /* ����Ϣ */
+        /* 发消息 */
         if (VOS_OK != PS_SEND_MSG(WUEPS_PID_AT, pstMsg))
         {
             AT_ERR_LOG("AT_HRESET_Callback: Send Msg Failed!\r\n");
@@ -5211,10 +5211,10 @@ VOS_INT AT_HifiResetCallback(
 
         return VOS_OK;
     }
-    /* ��λ�� */
+    /* 复位后 */
     else if (DRV_RESET_CALLCBFUN_RESET_AFTER == enParam)
     {
-        /* ������Ϣ */
+        /* 构造消息 */
         pstMsg = (AT_MSG_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(WUEPS_PID_AT,
                                                              sizeof(AT_MSG_STRU));
         if (VOS_NULL_PTR == pstMsg)
@@ -5223,19 +5223,19 @@ VOS_INT AT_HifiResetCallback(
             return VOS_ERROR;
         }
 
-        /* ��ʼ����Ϣ */
+        /* 初始化消息 */
         PS_MEM_SET((VOS_CHAR *)pstMsg + VOS_MSG_HEAD_LENGTH,
                    0x00,
                    (VOS_SIZE_T)(sizeof(AT_MSG_STRU) - VOS_MSG_HEAD_LENGTH));
 
-        /* ��д��Ϣͷ */
+        /* 填写消息头 */
         pstMsg->ulReceiverCpuId             = VOS_LOCAL_CPUID;
         pstMsg->ulReceiverPid               = WUEPS_PID_AT;
         pstMsg->ucType                      = ID_HIFI_AT_RESET_END_IND;
 
         pstMsg->enMsgId                     = ID_AT_COMM_HIFI_RESET_END;
 
-        /* ����Ϣ */
+        /* 发消息 */
         if (VOS_OK != PS_SEND_MSG(WUEPS_PID_AT, pstMsg))
         {
             AT_ERR_LOG("AT_HifiResetCallback: Send ID_HIFI_AT_RESET_END_IND Msg Failed!\r\n");
@@ -5256,9 +5256,9 @@ VOS_VOID AT_ModemeEnableCB(
     PS_BOOL_ENUM_UINT8                  ucEnable
 )
 {
-    /* �豸Ĭ�ϴ�����Ч״̬�������ݾ�ͨ�����ص����գ�
-    �� �豸ʧЧʱ�����ݵ�ǰ״̬��֪ͨPPP���紦������̬��
-       ��֪ͨATȥ����PDP.
+    /* 设备默认处于生效状态，有数据就通过读回调接收，
+    　 设备失效时，根据当前状态，通知PPP，如处于数传态，
+       则通知AT去激活PDP.
     */
     if (PS_FALSE == ucEnable)
     {
@@ -5267,13 +5267,13 @@ VOS_VOID AT_ModemeEnableCB(
             PPP_RcvAtCtrlOperEvent(gastAtClientTab[ucIndex].usPppId,
                                    PPP_AT_CTRL_REL_PPP_REQ);
 
-            /* ��ԭ�ȿ��������أ�����ֹͣ���� */
+            /* 若原先开启了流控，则需停止流控 */
             if (0 == (gastAtClientTab[ucIndex].ModemStatus & IO_CTRL_CTS))
             {
                 AT_StopFlowCtrl(ucIndex);
             }
 
-            /* �Ͽ����� */
+            /* 断开拨号 */
             if (VOS_OK != TAF_PS_CallEnd(WUEPS_PID_AT,
                                          gastAtClientTab[ucIndex].usClientId,
                                          0,
@@ -5288,13 +5288,13 @@ VOS_VOID AT_ModemeEnableCB(
             PPP_RcvAtCtrlOperEvent(gastAtClientTab[ucIndex].usPppId,
                                    PPP_AT_CTRL_REL_PPP_RAW_REQ);
 
-            /* ��ԭ�ȿ��������أ�����ֹͣ���� */
+            /* 若原先开启了流控，则需停止流控 */
             if (0 == (gastAtClientTab[ucIndex].ModemStatus & IO_CTRL_CTS))
             {
                 AT_StopFlowCtrl(ucIndex);
             }
 
-            /* �Ͽ����� */
+            /* 断开拨号 */
             if ( VOS_OK != TAF_PS_CallEnd(WUEPS_PID_AT,
                                           gastAtClientTab[ucIndex].usClientId,
                                           0,
@@ -5306,19 +5306,19 @@ VOS_VOID AT_ModemeEnableCB(
         }
         else
         {
-            /* �յ�else��֧������PCLINT���� */
+            /* 空的else分支，避免PCLINT报错 */
         }
 
-        /* ��PPP����HDLCȥʹ�ܲ��� */
+        /* 向PPP发送HDLC去使能操作 */
         PPP_RcvAtCtrlOperEvent(gastAtClientTab[ucIndex].usPppId,
                                PPP_AT_CTRL_HDLC_DISABLE);
 
-        /* ֹͣ��ʱ�� */
+        /* 停止定时器 */
         AT_StopRelTimer(ucIndex, &gastAtClientTab[ucIndex].hTimer);
 
-        /* �ܽ��ź��޸ĺ�At_ModemRelInd����ֻ������USB���γ���ʱ����ã�
-           Ϊ�˴ﵽModem��always-on��Ŀ�ģ���ʱ��Ҫ����AT��·��״̬Ǩ��
-           ������������״̬:
+        /* 管脚信号修改后，At_ModemRelInd函数只可能在USB被拔出的时候调用，
+           为了达到Modem口always-on的目的，此时需要将该AT链路的状态迁入
+           到正常的命令状态:
         */
         gastAtClientTab[ucIndex].Mode            = AT_CMD_MODE;
         gastAtClientTab[ucIndex].IndMode         = AT_IND_MODE;

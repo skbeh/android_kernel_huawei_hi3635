@@ -38,7 +38,7 @@
 #include "v_lib.h"
 #include "product_config.h"
 
-/* LINUX ²»Ö§³Ö */
+/* LINUX ä¸æ”¯æŒ */
 #if(VOS_VXWORKS == VOS_OS_VER)
 #include "stdio.h"
 #include "stdlib.h"
@@ -53,7 +53,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_V_BLKMEM_C
 
@@ -97,10 +97,10 @@ extern VOS_MEM_BLOCK_INFO AppMemBlockInfo[];
 /* the number of words which on the tail of the user's space */
 #define VOS_MEMORY_RESERVED_WORD_TAIL                          1
 
-/* µ¼³öOSAÄÚ´æ¿ØÖÆÐÅÏ¢µÄ¸öÊý */
+/* å¯¼å‡ºOSAå†…å­˜æŽ§åˆ¶ä¿¡æ¯çš„ä¸ªæ•° */
 #define VOS_DUMP_MEM_HEAD_NUM                                  (3)
 
-/* µ¼³öOSAÄÚ´æ¿ØÖÆÐÅÏ¢µÄ¸öÊý¼ÓÒ»ÊÇÎªÁË´ø³öÆäËüÐÅÏ¢ */
+/* å¯¼å‡ºOSAå†…å­˜æŽ§åˆ¶ä¿¡æ¯çš„ä¸ªæ•°åŠ ä¸€æ˜¯ä¸ºäº†å¸¦å‡ºå…¶å®ƒä¿¡æ¯ */
 #define VOS_DUMP_MEM_HEAD_TOTAL_NUM                            (VOS_DUMP_MEM_HEAD_NUM+1)
 
 /* the number of bytes which on the user's space */
@@ -108,7 +108,7 @@ extern VOS_MEM_BLOCK_INFO AppMemBlockInfo[];
     ((sizeof(VOS_UINT_PTR) * VOS_MEMORY_RESERVED_WORD_HEAD) \
     + (sizeof(VOS_UINT_PTR) * VOS_MEMORY_RESERVED_WORD_TAIL))
 
-/* ÓÉÓÚLINUX²»Ö§³Ö¸¡µãÀàÐÍ£¬ÓÉÖ®Ç°µÄ¸¡µãÀàÐÍ¸ÄÎªÕûÐÍ 0.1 -> 1 */
+/* ç”±äºŽLINUXä¸æ”¯æŒæµ®ç‚¹ç±»åž‹ï¼Œç”±ä¹‹å‰çš„æµ®ç‚¹ç±»åž‹æ”¹ä¸ºæ•´åž‹ 0.1 -> 1 */
 /* the ratio of count */
 #define VOS_CALC_MEM_RATIO                                     (10)
 /* the begin address of user's space */
@@ -132,7 +132,7 @@ VOS_CHAR g_acVosMemBuf[8693072];
 
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
 /* the buf of VOS's mem */
-VOS_CHAR g_acVosMemBuf[1577424]; /* ÓÉÓÚAºËÖ§³Ö64Î»£¬ÄÚ´æÐèÒªÔö´ó */
+VOS_CHAR g_acVosMemBuf[1577424]; /* ç”±äºŽAæ ¸æ”¯æŒ64ä½ï¼Œå†…å­˜éœ€è¦å¢žå¤§ */
 #endif
 
 #endif
@@ -146,7 +146,7 @@ VOS_CHAR g_acVosMemBuf[2506864];
 
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
 /* the buf of VOS's mem */
-VOS_CHAR g_acVosMemBuf[587008]; /* ÓÉÓÚAºËÖ§³Ö64Î»£¬ÄÚ´æÐèÒªÔö´ó */
+VOS_CHAR g_acVosMemBuf[587008]; /* ç”±äºŽAæ ¸æ”¯æŒ64ä½ï¼Œå†…å­˜éœ€è¦å¢žå¤§ */
 #endif
 
 #endif
@@ -178,10 +178,10 @@ MEMORY_HOOK_FUNC  g_pfnFreeMemHook = VOS_NULL_PTR;
 
 extern VOS_UINT32 VOS_GetMsgName(VOS_UINT_PTR ulAddrress);
 
-/* ×ÔÐýËø£¬ÓÃÀ´×÷MemoryµÄÁÙ½ç×ÊÔ´±£»¤ */
+/* è‡ªæ—‹é”ï¼Œç”¨æ¥ä½œMemoryçš„ä¸´ç•Œèµ„æºä¿æŠ¤ */
 VOS_SPINLOCK             g_stVosMemSpinLock;
 
-/* ×ÔÐýËø£¬ÓÃÀ´×÷¾²Ì¬MemoryµÄÁÙ½ç×ÊÔ´±£»¤ */
+/* è‡ªæ—‹é”ï¼Œç”¨æ¥ä½œé™æ€Memoryçš„ä¸´ç•Œèµ„æºä¿æŠ¤ */
 VOS_SPINLOCK             g_stVosStaticMemSpinLock;
 
 
@@ -411,12 +411,12 @@ VOS_VOID VOS_DumpVosMem(VOS_MEM_HEAD_BLOCK *pstHeadBlock, VOS_UINT_PTR ulUsrAddr
 
     VOS_TaskLock();
 
-    /* ½èÓÃ¿Õ¼ä±£´æ²¿·ÖÐÅÏ¢ */
+    /* å€Ÿç”¨ç©ºé—´ä¿å­˜éƒ¨åˆ†ä¿¡æ¯ */
     astMemHead[0].ulMemCtrlAddress = (VOS_UINT_PTR)pstHeadBlock;
     astMemHead[0].ulMemAddress = ulUsrAddr;
     astMemHead[0].ulMemUsedFlag = ulErrNo;
 
-    /* ±£´æ³ö´íµÄ¿ØÖÆ¿éÇ°ºó¸öÒ»¸ö£¬×Ü¹²3¸ö¿ØÖÆ¿é */
+    /* ä¿å­˜å‡ºé”™çš„æŽ§åˆ¶å—å‰åŽä¸ªä¸€ä¸ªï¼Œæ€»å…±3ä¸ªæŽ§åˆ¶å— */
     if ( VOS_NULL_PTR != pstHeadBlock )
     {
         pstTmpMemHead--;
@@ -438,7 +438,7 @@ VOS_VOID VOS_DumpVosMem(VOS_MEM_HEAD_BLOCK *pstHeadBlock, VOS_UINT_PTR ulUsrAddr
 
     VOS_MemSet((VOS_VOID *)pucDumpBuffer, 0, VOS_DUMP_MEM_TOTAL_SIZE);
 
-    /* ±£´æ³ö´íµÄµØÖ·Ç°ºó¸÷Ò»°ëµÄ¿Õ¼ä */
+    /* ä¿å­˜å‡ºé”™çš„åœ°å€å‰åŽå„ä¸€åŠçš„ç©ºé—´ */
     pucUserAddr -= (VOS_DUMP_MEM_TOTAL_SIZE >>1);
 
     VOS_MemCpy((VOS_CHAR *)pucDumpBuffer, pucUserAddr, VOS_DUMP_MEM_TOTAL_SIZE);
@@ -1777,13 +1777,13 @@ VOS_VOID VOS_MemDump(VOS_UINT32 ulInfo, VOS_UINT32 ulSize,VOS_UINT32 ulFileID,
         return;
     }
 
-    VOS_MemSet(pulDumpBuffer, 0, VOS_DUMP_MEM_TOTAL_SIZE); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    VOS_MemSet(pulDumpBuffer, 0, VOS_DUMP_MEM_TOTAL_SIZE); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
-    *pulDumpBuffer++ = ulFileID; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-    *pulDumpBuffer++ = (VOS_UINT32)ulLineNo; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-    *pulDumpBuffer++ = ulInfo; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-    *pulDumpBuffer++ = ulSize; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-    *pulDumpBuffer++ = VOS_GetSlice(); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    *pulDumpBuffer++ = ulFileID; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+    *pulDumpBuffer++ = (VOS_UINT32)ulLineNo; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+    *pulDumpBuffer++ = ulInfo; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+    *pulDumpBuffer++ = ulSize; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+    *pulDumpBuffer++ = VOS_GetSlice(); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     ulTotalSize += VOS_MEM_RECORD_BLOCK_SIZE;
 
@@ -1794,11 +1794,11 @@ VOS_VOID VOS_MemDump(VOS_UINT32 ulInfo, VOS_UINT32 ulSize,VOS_UINT32 ulFileID,
 
         while ( VOS_NULL_PTR != pstTmpMemHead)
         {
-            *pulDumpBuffer++ = pstTmpMemHead->aulMemRecord[0]; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-            *pulDumpBuffer++ = pstTmpMemHead->aulMemRecord[1]; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-            *pulDumpBuffer++ = pstTmpMemHead->ulAllocPid; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-            *pulDumpBuffer++ = pstTmpMemHead->ulAllocSize; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-            *pulDumpBuffer++ = pstTmpMemHead->ulcputickAlloc; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+            *pulDumpBuffer++ = pstTmpMemHead->aulMemRecord[0]; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+            *pulDumpBuffer++ = pstTmpMemHead->aulMemRecord[1]; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+            *pulDumpBuffer++ = pstTmpMemHead->ulAllocPid; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+            *pulDumpBuffer++ = pstTmpMemHead->ulAllocSize; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+            *pulDumpBuffer++ = pstTmpMemHead->ulcputickAlloc; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
             ulTotalSize += VOS_MEM_RECORD_BLOCK_SIZE;
 
@@ -1847,13 +1847,13 @@ VOS_VOID VOS_MsgDump(VOS_UINT32 ulInfo, VOS_UINT32 ulSize,
         return;
     }
 
-    VOS_MemSet(pulDumpBuffer, 0, VOS_DUMP_MEM_TOTAL_SIZE); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    VOS_MemSet(pulDumpBuffer, 0, VOS_DUMP_MEM_TOTAL_SIZE); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
-    *(pulDumpBuffer++) = ulFileID; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-    *(pulDumpBuffer++) = (VOS_UINT32)ulLineNo; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-    *(pulDumpBuffer++) = ulInfo; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-    *(pulDumpBuffer++) = ulSize; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-    *(pulDumpBuffer++) = VOS_GetSlice(); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    *(pulDumpBuffer++) = ulFileID; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+    *(pulDumpBuffer++) = (VOS_UINT32)ulLineNo; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+    *(pulDumpBuffer++) = ulInfo; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+    *(pulDumpBuffer++) = ulSize; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+    *(pulDumpBuffer++) = VOS_GetSlice(); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     ulTotalSize += VOS_MEM_RECORD_BLOCK_SIZE;
 
@@ -1864,7 +1864,7 @@ VOS_VOID VOS_MsgDump(VOS_UINT32 ulInfo, VOS_UINT32 ulSize,
 
         while ( VOS_NULL_PTR != pstTmpMemHead)
         {
-            /* Ê¡³öÒ»¸öãÐÀ´´æ·Å cpu tick */
+            /* çœå‡ºä¸€ä¸ªé˜ˆæ¥å­˜æ”¾ cpu tick */
             *(pulDumpBuffer++) = (pstTmpMemHead->aulMemRecord[0] << 16)|(pstTmpMemHead->aulMemRecord[1] & 0x0000ffff);
             *(pulDumpBuffer++) = pstTmpMemHead->ulcputickAlloc;
 
@@ -2363,20 +2363,20 @@ VOS_VOID VOS_UnCacheMemFree(VOS_VOID *pVirtAddr, VOS_VOID *pPhyAddr, VOS_UINT32 
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : VOS_UncacheMemPhyToVirt
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÊäÈëµÄÊµµØÖ·£¬¼ÆËã¶ÔÓ¦µÄÐéµØÖ·
- ÊäÈë²ÎÊý  : pucCurPhyAddr:  µ±Ç°ÊµµØÖ·
-             pucPhyStart: Í¨µÀÅäÖÃÄÚ´æÆðÊ¼µÄÊµµØÖ·
-             pucVirtStart:Í¨µÀÅäÖÃÄÚ´æÆðÊ¼µÄÐéµØÖ·
-             ulBufLen:    Í¨µÀÄÚ´æ¿Õ¼ä´óÐ¡
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_NULL: ×ª»»Ê§°Ü/other: ÐéµØÖ·µÄÖµ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : VOS_UncacheMemPhyToVirt
+ åŠŸèƒ½æè¿°  : æ ¹æ®è¾“å…¥çš„å®žåœ°å€ï¼Œè®¡ç®—å¯¹åº”çš„è™šåœ°å€
+ è¾“å…¥å‚æ•°  : pucCurPhyAddr:  å½“å‰å®žåœ°å€
+             pucPhyStart: é€šé“é…ç½®å†…å­˜èµ·å§‹çš„å®žåœ°å€
+             pucVirtStart:é€šé“é…ç½®å†…å­˜èµ·å§‹çš„è™šåœ°å€
+             ulBufLen:    é€šé“å†…å­˜ç©ºé—´å¤§å°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_NULL: è½¬æ¢å¤±è´¥/other: è™šåœ°å€çš„å€¼
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT_PTR VOS_UncacheMemPhyToVirt(VOS_UINT8 *pucCurPhyAddr, VOS_UINT8 *pucPhyStart, VOS_UINT8 *pucVirtStart, VOS_UINT32 ulBufLen)
 {
@@ -2399,20 +2399,20 @@ VOS_UINT_PTR VOS_UncacheMemPhyToVirt(VOS_UINT8 *pucCurPhyAddr, VOS_UINT8 *pucPhy
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : VOS_UncacheMemVirtToPhy
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÊäÈëµÄÐéµØÖ·£¬¼ÆËã¶ÔÓ¦µÄÊµµØÖ·
- ÊäÈë²ÎÊý  : pucCurVirtAddr:  µ±Ç°ÐéµØÖ·
-             pucPhyStart: Í¨µÀÅäÖÃÄÚ´æÆðÊ¼µÄÊµµØÖ·
-             pucVirtStart:Í¨µÀÅäÖÃÄÚ´æÆðÊ¼µÄÐéµØÖ·
-             ulBufLen:    Í¨µÀÄÚ´æ¿Õ¼ä´óÐ¡
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_NULL: ×ª»»Ê§°Ü/other: ÐéµØÖ·µÄÖµ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : VOS_UncacheMemVirtToPhy
+ åŠŸèƒ½æè¿°  : æ ¹æ®è¾“å…¥çš„è™šåœ°å€ï¼Œè®¡ç®—å¯¹åº”çš„å®žåœ°å€
+ è¾“å…¥å‚æ•°  : pucCurVirtAddr:  å½“å‰è™šåœ°å€
+             pucPhyStart: é€šé“é…ç½®å†…å­˜èµ·å§‹çš„å®žåœ°å€
+             pucVirtStart:é€šé“é…ç½®å†…å­˜èµ·å§‹çš„è™šåœ°å€
+             ulBufLen:    é€šé“å†…å­˜ç©ºé—´å¤§å°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_NULL: è½¬æ¢å¤±è´¥/other: è™šåœ°å€çš„å€¼
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT_PTR VOS_UncacheMemVirtToPhy(VOS_UINT8 *pucCurVirtAddr, VOS_UINT8 *pucPhyStart, VOS_UINT8 *pucVirtStart, VOS_UINT32 ulBufLen)
 {

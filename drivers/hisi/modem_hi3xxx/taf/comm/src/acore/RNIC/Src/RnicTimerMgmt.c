@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "RnicTimerMgmt.h"
 #include "RnicCtx.h"
@@ -16,18 +16,18 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 /*lint -e767 */
 #define    THIS_FILE_ID        PS_FILE_ID_RNIC_TIMERMGMT_C
 /*lint -e767 */
 
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
 
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 
@@ -55,25 +55,25 @@ VOS_VOID  RNIC_StartTimer(
     RNIC_UL_CTX_STRU                   *pstUlCtx;
     VOS_TIMER_PRECISION_ENUM_UINT32     enTimerPrecision;
 
-    /* Ŀǰ���貦�ŵĹ���ֻ������0���� */
+    /* 目前按需拨号的功能只在网卡0上有 */
     pstUlCtx            = RNIC_GetUlCtxAddr(RNIC_RM_NET_ID_0);
 
     pstRnicTimerCtx     = RNIC_GetTimerAddr();
     enTimerPrecision    = VOS_TIMER_PRECISION_5;
 
-    /* ����ʹ�õĶ�ʱ����Χ�� */
+    /* 不在使用的定时器范围内 */
     if (enTimerId >= RNIC_MAX_TIMER_NUM)
     {
         return;
     }
 
-    /* �����������иö�ʱ���Ѿ�������ֱ�ӷ��� */
+    /* 如果缓存队列中该定时器已经启动则直接返回 */
     if (RNIC_TIMER_STATUS_RUNING == pstRnicTimerCtx[enTimerId].enTimerStatus)
     {
         return;
     }
 
-    /* ���������� */
+    /* 输入参数检查 */
     if (0 == ulLen)
     {
         RNIC_ERROR_LOG1(ACPU_PID_ADS_UL, "ADS_StartTimer:ulLen is",ulLen);
@@ -86,7 +86,7 @@ VOS_VOID  RNIC_StartTimer(
     }
 
 #if (FEATURE_ON == FEATURE_LTE)
-    /* �����δ���û���Դ��־�������ǰ���Ͽ���ʱ���������øñ�־����������32Kʱ��Ϊ����Դ */
+    /* 如果还未设置唤醒源标志，并且是按需断开定时器，则设置该标志，并且设置32K时钟为唤醒源 */
     if ((VOS_FALSE == RNIC_GetTimer4WakeFlg())
       && (TI_RNIC_DEMAND_DIAL_DISCONNECT == enTimerId))
     {
@@ -97,14 +97,14 @@ VOS_VOID  RNIC_StartTimer(
 
 #endif
 
-     /* ����������ϱ���ʱ���������26Mʱ���ϣ��Խ��͹��� */
+     /* 如果是流量上报定时器，则挂在26M时钟上，以降低功耗 */
     if (RNIC_IS_DSFLOW_TIMER_ID(enTimerId))
     {
         enTimerPrecision = VOS_TIMER_NO_PRECISION;
     }
 
 
-    /* VOS_StartRelTimer ������ʱ�� */
+    /* VOS_StartRelTimer 启动定时器 */
     ulRet = VOS_StartRelTimer(&(pstRnicTimerCtx[enTimerId].hTimer),
                               ACPU_PID_RNIC,
                               ulLen,
@@ -120,14 +120,14 @@ VOS_VOID  RNIC_StartTimer(
 
     if (TI_RNIC_DEMAND_DIAL_DISCONNECT == enTimerId)
     {
-        /* ���貦��ͳ������ */
+        /* 按需拨号统计清零 */
         pstUlCtx->stULDataStats.ulULPeriodSndPkts = 0;
     }
 
     pstRnicTimerCtx[enTimerId].enTimerStatus = RNIC_TIMER_STATUS_RUNING;
 
 
-    /* ��ʱ��״̬�������� */
+    /* 定时器状态勾包出来 */
 
 }
 VOS_VOID  RNIC_StopTimer(
@@ -138,19 +138,19 @@ VOS_VOID  RNIC_StopTimer(
 
     pstRnicTimerCtx   =  RNIC_GetTimerAddr();
 
-    /* ����ʹ�õĶ�ʱ����Χ�� */
+    /* 不在使用的定时器范围内 */
     if (enTimerId >= RNIC_MAX_TIMER_NUM)
     {
         return;
     }
 
-    /* û����������Ҫֹͣ */
+    /* 没有启动则不需要停止 */
     if (RNIC_TIMER_STATUS_RUNING  != pstRnicTimerCtx[enTimerId].enTimerStatus)
     {
         return;
     }
 
-    /* ֹͣVOS��ʱ��: ����ʱ����ָ���Ѿ�Ϊ�յ�ʱ��, ˵�����Ѿ�ֹͣ���߳�ʱ */
+    /* 停止VOS定时器: 当定时器的指针已经为空的时候, 说明其已经停止或者超时 */
     if (VOS_NULL_PTR != pstRnicTimerCtx[enTimerId].hTimer)
     {
         VOS_StopRelTimer(&(pstRnicTimerCtx[enTimerId].hTimer));
@@ -159,9 +159,9 @@ VOS_VOID  RNIC_StopTimer(
     pstRnicTimerCtx[enTimerId].hTimer        = VOS_NULL_PTR;
     pstRnicTimerCtx[enTimerId].enTimerStatus = RNIC_TIMER_STATUS_STOP;
 
-    /* ��ʱ��״̬�������� */
+    /* 定时器状态勾包出来 */
 #if (FEATURE_ON == FEATURE_LTE)
-    /* ����Ѿ������˻���Դ��־�������ǰ���Ͽ���ʱ����������ñ�־����������32Kʱ��Ϊ�ǻ���Դ */
+    /* 如果已经设置了唤醒源标志，并且是按需断开定时器，则清除该标志，并且设置32K时钟为非唤醒源 */
     if ((VOS_TRUE == RNIC_GetTimer4WakeFlg())
      && (TI_RNIC_DEMAND_DIAL_DISCONNECT == enTimerId))
     {
@@ -183,7 +183,7 @@ VOS_VOID  RNIC_StopAllTimer( VOS_VOID )
     {
         if (RNIC_TIMER_STATUS_RUNING  == pstRnicTimerCtx[i].enTimerStatus)
         {
-            /* ֹͣVOS��ʱ�� */
+            /* 停止VOS定时器 */
             VOS_StopRelTimer(&(pstRnicTimerCtx[i].hTimer));
 
             pstRnicTimerCtx[i].hTimer        = VOS_NULL_PTR;
@@ -192,7 +192,7 @@ VOS_VOID  RNIC_StopAllTimer( VOS_VOID )
     }
 
 #if (FEATURE_ON == FEATURE_LTE)
-    /* ����Ѿ������˻���Դ��־��������ñ�־����������32Kʱ��Ϊ�ǻ���Դ */
+    /* 如果已经设置了唤醒源标志，则清除该标志，并且设置32K时钟为非唤醒源 */
     if (VOS_TRUE == RNIC_GetTimer4WakeFlg())
     {
         BSP_PWC_DelTimer4WakeSrc();

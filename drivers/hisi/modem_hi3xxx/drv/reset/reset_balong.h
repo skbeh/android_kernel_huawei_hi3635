@@ -20,7 +20,7 @@ extern "C"
 
 #include <bsp_reset.h>
 
-/************************** ºêºÍÃ¶¾Ù¶¨Òå **************************/
+/************************** å®å’Œæšä¸¾å®šä¹‰ **************************/
 #define RESET_WAIT_RESP_TIMEOUT          (5000)   /*ms, time of wating for reply from hifi/mcu*/
 #define RESET_WAIT_MODEM_IN_IDLE_TIMEOUT (310)   /*ms, time of wating for reply from modem in idle*/
 #define RESET_WAIT_M3_RESETING_REPLY_TIMEOUT (200)   /*ms, time of wating for reply from modem in idle*/
@@ -51,11 +51,11 @@ enum RESET_TYPE
     RESET_TYPE_RECV_HIFI_MSG_FAIL,
 
     /*add new above,please!!*/
-    RESET_TYPE_FOR_TEST,        /*ÓÃÓÚ²âÊÔ*/
+    RESET_TYPE_FOR_TEST,        /*ç”¨äºæµ‹è¯•*/
     RESET_TYPE_MAX
 } ;
 
-/* ½á¹¹Ìå¶¨Òå */
+/* ç»“æ„ä½“å®šä¹‰ */
 
 /*Record information of callback functions*/
 struct reset_cb_info
@@ -74,8 +74,8 @@ struct reset_cb_list
 
 struct modem_reset_ctrl
 {
-	u32 boot_mode;            /* ±íÊ¾ccoreÆô¶¯×´Ì¬: Õı³£Æô¶¯/µ¥¶À¸´Î»ºóÆô¶¯ */
-	u32 multicore_msg_switch; /* ºË¼äÏûÏ¢¿ª¹Ø: 1, ±íÊ¾´ò¿ª; 0±íÊ¾¹Ø±Õ */
+	u32 boot_mode;            /* è¡¨ç¤ºccoreå¯åŠ¨çŠ¶æ€: æ­£å¸¸å¯åŠ¨/å•ç‹¬å¤ä½åå¯åŠ¨ */
+	u32 multicore_msg_switch; /* æ ¸é—´æ¶ˆæ¯å¼€å…³: 1, è¡¨ç¤ºæ‰“å¼€; 0è¡¨ç¤ºå…³é—­ */
 	struct task_struct* task;
 	u32 modem_action;
 	spinlock_t action_lock;
@@ -126,7 +126,7 @@ do {                               \
 #define  reset_print_debug(fmt, ...) 
 #endif
 
-/* º¯ÊıÉùÃ÷ */
+/* å‡½æ•°å£°æ˜ */
 struct modem_reset_ctrl *bsp_reset_control_get(void);
 s32 send_sync_msg_to_mcore(u32 reset_info, u32 *ack_val);
 

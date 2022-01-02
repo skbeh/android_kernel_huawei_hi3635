@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "AtCmdFtmProc.h"
 #include "ATCmdProc.h"
@@ -20,19 +20,19 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e767 -e960*/
 #define    THIS_FILE_ID                 PS_FILE_ID_AT_CMD_FTM_PROC_C
 /*lint +e767 +e960*/
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
@@ -41,13 +41,13 @@ VOS_UINT32 At_SetLogPortPara(VOS_UINT8 ucIndex)
     VOS_UINT32                          ulRslt;
     VOS_UINT32                          ulOmLogPort;
 
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_ERROR;
     }
 
-    /* ²ÎÊý¹ý¶à */
+    /* å‚æ•°è¿‡å¤š */
     if (gucAtParaIndex != 1)
     {
         return AT_ERROR;
@@ -74,7 +74,7 @@ VOS_UINT32 At_SetLogPortPara(VOS_UINT8 ucIndex)
         ulOmLogPort = COMM_LOG_PORT_VCOM;
     }
 
-    /* µ÷ÓÃOMµÄ½Ó¿Ú */
+    /* è°ƒç”¨OMçš„æŽ¥å£ */
     ulRslt = GU_OamLogPortSwitch(ulOmLogPort);
 
     if (VOS_OK == ulRslt)
@@ -227,18 +227,18 @@ VOS_UINT32 At_SetDpdtTestFlagPara(VOS_UINT8 ucIndex)
     AT_MTA_SET_DPDTTEST_FLAG_REQ_STRU   stAtCmd;
     VOS_UINT32                          ulRst;
 
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (2 != gucAtParaIndex)
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* AT·¢ËÍÖÁMTAµÄÏûÏ¢½á¹¹¸³Öµ */
+    /* ATå‘é€è‡³MTAçš„æ¶ˆæ¯ç»“æž„èµ‹å€¼ */
     PS_MEM_SET(&stAtCmd, 0, sizeof(AT_MTA_SET_DPDTTEST_FLAG_REQ_STRU));
     stAtCmd.enRatMode = (AT_MTA_CMD_RATMODE_ENUM_UINT8)gastAtParaList[0].ulParaValue;
     stAtCmd.ucFlag    = (VOS_UINT8)gastAtParaList[1].ulParaValue;
 
-    /* ·¢ËÍÏûÏ¢¸øCºË´¦Àí */
+    /* å‘é€æ¶ˆæ¯ç»™Cæ ¸å¤„ç† */
     ulRst = AT_FillAndSndAppReqMsg(gastAtClientTab[ucIndex].usClientId,
                                    0,
                                    ID_AT_MTA_SET_DPDTTEST_FLAG_REQ,
@@ -261,18 +261,18 @@ VOS_UINT32 At_SetDpdtPara(VOS_UINT8 ucIndex)
     AT_MTA_SET_DPDT_VALUE_REQ_STRU      stAtCmd;
     VOS_UINT32                          ulRst;
 
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (2 != gucAtParaIndex)
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* AT·¢ËÍÖÁMTAµÄÏûÏ¢½á¹¹¸³Öµ */
+    /* ATå‘é€è‡³MTAçš„æ¶ˆæ¯ç»“æž„èµ‹å€¼ */
     PS_MEM_SET(&stAtCmd, 0, sizeof(AT_MTA_SET_DPDT_VALUE_REQ_STRU));
     stAtCmd.enRatMode   = (AT_MTA_CMD_RATMODE_ENUM_UINT8)gastAtParaList[0].ulParaValue;
     stAtCmd.ulDpdtValue = gastAtParaList[1].ulParaValue;
 
-    /* ·¢ËÍÏûÏ¢¸øCºË´¦Àí */
+    /* å‘é€æ¶ˆæ¯ç»™Cæ ¸å¤„ç† */
     ulRst = AT_FillAndSndAppReqMsg(gastAtClientTab[ucIndex].usClientId,
                                    0,
                                    ID_AT_MTA_SET_DPDT_VALUE_REQ,
@@ -296,17 +296,17 @@ VOS_UINT32 At_SetQryDpdtPara(VOS_UINT8 ucIndex)
     AT_MTA_QRY_DPDT_VALUE_REQ_STRU      stAtCmd;
     VOS_UINT32                          ulRst;
 
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (1 != gucAtParaIndex)
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* AT·¢ËÍÖÁMTAµÄÏûÏ¢½á¹¹¸³Öµ */
+    /* ATå‘é€è‡³MTAçš„æ¶ˆæ¯ç»“æž„èµ‹å€¼ */
     PS_MEM_SET(&stAtCmd, 0, sizeof(AT_MTA_QRY_DPDT_VALUE_REQ_STRU));
     stAtCmd.enRatMode = (AT_MTA_CMD_RATMODE_ENUM_UINT8)gastAtParaList[0].ulParaValue;
 
-    /* ·¢ËÍÏûÏ¢¸øCºË´¦Àí */
+    /* å‘é€æ¶ˆæ¯ç»™Cæ ¸å¤„ç† */
     ulRst = AT_FillAndSndAppReqMsg(gastAtClientTab[ucIndex].usClientId,
                                    0,
                                    ID_AT_MTA_QRY_DPDT_VALUE_REQ,
@@ -326,18 +326,18 @@ VOS_UINT32 At_SetQryDpdtPara(VOS_UINT8 ucIndex)
 }
 VOS_UINT32 AT_RcvMtaSetDpdtTestFlagCnf(VOS_VOID *pMsg)
 {
-    /* ¶¨Òå¾Ö²¿±äÁ¿ */
+    /* å®šä¹‰å±€éƒ¨å˜é‡ */
     AT_MTA_MSG_STRU                    *pstMtaMsg         = VOS_NULL_PTR;
     MTA_AT_SET_DPDTTEST_FLAG_CNF_STRU  *pstSetDpdtFlagCnf = VOS_NULL_PTR;
     VOS_UINT8                           ucIndex;
     VOS_UINT32                          ulResult;
 
-    /* ³õÊ¼»¯ÏûÏ¢±äÁ¿ */
+    /* åˆå§‹åŒ–æ¶ˆæ¯å˜é‡ */
     ucIndex   = 0;
     pstMtaMsg = (AT_MTA_MSG_STRU *)pMsg;
     pstSetDpdtFlagCnf = (MTA_AT_SET_DPDTTEST_FLAG_CNF_STRU *)pstMtaMsg->aucContent;
 
-    /* Í¨¹ýClientId»ñÈ¡ucIndex */
+    /* é€šè¿‡ClientIdèŽ·å–ucIndex */
     if (AT_FAILURE == At_ClientIdToUserId(pstMtaMsg->stAppCtrl.usClientId, &ucIndex))
     {
         AT_WARN_LOG("AT_RcvMtaSetDpdtTestFlagCnf: WARNING:AT INDEX NOT FOUND!");
@@ -350,17 +350,17 @@ VOS_UINT32 AT_RcvMtaSetDpdtTestFlagCnf(VOS_VOID *pMsg)
         return VOS_ERR;
     }
 
-    /* ÅÐ¶Ïµ±Ç°²Ù×÷ÀàÐÍÊÇ·ñÎªAT_CMD_DPDTTEST_SET */
+    /* åˆ¤æ–­å½“å‰æ“ä½œç±»åž‹æ˜¯å¦ä¸ºAT_CMD_DPDTTEST_SET */
     if (AT_CMD_DPDTTEST_SET != gastAtClientTab[ucIndex].CmdCurrentOpt)
     {
         AT_WARN_LOG("AT_RcvMtaSetDpdtTestFlagCnf: WARNING:Not AT_CMD_DPDTTEST_SET!");
         return VOS_ERR;
     }
 
-    /* ¸´Î»AT×´Ì¬ */
+    /* å¤ä½ATçŠ¶æ€ */
     AT_STOP_TIMER_CMD_READY(ucIndex);
 
-    /* ÅÐ¶Ï²éÑ¯²Ù×÷ÊÇ·ñ³É¹¦ */
+    /* åˆ¤æ–­æŸ¥è¯¢æ“ä½œæ˜¯å¦æˆåŠŸ */
     if (MTA_AT_RESULT_NO_ERROR == pstSetDpdtFlagCnf->enResult)
     {
         ulResult    = AT_OK;
@@ -372,25 +372,25 @@ VOS_UINT32 AT_RcvMtaSetDpdtTestFlagCnf(VOS_VOID *pMsg)
 
     gstAtSendData.usBufLen = 0;
 
-    /* µ÷ÓÃAt_FormatResultData·¢ËÍÃüÁî½á¹û */
+    /* è°ƒç”¨At_FormatResultDataå‘é€å‘½ä»¤ç»“æžœ */
     At_FormatResultData(ucIndex, ulResult);
 
     return VOS_OK;
 }
 VOS_UINT32 AT_RcvMtaSetDpdtValueCnf(VOS_VOID *pMsg)
 {
-    /* ¶¨Òå¾Ö²¿±äÁ¿ */
+    /* å®šä¹‰å±€éƒ¨å˜é‡ */
     AT_MTA_MSG_STRU                    *pstMtaMsg          = VOS_NULL_PTR;
     MTA_AT_SET_DPDT_VALUE_CNF_STRU     *pstSetDpdtValueCnf = VOS_NULL_PTR;
     VOS_UINT8                           ucIndex;
     VOS_UINT32                          ulResult;
 
-    /* ³õÊ¼»¯ÏûÏ¢±äÁ¿ */
+    /* åˆå§‹åŒ–æ¶ˆæ¯å˜é‡ */
     ucIndex            = 0;
     pstMtaMsg          = (AT_MTA_MSG_STRU *)pMsg;
     pstSetDpdtValueCnf = (MTA_AT_SET_DPDT_VALUE_CNF_STRU *)pstMtaMsg->aucContent;
 
-    /* Í¨¹ýClientId»ñÈ¡ucIndex */
+    /* é€šè¿‡ClientIdèŽ·å–ucIndex */
     if (AT_FAILURE == At_ClientIdToUserId(pstMtaMsg->stAppCtrl.usClientId, &ucIndex))
     {
         AT_WARN_LOG("AT_RcvMtaSetDpdtValueCnf: WARNING:AT INDEX NOT FOUND!");
@@ -403,17 +403,17 @@ VOS_UINT32 AT_RcvMtaSetDpdtValueCnf(VOS_VOID *pMsg)
         return VOS_ERR;
     }
 
-    /* ÅÐ¶Ïµ±Ç°²Ù×÷ÀàÐÍÊÇ·ñÎªAT_CMD_DPDT_SET */
+    /* åˆ¤æ–­å½“å‰æ“ä½œç±»åž‹æ˜¯å¦ä¸ºAT_CMD_DPDT_SET */
     if (AT_CMD_DPDT_SET != gastAtClientTab[ucIndex].CmdCurrentOpt)
     {
         AT_WARN_LOG("AT_RcvMtaSetDpdtValueCnf: WARNING:Not AT_CMD_DPDT_SET!");
         return VOS_ERR;
     }
 
-    /* ¸´Î»AT×´Ì¬ */
+    /* å¤ä½ATçŠ¶æ€ */
     AT_STOP_TIMER_CMD_READY(ucIndex);
 
-    /* ÅÐ¶Ï²éÑ¯²Ù×÷ÊÇ·ñ³É¹¦ */
+    /* åˆ¤æ–­æŸ¥è¯¢æ“ä½œæ˜¯å¦æˆåŠŸ */
     if (MTA_AT_RESULT_NO_ERROR == pstSetDpdtValueCnf->enResult)
     {
         ulResult    = AT_OK;
@@ -425,25 +425,25 @@ VOS_UINT32 AT_RcvMtaSetDpdtValueCnf(VOS_VOID *pMsg)
 
     gstAtSendData.usBufLen = 0;
 
-    /* µ÷ÓÃAt_FormatResultData·¢ËÍÃüÁî½á¹û */
+    /* è°ƒç”¨At_FormatResultDataå‘é€å‘½ä»¤ç»“æžœ */
     At_FormatResultData(ucIndex, ulResult);
 
     return VOS_OK;
 }
 VOS_UINT32 AT_RcvMtaQryDpdtValueCnf(VOS_VOID *pMsg)
 {
-    /* ¶¨Òå¾Ö²¿±äÁ¿ */
+    /* å®šä¹‰å±€éƒ¨å˜é‡ */
     AT_MTA_MSG_STRU                    *pstMtaMsg          = VOS_NULL_PTR;
     MTA_AT_QRY_DPDT_VALUE_CNF_STRU     *pstQryDpdtValueCnf = VOS_NULL_PTR;
     VOS_UINT8                           ucIndex;
     VOS_UINT32                          ulResult;
 
-    /* ³õÊ¼»¯ÏûÏ¢±äÁ¿ */
+    /* åˆå§‹åŒ–æ¶ˆæ¯å˜é‡ */
     ucIndex            = 0;
     pstMtaMsg          = (AT_MTA_MSG_STRU *)pMsg;
     pstQryDpdtValueCnf = (MTA_AT_QRY_DPDT_VALUE_CNF_STRU *)pstMtaMsg->aucContent;
 
-    /* Í¨¹ýClientId»ñÈ¡ucIndex */
+    /* é€šè¿‡ClientIdèŽ·å–ucIndex */
     if (AT_FAILURE == At_ClientIdToUserId(pstMtaMsg->stAppCtrl.usClientId, &ucIndex))
     {
         AT_WARN_LOG("AT_RcvMtaQryDpdtValueCnf: WARNING:AT INDEX NOT FOUND!");
@@ -456,17 +456,17 @@ VOS_UINT32 AT_RcvMtaQryDpdtValueCnf(VOS_VOID *pMsg)
         return VOS_ERR;
     }
 
-    /* ÅÐ¶Ïµ±Ç°²Ù×÷ÀàÐÍÊÇ·ñÎªAT_CMD_DPDTQRY_SET */
+    /* åˆ¤æ–­å½“å‰æ“ä½œç±»åž‹æ˜¯å¦ä¸ºAT_CMD_DPDTQRY_SET */
     if (AT_CMD_DPDTQRY_SET != gastAtClientTab[ucIndex].CmdCurrentOpt)
     {
         AT_WARN_LOG("AT_RcvMtaQryDpdtValueCnf: WARNING:Not AT_CMD_DPDTQRY_SET!");
         return VOS_ERR;
     }
 
-    /* ¸´Î»AT×´Ì¬ */
+    /* å¤ä½ATçŠ¶æ€ */
     AT_STOP_TIMER_CMD_READY(ucIndex);
 
-    /* ÅÐ¶Ï²éÑ¯²Ù×÷ÊÇ·ñ³É¹¦ */
+    /* åˆ¤æ–­æŸ¥è¯¢æ“ä½œæ˜¯å¦æˆåŠŸ */
     if (MTA_AT_RESULT_NO_ERROR == pstQryDpdtValueCnf->enResult)
     {
         ulResult = AT_OK;
@@ -482,7 +482,7 @@ VOS_UINT32 AT_RcvMtaQryDpdtValueCnf(VOS_VOID *pMsg)
         gstAtSendData.usBufLen = 0;
     }
 
-    /* µ÷ÓÃAt_FormatResultData·¢ËÍÃüÁî½á¹û */
+    /* è°ƒç”¨At_FormatResultDataå‘é€å‘½ä»¤ç»“æžœ */
     At_FormatResultData(ucIndex, ulResult);
 
     return VOS_OK;
@@ -493,13 +493,13 @@ VOS_UINT32 At_SetJamDetectPara(VOS_UINT8 ucIndex)
     NV_NAS_JAM_DETECT_CFG_STRU          stNvJamCfg;
     VOS_UINT32                          ulRst;
 
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if ((gucAtParaIndex < 1) || (gucAtParaIndex > 4))
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* AT·¢ËÍÖÁMTAµÄÏûÏ¢½á¹¹¸³Öµ */
+    /* ATå‘é€è‡³MTAçš„æ¶ˆæ¯ç»“æž„èµ‹å€¼ */
     PS_MEM_SET(&stAtCmd, 0, sizeof(AT_MTA_SET_JAM_DETECT_REQ_STRU));
 
     stAtCmd.ucFlag         = (VOS_UINT8)gastAtParaList[0].ulParaValue;
@@ -529,7 +529,7 @@ VOS_UINT32 At_SetJamDetectPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* ÅäÖÃ²ÎÊý±£´æÔÚNVÏûÏ¢½á¹¹ÖÐ */
+    /* é…ç½®å‚æ•°ä¿å­˜åœ¨NVæ¶ˆæ¯ç»“æž„ä¸­ */
     stNvJamCfg.ucMode      = stAtCmd.ucFlag;
     stNvJamCfg.ucMethod    = stAtCmd.ucMethod;
     stNvJamCfg.ucThreshold = stAtCmd.ucThreshold;
@@ -541,7 +541,7 @@ VOS_UINT32 At_SetJamDetectPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* ·¢ËÍÏûÏ¢¸øCºË´¦Àí */
+    /* å‘é€æ¶ˆæ¯ç»™Cæ ¸å¤„ç† */
     ulRst = AT_FillAndSndAppReqMsg(gastAtClientTab[ucIndex].usClientId,
                                    0,
                                    ID_AT_MTA_SET_JAM_DETECT_REQ,
@@ -567,7 +567,7 @@ VOS_UINT32 At_QryJamDetectPara(VOS_UINT8 ucIndex)
 
     PS_MEM_SET(&stNvJamDetect, 0x0, sizeof(stNvJamDetect));
 
-    /* Í¨¹ý¶ÁÈ¡NVÀ´»ñÈ¡Jam Detectµ±Ç°ÅäÖÃÖµ */
+    /* é€šè¿‡è¯»å–NVæ¥èŽ·å–Jam Detectå½“å‰é…ç½®å€¼ */
     if (NV_OK != NV_ReadEx(MODEM_ID_0,
                            en_NV_Item_JAM_DETECT_CFG,
                            &stNvJamDetect,
@@ -598,13 +598,13 @@ VOS_UINT32 AT_RcvMtaSetJamDetectCnf(
     VOS_UINT32                              ulResult;
     VOS_UINT8                               ucIndex;
 
-    /* ³õÊ¼»¯ */
+    /* åˆå§‹åŒ– */
     pstRcvMsg    = (AT_MTA_MSG_STRU *)pMsg;
     pstSetCnf    = (MTA_AT_SET_JAM_DETECT_CNF_STRU *)pstRcvMsg->aucContent;
     ulResult     = AT_OK;
     ucIndex      = 0;
 
-    /* Í¨¹ýclientid»ñÈ¡index */
+    /* é€šè¿‡clientidèŽ·å–index */
     if (AT_FAILURE == At_ClientIdToUserId(pstRcvMsg->stAppCtrl.usClientId, &ucIndex))
     {
         AT_WARN_LOG("AT_RcvMtaSetJamDetectCnf : WARNING:AT INDEX NOT FOUND!");
@@ -617,17 +617,17 @@ VOS_UINT32 AT_RcvMtaSetJamDetectCnf(
         return VOS_ERR;
     }
 
-    /* µ±Ç°ATÊÇ·ñÔÚµÈ´ý¸ÃÃüÁî·µ»Ø */
+    /* å½“å‰ATæ˜¯å¦åœ¨ç­‰å¾…è¯¥å‘½ä»¤è¿”å›ž */
     if (AT_CMD_JDETEX_SET != gastAtClientTab[ucIndex].CmdCurrentOpt)
     {
         AT_WARN_LOG("AT_RcvMtaSetJamDetectCnf : Current Option is not AT_CMD_JDETEX_SET.");
         return VOS_ERR;
     }
 
-    /* ¸´Î»AT×´Ì¬ */
+    /* å¤ä½ATçŠ¶æ€ */
     AT_STOP_TIMER_CMD_READY(ucIndex);
 
-    /* ¸ñÊ½»¯ÃüÁî·µ»Ø */
+    /* æ ¼å¼åŒ–å‘½ä»¤è¿”å›ž */
     gstAtSendData.usBufLen = 0;
 
     if (MTA_AT_RESULT_NO_ERROR != pstSetCnf->enResult)
@@ -635,7 +635,7 @@ VOS_UINT32 AT_RcvMtaSetJamDetectCnf(
         ulResult = AT_ERROR;
     }
 
-    /* Êä³ö½á¹û */
+    /* è¾“å‡ºç»“æžœ */
     At_FormatResultData(ucIndex, ulResult);
 
     return VOS_OK;
@@ -650,12 +650,12 @@ VOS_UINT32 AT_RcvMtaJamDetectInd(
     AT_MTA_MSG_STRU                    *pstMtaMsg;
     MTA_AT_JAM_DETECT_IND_STRU         *pstJamDetectInd;
 
-    /* ³õÊ¼»¯ÏûÏ¢±äÁ¿ */
+    /* åˆå§‹åŒ–æ¶ˆæ¯å˜é‡ */
     ucIndex             = 0;
     pstMtaMsg           = (AT_MTA_MSG_STRU*)pMsg;
     pstJamDetectInd     = (MTA_AT_JAM_DETECT_IND_STRU*)pstMtaMsg->aucContent;
 
-    /* Í¨¹ýClientId»ñÈ¡ucIndex */
+    /* é€šè¿‡ClientIdèŽ·å–ucIndex */
     if (AT_FAILURE == At_ClientIdToUserId(pstMtaMsg->stAppCtrl.usClientId, &ucIndex))
     {
         AT_WARN_LOG("AT_RcvMtaJamDetectInd: WARNING:AT INDEX NOT FOUND!");
@@ -664,7 +664,7 @@ VOS_UINT32 AT_RcvMtaJamDetectInd(
 
     gstAtSendData.usBufLen = 0;
 
-    /* ÉÏ±¨¸ÉÈÅ¼ì²â½á¹û */
+    /* ä¸ŠæŠ¥å¹²æ‰°æ£€æµ‹ç»“æžœ */
     if (MTA_AT_JAM_RESULT_JAM_DISCOVERED == pstJamDetectInd->enJamResult)
     {
         gstAtSendData.usBufLen = (VOS_UINT16)At_sprintf(AT_CMD_MAX_LEN,
@@ -695,17 +695,17 @@ VOS_UINT32 AT_SetGFreqLock(VOS_UINT8 ucIndex)
     AT_MTA_SET_GSM_FREQLOCK_REQ_STRU    stGFreqLockInfo;
     VOS_UINT32                          ulRst;
 
-    /* ²ÎÊý¸öÊý¼ì²é */
+    /* å‚æ•°ä¸ªæ•°æ£€æŸ¥ */
     if ((gucAtParaIndex != 1) && (gucAtParaIndex != 3))
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* ³õÊ¼»¯ */
+    /* åˆå§‹åŒ– */
     PS_MEM_SET(&stGFreqLockInfo, 0, sizeof(AT_MTA_SET_GSM_FREQLOCK_REQ_STRU));
 
-    /* ²ÎÊýÓÐÐ§ÐÔ¼ì²é */
-    /* µÚÒ»¸ö²ÎÊý±ØÐë´ø */
+    /* å‚æ•°æœ‰æ•ˆæ€§æ£€æŸ¥ */
+    /* ç¬¬ä¸€ä¸ªå‚æ•°å¿…é¡»å¸¦ */
     if (0 == gastAtParaList[0].usParaLen)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -713,7 +713,7 @@ VOS_UINT32 AT_SetGFreqLock(VOS_UINT8 ucIndex)
 
     stGFreqLockInfo.enableFlag = (PS_BOOL_ENUM_UINT8)gastAtParaList[0].ulParaValue;
 
-    /* ÈôÆô¶¯ËøÆµ£¬Ôò±ØÐë´øµÚ¶þ¸ö²ÎÊýºÍµÚÈý¸ö²ÎÊý */
+    /* è‹¥å¯åŠ¨é”é¢‘ï¼Œåˆ™å¿…é¡»å¸¦ç¬¬äºŒä¸ªå‚æ•°å’Œç¬¬ä¸‰ä¸ªå‚æ•° */
     if (PS_TRUE == stGFreqLockInfo.enableFlag)
     {
         if ( (0 == gastAtParaList[1].usParaLen)
@@ -728,7 +728,7 @@ VOS_UINT32 AT_SetGFreqLock(VOS_UINT8 ucIndex)
         }
     }
 
-    /* ·¢ËÍÏûÏ¢¸øCºË´¦Àí */
+    /* å‘é€æ¶ˆæ¯ç»™Cæ ¸å¤„ç† */
     ulRst = AT_FillAndSndAppReqMsg(gastAtClientTab[ucIndex].usClientId,
                                    0,
                                    ID_AT_MTA_SET_GSM_FREQLOCK_REQ,
@@ -757,13 +757,13 @@ VOS_UINT32 AT_RcvMtaSetGFreqLockCnf(
     VOS_UINT8                           ucIndex;
     VOS_UINT32                          ulResult;
 
-    /* ³õÊ¼»¯ */
+    /* åˆå§‹åŒ– */
     pstRcvMsg    = (AT_MTA_MSG_STRU *)pMsg;
     pstSetCnf    = (MTA_AT_SET_GSM_FREQLOCK_CNF_STRU *)pstRcvMsg->aucContent;
     ucIndex      = 0;
     ulResult     = AT_ERROR;
 
-    /* Í¨¹ýclientid»ñÈ¡index */
+    /* é€šè¿‡clientidèŽ·å–index */
     if (AT_FAILURE == At_ClientIdToUserId(pstRcvMsg->stAppCtrl.usClientId, &ucIndex))
     {
         AT_WARN_LOG("AT_RcvMtaSetGFreqLockCnf : WARNING:AT INDEX NOT FOUND!");
@@ -776,17 +776,17 @@ VOS_UINT32 AT_RcvMtaSetGFreqLockCnf(
         return VOS_ERR;
     }
 
-    /* µ±Ç°ATÊÇ·ñÔÚµÈ´ý¸ÃÃüÁî·µ»Ø */
+    /* å½“å‰ATæ˜¯å¦åœ¨ç­‰å¾…è¯¥å‘½ä»¤è¿”å›ž */
     if (AT_CMD_GSM_FREQLOCK_SET != gastAtClientTab[ucIndex].CmdCurrentOpt)
     {
         AT_WARN_LOG("AT_RcvMtaSetGFreqLockCnf : Current Option is not AT_CMD_GSM_FREQLOCK_SET.");
         return VOS_ERR;
     }
 
-    /* ¸´Î»AT×´Ì¬ */
+    /* å¤ä½ATçŠ¶æ€ */
     AT_STOP_TIMER_CMD_READY(ucIndex);
 
-    /* ¸ñÊ½»¯ÃüÁî·µ»Ø */
+    /* æ ¼å¼åŒ–å‘½ä»¤è¿”å›ž */
     gstAtSendData.usBufLen = 0;
 
     if (MTA_AT_RESULT_NO_ERROR == pstSetCnf->enResult)
@@ -800,30 +800,30 @@ VOS_UINT32 AT_RcvMtaSetGFreqLockCnf(
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : AT_SetActPdpStubPara
- ¹¦ÄÜÃèÊö  : ^ACTPDPSTUB
- ÊäÈë²ÎÊý  : ucIndex - ¶Ë¿ÚË÷Òý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : AT_XXX
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : AT_SetActPdpStubPara
+ åŠŸèƒ½æè¿°  : ^ACTPDPSTUB
+ è¾“å…¥å‚æ•°  : ucIndex - ç«¯å£ç´¢å¼•
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : AT_XXX
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2015Äê11ÔÂ04ÈÕ
-    ×÷    Õß   : z00301431
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2015å¹´11æœˆ04æ—¥
+    ä½œ    è€…   : z00301431
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 AT_SetActPdpStubPara(VOS_UINT8 ucIndex)
 {
     VOS_UINT8                           ucFlag;
 
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* ²ÎÊý¸öÊý¼ì²é */
+    /* å‚æ•°ä¸ªæ•°æ£€æŸ¥ */
     if (2 != gucAtParaIndex)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -835,10 +835,10 @@ VOS_UINT32 AT_SetActPdpStubPara(VOS_UINT8 ucIndex)
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* »ñÈ¡ÉèÖÃµÄ±êÖ¾ */
+    /* èŽ·å–è®¾ç½®çš„æ ‡å¿— */
     ucFlag = (VOS_UINT8)gastAtParaList[1].ulParaValue;
 
-    /* ¸ù¾ÝMODEM IDµ÷ÓÃ²»Í¬µÄ×®º¯Êý */
+    /* æ ¹æ®MODEM IDè°ƒç”¨ä¸åŒçš„æ¡©å‡½æ•° */
     if (0 == gastAtParaList[0].ulParaValue)
     {
         AT_SetPcuiPsCallFlag(ucFlag, AT_CLIENT_TAB_APP_INDEX);

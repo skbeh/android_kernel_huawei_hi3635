@@ -4,7 +4,7 @@
 
  ******************************************************************************
   File Name       : IpIpmIface.c
-  Description     : IPÄ£¿éµÄÎÄ¼ş
+  Description     : IPæ¨¡å—çš„æ–‡ä»¶
   History         :
      1.hanlufeng 41410       2010-8-2   Draft Enact
 ******************************************************************************/
@@ -25,7 +25,7 @@ extern "C" {
 #include  "msp_at.h"
 
 /*lint -e767*/
-#define    THIS_FILE_ID        PS_FILE_ID_IPCOMM_C    /*´ıĞŞ¸Ä*/
+#define    THIS_FILE_ID        PS_FILE_ID_IPCOMM_C    /*å¾…ä¿®æ”¹*/
 /*lint +e767*/
 
 /*****************************************************************************
@@ -77,7 +77,7 @@ VOS_VOID IP_BuildLinkLocalAddr
     const VOS_UINT8 *pucIfId
 )
 {
-    /* ¹¹Ôìlink-local address */
+    /* æ„é€ link-local address */
     IP_SetUint16Data(pucLinkLocalAddr, IP_IPV6_LINK_LOCAL_PREFIX);
     IP_MEM_CPY(&pucLinkLocalAddr[ND_IPV6_IF_OFFSET], pucIfId, ND_IPV6_IF_LEN);
 }
@@ -91,16 +91,16 @@ VOS_VOID IP_BuildIPv6Header
 {
     VOS_UINT8    aucLinkLocalAddr[IP_IPV6_ADDR_LEN] = {0};
 
-    /* ¹¹Ôìlink-local address */
+    /* æ„é€ link-local address */
     IP_BuildLinkLocalAddr(aucLinkLocalAddr, pucInterfaceId);
 
-    /* ÉèÖÃIP°æ±¾ºÅ */
+    /* è®¾ç½®IPç‰ˆæœ¬å· */
     *pucIpv6 = IP_VERSION_6 << 4;
 
-    /* ÉèÖÃPayload£¬Ã»ÓĞÀ©Õ¹Í· */
+    /* è®¾ç½®Payloadï¼Œæ²¡æœ‰æ‰©å±•å¤´ */
     IP_SetUint16Data(pucIpv6 + IP_IPV6_BASIC_HEAD_PAYLOAD_OFFSET, ulUpperLength);
 
-    /* ÉèÖÃnext header */
+    /* è®¾ç½®next header */
     *(pucIpv6 + IP_IPV6_BASIC_HEAD_NEXT_HEAD_OFFSET) = IP_HEAD_PROTOCOL_ICMPV6;
 
     /* Hop Limit 255 */
@@ -109,7 +109,7 @@ VOS_VOID IP_BuildIPv6Header
     IP_MEM_CPY(pucIpv6 + IP_IPV6_SRC_ADDR_OFFSET, aucLinkLocalAddr, IP_IPV6_ADDR_LEN);
     IP_MEM_CPY(pucIpv6 + IP_IPV6_DST_ADDR_OFFSET, g_aucNdAllRoutersMulticaseAddr, IP_IPV6_ADDR_LEN);
 
-    /* Îª¼ÆËãchecksum¹¹Ôìpseudo-header */
+    /* ä¸ºè®¡ç®—checksumæ„é€ pseudo-header */
     PS_MEM_CPY(pstPseduoHeader->aucIPSrc, aucLinkLocalAddr, IP_IPV6_ADDR_LEN);
     PS_MEM_CPY(pstPseduoHeader->aucIPDes, g_aucNdAllRoutersMulticaseAddr, IP_IPV6_ADDR_LEN);
     IP_SetUint32Data((VOS_UINT8*)&pstPseduoHeader->ulUpperLength, ulUpperLength);
@@ -129,32 +129,32 @@ VOS_VOID IP_ND_FormIPv6HeaderMsg
     VOS_UINT8                           ucType
 )
 {
-    /* °æ±¾ */
+    /* ç‰ˆæœ¬ */
     *pucData = (VOS_UINT8)((IP_VERSION_6 << IP_MOVEMENT_4_BITS) & IP_IPDATA_HIGH_4_BIT_MASK);
     pucData++;
 
-    /* ´«ÊäÀàĞÍ¡¢Á÷±êÇ© */
+    /* ä¼ è¾“ç±»å‹ã€æµæ ‡ç­¾ */
     pucData += 3;
 
-    /* ÓĞĞ§¸ºÔØ³¤¶È */
+    /* æœ‰æ•ˆè´Ÿè½½é•¿åº¦ */
     IP_SetUint16Data(pucData, (VOS_UINT16)ulPduLen);
     pucData += 2;
 
-    /* ÏÂÒ»±¨Í· */
+    /* ä¸‹ä¸€æŠ¥å¤´ */
     *pucData = ucType;
     pucData++;
 
-    /* ÌøÏŞÖÆ */
+    /* è·³é™åˆ¶ */
     *pucData = IP_IPV6_ND_HOP_LIMIT;
     pucData++;
 
-    /* Ô´µØÖ· */
+    /* æºåœ°å€ */
     IP_MEM_CPY( pucData,
                 aucSrcIPAddr,
                 IP_IPV6_ADDR_LEN);
     pucData += IP_IPV6_ADDR_LEN;
 
-    /* Ä¿µÄµØÖ· */
+    /* ç›®çš„åœ°å€ */
     IP_MEM_CPY( pucData,
                 aucDstIPAddr,
                 IP_IPV6_ADDR_LEN);
@@ -203,11 +203,11 @@ IP_BOOL_ENUM_UINT8 IP_IsValidRAPacket
 /* lihong00150010 ipv6 begin */
 /*****************************************************************************
  Function Name   : IP_GetIpv6UpLayerProtocol
- Description     : »ñÈ¡IPv6ÉÏ²ãĞ­Òé
- Input           : pucIpMsg---------------------IPv6Êı¾İ°üÊ×µØÖ·
-                   usPayLoad--------------------IPv6Êı¾İ°üpayload³¤¶È
- Output          : pucNextHeader----------------ÏÂÒ»Í·ÀàĞÍÖ¸Õë
-                   pulDecodedLen----------------ÒÑÒëÂë³¤¶ÈÖ¸Õë
+ Description     : è·å–IPv6ä¸Šå±‚åè®®
+ Input           : pucIpMsg---------------------IPv6æ•°æ®åŒ…é¦–åœ°å€
+                   usPayLoad--------------------IPv6æ•°æ®åŒ…payloadé•¿åº¦
+ Output          : pucNextHeader----------------ä¸‹ä¸€å¤´ç±»å‹æŒ‡é’ˆ
+                   pulDecodedLen----------------å·²è¯‘ç é•¿åº¦æŒ‡é’ˆ
  Return          : IP_ERR_ENUM_UINT32
 
  History         :
@@ -231,30 +231,30 @@ IP_ERR_ENUM_UINT32 IP_GetIpv6UpLayerProtocol
     IP_ASSERT_RTN(VOS_NULL_PTR != pucNextHeader, IP_FAIL);
     IP_ASSERT_RTN(VOS_NULL_PTR != pulDecodedLen, IP_FAIL);
 
-    /* »ñÈ¡nextheader */
+    /* è·å–nextheader */
     ucNextHeader = *(pucIpMsgTemp + IP_IPV6_BASIC_HEAD_NEXT_HEAD_OFFSET);
 
     pucIpMsgTemp = pucIpMsgTemp + IP_IPV6_HEAD_LEN;
 
-    /* ÒÑÌø¹ıµÄÊı¾İ°ü³¤¶ÈĞ¡ÓÚulIpMsgLen */
+    /* å·²è·³è¿‡çš„æ•°æ®åŒ…é•¿åº¦å°äºulIpMsgLen */
     while (usDecodeLen <= usPayLoad)
     {
         switch (ucNextHeader)
         {
-            case IP_EXTENSION_HEADER_TYPE_FRAGMENT/* ·Ö¶ÎÍ· */:
-            case IP_EXTENSION_HEADER_TYPE_AH/* AHÍ· */:
-            case IP_EXTENSION_HEADER_TYPE_ESP/* ESPÍ· */:
+            case IP_EXTENSION_HEADER_TYPE_FRAGMENT/* åˆ†æ®µå¤´ */:
+            case IP_EXTENSION_HEADER_TYPE_AH/* AHå¤´ */:
+            case IP_EXTENSION_HEADER_TYPE_ESP/* ESPå¤´ */:
                 *pucNextHeader = ucNextHeader;
                 *pulDecodedLen = usDecodeLen + IP_IPV6_HEAD_LEN;
                 return IP_SUCC;
-            case IP_EXTENSION_HEADER_TYPE_HOPBYHOP/* ÖğÌøÑ¡ÏîÍ· */:
-            case IP_EXTENSION_HEADER_TYPE_DESTINATION/* Ä¿µÄµØÑ¡ÏîÍ· */:
-            case IP_EXTENSION_HEADER_TYPE_ROUTING/* Ñ¡Â·Í· */:
+            case IP_EXTENSION_HEADER_TYPE_HOPBYHOP/* é€è·³é€‰é¡¹å¤´ */:
+            case IP_EXTENSION_HEADER_TYPE_DESTINATION/* ç›®çš„åœ°é€‰é¡¹å¤´ */:
+            case IP_EXTENSION_HEADER_TYPE_ROUTING/* é€‰è·¯å¤´ */:
 
-                /* µ±Ç°À©Õ¹Í·ÖĞµÄÏÂÒ»Ìø */
+                /* å½“å‰æ‰©å±•å¤´ä¸­çš„ä¸‹ä¸€è·³ */
                 ucNextHeader =  *(pucIpMsgTemp + IP_IPV6_EXT_HEAD_NEXT_HEAD_OFFSET);
 
-                /* ¶ÁÈ¡À©Õ¹Í·ÖĞµÄ³¤¶ÈĞÅÏ¢£¬Ìø¹ı´ËÀ©Õ¹Í· */
+                /* è¯»å–æ‰©å±•å¤´ä¸­çš„é•¿åº¦ä¿¡æ¯ï¼Œè·³è¿‡æ­¤æ‰©å±•å¤´ */
                 ucExtHeaderLen = *(pucIpMsgTemp + IP_IPV6_EXT_HEAD_LEN_OFFSET);
 
                 pucIpMsgTemp = pucIpMsgTemp + IP_GetExtensionLen(ucExtHeaderLen);
@@ -310,10 +310,10 @@ IP_ERR_ENUM_UINT32 IP_AffirmNdParam
 
 /*****************************************************************************
  Function Name   : IP_IsIcmpv6Packet
- Description     : ÅĞ¶¨ÊÇ·ñÎªICMPv6°ü
- Input           : pucIpMsg---------------------IPÊı¾İ°üÊ×µØÖ·
-                   ulIpMsgLen-------------------IPÊı¾İ°ü³¤¶È
- Output          : pulDecodedLen----------------ÒÑÒëÂë³¤¶ÈÖ¸Õë
+ Description     : åˆ¤å®šæ˜¯å¦ä¸ºICMPv6åŒ…
+ Input           : pucIpMsg---------------------IPæ•°æ®åŒ…é¦–åœ°å€
+                   ulIpMsgLen-------------------IPæ•°æ®åŒ…é•¿åº¦
+ Output          : pulDecodedLen----------------å·²è¯‘ç é•¿åº¦æŒ‡é’ˆ
  Return          : IP_BOOL_ENUM_UINT8
 
  History         :
@@ -338,20 +338,20 @@ IP_BOOL_ENUM_UINT8 IP_IsIcmpv6Packet
     IP_ASSERT_RTN(VOS_NULL_PTR != pucIpMsg, IP_FALSE);
     IP_ASSERT_RTN(VOS_NULL_PTR != pulDecodedLen, IP_FALSE);
 
-    /* »ñÈ¡IP°æ±¾ºÅ */
+    /* è·å–IPç‰ˆæœ¬å· */
     ucIpVersion = IP_GetIpVersion(pucIpMsg);
 
-    /* Èç¹û°æ±¾ºÅ²»ÊÇIPV6£¬Ôò²»ÊÇICMPv6°ü */
+    /* å¦‚æœç‰ˆæœ¬å·ä¸æ˜¯IPV6ï¼Œåˆ™ä¸æ˜¯ICMPv6åŒ… */
     if (IP_VERSION_6 != ucIpVersion)
     {
         IPND_INFO_LOG1(ND_TASK_PID, "IP_IsIcmpv6Packet: IpVersion:", ucIpVersion);
         return IP_FALSE;
     }
 
-    /* »ñÈ¡PAYLOAD */
+    /* è·å–PAYLOAD */
     IP_GetUint16Data(usPayLoad, pucIpMsg + IP_IPV6_BASIC_HEAD_PAYLOAD_OFFSET);
 
-    /* ³¤¶ÈºÏ·¨¼ì²é */
+    /* é•¿åº¦åˆæ³•æ£€æŸ¥ */
     if ((VOS_UINT32)(usPayLoad + IP_IPV6_HEAD_LEN) > ulIpMsgLen)
     {
         if(1 == g_ulCnNd)
@@ -377,7 +377,7 @@ IP_BOOL_ENUM_UINT8 IP_IsIcmpv6Packet
         return IP_FALSE;
     }
 
-    /* »ñÈ¡ÉÏ²ãĞ­ÒéºÅ */
+    /* è·å–ä¸Šå±‚åè®®å· */
     ulRslt = IP_GetIpv6UpLayerProtocol(pucIpMsg, usPayLoad, &ucProtocol, &ulDecodedLen);
     if (IP_SUCC != ulRslt)
     {
@@ -404,7 +404,7 @@ IP_BOOL_ENUM_UINT8 IP_IsIcmpv6Packet
         return IP_FALSE;
     }
 
-    /* ÅĞ¶ÏÉÏ²ãĞ­ÒéºÅÊÇ·ñÎªIcmpv6 */
+    /* åˆ¤æ–­ä¸Šå±‚åè®®å·æ˜¯å¦ä¸ºIcmpv6 */
     if (IP_HEAD_PROTOCOL_ICMPV6 != ucProtocol)
     {
         IPND_INFO_LOG1(ND_TASK_PID, "IP_IsIcmpv6Packet: Protocol:", ucProtocol);
@@ -434,7 +434,7 @@ VOS_UINT32 IP_ConstructICMPv6PseudoHeader
 
     pstPseduoHeader->ucNextHead = IP_HEAD_PROTOCOL_ICMPV6;
 
-    /* »ñÈ¡PAYLOAD */
+    /* è·å–PAYLOAD */
     IP_GetUint16Data(ulLength, pucMsgData + IP_IPV6_BASIC_HEAD_PAYLOAD_OFFSET);
 
     ulLengthTmp = (ulTypeOffset - IP_IPV6_HEAD_LEN);
@@ -488,10 +488,10 @@ VOS_UINT16 IPv6_Checksum
     IP_ASSERT_RTN(VOS_NULL_PTR != pucData, 0);
     IP_ASSERT_RTN(0 != ulLen, 0);
 
-    /* pseduo-headerÇóºÍ */
+    /* pseduo-headeræ±‚å’Œ */
     ulCheckSum += IP_Unit16Sum(pucPseduoHeader, sizeof(IPV6_PSEDUOHEADER_STRU));
 
-    /* IPV6 Upper-layer packageÇóºÍ */
+    /* IPV6 Upper-layer packageæ±‚å’Œ */
     ulCheckSum += IP_Unit16Sum(pucData, ulLen);
 
     while(ulCheckSum >> 16)
@@ -520,7 +520,7 @@ IP_ERR_ENUM_UINT32 IP_VerifyICMPv6
         return IP_FAIL;
     }
 
-    /* ÅĞ¶ÏÊÇ·ñĞèÒª¼ìÑé£¬ÈôÃ»ÓĞĞ¯´øchecksum£¬×÷Îª·Ç·¨°ü´¦Àí */
+    /* åˆ¤æ–­æ˜¯å¦éœ€è¦æ£€éªŒï¼Œè‹¥æ²¡æœ‰æºå¸¦checksumï¼Œä½œä¸ºéæ³•åŒ…å¤„ç† */
     if ((0 == *(pucIpMsg + ulTypeOffset + IP_ICMPV6_CHECKSUM_OFFSET))
         && (0 == *(pucIpMsg + ulTypeOffset + IP_ICMPV6_CHECKSUM_OFFSET + 1)))
     {
@@ -528,13 +528,13 @@ IP_ERR_ENUM_UINT32 IP_VerifyICMPv6
         return IP_FAIL;
     }
 
-    /* ¹¹Ôìpseduo-header */
+    /* æ„é€ pseduo-header */
     if (0 == (ulLen = IP_ConstructICMPv6PseudoHeader(pucIpMsg, ulTypeOffset, &stPseduoHeader)))
     {
         return IP_FAIL;
     }
 
-    /* Ğ£ÑéICMPv6°ü */
+    /* æ ¡éªŒICMPv6åŒ… */
     if(0 != IPv6_Checksum(&stPseduoHeader, pucIpMsg + ulTypeOffset, ulLen))
     {
         IPND_WARNING_LOG(ND_TASK_PID, "IP_VerifyICMPv6: CHECKSUM Error!");
@@ -556,7 +556,7 @@ IP_BOOL_ENUM_UINT8 IP_IsValidNdMsg
     IP_ASSERT_RTN(VOS_NULL_PTR != pucIpMsg, IP_FALSE);
     IP_ASSERT_RTN(VOS_NULL_PTR != pulTypeOffset, IP_FALSE);
 
-    /* ÅĞ¶ÏÊÇ·ñÎªICMPv6°ü */
+    /* åˆ¤æ–­æ˜¯å¦ä¸ºICMPv6åŒ… */
     if (IP_TRUE != IP_IsIcmpv6Packet(pucIpMsg, ulIpMsgLen, &ulDecodedLen))
     {
         IPND_ERROR_LOG(ND_TASK_PID, "IP_IsValidNdMsg: Not Icmpv6 Packet");
@@ -569,7 +569,7 @@ IP_BOOL_ENUM_UINT8 IP_IsValidNdMsg
         return IP_FALSE;
     }
 
-    /* È¡ICMPV6ÏûÏ¢ÖĞµÄTYPE×Ö¶Î */
+    /* å–ICMPV6æ¶ˆæ¯ä¸­çš„TYPEå­—æ®µ */
     ucType = *(pucIpMsg + ulDecodedLen);
     if (IP_ICMPV6_TYPE_ECHOREQUEST != ucType)
     {
@@ -580,7 +580,7 @@ IP_BOOL_ENUM_UINT8 IP_IsValidNdMsg
         }
     }
 
-    /* TYPEÊÇ·ñÎ»ÓÚ[128,137] */
+    /* TYPEæ˜¯å¦ä½äº[128,137] */
     if ((IP_ICMPV6_TYPE_ECHOREQUEST <= ucType)
         && (IP_ICMPV6_TYPE_REDIRECT >= ucType))
     {
@@ -609,17 +609,17 @@ IP_ERR_ENUM_UINT32 IP_BuildIcmpv6Checksum
         return IP_FAIL;
     }
 
-    /* Çå³ıICMPv6Ğ£ÑéºÍ×Ö¶Î */
+    /* æ¸…é™¤ICMPv6æ ¡éªŒå’Œå­—æ®µ */
     pucIpMsg[ulTypeOffset + IP_ICMPV6_CHECKSUM_OFFSET] = 0;
     pucIpMsg[ulTypeOffset + IP_ICMPV6_CHECKSUM_OFFSET + 1] = 0;
 
-    /* ¹¹Ôìpseduo-header */
+    /* æ„é€ pseduo-header */
     if (0 == (ulLen = IP_ConstructICMPv6PseudoHeader(pucIpMsg, ulTypeOffset, &stPseduoHeader)))
     {
         return IP_FAIL;
     }
 
-    /* Éú³ÉICMPv6°üĞ£ÑéºÍ */
+    /* ç”ŸæˆICMPv6åŒ…æ ¡éªŒå’Œ */
     usCheckSum = IPv6_Checksum(&stPseduoHeader, pucIpMsg + ulTypeOffset, ulLen);
 
     /*IP_SetUint16Data(&pucIpMsg[ulTypeOffset + IP_ICMPV6_CHECKSUM_OFFSET], usCheckSum);*/
@@ -734,24 +734,24 @@ VOS_UINT16 TTF_NDIS_Ipv6_CalcCheckSum
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : TTF_NDIS_Ipv6GetDhcpOption
- ¹¦ÄÜÃèÊö  : Returns a specific option.
- ÊäÈë²ÎÊı  : pFirstOpt - Points to the first option in the packet.
+ å‡½ æ•° å  : TTF_NDIS_Ipv6GetDhcpOption
+ åŠŸèƒ½æè¿°  : Returns a specific option.
+ è¾“å…¥å‚æ•°  : pFirstOpt - Points to the first option in the packet.
              ulTotOptLen - Length in byte of ICMPv6 header + data.
              usNdOptCode - The option Code to find.
              lNumber - The number of the option (if the same option can occure
               multiple times).
- Êä³ö²ÎÊı  : pOpt - Will point to the option when the function returns,
+ è¾“å‡ºå‚æ•°  : pOpt - Will point to the option when the function returns,
               or to VOS_NULL_PTR if the option was not found.
- ·µ »Ø Öµ  :PS_SUCC - ³É¹¦
-             PS_FAIL - Ê§°Ü
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¿” å› å€¼  :PS_SUCC - æˆåŠŸ
+             PS_FAIL - å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê4ÔÂ28ÈÕ
-    ×÷    Õß   : »Æ·É 62119
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´4æœˆ28æ—¥
+    ä½œ    è€…   : é»„é£ 62119
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 TTF_NDIS_Ipv6GetDhcpOption

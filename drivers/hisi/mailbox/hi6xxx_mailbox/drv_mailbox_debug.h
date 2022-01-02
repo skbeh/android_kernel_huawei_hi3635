@@ -3,7 +3,7 @@
 #define _DRV_MAILBOX_DEBUG_H_
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "drv_mailbox_platform.h"
 
@@ -16,14 +16,14 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 �궨��
+  2 宏定义
 *****************************************************************************/
-/*�������ݴ���ʹ���ʱ������*/
-#define MAILBOX_MAIL_TRANS_TIME_LIMIT               (3000)       /* ���������Ϣ�����ʱ��(value/32 ms) */
-#define MAILBOX_MAIL_DEAL_TIME_LIMIT                (2000)       /* ���������Ϣ��ص�����ʱ��(value/32 ms) */
-#define MAILBOX_MAIL_SCHE_TIME_LIMIT                (2000)       /* ���������Ϣ�������ȵȴ�ʱ��(value/32 ms) */
+/*邮箱数据传输和处理时间限制*/
+#define MAILBOX_MAIL_TRANS_TIME_LIMIT               (3000)       /* 跨核邮箱消息最长滞留时间(value/32 ms) */
+#define MAILBOX_MAIL_DEAL_TIME_LIMIT                (2000)       /* 跨核邮箱消息最长回调处理时间(value/32 ms) */
+#define MAILBOX_MAIL_SCHE_TIME_LIMIT                (2000)       /* 跨核邮箱消息最长任务调度等待时间(value/32 ms) */
 
-/*��¼����ļ��δ���ӡ����*/
+/*记录最近的几次错打印个数*/
 #define MAILBOX_ERRO_ARRAY_NUM                      (5)
 
 #define MAILBOX_LOG_NONE                (-1)
@@ -32,17 +32,17 @@ extern "C" {
 #define MAILBOX_LOG_WARNING             (2)
 #define MAILBOX_LOG_INFO                (3)
 
-#define MAILBOX_SHOW_ALL                (0x001) /*��ʾ����ͨ����ϸ��Ϣ*/
-#define MAILBOX_SHOW_CLEAR              (0x010) /*��ʾͨ����Ϣ�������Ϣ*/
+#define MAILBOX_SHOW_ALL                (0x001) /*显示所有通道详细信息*/
+#define MAILBOX_SHOW_CLEAR              (0x010) /*显示通道信息后清除信息*/
 
-/*����ͨ��ʣ��ռ�����ֵ*/
+/*邮箱通道剩余空间的最大值*/
 #define MAILBOX_QUEUE_LEFT_INVALID                  (0xffffffff)
 
-/*����ʱ��������slice*/
+/*邮箱时间戳的最大slice*/
 #define MAILBOX_MAX_SLICE                           (0xffffffff)
 #define mailbox_get_slice_diff(s,e)                 (((e) >= (s))?((e) - (s)) : (MAILBOX_MAX_SLICE - (s) + (e)))
 
-/*������Դ�ӡ�ӿ�*/
+/*邮箱调试打印接口*/
 #if (MAILBOX_LOG_LEVEL == MAILBOX_LOG_NONE)
 #define mailbox_logerro_p0(ErrorId)                 (unsigned int)(ErrorId)
 
@@ -61,7 +61,7 @@ extern "C" {
                                                     (unsigned int)_MAILBOX_LINE_, (char*)_MAILBOX_FILE_)
 #endif
 
-/*��������ʼ*/ /*��Ҫ��λϵͳ�Ĵ���:�����ڲ�����*/
+/*致命错误开始*/ /*需要复位系统的错误:邮箱内部错误*/
 #define    MAILBOX_CRIT_RET_START                               0x80000001
 #define    MAILBOX_CRIT_GUT_INVALID_USER_MAIL_HANDLE            0x80000002
 #define    MAILBOX_CRIT_GUT_INIT_CHANNEL_POOL_TOO_SMALL         0x80000003
@@ -72,14 +72,14 @@ extern "C" {
 #define    MAILBOX_CRIT_GUT_RECEIVE_MAIL                        0x80000008
 #define    MAILBOX_CRIT_GUT_READ_MAIL                           0x80000009
 #define    MAILBOX_CRIT_GUT_MEMORY_CONFIG                       0x8000000a
-#define    MAILBOX_CRIT_PORT_CONFIG                             0x80000010 /*ĳ���˵�ͨ�����ô���*/
-#define    MAILBOX_CRIT_RET_END                                 0x800000ff /*�����������*/
+#define    MAILBOX_CRIT_PORT_CONFIG                             0x80000010 /*某个核的通道配置错误*/
+#define    MAILBOX_CRIT_RET_END                                 0x800000ff /*致命错误结束*/
 
 
 /*****************************************************************************
-  �������Ŷ���
+  邮箱错误号定义
 *****************************************************************************/
-/*�ɿ�ˡ����ʼ*/ /*����Ҫ��λϵͳ�Ĵ���:�����ⲿ�ӿڵ��ô���*/
+/*可宽恕错误开始*/ /*不需要复位系统的错误:邮箱外部接口调用错误*/
 #define    MAILBOX_ERR_RET_START                                0x80000100
 #define    MAILBOX_ERR_GUT_INVALID_CPU_LINK                     0x80000101
 #define    MAILBOX_ERR_GUT_INVALID_SRC_CPU                      0x80000102
@@ -130,71 +130,71 @@ extern "C" {
 #define    MAILBOX_ERR_LINUX_CHANNEL_NOT_FIND                   0x80000185
 #define    MAILBOX_ERR_LINUX_ALLOC_MEMORY                       0x80000186
 
-#define    MAILBOX_ERR_RET_END                                  0x800001ff /*�ɿ�ˡ�������*/
+#define    MAILBOX_ERR_RET_END                                  0x800001ff /*可宽恕错误结束*/
 
-/*�澯��Ϣ��ʼ*/
+/*告警信息开始*/
 #define    MAILBOX_WARNING_RET_START                            0x80000200
 #define    MAILBOX_WARNING_USER_CALLBACK_ALREADY_EXIST          0x80000201
 #define    MAILBOX_WARNING_TRANSPORT_TIME_OUT                   0x80000202
 #define    MAILBOX_WARNING_RECEIVE_TIME_OUT                     0x80000203
 #define    MAILBOX_WARNING_SCHE_TIME_OUT                        0x80000204
-#define    MAILBOX_WARNING_RET_END                              0x800002ff /*�澯��Ϣ����*/
+#define    MAILBOX_WARNING_RET_END                              0x800002ff /*告警信息结束*/
 
-/*֪ͨ��Ϣ��ʼ*/
+/*通知信息开始*/
 #define    MAILBOX_INFO_RET_START                               0x80000300
 #define    MAILBOX_INFO_RECEIVE_FIRST_MAIL                      0x80000301
 #define    MAILBOX_INFO_SEND_FIRST_MAIL                         0x80000302
-#define    MAILBOX_INFO_RET_END                                 0x800003ff /*֪ͨ��Ϣ����*/
+#define    MAILBOX_INFO_RET_END                                 0x800003ff /*通知信息结束*/
 
-/*�����Ե���Ϣͷ������*/
+/*板侧测试的消息头保护字*/
 #define MAILBOX_BOARDST_USER_PROTECT1               (0x18273645)
 
 #define MAILBOX_MCU_TEST_BUFF_SIZE                  256
 
 /*****************************************************************************
-  3 ö�ٶ���
+  3 枚举定义
 *****************************************************************************/
 
 /*****************************************************************************
-  4 ��Ϣͷ����
+  4 消息头定义
 *****************************************************************************/
 
 
 /*****************************************************************************
- ʵ �� ��  : tm_mb_cb
- ��������  : �����ԵĲ���������Ϣͷ�ṹ
+ 实 体 名  : tm_mb_cb
+ 功能描述  : 板侧测试的测试数据消息头结构
 *****************************************************************************/
 struct  mb_st_msg
 {
 
-    unsigned int protect;                       /*��Ϣ������ MAILBOX_BOARDST_USER_PROTECT1*/
-    unsigned int length;                        /*���Ե���Ϣ����*/
-    unsigned int back_code;              /*���ڷ�����Ϣ���ݵ�ͨ����*/
-    unsigned int test_id;                        /*���Թ�����Ϣ��: TM_MAILBOX_TEST_ID_E����*/
+    unsigned int protect;                       /*消息保护字 MAILBOX_BOARDST_USER_PROTECT1*/
+    unsigned int length;                        /*测试的消息长度*/
+    unsigned int back_code;              /*用于返回消息内容的通道号*/
+    unsigned int test_id;                        /*测试过程消息号: TM_MAILBOX_TEST_ID_E定义*/
 };
 
 /*****************************************************************************
-  5 ��Ϣ����
+  5 消息定义
 *****************************************************************************/
 
 /*****************************************************************************
- ʵ �� ��  : MAILBOX_BOARDST_TEST_ID_E
- ��������  : �����ԵĲ��Թ�����ϢID
+ 实 体 名  : MAILBOX_BOARDST_TEST_ID_E
+ 功能描述  : 板侧测试的测试功能消息ID
 *****************************************************************************/
 enum MAILBOX_BOARDST_TEST_ID_E 
 {
-    MAILBOX_BOARDST_ID_LOOP_SEND,                /*�ػ����Եķ���*/
-    MAILBOX_BOARDST_ID_LOOP_BACK,                /*�ػ����ԵĽ������ݺ󷵻�*/
-    MAILBOX_BOARDST_ID_LOOP_FINISH               /*�ػ����Խ���*/
+    MAILBOX_BOARDST_ID_LOOP_SEND,                /*回环测试的发送*/
+    MAILBOX_BOARDST_ID_LOOP_BACK,                /*回环测试的接收数据后返回*/
+    MAILBOX_BOARDST_ID_LOOP_FINISH               /*回环测试结束*/
 };
 
 /*****************************************************************************
-  6 STRUCT����
+  6 STRUCT定义
 *****************************************************************************/
 
 /*****************************************************************************
- ʵ �� ��  : struct mb_log
- ��������  : �������¼�ṹ��
+ 实 体 名  : struct mb_log
+ 功能描述  : 错误码记录结构体
 *****************************************************************************/
 struct mb_log
 {
@@ -206,62 +206,62 @@ struct mb_log
 };
 
 /****************************************************************************
-  ����ͨ������use id �켣���ݽṹ
+  邮箱通道传送use id 轨迹数据结构
 ****************************************************************************/
 typedef struct
 {
-    unsigned int               send_slice;         /*���͵�ʱ���*/
-    unsigned int               recv_slice;         /*���յ�ʱ���*/
-    unsigned long               mail_addr;         /*�ʼ����ݵ�ַ*/
+    unsigned int               send_slice;         /*发送的时间戳*/
+    unsigned int               recv_slice;         /*接收的时间戳*/
+    unsigned long               mail_addr;         /*邮件数据地址*/
     unsigned short              use_id;
     unsigned short              reserved;
 }MAILBOX_TRACK_STRU;
 
 /*****************************************************************************
-  ������ͨ���Ŀ�ά�ɲ���Ϣ
+  此邮箱通道的可维可测信息
 *****************************************************************************/
 struct mb_slice
 {
-    unsigned int               total;           /*�ʼ��ۼƴ���ʱ��,�����һ���㷢�͵�����һ����Ӧ���ʱ��*/
-    unsigned int               start;           /*���浥��ͳ�Ƶķ��͵�ʱ��*/
-    unsigned int               max;             /*�ʼ���󴫵�ʱ�䣬�����һ���㷢�͵�����һ����Ӧ���ʱ��**/
-    unsigned int               code;            /*�ʼ���󴫵�ʹ�ú�*/
-    unsigned int               overflow;        /*������ʱ������Ƿ����*/
+    unsigned int               total;           /*邮件累计传递时间,计算从一个点发送到另外一个响应点的时间*/
+    unsigned int               start;           /*保存单次统计的发送点时间*/
+    unsigned int               max;             /*邮件最大传递时间，计算从一个点发送到另外一个响应点的时间**/
+    unsigned int               code;            /*邮件最大传递使用号*/
+    unsigned int               overflow;        /*处理总时间计数是否溢出*/
 
-    /*��¼���MAILBOX_RECORD_RECENT_NUM����Ӧʱ��*/
+    /*记录最近MAILBOX_RECORD_RECENT_NUM次响应时间*/
     unsigned int               rdiff_index;/*record recent diff index*/
     unsigned int               rdiff[MAILBOX_RECORD_RECENT_NUM];/*record recent diff info*/
 };
 
 struct mb_mntn
 {
-    unsigned int               per_sche_mail_cnt;       /*��ǰ���ȶ�ȡ�ʼ�����,��ʼ��0*/
-    unsigned int               peak_traffic_left;       /*ͨ��ʣ��ռ�����ֵ������ͳ���������ݷ�ֵ*/
+    unsigned int               per_sche_mail_cnt;       /*当前调度读取邮件个数,开始清0*/
+    unsigned int               peak_traffic_left;       /*通道剩余空间的最低值，用于统计邮箱数据峰值*/
 
-    struct mb_slice            trans;                   /*ͳ���ʼ�����ʱ�䣬�ӷ��ͺ˷��ͣ����ӽ��պ˵��ûص�֮ǰ*/
-    struct mb_slice            deal;                    /*ͳ���ʼ�����ʱ�䣬ͳ���û����ʼ�����ʱ��*/
-    struct mb_slice            sche;                    /*ͳ���ʼ�������ȵȴ�ʱ�䣬ͳ�ƴ��жϵ�������ȵ�ʱ��*/
+    struct mb_slice            trans;                   /*统计邮件传递时间，从发送核发送，到接接收核调用回调之前*/
+    struct mb_slice            deal;                    /*统计邮件处理时间，统计用户的邮件处理时长*/
+    struct mb_slice            sche;                    /*统计邮件任务调度等待时间，统计从中断到任务调度的时间*/
 
-    /*�������ʼ�����(����)�켣��¼*/
-    unsigned int               track_prob;             /*ָ��TrackArray����һ�μ�¼*/
-    MAILBOX_TRACK_STRU         track_array[MAILBOX_RECORD_USEID_NUM];/*��¼���������MAILBOX_LATEST_USEID_NUM��use id ������Ϣ*/
+    /*以下是邮件发送(接收)轨迹记录*/
+    unsigned int               track_prob;             /*指向TrackArray中下一次记录*/
+    MAILBOX_TRACK_STRU         track_array[MAILBOX_RECORD_USEID_NUM];/*记录最近处理的MAILBOX_LATEST_USEID_NUM个use id 传送信息*/
     struct mb_buff             *mbuff;
 };
 
 /*****************************************************************************
-  7 UNION����
+  7 UNION定义
 *****************************************************************************/
 
 /*****************************************************************************
-  8 OTHERS����
+  8 OTHERS定义
 *****************************************************************************/
 
 /*****************************************************************************
-  9 ȫ�ֱ�������
+  9 全局变量声明
 *****************************************************************************/
 
 /*****************************************************************************
-  10 ��������
+  10 函数声明
 *****************************************************************************/
 extern MAILBOX_EXTERN int mailbox_log_erro(
                 unsigned int   err_no,

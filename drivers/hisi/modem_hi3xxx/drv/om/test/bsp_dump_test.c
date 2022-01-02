@@ -139,7 +139,7 @@ void exchTest(int type)
         break;
     }
 }
-/* Ä£Ê½¿ØÖÆ EXC DUMPÄ£Ê½ */
+/* æ¨¡å¼æ§åˆ¶ EXC DUMPæ¨¡å¼ */
 int dump_st_001(void)
 {
     system_error(0x72, 1, 2, 0, 0);
@@ -147,14 +147,14 @@ int dump_st_001(void)
 }
 
 
-/* Ä£Ê½¿ØÖÆ USB DUMPÄ£Ê½ */
+/* æ¨¡å¼æ§åˆ¶ USB DUMPæ¨¡å¼ */
 int dump_st_002(void)
 {
     system_error(0x72, 1, 2, 0, 0);
     return 0;
 }
 
-/* RESET´íÎó */
+/* RESETé”™è¯¯ */
 int dump_st_003(void)
 {
 //    exchTest(RESET);
@@ -163,7 +163,7 @@ int dump_st_003(void)
 }
 
 
-/* UNDEF´íÎó */
+/* UNDEFé”™è¯¯ */
 int dump_st_004(void)
 {
 //    exchTest(UNDEF);
@@ -172,7 +172,7 @@ int dump_st_004(void)
 }
 
 
-/* SWI´íÎó */
+/* SWIé”™è¯¯ */
 int dump_st_005(void)
 {
     exchTest(SWI);
@@ -181,7 +181,7 @@ int dump_st_005(void)
 }
 
 
-/* Prefetch abort´íÎó */
+/* Prefetch aborté”™è¯¯ */
 int dump_st_006(void)
 {
 //    exchTest(PABT);
@@ -189,7 +189,7 @@ int dump_st_006(void)
     return 0;
 }
 
-/* Data abort´íÎó */
+/* Data aborté”™è¯¯ */
 int dump_st_007(void)
 {
 //    exchTest(DABT);
@@ -197,44 +197,44 @@ int dump_st_007(void)
     return 0;
 }
 
-/* ³ı0´íÎó */
+/* é™¤0é”™è¯¯ */
 int dump_st_008(void)
 {
     exchDIV(0);
     return 0;
 }
 
-/* ºËĞÄ¹ıÁ÷ */
+/* æ ¸å¿ƒè¿‡æµ */
 int dump_st_009(void)
 {
     return 0;
 }
 
-/* ·ÇºËĞÄ¹ıÁ÷ */
+/* éæ ¸å¿ƒè¿‡æµ */
 int dump_st_010(void)
 {
     return 0;
 }
 
-/* ¿´ÃÅ¹·³¬Ê±´íÎó */
+/* çœ‹é—¨ç‹—è¶…æ—¶é”™è¯¯ */
 int dump_st_011(void)
 {
     return 0;
 }
 
-/* AºËÈí¼şÒì³£ */
+/* Aæ ¸è½¯ä»¶å¼‚å¸¸ */
 int dump_st_012_013(void)
 {
     return 0;
 }
 
-/* AºËÈí¼şÒì³£Ö®ºó»ù±¾ĞÅÏ¢ */
+/* Aæ ¸è½¯ä»¶å¼‚å¸¸ä¹‹ååŸºæœ¬ä¿¡æ¯ */
 int dump_st_015_025(void)
 {
     return 0;
 }
 
-/* AºËÓÃ»§Êı¾İ */
+/* Aæ ¸ç”¨æˆ·æ•°æ® */
 int dump_st_026(void)
 {
     char *p;
@@ -269,7 +269,7 @@ void dump_st_hook(void)
     }
 }
 
-/* AºËÀ©Õ¹Êı¾İ */
+/* Aæ ¸æ‰©å±•æ•°æ® */
 int dump_st_028(void)
 {
     int ret;

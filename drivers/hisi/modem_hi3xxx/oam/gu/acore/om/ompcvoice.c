@@ -1,24 +1,24 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : OmPcVoice.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : Óà¿¥
-  Éú³ÉÈÕÆÚ   : 2010Äê4ÔÂ
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : pc voiceµÄÊµÏÖ
-  º¯ÊýÁÐ±í   :
-  ÐÞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2010Äê4ÔÂ
-    ×÷    Õß   : Óà¿¥
-    ÐÞ¸ÄÄÚÈÝ   : ´´½¨ÎÄ¼þ
+  æ–‡ ä»¶ å   : OmPcVoice.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : ä½™éª
+  ç”Ÿæˆæ—¥æœŸ   : 2010å¹´4æœˆ
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : pc voiceçš„å®žçŽ°
+  å‡½æ•°åˆ—è¡¨   :
+  ä¿®æ”¹åŽ†å²   :
+  1.æ—¥    æœŸ   : 2010å¹´4æœˆ
+    ä½œ    è€…   : ä½™éª
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "omringbuffer.h"
 #include "omprivate.h"
@@ -33,7 +33,7 @@
 #include "OmCommonPpm.h"
 #include "OmUsbPpm.h"
 #endif
-/* HIFI ÉÏÒÆ */
+/* HIFI ä¸Šç§» */
 #include "HifiOmInterface.h"
 
 #ifdef __cplusplus
@@ -47,12 +47,12 @@ extern "C" {
 
 
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
-/* °´ÕÕ¿í´ø¹æ¸ñ£¬640Ã¿Ö¡´óÐ¡ ½öÖ§³Ö V3R3*/
+/* æŒ‰ç…§å®½å¸¦è§„æ ¼ï¼Œ640æ¯å¸§å¤§å° ä»…æ”¯æŒ V3R3*/
 #define OM_PCV_BUF_SIZE                         (640*6*2)
 
 #define OM_PCV_PORT_PCSC                        (3)
 
-/*¹³È¡Êý¾ÝÊ¹ÄÜÎ»*/
+/*é’©å–æ•°æ®ä½¿èƒ½ä½*/
 #define OM_PCV_HOOK_ENABLE                      (0x010000)
 #define OM_PCV_USB_OM_ENABLE                    (0x010400)
 #define OM_PCV_OM_MED_ENABLE                    (0x010100)
@@ -62,30 +62,30 @@ extern "C" {
 #define OM_PCV_MED_OM_BIT                       (9)
 #define OM_PCV_USB_OM_BIT                       (10)
 
-/*EventID:Êý¾ÝÒì³£*/
+/*EventID:æ•°æ®å¼‚å¸¸*/
 #define OM_APP_PCV_EXCEPTION_IND                (0x01)
-/*EventID:ringbufÂú*/
+/*EventID:ringbufæ»¡*/
 #define OM_APP_PCV_BUF_FULL_IND                 (0x02)
-/*EventID:DSP PLLÏÂµç*/
+/*EventID:DSP PLLä¸‹ç”µ*/
 #define OM_APP_PCV_DSP_PLL_OFF                  (0x03)
 #define OM_APP_PCV_QUNUE_FULL                   (0x04)
 
-/*eventID = 0x05µ×ÈíÒÑ¾­Ê¹ÓÃ */
+/*eventID = 0x05åº•è½¯å·²ç»ä½¿ç”¨ */
 #define OM_APP_PCV_MED_OM_LEN                   (0x20)
 #define OM_APP_PCV_OM_USB_RET                   (0x21)
 #define OM_APP_PCV_READ_NV_FAIL                 (0x22)
 #define OM_APP_PCV_MAX_MSG_NUM                  (50)
 
-/*HOOKÓïÒôÉÏ±¨Í¸Ã÷ÏûÏ¢PrimID*/
+/*HOOKè¯­éŸ³ä¸ŠæŠ¥é€æ˜Žæ¶ˆæ¯PrimID*/
 #define OM_APP_VOICE_HOOK_IND                   (0xf0fe)
 
-/* Í¨³£10ÃëÖÓÊÕµ½500Ö¡ */
+/* é€šå¸¸10ç§’é’Ÿæ”¶åˆ°500å¸§ */
 #define OM_PCV_RCVDATA_TIMES_IN_10S             (500)
 
-/* Ã¿10ÃëÖÓ£¬ERRLOGÄÜÈÝÈÌµÄ¶ªÊý×î´ó´ÎÊý*/
+/* æ¯10ç§’é’Ÿï¼ŒERRLOGèƒ½å®¹å¿çš„ä¸¢æ•°æœ€å¤§æ¬¡æ•°*/
 #define OM_PCV_RBUF_FULL_TIMES_IN_10S           (50)
 
-/*½á¹¹OM_PCV_TRANS_IND_STRU, sizeof(->ulSn)+ sizeof(ulTimeStamp)
+/*ç»“æž„OM_PCV_TRANS_IND_STRU, sizeof(->ulSn)+ sizeof(ulTimeStamp)
  + sizeof(usPrimID) + sizeof(usReserved) + sizeof(ulFrameTick) +
  sizeof(usHookTarget) + sizeof(usDataLen)*/
 #define OM_PCV_TRANS_SIZE                      (20)
@@ -102,18 +102,18 @@ extern "C" {
 
 typedef struct
 {
-    VOS_UINT32                          ulProtectWord1;     /*±£»¤×Ö 0x55AA55AA*/
-    VOS_UINT32                          ulProtectWord2;     /*±£»¤×Ö 0x5A5A5A5A*/
+    VOS_UINT32                          ulProtectWord1;     /*ä¿æŠ¤å­— 0x55AA55AA*/
+    VOS_UINT32                          ulProtectWord2;     /*ä¿æŠ¤å­— 0x5A5A5A5A*/
     OM_RING                             stRingBuffer;
-    VOS_UINT32                          ulProtectWord3;     /*±£»¤×Ö 0x55AA55AA*/
-    VOS_UINT32                          ulProtectWord4;     /*±£»¤×Ö 0x5A5A5A5A*/
+    VOS_UINT32                          ulProtectWord3;     /*ä¿æŠ¤å­— 0x55AA55AA*/
+    VOS_UINT32                          ulProtectWord4;     /*ä¿æŠ¤å­— 0x5A5A5A5A*/
 }OM_PCV_RINGBUFFER_STRU;
 
 typedef struct
 {
-    VOS_UINT_PTR                        ulMailBoxAddr;      /* ±£´æÓÊÏäÍ·µØÖ· */
-    VOS_UINT_PTR                        ulBufPhyAddr;       /* ÓÊÏäÄÚÈÝµÄÎïÀíµØÖ· */
-    VOS_UINT_PTR                        ulBufVirtAddr;      /* ÓÊÏäÄÚÈÝµÄÐéÄâµØÖ· */
+    VOS_UINT_PTR                        ulMailBoxAddr;      /* ä¿å­˜é‚®ç®±å¤´åœ°å€ */
+    VOS_UINT_PTR                        ulBufPhyAddr;       /* é‚®ç®±å†…å®¹çš„ç‰©ç†åœ°å€ */
+    VOS_UINT_PTR                        ulBufVirtAddr;      /* é‚®ç®±å†…å®¹çš„è™šæ‹Ÿåœ°å€ */
 }OM_PCV_ADDR_INFO_STRU;
 
 typedef struct
@@ -130,7 +130,7 @@ typedef struct
     VOS_UINT16  usLength;
     VOS_UINT32  ulSn;
     VOS_UINT32  ulTimeStamp;
-    VOS_UINT16  usPrimID;            /*¸ù¾ÝMED½Ó¿ÚÎÄ¼þ¶¨ÒåÒÔÏÂÊý¾Ý³ÉÔ±*/
+    VOS_UINT16  usPrimID;            /*æ ¹æ®MEDæŽ¥å£æ–‡ä»¶å®šä¹‰ä»¥ä¸‹æ•°æ®æˆå‘˜*/
     VOS_UINT16  usReserved;
     VOS_UINT32  ulFrameTick;
     VOS_UINT16  usHookTarget;
@@ -149,11 +149,11 @@ typedef struct
 
 typedef struct
 {
-    VOS_UINT32  ulDataErr;              /*·¢ÉúÓïÒôÊý¾Ý´íÎ»£¬ERRLOGÐ´±ê¼Ç*/
-    VOS_UINT32  ulFullErr;              /*·¢Éú¶ªÊýÒì³££¬ERRLOGÐ´±ê¼Ç    */
-    VOS_UINT32  ulRcvNum;               /*¼ÇÂ¼10ÃëÄÚÉÏÐÐÊÕµ½Êý¾ÝÖ¡ÊýÄ¿  */
-    VOS_UINT32  ulFullNum;              /*¼ÇÂ¼10ÃëÄÚ·¢Éú¶ªÊýµÄ´ÎÊý      */
-    VOS_UINT32  ul10sFlag;              /*µÚÒ»¸ö10Ãë±ê¼Ç                */
+    VOS_UINT32  ulDataErr;              /*å‘ç”Ÿè¯­éŸ³æ•°æ®é”™ä½ï¼ŒERRLOGå†™æ ‡è®°*/
+    VOS_UINT32  ulFullErr;              /*å‘ç”Ÿä¸¢æ•°å¼‚å¸¸ï¼ŒERRLOGå†™æ ‡è®°    */
+    VOS_UINT32  ulRcvNum;               /*è®°å½•10ç§’å†…ä¸Šè¡Œæ”¶åˆ°æ•°æ®å¸§æ•°ç›®  */
+    VOS_UINT32  ulFullNum;              /*è®°å½•10ç§’å†…å‘ç”Ÿä¸¢æ•°çš„æ¬¡æ•°      */
+    VOS_UINT32  ul10sFlag;              /*ç¬¬ä¸€ä¸ª10ç§’æ ‡è®°                */
 }OM_PCV_ERRLOG_STRU;
 
 typedef struct
@@ -161,8 +161,8 @@ typedef struct
     VOS_MSG_HEADER
     VOS_UINT16  usPrimId;
     VOS_UINT16  usReserve;
-    VOS_UINT32  ulStatus;               /* ²Ù×÷ÀàÐÍ */
-    VOS_UINT32  ulPort;                 /* ¶Ë¿ÚºÅ£¬Ä¿Ç°Ö»Ö§³Ö¶Ë¿Ú2 */
+    VOS_UINT32  ulStatus;               /* æ“ä½œç±»åž‹ */
+    VOS_UINT32  ulPort;                 /* ç«¯å£å·ï¼Œç›®å‰åªæ”¯æŒç«¯å£2 */
 }OM_PCV_COM_CFG_REQ;
 
 typedef struct
@@ -174,36 +174,36 @@ typedef struct
 }OM_PCV_TRACE_CFG_REQ;
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
-/*±£³ÖPC VOICEÊý¾ÝÍ¨µÀ×´Ì¬*/
+/*ä¿æŒPC VOICEæ•°æ®é€šé“çŠ¶æ€*/
 VOS_UINT32                      g_ulPcvStatus = OM_PCV_CHANNEL_CLOSE;
 VOS_UINT8                       g_ucPcvComPort = VOS_NULL_BYTE;
-/*PC VOICE(USB->OM->DSP)»·ÐÎ»º´æ¿ØÖÆ¿é*/
+/*PC VOICE(USB->OM->DSP)çŽ¯å½¢ç¼“å­˜æŽ§åˆ¶å—*/
 OM_PCV_RINGBUFFER_STRU          g_PcvRBufOmToDsp;
-/*PC VOICE(DSP->OM->USB)»·ÐÎ»º´æ¿ØÖÆ¿é*/
+/*PC VOICE(DSP->OM->USB)çŽ¯å½¢ç¼“å­˜æŽ§åˆ¶å—*/
 OM_PCV_RINGBUFFER_STRU          g_PcvRBufDspToOm;
 
 OM_PCV_ADDR_INFO_STRU           g_stPcvOmToDspAddr;
 
 OM_PCV_ADDR_INFO_STRU           g_stPcvDspToOmAddr;
 
-/* ring buffer¿ØÖÆÍ·ÐÅÏ¢(Êý¾Ý·½Ïò: USB -> COMM -> VOICE -> PHY -> Íø²à) */
+/* ring bufferæŽ§åˆ¶å¤´ä¿¡æ¯(æ•°æ®æ–¹å‘: USB -> COMM -> VOICE -> PHY -> ç½‘ä¾§) */
 COMM_VOICE_RING_BUFFER_CONTROL_STRU  g_stRingBufferControlTXAddr;
 
-/* ring buffer¿ØÖÆÍ·ÐÅÏ¢(Êý¾Ý·½Ïò: USB <- COMM <- VOICE <- PHY <- Íø²à) */
+/* ring bufferæŽ§åˆ¶å¤´ä¿¡æ¯(æ•°æ®æ–¹å‘: USB <- COMM <- VOICE <- PHY <- ç½‘ä¾§) */
 COMM_VOICE_RING_BUFFER_CONTROL_STRU  g_stRingBufferControlRXAddr;
 
 /* the semaphore which be used to wake up PC voice transmit task */
 VOS_SEM                         g_ulPcvTransmitSem;
 
-/* ÓÃÓÚcs errorlog¼ÇÂ¼´íÎóµÄ×´Ì¬ºÍ´ÎÊý */
+/* ç”¨äºŽcs errorlogè®°å½•é”™è¯¯çš„çŠ¶æ€å’Œæ¬¡æ•° */
 OM_PCV_ERRLOG_STRU              g_stErrLogFlag;
-/*ÓïÒôÊý¾Ý¹³È¡±êÖ¾
-* ¸ß16Î»: 0--¹Ø±ÕÊý¾Ý¹³È¡; 1--´ò¿ªÊý¾Ý¹³È¡
-* bit8           ¹³È¡µã8    (OM --> DSP)
-* bit9           ¹³È¡µã9    (DSP -->OM)
-* bit10          ¹³È¡µã10   (USB-->OM)
+/*è¯­éŸ³æ•°æ®é’©å–æ ‡å¿—
+* é«˜16ä½: 0--å…³é—­æ•°æ®é’©å–; 1--æ‰“å¼€æ•°æ®é’©å–
+* bit8           é’©å–ç‚¹8    (OM --> DSP)
+* bit9           é’©å–ç‚¹9    (DSP -->OM)
+* bit10          é’©å–ç‚¹10   (USB-->OM)
 */
 VOS_UINT32                      g_ulPcvHookFlag = 0;
 
@@ -231,7 +231,7 @@ extern VOS_UINT32 GU_OamAppSendDataSync(VOS_UINT8 *pucData, VOS_UINT32 ulDataLen
 extern VOS_UINT32 GU_OamAppSendData(VOS_UINT8 *pucData, VOS_UINT32 ulDataLen);
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
@@ -328,7 +328,7 @@ VOS_VOID OM_PcvHookInd(VOS_UCHAR* pucBuf, VOS_UINT16 usLen, VOS_UINT16 usBit, VO
 
     OM_AcpuAddSNTime(&(pstOmToAppMsg->ulSn), &(pstOmToAppMsg->ulTimeStamp));
 
-    /* ¹³È¡µãµÄbitmap */
+    /* é’©å–ç‚¹çš„bitmap */
     pstOmToAppMsg->usHookTarget   = (VOS_UINT16) BIT_N(usBit);
     pstOmToAppMsg->ulFrameTick    = ulFrameTick;
     pstOmToAppMsg->usDataLen      = usLen;
@@ -382,7 +382,7 @@ VOS_UINT32 OM_PcvInitRBuf(OM_PCV_RINGBUFFER_STRU *pstRingId, OM_PCV_ADDR_INFO_ST
 
     OM_RingBufferFlush(&(pstRingId->stRingBuffer));
 
-    /* ½«ringbuf¿ØÖÆÐÅÏ¢Ð´ÈëAHB */
+    /* å°†ringbufæŽ§åˆ¶ä¿¡æ¯å†™å…¥AHB */
     VOS_MemCpy((VOS_CHAR*)(pstAddrInfo->ulMailBoxAddr),
             (VOS_CHAR*)pstRingId, sizeof(OM_PCV_RINGBUFFER_STRU));
 
@@ -392,10 +392,10 @@ VOS_UINT32 OM_PcvInitRBuf(OM_PCV_RINGBUFFER_STRU *pstRingId, OM_PCV_ADDR_INFO_ST
 }
 VOS_UINT32 OM_PcvGetRBufOffset(OM_RING_ID pstRingId, VOS_UINT_PTR ulAddr)
 {
-    /*¶ÁÈ¡AHB ringbuf¿ØÖÆÐÅÏ¢µÄÐ´µØÖ·*/
+    /*è¯»å–AHB ringbufæŽ§åˆ¶ä¿¡æ¯çš„å†™åœ°å€*/
     pstRingId->pToBuf   = (VOS_INT)(OM_Read32Reg(OM_PCV_RINGBUF_TO_ADDR(ulAddr)));
 
-    /*¶ÁÈ¡AHB ringbuf¿ØÖÆÐÅÏ¢µÄ¶ÁµØÖ·*/
+    /*è¯»å–AHB ringbufæŽ§åˆ¶ä¿¡æ¯çš„è¯»åœ°å€*/
     pstRingId->pFromBuf = (VOS_INT)(OM_Read32Reg(OM_PCV_RINGBUF_FROM_ADDR(ulAddr)));
 
     if ((pstRingId->pToBuf >= pstRingId->bufSize)
@@ -426,14 +426,14 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
         return VOS_ERR;
     }
 
-    /* µ¥´ÎÍ¨»°¹ý³ÌÖÐ£¬Èç¹ûÃ¿10s·¢Éú50´ÎÒÔÉÏµÄ¶ª°üÏÖÏóÐè¼ÇÂ¼ERRLOG£¬Ã¿´ÎÍ¨»°Ö»ÔÊÐí¼ÇÂ¼Ò»´Î */
+    /* å•æ¬¡é€šè¯è¿‡ç¨‹ä¸­ï¼Œå¦‚æžœæ¯10så‘ç”Ÿ50æ¬¡ä»¥ä¸Šçš„ä¸¢åŒ…çŽ°è±¡éœ€è®°å½•ERRLOGï¼Œæ¯æ¬¡é€šè¯åªå…è®¸è®°å½•ä¸€æ¬¡ */
     g_stErrLogFlag.ulRcvNum++;
     if((0 == g_stErrLogFlag.ulFullErr)
         &&(OM_PCV_RCVDATA_TIMES_IN_10S <= g_stErrLogFlag.ulRcvNum))
     {
         g_stErrLogFlag.ul10sFlag++;
 
-        /* µÚÒ»¸ö10S,Óöµ½BUFÂúÊôÓÚÕý³£Çé¿ö²»¼ÇÂ¼ERRLOG */
+        /* ç¬¬ä¸€ä¸ª10S,é‡åˆ°BUFæ»¡å±žäºŽæ­£å¸¸æƒ…å†µä¸è®°å½•ERRLOG */
         if(1 == g_stErrLogFlag.ul10sFlag)
         {
             g_stErrLogFlag.ulFullNum = 0;
@@ -441,31 +441,31 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
 
         if(OM_PCV_RBUF_FULL_TIMES_IN_10S < g_stErrLogFlag.ulFullNum)
         {
-            g_stErrLogFlag.ulFullErr++;     /*±ê¼ÇERRLOGÒÑÐ´*/
+            g_stErrLogFlag.ulFullErr++;     /*æ ‡è®°ERRLOGå·²å†™*/
 
             MNTN_RecordErrorLog(MNTN_OAM_PCV_QUNUE_FULL_EVENT, (void *)&stErrLog,
                                 sizeof(OAM_MNTN_PCV_ERRLOG_EVENT_STRU));
         }
-        /* Ã¿10sÖØÐÂ¼ì²â */
+        /* æ¯10sé‡æ–°æ£€æµ‹ */
         g_stErrLogFlag.ulRcvNum = 0;
         g_stErrLogFlag.ulFullNum = 0;
     }
 
     g_stPcvDebuggingInfo.ulRcvUsbSize += (VOS_UINT32)ulLen;
 
-    /*Èç¹ûÊÕµ½ÆæÊý×Ö½Ú£¬×÷ÎªÒì³£ÉÏ±¨*/
+    /*å¦‚æžœæ”¶åˆ°å¥‡æ•°å­—èŠ‚ï¼Œä½œä¸ºå¼‚å¸¸ä¸ŠæŠ¥*/
     if(VOS_NULL != (ulLen&0x01))
     {
         ulSlice = OM_GetSlice();
         OM_PcvSendEvent(OM_APP_PCV_EXCEPTION_IND, &ulSlice, sizeof(VOS_UINT32));
 
-        /* Ã¿´ÎÍ¨»°Ö»ÔÊÐí¼ÇÂ¼Ò»´ÎERRLOG */
+        /* æ¯æ¬¡é€šè¯åªå…è®¸è®°å½•ä¸€æ¬¡ERRLOG */
         if(0 != g_stErrLogFlag.ulDataErr)
         {
             return VOS_ERR;
         }
 
-        /* ÔÚErrorlogÎÄ¼þÖÐ¼ÇÂ¼ÊÕµ½ÆæÊý×Ö½ÚÊý¾Ý */
+        /* åœ¨Errorlogæ–‡ä»¶ä¸­è®°å½•æ”¶åˆ°å¥‡æ•°å­—èŠ‚æ•°æ® */
         g_stErrLogFlag.ulDataErr++;
         MNTN_RecordErrorLog(MNTN_OAM_PCV_DATA_EXCEPTION_EVENT, (void *)&stErrLog,
                                                 sizeof(OAM_MNTN_PCV_ERRLOG_EVENT_STRU));
@@ -475,7 +475,7 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
 
     if( OM_PCV_USB_OM_ENABLE == (g_ulPcvHookFlag & OM_PCV_USB_OM_ENABLE) )
     {
-        /*Bit10 ±íÊ¾¹³È¡USB-OMÊý¾Ý*/
+        /*Bit10 è¡¨ç¤ºé’©å–USB-OMæ•°æ®*/
         OM_PcvHookInd( pucData, (VOS_UINT16)ulLen, OM_PCV_USB_OM_BIT,  g_ulUsbHookFrameSN);
         g_ulUsbHookFrameSN++;
     }
@@ -488,7 +488,7 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
 
     usFreeSize = (VOS_UINT16)OM_RingBufferFreeBytes(&(g_PcvRBufOmToDsp.stRingBuffer));
 
-    /*ÓïÒôÊý¾Ý°´2 byte²ÉÑù*/
+    /*è¯­éŸ³æ•°æ®æŒ‰2 byteé‡‡æ ·*/
     usFreeSize = usFreeSize & 0xFFFE;
     if(usFreeSize >= (VOS_UINT16)ulLen)
     {
@@ -498,32 +498,32 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
     }
     else
     {
-        /*½«Ê±¼ä×î½üµÄÊý¾ÝÌîÂúringbuf£¬ÆäÓàÊý¾Ý¶ªÆú*/
+        /*å°†æ—¶é—´æœ€è¿‘çš„æ•°æ®å¡«æ»¡ringbufï¼Œå…¶ä½™æ•°æ®ä¸¢å¼ƒ*/
         pcSendData = (VOS_UCHAR*)&(pucData[ulLen-usFreeSize]);
         usSendLen  = usFreeSize;
         g_stPcvDebuggingInfo.ulPutSize += (VOS_UINT32)usSendLen;
 
-        /*·¢ÉúÊý¾Ý¶ªÊ§£¬ÏûÏ¢ÉÏ±¨*/
+        /*å‘ç”Ÿæ•°æ®ä¸¢å¤±ï¼Œæ¶ˆæ¯ä¸ŠæŠ¥*/
         OM_PcvSendEvent(OM_APP_PCV_BUF_FULL_IND, &g_stPcvDebuggingInfo, sizeof(g_stPcvDebuggingInfo));
 
-        /* ÔÚErrorlogÎÄ¼þÖÐ¼ÇÂ¼·¢ÉúÊý¾Ý¶ªÊ§*/
+        /* åœ¨Errorlogæ–‡ä»¶ä¸­è®°å½•å‘ç”Ÿæ•°æ®ä¸¢å¤±*/
         g_stErrLogFlag.ulFullNum++;
 
     }
 
-    /*Êý¾Ý¿½±´µ½ringbufferÖÐ*/
+    /*æ•°æ®æ‹·è´åˆ°ringbufferä¸­*/
     (VOS_VOID)OM_RingBufferPut( &(g_PcvRBufOmToDsp.stRingBuffer), (VOS_CHAR*)pcSendData, (VOS_INT)usSendLen );
 
     VOS_FlushCpuWriteBuf();
 
     if( OM_PCV_OM_MED_ENABLE == (g_ulPcvHookFlag & OM_PCV_OM_MED_ENABLE) )
     {
-        /*Bit8 ±íÊ¾¹³È¡OM-MEDÊý¾Ý*/
+        /*Bit8 è¡¨ç¤ºé’©å–OM-MEDæ•°æ®*/
         OM_PcvHookInd( (VOS_UCHAR*)pcSendData, usSendLen, OM_PCV_OM_MED_BIT,  g_ulOmHookFrameSN);
         g_ulOmHookFrameSN++;
     }
 
-    /* ¸üÐÂringbuf¿ØÖÆÐÅÏ¢µÄÐ´µØÖ· */
+    /* æ›´æ–°ringbufæŽ§åˆ¶ä¿¡æ¯çš„å†™åœ°å€ */
     OM_Write32Reg(OM_PCV_RINGBUF_TO_ADDR(g_stPcvOmToDspAddr.ulMailBoxAddr),
                     (VOS_UINT32)(g_PcvRBufOmToDsp.stRingBuffer.pToBuf));
 
@@ -537,7 +537,7 @@ VOS_UINT32 OM_PcvOpen(VOS_UINT32 ulPort)
         return VOS_ERR;
     }
 
-    /* ³õÊ¼»¯ÓÊÏä */
+    /* åˆå§‹åŒ–é‚®ç®± */
     OM_PcvInitRBuf(&g_PcvRBufOmToDsp, &g_stPcvOmToDspAddr);
     OM_PcvInitRBuf(&g_PcvRBufDspToOm, &g_stPcvDspToOmAddr);
 
@@ -557,12 +557,12 @@ VOS_UINT32 OM_PcvOpen(VOS_UINT32 ulPort)
 VOS_UINT32 OM_PcvSwitch(VOS_UINT32 ulPort)
 {
 
-    /* ÔÝ²»Ö§³Ö */
+    /* æš‚ä¸æ”¯æŒ */
     return VOS_ERR;
 }
 VOS_VOID OM_PcvReleaseAll(VOS_VOID)
 {
-    /* ×¢ÏúUSB»Øµ÷º¯Êý */
+    /* æ³¨é”€USBå›žè°ƒå‡½æ•° */
     if( VOS_NULL_BYTE != g_ucPcvComPort )
     {
         CPM_DisconnectPorts(CPM_APP_PORT, CPM_PCVOICE_COMM);
@@ -570,7 +570,7 @@ VOS_VOID OM_PcvReleaseAll(VOS_VOID)
 
     CPM_PhySendReg(CPM_APP_PORT, GU_OamAppSendData);
 
-    /* Èç¹ûµ±Ç°OM¿ÚÃ»ÓÐÈÎºÎÎïÀí¶Ë¿Ú£¬²¢ÇÒµ±Ç°Ã»ÓÐÇÐ»»µ½Ctrl¿Ú */
+    /* å¦‚æžœå½“å‰OMå£æ²¡æœ‰ä»»ä½•ç‰©ç†ç«¯å£ï¼Œå¹¶ä¸”å½“å‰æ²¡æœ‰åˆ‡æ¢åˆ°Ctrlå£ */
     if((CPM_PORT_BUTT == CPM_QueryPhyPort(CPM_OM_COMM))&&(g_GUOmOnCtrlPort == VOS_TRUE))
     {
         CPM_ConnectPorts(CPM_APP_PORT, CPM_OM_COMM);
@@ -580,7 +580,7 @@ VOS_VOID OM_PcvReleaseAll(VOS_VOID)
 
     g_ucPcvComPort = VOS_NULL_BYTE;
 
-    /* ERRORLOG ¼ÇÂ¼¿é */
+    /* ERRORLOG è®°å½•å— */
     VOS_MemSet(&g_stErrLogFlag, 0, sizeof(g_stErrLogFlag));
     return;
 }
@@ -662,7 +662,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
         return;
     }
 
-    /*·ÖÅäÁÙÊ±»º³åÇø£¬(OM->USB)·½Ïò°áÔËÊý¾ÝÊ±Ê¹ÓÃ*/
+    /*åˆ†é…ä¸´æ—¶ç¼“å†²åŒºï¼Œ(OM->USB)æ–¹å‘æ¬è¿æ•°æ®æ—¶ä½¿ç”¨*/
     pucTempBuf = (VOS_UCHAR  *)VOS_UnCacheMemAlloc(OM_PCV_BUF_SIZE, &ulRealAddr);
     if ( VOS_NULL_PTR == pucTempBuf)
     {
@@ -674,7 +674,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
         return;
     }
 
-    /* ERRORLOG ¼ÇÂ¼¿é */
+    /* ERRORLOG è®°å½•å— */
     VOS_MemSet(&g_stErrLogFlag, 0, sizeof(g_stErrLogFlag));
 
     for ( ; ; )
@@ -685,7 +685,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
             continue;
         }
 
-        /* ¼ÙÈçÍ¨µÀÃ»ÓÐ´ò¿ª£¬ÔòÖ±½Ó·µ»ØÊ§°Ü */
+        /* å‡å¦‚é€šé“æ²¡æœ‰æ‰“å¼€ï¼Œåˆ™ç›´æŽ¥è¿”å›žå¤±è´¥ */
         if(OM_PCV_CHANNEL_OPEN != g_ulPcvStatus)
         {
             LogPrint("OM_PcvTransmitTaskEntry: PLL should not power down. \r\n");
@@ -693,7 +693,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
             continue;
         }
 
-        /* Èç¹û¹Ø±Õ£¬Ö¡ºÅÖØÐÂ¼ÆÊý */
+        /* å¦‚æžœå…³é—­ï¼Œå¸§å·é‡æ–°è®¡æ•° */
         if ( VOS_NULL == (OM_PCV_HOOK_ENABLE & g_ulPcvHookFlag) )
         {
             ulHookFrameSN = 0;
@@ -701,7 +701,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
             g_ulOmHookFrameSN = 0;
         }
 
-        /* ´ÓAHBÓÊÏä¶ÁÈ¡ringbuf¿ØÖÆÐÅÏ¢ */
+        /* ä»ŽAHBé‚®ç®±è¯»å–ringbufæŽ§åˆ¶ä¿¡æ¯ */
         if ( VOS_OK != OM_PcvGetRBufOffset(&(g_PcvRBufDspToOm.stRingBuffer), g_stPcvDspToOmAddr.ulMailBoxAddr) )
         {
            DRV_SYSTEM_ERROR(OAM_UL_R99_AHB_HEAD_ERR, VOS_FILE_ID,
@@ -713,30 +713,30 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
 
         OM_PcvSendEvent(OM_APP_PCV_MED_OM_LEN, &usLen, sizeof(usLen));
 
-        if( 0 == usLen )    /* ringbufÖÐÎÞÊý¾Ý */
+        if( 0 == usLen )    /* ringbufä¸­æ— æ•°æ® */
         {
             continue;
         }
 
-        /* ´Óringbuf¿½±´ÓïÒôÊý¾Ýµ½ÁÙÊ±»º³åÇø */
+        /* ä»Žringbufæ‹·è´è¯­éŸ³æ•°æ®åˆ°ä¸´æ—¶ç¼“å†²åŒº */
         OM_RingBufferGet(&(g_PcvRBufDspToOm.stRingBuffer), (VOS_CHAR *)pucTempBuf, (VOS_INT)usLen);
 
         VOS_FlushCpuWriteBuf();
 
-        /* ÐÞ¸ÄAHBÓÊÏäÖÐringbuf¿ØÖÆÐÅÏ¢ÖÐµÄ¶ÁÖ¸Õë */
+        /* ä¿®æ”¹AHBé‚®ç®±ä¸­ringbufæŽ§åˆ¶ä¿¡æ¯ä¸­çš„è¯»æŒ‡é’ˆ */
         OM_Write32Reg(OM_PCV_RINGBUF_FROM_ADDR(g_stPcvDspToOmAddr.ulMailBoxAddr),
                         (VOS_UINT32)(g_PcvRBufDspToOm.stRingBuffer.pFromBuf));
 
         g_stPcvDebuggingInfo.ulRcvDspSize += (VOS_UINT32)usLen;
 
-        /* ·¢ËÍÓïÒôÊý¾Ýµ½USB¶Ë¿Ú */
+        /* å‘é€è¯­éŸ³æ•°æ®åˆ°USBç«¯å£ */
         lRet = (VOS_INT32)CPM_ComSend(CPM_PCVOICE_COMM, pucTempBuf, usLen);
 
         OM_PcvSendEvent(OM_APP_PCV_OM_USB_RET, &lRet, sizeof(lRet));
 
         if( OM_PCV_MED_OM_ENABLE == (g_ulPcvHookFlag & OM_PCV_MED_OM_ENABLE) )
         {
-            /* Bit9±íÊ¾¹³È¡MED-OMÊý¾Ý */
+            /* Bit9è¡¨ç¤ºé’©å–MED-OMæ•°æ® */
             OM_PcvHookInd( pucTempBuf, usLen, OM_PCV_MED_OM_BIT,  ulHookFrameSN);
             ulHookFrameSN++;
         }
@@ -747,7 +747,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
 
 VOS_VOID OM_PcvIpcIsr(VOS_VOID)
 {
-    /* HIFI ÉÏÒÆºó²»ÔÙÐèÒª IPC ÖÐ¶Ï */
+    /* HIFI ä¸Šç§»åŽä¸å†éœ€è¦ IPC ä¸­æ–­ */
 
     /*DRV_IPC_INTDISABLE((IPC_INT_LEV_E)PC_VOICE_RX_DATA_ACPU_IPC_BIT);*/
 
@@ -755,7 +755,7 @@ VOS_VOID OM_PcvIpcIsr(VOS_VOID)
     {
         g_stPcvLog.ulIntSlice = OM_GetSlice();
 
-        /*ÊÕµ½0MSÖÐ¶Ï»òÖ¡ÖÐ¶Ï£¬ÊÍ·ÅÐÅºÅÁ¿*/
+        /*æ”¶åˆ°0MSä¸­æ–­æˆ–å¸§ä¸­æ–­ï¼Œé‡Šæ”¾ä¿¡å·é‡*/
         VOS_SmV(g_ulPcvTransmitSem);
     }
 
@@ -768,14 +768,14 @@ VOS_VOID OM_PcvMsgProc(MsgBlock *pMsg)
     OM_PCV_COM_CFG_REQ      *pstComCfg;
     OM_PCV_TRACE_CFG_REQ    *pstTraceCfg;
 
-    /* ´¦ÀíNAS VCÄ£¿é·¢À´µÄÓïÒôÍ¨µÀ¿ØÖÆÏûÏ¢() */
+    /* å¤„ç†NAS VCæ¨¡å—å‘æ¥çš„è¯­éŸ³é€šé“æŽ§åˆ¶æ¶ˆæ¯() */
     if (WUEPS_PID_VC == pMsg->ulSenderPid)
     {
         pstComCfg = (OM_PCV_COM_CFG_REQ*)pMsg;
 
         OM_PcvTransStatus(pstComCfg->ulStatus, pstComCfg->ulPort);
     }
-    /* ´¦ÀíHIFI·¢À´µÄÓïÒôÊý¾Ý¹´È¡ÅäÖÃÏûÏ¢ */
+    /* å¤„ç†HIFIå‘æ¥çš„è¯­éŸ³æ•°æ®å‹¾å–é…ç½®æ¶ˆæ¯ */
     else if (DSP_PID_VOICE == pMsg->ulSenderPid)
     {
         pstTraceCfg = (OM_PCV_TRACE_CFG_REQ*)pMsg;
@@ -796,7 +796,7 @@ VOS_VOID OM_PcvMsgProc(MsgBlock *pMsg)
 
 VOS_UINT32 OM_PcvPidInit(enum VOS_INIT_PHASE_DEFINE ip)
 {
-    /* HIFI ÉÏÒÆµ½AºË´úÂëÐÞ¸Ä */
+    /* HIFI ä¸Šç§»åˆ°Aæ ¸ä»£ç ä¿®æ”¹ */
     switch(ip)
     {
         case VOS_IP_LOAD_CONFIG:
@@ -808,7 +808,7 @@ VOS_UINT32 OM_PcvPidInit(enum VOS_INIT_PHASE_DEFINE ip)
             VOS_MemSet(&g_stRingBufferControlRXAddr, 0, sizeof(COMM_VOICE_RING_BUFFER_CONTROL_STRU));
             g_stPcvDspToOmAddr.ulMailBoxAddr = (VOS_UINT_PTR)&g_stRingBufferControlRXAddr;
 
-            /*ÉêÇëuncacheµÄ¶¯Ì¬ÄÚ´æÇø*/
+            /*ç”³è¯·uncacheçš„åŠ¨æ€å†…å­˜åŒº*/
             g_stPcvOmToDspAddr.ulBufVirtAddr = (VOS_UINT_PTR)VOS_UnCacheMemAlloc(OM_PCV_BUF_SIZE, &g_stPcvOmToDspAddr.ulBufPhyAddr);
 
             g_stPcvDspToOmAddr.ulBufVirtAddr = (VOS_UINT_PTR)VOS_UnCacheMemAlloc(OM_PCV_BUF_SIZE, &g_stPcvDspToOmAddr.ulBufPhyAddr);
@@ -836,7 +836,7 @@ VOS_UINT32 OM_PcvPidInit(enum VOS_INIT_PHASE_DEFINE ip)
             break;
     }
 
-/* HIFI Î´ÉÏÒÆÖ®Ç° */
+/* HIFI æœªä¸Šç§»ä¹‹å‰ */
 #if 0
     BSP_AXI_SECT_INFO                       stAxiInfo;
 
@@ -866,7 +866,7 @@ VOS_UINT32 OM_PcvPidInit(enum VOS_INIT_PHASE_DEFINE ip)
             g_stPcvDspToOmAddr.ulBufVirtAddr = dma_alloc_coherent(NULL,
                         OM_PCV_BUF_SIZE, (dma_addr_t*)&g_stPcvDspToOmAddr.ulBufPhyAddr, GFP_KERNEL);
 #else
-            /*ÉêÇëuncacheµÄ¶¯Ì¬ÄÚ´æÇø*/
+            /*ç”³è¯·uncacheçš„åŠ¨æ€å†…å­˜åŒº*/
             g_stPcvOmToDspAddr.ulBufVirtAddr = (VOS_UINT32)DRV_CACHEDMAM_ALLOC( OM_PCV_BUF_SIZE );
             g_stPcvOmToDspAddr.ulBufPhyAddr  = g_stPcvOmToDspAddr.ulBufVirtAddr;
 
@@ -903,22 +903,22 @@ VOS_UINT32 OM_PcvPidInit(enum VOS_INIT_PHASE_DEFINE ip)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : COMM_VOICE_GetPcVoiceRingBuffCtrlAddr
- ¹¦ÄÜÃèÊö  : »ñµÃRingBuff¿ØÖÆ½á¹¹ÌåµÄµØÖ·
- ÊäÈë²ÎÊý  : enDirection - Êý¾Ý·½Ïò
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : Ring Buff¿ØÖÆ½á¹¹ÌåµÄµØÖ·(ÐéµØÖ·)
-             ÈôRing Buff¿ØÖÆ½á¹¹Ìå³õÊ¼»¯Ê§°ÜÔò·µ»ØVOS_NULL
+ å‡½ æ•° å  : COMM_VOICE_GetPcVoiceRingBuffCtrlAddr
+ åŠŸèƒ½æè¿°  : èŽ·å¾—RingBuffæŽ§åˆ¶ç»“æž„ä½“çš„åœ°å€
+ è¾“å…¥å‚æ•°  : enDirection - æ•°æ®æ–¹å‘
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : Ring BuffæŽ§åˆ¶ç»“æž„ä½“çš„åœ°å€(è™šåœ°å€)
+             è‹¥Ring BuffæŽ§åˆ¶ç»“æž„ä½“åˆå§‹åŒ–å¤±è´¥åˆ™è¿”å›žVOS_NULL
 
- ²¹³äËµÃ÷  : (1) Ring Buff¿ØÖÆ½á¹¹ÌåÄÚÈÝ¶¨ÒåÎªCOMM_VOICE_RING_BUFFER_CONTROL_STRU
-             (2) Ring Buff¿ØÖÆ½á¹¹ÌåÈ«¾Ö±äÁ¿¶¨ÒåÔÚCOMMÖÐ(Ó¦´æÔÚ2¸ö, ·Ö±ðÓÃÓÚÉÏÐÐºÍÏÂÐÐÁ½¸ö·½Ïò)
-             (3) COMMÐèÒªÔÚµ÷ÓÃ¸Ã½Ó¿Úº¯ÊýÇ°»òÕßµ÷ÓÃ¸Ã½Ó¿Úº¯ÊýÊ±³õÊ¼»¯RingBuff¿ØÖÆ½á¹¹Ìå
+ è¡¥å……è¯´æ˜Ž  : (1) Ring BuffæŽ§åˆ¶ç»“æž„ä½“å†…å®¹å®šä¹‰ä¸ºCOMM_VOICE_RING_BUFFER_CONTROL_STRU
+             (2) Ring BuffæŽ§åˆ¶ç»“æž„ä½“å…¨å±€å˜é‡å®šä¹‰åœ¨COMMä¸­(åº”å­˜åœ¨2ä¸ª, åˆ†åˆ«ç”¨äºŽä¸Šè¡Œå’Œä¸‹è¡Œä¸¤ä¸ªæ–¹å‘)
+             (3) COMMéœ€è¦åœ¨è°ƒç”¨è¯¥æŽ¥å£å‡½æ•°å‰æˆ–è€…è°ƒç”¨è¯¥æŽ¥å£å‡½æ•°æ—¶åˆå§‹åŒ–RingBuffæŽ§åˆ¶ç»“æž„ä½“
 *****************************************************************************/
 VOS_UINT32 COMM_VOICE_GetPcVoiceRingBuffCtrlAddr(COMM_VOICE_PCVOICE_DATA_DIRECTION_ENUM_UINT32 enDirection)
 {
     if (COMM_VOICE_PCVOICE_DATA_DIRECTION_TX == enDirection)
     {
-        /* ³õÊ¼»¯ÓÊÏä */
+        /* åˆå§‹åŒ–é‚®ç®± */
         OM_PcvInitRBuf(&g_PcvRBufOmToDsp, &g_stPcvOmToDspAddr);
 
         return (VOS_UINT32)g_stPcvOmToDspAddr.ulMailBoxAddr;
@@ -926,7 +926,7 @@ VOS_UINT32 COMM_VOICE_GetPcVoiceRingBuffCtrlAddr(COMM_VOICE_PCVOICE_DATA_DIRECTI
 
     if (COMM_VOICE_PCVOICE_DATA_DIRECTION_RX == enDirection)
     {
-        /* ³õÊ¼»¯ÓÊÏä */
+        /* åˆå§‹åŒ–é‚®ç®± */
         OM_PcvInitRBuf(&g_PcvRBufDspToOm, &g_stPcvDspToOmAddr);
         return (VOS_UINT32)g_stPcvDspToOmAddr.ulMailBoxAddr;
     }
@@ -938,19 +938,19 @@ VOS_UINT32 COMM_VOICE_GetPcVoiceRingBuffCtrlAddr(COMM_VOICE_PCVOICE_DATA_DIRECTI
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : COMM_VOICE_TransferPcVoiceRxData
- ¹¦ÄÜÃèÊö  : ´«ÊäÏÂÐÐ·½ÏòÊý¾Ý
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK  - ´«Êä³É¹¦
-             VOS_ERR - ´«ÊäÊ§°Ü
+ å‡½ æ•° å  : COMM_VOICE_TransferPcVoiceRxData
+ åŠŸèƒ½æè¿°  : ä¼ è¾“ä¸‹è¡Œæ–¹å‘æ•°æ®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK  - ä¼ è¾“æˆåŠŸ
+             VOS_ERR - ä¼ è¾“å¤±è´¥
 
- ²¹³äËµÃ÷  : (1) VOICE½«ÏÂÐÐÊý¾ÝÐ´ÈëRing Buffºóµ÷ÓÃ¸Ãº¯ÊýÍ¨ÖªCOMM½«Êý¾Ý´«ÊäÖÁUSB
+ è¡¥å……è¯´æ˜Ž  : (1) VOICEå°†ä¸‹è¡Œæ•°æ®å†™å…¥Ring BuffåŽè°ƒç”¨è¯¥å‡½æ•°é€šçŸ¥COMMå°†æ•°æ®ä¼ è¾“è‡³USB
 
 *****************************************************************************/
 VOS_UINT32 COMM_VOICE_TransferPcVoiceRxData(VOS_VOID)
 {
-    /* ÊÍ·ÅÐÅºÅÁ¿ */
+    /* é‡Šæ”¾ä¿¡å·é‡ */
     OM_PcvIpcIsr();
     return VOS_OK;
 }
@@ -979,12 +979,12 @@ VOS_VOID OM_PcvLogShow(VOS_VOID)
 }
 
 #else
-/* °´ÕÕ¿í´ø¹æ¸ñ£¬640Ã¿Ö¡´óÐ¡ ½öÖ§³Ö V3R3*/
+/* æŒ‰ç…§å®½å¸¦è§„æ ¼ï¼Œ640æ¯å¸§å¤§å° ä»…æ”¯æŒ V3R3*/
 #define OM_PCV_BUF_SIZE                         (640*6*2)
 
 #define OM_PCV_PORT_PCSC                        (3)
 
-/*¹³È¡Êý¾ÝÊ¹ÄÜÎ»*/
+/*é’©å–æ•°æ®ä½¿èƒ½ä½*/
 #define OM_PCV_HOOK_ENABLE                      (0x010000)
 #define OM_PCV_USB_OM_ENABLE                    (0x010400)
 #define OM_PCV_OM_MED_ENABLE                    (0x010100)
@@ -994,30 +994,30 @@ VOS_VOID OM_PcvLogShow(VOS_VOID)
 #define OM_PCV_MED_OM_BIT                       (9)
 #define OM_PCV_USB_OM_BIT                       (10)
 
-/*EventID:Êý¾ÝÒì³£*/
+/*EventID:æ•°æ®å¼‚å¸¸*/
 #define OM_APP_PCV_EXCEPTION_IND                (0x01)
-/*EventID:ringbufÂú*/
+/*EventID:ringbufæ»¡*/
 #define OM_APP_PCV_BUF_FULL_IND                 (0x02)
-/*EventID:DSP PLLÏÂµç*/
+/*EventID:DSP PLLä¸‹ç”µ*/
 #define OM_APP_PCV_DSP_PLL_OFF                  (0x03)
 #define OM_APP_PCV_QUNUE_FULL                   (0x04)
 
-/*eventID = 0x05µ×ÈíÒÑ¾­Ê¹ÓÃ */
+/*eventID = 0x05åº•è½¯å·²ç»ä½¿ç”¨ */
 #define OM_APP_PCV_MED_OM_LEN                   (0x20)
 #define OM_APP_PCV_OM_USB_RET                   (0x21)
 #define OM_APP_PCV_READ_NV_FAIL                 (0x22)
 #define OM_APP_PCV_MAX_MSG_NUM                  (50)
 
-/*HOOKÓïÒôÉÏ±¨Í¸Ã÷ÏûÏ¢PrimID*/
+/*HOOKè¯­éŸ³ä¸ŠæŠ¥é€æ˜Žæ¶ˆæ¯PrimID*/
 #define OM_APP_VOICE_HOOK_IND                   (0xf0fe)
 
-/* Í¨³£10ÃëÖÓÊÕµ½500Ö¡ */
+/* é€šå¸¸10ç§’é’Ÿæ”¶åˆ°500å¸§ */
 #define OM_PCV_RCVDATA_TIMES_IN_10S             (500)
 
-/* Ã¿10ÃëÖÓ£¬ERRLOGÄÜÈÝÈÌµÄ¶ªÊý×î´ó´ÎÊý*/
+/* æ¯10ç§’é’Ÿï¼ŒERRLOGèƒ½å®¹å¿çš„ä¸¢æ•°æœ€å¤§æ¬¡æ•°*/
 #define OM_PCV_RBUF_FULL_TIMES_IN_10S           (50)
 
-/*½á¹¹OM_PCV_TRANS_IND_STRU, sizeof(->ulSn)+ sizeof(ulTimeStamp)
+/*ç»“æž„OM_PCV_TRANS_IND_STRU, sizeof(->ulSn)+ sizeof(ulTimeStamp)
  + sizeof(usPrimID) + sizeof(usReserved) + sizeof(ulFrameTick) +
  sizeof(usHookTarget) + sizeof(usDataLen)*/
 #define OM_PCV_TRANS_SIZE                      (20)
@@ -1034,18 +1034,18 @@ VOS_VOID OM_PcvLogShow(VOS_VOID)
 
 typedef struct
 {
-    VOS_UINT32                          ulProtectWord1;     /*±£»¤×Ö 0x55AA55AA*/
-    VOS_UINT32                          ulProtectWord2;     /*±£»¤×Ö 0x5A5A5A5A*/
+    VOS_UINT32                          ulProtectWord1;     /*ä¿æŠ¤å­— 0x55AA55AA*/
+    VOS_UINT32                          ulProtectWord2;     /*ä¿æŠ¤å­— 0x5A5A5A5A*/
     OM_RING                             stRingBuffer;
-    VOS_UINT32                          ulProtectWord3;     /*±£»¤×Ö 0x55AA55AA*/
-    VOS_UINT32                          ulProtectWord4;     /*±£»¤×Ö 0x5A5A5A5A*/
+    VOS_UINT32                          ulProtectWord3;     /*ä¿æŠ¤å­— 0x55AA55AA*/
+    VOS_UINT32                          ulProtectWord4;     /*ä¿æŠ¤å­— 0x5A5A5A5A*/
 }OM_PCV_RINGBUFFER_STRU;
 
 typedef struct
 {
-    VOS_UINT_PTR                        ulMailBoxAddr;      /* ±£´æÓÊÏäÍ·µØÖ· */
-    VOS_UINT_PTR                        ulBufPhyAddr;       /* ÓÊÏäÄÚÈÝµÄÎïÀíµØÖ· */
-    VOS_UINT_PTR                        ulBufVirtAddr;      /* ÓÊÏäÄÚÈÝµÄÐéÄâµØÖ· */
+    VOS_UINT_PTR                        ulMailBoxAddr;      /* ä¿å­˜é‚®ç®±å¤´åœ°å€ */
+    VOS_UINT_PTR                        ulBufPhyAddr;       /* é‚®ç®±å†…å®¹çš„ç‰©ç†åœ°å€ */
+    VOS_UINT_PTR                        ulBufVirtAddr;      /* é‚®ç®±å†…å®¹çš„è™šæ‹Ÿåœ°å€ */
 }OM_PCV_ADDR_INFO_STRU;
 
 typedef struct
@@ -1062,7 +1062,7 @@ typedef struct
     VOS_UINT16  usLength;
     VOS_UINT32  ulSn;
     VOS_UINT32  ulTimeStamp;
-    VOS_UINT16  usPrimID;            /*¸ù¾ÝMED½Ó¿ÚÎÄ¼þ¶¨ÒåÒÔÏÂÊý¾Ý³ÉÔ±*/
+    VOS_UINT16  usPrimID;            /*æ ¹æ®MEDæŽ¥å£æ–‡ä»¶å®šä¹‰ä»¥ä¸‹æ•°æ®æˆå‘˜*/
     VOS_UINT16  usReserved;
     VOS_UINT32  ulFrameTick;
     VOS_UINT16  usHookTarget;
@@ -1081,11 +1081,11 @@ typedef struct
 
 typedef struct
 {
-    VOS_UINT32  ulDataErr;              /*·¢ÉúÓïÒôÊý¾Ý´íÎ»£¬ERRLOGÐ´±ê¼Ç*/
-    VOS_UINT32  ulFullErr;              /*·¢Éú¶ªÊýÒì³££¬ERRLOGÐ´±ê¼Ç    */
-    VOS_UINT32  ulRcvNum;               /*¼ÇÂ¼10ÃëÄÚÉÏÐÐÊÕµ½Êý¾ÝÖ¡ÊýÄ¿  */
-    VOS_UINT32  ulFullNum;              /*¼ÇÂ¼10ÃëÄÚ·¢Éú¶ªÊýµÄ´ÎÊý      */
-    VOS_UINT32  ul10sFlag;              /*µÚÒ»¸ö10Ãë±ê¼Ç                */
+    VOS_UINT32  ulDataErr;              /*å‘ç”Ÿè¯­éŸ³æ•°æ®é”™ä½ï¼ŒERRLOGå†™æ ‡è®°*/
+    VOS_UINT32  ulFullErr;              /*å‘ç”Ÿä¸¢æ•°å¼‚å¸¸ï¼ŒERRLOGå†™æ ‡è®°    */
+    VOS_UINT32  ulRcvNum;               /*è®°å½•10ç§’å†…ä¸Šè¡Œæ”¶åˆ°æ•°æ®å¸§æ•°ç›®  */
+    VOS_UINT32  ulFullNum;              /*è®°å½•10ç§’å†…å‘ç”Ÿä¸¢æ•°çš„æ¬¡æ•°      */
+    VOS_UINT32  ul10sFlag;              /*ç¬¬ä¸€ä¸ª10ç§’æ ‡è®°                */
 }OM_PCV_ERRLOG_STRU;
 
 typedef struct
@@ -1093,8 +1093,8 @@ typedef struct
     VOS_MSG_HEADER
     VOS_UINT16  usPrimId;
     VOS_UINT16  usReserve;
-    VOS_UINT32  ulStatus;               /* ²Ù×÷ÀàÐÍ */
-    VOS_UINT32  ulPort;                 /* ¶Ë¿ÚºÅ£¬Ä¿Ç°Ö»Ö§³Ö¶Ë¿Ú2 */
+    VOS_UINT32  ulStatus;               /* æ“ä½œç±»åž‹ */
+    VOS_UINT32  ulPort;                 /* ç«¯å£å·ï¼Œç›®å‰åªæ”¯æŒç«¯å£2 */
 }OM_PCV_COM_CFG_REQ;
 
 typedef struct
@@ -1106,48 +1106,48 @@ typedef struct
 }OM_PCV_TRACE_CFG_REQ;
 
 /*****************************************************************************
-½á¹¹Ãû    : OM_PCV_UNCACHE_MEM_CTRL
-½á¹¹ËµÃ÷  : PCVOICE uncache memory¿ØÖÆ½á¹¹
+ç»“æž„å    : OM_PCV_UNCACHE_MEM_CTRL
+ç»“æž„è¯´æ˜Ž  : PCVOICE uncache memoryæŽ§åˆ¶ç»“æž„
 *****************************************************************************/
 typedef struct
 {
-    VOS_UINT8                          *pucBuf;         /* Ö¸Ïò»º³åÇøÐéÄâÊ×µØÖ· */
-    VOS_UINT8                          *pucRealBuf;     /* Ö¸Ïò»º³åÇøÊµÊ×µØÖ· */
-    VOS_UINT32                          ulBufSize;      /* ±£´æ»º³åÇø×Ü´óÐ¡ */
+    VOS_UINT8                          *pucBuf;         /* æŒ‡å‘ç¼“å†²åŒºè™šæ‹Ÿé¦–åœ°å€ */
+    VOS_UINT8                          *pucRealBuf;     /* æŒ‡å‘ç¼“å†²åŒºå®žé¦–åœ°å€ */
+    VOS_UINT32                          ulBufSize;      /* ä¿å­˜ç¼“å†²åŒºæ€»å¤§å° */
     VOS_UINT32                          ulRsv;          /* Reserve */
 }OM_PCV_UNCACHE_MEM_CTRL;
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
-/*±£³ÖPC VOICEÊý¾ÝÍ¨µÀ×´Ì¬*/
+/*ä¿æŒPC VOICEæ•°æ®é€šé“çŠ¶æ€*/
 VOS_UINT32                      g_ulPcvStatus = OM_PCV_CHANNEL_CLOSE;
 VOS_UINT8                       g_ucPcvComPort = VOS_NULL_BYTE;
-/*PC VOICE(USB->OM->DSP)»·ÐÎ»º´æ¿ØÖÆ¿é*/
+/*PC VOICE(USB->OM->DSP)çŽ¯å½¢ç¼“å­˜æŽ§åˆ¶å—*/
 OM_PCV_RINGBUFFER_STRU          g_PcvRBufOmToDsp;
-/*PC VOICE(DSP->OM->USB)»·ÐÎ»º´æ¿ØÖÆ¿é*/
+/*PC VOICE(DSP->OM->USB)çŽ¯å½¢ç¼“å­˜æŽ§åˆ¶å—*/
 OM_PCV_RINGBUFFER_STRU          g_PcvRBufDspToOm;
 
 OM_PCV_ADDR_INFO_STRU           g_stPcvOmToDspAddr;
 
 OM_PCV_ADDR_INFO_STRU           g_stPcvDspToOmAddr;
 
-/* ring buffer¿ØÖÆÍ·ÐÅÏ¢(Êý¾Ý·½Ïò: USB -> COMM -> VOICE -> PHY -> Íø²à) */
+/* ring bufferæŽ§åˆ¶å¤´ä¿¡æ¯(æ•°æ®æ–¹å‘: USB -> COMM -> VOICE -> PHY -> ç½‘ä¾§) */
 COMM_VOICE_RING_BUFFER_CONTROL_STRU  g_stRingBufferControlTXAddr;
 
-/* ring buffer¿ØÖÆÍ·ÐÅÏ¢(Êý¾Ý·½Ïò: USB <- COMM <- VOICE <- PHY <- Íø²à) */
+/* ring bufferæŽ§åˆ¶å¤´ä¿¡æ¯(æ•°æ®æ–¹å‘: USB <- COMM <- VOICE <- PHY <- ç½‘ä¾§) */
 COMM_VOICE_RING_BUFFER_CONTROL_STRU  g_stRingBufferControlRXAddr;
 
 /* the semaphore which be used to wake up PC voice transmit task */
 VOS_SEM                         g_ulPcvTransmitSem;
 
-/* ÓÃÓÚcs errorlog¼ÇÂ¼´íÎóµÄ×´Ì¬ºÍ´ÎÊý */
+/* ç”¨äºŽcs errorlogè®°å½•é”™è¯¯çš„çŠ¶æ€å’Œæ¬¡æ•° */
 OM_PCV_ERRLOG_STRU              g_stErrLogFlag;
-/*ÓïÒôÊý¾Ý¹³È¡±êÖ¾
-* ¸ß16Î»: 0--¹Ø±ÕÊý¾Ý¹³È¡; 1--´ò¿ªÊý¾Ý¹³È¡
-* bit8           ¹³È¡µã8    (OM --> DSP)
-* bit9           ¹³È¡µã9    (DSP -->OM)
-* bit10          ¹³È¡µã10   (USB-->OM)
+/*è¯­éŸ³æ•°æ®é’©å–æ ‡å¿—
+* é«˜16ä½: 0--å…³é—­æ•°æ®é’©å–; 1--æ‰“å¼€æ•°æ®é’©å–
+* bit8           é’©å–ç‚¹8    (OM --> DSP)
+* bit9           é’©å–ç‚¹9    (DSP -->OM)
+* bit10          é’©å–ç‚¹10   (USB-->OM)
 */
 VOS_UINT32                      g_ulPcvHookFlag = 0;
 
@@ -1179,7 +1179,7 @@ VOS_VOID OM_PcvSendEvent(VOS_UINT16 usEventId, VOS_VOID* pData, VOS_UINT32 ulLen
 
 extern VOS_UINT32 CBTPPM_OamUsbCbtSendData(VOS_UINT8 *pucVirAddr, VOS_UINT8 *pucPhyAddr, VOS_UINT32 ulDataLen);
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
@@ -1276,7 +1276,7 @@ VOS_VOID OM_PcvHookInd(VOS_UCHAR* pucBuf, VOS_UINT16 usLen, VOS_UINT16 usBit, VO
 
     OM_AcpuAddSNTime(&(pstOmToAppMsg->ulSn), &(pstOmToAppMsg->ulTimeStamp));
 
-    /* ¹³È¡µãµÄbitmap */
+    /* é’©å–ç‚¹çš„bitmap */
     pstOmToAppMsg->usHookTarget   = (VOS_UINT16) BIT_N(usBit);
     pstOmToAppMsg->ulFrameTick    = ulFrameTick;
     pstOmToAppMsg->usDataLen      = usLen;
@@ -1330,7 +1330,7 @@ VOS_UINT32 OM_PcvInitRBuf(OM_PCV_RINGBUFFER_STRU *pstRingId, OM_PCV_ADDR_INFO_ST
 
     OM_RingBufferFlush(&(pstRingId->stRingBuffer));
 
-    /* ½«ringbuf¿ØÖÆÐÅÏ¢Ð´ÈëAHB */
+    /* å°†ringbufæŽ§åˆ¶ä¿¡æ¯å†™å…¥AHB */
     VOS_MemCpy((VOS_CHAR*)(pstAddrInfo->ulMailBoxAddr),
             (VOS_CHAR*)pstRingId, sizeof(OM_PCV_RINGBUFFER_STRU));
 
@@ -1340,10 +1340,10 @@ VOS_UINT32 OM_PcvInitRBuf(OM_PCV_RINGBUFFER_STRU *pstRingId, OM_PCV_ADDR_INFO_ST
 }
 VOS_UINT32 OM_PcvGetRBufOffset(OM_RING_ID pstRingId, VOS_UINT_PTR ulAddr)
 {
-    /*¶ÁÈ¡AHB ringbuf¿ØÖÆÐÅÏ¢µÄÐ´µØÖ·*/
+    /*è¯»å–AHB ringbufæŽ§åˆ¶ä¿¡æ¯çš„å†™åœ°å€*/
     pstRingId->pToBuf   = (VOS_INT)(OM_Read32Reg(OM_PCV_RINGBUF_TO_ADDR(ulAddr)));
 
-    /*¶ÁÈ¡AHB ringbuf¿ØÖÆÐÅÏ¢µÄ¶ÁµØÖ·*/
+    /*è¯»å–AHB ringbufæŽ§åˆ¶ä¿¡æ¯çš„è¯»åœ°å€*/
     pstRingId->pFromBuf = (VOS_INT)(OM_Read32Reg(OM_PCV_RINGBUF_FROM_ADDR(ulAddr)));
 
     if ((pstRingId->pToBuf >= pstRingId->bufSize)
@@ -1374,14 +1374,14 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
         return VOS_ERR;
     }
 
-    /* µ¥´ÎÍ¨»°¹ý³ÌÖÐ£¬Èç¹ûÃ¿10s·¢Éú50´ÎÒÔÉÏµÄ¶ª°üÏÖÏóÐè¼ÇÂ¼ERRLOG£¬Ã¿´ÎÍ¨»°Ö»ÔÊÐí¼ÇÂ¼Ò»´Î */
+    /* å•æ¬¡é€šè¯è¿‡ç¨‹ä¸­ï¼Œå¦‚æžœæ¯10så‘ç”Ÿ50æ¬¡ä»¥ä¸Šçš„ä¸¢åŒ…çŽ°è±¡éœ€è®°å½•ERRLOGï¼Œæ¯æ¬¡é€šè¯åªå…è®¸è®°å½•ä¸€æ¬¡ */
     g_stErrLogFlag.ulRcvNum++;
     if((0 == g_stErrLogFlag.ulFullErr)
         &&(OM_PCV_RCVDATA_TIMES_IN_10S <= g_stErrLogFlag.ulRcvNum))
     {
         g_stErrLogFlag.ul10sFlag++;
 
-        /* µÚÒ»¸ö10S,Óöµ½BUFÂúÊôÓÚÕý³£Çé¿ö²»¼ÇÂ¼ERRLOG */
+        /* ç¬¬ä¸€ä¸ª10S,é‡åˆ°BUFæ»¡å±žäºŽæ­£å¸¸æƒ…å†µä¸è®°å½•ERRLOG */
         if(1 == g_stErrLogFlag.ul10sFlag)
         {
             g_stErrLogFlag.ulFullNum = 0;
@@ -1389,31 +1389,31 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
 
         if(OM_PCV_RBUF_FULL_TIMES_IN_10S < g_stErrLogFlag.ulFullNum)
         {
-            g_stErrLogFlag.ulFullErr++;     /*±ê¼ÇERRLOGÒÑÐ´*/
+            g_stErrLogFlag.ulFullErr++;     /*æ ‡è®°ERRLOGå·²å†™*/
 
             MNTN_RecordErrorLog(MNTN_OAM_PCV_QUNUE_FULL_EVENT, (void *)&stErrLog,
                                 sizeof(OAM_MNTN_PCV_ERRLOG_EVENT_STRU));
         }
-        /* Ã¿10sÖØÐÂ¼ì²â */
+        /* æ¯10sé‡æ–°æ£€æµ‹ */
         g_stErrLogFlag.ulRcvNum = 0;
         g_stErrLogFlag.ulFullNum = 0;
     }
 
     g_stPcvDebuggingInfo.ulRcvUsbSize += (VOS_UINT32)ulLen;
 
-    /*Èç¹ûÊÕµ½ÆæÊý×Ö½Ú£¬×÷ÎªÒì³£ÉÏ±¨*/
+    /*å¦‚æžœæ”¶åˆ°å¥‡æ•°å­—èŠ‚ï¼Œä½œä¸ºå¼‚å¸¸ä¸ŠæŠ¥*/
     if(VOS_NULL != (ulLen&0x01))
     {
         ulSlice = OM_GetSlice();
         OM_PcvSendEvent(OM_APP_PCV_EXCEPTION_IND, &ulSlice, sizeof(VOS_UINT32));
 
-        /* Ã¿´ÎÍ¨»°Ö»ÔÊÐí¼ÇÂ¼Ò»´ÎERRLOG */
+        /* æ¯æ¬¡é€šè¯åªå…è®¸è®°å½•ä¸€æ¬¡ERRLOG */
         if(0 != g_stErrLogFlag.ulDataErr)
         {
             return VOS_ERR;
         }
 
-        /* ÔÚErrorlogÎÄ¼þÖÐ¼ÇÂ¼ÊÕµ½ÆæÊý×Ö½ÚÊý¾Ý */
+        /* åœ¨Errorlogæ–‡ä»¶ä¸­è®°å½•æ”¶åˆ°å¥‡æ•°å­—èŠ‚æ•°æ® */
         g_stErrLogFlag.ulDataErr++;
         MNTN_RecordErrorLog(MNTN_OAM_PCV_DATA_EXCEPTION_EVENT, (void *)&stErrLog,
                                                 sizeof(OAM_MNTN_PCV_ERRLOG_EVENT_STRU));
@@ -1423,7 +1423,7 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
 
     if( OM_PCV_USB_OM_ENABLE == (g_ulPcvHookFlag & OM_PCV_USB_OM_ENABLE) )
     {
-        /*Bit10 ±íÊ¾¹³È¡USB-OMÊý¾Ý*/
+        /*Bit10 è¡¨ç¤ºé’©å–USB-OMæ•°æ®*/
         OM_PcvHookInd( pucData, (VOS_UINT16)ulLen, OM_PCV_USB_OM_BIT,  g_ulUsbHookFrameSN);
         g_ulUsbHookFrameSN++;
     }
@@ -1436,7 +1436,7 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
 
     usFreeSize = (VOS_UINT16)OM_RingBufferFreeBytes(&(g_PcvRBufOmToDsp.stRingBuffer));
 
-    /*ÓïÒôÊý¾Ý°´2 byte²ÉÑù*/
+    /*è¯­éŸ³æ•°æ®æŒ‰2 byteé‡‡æ ·*/
     usFreeSize = usFreeSize & 0xFFFE;
     if(usFreeSize >= (VOS_UINT16)ulLen)
     {
@@ -1446,32 +1446,32 @@ VOS_UINT32 OM_PcvComRecv(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
     }
     else
     {
-        /*½«Ê±¼ä×î½üµÄÊý¾ÝÌîÂúringbuf£¬ÆäÓàÊý¾Ý¶ªÆú*/
+        /*å°†æ—¶é—´æœ€è¿‘çš„æ•°æ®å¡«æ»¡ringbufï¼Œå…¶ä½™æ•°æ®ä¸¢å¼ƒ*/
         pcSendData = (VOS_UCHAR*)&(pucData[ulLen-usFreeSize]);
         usSendLen  = usFreeSize;
         g_stPcvDebuggingInfo.ulPutSize += (VOS_UINT32)usSendLen;
 
-        /*·¢ÉúÊý¾Ý¶ªÊ§£¬ÏûÏ¢ÉÏ±¨*/
+        /*å‘ç”Ÿæ•°æ®ä¸¢å¤±ï¼Œæ¶ˆæ¯ä¸ŠæŠ¥*/
         OM_PcvSendEvent(OM_APP_PCV_BUF_FULL_IND, &g_stPcvDebuggingInfo, sizeof(g_stPcvDebuggingInfo));
 
-        /* ÔÚErrorlogÎÄ¼þÖÐ¼ÇÂ¼·¢ÉúÊý¾Ý¶ªÊ§*/
+        /* åœ¨Errorlogæ–‡ä»¶ä¸­è®°å½•å‘ç”Ÿæ•°æ®ä¸¢å¤±*/
         g_stErrLogFlag.ulFullNum++;
 
     }
 
-    /*Êý¾Ý¿½±´µ½ringbufferÖÐ*/
+    /*æ•°æ®æ‹·è´åˆ°ringbufferä¸­*/
     (VOS_VOID)OM_RingBufferPut( &(g_PcvRBufOmToDsp.stRingBuffer), (VOS_CHAR*)pcSendData, (VOS_INT)usSendLen );
 
     VOS_FlushCpuWriteBuf();
 
     if( OM_PCV_OM_MED_ENABLE == (g_ulPcvHookFlag & OM_PCV_OM_MED_ENABLE) )
     {
-        /*Bit8 ±íÊ¾¹³È¡OM-MEDÊý¾Ý*/
+        /*Bit8 è¡¨ç¤ºé’©å–OM-MEDæ•°æ®*/
         OM_PcvHookInd( (VOS_UCHAR*)pcSendData, usSendLen, OM_PCV_OM_MED_BIT,  g_ulOmHookFrameSN);
         g_ulOmHookFrameSN++;
     }
 
-    /* ¸üÐÂringbuf¿ØÖÆÐÅÏ¢µÄÐ´µØÖ· */
+    /* æ›´æ–°ringbufæŽ§åˆ¶ä¿¡æ¯çš„å†™åœ°å€ */
     OM_Write32Reg(OM_PCV_RINGBUF_TO_ADDR(g_stPcvOmToDspAddr.ulMailBoxAddr),
                     (VOS_UINT32)(g_PcvRBufOmToDsp.stRingBuffer.pToBuf));
 
@@ -1485,7 +1485,7 @@ VOS_UINT32 OM_PcvOpen(VOS_UINT32 ulPort)
         return VOS_ERR;
     }
 
-    /* ³õÊ¼»¯ÓÊÏä */
+    /* åˆå§‹åŒ–é‚®ç®± */
     OM_PcvInitRBuf(&g_PcvRBufOmToDsp, &g_stPcvOmToDspAddr);
     OM_PcvInitRBuf(&g_PcvRBufDspToOm, &g_stPcvDspToOmAddr);
 
@@ -1501,12 +1501,12 @@ VOS_UINT32 OM_PcvOpen(VOS_UINT32 ulPort)
 VOS_UINT32 OM_PcvSwitch(VOS_UINT32 ulPort)
 {
 
-    /* ÔÝ²»Ö§³Ö */
+    /* æš‚ä¸æ”¯æŒ */
     return VOS_ERR;
 }
 VOS_VOID OM_PcvReleaseAll(VOS_VOID)
 {
-    /* ×¢ÏúUSB»Øµ÷º¯Êý */
+    /* æ³¨é”€USBå›žè°ƒå‡½æ•° */
     if( VOS_NULL_BYTE != g_ucPcvComPort )
     {
         CBTCPM_PortRcvReg(VOS_NULL_PTR);
@@ -1516,7 +1516,7 @@ VOS_VOID OM_PcvReleaseAll(VOS_VOID)
 
     g_ucPcvComPort = VOS_NULL_BYTE;
 
-    /* ERRORLOG ¼ÇÂ¼¿é */
+    /* ERRORLOG è®°å½•å— */
     VOS_MemSet(&g_stErrLogFlag, 0, sizeof(g_stErrLogFlag));
     return;
 }
@@ -1590,7 +1590,7 @@ VOS_UINT32 OM_PcvSendData(VOS_UINT8 *pucVirAddr, VOS_UINT8 *pucPhyAddr,VOS_UINT3
 
     if ((VOS_NULL_PTR == pucVirAddr) || (VOS_NULL_PTR == pucPhyAddr))
     {
-        /* ´òÓ¡´íÎó */
+        /* æ‰“å°é”™è¯¯ */
         LogPrint("\r\nOM_PcvSendData: Vir or Phy Addr is Null \n");
 
         return VOS_ERR;
@@ -1625,7 +1625,7 @@ VOS_UINT32 OM_PcvSendData(VOS_UINT8 *pucVirAddr, VOS_UINT8 *pucPhyAddr,VOS_UINT3
         g_stAcpuDebugInfo.astPortInfo[OM_USB_CBT_PORT_HANDLE].ulUSBWriteMaxTime = ulWriteSlice;
     }
 
-    if (BSP_OK == lRet)     /*µ±Ç°·¢ËÍ³É¹¦*/
+    if (BSP_OK == lRet)     /*å½“å‰å‘é€æˆåŠŸ*/
     {
         if (VOS_OK != VOS_SmP(g_ulCbtUsbPseudoSyncSemId, 0))
         {
@@ -1635,9 +1635,9 @@ VOS_UINT32 OM_PcvSendData(VOS_UINT8 *pucVirAddr, VOS_UINT8 *pucPhyAddr,VOS_UINT3
 
         return VOS_OK;
     }
-    else if(BSP_OK > lRet)    /*ÁÙÊ±´íÎó*/
+    else if(BSP_OK > lRet)    /*ä¸´æ—¶é”™è¯¯*/
     {
-        /*´òÓ¡ÐÅÏ¢£¬µ÷ÓÃUDI½Ó¿ÚµÄ´íÎóÐÅÏ¢*/
+        /*æ‰“å°ä¿¡æ¯ï¼Œè°ƒç”¨UDIæŽ¥å£çš„é”™è¯¯ä¿¡æ¯*/
         LogPrint1("\r\n OM_PcvSendData: DRV_UDI_IOCTL Send Data return Error %d\n", lRet);
 
         g_stAcpuDebugInfo.astPortInfo[OM_USB_CBT_PORT_HANDLE].ulUSBWriteErrNum++;
@@ -1645,11 +1645,11 @@ VOS_UINT32 OM_PcvSendData(VOS_UINT8 *pucVirAddr, VOS_UINT8 *pucPhyAddr,VOS_UINT3
         g_stAcpuDebugInfo.astPortInfo[OM_USB_CBT_PORT_HANDLE].ulUSBWriteErrValue  = (VOS_UINT32)lRet;
         g_stAcpuDebugInfo.astPortInfo[OM_USB_CBT_PORT_HANDLE].ulUSBWriteErrTime   = OM_GetSlice();
 
-        return VOS_ERR; /*¶ÔÓÚÁÙÊ±´íÎó£¬ÐèÒª·µ»ØNULL¶ªÆúÊý¾Ý*/
+        return VOS_ERR; /*å¯¹äºŽä¸´æ—¶é”™è¯¯ï¼Œéœ€è¦è¿”å›žNULLä¸¢å¼ƒæ•°æ®*/
     }
-    else    /*ÆäËû´íÎóÐèÒª¸´Î»µ¥°å*/
+    else    /*å…¶ä»–é”™è¯¯éœ€è¦å¤ä½å•æ¿*/
     {
-        /*´òÓ¡ÐÅÏ¢£¬µ÷ÓÃUDI½Ó¿Ú*/
+        /*æ‰“å°ä¿¡æ¯ï¼Œè°ƒç”¨UDIæŽ¥å£*/
         LogPrint1("\r\n OM_PcvSendData: DRV_UDI_IOCTL Send Data return Error %d\n", lRet);
 
         DRV_SYSTEM_ERROR(OAM_USB_SEND_ERROR, (VOS_INT)THIS_FILE_ID, (VOS_INT)__LINE__,
@@ -1678,7 +1678,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
         return;
     }
 
-    /*·ÖÅäÁÙÊ±»º³åÇø£¬(OM->USB)·½Ïò°áÔËÊý¾ÝÊ±Ê¹ÓÃ*/
+    /*åˆ†é…ä¸´æ—¶ç¼“å†²åŒºï¼Œ(OM->USB)æ–¹å‘æ¬è¿æ•°æ®æ—¶ä½¿ç”¨*/
     g_stPcvUncacheMemCtrl.pucBuf = (VOS_UCHAR  *)VOS_UnCacheMemAlloc(OM_PCV_BUF_SIZE, &ulRealAddr);
     if ( VOS_NULL_PTR == g_stPcvUncacheMemCtrl.pucBuf)
     {
@@ -1690,11 +1690,11 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
         return;
     }
 
-    /* ±£´æÊµµØÖ·ºÍbuffer size */
+    /* ä¿å­˜å®žåœ°å€å’Œbuffer size */
     g_stPcvUncacheMemCtrl.pucBuf    = (VOS_UINT8 *)ulRealAddr;
     g_stPcvUncacheMemCtrl.ulBufSize = OM_PCV_BUF_SIZE;
 
-    /* ERRORLOG ¼ÇÂ¼¿é */
+    /* ERRORLOG è®°å½•å— */
     VOS_MemSet(&g_stErrLogFlag, 0, sizeof(g_stErrLogFlag));
 
     for ( ; ; )
@@ -1705,7 +1705,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
             continue;
         }
 
-        /* ¼ÙÈçÍ¨µÀÃ»ÓÐ´ò¿ª£¬ÔòÖ±½Ó·µ»ØÊ§°Ü */
+        /* å‡å¦‚é€šé“æ²¡æœ‰æ‰“å¼€ï¼Œåˆ™ç›´æŽ¥è¿”å›žå¤±è´¥ */
         if(OM_PCV_CHANNEL_OPEN != g_ulPcvStatus)
         {
             LogPrint("OM_PcvTransmitTaskEntry: PLL should not power down. \r\n");
@@ -1713,7 +1713,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
             continue;
         }
 
-        /* Èç¹û¹Ø±Õ£¬Ö¡ºÅÖØÐÂ¼ÆÊý */
+        /* å¦‚æžœå…³é—­ï¼Œå¸§å·é‡æ–°è®¡æ•° */
         if ( VOS_NULL == (OM_PCV_HOOK_ENABLE & g_ulPcvHookFlag) )
         {
             ulHookFrameSN = 0;
@@ -1721,7 +1721,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
             g_ulOmHookFrameSN = 0;
         }
 
-        /* ´ÓAHBÓÊÏä¶ÁÈ¡ringbuf¿ØÖÆÐÅÏ¢ */
+        /* ä»ŽAHBé‚®ç®±è¯»å–ringbufæŽ§åˆ¶ä¿¡æ¯ */
         if ( VOS_OK != OM_PcvGetRBufOffset(&(g_PcvRBufDspToOm.stRingBuffer), g_stPcvDspToOmAddr.ulMailBoxAddr) )
         {
            DRV_SYSTEM_ERROR(OAM_UL_R99_AHB_HEAD_ERR, VOS_FILE_ID,
@@ -1733,30 +1733,30 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
 
         OM_PcvSendEvent(OM_APP_PCV_MED_OM_LEN, &usLen, sizeof(usLen));
 
-        if( 0 == usLen )    /* ringbufÖÐÎÞÊý¾Ý */
+        if( 0 == usLen )    /* ringbufä¸­æ— æ•°æ® */
         {
             continue;
         }
 
-        /* ´Óringbuf¿½±´ÓïÒôÊý¾Ýµ½ÁÙÊ±»º³åÇø */
+        /* ä»Žringbufæ‹·è´è¯­éŸ³æ•°æ®åˆ°ä¸´æ—¶ç¼“å†²åŒº */
         OM_RingBufferGet(&(g_PcvRBufDspToOm.stRingBuffer), (VOS_CHAR *)g_stPcvUncacheMemCtrl.pucBuf, (VOS_INT)usLen);
 
         VOS_FlushCpuWriteBuf();
 
-        /* ÐÞ¸ÄAHBÓÊÏäÖÐringbuf¿ØÖÆÐÅÏ¢ÖÐµÄ¶ÁÖ¸Õë */
+        /* ä¿®æ”¹AHBé‚®ç®±ä¸­ringbufæŽ§åˆ¶ä¿¡æ¯ä¸­çš„è¯»æŒ‡é’ˆ */
         OM_Write32Reg(OM_PCV_RINGBUF_FROM_ADDR(g_stPcvDspToOmAddr.ulMailBoxAddr),
                         (VOS_UINT32)(g_PcvRBufDspToOm.stRingBuffer.pFromBuf));
 
         g_stPcvDebuggingInfo.ulRcvDspSize += (VOS_UINT32)usLen;
 
-        /* ·¢ËÍÓïÒôÊý¾Ýµ½USB¶Ë¿Ú */
+        /* å‘é€è¯­éŸ³æ•°æ®åˆ°USBç«¯å£ */
         OM_PcvSendData(g_stPcvUncacheMemCtrl.pucBuf, g_stPcvUncacheMemCtrl.pucRealBuf, usLen);
 
         OM_PcvSendEvent(OM_APP_PCV_OM_USB_RET, &lRet, sizeof(lRet));
 
         if( OM_PCV_MED_OM_ENABLE == (g_ulPcvHookFlag & OM_PCV_MED_OM_ENABLE) )
         {
-            /* Bit9±íÊ¾¹³È¡MED-OMÊý¾Ý */
+            /* Bit9è¡¨ç¤ºé’©å–MED-OMæ•°æ® */
             OM_PcvHookInd( g_stPcvUncacheMemCtrl.pucBuf, usLen, OM_PCV_MED_OM_BIT,  ulHookFrameSN);
             ulHookFrameSN++;
         }
@@ -1765,7 +1765,7 @@ VOS_VOID OM_PcvTransmitTaskEntry( VOS_VOID )
 }
 VOS_VOID OM_PcvIpcIsr(VOS_VOID)
 {
-    /* HIFI ÉÏÒÆºó²»ÔÙÐèÒª IPC ÖÐ¶Ï */
+    /* HIFI ä¸Šç§»åŽä¸å†éœ€è¦ IPC ä¸­æ–­ */
 
     /*DRV_IPC_INTDISABLE((IPC_INT_LEV_E)PC_VOICE_RX_DATA_ACPU_IPC_BIT);*/
 
@@ -1773,7 +1773,7 @@ VOS_VOID OM_PcvIpcIsr(VOS_VOID)
     {
         g_stPcvLog.ulIntSlice = OM_GetSlice();
 
-        /*ÊÕµ½0MSÖÐ¶Ï»òÖ¡ÖÐ¶Ï£¬ÊÍ·ÅÐÅºÅÁ¿*/
+        /*æ”¶åˆ°0MSä¸­æ–­æˆ–å¸§ä¸­æ–­ï¼Œé‡Šæ”¾ä¿¡å·é‡*/
         VOS_SmV(g_ulPcvTransmitSem);
     }
 
@@ -1786,14 +1786,14 @@ VOS_VOID OM_PcvMsgProc(MsgBlock *pMsg)
     OM_PCV_COM_CFG_REQ      *pstComCfg;
     OM_PCV_TRACE_CFG_REQ    *pstTraceCfg;
 
-    /* ´¦ÀíNAS VCÄ£¿é·¢À´µÄÓïÒôÍ¨µÀ¿ØÖÆÏûÏ¢() */
+    /* å¤„ç†NAS VCæ¨¡å—å‘æ¥çš„è¯­éŸ³é€šé“æŽ§åˆ¶æ¶ˆæ¯() */
     if (WUEPS_PID_VC == pMsg->ulSenderPid)
     {
         pstComCfg = (OM_PCV_COM_CFG_REQ*)pMsg;
 
         OM_PcvTransStatus(pstComCfg->ulStatus, pstComCfg->ulPort);
     }
-    /* ´¦ÀíHIFI·¢À´µÄÓïÒôÊý¾Ý¹´È¡ÅäÖÃÏûÏ¢ */
+    /* å¤„ç†HIFIå‘æ¥çš„è¯­éŸ³æ•°æ®å‹¾å–é…ç½®æ¶ˆæ¯ */
     else if (DSP_PID_VOICE == pMsg->ulSenderPid)
     {
         pstTraceCfg = (OM_PCV_TRACE_CFG_REQ*)pMsg;
@@ -1814,7 +1814,7 @@ VOS_VOID OM_PcvMsgProc(MsgBlock *pMsg)
 
 VOS_UINT32 OM_PcvPidInit(enum VOS_INIT_PHASE_DEFINE ip)
 {
-    /* HIFI ÉÏÒÆµ½AºË´úÂëÐÞ¸Ä */
+    /* HIFI ä¸Šç§»åˆ°Aæ ¸ä»£ç ä¿®æ”¹ */
     switch(ip)
     {
         case VOS_IP_LOAD_CONFIG:
@@ -1825,7 +1825,7 @@ VOS_UINT32 OM_PcvPidInit(enum VOS_INIT_PHASE_DEFINE ip)
             VOS_MemSet(&g_stRingBufferControlRXAddr, 0, sizeof(COMM_VOICE_RING_BUFFER_CONTROL_STRU));
             g_stPcvDspToOmAddr.ulMailBoxAddr = (VOS_UINT_PTR)&g_stRingBufferControlRXAddr;
 
-            /*ÉêÇëuncacheµÄ¶¯Ì¬ÄÚ´æÇø*/
+            /*ç”³è¯·uncacheçš„åŠ¨æ€å†…å­˜åŒº*/
             g_stPcvOmToDspAddr.ulBufVirtAddr = (VOS_UINT_PTR)VOS_UnCacheMemAlloc(OM_PCV_BUF_SIZE, &g_stPcvOmToDspAddr.ulBufPhyAddr);
 
             g_stPcvDspToOmAddr.ulBufVirtAddr = (VOS_UINT_PTR)VOS_UnCacheMemAlloc(OM_PCV_BUF_SIZE, &g_stPcvDspToOmAddr.ulBufPhyAddr);
@@ -1858,22 +1858,22 @@ VOS_UINT32 OM_PcvPidInit(enum VOS_INIT_PHASE_DEFINE ip)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : COMM_VOICE_GetPcVoiceRingBuffCtrlAddr
- ¹¦ÄÜÃèÊö  : »ñµÃRingBuff¿ØÖÆ½á¹¹ÌåµÄµØÖ·
- ÊäÈë²ÎÊý  : enDirection - Êý¾Ý·½Ïò
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : Ring Buff¿ØÖÆ½á¹¹ÌåµÄµØÖ·(ÐéµØÖ·)
-             ÈôRing Buff¿ØÖÆ½á¹¹Ìå³õÊ¼»¯Ê§°ÜÔò·µ»ØVOS_NULL
+ å‡½ æ•° å  : COMM_VOICE_GetPcVoiceRingBuffCtrlAddr
+ åŠŸèƒ½æè¿°  : èŽ·å¾—RingBuffæŽ§åˆ¶ç»“æž„ä½“çš„åœ°å€
+ è¾“å…¥å‚æ•°  : enDirection - æ•°æ®æ–¹å‘
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : Ring BuffæŽ§åˆ¶ç»“æž„ä½“çš„åœ°å€(è™šåœ°å€)
+             è‹¥Ring BuffæŽ§åˆ¶ç»“æž„ä½“åˆå§‹åŒ–å¤±è´¥åˆ™è¿”å›žVOS_NULL
 
- ²¹³äËµÃ÷  : (1) Ring Buff¿ØÖÆ½á¹¹ÌåÄÚÈÝ¶¨ÒåÎªCOMM_VOICE_RING_BUFFER_CONTROL_STRU
-             (2) Ring Buff¿ØÖÆ½á¹¹ÌåÈ«¾Ö±äÁ¿¶¨ÒåÔÚCOMMÖÐ(Ó¦´æÔÚ2¸ö, ·Ö±ðÓÃÓÚÉÏÐÐºÍÏÂÐÐÁ½¸ö·½Ïò)
-             (3) COMMÐèÒªÔÚµ÷ÓÃ¸Ã½Ó¿Úº¯ÊýÇ°»òÕßµ÷ÓÃ¸Ã½Ó¿Úº¯ÊýÊ±³õÊ¼»¯RingBuff¿ØÖÆ½á¹¹Ìå
+ è¡¥å……è¯´æ˜Ž  : (1) Ring BuffæŽ§åˆ¶ç»“æž„ä½“å†…å®¹å®šä¹‰ä¸ºCOMM_VOICE_RING_BUFFER_CONTROL_STRU
+             (2) Ring BuffæŽ§åˆ¶ç»“æž„ä½“å…¨å±€å˜é‡å®šä¹‰åœ¨COMMä¸­(åº”å­˜åœ¨2ä¸ª, åˆ†åˆ«ç”¨äºŽä¸Šè¡Œå’Œä¸‹è¡Œä¸¤ä¸ªæ–¹å‘)
+             (3) COMMéœ€è¦åœ¨è°ƒç”¨è¯¥æŽ¥å£å‡½æ•°å‰æˆ–è€…è°ƒç”¨è¯¥æŽ¥å£å‡½æ•°æ—¶åˆå§‹åŒ–RingBuffæŽ§åˆ¶ç»“æž„ä½“
 *****************************************************************************/
 VOS_UINT32 COMM_VOICE_GetPcVoiceRingBuffCtrlAddr(COMM_VOICE_PCVOICE_DATA_DIRECTION_ENUM_UINT32 enDirection)
 {
     if (COMM_VOICE_PCVOICE_DATA_DIRECTION_TX == enDirection)
     {
-        /* ³õÊ¼»¯ÓÊÏä */
+        /* åˆå§‹åŒ–é‚®ç®± */
         OM_PcvInitRBuf(&g_PcvRBufOmToDsp, &g_stPcvOmToDspAddr);
 
         return (VOS_UINT32)g_stPcvOmToDspAddr.ulMailBoxAddr;
@@ -1881,7 +1881,7 @@ VOS_UINT32 COMM_VOICE_GetPcVoiceRingBuffCtrlAddr(COMM_VOICE_PCVOICE_DATA_DIRECTI
 
     if (COMM_VOICE_PCVOICE_DATA_DIRECTION_RX == enDirection)
     {
-        /* ³õÊ¼»¯ÓÊÏä */
+        /* åˆå§‹åŒ–é‚®ç®± */
         OM_PcvInitRBuf(&g_PcvRBufDspToOm, &g_stPcvDspToOmAddr);
         return (VOS_UINT32)g_stPcvDspToOmAddr.ulMailBoxAddr;
     }
@@ -1893,19 +1893,19 @@ VOS_UINT32 COMM_VOICE_GetPcVoiceRingBuffCtrlAddr(COMM_VOICE_PCVOICE_DATA_DIRECTI
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : COMM_VOICE_TransferPcVoiceRxData
- ¹¦ÄÜÃèÊö  : ´«ÊäÏÂÐÐ·½ÏòÊý¾Ý
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK  - ´«Êä³É¹¦
-             VOS_ERR - ´«ÊäÊ§°Ü
+ å‡½ æ•° å  : COMM_VOICE_TransferPcVoiceRxData
+ åŠŸèƒ½æè¿°  : ä¼ è¾“ä¸‹è¡Œæ–¹å‘æ•°æ®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK  - ä¼ è¾“æˆåŠŸ
+             VOS_ERR - ä¼ è¾“å¤±è´¥
 
- ²¹³äËµÃ÷  : (1) VOICE½«ÏÂÐÐÊý¾ÝÐ´ÈëRing Buffºóµ÷ÓÃ¸Ãº¯ÊýÍ¨ÖªCOMM½«Êý¾Ý´«ÊäÖÁUSB
+ è¡¥å……è¯´æ˜Ž  : (1) VOICEå°†ä¸‹è¡Œæ•°æ®å†™å…¥Ring BuffåŽè°ƒç”¨è¯¥å‡½æ•°é€šçŸ¥COMMå°†æ•°æ®ä¼ è¾“è‡³USB
 
 *****************************************************************************/
 VOS_UINT32 COMM_VOICE_TransferPcVoiceRxData(VOS_VOID)
 {
-    /* ÊÍ·ÅÐÅºÅÁ¿ */
+    /* é‡Šæ”¾ä¿¡å·é‡ */
     OM_PcvIpcIsr();
     return VOS_OK;
 }

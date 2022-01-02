@@ -3,7 +3,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "IMMmemZC.h"
 #include "ImmInterface.h"
@@ -21,7 +21,7 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 /*lint -e767*/
 #define    THIS_FILE_ID                 PS_FILE_ID_IMM_ZC_C
@@ -29,7 +29,7 @@ extern "C" {
 #if (FEATURE_ON == FEATURE_SKB_EXP)
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 IMM_ZC_STRU* IMM_ZcStaticAlloc_Debug(unsigned short usFileID, unsigned short usLineNum, unsigned int ulLen)
@@ -37,7 +37,7 @@ IMM_ZC_STRU* IMM_ZcStaticAlloc_Debug(unsigned short usFileID, unsigned short usL
     IMM_ZC_STRU *pstAlloc = VOS_NULL_PTR;
 
 
-    /* MBBĞÎÌ¬ÉÏ, ÉêÇëIMM_ZCÄÚ´æ(¿çºËÄÚ´æ) */
+    /* MBBå½¢æ€ä¸Š, ç”³è¯·IMM_ZCå†…å­˜(è·¨æ ¸å†…å­˜) */
     #if (FEATURE_IMM_MEM_DEBUG == FEATURE_ON)
     pstAlloc = (IMM_ZC_STRU *)dev_alloc_skb_exp_debug(usFileID, usLineNum, ulLen);
     #else
@@ -50,14 +50,14 @@ IMM_ZC_STRU* IMM_ZcStaticCopy_Debug(VOS_UINT16 usFileID, VOS_UINT16 usLineNum, I
 {
     IMM_ZC_STRU *pstCopy = VOS_NULL_PTR;
 
-    /* MBBĞÎÌ¬ÉÏ, ÉêÇëIMM_ZCÄÚ´æ(¿çºËÄÚ´æ) */
+    /* MBBå½¢æ€ä¸Š, ç”³è¯·IMM_ZCå†…å­˜(è·¨æ ¸å†…å­˜) */
     pstCopy = skb_copy_exp((pstImmZc));
 
     return pstCopy;
 }
 void IMM_ZcHeadFree(IMM_ZC_STRU* pstImmZc)
 {
-    /* FEATURE_SKB_EXPºê¿ª¹Ø¿ØÖÆ£¬ºê¿ª¹Ø¹Ø±Õ³¡¾°ÏÂ½Ó¿ÚÉÏ±£Áô, Îª¿Õº¯Êı */
+    /* FEATURE_SKB_EXPå®å¼€å…³æ§åˆ¶ï¼Œå®å¼€å…³å…³é—­åœºæ™¯ä¸‹æ¥å£ä¸Šä¿ç•™, ä¸ºç©ºå‡½æ•° */
 #if (FEATURE_ON ==  FEATURE_SKB_EXP)
     kfree_skb_head((pstImmZc));
 #endif
@@ -98,7 +98,7 @@ IMM_MEM_STRU *IMM_ZcMapToImmMem_Debug(unsigned short usFileID,
         return NULL;
     }
 
-    /* ½«Êı¾İ¹Ò½Óµ½IMM_MEM¿ØÖÆ½Úµã */
+    /* å°†æ•°æ®æŒ‚æ¥åˆ°IMM_MEMæ§åˆ¶èŠ‚ç‚¹ */
     pstImm = pstImmZc->private_mem.pMem;
     pstImmZc->private_mem.pMem = NULL;
 
@@ -110,21 +110,21 @@ IMM_MEM_STRU *IMM_ZcMapToImmMem_Debug(unsigned short usFileID,
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : IMM_ZcAddMacHead
- ¹¦ÄÜÃèÊö  : ¸øIMM_ZC_STRU Áã¿½±´½á¹¹Ìí¼ÓMACÍ·
- ÊäÈë²ÎÊı  : IMM_ZC_STRU *pstImmZc
+ å‡½ æ•° å  : IMM_ZcAddMacHead
+ åŠŸèƒ½æè¿°  : ç»™IMM_ZC_STRU é›¶æ‹·è´ç»“æ„æ·»åŠ MACå¤´
+ è¾“å…¥å‚æ•°  : IMM_ZC_STRU *pstImmZc
              unsigned char* pucAddData
              VOS_UINT16 usLen
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_OK Ìí¼Ó³É¹¦
-             VOS_ERR Ìí¼ÓÊ§°Ü
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_OK æ·»åŠ æˆåŠŸ
+             VOS_ERR æ·»åŠ å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ2ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : Created
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ2æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int IMM_ZcAddMacHead (IMM_ZC_STRU *pstImmZc, const unsigned char* pucAddData)
 {
@@ -393,7 +393,7 @@ IMM_ZC_STRU * IMM_ZcDataTransformImmZc_Debug(unsigned short usFileID,
     IMM_ZC_STRU                        *pstSkb             = NULL;
 
 
-    /* MBBĞÎÌ¬, ½«Êı¾İ¿éµÄ¹Ò½Óµ½IMM_ZC_STRUÉÏ */
+    /* MBBå½¢æ€, å°†æ•°æ®å—çš„æŒ‚æ¥åˆ°IMM_ZC_STRUä¸Š */
     unsigned int                       ulDataReservedHead;
     unsigned int                       ulDataReservedTail = 0;
     unsigned int                       ulDataAllign       = 32;
@@ -446,7 +446,7 @@ IMM_ZC_STRU* IMM_ZcStaticAlloc_Debug(unsigned short usFileID, unsigned short usL
 {
     IMM_ZC_STRU *pstAlloc = VOS_NULL_PTR;
 
-    /* ÖÇÄÜ»úĞÎÌ¬ÉÏ, ÉêÇëskbÏµÍ³ÄÚ´æ */
+    /* æ™ºèƒ½æœºå½¢æ€ä¸Š, ç”³è¯·skbç³»ç»Ÿå†…å­˜ */
     pstAlloc = (IMM_ZC_STRU *)IMM_ZcLargeMemAlloc(ulLen);
 
     return pstAlloc;
@@ -471,21 +471,21 @@ IMM_MEM_STRU *IMM_ZcMapToImmMem_Debug(unsigned short usFileID,
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : IMM_ZcAddMacHead
- ¹¦ÄÜÃèÊö  : ¸øIMM_ZC_STRU Áã¿½±´½á¹¹Ìí¼ÓMACÍ·
- ÊäÈë²ÎÊı  : IMM_ZC_STRU *pstImmZc
+ å‡½ æ•° å  : IMM_ZcAddMacHead
+ åŠŸèƒ½æè¿°  : ç»™IMM_ZC_STRU é›¶æ‹·è´ç»“æ„æ·»åŠ MACå¤´
+ è¾“å…¥å‚æ•°  : IMM_ZC_STRU *pstImmZc
              unsigned char* pucAddData
              VOS_UINT16 usLen
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_OK Ìí¼Ó³É¹¦
-             VOS_ERR Ìí¼ÓÊ§°Ü
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_OK æ·»åŠ æˆåŠŸ
+             VOS_ERR æ·»åŠ å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ2ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : Created
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ2æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int IMM_ZcAddMacHead (IMM_ZC_STRU *pstImmZc, const unsigned char* pucAddData)
 {

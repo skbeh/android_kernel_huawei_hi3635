@@ -32,7 +32,7 @@ extern "C" {
 #include "v_IO.h"
 
 /*****************************************************************************
-    –≠“È’ª¥Ú”°¥Úµ„∑Ω Ωœ¬µƒ.CŒƒº˛∫Í∂®“Â
+    ÂçèËÆÆÊ†àÊâìÂç∞ÊâìÁÇπÊñπÂºè‰∏ãÁöÑ.CÊñá‰ª∂ÂÆèÂÆö‰πâ
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_V_NSPRINTF_C
 
@@ -102,7 +102,7 @@ VOS_INT32 ANSI_nvsprintf(VOS_CHAR *out_buf, VOS_UINT32 ulStrLen, const VOS_CHAR 
 
 rflag: switch (*++pucFmt) {
         case ' ':
-            /* »Ùø’∏Ò∫Õº”∫≈Õ¨ ±≥ˆœ÷£¨‘Ú∫ˆ¬‘ø’∏Ò -- ANSI X3J11  */
+            /* Ëã•Á©∫Ê†ºÂíåÂä†Âè∑ÂêåÊó∂Âá∫Áé∞ÔºåÂàôÂøΩÁï•Á©∫Ê†º -- ANSI X3J11  */
             if (!ucPrefixSign)
             {
                 ucPrefixSign = ' ';
@@ -119,7 +119,7 @@ rflag: switch (*++pucFmt) {
             }
             lFormatWidth = -lFormatWidth;
         case '-':
-            lFlags |= LADJUST; /* ◊Û∂‘∆Î */
+            lFlags |= LADJUST; /* Â∑¶ÂØπÈΩê */
             goto rflag;
         case '+':
             ucPrefixSign = '+';
@@ -195,7 +195,7 @@ rflag: switch (*++pucFmt) {
         case 'G':
 
         {
-            VOS_DOUBLE udDouble;        /* À´æ´∂»∏°µ„ ˝ */ 
+            VOS_DOUBLE udDouble;        /* ÂèåÁ≤æÂ∫¶ÊµÆÁÇπÊï∞ */ 
             udDouble = va_arg(argp, VOS_DOUBLE);
 
             if (lPrec > MAXFRACT) 
@@ -308,7 +308,7 @@ rflag: switch (*++pucFmt) {
                 lFlags |= HEXPREFIX;
             }
 
-            /* Œﬁ∑˚∫≈ ˝◊™ªª */
+            /* Êó†Á¨¶Âè∑Êï∞ËΩ¨Êç¢ */
 nosign:    ucPrefixSign = '\0';
 
 number:    	if ((lDprec = lPrec) >= 0)
@@ -327,7 +327,7 @@ number:    	if ((lDprec = lPrec) >= 0)
                 pucDigs = "0123456789abcdef";
                 if (lFlags & ALT && lBase == 8 && *pcBuf != '0')
                 {
-                    *--pcBuf = '0'; /* 8Ω¯÷∆±Í÷æ */
+                    *--pcBuf = '0'; /* 8ËøõÂà∂Ê†áÂøó */
                 }
             }
             lConverSize = ucBuf + BUF - pcBuf;
@@ -593,7 +593,7 @@ VOS_INT32 vos_printf( const VOS_CHAR * format, ... )
         VOS_CHAR *  pcWarning = " [!!!Warning: Print too long!!!]\r\n";
         ulTempLen = VOS_StrLen( pcWarning );
         VOS_StrNCpy( output_info + ( VOS_MAX_PRINT_LEN - ulTempLen - 1 ), pcWarning, ulTempLen );
-        rc = VOS_MAX_PRINT_LEN - 1; /* [false alarm]: ∆¡±ŒFortify¥ÌŒÛ */
+        rc = VOS_MAX_PRINT_LEN - 1; /* [false alarm]: Â±èËîΩFortifyÈîôËØØ */
 
         VOS_SetErrorNo( VOS_ERRNO_LIB_PRINTF_INPUTFORMATTOOLONG );
         ulReturn = VOS_ERRNO_LIB_PRINTF_INPUTFORMATTOOLONG;
@@ -602,7 +602,7 @@ VOS_INT32 vos_printf( const VOS_CHAR * format, ... )
     {
         VOS_CHAR *  pcWarning = "\r\n### vos printf error: unknown internal error. ###\r\n";
         VOS_StrCpy( output_info, pcWarning );
-        rc = VOS_StrLen( pcWarning ); /* [false alarm]: ∆¡±ŒFortify¥ÌŒÛ */
+        rc = VOS_StrLen( pcWarning ); /* [false alarm]: Â±èËîΩFortifyÈîôËØØ */
 
         VOS_SetErrorNo( VOS_ERRNO_LIB_PRINTF_UNKNOWNINTERERROR );
         ulReturn = VOS_ERRNO_LIB_PRINTF_UNKNOWNINTERERROR;

@@ -1,19 +1,19 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : cpm.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : ¸ÊÀ¼ 47350
-  Éú³ÉÈÕÆÚ   : 2011Äê9ÔÂ29ÈÕ
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : ÊµÏÖOAMÍ¨µÀµÄ¹ÜÀí¹¦ÄÜ,channel port manager.
-  º¯ÊýÁÐ±í   :
-  ÐÞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2011Äê9ÔÂ29ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ÐÞ¸ÄÄÚÈÝ   : ´´½¨ÎÄ¼þ
+  æ–‡ ä»¶ å   : cpm.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : ç”˜å…° 47350
+  ç”Ÿæˆæ—¥æœŸ   : 2011å¹´9æœˆ29æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : å®žçŽ°OAMé€šé“çš„ç®¡ç†åŠŸèƒ½,channel port manager.
+  å‡½æ•°åˆ—è¡¨   :
+  ä¿®æ”¹åŽ†å²   :
+  1.æ—¥    æœŸ   : 2011å¹´9æœˆ29æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
@@ -25,42 +25,42 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_CPM_C
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "cpm.h"
 #include "NVIM_Interface.h"
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 CPM_PHY_PORT_CFG_STRU                   g_astCPMPhyPortCfg[CPM_PORT_BUTT - CPM_IND_PORT];
 CPM_LOGIC_PORT_CFG_STRU                 g_astCPMLogicPortCfg[CPM_COMM_BUTT];
 
-/* ¶Ë¿ÚÅäÖÃÈ«¾Ö±äÁ¿ */
+/* ç«¯å£é…ç½®å…¨å±€å˜é‡ */
 OM_CHANNLE_PORT_CFG_STRU                g_stPortCfg;
 
 /*****************************************************************************
-  3 º¯ÊýÌåÉêÃ÷
+  3 å‡½æ•°ä½“ç”³æ˜Ž
 *****************************************************************************/
 
 /*****************************************************************************
-  4 º¯ÊýÌå¶¨Òå
+  4 å‡½æ•°ä½“å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  : CPM_PhySendReg
- ¹¦ÄÜÃèÊö  : Ìá¹©¸øÍâ²¿µÄ×¢²áº¯Êý£¬ÓÃÀ´ÎïÀíÍ¨µÀ½ÓÊÕµ½Êý¾ÝµÄ´¦Àí
- ÊäÈë²ÎÊý  : enPhyPort£º  ×¢²áµÄÎïÀíÍ¨µÀºÅ
-             pRecvFunc£º  Êý¾Ý½ÓÊÕº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
+ å‡½ æ•° å  : CPM_PhySendReg
+ åŠŸèƒ½æè¿°  : æä¾›ç»™å¤–éƒ¨çš„æ³¨å†Œå‡½æ•°ï¼Œç”¨æ¥ç‰©ç†é€šé“æŽ¥æ”¶åˆ°æ•°æ®çš„å¤„ç†
+ è¾“å…¥å‚æ•°  : enPhyPortï¼š  æ³¨å†Œçš„ç‰©ç†é€šé“å·
+             pRecvFuncï¼š  æ•°æ®æŽ¥æ”¶å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
 
 *****************************************************************************/
 VOS_VOID CPM_PhySendReg(CPM_PHY_PORT_ENUM_UINT32 enPhyPort, CPM_SEND_FUNC pSendFunc)
@@ -74,12 +74,12 @@ VOS_VOID CPM_PhySendReg(CPM_PHY_PORT_ENUM_UINT32 enPhyPort, CPM_SEND_FUNC pSendF
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : CPM_LogicRcvReg
- ¹¦ÄÜÃèÊö  : ¸øÂß¼­Í¨µÀ×¢²á½ÓÊÕº¯Êý
- ÊäÈë²ÎÊý  : enLogicPort£º ×¢²áµÄÂß¼­Í¨µÀºÅ
-             pRecvFunc£º   Êý¾Ý½ÓÊÕº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
+ å‡½ æ•° å  : CPM_LogicRcvReg
+ åŠŸèƒ½æè¿°  : ç»™é€»è¾‘é€šé“æ³¨å†ŒæŽ¥æ”¶å‡½æ•°
+ è¾“å…¥å‚æ•°  : enLogicPortï¼š æ³¨å†Œçš„é€»è¾‘é€šé“å·
+             pRecvFuncï¼š   æ•°æ®æŽ¥æ”¶å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
 
 *****************************************************************************/
 VOS_VOID CPM_LogicRcvReg(CPM_LOGIC_PORT_ENUM_UINT32 enLogicPort, CPM_RCV_FUNC pRcvFunc)
@@ -93,11 +93,11 @@ VOS_VOID CPM_LogicRcvReg(CPM_LOGIC_PORT_ENUM_UINT32 enLogicPort, CPM_RCV_FUNC pR
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : CPM_QueryPhyPort
- ¹¦ÄÜÃèÊö  : ²éÑ¯µ±Ç°Âß¼­Í¨µÀÊ¹ÓÃµÄÎïÀí¶Ë¿Ú
- ÊäÈë²ÎÊý  : enLogicPort£º  Âß¼­Í¨µÀºÅ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎïÀíÍ¨µÀºÅ
+ å‡½ æ•° å  : CPM_QueryPhyPort
+ åŠŸèƒ½æè¿°  : æŸ¥è¯¢å½“å‰é€»è¾‘é€šé“ä½¿ç”¨çš„ç‰©ç†ç«¯å£
+ è¾“å…¥å‚æ•°  : enLogicPortï¼š  é€»è¾‘é€šé“å·
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : ç‰©ç†é€šé“å·
 
 *****************************************************************************/
 CPM_PHY_PORT_ENUM_UINT32 CPM_QueryPhyPort(CPM_LOGIC_PORT_ENUM_UINT32 enLogicPort)
@@ -106,12 +106,12 @@ CPM_PHY_PORT_ENUM_UINT32 CPM_QueryPhyPort(CPM_LOGIC_PORT_ENUM_UINT32 enLogicPort
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : CPM_ConnectPorts
- ¹¦ÄÜÃèÊö  : ½«ÎïÀíÍ¨µÀºÍÂß¼­Í¨µÀÁ¬½ÓÉÏ
- ÊäÈë²ÎÊý  : enPhyPort£º    ÎïÀíÍ¨µÀºÅ
-             enLogicPort£º  Âß¼­Í¨µÀºÅ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
+ å‡½ æ•° å  : CPM_ConnectPorts
+ åŠŸèƒ½æè¿°  : å°†ç‰©ç†é€šé“å’Œé€»è¾‘é€šé“è¿žæŽ¥ä¸Š
+ è¾“å…¥å‚æ•°  : enPhyPortï¼š    ç‰©ç†é€šé“å·
+             enLogicPortï¼š  é€»è¾‘é€šé“å·
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
 
 *****************************************************************************/
 VOS_VOID CPM_ConnectPorts(CPM_PHY_PORT_ENUM_UINT32 enPhyPort, CPM_LOGIC_PORT_ENUM_UINT32 enLogicPort)
@@ -121,25 +121,25 @@ VOS_VOID CPM_ConnectPorts(CPM_PHY_PORT_ENUM_UINT32 enPhyPort, CPM_LOGIC_PORT_ENU
         return;
     }
 
-    /* Á¬½Ó·¢ËÍÍ¨µÀ */
+    /* è¿žæŽ¥å‘é€é€šé“ */
     CPM_LOGIC_SEND_FUNC(enLogicPort)= CPM_PHY_SEND_FUNC(enPhyPort - CPM_IND_PORT);
 
-    /* Á¬½Ó½ÓÊÕÍ¨µÀ */
+    /* è¿žæŽ¥æŽ¥æ”¶é€šé“ */
     CPM_PHY_RCV_FUNC(enPhyPort - CPM_IND_PORT) = CPM_LOGIC_RCV_FUNC(enLogicPort);
 
-    /* ½«ÎïÀí·¢ËÍº¯Êý×¢²á¸øÂß¼­Í¨µÀ */
+    /* å°†ç‰©ç†å‘é€å‡½æ•°æ³¨å†Œç»™é€»è¾‘é€šé“ */
     CPM_LOGIC_PHY_PORT(enLogicPort) = enPhyPort;
 
     return;
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : CPM_DisconnectPorts
- ¹¦ÄÜÃèÊö  : ¶Ï¿ªÎïÀíÍ¨µÀºÍÂß¼­Í¨µÀÁ¬½Ó
- ÊäÈë²ÎÊý  : enPhyPort£º    ÎïÀíÍ¨µÀºÅ
-             enLogicPort£º  Âß¼­Í¨µÀºÅ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
+ å‡½ æ•° å  : CPM_DisconnectPorts
+ åŠŸèƒ½æè¿°  : æ–­å¼€ç‰©ç†é€šé“å’Œé€»è¾‘é€šé“è¿žæŽ¥
+ è¾“å…¥å‚æ•°  : enPhyPortï¼š    ç‰©ç†é€šé“å·
+             enLogicPortï¼š  é€»è¾‘é€šé“å·
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
 
 *****************************************************************************/
 VOS_VOID CPM_DisconnectPorts(CPM_PHY_PORT_ENUM_UINT32 enPhyPort, CPM_LOGIC_PORT_ENUM_UINT32 enLogicPort)
@@ -149,16 +149,16 @@ VOS_VOID CPM_DisconnectPorts(CPM_PHY_PORT_ENUM_UINT32 enPhyPort, CPM_LOGIC_PORT_
         return;
     }
 
-    /* ¼ÙÈçµ±Ç°Âß¼­Í¨µÀ²¢Ã»ÓÐÊ¹ÓÃ´ËÎïÀíÍ¨µÀ£¬Ôò²»ÓÃ´¦Àí */
+    /* å‡å¦‚å½“å‰é€»è¾‘é€šé“å¹¶æ²¡æœ‰ä½¿ç”¨æ­¤ç‰©ç†é€šé“ï¼Œåˆ™ä¸ç”¨å¤„ç† */
     if (enPhyPort != CPM_LOGIC_PHY_PORT(enLogicPort))
     {
         return;
     }
 
-    /* ¶Ï¿ª½ÓÊÕÍ¨µÀ */
+    /* æ–­å¼€æŽ¥æ”¶é€šé“ */
     CPM_PHY_RCV_FUNC(enPhyPort - CPM_IND_PORT) = VOS_NULL_PTR;
 
-    /* ¶Ï¿ª·¢ËÍÍ¨µÀ */
+    /* æ–­å¼€å‘é€é€šé“ */
     CPM_LOGIC_SEND_FUNC(enLogicPort)= VOS_NULL_PTR;
     CPM_LOGIC_PHY_PORT(enLogicPort) = CPM_PORT_BUTT;
 
@@ -167,11 +167,11 @@ VOS_VOID CPM_DisconnectPorts(CPM_PHY_PORT_ENUM_UINT32 enPhyPort, CPM_LOGIC_PORT_
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : CPM_PortAssociateInit
- ¹¦ÄÜÃèÊö  : ¸ù¾Ý¶Ë¿ÚÀàÐÍ¹ØÁªÎïÀí¶Ë¿ÚºÍÂß¼­¶Ë¿Ú
- ÊäÈë²ÎÊý  : VOS_VOID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK:³É¹¦£¬ÆäËûÎªÊ§°Ü
+ å‡½ æ•° å  : CPM_PortAssociateInit
+ åŠŸèƒ½æè¿°  : æ ¹æ®ç«¯å£ç±»åž‹å…³è”ç‰©ç†ç«¯å£å’Œé€»è¾‘ç«¯å£
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK:æˆåŠŸï¼Œå…¶ä»–ä¸ºå¤±è´¥
 *****************************************************************************/
 VOS_UINT32 CPM_PortAssociateInit(VOS_VOID)
 {
@@ -185,20 +185,20 @@ VOS_UINT32 CPM_PortAssociateInit(VOS_VOID)
 #if (VOS_OS_VER == VOS_WIN32)
     g_stPortCfg.enPortNum = CPM_OM_PORT_TYPE_WIFI;
 #else
-    /* ²úÆ·Ö§³ÖHSICÌØÐÔ£¬Ö±½Ó·µ»Ø³É¹¦£¬²»×ö¶Ë¿Ú¹ØÁª */
+    /* äº§å“æ”¯æŒHSICç‰¹æ€§ï¼Œç›´æŽ¥è¿”å›žæˆåŠŸï¼Œä¸åšç«¯å£å…³è” */
     if (BSP_MODULE_SUPPORT == DRV_GET_HSIC_SUPPORT())
     {
         return VOS_OK;
     }
 
-    /* ¶ÁÈ¡OMµÄÎïÀíÊä³öÍ¨µÀ */
+    /* è¯»å–OMçš„ç‰©ç†è¾“å‡ºé€šé“ */
     if (NV_OK != NV_Read(en_NV_Item_Om_Port_Type, &g_stPortCfg, sizeof(OM_CHANNLE_PORT_CFG_STRU)))
     {
         return VOS_ERR;
     }
 #endif
 
-    /* ¼ì²â²ÎÊý*/
+    /* æ£€æµ‹å‚æ•°*/
     if (CPM_OM_PORT_TYPE_USB == g_stPortCfg.enPortNum)
     {
         CPM_ConnectPorts(CPM_CFG_PORT, CPM_OM_CFG_COMM);
@@ -215,7 +215,7 @@ VOS_UINT32 CPM_PortAssociateInit(VOS_VOID)
         CPM_ConnectPorts(CPM_WIFI_OM_IND_PORT, CPM_OM_IND_COMM);
         CPM_ConnectPorts(CPM_WIFI_OM_CFG_PORT, CPM_OM_CFG_COMM);
     }
-    /* NVÏî²»ÕýÈ·Ê±°´USBÊä³ö´¦Àí */
+    /* NVé¡¹ä¸æ­£ç¡®æ—¶æŒ‰USBè¾“å‡ºå¤„ç† */
     else
     {
         CPM_ConnectPorts(CPM_CFG_PORT, CPM_OM_CFG_COMM);
@@ -223,7 +223,7 @@ VOS_UINT32 CPM_PortAssociateInit(VOS_VOID)
 
         g_stPortCfg.enPortNum = CPM_OM_PORT_TYPE_USB;
     }
-    /*Èç¹ûµ±Ç°Á¬½ÓÎªUSBÊä³ö£¬ÐèÒªÉèÖÃSOCPÄ¬ÈÏ³¬Ê±*/
+    /*å¦‚æžœå½“å‰è¿žæŽ¥ä¸ºUSBè¾“å‡ºï¼Œéœ€è¦è®¾ç½®SOCPé»˜è®¤è¶…æ—¶*/
     if(g_stPortCfg.enPortNum == CPM_OM_PORT_TYPE_USB)
     {
         DRV_SOCP_VOTE(SOCP_VOTE_PPM_RCV, SOCP_VOTE_FOR_WAKE);
@@ -236,21 +236,21 @@ VOS_UINT32 CPM_PortAssociateInit(VOS_VOID)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : CPM_ComSend
- ¹¦ÄÜÃèÊö  : ·¢ËÍÊý¾Ýº¯Êý£¬Ìá¹©¸øÂß¼­Í¨µÀÊ¹ÓÃ
- ÊäÈë²ÎÊý  : enLogicPort£ºÂß¼­Í¨µÀºÅ
-             pucVirData:  Êý¾ÝÐéÄâµØÖ·
-             pucPHYData:  Êý¾ÝÎïÀíµØÖ·
-             pucData£º    ·¢ËÍÊý¾ÝµÄÖ¸Õë
-             ulLen:       ·¢ËÍÊý¾ÝµÄ³¤¶È
+ å‡½ æ•° å  : CPM_ComSend
+ åŠŸèƒ½æè¿°  : å‘é€æ•°æ®å‡½æ•°ï¼Œæä¾›ç»™é€»è¾‘é€šé“ä½¿ç”¨
+ è¾“å…¥å‚æ•°  : enLogicPortï¼šé€»è¾‘é€šé“å·
+             pucVirData:  æ•°æ®è™šæ‹Ÿåœ°å€
+             pucPHYData:  æ•°æ®ç‰©ç†åœ°å€
+             pucDataï¼š    å‘é€æ•°æ®çš„æŒ‡é’ˆ
+             ulLen:       å‘é€æ•°æ®çš„é•¿åº¦
 
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK:³É¹¦£¬ÆäËûÎªÊ§°Ü
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK:æˆåŠŸï¼Œå…¶ä»–ä¸ºå¤±è´¥
 
 *****************************************************************************/
 VOS_UINT32 CPM_ComSend(CPM_LOGIC_PORT_ENUM_UINT32 enLogicPort, VOS_UINT8 *pucVirData, VOS_UINT8 *pucPHYData, VOS_UINT32 ulLen)
 {
-    /* ²ÎÊý¼ì²â */
+    /* å‚æ•°æ£€æµ‹ */
     if ((CPM_COMM_BUTT <= enLogicPort) || (VOS_NULL_PTR == pucVirData) || (0 == ulLen))
     {
         return CPM_SEND_PARA_ERR;
@@ -265,18 +265,18 @@ VOS_UINT32 CPM_ComSend(CPM_LOGIC_PORT_ENUM_UINT32 enLogicPort, VOS_UINT8 *pucVir
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : CPM_ComRcv
- ¹¦ÄÜÃèÊö  : ½ÓÊÕÊý¾Ýº¯Êý£¬Ìá¹©¸øÎïÀíÍ¨µÀÊ¹ÓÃ
- ÊäÈë²ÎÊý  : enPhyPort£º  ÎïÀíÍ¨µÀºÅ
-             pucData£º    ½ÓÊÕÊý¾ÝµÄÖ¸Õë
-             ulLen:       ½ÓÊÕÊý¾ÝµÄ³¤¶È
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK:³É¹¦£¬ÆäËûÎªÊ§°Ü
+ å‡½ æ•° å  : CPM_ComRcv
+ åŠŸèƒ½æè¿°  : æŽ¥æ”¶æ•°æ®å‡½æ•°ï¼Œæä¾›ç»™ç‰©ç†é€šé“ä½¿ç”¨
+ è¾“å…¥å‚æ•°  : enPhyPortï¼š  ç‰©ç†é€šé“å·
+             pucDataï¼š    æŽ¥æ”¶æ•°æ®çš„æŒ‡é’ˆ
+             ulLen:       æŽ¥æ”¶æ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK:æˆåŠŸï¼Œå…¶ä»–ä¸ºå¤±è´¥
 
 *****************************************************************************/
 VOS_UINT32 CPM_ComRcv(CPM_PHY_PORT_ENUM_UINT32 enPhyPort, VOS_UINT8 *pucData, VOS_UINT32 ulLen)
 {
-    /* ²ÎÊý¼ì²â */
+    /* å‚æ•°æ£€æµ‹ */
     if ((CPM_PORT_BUTT <= enPhyPort) || (VOS_NULL_PTR == pucData) || (0 == ulLen))
     {
         return VOS_ERR;
@@ -293,11 +293,11 @@ VOS_UINT32 CPM_ComRcv(CPM_PHY_PORT_ENUM_UINT32 enPhyPort, VOS_UINT8 *pucData, VO
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : CPM_Show
- ¹¦ÄÜÃèÊö  : ÏÔÊ¾µ±Ç°µÄÂß¼­ºÍÎïÀí¶Ë¿Ú¶ÔÓ¦¹ØÏµ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
+ å‡½ æ•° å  : CPM_Show
+ åŠŸèƒ½æè¿°  : æ˜¾ç¤ºå½“å‰çš„é€»è¾‘å’Œç‰©ç†ç«¯å£å¯¹åº”å…³ç³»
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
 
 *****************************************************************************/
 VOS_VOID CPM_Show(VOS_VOID)

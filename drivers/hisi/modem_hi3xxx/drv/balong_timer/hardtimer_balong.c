@@ -11,12 +11,12 @@
 
 struct timer_ctrl
 {
-   timer_func routine;                    /*ÖĞ¶Ï´¦Àíº¯Êı    */
-   void *arg;                             /*ÖĞ¶Ï´¦Àíº¯Êı²ÎÊı*/
-   u32 addr;                              /*timerµÄ»ùµØÖ·   */
-   u32 interrupt_num;                     /*timerµÄÖĞ¶ÏºÅ   */
-   u32 clk;                               /*timerµÄÊ±ÖÓÆµÂÊ */
-   u32 timeout;                           /*ÒÔ1Îªµ¥Î»¼ÇÂ¼Ê¹ÓÃtimerµÄ³¬Ê±Ê±¼ä*/
+   timer_func routine;                    /*ä¸­æ–­å¤„ç†å‡½æ•°    */
+   void *arg;                             /*ä¸­æ–­å¤„ç†å‡½æ•°å‚æ•°*/
+   u32 addr;                              /*timerçš„åŸºåœ°å€   */
+   u32 interrupt_num;                     /*timerçš„ä¸­æ–­å·   */
+   u32 clk;                               /*timerçš„æ—¶é’Ÿé¢‘ç‡ */
+   u32 timeout;                           /*ä»¥1ä¸ºå•ä½è®°å½•ä½¿ç”¨timerçš„è¶…æ—¶æ—¶é—´*/
    spinlock_t lock;
 };
 static struct timer_ctrl hard_timer_control[TIMER_NUM] ={
@@ -80,7 +80,7 @@ u32 bsp_get_timer_rest_time(u32 timer_id, DRV_TIMER_UNIT unit)
 	u32 addr = 0,ret = 0;
 	addr = TIMER_CONTROLREG(hard_timer_control[timer_id].addr);
 	ret = readl(addr);
-	/*ÔÚÊ¹ÄÜµÄÇé¿öÏÂ£¬·µ»Ø½á¹û*/
+	/*åœ¨ä½¿èƒ½çš„æƒ…å†µä¸‹ï¼Œè¿”å›ç»“æœ*/
 	if(ret&0x1)
 	{
 		ret = bsp_get_timer_current_value(timer_id);
@@ -96,7 +96,7 @@ u32 bsp_get_timer_rest_time(u32 timer_id, DRV_TIMER_UNIT unit)
 			return ret;
 		}
 	}else
-		/*Èç¹ûÃ»ÓĞÊ¹ÄÜ£¬Ôò·µ»Ø0xFFFFFFFF*/
+		/*å¦‚æœæ²¡æœ‰ä½¿èƒ½ï¼Œåˆ™è¿”å›0xFFFFFFFF*/
 		return 0xFFFFFFFF;
 	return OK;
 }
@@ -105,7 +105,7 @@ void bsp_hardtimer_int_unmask(u32 timer_id)
 {
 	u32 ret = 0,addr = 0;
 	addr = TIMER_CONTROLREG(hard_timer_control[timer_id].addr);
-	ret = readl(addr);/* [false alarm]:Îó±¨ */
+	ret = readl(addr);/* [false alarm]:è¯¯æŠ¥ */
 	writel(ret&(~TIMER_INT_MASK),addr);
 }
 
@@ -113,7 +113,7 @@ void bsp_hardtimer_int_mask(u32 timer_id)
 {
 	u32 ret = 0,addr = 0;
 	addr = TIMER_CONTROLREG(hard_timer_control[timer_id].addr);
-	ret = readl(addr);/* [false alarm]:Îó±¨ */
+	ret = readl(addr);/* [false alarm]:è¯¯æŠ¥ */
 	writel(ret|TIMER_INT_MASK,addr);
 }
 u32 bsp_hardtimer_int_status(u32 timer_id)
@@ -130,7 +130,7 @@ void bsp_hardtimer_int_clear(u32 timer_id)
 }
 static s32 bsp_hardtimer_disable_noirq(u32 timer_id)
 {
-	/*×îºó1bitĞ´0,¹Ø±ÕÖ®Ç°ÏÈÇåÖĞ¶Ï*/
+	/*æœ€å1bitå†™0,å…³é—­ä¹‹å‰å…ˆæ¸…ä¸­æ–­*/
 	u32 ret = 0;
 	ret = readl(TIMER_INTSTATUS(hard_timer_control[timer_id].addr));
 	if (ret )
@@ -139,7 +139,7 @@ static s32 bsp_hardtimer_disable_noirq(u32 timer_id)
 	}
 	ret = readl(TIMER_CONTROLREG(hard_timer_control[timer_id].addr));
 	ret &= ~HARD_TIMER_ENABLE;
-	ret |=TIMER_INT_MASK;/* [false alarm]:Îó±¨ */
+	ret |=TIMER_INT_MASK;/* [false alarm]:è¯¯æŠ¥ */
 	writel(ret,TIMER_CONTROLREG(hard_timer_control[timer_id].addr));
 	do{
 		ret = readl(TIMER_CONTROLREG(hard_timer_control[timer_id].addr));
@@ -168,16 +168,16 @@ s32 bsp_hardtimer_alloc(struct bsp_hardtimer_control  *timer_ctrl)
 	spin_lock_irqsave(&hard_timer_control[timer_ctrl->timerId].lock,flags);
 	(void)bsp_hardtimer_disable_noirq(timer_ctrl->timerId);
 	bsp_hardtimer_load_value(timer_ctrl->timerId,timer_ctrl->timeout);
-	if (TIMER_ONCE_COUNT == timer_ctrl->mode||TIMER_FREERUN_COUNT == timer_ctrl->mode)/*×ÔÓÉÄ£Ê½,µÚ2bitĞ´0*/
+	if (TIMER_ONCE_COUNT == timer_ctrl->mode||TIMER_FREERUN_COUNT == timer_ctrl->mode)/*è‡ªç”±æ¨¡å¼,ç¬¬2bitå†™0*/
 	{
 		readValue = readl(TIMER_CONTROLREG(timerAddr));
-		readValue &= (~0x2);/* [false alarm]:Îó±¨ */
+		readValue &= (~0x2);/* [false alarm]:è¯¯æŠ¥ */
 		writel(readValue,TIMER_CONTROLREG(timerAddr));
 	}
-	else/*ÖÜÆÚÄ£Ê½,µÚ2bitĞ´1*/
+	else/*å‘¨æœŸæ¨¡å¼,ç¬¬2bitå†™1*/
 	{
 		readValue = readl(TIMER_CONTROLREG(timerAddr));
-		readValue |= 0x2;/* [false alarm]:Îó±¨ */
+		readValue |= 0x2;/* [false alarm]:è¯¯æŠ¥ */
 		writel(readValue,TIMER_CONTROLREG(timerAddr));
 	}
 	spin_unlock_irqrestore(&hard_timer_control[timer_ctrl->timerId].lock,flags);
@@ -248,7 +248,7 @@ s32 bsp_hardtimer_start(struct bsp_hardtimer_control  *timer_ctrl)
 		hardtimer_print_error("timer_ctrl is NULL \n");
 		return ERROR;
 	}
-	/*Ö±½Ó²Ù×÷¼Ä´æÆ÷*/
+	/*ç›´æ¥æ“ä½œå¯„å­˜å™¨*/
 	if(TIMER_UNIT_NONE==timer_ctrl->unit){
 		ret = bsp_hardtimer_alloc(timer_ctrl);
 		if(OK!=ret){
@@ -288,7 +288,7 @@ static s32 bsp_hardtimer_enable_noirq(u32 timer_id)
 	ret = readl(TIMER_CONTROLREG(hard_timer_control[timer_id].addr));
 	/*lint -restore +e527*/
 	ret |= HARD_TIMER_ENABLE ;
-	ret&=(~TIMER_INT_MASK);/* [false alarm]:Îó±¨ */
+	ret&=(~TIMER_INT_MASK);/* [false alarm]:è¯¯æŠ¥ */
 	writel(ret,TIMER_CONTROLREG(hard_timer_control[timer_id].addr));
 	do{
 		ret = readl(TIMER_CONTROLREG(hard_timer_control[timer_id].addr));
@@ -317,7 +317,7 @@ s32 bsp_hardtimer_free(u32 timer_id)
 }
 /*lint -restore +e550*/
 
-/*»ñÈ¡»½ĞÑÔ´timerµÄÏÂÒ»¸ö×î½üµ½Ê±Ê±¼ä£¬¹©µÍ¹¦ºÄÄ£¿éÊ¹ÓÃ*/
+/*è·å–å”¤é†’æºtimerçš„ä¸‹ä¸€ä¸ªæœ€è¿‘åˆ°æ—¶æ—¶é—´ï¼Œä¾›ä½åŠŸè€—æ¨¡å—ä½¿ç”¨*/
 u32 get_next_schedule_time(void)
 {
 	u32 i=0,min = 0xffffffff,ret = 0;

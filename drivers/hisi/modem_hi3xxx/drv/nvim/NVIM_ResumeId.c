@@ -68,8 +68,8 @@ unsigned short  g_ausNvResumeManufactureIdList[] =
     en_NV_Item_VSIM_HVSDH_INFO,
     en_NV_Item_XO_INIT_LOW_TEMP,
 
-/* Deleted by c00318887 for DPlmn¿©»›∫Õ”≈œ»Ω”»ÎHPLMN, 2015-5-18, begin */
-/* Deleted by c00318887 for DPlmn¿©»›∫Õ”≈œ»Ω”»ÎHPLMN, 2015-5-18, end */
+/* Deleted by c00318887 for DPlmnÊâ©ÂÆπÂíå‰ºòÂÖàÊé•ÂÖ•HPLMN, 2015-5-18, begin */
+/* Deleted by c00318887 for DPlmnÊâ©ÂÆπÂíå‰ºòÂÖàÊé•ÂÖ•HPLMN, 2015-5-18, end */
     
     /* Gsm 850 */
     en_NV_Item_GSM850_RX_DCOFFSET,
@@ -1829,7 +1829,7 @@ unsigned short  g_ausNvResumeManufactureIdList[] =
     
     
     
-/*BAND28 …˙≤˙NV*/
+/*BAND28 Áîü‰∫ßNV*/
 	EN_NV_ID_ANT_MODEM_LOSS_B28				/* 0xf440*/,
 	EN_NV_ID_LTE_AGC_BLK_FREQ_COMP_ANT1_B28			/* 0xf44D*/,
 	EN_NV_ID_LTE_AGC_BLK_FREQ_COMP_ANT2_B28			/* 0xf44E*/,
@@ -1860,7 +1860,7 @@ unsigned short  g_ausNvResumeManufactureIdList[] =
 	EN_NV_ID_LTE_AGC_SCC_NOBLK_FREQ_COMP_ANT1_B28  /* 0xf46b*/,
 	EN_NV_ID_LTE_AGC_SCC_NOBLK_FREQ_COMP_ANT2_B28  /* 0xf46c*/,
 
-/*BAND128 …˙≤˙NV*/
+/*BAND128 Áîü‰∫ßNV*/
     EN_NV_ID_ANT_MODEM_LOSS_B128             /* 0xf480*/,
     EN_NV_ID_LTE_AGC_BLK_FREQ_COMP_ANT1_B128         /* 0xf48D*/,
     EN_NV_ID_LTE_AGC_BLK_FREQ_COMP_ANT2_B128         /* 0xf48E*/,
@@ -1909,7 +1909,7 @@ unsigned short  g_ausNvResumeManufactureIdList[] =
     EN_NV_ID_RX_AGC_FREQ_COMP_2                      /*0xF8fe*/,
 
     /*TDS*/
-    /*Band34 π§≥ßnv*/
+    /*Band34 Â∑•ÂéÇnv*/
     EN_NV_ID_TDS_TX_FREQ_COMP_B34                    /*0xf8a0*/,
     EN_NV_ID_TDS_PA_POWER_DIFFERENCE_B34             /*0xf8a1*/,
     EN_NV_ID_TDS_TX_APC_GAIN_ITEM_B34                     /*0xf8a2*/,
@@ -1920,7 +1920,7 @@ unsigned short  g_ausNvResumeManufactureIdList[] =
     EN_NV_ID_TDS_TX_CAL_PA_GAIN_BB_B34               /*0xf8a7*/,
     EN_NV_ID_TDS_PA_MID_TX_FREQ_COMP_B34              /* 0xf8a8 */,
     EN_NV_ID_TDS_PA_LOW_TX_FREQ_COMP_B34	     /* 0xf8a9 */,
-    /*Band39 π§≥ßnv*/
+    /*Band39 Â∑•ÂéÇnv*/
     EN_NV_ID_TDS_TX_FREQ_COMP_B39                     /*0xf8b0*/,
     EN_NV_ID_TDS_PA_POWER_DIFFERENCE_B39             /*0xf8b1*/,
     EN_NV_ID_TDS_TX_APC_GAIN_ITEM_B39                     /*0xf8b2*/,
@@ -1932,7 +1932,7 @@ unsigned short  g_ausNvResumeManufactureIdList[] =
     EN_NV_ID_TDS_PA_MID_TX_FREQ_COMP_B39              /* 0xf8b8 */,
     EN_NV_ID_TDS_PA_LOW_TX_FREQ_COMP_B39	     /* 0xf8b9 */,
 
-    /*Band40 π§≥ßnv*/
+    /*Band40 Â∑•ÂéÇnv*/
     EN_NV_ID_TDS_TX_FREQ_COMP_B40                     /*0xf8c0*/,
     EN_NV_ID_TDS_PA_POWER_DIFFERENCE_B40             /*0xf8c1*/,
     EN_NV_ID_TDS_TX_APC_GAIN_ITEM_B40                     /*0xf8c2*/,
@@ -1944,7 +1944,7 @@ unsigned short  g_ausNvResumeManufactureIdList[] =
     EN_NV_ID_TDS_PA_MID_TX_FREQ_COMP_B40              /* 0xf8c8 */,
     EN_NV_ID_TDS_PA_LOW_TX_FREQ_COMP_B40	     /* 0xf8c9 */,
 
-    /*Band_Reserved π§≥ßnv*/
+    /*Band_Reserved Â∑•ÂéÇnv*/
     EN_NV_ID_TDS_TX_FREQ_COMP_BRESERVED             /*0xf8d0*/,
     EN_NV_ID_TDS_PA_POWER_DIFFERENCE_BRESERVED         /*0xf8d1*/,
     EN_NV_ID_TDS_TX_APC_GAIN_ITEM_BRESERVED                 /*0xf8d2*/,
@@ -1956,7 +1956,7 @@ unsigned short  g_ausNvResumeManufactureIdList[] =
     EN_NV_ID_TDS_PA_MID_TX_FREQ_COMP_BRESERVED              /* 0xf8d8 */,
     EN_NV_ID_TDS_PA_LOW_TX_FREQ_COMP_BRESERVED	      /* 0xf8d9 */,
 
-/*BAND26 …˙≤˙NV*/
+/*BAND26 Áîü‰∫ßNV*/
     EN_NV_ID_ANT_MODEM_LOSS_B26   ,                  /*0xf840*/
     EN_NV_ID_LTE_AGC_BLK_FREQ_COMP_ANT1_B26 ,        /* 0xf84d*/
     EN_NV_ID_LTE_AGC_BLK_FREQ_COMP_ANT2_B26 ,        /* 0xf84e*/
@@ -2005,7 +2005,7 @@ unsigned short  g_ausNvResumeUserIdList[] =
 };
 
 
-/* ∑«º”√‹∞Ê±æ–Ë“™Ω¯––ª÷∏¥µƒª˙“™ ˝æ›NVœÓ */
+/* ÈùûÂä†ÂØÜÁâàÊú¨ÈúÄË¶ÅËøõË°åÊÅ¢Â§çÁöÑÊú∫Ë¶ÅÊï∞ÊçÆNVÈ°π */
 unsigned short  g_ausNvResumeSecureIdList[] =
 {
     en_NV_Item_CustomizeSimLockPlmnInfo,

@@ -32,7 +32,7 @@ ssize_t pm_om_fread(struct file *file, char __user *buf, size_t count, loff_t *p
 	{
 		prepare_to_wait(&g_pmom_platform.wq, &wait, TASK_INTERRUPTIBLE);
 
-		/* Òì³£±£»¤ */
+		/* å¼‚å¸¸ä¿æŠ¤ */
 		if (ctrl->log.init_flag != PM_OM_INIT_MAGIC)
 		{
 			goto skip_read;
@@ -90,7 +90,7 @@ skip_read:
 		}
 	}
 
-	/* ³É¹¦¶ÁÍêÖ®ºó¸üĞÂºË¼äring bufferµÄ¶ÁÖ¸Õë */
+	/* æˆåŠŸè¯»å®Œä¹‹åæ›´æ–°æ ¸é—´ring bufferçš„è¯»æŒ‡é’ˆ */
 	pm_om_spin_lock(&ctrl->log.lock, flags);
 	ctrl->log.rb.read += len;
 	ctrl->log.rb.read %= (ctrl->log.rb.size);
@@ -151,7 +151,7 @@ int pm_om_fwrite_trigger(void)
 	struct pm_om_ctrl *ctrl = g_pmom_platform.ctrl;
 	u32 timestamp = 0;
 
-	/* È·ÈÏÊÇ·ñĞèÒªĞ´ÎÄ¼ş */
+	/* ç¡®è®¤æ˜¯å¦éœ€è¦å†™æ–‡ä»¶ */
 	if (ctrl->log.app_is_alive)
 	{
 		timestamp = bsp_get_slice_value();
@@ -233,7 +233,7 @@ static int get_u32_seq_data_from_user(const char  __user *usr_buf, size_t usr_co
 	return 0;
 }
 
-/* Í¨ÖªÆäËûºË¿ªÆôlog¹¦ÄÜ */
+/* é€šçŸ¥å…¶ä»–æ ¸å¼€å¯logåŠŸèƒ½ */
 static void pm_om_notify_other_core(pm_om_icc_data_type data)
 {
 	s32 ret = 0;
@@ -246,7 +246,7 @@ static void pm_om_notify_other_core(pm_om_icc_data_type data)
 		goto icc_send_fail;
 	}
 
-	/* TODO:  µÈM3¿ªÆôºó´ò¿ª */
+	/* TODO:  ç­‰M3å¼€å¯åæ‰“å¼€ */
 	return;
 
 icc_send_fail:
@@ -484,7 +484,7 @@ void pm_om_ipc_handler(u32 data)
 	wake_up_interruptible(&g_pmom_platform.wq);
 }
 
-/* ÏµÍ³±»»½ĞÑÊ±´¥·¢Ò»´ÎĞ´ÎÄ¼ş£¬¼õÉÙacore±»»½ĞÑ´ÎÊı */
+/* ç³»ç»Ÿè¢«å”¤é†’æ—¶è§¦å‘ä¸€æ¬¡å†™æ–‡ä»¶ï¼Œå‡å°‘acoreè¢«å”¤é†’æ¬¡æ•° */
 s32 pm_om_notify(struct notifier_block *notify_block, unsigned long mode, void *unused)
 {
     switch (mode)

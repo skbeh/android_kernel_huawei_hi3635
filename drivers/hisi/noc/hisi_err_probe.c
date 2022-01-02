@@ -104,7 +104,7 @@ void modem_reg_addr_init(void)
 }
 #endif
 
-/*Êä³öbase+0x14µÄÖµµÄº¬Òå*/
+/*è¾“å‡ºbase+0x14çš„å€¼çš„å«ä¹‰*/
 static void print_errlog0(unsigned int val)
 {
 	unsigned int idx;
@@ -123,7 +123,7 @@ static void print_errlog0(unsigned int val)
 	else
 		pr_err("\t[opc=%d] out of range!\n",idx);
 }
-/*Êä³öÊä³öbase+0x18µÄÖµµÄº¬Òå*/
+/*è¾“å‡ºè¾“å‡ºbase+0x18çš„å€¼çš„å«ä¹‰*/
 static unsigned int print_errlog1(unsigned int val, unsigned int idx)
 {
 	struct noc_bus_info *noc_bus = 0;
@@ -384,7 +384,7 @@ static void dump_error_logger(void *base, unsigned int size)
     translate_error_logger(base);
 
 #ifdef CONFIG_ARCH_HI6XXX
-    /*Èç¹ûÊÇModem Noc ÄÇÃ´´òÓ¡NocÐÅÏ¢*/
+    /*å¦‚æžœæ˜¯Modem Noc é‚£ä¹ˆæ‰“å°Nocä¿¡æ¯*/
     if(NULL != g_ModemNocBaseAddr && NOC_INIT_MODEM == s_noc_err_init_type)
     {
         MNTN_PRINT("modem noc error logger dump:\n");
@@ -537,7 +537,7 @@ void hi6220_noc_err_probe_hanlder(void __iomem *base)
         return;
     }
 
-    /*Modem Noc²»´¥·¢È«¾Ö¸´Î»£¬ÐèÒª½«¸Ã±äÁ¿ÖÃNONE£¬±ÜÃâModem NocÖ®ºó£¬ÆäËûÒì³£´¥·¢µÄNoc½øModem NocÁ÷³Ì*/
+    /*Modem Nocä¸è§¦å‘å…¨å±€å¤ä½ï¼Œéœ€è¦å°†è¯¥å˜é‡ç½®NONEï¼Œé¿å…Modem Nocä¹‹åŽï¼Œå…¶ä»–å¼‚å¸¸è§¦å‘çš„Nocè¿›Modem Nocæµç¨‹*/
     s_noc_err_init_type = NOC_INIT_NONE;
 
     /*show error logger data*/

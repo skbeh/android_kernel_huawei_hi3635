@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 **************************************************************************** */
 #include "SCMProc.h"
 #include "ombufmngr.h"
@@ -22,33 +22,33 @@ extern "C" {
 /* lint +e767  */
 
 /* ****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 **************************************************************************** */
 
 
 /*****************************************************************************
-  3 Íâ²¿ÒýÓÃÉùÃ÷
+  3 å¤–éƒ¨å¼•ç”¨å£°æ˜Ž
 *****************************************************************************/
 extern NV_FLASH_LOG_RECORD_STRU            g_stFlashLogCfg;
 extern OM_FLASH_DEBUG_INFO_STRU            g_stFSLogFileInfo;
 extern VOS_UINT32                          g_ulLogMaxCout;
 /*****************************************************************************
-  4 º¯ÊýÊµÏÖ
+  4 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  :
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊý  :
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  :
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê5ÔÂ31ÈÕ
-    ×÷    Õß   : XXXXXXXX
-    ÐÞ¸ÄÄÚÈÝ   : V8R1 OM_OptimizeÏîÄ¿ÐÂÔö
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´5æœˆ31æ—¥
+    ä½œ    è€…   : XXXXXXXX
+    ä¿®æ”¹å†…å®¹   : V8R1 OM_Optimizeé¡¹ç›®æ–°å¢ž
 
 *****************************************************************************/
 #if (VOS_LINUX == VOS_OS_VER)
@@ -56,7 +56,7 @@ extern VOS_UINT32                          g_ulLogMaxCout;
 
 VOS_UINT32 PPM_FSStartLog(VOS_VOID)
 {
-    /*Èç¹ûGUÅäÖÃ±£´æ¿Õ¼äÅäÖÃÎª0£¬Ôò²»ÐèÒª½øÐÐ±£´æ*/
+    /*å¦‚æžœGUé…ç½®ä¿å­˜ç©ºé—´é…ç½®ä¸º0ï¼Œåˆ™ä¸éœ€è¦è¿›è¡Œä¿å­˜*/
     if (0 == g_stFlashLogCfg.ulGULogFileSize)
     {
         return VOS_OK;
@@ -92,7 +92,7 @@ VOS_UINT32 PPM_FSWriteLogProc(VOS_UINT8 *pucVirAddr, VOS_UINT8 *pucPhyAddr, VOS_
 
 VOS_UINT32 PPM_FSInitLogFile(VOS_VOID)
 {
-    /*¶ÁÈ¡Flash±£´ætraceÅäÖÃ*/
+    /*è¯»å–Flashä¿å­˜traceé…ç½®*/
     if(NV_OK != NV_Read(en_NV_Item_FLASH_Log_Record_CFG, &g_stFlashLogCfg, sizeof(NV_FLASH_LOG_RECORD_STRU)))
     {
         PS_LOG(WUEPS_PID_OM, 0, PS_PRINT_ERROR, "PPM_FSInitLogFile:Read NV Config fail!");
@@ -102,7 +102,7 @@ VOS_UINT32 PPM_FSInitLogFile(VOS_VOID)
 
     g_stFSLogFileInfo.bIsWritten    = VOS_FALSE;
 
-    /*Èç¹ûGUÅäÖÃ±£´æ¿Õ¼äÅäÖÃÎª0£¬Ôò²»ÐèÒª½øÐÐ±£´æ*/
+    /*å¦‚æžœGUé…ç½®ä¿å­˜ç©ºé—´é…ç½®ä¸º0ï¼Œåˆ™ä¸éœ€è¦è¿›è¡Œä¿å­˜*/
     if (0 == g_stFlashLogCfg.ulGULogFileSize)
     {
         return VOS_OK;

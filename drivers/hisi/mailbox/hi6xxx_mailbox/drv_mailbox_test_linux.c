@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 
 #include <linux/string.h>
@@ -32,17 +32,17 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-  1 ¿ÉÎ¬¿É²âĞÅÏ¢ÖĞ°üº¬µÄCÎÄ¼ş±àºÅºê¶¨Òå
+  1 å¯ç»´å¯æµ‹ä¿¡æ¯ä¸­åŒ…å«çš„Cæ–‡ä»¶ç¼–å·å®å®šä¹‰
 *****************************************************************************/
 #undef  _MAILBOX_FILE_
 #define _MAILBOX_FILE_   "tm"
 typedef int (*FUNCPTR)(void);
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 /*****************************************************************************
-MSG ¹¦ÄÜ ²âÊÔÇø
+MSG åŠŸèƒ½ æµ‹è¯•åŒº
 *****************************************************************************/
 static const unsigned char g_test_mailbox_data_str[] = {"Use this page to search the product documentation and Microsoft Partner sites for information. To access this page, choose Search from the Help menu.\
 Security Note Microsoft does not guarantee or endorse search results provided by third-parties, such as Codezone Community participants. Use caution when downloading and installing components from online sources.\
@@ -67,10 +67,10 @@ Source The physical source of the results, such as Local Help and MSDN Online. C
 struct tm_mb_handle g_test_mailbox_handle = {0};
 
 /*****************************************************************************
-  3 º¯Êı¶¨Òå
+  3 å‡½æ•°å®šä¹‰
 *****************************************************************************/
 
-/*PCÄ£Äâ°å²àSTµÄÊÕÓÊ¼şÍ¨Öªº¯Êı*/
+/*PCæ¨¡æ‹Ÿæ¿ä¾§STçš„æ”¶é‚®ä»¶é€šçŸ¥å‡½æ•°*/
 extern void st_mailbox_notify(unsigned int MailCode);
 
 MAILBOX_LOCAL unsigned int test_mailbox_get_bound_width(
@@ -183,7 +183,7 @@ void test_mailbox_msg_cb(
     st_msg = (struct mb_st_msg *)buff;
 
     if (MAILBOX_BOARDST_USER_PROTECT1 !=  st_msg->protect) {
-        /*ÎŞĞ§µÄÏûÏ¢*/
+        /*æ— æ•ˆçš„æ¶ˆæ¯*/
         printk("error test_mailbox_msg_cb: PROTECT \n");
         if ((MAILBOX_NULL != pCbHandle) && (MAILBOX_NULL != pCbHandle->finish_sema)) {
             up(pCbHandle->finish_sema);
@@ -192,14 +192,14 @@ void test_mailbox_msg_cb(
     }
 
 #ifdef _DRV_LLT_
-    /*PC ÑéÖ¤×Ô·¢×ÔÊÕ£¬²»´æÔÚÕæÕıµÄ MAILBOX_BOARDST_ID_LOOP_SEND ½×¶Î*/
+    /*PC éªŒè¯è‡ªå‘è‡ªæ”¶ï¼Œä¸å­˜åœ¨çœŸæ­£çš„ MAILBOX_BOARDST_ID_LOOP_SEND é˜¶æ®µ*/
     st_msg->test_id = MAILBOX_BOARDST_ID_LOOP_BACK;
 #endif
 
     switch (st_msg->test_id)
     {
         case MAILBOX_BOARDST_ID_LOOP_SEND:
-            /*½ÓÊÕµ½·¢ËÍ¹ıÀ´²âÊÔÏûÏ¢£¬Í¨¹ıÏûÏ¢ÖĞ¶¨ÒåµÄ·µ»ØÍ¨µÀ·µ»ØÍ¬ÑùµÄÏûÏ¢*/
+            /*æ¥æ”¶åˆ°å‘é€è¿‡æ¥æµ‹è¯•æ¶ˆæ¯ï¼Œé€šè¿‡æ¶ˆæ¯ä¸­å®šä¹‰çš„è¿”å›é€šé“è¿”å›åŒæ ·çš„æ¶ˆæ¯*/
             st_msg->test_id = MAILBOX_BOARDST_ID_LOOP_BACK;
             mailbox_send_msg(st_msg->back_code, (void*)(st_msg), mail_len);
             break;
@@ -210,7 +210,7 @@ void test_mailbox_msg_cb(
                 break;
             }
             pCbHandle->back_slice = pCbHandle->back_slice ? pCbHandle->back_slice : test_mailbox_get_time_stamp();
-            /*»Ø»·¹ıÀ´µÄÏûÏ¢£¬ÑéÖ¤ÏûÏ¢µÄÕıÈ·ĞÔ*/
+            /*å›ç¯è¿‡æ¥çš„æ¶ˆæ¯ï¼ŒéªŒè¯æ¶ˆæ¯çš„æ­£ç¡®æ€§*/
             dst_buff = (unsigned char*)(st_msg + 1);
             SrcBuff = (g_test_mailbox_data_str);
 
@@ -332,7 +332,7 @@ void test_mailbox_msg_process(
         }
     }
 
-    /*½ø³ÌÍ¬²½*/
+    /*è¿›ç¨‹åŒæ­¥*/
     if (MAILBOX_NULL != mb_cb->sync_sema) {
         down(mb_cb->sync_sema);
         up(mb_cb->sync_sema);
@@ -439,7 +439,7 @@ unsigned int test_mailbox_msg_multi_send(
         priority = 1;
     }
 
-    /*kthread_run µÄÏß³ÌÊÇÒì²½´´½¨£¬ĞèÒªÊ¹ÓÃĞÅºÅÁ¿ºÍÈ«¾Ö±äÁ¿À´±£Ö¤ËùÓĞÈÎÎñµÄÍ¬²½ */
+    /*kthread_run çš„çº¿ç¨‹æ˜¯å¼‚æ­¥åˆ›å»ºï¼Œéœ€è¦ä½¿ç”¨ä¿¡å·é‡å’Œå…¨å±€å˜é‡æ¥ä¿è¯æ‰€æœ‰ä»»åŠ¡çš„åŒæ­¥ */
     if(mb_handle->mutex) {
         down(mb_handle->mutex);
     } else {
@@ -447,7 +447,7 @@ unsigned int test_mailbox_msg_multi_send(
         return MAILBOX_ERRO;
     }
 
-    /*´´½¨»Øµ÷ÓÃ»§¾ä±ú*/
+    /*åˆ›å»ºå›è°ƒç”¨æˆ·å¥æŸ„*/
     mb_cb = kcalloc(sizeof(struct tm_mb_cb), 1, GFP_KERNEL);
     if (!mb_cb) {
         printk("error test_mailbox_msg_multi_send kcalloc,line(%d)\n",_MAILBOX_LINE_);
@@ -460,14 +460,14 @@ unsigned int test_mailbox_msg_multi_send(
     sema_init(mb_cb->sync_sema, 0);
     mb_cb->check_ret = MAILBOX_CRIT_RET_START;
 
-    /*×¢²áÏûÏ¢ÏìÓ¦½ÓÊÕ»Øµ÷*/
+    /*æ³¨å†Œæ¶ˆæ¯å“åº”æ¥æ”¶å›è°ƒ*/
     mailbox_reg_msg_cb(recv_code, test_mailbox_msg_cb, mb_cb);
 
     mb_cb->task_count = task_num;
 
     data_size = task_num * msg_num * (msg_len + task_num/2);
 
-    /*´´½¨Åµ¸É¸öÈÎÎñ£¬ÈÎÎñÈë¿Úº¯ÊıÎª±¾ºËÍùÆäËûºË·¢ËÍÏûÏ¢µÄº¯Êı*/
+    /*åˆ›å»ºè¯ºå¹²ä¸ªä»»åŠ¡ï¼Œä»»åŠ¡å…¥å£å‡½æ•°ä¸ºæœ¬æ ¸å¾€å…¶ä»–æ ¸å‘é€æ¶ˆæ¯çš„å‡½æ•°*/
     while (task_num) {
         mb_cb->msg_count += msg_num;
        printk("test_mailbox_msg_multi_send(%d) MailCode(0x%08x), RecevCode(0x%08x), \n\r\
@@ -601,19 +601,19 @@ void test_mailbox_init(void)
 
 void test_mailbox_msg_reg(unsigned int channel_id)
 {
-    /*Í¨µÀÖĞµÄµÚÒ»¸ömail_codeÎª±£Áô²âÊÔºÅ£¬Õâ¸ömail_codeºÍ´ËÍ¨µÀµÄchannel_idÒ»ÖÂ*/
+    /*é€šé“ä¸­çš„ç¬¬ä¸€ä¸ªmail_codeä¸ºä¿ç•™æµ‹è¯•å·ï¼Œè¿™ä¸ªmail_codeå’Œæ­¤é€šé“çš„channel_idä¸€è‡´*/
     unsigned int recv_code = channel_id;
 
     test_mailbox_init();
 
-    /*×¢²áÏûÏ¢ÏìÓ¦½ÓÊÕ»Øµ÷*/
+    /*æ³¨å†Œæ¶ˆæ¯å“åº”æ¥æ”¶å›è°ƒ*/
     mailbox_reg_msg_cb(recv_code, test_mailbox_msg_cb, MAILBOX_NULL);
 
 }
 
 
 /*****************************************************************************
-IFC ¹¦ÄÜ ²âÊÔÇø
+IFC åŠŸèƒ½ æµ‹è¯•åŒº
 *****************************************************************************/
 #ifndef _DRV_LLT_
 
@@ -676,7 +676,7 @@ int acore_fopen(const char *filename, int name_len, char *mode, int mode_len)
 
     printk("acore_fopen:filename(%s), name_len(%d), mode(%s), mode_len(%d)\n", filename, name_len, mode, mode_len);
 
-    /*Í¨¹ımode£¬×ª»»ÎªÏàÓ¦Ê®Áù½øÖÆÂë*/
+    /*é€šè¿‡modeï¼Œè½¬æ¢ä¸ºç›¸åº”åå…­è¿›åˆ¶ç */
     if (file_sflags (mode, &oflags, &appendflag) == 0) {
         return 0;
     }
@@ -858,7 +858,7 @@ int acore_rmdir( const char *pathname, int pathlen)
 }
 
 
-/*AºËºêÉú³Éº¯Êı*/
+/*Aæ ¸å®ç”Ÿæˆå‡½æ•°*/
 IFC_GEN_EXEC2( acore_print_p0,
                  IFC_INVAR, const char *  , string , 0,
                  IFC_INCNT, int, strlen, 0

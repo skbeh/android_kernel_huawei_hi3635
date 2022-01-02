@@ -140,7 +140,7 @@ OSL_IRQ_FUNC(static irqreturn_t,adp_timer_handler,irq,para)
 
 #ifdef __KERNEL__
 #if 0
-/*TIMER_ACPU_OSA_ID:ºÍcaixiÈ·ÈÏ£¬ºóĞø¿ÉÄÃµô*/
+/*TIMER_ACPU_OSA_ID:å’Œcaixiç¡®è®¤ï¼Œåç»­å¯æ‹¿æ‰*/
 void BSP_StartHardTimer(unsigned int value)
 {
     writel(HARD_TIMER_DISABLE, (volatile void *)TIMER_CONTROLREG(HI_TIMER_18_REGBASE_ADDR_VIRT));
@@ -158,7 +158,7 @@ BSP_U32 BSP_GetHardTimerCurTime(BSP_VOID)
 {
     u32 ret = 0;
     ret = readl((const volatile void *)TIMER_CONTROLREG(HI_TIMER_18_REGBASE_ADDR_VIRT));/*lint !e746*/
-    if((ret&0x1)!=0x1)/*Èç¹û¼ÆÊıÆ÷Ã»´ò¿ª*/
+    if((ret&0x1)!=0x1)/*å¦‚æœè®¡æ•°å™¨æ²¡æ‰“å¼€*/
     {
         return 0;
     }
@@ -175,7 +175,7 @@ void BSP_ClearTimerINT(void)
 }
 #endif
 #elif defined(__VXWORKS__)
-/*TIMER_ACPU_OSA_ID:ºÍcaixiÈ·ÈÏ£¬ºóĞø¿ÉÄÃµô*/
+/*TIMER_ACPU_OSA_ID:å’Œcaixiç¡®è®¤ï¼Œåç»­å¯æ‹¿æ‰*/
 void BSP_StartHardTimer(u32 value)
 {
     return;
@@ -254,7 +254,7 @@ int DRV_TIMER_START(unsigned int usrClkId,FUNCPTR_1 routine,int arg,unsigned int
             }
         }
     }
-    else if(TIMER_UNIT_NONE == unitType)/*Ö±½Ó²Ù×÷¼Ä´æÆ÷*/
+    else if(TIMER_UNIT_NONE == unitType)/*ç›´æ¥æ“ä½œå¯„å­˜å™¨*/
     {
         my_hardtimer.timeout = timerValue;
     }
@@ -344,7 +344,7 @@ static int adp_timer_init(void)
 }
 core_initcall(adp_timer_init);
 
-/*v7r2ÖĞ,Ê±¼ä´Á·µ»ØÏµÍ³¿ØÖÆÆ÷¶¨Ê±Æ÷£¬ÔÚp531 asicÖĞ£¬Ê±¼ä´ÁÓÉtimer5Ìá¹©*/
+/*v7r2ä¸­,æ—¶é—´æˆ³è¿”å›ç³»ç»Ÿæ§åˆ¶å™¨å®šæ—¶å™¨ï¼Œåœ¨p531 asicä¸­ï¼Œæ—¶é—´æˆ³ç”±timer5æä¾›*/
 unsigned int BSP_GetSliceValue(void)
 {
     return bsp_get_slice_value();
@@ -358,11 +358,11 @@ unsigned int bsp_get_32k_ms(void)
 	/*lint -restore  +e504*/
 }
 /*****************************************************************************
- º¯ Êı Ãû  : BSP_32K_GetTick
- ¹¦ÄÜÃèÊö  : 32KÊ±ÖÓ¶ÔÓ¦Tick²éÑ¯½Ó¿Ú
- ÊäÈë²ÎÊı  : None
- Êä³ö²ÎÊı  : None
- ·µ »Ø Öµ  : 32KÊ±ÖÓ¶ÔÓ¦TickÖµ
+ å‡½ æ•° å  : BSP_32K_GetTick
+ åŠŸèƒ½æè¿°  : 32Kæ—¶é’Ÿå¯¹åº”TickæŸ¥è¯¢æ¥å£
+ è¾“å…¥å‚æ•°  : None
+ è¾“å‡ºå‚æ•°  : None
+ è¿” å› å€¼  : 32Kæ—¶é’Ÿå¯¹åº”Tickå€¼
 *****************************************************************************/
  BSP_U32 BSP_32K_GetTick( BSP_VOID )
  {
@@ -371,7 +371,7 @@ unsigned int bsp_get_32k_ms(void)
 
 /*****************************************************************************
  Function   : BSP_PWC_SetTimer4WakeSrc
- Description: ÉèÖÃtimer4×÷Îª»½ĞÑÔ´
+ Description: è®¾ç½®timer4ä½œä¸ºå”¤é†’æº
  Input      :
  Return     : void
  Other      :
@@ -381,7 +381,7 @@ unsigned int bsp_get_32k_ms(void)
  }
 /*****************************************************************************
  Function   : BSP_PWC_DelTimer4WakeSrc
- Description: ÉèÖÃtimer4²»×÷Îª»½ĞÑÔ´
+ Description: è®¾ç½®timer4ä¸ä½œä¸ºå”¤é†’æº
  Input      :
             :
  Return     : void

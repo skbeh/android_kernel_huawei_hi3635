@@ -338,14 +338,14 @@ static int cpu_idle_notifier(struct notifier_block *nb, unsigned long val, void 
 
     switch (val) {
     case IDLE_START:
-        /* ildeÊ±ÅäÖÃ×Ô¶¯Ê§Ğ§ */
+        /* ildeæ—¶é…ç½®è‡ªåŠ¨å¤±æ•ˆ */
 
         /*mlog_i("cpu %d i_start", cpu);*/
         break;
     case IDLE_END:
         /*mlog_i("cpu %d i_end", cpu);*/
 
-        /* idle endÊ±ÅäÖÃÊ¹ÉúĞ§ */
+        /* idle endæ—¶é…ç½®ä½¿ç”Ÿæ•ˆ */
         direct_enable_monitor_mode(cpu);
         direct_set_all_watchpoints_one_cpu(cpu);
         break;
@@ -432,7 +432,7 @@ error:
  * @cpus   :[in] which cpu to clear. 0 to 3 is for single cpu, 4(ACPUMAX) is for all.
  *
  * Can return negative error values, returns 0 on success.
- * ¶ÔÍâ½Ó¿Ú
+ * å¯¹å¤–æ¥å£
  */
 int wp_set_watchpoints_ex(watchpoint_t* wp, uint32_t cpus)
 {
@@ -483,7 +483,7 @@ EXPORT_SYMBOL(wp_set_watchpoints_ex);
  * @cpus   :[in] which cpu to set. 0 to 3 is for single cpu, 4(ACPUMAX) is for all.
  *
  * Can return negative error values, returns 0 on success.
- * ¶ÔÍâ½Ó¿Ú
+ * å¯¹å¤–æ¥å£
  */
 int wp_set_watchpoints(uint32_t addr, uint32_t osize, uint32_t rw_type, uint32_t cb, uint32_t cb_param, uint32_t cpus)
 {
@@ -584,7 +584,7 @@ error:
  * @cpus:which cpu to clear. 0 to 3 is for single cpu, 4(ACPUMAX) is for all.
  *
  * Can return negative error values, returns 0 on success.
- * ¶ÔÍâ½Ó¿Ú
+ * å¯¹å¤–æ¥å£
  */
 int wp_clear_watchpoints(uint32_t addr, uint32_t cpus)
 {
@@ -658,7 +658,7 @@ int watchpoint_resume(struct platform_device * pdev)
 
     wp_suspended = false;
 
-    /* Êµ¼Ê¼Ä´æÆ÷µÄĞ´ÈëÖ»ÔÚidle endÊ±½øĞĞ */
+    /* å®é™…å¯„å­˜å™¨çš„å†™å…¥åªåœ¨idle endæ—¶è¿›è¡Œ */
 
     return 0;
 }
@@ -818,7 +818,7 @@ static int wp_state_read(struct file *file, char __user *user_buf,
 }
 
 /*
-watchpoint config ËµÃ÷
+watchpoint config è¯´æ˜
 */
 static int wp_config_read(struct file *file, char __user *user_buf,
                       size_t count, loff_t *ppos)
@@ -929,7 +929,7 @@ static int wp_config_write(struct file *file, const char __user *user_buf, size_
         }
 
     } else {
-        /* Òì³£ */
+        /* å¼‚å¸¸ */
         byte_writen = -EINVAL;
     }
 
@@ -1098,12 +1098,12 @@ static void wp_tshow_regs(char *buf)
         msleep(10);
     }
 
-    /* Ë³ĞòÏÔÊ¾ */
+    /* é¡ºåºæ˜¾ç¤º */
     snprintf(buf, WP_DBG_SIZE_PAGE, "%s%s", buf, buf + WP_DBG_SIZE_ONE_SHOW * 1);
     snprintf(buf, WP_DBG_SIZE_PAGE, "%s%s", buf, buf + WP_DBG_SIZE_ONE_SHOW * 2);
     snprintf(buf, WP_DBG_SIZE_PAGE, "%s%s", buf, buf + WP_DBG_SIZE_ONE_SHOW * 3);
 
-    /* ¶¯Ì¬Ë¢ĞÂ£¬Ã¿´Î¿ÉÄÜ²»Í¬ 
+    /* åŠ¨æ€åˆ·æ–°ï¼Œæ¯æ¬¡å¯èƒ½ä¸åŒ 
     snprintf(buf, WP_DBG_SIZE_PAGE, "%stried %d/99 times\n", buf, i)*/;
     snprintf(buf, WP_DBG_SIZE_PAGE, "%s<end>\n", buf);
 
@@ -1296,7 +1296,7 @@ static int wp_tgetmem_write(struct file *file, const char __user *user_buf, size
         }
 
     } else {
-        /* Òì³£ */
+        /* å¼‚å¸¸ */
         byte_writen = -EINVAL;
     }
 
@@ -1402,7 +1402,7 @@ static int wp_taccess_write(struct file *file, const char __user *user_buf, size
 
 
     } else {
-        /* Òì³£ */
+        /* å¼‚å¸¸ */
         byte_writen = -EINVAL;
     }
 

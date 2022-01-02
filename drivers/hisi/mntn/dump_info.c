@@ -198,12 +198,12 @@ static int __init dump_info_init(void)
 			printk(KERN_ERR "irq g:%s\n", g_irq_trace_name[i]);
 			goto unmap;
 		}
-		/* ÅÐ¶ÏmaxÖµ£¬·ÀÖ¹¶ÓÁÐÍ·³¤¶È±ä»»*/
+		/* åˆ¤æ–­maxå€¼ï¼Œé˜²æ­¢é˜Ÿåˆ—å¤´é•¿åº¦å˜æ¢*/
 		if (irq_queue[i]->max != (g_irq_record_len[i] - sizeof(struct queue))) {
 			printk(KERN_ERR "%s : irq trace cpu[%d] section header, max length incorrect\n", __func__, i);
 			goto unmap;
 		}
-		/* ÅÐ¶Ïhead/tailÖµÊÇ·ñÒì³£ */
+		/* åˆ¤æ–­head/tailå€¼æ˜¯å¦å¼‚å¸¸ */
 		saved_length = MOD_SUB(irq_queue[i]->head, irq_queue[i]->tail, irq_queue[i]->max);
 		if (saved_length%sizeof(struct irq_info) != 0) {
 			printk(KERN_ERR "%s : irq trace cpu[%d] section header, head/tail incorrect\n", __func__, i);
@@ -219,12 +219,12 @@ static int __init dump_info_init(void)
 			printk(KERN_ERR "task g:%s\n", g_task_trace_name[i]);
 			goto unmap;
 		}
-		/* ÅÐ¶ÏmaxÖµ£¬·ÀÖ¹¶ÓÁÐÍ·³¤¶È±ä»»*/
+		/* åˆ¤æ–­maxå€¼ï¼Œé˜²æ­¢é˜Ÿåˆ—å¤´é•¿åº¦å˜æ¢*/
 		if (task_queue[i]->max !=  (g_task_record_len[i] - sizeof(struct queue))) {
 			printk(KERN_ERR "%s : task trace cpu[%d] section header, max length incorrect\n", __func__, i);
 			goto unmap;
 		}
-		/* ÅÐ¶Ïhead/tailÖµÊÇ·ñÒì³£ */
+		/* åˆ¤æ–­head/tailå€¼æ˜¯å¦å¼‚å¸¸ */
 		saved_length = MOD_SUB(task_queue[i]->head, task_queue[i]->tail, task_queue[i]->max);
 		if (saved_length%sizeof(struct task_info) != 0) {
 			printk(KERN_ERR "%s : task trace cpu[%d] section header, head/tail incorrect\n", __func__, i);

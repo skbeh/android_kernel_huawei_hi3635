@@ -11,7 +11,7 @@ extern "C" {
 #include "diag_common.h"
 #include "dms.h"
 
-/*lint -save -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -save -e767 åŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_DIAG_VCOM_C
 /*lint -restore*/
 
@@ -20,7 +20,7 @@ VOS_VOID diag_VcomCtrlEvtCB(VOS_UINT32 ulChan, VOS_UINT32 ulEvent);
 VOS_VOID diag_VcomAppEvtCB(VOS_UINT32 ulChan, VOS_UINT32 ulEvent);
 VOS_UINT32 diag_VcomRead(VOS_UINT32 ulChan, VOS_UINT8 *pData, VOS_UINT32 uslength);
 
-/* CTRL¡¢APP¶Ë¿Ú×´Ì¬,0:ctrl,1:app */
+/* CTRLã€APPç«¯å£çŠ¶æ€,0:ctrl,1:app */
 static VOS_UINT32 g_diagVcomState[2];
 
 static VOS_VOID diag_VcomInfo_Init(VOS_VOID)
@@ -94,7 +94,7 @@ VOS_VOID diag_VcomCtrlEvtCB(VOS_UINT32 ulChan, VOS_UINT32 ulEvent)
         {
             return;
         }
-        //Í¨ÖªÂß¼­Í¨µÀ×´Ì¬
+        //é€šçŸ¥é€»è¾‘é€šé“çŠ¶æ€
         if(pfnConn!=NULL)
         {
             pfnConn(DIAG_DISCONN);
@@ -120,7 +120,7 @@ VOS_VOID diag_VcomAppEvtCB(VOS_UINT32 ulChan, VOS_UINT32 ulEvent)
         {
             return;
         }
-        //Í¨ÖªÂß¼­Í¨µÀ×´Ì¬
+        //é€šçŸ¥é€»è¾‘é€šé“çŠ¶æ€
         if(pfnConn!=NULL)
         {
             pfnConn(DIAG_DISCONN);
@@ -143,7 +143,7 @@ VOS_UINT32 diag_VcomRead(VOS_UINT32 ulChan, VOS_UINT8 *pData, VOS_UINT32 uslengt
     }
 
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
-    /*¶Ë¿ÚÇĞ»»£¬¶ªÆúÁ´±íÖĞÊı¾İ*/
+    /*ç«¯å£åˆ‡æ¢ï¼Œä¸¢å¼ƒé“¾è¡¨ä¸­æ•°æ®*/
     if(DIAG_PORT_GET_CONN_PORT() != EN_DIAG_VCOM_BEABER_DIAG_CTRL)
     {
         for(;;)
@@ -159,12 +159,12 @@ VOS_UINT32 diag_VcomRead(VOS_UINT32 ulChan, VOS_UINT8 *pData, VOS_UINT32 uslengt
     }
 #endif
 
-    /*ÉèÖÃµ±Ç°ÎïÀíÍ¨µÀ*/
+    /*è®¾ç½®å½“å‰ç‰©ç†é€šé“*/
     DIAG_PORT_PORT_SWITCH(EN_DIAG_VCOM_BEABER_DIAG_CTRL);
     diag_TraceDebug(pData, uslength);
 
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
-    /*SOCP²»¿ÉÓÃ»òÕß»º´æ·Ç¿Õ*/
+    /*SOCPä¸å¯ç”¨æˆ–è€…ç¼“å­˜éç©º*/
     if((g_diagSocpIsEnable != TRUE) || (ERR_MSP_SUCCESS != diag_PortDataBufIsEmpty()))
     {
         diag_PortAddToDataBuf(EN_DIAG_VCOM_BEABER_DIAG_CTRL, (VOS_UINT8 *)pData, uslength);
@@ -190,13 +190,13 @@ VOS_UINT32 diag_VcomInit(VOS_VOID)
 {
     diag_VcomInfo_Init();
 #if (FEATURE_ON == FEATURE_VCOM_EXT)
-    /*×¢²áAPP VCOM¶Á»Øµ÷*/
+    /*æ³¨å†ŒAPP VCOMè¯»å›è°ƒ*/
     DMS_RegOmChanDataReadCB(DIAG_APPVCOM_CHAN_CTRL, diag_VcomRead);
 
-    /*CTRL¿ÚÊÂ¼ş»Øµ÷*/
+    /*CTRLå£äº‹ä»¶å›è°ƒ*/
     DMS_RegOmChanEventCB(DIAG_APPVCOM_CHAN_CTRL, diag_VcomCtrlEvtCB);
 
-    /*APP¿ÚÊÂ¼ş»Øµ÷*/
+    /*APPå£äº‹ä»¶å›è°ƒ*/
     DMS_RegOmChanEventCB(DIAG_APPVCOM_CHAN_APP, diag_VcomAppEvtCB);
 
     DIAG_PORT_INIT_STATE_SWITCH(EN_DIAG_VCOM_BEABER_DIAG_CTRL,EN_PORT_INIT_SUCC);

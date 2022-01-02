@@ -94,12 +94,12 @@ error:
 sreset_mgr_LLI  *g_pmgr_hifireset_data = NULL;
 
 /*****************************************************************************
- º¯ Êı Ãû  : reset_link_insert
- ¹¦ÄÜÃèÊö  : ½«Êı¾İ²åÈëÁ´±í
- ÊäÈë²ÎÊı  : sreset_mgr_LLI *plink, Á´±íÖ¸Õë
-             sreset_mgr_LLI *punit£¬´ı²åÈëµÄ½ÚµãÖ¸Õë
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : reset_link_insert
+ åŠŸèƒ½æè¿°  : å°†æ•°æ®æ’å…¥é“¾è¡¨
+ è¾“å…¥å‚æ•°  : sreset_mgr_LLI *plink, é“¾è¡¨æŒ‡é’ˆ
+             sreset_mgr_LLI *punitï¼Œå¾…æ’å…¥çš„èŠ‚ç‚¹æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 sreset_mgr_LLI * reset_link_insert(sreset_mgr_LLI *plink, sreset_mgr_LLI *punit)
 {
@@ -113,7 +113,7 @@ sreset_mgr_LLI * reset_link_insert(sreset_mgr_LLI *plink, sreset_mgr_LLI *punit)
 	}
 	while (NULL != ppose)
 	{
-		/*¸ù¾İÓÅÏÈ¼¶²åÈëµ½Á´±íÖĞ*/
+		/*æ ¹æ®ä¼˜å…ˆçº§æ’å…¥åˆ°é“¾è¡¨ä¸­*/
 		if (ppose->cbfuninfo.priolevel > punit->cbfuninfo.priolevel)
 		{
 			if (phead == ppose)
@@ -139,23 +139,23 @@ sreset_mgr_LLI * reset_link_insert(sreset_mgr_LLI *plink, sreset_mgr_LLI *punit)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : reset_do_regcbfunc
- ¹¦ÄÜÃèÊö  : ÓÃÓÚÆäËü×é¼ş×¢²á»Øµ÷º¯Êı£¬´¦ÀíModem¸´Î»Ç°ºóÏà¹ØÊı¾İ¡£
- ÊäÈë²ÎÊı  :
-         sreset_mgr_LLI *plink,¹ÜÀíÁ´±í£¬×¢Òâ£¬ÔÊĞíÎª¿Õ.
-            const char *pname, ×é¼ş×¢²áµÄÃû×Ö
-         pdrv_reset_cbfun cbfun,    ×é¼ş×¢²áµÄ»Øµ÷º¯Êı
-         int userdata,×é¼şµÄË½ÓĞÊı¾İ
-         Int Priolevel, »Øµ÷º¯Êıµ÷ÓÃÓÅÏÈ¼¶ 0-49£¬ÆäÖĞ0-9 ±£Áô¡£
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : reset_do_regcbfunc
+ åŠŸèƒ½æè¿°  : ç”¨äºå…¶å®ƒç»„ä»¶æ³¨å†Œå›è°ƒå‡½æ•°ï¼Œå¤„ç†Modemå¤ä½å‰åç›¸å…³æ•°æ®ã€‚
+ è¾“å…¥å‚æ•°  :
+         sreset_mgr_LLI *plink,ç®¡ç†é“¾è¡¨ï¼Œæ³¨æ„ï¼Œå…è®¸ä¸ºç©º.
+            const char *pname, ç»„ä»¶æ³¨å†Œçš„åå­—
+         pdrv_reset_cbfun cbfun,    ç»„ä»¶æ³¨å†Œçš„å›è°ƒå‡½æ•°
+         int userdata,ç»„ä»¶çš„ç§æœ‰æ•°æ®
+         Int Priolevel, å›è°ƒå‡½æ•°è°ƒç”¨ä¼˜å…ˆçº§ 0-49ï¼Œå…¶ä¸­0-9 ä¿ç•™ã€‚
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 sreset_mgr_LLI * reset_do_regcbfunc(sreset_mgr_LLI *plink, const char *pname, pdrv_reset_cbfun pcbfun, int userdata, int priolevel)
 {
 	sreset_mgr_LLI  *phead = plink;
 	sreset_mgr_LLI  *pmgr_unit = NULL;
 
-	/*ÅĞ¶ÏÈë²ÎÊÇ·ñºÏ·¨£¬²»ºÏ·¨·µ»Ø´íÎó*/
+	/*åˆ¤æ–­å…¥å‚æ˜¯å¦åˆæ³•ï¼Œä¸åˆæ³•è¿”å›é”™è¯¯*/
 	if (NULL == pname
 		|| NULL == pcbfun
 		|| (priolevel < RESET_CBFUNC_PRIO_LEVEL_LOWT || priolevel > RESET_CBFUNC_PRIO_LEVEL_HIGH))
@@ -165,12 +165,12 @@ sreset_mgr_LLI * reset_do_regcbfunc(sreset_mgr_LLI *plink, const char *pname, pd
 		return NULL;
 	}
 
-	/*·ÖÅä¿Õ¼ä*/
+	/*åˆ†é…ç©ºé—´*/
 	pmgr_unit = (sreset_mgr_LLI*)kmalloc(sizeof(sreset_mgr_LLI), GFP_KERNEL);
 	if (NULL != pmgr_unit)
 	{
 		memset((void*)pmgr_unit, 0, (sizeof(sreset_mgr_LLI)));
-		/*¸³Öµ*/
+		/*èµ‹å€¼*/
 		strncpy(pmgr_unit->cbfuninfo.name, pname, 9);
 		pmgr_unit->cbfuninfo.priolevel = priolevel;
 		pmgr_unit->cbfuninfo.userdata = userdata;
@@ -182,28 +182,28 @@ sreset_mgr_LLI * reset_do_regcbfunc(sreset_mgr_LLI *plink, const char *pname, pd
 		return NULL;
 	}
 
-	/*µÚÒ»´Îµ÷ÓÃ¸Ãº¯Êı£¬Á´±íÎª¿Õ*/
+	/*ç¬¬ä¸€æ¬¡è°ƒç”¨è¯¥å‡½æ•°ï¼Œé“¾è¡¨ä¸ºç©º*/
 	if (NULL == phead)
 	{
 		phead = pmgr_unit;
 	}
 	else
 	{
-	/*¸ù¾İÓÅÏÈ¼¶²åÈëÁ´±í*/
+	/*æ ¹æ®ä¼˜å…ˆçº§æ’å…¥é“¾è¡¨*/
 		phead = reset_link_insert(phead, pmgr_unit);
 	}
 	return phead;
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : hifireset_regcbfunc
- ¹¦ÄÜÃèÊö  : ÓÃÓÚÆäËü×é¼ş×¢²á»Øµ÷º¯Êı£¬´¦ÀíHIFI¸´Î»Ç°ºóÏà¹ØÊı¾İ¡£
- ÊäÈë²ÎÊı  : const char *pname, ×é¼ş×¢²áµÄÃû×Ö
-         pdrv_reset_cbfun cbfun,    ×é¼ş×¢²áµÄ»Øµ÷º¯Êı
-         int userdata,×é¼şµÄË½ÓĞÊı¾İ
-         Int Priolevel, »Øµ÷º¯Êıµ÷ÓÃÓÅÏÈ¼¶ 0-49£¬ÆäÖĞ0-9 ±£Áô¡£
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : hifireset_regcbfunc
+ åŠŸèƒ½æè¿°  : ç”¨äºå…¶å®ƒç»„ä»¶æ³¨å†Œå›è°ƒå‡½æ•°ï¼Œå¤„ç†HIFIå¤ä½å‰åç›¸å…³æ•°æ®ã€‚
+ è¾“å…¥å‚æ•°  : const char *pname, ç»„ä»¶æ³¨å†Œçš„åå­—
+         pdrv_reset_cbfun cbfun,    ç»„ä»¶æ³¨å†Œçš„å›è°ƒå‡½æ•°
+         int userdata,ç»„ä»¶çš„ç§æœ‰æ•°æ®
+         Int Priolevel, å›è°ƒå‡½æ•°è°ƒç”¨ä¼˜å…ˆçº§ 0-49ï¼Œå…¶ä¸­0-9 ä¿ç•™ã€‚
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 int hifireset_regcbfunc(const char *pname, pdrv_reset_cbfun pcbfun, int userdata, int priolevel)
 {
@@ -213,13 +213,13 @@ int hifireset_regcbfunc(const char *pname, pdrv_reset_cbfun pcbfun, int userdata
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  :  hifireset_doruncbfun
- ¹¦ÄÜÃèÊö  : HIFI¸´Î»Ç°ºóµ÷ÓÃ»Øµ÷º¯ÊıµÄº¯Êı¡£ÓÉÓÚÈ¦¸´ÔÓ¶È³¬±ê£¬ËùÒÔÕâÀï·â×°º¯Êı
- ÊäÈë²ÎÊı  : DRV_RESET_CALLCBFUN_MOMENT eparam, 0 ±íÊ¾HIFI¸´Î»Ç°£»·ÇÁã±íÊ¾¸´Î»ºó¡£
+ å‡½ æ•° å  :  hifireset_doruncbfun
+ åŠŸèƒ½æè¿°  : HIFIå¤ä½å‰åè°ƒç”¨å›è°ƒå‡½æ•°çš„å‡½æ•°ã€‚ç”±äºåœˆå¤æ‚åº¦è¶…æ ‡ï¼Œæ‰€ä»¥è¿™é‡Œå°è£…å‡½æ•°
+ è¾“å…¥å‚æ•°  : DRV_RESET_CALLCBFUN_MOMENT eparam, 0 è¡¨ç¤ºHIFIå¤ä½å‰ï¼›éé›¶è¡¨ç¤ºå¤ä½åã€‚
 
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
-        0, ³É¹¦£¬·Ç0£¬Ê§°Ü
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+        0, æˆåŠŸï¼Œé0ï¼Œå¤±è´¥
 *****************************************************************************/
 int hifireset_doruncbfun (const char *pname, DRV_RESET_CALLCBFUN_MOMENT eparam)
 {
@@ -227,7 +227,7 @@ int hifireset_doruncbfun (const char *pname, DRV_RESET_CALLCBFUN_MOMENT eparam)
 
 	sreset_mgr_LLI  *phead = g_pmgr_hifireset_data;
 	BUG_ON(NULL == pname);
-	/*²»ÅĞ¶ÏÄ£¿éÃû×Ö,°´Ë³ĞòÖ´ĞĞ*/
+	/*ä¸åˆ¤æ–­æ¨¡å—åå­—,æŒ‰é¡ºåºæ‰§è¡Œ*/
 	if (strcmp(pname, RESET_CBFUN_IGNORE_NAME) == 0)
 	{
 		while (NULL != phead)
@@ -237,7 +237,7 @@ int hifireset_doruncbfun (const char *pname, DRV_RESET_CALLCBFUN_MOMENT eparam)
 				iresult = phead->cbfuninfo.cbfun(eparam, phead->cbfuninfo.userdata);
 				if (BSP_RESET_OK != iresult)
 				{
-					/*Èç¹û·µ»ØÊ§°Ü£¬¼ÇÂ¼ÏÂ×é¼şÃû×Ö,·µ»ØÖµ*/
+					/*å¦‚æœè¿”å›å¤±è´¥ï¼Œè®°å½•ä¸‹ç»„ä»¶åå­—,è¿”å›å€¼*/
 					printk(KERN_ERR "%s: fail to run cbfun of %s, at %d return %d\n", __FUNCTION__, phead->cbfuninfo.name, eparam, iresult);
 					break;
 				}
@@ -246,7 +246,7 @@ int hifireset_doruncbfun (const char *pname, DRV_RESET_CALLCBFUN_MOMENT eparam)
 			phead = phead->pnext;
 		}
 	}
-	else/*ĞèÒªÅĞ¶ÏÄ£¿éÃû×Ö£¬Ö´ĞĞÖ¸¶¨µÄ»Øµ÷º¯Êı*/
+	else/*éœ€è¦åˆ¤æ–­æ¨¡å—åå­—ï¼Œæ‰§è¡ŒæŒ‡å®šçš„å›è°ƒå‡½æ•°*/
 	{
 		while (NULL != phead)
 		{
@@ -277,13 +277,13 @@ int hifireset_doruncbfun (const char *pname, DRV_RESET_CALLCBFUN_MOMENT eparam)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  :  hifireset _runcbfun
- ¹¦ÄÜÃèÊö  : HIFI¸´Î»Ç°ºóµ÷ÓÃ»Øµ÷º¯ÊıµÄº¯Êı¡£
- ÊäÈë²ÎÊı  : DRV_RESET_CALLCBFUN_MOMENT eparam, 0 ±íÊ¾HIFI¸´Î»Ç°£»·ÇÁã±íÊ¾¸´Î»ºó¡£
+ å‡½ æ•° å  :  hifireset _runcbfun
+ åŠŸèƒ½æè¿°  : HIFIå¤ä½å‰åè°ƒç”¨å›è°ƒå‡½æ•°çš„å‡½æ•°ã€‚
+ è¾“å…¥å‚æ•°  : DRV_RESET_CALLCBFUN_MOMENT eparam, 0 è¡¨ç¤ºHIFIå¤ä½å‰ï¼›éé›¶è¡¨ç¤ºå¤ä½åã€‚
 
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
-        0, ³É¹¦£¬·Ç0£¬Ê§°Ü
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+        0, æˆåŠŸï¼Œé0ï¼Œå¤±è´¥
 *****************************************************************************/
 int hifireset_runcbfun (DRV_RESET_CALLCBFUN_MOMENT eparam)
 {
@@ -291,17 +291,17 @@ int hifireset_runcbfun (DRV_RESET_CALLCBFUN_MOMENT eparam)
 
 	if (DRV_RESET_CALLCBFUN_RESET_BEFORE == eparam)
 	{
-		/*±éÀú»Øµ÷º¯ÊıÁ´±í£¬µ÷ÓÃNASµÄ»Øµ÷*/
+		/*éå†å›è°ƒå‡½æ•°é“¾è¡¨ï¼Œè°ƒç”¨NASçš„å›è°ƒ*/
 		iresult = hifireset_doruncbfun("NAS_AT", eparam);
 		if (BSP_RESET_OK != iresult)
 		{
-			/*Èç¹û·µ»ØÊ§°Ü£¬¼ÇÂ¼ÏÂ×é½¨name, ·µ»ØÖµ£¬±£´æµ½ÎÄ¼ş*/
+			/*å¦‚æœè¿”å›å¤±è´¥ï¼Œè®°å½•ä¸‹ç»„å»ºname, è¿”å›å€¼ï¼Œä¿å­˜åˆ°æ–‡ä»¶*/
 			goto return_error;
 		}
 	}
 	else
 	{
-		/*±éÀú»Øµ÷º¯ÊıÁ´±í£¬µ÷ÓÃ»Øµ÷º¯Êı*/
+		/*éå†å›è°ƒå‡½æ•°é“¾è¡¨ï¼Œè°ƒç”¨å›è°ƒå‡½æ•°*/
 		iresult = hifireset_doruncbfun(RESET_CBFUN_IGNORE_NAME, eparam);
 		if (BSP_RESET_OK != iresult)
 		{

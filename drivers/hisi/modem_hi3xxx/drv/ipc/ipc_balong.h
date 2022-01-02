@@ -1,7 +1,7 @@
 /*************************************************************************
-*   °æÈ¨ËùÓĞ(C) 1987-2013, ÉîÛÚ»ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾.
+*   ç‰ˆæƒæ‰€æœ‰(C) 1987-2013, æ·±åœ³åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸.
 *
-*   ÎÄ ¼ş Ãû :  IPC_BALONG.h
+*   æ–‡ ä»¶ å :  IPC_BALONG.h
 *************************************************************************/
 
 #ifndef _IPC_BALONG_H_
@@ -45,20 +45,20 @@ extern "C" {
 
 struct ipc_debug_s
 {
-	u32 u32RecvIntCore;										/*µ±Ç°·¢ËÍÖĞ¶ÏÄ¿±êºËID*/
-	u32 u32IntHandleTimes[INTSRC_NUM];						/*¼ÇÂ¼Ä³ºÅÖĞ¶Ï½ÓÊÕ´ÎÊı*/
-	u32 u32IntSendTimes[IPC_CORE_BUTTOM][INTSRC_NUM];		/*¼ÇÂ¼ÍùÃ¿¸öºË·¢ËÍÃ¿¸öÖĞ¶ÏµÄ´ÎÊı*/
-	u32 u32SemId;											/*µ±Ç°Õ¼ÓÃĞÅºÅÁ¿*/
-	u32 u32SemTakeTimes[INTSRC_NUM];						/*Ä³ĞÅºÅÁ¿Õ¼ÓÃ³É¹¦´ÎÊı*/
-	u32 u32SemTakeFailTimes[INTSRC_NUM];					/*Ä³ĞÅºÅÁ¿Õ¼ÓÃÊ§°Ü´ÎÊı*/
-	u32 u32SemGiveTimes[INTSRC_NUM];						/*Ä³ĞÅºÅÁ¿ÊÍ·Å´ÎÊı*/
-	u32 u32IntTimeDelta[INTSRC_NUM];						/*¼ÇÂ¼Ã¿¸öÖĞ¶Ï¶ÔÓ¦´¦Àíº¯ÊıËùÓÃÊ±¼ä*/
+	u32 u32RecvIntCore;										/*å½“å‰å‘é€ä¸­æ–­ç›®æ ‡æ ¸ID*/
+	u32 u32IntHandleTimes[INTSRC_NUM];						/*è®°å½•æŸå·ä¸­æ–­æ¥æ”¶æ¬¡æ•°*/
+	u32 u32IntSendTimes[IPC_CORE_BUTTOM][INTSRC_NUM];		/*è®°å½•å¾€æ¯ä¸ªæ ¸å‘é€æ¯ä¸ªä¸­æ–­çš„æ¬¡æ•°*/
+	u32 u32SemId;											/*å½“å‰å ç”¨ä¿¡å·é‡*/
+	u32 u32SemTakeTimes[INTSRC_NUM];						/*æŸä¿¡å·é‡å ç”¨æˆåŠŸæ¬¡æ•°*/
+	u32 u32SemTakeFailTimes[INTSRC_NUM];					/*æŸä¿¡å·é‡å ç”¨å¤±è´¥æ¬¡æ•°*/
+	u32 u32SemGiveTimes[INTSRC_NUM];						/*æŸä¿¡å·é‡é‡Šæ”¾æ¬¡æ•°*/
+	u32 u32IntTimeDelta[INTSRC_NUM];						/*è®°å½•æ¯ä¸ªä¸­æ–­å¯¹åº”å¤„ç†å‡½æ•°æ‰€ç”¨æ—¶é—´*/
 };
 struct ipc_control{
-    u32     core_num;										/*¼ÇÂ¼IPCÄ£¿é¹¤×÷ËùÔÚµÄºËID*/
-    void*     ipc_base;										/*ipc»ùÖ·*/
-    bool   sem_exist[INTSRC_NUM];							/*¼ÇÂ¼ĞÅºÅÁ¿ÊÇ·ñÒÑ¾­´´½¨*/
-    struct ipc_entry ipc_int_table[INTSRC_NUM];				/*¼ÇÂ¼Ã¿Ò»¸öÖĞ¶ÏÔ´×¢²áµÄ»Øµ÷º¯Êı*/
+    u32     core_num;										/*è®°å½•IPCæ¨¡å—å·¥ä½œæ‰€åœ¨çš„æ ¸ID*/
+    void*     ipc_base;										/*ipcåŸºå€*/
+    bool   sem_exist[INTSRC_NUM];							/*è®°å½•ä¿¡å·é‡æ˜¯å¦å·²ç»åˆ›å»º*/
+    struct ipc_entry ipc_int_table[INTSRC_NUM];				/*è®°å½•æ¯ä¸€ä¸ªä¸­æ–­æºæ³¨å†Œçš„å›è°ƒå‡½æ•°*/
     osl_sem_id	 sem_ipc_task[INTSRC_NUM];
     spinlock_t lock;
 };

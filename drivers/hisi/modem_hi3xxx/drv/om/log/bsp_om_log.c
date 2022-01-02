@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 /*lint -save -e322 -e7 -e537*/
 #include "bsp_om_api.h"
@@ -22,7 +22,7 @@
 #define    THIS_MODU_ID        BSP_MODU_LOG
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 bsp_log_swt_cfg_s  g_mod_peint_level_info[BSP_MODU_MAX]    =
 {
@@ -77,18 +77,18 @@ void bsp_log_show(void);
 
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_log_module_cfg_set
+* å‡½ æ•° å  : bsp_log_module_cfg_set
 *
-* ¹¦ÄÜÃèÊö  : HSOÉèÖÃµ×Èí´òÓ¡¼¶±ğ´¦Àíº¯Êı
+* åŠŸèƒ½æè¿°  : HSOè®¾ç½®åº•è½¯æ‰“å°çº§åˆ«å¤„ç†å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : log_swt_stru:¸÷¸öÄ£¿éµÄ´òÓ¡¼¶±ğÖµ
-*                         data_len:      ²ÎÊılog_swt_struµÄ³¤¶È
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : log_swt_stru:å„ä¸ªæ¨¡å—çš„æ‰“å°çº§åˆ«å€¼
+*                         data_len:      å‚æ•°log_swt_struçš„é•¿åº¦
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK ³É¹¦;ÆäËû Ê§°Ü
+* è¿” å› å€¼  : BSP_OK æˆåŠŸ;å…¶ä»– å¤±è´¥
 *****************************************************************************/
 
 u32 bsp_log_module_cfg_set(bsp_log_swt_cfg_s *log_swt_stru ,u32 data_len)
@@ -129,15 +129,15 @@ u32 bsp_log_module_cfg_set(bsp_log_swt_cfg_s *log_swt_stru ,u32 data_len)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_log_module_cfg_get
+* å‡½ æ•° å  : bsp_log_module_cfg_get
 *
-* ¹¦ÄÜÃèÊö  : ²éÑ¯Ä£¿éµ±Ç°ÉèÖÃµÄ´òÓ¡¼¶±ğ
+* åŠŸèƒ½æè¿°  : æŸ¥è¯¢æ¨¡å—å½“å‰è®¾ç½®çš„æ‰“å°çº§åˆ«
 *
-* ÊäÈë²ÎÊı  : mod_id:±»²éÑ¯Ä£¿éID
+* è¾“å…¥å‚æ•°  : mod_id:è¢«æŸ¥è¯¢æ¨¡å—ID
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ´òÓ¡¼¶±ğ
+* è¿” å› å€¼  : æ‰“å°çº§åˆ«
 *****************************************************************************/
 
 u32 bsp_log_module_cfg_get(bsp_module_e mod_id)
@@ -151,15 +151,15 @@ u32 bsp_log_module_cfg_get(bsp_module_e mod_id)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_mod_level_set
+* å‡½ æ•° å  : bsp_mod_level_set
 *
-* ¹¦ÄÜÃèÊö  : ÉèÖÃµ¥¸öÄ£¿éµÄ´òÓ¡¼¶±ğ
+* åŠŸèƒ½æè¿°  : è®¾ç½®å•ä¸ªæ¨¡å—çš„æ‰“å°çº§åˆ«
 *
-* ÊäÈë²ÎÊı  : mod_id:Ä£¿éID
-*                         print_level: ´òÓ¡¼¶±ğ
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : mod_id:æ¨¡å—ID
+*                         print_level: æ‰“å°çº§åˆ«
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK ÉèÖÃ³É¹¦£¬ÆäËû  ÉèÖÃÊ§°Ü
+* è¿” å› å€¼  : BSP_OK è®¾ç½®æˆåŠŸï¼Œå…¶ä»–  è®¾ç½®å¤±è´¥
 *****************************************************************************/
 
 u32 bsp_mod_level_set(bsp_module_e  mod_id ,u32 print_level)
@@ -180,15 +180,15 @@ u32 bsp_mod_level_set(bsp_module_e  mod_id ,u32 print_level)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_log_level_set
+* å‡½ æ•° å  : bsp_log_level_set
 *
-* ¹¦ÄÜÃèÊö  : ÉèÖÃËùÓĞÄ£¿éµÄ´òÓ¡¼¶±ğ
+* åŠŸèƒ½æè¿°  : è®¾ç½®æ‰€æœ‰æ¨¡å—çš„æ‰“å°çº§åˆ«
 *
-* ÊäÈë²ÎÊı  : print_level: ´òÓ¡¼¶±ğ
+* è¾“å…¥å‚æ•°  : print_level: æ‰“å°çº§åˆ«
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK ÉèÖÃ³É¹¦£¬ÆäËû  ÉèÖÃÊ§°Ü
+* è¿” å› å€¼  : BSP_OK è®¾ç½®æˆåŠŸï¼Œå…¶ä»–  è®¾ç½®å¤±è´¥
 *****************************************************************************/
 
 u32 bsp_log_level_set(bsp_log_level_e log_level)
@@ -210,15 +210,15 @@ u32 bsp_log_level_set(bsp_log_level_e log_level)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_log_level_reset
+* å‡½ æ•° å  : bsp_log_level_reset
 *
-* ¹¦ÄÜÃèÊö  : ½«ËùÓĞÄ£¿éµÄ´òÓ¡¼¶±ğÉèÖÃÎªÄ¬ÈÏÖµ
+* åŠŸèƒ½æè¿°  : å°†æ‰€æœ‰æ¨¡å—çš„æ‰“å°çº§åˆ«è®¾ç½®ä¸ºé»˜è®¤å€¼
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 
 void bsp_log_level_reset(void)
@@ -233,17 +233,17 @@ void bsp_log_level_reset(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_log_header_packet
+* å‡½ æ•° å  : bsp_log_header_packet
 *
-* ¹¦ÄÜÃèÊö  : ´òÓ¡Êı¾İ°üÍ·ĞÅÏ¢Ìî³ä
+* åŠŸèƒ½æè¿°  : æ‰“å°æ•°æ®åŒ…å¤´ä¿¡æ¯å¡«å……
 *
-* ÊäÈë²ÎÊı  :  mod_id: Êä³öÄ£¿é
-*                           print_level: ´òÓ¡¼¶±ğ
-*                           print_buf :Õû¸öbufÖ¸Õë
-*                           buf_size: Õû¸öÊä³öµÄbuf³¤¶È
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :  mod_id: è¾“å‡ºæ¨¡å—
+*                           print_level: æ‰“å°çº§åˆ«
+*                           print_buf :æ•´ä¸ªbufæŒ‡é’ˆ
+*                           buf_size: æ•´ä¸ªè¾“å‡ºçš„bufé•¿åº¦
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK ´ò°ü³É¹¦
+* è¿” å› å€¼  : BSP_OK æ‰“åŒ…æˆåŠŸ
 *****************************************************************************/
 
 void bsp_log_header_packet(bsp_module_e mod_id,bsp_log_level_e log_level,u8 *print_buf,u32 buf_size)
@@ -252,7 +252,7 @@ void bsp_log_header_packet(bsp_module_e mod_id,bsp_log_level_e log_level,u8 *pri
     bsp_om_head_s        *bsp_om_header  = NULL;
     bsp_trace_txt_s  *print_header   = NULL;
 
-    /*´ò°üSOCPÍ·*/
+    /*æ‰“åŒ…SOCPå¤´*/
     PACKET_BSP_SOCP_HEAD(print_buf);
 
     bsp_om_header = (bsp_om_head_s *)(print_buf + sizeof(bsp_socp_head_s));
@@ -273,17 +273,17 @@ void bsp_log_header_packet(bsp_module_e mod_id,bsp_log_level_e log_level,u8 *pri
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_trace
+* å‡½ æ•° å  : bsp_trace
 *
-* ¹¦ÄÜÃèÊö  : µ×Èí´òÓ¡Êä³ö´¦Àí½Ó¿Ú
+* åŠŸèƒ½æè¿°  : åº•è½¯æ‰“å°è¾“å‡ºå¤„ç†æ¥å£
 *
-* ÊäÈë²ÎÊı  :  mod_id: Êä³öÄ£¿é
-*                           print_level: ´òÓ¡¼¶±ğ
-*                           fmt :´òÓ¡ÊäÈë²ÎÊı
+* è¾“å…¥å‚æ•°  :  mod_id: è¾“å‡ºæ¨¡å—
+*                           print_level: æ‰“å°çº§åˆ«
+*                           fmt :æ‰“å°è¾“å…¥å‚æ•°
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 
 void bsp_trace(bsp_log_level_e log_level,bsp_module_e mod_id,char *fmt,...)
@@ -291,7 +291,7 @@ void bsp_trace(bsp_log_level_e log_level,bsp_module_e mod_id,char *fmt,...)
     char                      bsp_print_buffer[BSP_PRINT_BUF_LEN] ;
     va_list arglist;
 
-    /*´òÓ¡¼¶±ğ¹ıÂË*/
+    /*æ‰“å°çº§åˆ«è¿‡æ»¤*/
     if(mod_id >= BSP_MODU_MAX )
     {
         return ;
@@ -305,7 +305,7 @@ void bsp_trace(bsp_log_level_e log_level,bsp_module_e mod_id,char *fmt,...)
     /*lint -save -e530*/
     va_start(arglist, fmt);
     /*lint -restore +e530*/
-    vsnprintf(bsp_print_buffer, BSP_PRINT_BUF_LEN, fmt, arglist); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    vsnprintf(bsp_print_buffer, BSP_PRINT_BUF_LEN, fmt, arglist); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
     va_end(arglist);
 
     bsp_print_buffer[BSP_PRINT_BUF_LEN - 1] = '\0';
@@ -317,17 +317,17 @@ void bsp_trace(bsp_log_level_e log_level,bsp_module_e mod_id,char *fmt,...)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_log_bin_ind
+* å‡½ æ•° å  : bsp_log_bin_ind
 *
-* ¹¦ÄÜÃèÊö  : µ×ÈíÖ÷¶¯ÉÏ±¨½Ó¿Ú
+* åŠŸèƒ½æè¿°  : åº•è½¯ä¸»åŠ¨ä¸ŠæŠ¥æ¥å£
 *
-* ÊäÈë²ÎÊı  :  str_id: ºÍHSO½»»¥µÄ½á¹¹»¯ID
-*                           ind_data_size: ÉÏ±¨µÄ¿ÉÎ¬¿É²âĞÅÏ¢³¤¶È
-*                           ind_data :ÉÏ±¨µÄ¿ÉÎ¬¿É²âĞÅÏ¢
+* è¾“å…¥å‚æ•°  :  str_id: å’ŒHSOäº¤äº’çš„ç»“æ„åŒ–ID
+*                           ind_data_size: ä¸ŠæŠ¥çš„å¯ç»´å¯æµ‹ä¿¡æ¯é•¿åº¦
+*                           ind_data :ä¸ŠæŠ¥çš„å¯ç»´å¯æµ‹ä¿¡æ¯
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32 log_ind_enter_cnt=0;
 u32 log_ind_exit_cnt=0;
@@ -350,7 +350,7 @@ void bsp_log_bin_ind(s32 str_id, void* ind_data, u32 ind_data_size)
 
     buflen = sizeof(bsp_socp_head_s)+sizeof(bsp_om_head_s)+ind_data_size ;
 
-    /*»ñÈ¡buf*/
+    /*è·å–buf*/
     if(bsp_om_buf_sem_take())
     {
         return;
@@ -363,7 +363,7 @@ void bsp_log_bin_ind(s32 str_id, void* ind_data, u32 ind_data_size)
         return ;
     }
 
-     /*´ò°üSOCPÍ·*/
+     /*æ‰“åŒ…SOCPå¤´*/
     PACKET_BSP_SOCP_HEAD(pbuf);
 
     bsp_om_header = (bsp_om_head_s*)(pbuf + sizeof(bsp_socp_head_s));
@@ -384,7 +384,7 @@ void bsp_log_bin_ind(s32 str_id, void* ind_data, u32 ind_data_size)
 }
 
 
-/*debug ½Ó¿Ú*/
+/*debug æ¥å£*/
 void bsp_log_show(void)
 {
     printk("trace level              = %d\n",g_mod_peint_level_info[0].print_level);

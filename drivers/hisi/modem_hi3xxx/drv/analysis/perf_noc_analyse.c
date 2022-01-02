@@ -522,7 +522,7 @@ void dss_latency_modem_init(void)
     outp32(noc_modem_base + 0x08A8, 0x0);
     outp32(noc_modem_base + 0x08B0, 0x0);
 
-    outp32(noc_modem_base + 0x0878, 0x20); // for latency only************************************ÓëÎÄµµ²»Í¬
+    outp32(noc_modem_base + 0x0878, 0x20); // for latency only************************************ä¸æ–‡æ¡£ä¸åŒ
 
     outp32(noc_modem_base + 0x0808, 0x1);
 
@@ -942,7 +942,7 @@ ssize_t hisi_bw_dump_write(struct file *fp, const char __user *ch, size_t count,
     if (copy_from_user(buf, ch, count)) {
         return -EFAULT;
     }
-	/*ÅäÖÃtimerÊ±¼ä£¬Æô¶¯¼ÆÊ±£¬³õÊ¼»¯ĞèÒª¼ÇÂ¼µÄ¶«¶«*/
+	/*é…ç½®timeræ—¶é—´ï¼Œå¯åŠ¨è®¡æ—¶ï¼Œåˆå§‹åŒ–éœ€è¦è®°å½•çš„ä¸œä¸œ*/
     if (buf[0] == '0') {
         if (sscanf(buf, "%d %d %d", &temp, &time_tick_s, &time_tick_u) != 3) {
             printk("Invalid input\n");
@@ -980,7 +980,7 @@ ssize_t hisi_bw_dump_write(struct file *fp, const char __user *ch, size_t count,
             if ((module_mask & (1<<i)) && (hisi_module_map[i].hisi_module_dump_init))
                 hisi_module_map[i].hisi_module_dump_init();
         }
-    } else if (buf[0] == '1') {/*Í£Ö¹timer¼ÇÂ¼Êı¾İµ½ÎÄ¼ş*/
+    } else if (buf[0] == '1') {/*åœæ­¢timerè®°å½•æ•°æ®åˆ°æ–‡ä»¶*/
         k3v3_bw_timer_deinit();
         if (fd && !IS_ERR(fd) && (0 == write_len)) {
             write_len = vfs_write(fd,(char __user*)file_addr, cur_pos, &pos);
@@ -989,7 +989,7 @@ ssize_t hisi_bw_dump_write(struct file *fp, const char __user *ch, size_t count,
             fd = NULL;
             cur_pos = 0;
         }
-    } else if (buf[0] == '2') {/*ÅäÖÃ³õÊ¼»¯ÄÄĞ©Ä£¿éĞèÒª²âÊÔ*/
+    } else if (buf[0] == '2') {/*é…ç½®åˆå§‹åŒ–å“ªäº›æ¨¡å—éœ€è¦æµ‹è¯•*/
         if (sscanf(buf, "%d %d", &i, &temp) != 2) {
             printk("Invalid input\n");
             return -EINVAL;
@@ -1002,7 +1002,7 @@ ssize_t hisi_bw_dump_write(struct file *fp, const char __user *ch, size_t count,
 
         module_mask = temp;												
         pr_info("set module_mask = 0x%x\n", module_mask);
-    } else if (buf[0] == '3') {/*ÅäÖÃDDRĞèÒª¼ì²âµÄ¶Ë¿Ú*/
+    } else if (buf[0] == '3') {/*é…ç½®DDRéœ€è¦æ£€æµ‹çš„ç«¯å£*/
         if (sscanf(buf, "%d %d", &i, &temp) != 2) {
             printk("Invalid input\n");
             return -EINVAL;
@@ -1015,7 +1015,7 @@ ssize_t hisi_bw_dump_write(struct file *fp, const char __user *ch, size_t count,
 
         ddrc_port_monitor = temp;
         pr_info("set ddrc_port_monitor = 0x%x\n", ddrc_port_monitor);
-    } else if (buf[0] == '4') {/*ÅäÖÃÊÇlatency»¹ÊÇoutstandyÍ³¼Æ0:outstanding 1:latency*/
+    } else if (buf[0] == '4') {/*é…ç½®æ˜¯latencyè¿˜æ˜¯outstandyç»Ÿè®¡0:outstanding 1:latency*/
         if (sscanf(buf, "%d %d", &i, &temp) != 2) {
             printk("Invalid input\n");
             return -EINVAL;

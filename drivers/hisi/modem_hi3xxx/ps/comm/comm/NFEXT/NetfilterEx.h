@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼ş°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "v_id.h"
 #include "vos.h"
@@ -36,7 +36,7 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 #define DBG_ON                                      (1)
 #define DBG_OFF                                     (0)
@@ -49,18 +49,18 @@ extern "C" {
 
 #define NF_EXT_DEF_POST_ROUTING_HOOK_ON_MASK        (g_stExHookMask.ulOutHookValue)
 
-/* ÍøÂçĞ­ÒéÕ»Á÷¿ØHOOK MASK¿ª¹Ø */
+/* ç½‘ç»œåè®®æ ˆæµæ§HOOK MASKå¼€å…³ */
 #define NF_EXT_DEF_FLOW_CTRL_HOOK_ON_MASK           (g_stExHookMask.ulFlowCtrlHookValue)
 
 
-#define NF_EXT_RPO_TCP                              (0x6)   /*TCPĞ­ÒéÀàĞÍ±êÖ¾*/
-#define NF_EXT_RING_BUF_SIZE                        (2048)  /*»·ĞÎbuffµÄ´óĞ¡*/
+#define NF_EXT_RPO_TCP                              (0x6)   /*TCPåè®®ç±»å‹æ ‡å¿—*/
+#define NF_EXT_RING_BUF_SIZE                        (2048)  /*ç¯å½¢buffçš„å¤§å°*/
 #define NF_TX_MSG_TASK_STACK_SIZE                   (32768)
 #define MAC_HEADER_LENGTH                           (14)
 
 #define NF_EXT_MAX_IP_SIZE                          (1500)
 
-/* netfilter¹³×Óº¯ÊıÑÚÂë */
+/* netfilteré’©å­å‡½æ•°æ©ç  */
 #define NF_EXT_BR_PRE_ROUTING_HOOK_ON_MASK          (1)
 #define NF_EXT_BR_POST_ROUTING_HOOK_ON_MASK         (1 << 1)
 #define NF_EXT_BR_FORWARD_HOOK_ON_MASK              (1 << 2)
@@ -100,12 +100,12 @@ extern "C" {
 #endif
 
 /*******************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æšä¸¾å®šä¹‰
 *******************************************************************************/
 enum NF_EXT_FLAG_OM_DATA_ENUM
 {
-    NF_EXT_FLAG_OM_DATA                = 0,                    /* OMÏûÏ¢±êÖ¾ */
-    NF_EXT_FLAG_NOT_OM_DATA            = 1,                    /* ·ÇOMÏûÏ¢±êÖ¾ */
+    NF_EXT_FLAG_OM_DATA                = 0,                    /* OMæ¶ˆæ¯æ ‡å¿— */
+    NF_EXT_FLAG_NOT_OM_DATA            = 1,                    /* éOMæ¶ˆæ¯æ ‡å¿— */
 
     NF_EXT_FLAG_OM_DATA_BUTT
 };
@@ -113,15 +113,15 @@ typedef int NF_EXT_FLAG_OM_DATA_ENUM_U32;
 
 enum NF_EXT_FLAG_BLOCK_ENUM
 {
-    NF_EXT_FLAG_BLOCKED                = 0,                    /* ×èÈû±êÖ¾ */
-    NF_EXT_FLAG_UNBLOCKED              = 1,                    /* ·Ç×èÈû±êÖ¾ */
+    NF_EXT_FLAG_BLOCKED                = 0,                    /* é˜»å¡æ ‡å¿— */
+    NF_EXT_FLAG_UNBLOCKED              = 1,                    /* éé˜»å¡æ ‡å¿— */
 
     NF_EXT_FLAG_BUTT
 };
 
 enum NF_EXT_TX_BYTES_CNT_ENUM
 {
-    NF_EXT_TX_BYTES_CNT_BR             = 0,                    /* Í³¼ÆÀàĞÍ */
+    NF_EXT_TX_BYTES_CNT_BR             = 0,                    /* ç»Ÿè®¡ç±»å‹ */
     NF_EXT_TX_BYTES_CNT_BUTT
 };
 
@@ -139,12 +139,12 @@ enum NF_EXT_STATS_ENUM
 };
 #endif
 /*****************************************************************************
-  4 ½á¹¹¶¨Òå
+  4 ç»“æ„å®šä¹‰
 *****************************************************************************/
 /*********************************************
- ½á¹¹ÌåÃû :NF_EXT_MASK_OPS_STRU
- Ğ­Òé±í¸ñ :ÎŞ
- ½á¹¹ÌåËµÃ÷ :¹´×Ó¿ª¹ØÑÚÂëÓ³Éä±í½á¹¹Ìå
+ ç»“æ„ä½“å :NF_EXT_MASK_OPS_STRU
+ åè®®è¡¨æ ¼ :æ— 
+ ç»“æ„ä½“è¯´æ˜ :å‹¾å­å¼€å…³æ©ç æ˜ å°„è¡¨ç»“æ„ä½“
 *********************************************/
 typedef struct
 {
@@ -156,13 +156,13 @@ typedef struct
 
 typedef struct
 {
-    VOS_UINT32                      ulIsBlkflag;               /* ×èÈûÌõ¼ş */
-    VOS_UINT32                      ulCurHookOnMask;           /* µ±Ç°HookÑÚÂë */
-    VOS_UINT32                      ulIsDeviceOpen ;           /* Éè±¸ÊÇ·ñ¿ªÆôµÄ±êÖ¾ */
+    VOS_UINT32                      ulIsBlkflag;               /* é˜»å¡æ¡ä»¶ */
+    VOS_UINT32                      ulCurHookOnMask;           /* å½“å‰Hookæ©ç  */
+    VOS_UINT32                      ulIsDeviceOpen ;           /* è®¾å¤‡æ˜¯å¦å¼€å¯çš„æ ‡å¿— */
     VOS_UINT32                      ulOmIp;
-    OM_RING_ID                      pRingBufferId;             /* »·ĞÎbuff*/
-    wait_queue_head_t               stWaitHeadTxTask;          /* µÈ´ı¶ÓÁĞÍ·£¬×Ô´¦ÀíÈÎÎñÊ¹ÓÃ */
-    spinlock_t                      stLockTxTask;              /* ×ÔĞıËø£¬ÓÃÓÚ»·ĞÎbuff²Ù×÷µÄ»¥³â±£»¤ */
+    OM_RING_ID                      pRingBufferId;             /* ç¯å½¢buff*/
+    wait_queue_head_t               stWaitHeadTxTask;          /* ç­‰å¾…é˜Ÿåˆ—å¤´ï¼Œè‡ªå¤„ç†ä»»åŠ¡ä½¿ç”¨ */
+    spinlock_t                      stLockTxTask;              /* è‡ªæ—‹é”ï¼Œç”¨äºç¯å½¢buffæ“ä½œçš„äº’æ–¥ä¿æŠ¤ */
     VOS_UINT8                       aucRsv2[4];
 }NF_EXT_ENTITY_STRU;
 
@@ -190,21 +190,21 @@ typedef struct
 
 typedef struct
 {
-    VOS_UINT32          ulBrArpHookValue;       /* ÍøÇÅºÍARP¹³×Óº¯Êı¶ÔÓ¦µÄÑÚÂë */
-    VOS_UINT32          ulInHookValue;          /* IP²ãPRE_ROUTING¹³×Óº¯Êı¶ÔÓ¦µÄÑÚÂë */
-    VOS_UINT32          ulOutHookValue;         /* IP²ãPOST_ROUTING¹³×Óº¯Êı¶ÔÓ¦µÄÑÚÂë */
-    VOS_UINT32          ulFlowCtrlHookValue;    /* ÍøÇÅÁ÷¿Ø¹³×Óº¯ÊıËù¶ÔÓ¦µÄÑÚÂë */
+    VOS_UINT32          ulBrArpHookValue;       /* ç½‘æ¡¥å’ŒARPé’©å­å‡½æ•°å¯¹åº”çš„æ©ç  */
+    VOS_UINT32          ulInHookValue;          /* IPå±‚PRE_ROUTINGé’©å­å‡½æ•°å¯¹åº”çš„æ©ç  */
+    VOS_UINT32          ulOutHookValue;         /* IPå±‚POST_ROUTINGé’©å­å‡½æ•°å¯¹åº”çš„æ©ç  */
+    VOS_UINT32          ulFlowCtrlHookValue;    /* ç½‘æ¡¥æµæ§é’©å­å‡½æ•°æ‰€å¯¹åº”çš„æ©ç  */
 }NF_EXT_HOOK_MASK_NV_STRU;
 
 /*****************************************************************************
-  5 È«¾Ö±äÁ¿ÉùÃ÷
+  5 å…¨å±€å˜é‡å£°æ˜
 *****************************************************************************/
 #if(NF_EXT_DBG == DBG_ON)
 extern NF_EXT_STATS_STRU g_stNfExtStats;
 #endif
 
 /*****************************************************************************
-  6 º¯ÊıÉùÃ÷
+  6 å‡½æ•°å£°æ˜
 *****************************************************************************/
 extern unsigned int NFExt_BrPreRoutingHook(unsigned int hooknum,
                             struct sk_buff *skb,

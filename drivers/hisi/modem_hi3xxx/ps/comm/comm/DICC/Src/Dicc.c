@@ -22,7 +22,7 @@
 #endif
 
 /******************************************************************************
-   1 Í·ÎÄ¼þ°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "product_config.h"
 #if( FEATURE_ON == FEATURE_CSD )
@@ -43,7 +43,7 @@
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 /*lint -e(767)*/
@@ -58,7 +58,7 @@
     #define    LOCAL_UEPS_PID_DICC (UEPS_PID_DICC_A)
     #endif
 #else
-    #define     LOCAL_UEPS_PID_DICC (UEPS_PID_DICC_A)    /* WIN32ÉÏ°´ÕÕAºËÀ´ÉèÖÃPID, ÓÃÓÚ¿´ÐéÊµ×ª»»ÓÐÃ»ÓÐÖ´ÐÐ */
+    #define     LOCAL_UEPS_PID_DICC (UEPS_PID_DICC_A)    /* WIN32ä¸ŠæŒ‰ç…§Aæ ¸æ¥è®¾ç½®PID, ç”¨äºŽçœ‹è™šå®žè½¬æ¢æœ‰æ²¡æœ‰æ‰§è¡Œ */
 #endif
 
 #ifdef __UT_CENTER__
@@ -70,21 +70,21 @@
 #endif
 
 /******************************************************************************
-   2 Íâ²¿º¯Êý±äÁ¿ÉùÃ÷
+   2 å¤–éƒ¨å‡½æ•°å˜é‡å£°æ˜Ž
 ******************************************************************************/
 
 
 /******************************************************************************
-   3 Ë½ÓÐ¶¨Òå
+   3 ç§æœ‰å®šä¹‰
 ******************************************************************************/
-/* DICCÄ£¿éÄÚ²¿µÄDFx¹¦ÄÜ¿ª¹Ø, 1 - ´ò¿ª, 0 - ¹Ø±Õ */
+/* DICCæ¨¡å—å†…éƒ¨çš„DFxåŠŸèƒ½å¼€å…³, 1 - æ‰“å¼€, 0 - å…³é—­ */
 #define DICC_DFX_SWITCH    (1)
 
-/* µ÷ÊÔÊ¹ÓÃµÄºê */
+/* è°ƒè¯•ä½¿ç”¨çš„å® */
 #define DICC_BBIT          (0)
 #define DICC_RELEASE       (1)
 
-/* µ÷ÊÔ´òÓ¡ */
+/* è°ƒè¯•æ‰“å° */
 #define DEBUG_PRINT(...)\
         {\
             if ( PS_TRUE == g_ulDiccDebugPrint )\
@@ -156,11 +156,11 @@
 
 
 /******************************************************************************
-   4 È«¾Ö±äÁ¿¶¨Òå
+   4 å…¨å±€å˜é‡å®šä¹‰
 ******************************************************************************/
 /*
-DICCÍ¨µÀ¼ÇÂ¼±í
-²ÉÓÃ¾²Ì¬ÅäÖÃ·½Ê½, ¼È¹ÜÀí¼òµ¥, ÓÖÄÜ·ÀÖ¹Í¨µÀµÄÎóÊ¹ÓÃ
+DICCé€šé“è®°å½•è¡¨
+é‡‡ç”¨é™æ€é…ç½®æ–¹å¼, æ—¢ç®¡ç†ç®€å•, åˆèƒ½é˜²æ­¢é€šé“çš„è¯¯ä½¿ç”¨
  */
 volatile DICC_CHAN_ROLE_STRU g_astChanRole[] =
 {
@@ -250,13 +250,13 @@ volatile DICC_CHAN_ROLE_STRU g_astChanRole[] =
     }
 };
 
-/* ´®¿Ú´òÓ¡¿ª¹Ø, ÉèÖÃÎªPS_TRUEÊ±, »áÏò´®¿Ú´òÓ¡ */
+/* ä¸²å£æ‰“å°å¼€å…³, è®¾ç½®ä¸ºPS_TRUEæ—¶, ä¼šå‘ä¸²å£æ‰“å° */
 VOS_UINT32 g_ulDiccDebugPrint                            = PS_FALSE;
 VOS_UINT8  g_ucDiccPrintDataMaxLen                       = DICC_DEBUG_PRINT_MAX_LEN;
 DICC_TRACE_INFO_STRU g_stDiccTraceInfo[DICC_CPU_ID_BUTT] = {{0,0,{0,0},0,0,0},{0,0,{0,0},0,0,0}};
 VOS_UINT8  g_ucDiccStability                             = DICC_BBIT;
 
-/* DICC³õÊ¼»¯º¯ÊýÖØÈë±ê¼Ç */
+/* DICCåˆå§‹åŒ–å‡½æ•°é‡å…¥æ ‡è®° */
 VOS_UINT32      g_ulDiccMultiCoreFlag                    = DICC_MUTEX_SEM_NOT_CREATE;
 
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
@@ -270,7 +270,7 @@ VOS_UINT32 g_ulMagicNum;
 
 
 /******************************************************************************
-   5 º¯ÊýÊµÏÖ
+   5 å‡½æ•°å®žçŽ°
 ******************************************************************************/
 
 VOS_VOID DICC_PrintDebugData(VOS_VOID *pData, VOS_UINT32 ulDataLen)
@@ -315,18 +315,18 @@ VOS_VOID DICC_SetDebugPrintState(VOS_UINT32 ulPrintState, VOS_UINT8 ucPrintDataM
 }/* Debug_PrintStateSet */
 
 /*****************************************************************************
- º¯ Êý Ãû  : DICC_TraceInfo
- ¹¦ÄÜÃèÊö  : ½è¼øVCÏÂTRACE¼ÇÂ¼»úÖÆ, ¼ÇÂ¼ÏÂ³ÌÐòÖ´ÐÐÂ·¾¶, Ö§³ÖÊÖ¶¯´òÓ¡µ½´®¿Ú
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : DICC_TraceInfo
+ åŠŸèƒ½æè¿°  : å€Ÿé‰´VCä¸‹TRACEè®°å½•æœºåˆ¶, è®°å½•ä¸‹ç¨‹åºæ‰§è¡Œè·¯å¾„, æ”¯æŒæ‰‹åŠ¨æ‰“å°åˆ°ä¸²å£
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê1ÔÂ17ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´1æœˆ17æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID DICC_TraceInfo()
@@ -371,7 +371,7 @@ VOS_VOID DICC_DealWithFatalError(DICC_SOFT_REBOOT_INFO_STRU *pstRebootInfo)
     {
         if (VOS_NULL_PTR != pstRebootInfo)
         {
-            /* µ÷ÓÃOM API½øÐÐµ¥°å¸´Î» */
+            /* è°ƒç”¨OM APIè¿›è¡Œå•æ¿å¤ä½ */
             VOS_ProtectionReboot((VOS_INT)pstRebootInfo->ulModule,
                 (VOS_INT)(pstRebootInfo->ulFile), (VOS_INT)(pstRebootInfo->ulLine),
                 (VOS_CHAR *)(pstRebootInfo->pucData),
@@ -381,21 +381,21 @@ VOS_VOID DICC_DealWithFatalError(DICC_SOFT_REBOOT_INFO_STRU *pstRebootInfo)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DICC_SndEvent
- ¹¦ÄÜÃèÊö  : ÉÏ±¨DICCÊÂ¼þ
- ÊäÈë²ÎÊý  : ulPid - ²Ù×÷PID
-             enEventId - ÊÂ¼þID
-             pEventData - ÊÂ¼þÐÅÏ¢ÄÚÈÝ
-             ulDataLen - ÊÂ¼þÐÅÏ¢³¤¶È
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : DICC_SndEvent
+ åŠŸèƒ½æè¿°  : ä¸ŠæŠ¥DICCäº‹ä»¶
+ è¾“å…¥å‚æ•°  : ulPid - æ“ä½œPID
+             enEventId - äº‹ä»¶ID
+             pEventData - äº‹ä»¶ä¿¡æ¯å†…å®¹
+             ulDataLen - äº‹ä»¶ä¿¡æ¯é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ22ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ22æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID  DICC_SndEvent(DICC_MNTN_EVENT_ID_ENUM_UINT16 enEventId,
@@ -407,13 +407,13 @@ VOS_VOID  DICC_SndEvent(DICC_MNTN_EVENT_ID_ENUM_UINT16 enEventId,
     VOS_UINT32                          ulLength;
 
 
-    /*³õÊ¼»¯*/
+    /*åˆå§‹åŒ–*/
     ulLength        = 0;
 
-    /*ÏûÏ¢×Ü³¤¶È*/
+    /*æ¶ˆæ¯æ€»é•¿åº¦*/
     ulLength          = (sizeof(PS_OM_EVENT_IND_STRU) - 4 ) + ulDataLen;
 
-    /*ÉêÇëÏûÏ¢ÄÚ´æ*/
+    /*ç”³è¯·æ¶ˆæ¯å†…å­˜*/
     pstDiccEvent    = (PS_OM_EVENT_IND_STRU *)PS_MEM_ALLOC(LOCAL_UEPS_PID_DICC, ulLength);
     if (VOS_NULL_PTR == pstDiccEvent )
     {
@@ -421,14 +421,14 @@ VOS_VOID  DICC_SndEvent(DICC_MNTN_EVENT_ID_ENUM_UINT16 enEventId,
         return;
     }
 
-    /*ÌîÐ´ÏûÏ¢ÄÚÈÝ*/
-    pstDiccEvent->ulLength      = ulLength - 4; /* ²»°üÀ¨ulLength ËùÕ¼ÓÃµÄ×Ö½Ú */
+    /*å¡«å†™æ¶ˆæ¯å†…å®¹*/
+    pstDiccEvent->ulLength      = ulLength - 4; /* ä¸åŒ…æ‹¬ulLength æ‰€å ç”¨çš„å­—èŠ‚ */
     pstDiccEvent->usEventId     = enEventId;
     pstDiccEvent->ulModuleId    = LOCAL_UEPS_PID_DICC;
 
     DRV_RT_MEMCPY(pstDiccEvent->aucData, pEventData, ulDataLen);
 
-    /*µ÷ÓÃOMµÄÊÂ¼þÉÏ±¨½Ó¿Ú*/
+    /*è°ƒç”¨OMçš„äº‹ä»¶ä¸ŠæŠ¥æŽ¥å£*/
 #if (VOS_WIN32 != VOS_OS_VER)
  #if (OSA_CPU_CCPU == VOS_OSA_CPU)
     if (VOS_OK != OM_Event((PS_OM_EVENT_IND_STRU*)pstDiccEvent))
@@ -442,8 +442,8 @@ VOS_VOID  DICC_SndEvent(DICC_MNTN_EVENT_ID_ENUM_UINT16 enEventId,
     }
  #endif
 #else
-    /* ¼Æ»®ÔÚPC»úÉÏ²âÊÔAºË, µ«µ±Ç°OAM×éÃ»ÓÐ°ÑOM_AcpuEventÔÚWIN32ÉÏÊµÏÖºÃ,
-       ±¨²»³öÊÂ¼þ, ÔÝÊ±ÓÃOM_EventÉÏ±¨ */
+    /* è®¡åˆ’åœ¨PCæœºä¸Šæµ‹è¯•Aæ ¸, ä½†å½“å‰OAMç»„æ²¡æœ‰æŠŠOM_AcpuEventåœ¨WIN32ä¸Šå®žçŽ°å¥½,
+       æŠ¥ä¸å‡ºäº‹ä»¶, æš‚æ—¶ç”¨OM_Eventä¸ŠæŠ¥ */
     if (DICC_CPU_ID_CCPU == enCpuId)
     {
         if (VOS_OK != OM_Event((PS_OM_EVENT_IND_STRU*)pstDiccEvent))
@@ -461,7 +461,7 @@ VOS_VOID  DICC_SndEvent(DICC_MNTN_EVENT_ID_ENUM_UINT16 enEventId,
     }
 #endif
 
-    /*ÊÍ·ÅÉêÇëµÄÄÚ´æ*/
+    /*é‡Šæ”¾ç”³è¯·çš„å†…å­˜*/
     PS_MEM_FREE(LOCAL_UEPS_PID_DICC, pstDiccEvent);
     return ;
 }    /* DICC_SndEvent */
@@ -483,11 +483,11 @@ VOS_UINT8* DICC_GetTtfRingQStChnAddr(VOS_UINT8 ucChnId, DICC_CPU_ID_ENUM_UINT8 e
     DICC_CHAN_CTRL_STRU                    *pstDiccChnCtrl = VOS_NULL_PTR;
     VOS_UINT8                              *pucSpace = VOS_NULL_PTR;
 
-    /* ³õÊ¼»¯ÎªºË¼äÄÚ´æÊ×µØÖ· */
+    /* åˆå§‹åŒ–ä¸ºæ ¸é—´å†…å­˜é¦–åœ°å€ */
     pucSpace = (VOS_UINT8 *)(g_astChanRole[enCpuId].pastDICCMgmt);
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
-    /* ¼ÓÉÏÍ¨µÀµÄTTFRINGQSTÆ«ÒÆÁ¿ */
+    /* åŠ ä¸Šé€šé“çš„TTFRINGQSTåç§»é‡ */
     pucSpace = pucSpace + pstDiccChnCtrl->ulTtfRingQStAddrOffSet;
 
     return pucSpace;
@@ -499,32 +499,32 @@ VOS_UINT8* DICC_GetQueueNodeChnAddr(VOS_UINT8 ucChnId,
     DICC_CHAN_CTRL_STRU                    *pstDiccChnCtrl = VOS_NULL_PTR;
     VOS_UINT8                              *pucSpace = VOS_NULL_PTR;
 
-    /* ³õÊ¼»¯ÎªºË¼äÄÚ´æÊ×µØÖ· */
+    /* åˆå§‹åŒ–ä¸ºæ ¸é—´å†…å­˜é¦–åœ°å€ */
     pucSpace = (VOS_UINT8 *)(g_astChanRole[enCpuId].pastDICCMgmt);
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
-    /* ¼ÓÉÏÍ¨µÀµÄTTFRINGQSTÆ«ÒÆÁ¿ */
+    /* åŠ ä¸Šé€šé“çš„TTFRINGQSTåç§»é‡ */
     pucSpace = pucSpace + pstDiccChnCtrl->ulQueueNodeAddrOffSet;
 
     return pucSpace;
 }/* DICC_GetQueueNodeChnAddr */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_GetChannelNodeCnt
-¹¦ÄÜÃèÊö  : ¼ì²é»ñÈ¡Í¨µÀÖÐÊý¾Ý¿éÊýµÄ²ÎÊý
-ÊäÈë²ÎÊý  : ulPid - µ÷ÓÃ´Ë½Ó¿ÚµÄPID
-            ucChanId - Í¨µÀID
-            enGetChnNodeCntType - Ö¸Ê¾»ñÈ¡Í¨µÀÖÐÒÑ¾­´æ·ÅµÄÊý¾Ý¸öÊý,
-                                  »òÕßÍ¨µÀÖÐ¿ÉÒÔ¼ÌÐø´æ·ÅµÄ¸öÊý
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_GetChannelNodeCnt
+åŠŸèƒ½æè¿°  : æ£€æŸ¥èŽ·å–é€šé“ä¸­æ•°æ®å—æ•°çš„å‚æ•°
+è¾“å…¥å‚æ•°  : ulPid - è°ƒç”¨æ­¤æŽ¥å£çš„PID
+            ucChanId - é€šé“ID
+            enGetChnNodeCntType - æŒ‡ç¤ºèŽ·å–é€šé“ä¸­å·²ç»å­˜æ”¾çš„æ•°æ®ä¸ªæ•°,
+                                  æˆ–è€…é€šé“ä¸­å¯ä»¥ç»§ç»­å­˜æ”¾çš„ä¸ªæ•°
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ11ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ11æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_CheckCpuId(DICC_CPU_ID_ENUM_UINT8 enCpuId)
 {
@@ -551,18 +551,18 @@ VOS_UINT32 DICC_CheckCpuId(DICC_CPU_ID_ENUM_UINT8 enCpuId)
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_RecordIsrOp
-¹¦ÄÜÃèÊö  : ¼ÇÂ¼ÓÃ»§ÖÐ¶Ï²Ù×÷
-ÊäÈë²ÎÊý  : pstIsrRecord - ÓÃ»§²Ù×÷ÖÐ¶ÏµÄ¼ÇÂ¼ÐÅÏ¢
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ÎÞ
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_RecordIsrOp
+åŠŸèƒ½æè¿°  : è®°å½•ç”¨æˆ·ä¸­æ–­æ“ä½œ
+è¾“å…¥å‚æ•°  : pstIsrRecord - ç”¨æˆ·æ“ä½œä¸­æ–­çš„è®°å½•ä¿¡æ¯
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ— 
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ13ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ13æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_VOID DICC_RecordIsrOp(DICC_RECORD_ISR_STRU *pstIsrRecord,
                           DICC_CPU_ID_ENUM_UINT8       enCpuId)
@@ -572,9 +572,9 @@ VOS_VOID DICC_RecordIsrOp(DICC_RECORD_ISR_STRU *pstIsrRecord,
 
     pstDFx = DICC_GET_CHAN_DFX(g_astChanRole[enCpuId].pastDICCMgmt);
 
-    if (PS_TRUE == pstIsrRecord->enOpResult)    /* ÕýÈ·²Ù×÷ÖÐ¶Ï, ¼ÇÂ¼ÏÂ¹ì¼£¼´¿É */
+    if (PS_TRUE == pstIsrRecord->enOpResult)    /* æ­£ç¡®æ“ä½œä¸­æ–­, è®°å½•ä¸‹è½¨è¿¹å³å¯ */
     {
-        /* ÔÚÍ¨µÀÍê³É³õÊ¼»¯ºó, ¶¼ÊÇ½ÓÊÕ¶ËÀ´DiableIsr, EnableIsr */
+        /* åœ¨é€šé“å®Œæˆåˆå§‹åŒ–åŽ, éƒ½æ˜¯æŽ¥æ”¶ç«¯æ¥DiableIsr, EnableIsr */
         ucChanId = g_astChanRole[enCpuId].aenRecver[pstIsrRecord->enServiceType];
 
         if (DICC_SERVICE_ISR_ENABLE == pstIsrRecord->enIsrOp)
@@ -590,7 +590,7 @@ VOS_VOID DICC_RecordIsrOp(DICC_RECORD_ISR_STRU *pstIsrRecord,
             pstDFx->astChanStatus[ucChanId].stIsrOp.ulDisableCnt++;
         }
     }
-    else    /* µ±DiableIsr, EnableIsr²ÎÊý´íÎóÊ±, ¼ÇÂ¼µ½DebugÖÐ, Ö»¼ÇÂ¼ÏÂ×î½üÒ»´ÎµÄÇéÐÎ */
+    else    /* å½“DiableIsr, EnableIsrå‚æ•°é”™è¯¯æ—¶, è®°å½•åˆ°Debugä¸­, åªè®°å½•ä¸‹æœ€è¿‘ä¸€æ¬¡çš„æƒ…å½¢ */
     {
         if (DICC_SERVICE_ISR_ENABLE == pstIsrRecord->enIsrOp)
         {
@@ -606,19 +606,19 @@ VOS_VOID DICC_RecordIsrOp(DICC_RECORD_ISR_STRU *pstIsrRecord,
 }    /* DICC_RecordIsrOp */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_EnableIsr
-¹¦ÄÜÃèÊö  : ÉÏ±¨ÓÃ»§²Ù×÷ÏûÏ¢
-ÊäÈë²ÎÊý  : Ê¹ÄÜºË¼äÍ¨ÐÅÖÐ¶ÏAPI
-Êä³ö²ÎÊý  : ulPid - ²Ù×÷PID
-            enServiceType - ·þÎñºÅ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_EnableIsr
+åŠŸèƒ½æè¿°  : ä¸ŠæŠ¥ç”¨æˆ·æ“ä½œæ¶ˆæ¯
+è¾“å…¥å‚æ•°  : ä½¿èƒ½æ ¸é—´é€šä¿¡ä¸­æ–­API
+è¾“å‡ºå‚æ•°  : ulPid - æ“ä½œPID
+            enServiceType - æœåŠ¡å·
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ13ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ13æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_EnableIsr(VOS_UINT32                   ulPid,
                           DICC_SERVICE_TYPE_ENUM_UINT8 enServiceType,
@@ -629,19 +629,19 @@ VOS_UINT32 DICC_EnableIsr(VOS_UINT32                   ulPid,
 #endif
     VOS_UINT32              ulRet;
     /*lint --e{550, 830} */
-    PS_BOOL_ENUM_UINT8      enOpResult;    /* PS_FALSE - Îó²Ù×÷ÖÐ¶Ï */
-    VOS_INT32               lIntRet;    /* ÖÐ¶Ï²Ù×÷·µ»ØÖµ */
+    PS_BOOL_ENUM_UINT8      enOpResult;    /* PS_FALSE - è¯¯æ“ä½œä¸­æ–­ */
+    VOS_INT32               lIntRet;    /* ä¸­æ–­æ“ä½œè¿”å›žå€¼ */
     IPC_INT_LEV_E           lIntLvl;
 
     if ((DICC_SERVICE_TYPE_0 != enServiceType)
         && (DICC_SERVICE_TYPE_1 != enServiceType))
     {
-        enOpResult = PS_FALSE;    /* ÎÞ´Ë·þÎñÀà±ð, ÊôÓÚÎó²Ù×÷ÖÐ¶Ï */
+        enOpResult = PS_FALSE;    /* æ— æ­¤æœåŠ¡ç±»åˆ«, å±žäºŽè¯¯æ“ä½œä¸­æ–­ */
         ulRet      = DICC_ERR_SERVCE_UNDEFINED;
     }
     else
     {
-        enOpResult = PS_TRUE;    /* ÕýÈ·µÄ·þÎñÀà±ð, ²»ÊôÓÚÎó²Ù×÷ÖÐ¶Ï */
+        enOpResult = PS_TRUE;    /* æ­£ç¡®çš„æœåŠ¡ç±»åˆ«, ä¸å±žäºŽè¯¯æ“ä½œä¸­æ–­ */
         ulRet      = DICC_OK;
 
         if (DICC_SERVICE_TYPE_0 == enServiceType)
@@ -653,7 +653,7 @@ VOS_UINT32 DICC_EnableIsr(VOS_UINT32                   ulPid,
             lIntLvl = DICC_SERVICE_1_INT_LEVEL;
         }
 
-        /* Ê¹ÄÜserviceÍ¨ÖªÖÐ¶Ï */
+        /* ä½¿èƒ½serviceé€šçŸ¥ä¸­æ–­ */
 #ifndef WTTF_PS_FUSION_PC_ST
         lIntRet = DRV_IPC_INTENABLE(lIntLvl);
 #else
@@ -667,27 +667,27 @@ VOS_UINT32 DICC_EnableIsr(VOS_UINT32                   ulPid,
 
 #if (1 == DICC_DFX_SWITCH)
     SET_ISR_RECORD(&stIsrRecord, ulPid, enServiceType, DICC_SERVICE_ISR_ENABLE, enOpResult);
-    DICC_RecordIsrOp(&stIsrRecord, enCpuId);    /* ¼ÇÂ¼ÓÃ»§Îó²Ù×÷ÖÐ¶Ï */
+    DICC_RecordIsrOp(&stIsrRecord, enCpuId);    /* è®°å½•ç”¨æˆ·è¯¯æ“ä½œä¸­æ–­ */
 #endif
 
     return ulRet;
 }    /* DICC_EnableIsr */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_DisableIsr
-¹¦ÄÜÃèÊö  : È¥Ê¹ÄÜºË¼äÍ¨ÐÅÖÐ¶ÏAPI
-            ÔÚÖÐ¶Ï·þÎñ³ÌÐòÖÐÖ´ÐÐ, ²»ÄÜÓÐ×èÈûÐÔ²Ù×÷
-ÊäÈë²ÎÊý  : ulPid - ²Ù×÷PID
-            enServiceType - ·þÎñºÅ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_DisableIsr
+åŠŸèƒ½æè¿°  : åŽ»ä½¿èƒ½æ ¸é—´é€šä¿¡ä¸­æ–­API
+            åœ¨ä¸­æ–­æœåŠ¡ç¨‹åºä¸­æ‰§è¡Œ, ä¸èƒ½æœ‰é˜»å¡žæ€§æ“ä½œ
+è¾“å…¥å‚æ•°  : ulPid - æ“ä½œPID
+            enServiceType - æœåŠ¡å·
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ7ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ7æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_DisableIsr(VOS_UINT32 ulPid, DICC_SERVICE_TYPE_ENUM_UINT8 enServiceType,
                DICC_CPU_ID_ENUM_UINT8       enCpuId)
@@ -697,19 +697,19 @@ VOS_UINT32 DICC_DisableIsr(VOS_UINT32 ulPid, DICC_SERVICE_TYPE_ENUM_UINT8 enServ
 #endif
     VOS_UINT32              ulRet;
     /*lint --e{550, 830} */
-    PS_BOOL_ENUM_UINT8      enOpResult;    /* PS_FALSE - Îó²Ù×÷ÖÐ¶Ï */
-    VOS_INT32               lIntRet;    /* ÖÐ¶Ï²Ù×÷·µ»ØÖµ */
+    PS_BOOL_ENUM_UINT8      enOpResult;    /* PS_FALSE - è¯¯æ“ä½œä¸­æ–­ */
+    VOS_INT32               lIntRet;    /* ä¸­æ–­æ“ä½œè¿”å›žå€¼ */
     IPC_INT_LEV_E           lIntLvl;
 
     if ((DICC_SERVICE_TYPE_0 != enServiceType)
         && (DICC_SERVICE_TYPE_1 != enServiceType))
     {
-        enOpResult = PS_FALSE;    /* ÎÞ´Ë·þÎñÀà±ð, ÊôÓÚÎó²Ù×÷ÖÐ¶Ï */
+        enOpResult = PS_FALSE;    /* æ— æ­¤æœåŠ¡ç±»åˆ«, å±žäºŽè¯¯æ“ä½œä¸­æ–­ */
         ulRet      = DICC_ERR_SERVCE_UNDEFINED;
     }
     else
     {
-        enOpResult = PS_TRUE;    /* ÕýÈ·µÄ·þÎñÀà±ð, ²»ÊôÓÚÎó²Ù×÷ÖÐ¶Ï */
+        enOpResult = PS_TRUE;    /* æ­£ç¡®çš„æœåŠ¡ç±»åˆ«, ä¸å±žäºŽè¯¯æ“ä½œä¸­æ–­ */
         ulRet      = DICC_OK;
 
         if (DICC_SERVICE_TYPE_0 == enServiceType)
@@ -721,7 +721,7 @@ VOS_UINT32 DICC_DisableIsr(VOS_UINT32 ulPid, DICC_SERVICE_TYPE_ENUM_UINT8 enServ
             lIntLvl = DICC_SERVICE_1_INT_LEVEL;
         }
 
-        /* È¥Ê¹ÄÜserviceÍ¨ÖªÖÐ¶Ï */
+        /* åŽ»ä½¿èƒ½serviceé€šçŸ¥ä¸­æ–­ */
 #ifndef WTTF_PS_FUSION_PC_ST
         lIntRet = DRV_IPC_INTDISABLE(lIntLvl);
 #else
@@ -736,7 +736,7 @@ VOS_UINT32 DICC_DisableIsr(VOS_UINT32 ulPid, DICC_SERVICE_TYPE_ENUM_UINT8 enServ
 
 #if (1 == DICC_DFX_SWITCH)
     SET_ISR_RECORD(&stIsrRecord, ulPid, enServiceType, DICC_SERVICE_ISR_DISABLE, enOpResult);
-    DICC_RecordIsrOp(&stIsrRecord, enCpuId);    /* ¼ÇÂ¼ÓÃ»§Îó²Ù×÷ÖÐ¶Ï */
+    DICC_RecordIsrOp(&stIsrRecord, enCpuId);    /* è®°å½•ç”¨æˆ·è¯¯æ“ä½œä¸­æ–­ */
 #endif
 
     return ulRet;
@@ -771,7 +771,7 @@ VOS_UINT32 DICC_CheckIsExistEnoughMem(DICC_BLK_CHN_INFO_STRU *penSndChnInfo,
     {
         DICC_LOG(PS_PRINT_WARNING, "[LOCAL CPU_ID: DICC_CheckIsExistEnoughMem] check total memory size fail");
 
-        /* È·±£ÁËblk_sizeºÍblk_numµÄÕýÈ·ÐÔ, ¾Í²»»á³öÏÖÄÚ´æ²»×ã, ¹Ê²»ÔÙÖØ¸´ÉÏ±¨SDT */
+        /* ç¡®ä¿äº†blk_sizeå’Œblk_numçš„æ­£ç¡®æ€§, å°±ä¸ä¼šå‡ºçŽ°å†…å­˜ä¸è¶³, æ•…ä¸å†é‡å¤ä¸ŠæŠ¥SDT */
         return DICC_ERR_MEM_SIZE;
     }
 
@@ -788,9 +788,9 @@ VOS_UINT32 DICC_CheckChnInitStatus(DICC_SERVICE_TYPE_ENUM_UINT8 enServiceType,
     ucChnId = g_astChanRole[enCpuId].aenSender[enServiceType];
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
-    /* ´æÔÚÆäËûÈÎÎñÇÀÕ¼pstDiccChnCtrl->ucValidFlagµÄÎÊÌâ£¬ÐèÒª¼ÓÈÎÎñ»¥³âËø */
+    /* å­˜åœ¨å…¶ä»–ä»»åŠ¡æŠ¢å pstDiccChnCtrl->ucValidFlagçš„é—®é¢˜ï¼Œéœ€è¦åŠ ä»»åŠ¡äº’æ–¥é” */
 
-    if (DICC_CHAN_STATUS_INITIALED == pstDiccChnCtrl->enValidFlag)    /* ·¢ËÍÍ¨µÀÒÑ³õÊ¼»¯ */
+    if (DICC_CHAN_STATUS_INITIALED == pstDiccChnCtrl->enValidFlag)    /* å‘é€é€šé“å·²åˆå§‹åŒ– */
     {
         VOS_TaskUnlock();
         DICC_LOG1(PS_PRINT_WARNING, "[LOCAL CPU_ID: DICC_CheckChnInitStatus] <pstDiccChnCtrl->enValidFlag>",
@@ -808,16 +808,16 @@ VOS_UINT32  DICC_RING_Q_InitAndNodeAddrSet(VOS_UINT32 ulPid,
 {
     VOS_UINT16                          usNodeLoop = 0;
 
-    /* Ö¸Ïò¶ÔÍ¨µÀµÄring_queueµÄÖ¸Õë(ring_queueµÄppNode) */
+    /* æŒ‡å‘å¯¹é€šé“çš„ring_queueçš„æŒ‡é’ˆ(ring_queueçš„ppNode) */
     VOS_VOID                           *pstTtfRingQStAddr = VOS_NULL_PTR;
 
-    /* Í¨µÀÖÐring_queueµÄÖ¸ÕëÊý×éµÄ»ùÖ· */
+    /* é€šé“ä¸­ring_queueçš„æŒ‡é’ˆæ•°ç»„çš„åŸºå€ */
     DICC_QUEUE_NODE_STRU               *pstQueueNodeBaseAddr = VOS_NULL_PTR;
 
-    /* ÔÚ¼ÆËãÃ¿¸öºË¼äÊý¾ÝµÄÊ×µØÖ·Ê±Ê¹ÓÃµ½µÄÁÙÊ±Ö¸Õë */
+    /* åœ¨è®¡ç®—æ¯ä¸ªæ ¸é—´æ•°æ®çš„é¦–åœ°å€æ—¶ä½¿ç”¨åˆ°çš„ä¸´æ—¶æŒ‡é’ˆ */
     VOS_UINT8                          *pucBaseQueueNodeAddr = VOS_NULL_PTR;
 
-    /* Ã¿¸öºË¼äÊý¾ÝµÄÊ×µØÖ· */
+    /* æ¯ä¸ªæ ¸é—´æ•°æ®çš„é¦–åœ°å€ */
     VOS_UINT8                          *pucQueuePerNodeAddr = VOS_NULL_PTR;
     DICC_QUEUE_NODE_STRU               *pstPerNodeAddr = VOS_NULL_PTR;
     VOS_UINT32                          ulRslt;
@@ -844,10 +844,10 @@ VOS_UINT32  DICC_RING_Q_InitAndNodeAddrSet(VOS_UINT32 ulPid,
     {
         pucQueuePerNodeAddr = (pucBaseQueueNodeAddr + (ulChnNodeSize * usNodeLoop));
 
-        /* ºË¼ä¹²Ïí½áµãµÄµØÖ· */
+        /* æ ¸é—´å…±äº«ç»“ç‚¹çš„åœ°å€ */
         pstPerNodeAddr = (DICC_QUEUE_NODE_STRU *)pucQueuePerNodeAddr;
 
-        /* ºË¼ä´«µÝ½áµãÄÚ´æÇåÁã */
+        /* æ ¸é—´ä¼ é€’ç»“ç‚¹å†…å­˜æ¸…é›¶ */
         VOS_MemSet(pstPerNodeAddr->aucPriData, 0x0, sizeof(pstPerNodeAddr->aucPriData));
 
         pstPerNodeAddr->usIndex = usNodeLoop;
@@ -858,19 +858,19 @@ VOS_UINT32  DICC_RING_Q_InitAndNodeAddrSet(VOS_UINT32 ulPid,
 } /* DICC_RING_Q_InitAndNodeAddrSet */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_SenderChnInit
-¹¦ÄÜÃèÊö  : Í¨µÀ·¢ËÍ¶Ë³õÊ¼»¯
-ÊäÈë²ÎÊý  : ucChnId - Í¨µÀID
-            penChnInfo - Í¨µÀ»ù±¾ÐÅÏ¢(ÉêÇëºË¼äÐÅÏ¢¿éÊýºÍ´óÐ¡µÈ)
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_SenderChnInit
+åŠŸèƒ½æè¿°  : é€šé“å‘é€ç«¯åˆå§‹åŒ–
+è¾“å…¥å‚æ•°  : ucChnId - é€šé“ID
+            penChnInfo - é€šé“åŸºæœ¬ä¿¡æ¯(ç”³è¯·æ ¸é—´ä¿¡æ¯å—æ•°å’Œå¤§å°ç­‰)
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ12ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ12æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_SenderChnInit(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
                               DICC_BLK_CHN_INFO_STRU        *penChnInfo,
@@ -882,24 +882,24 @@ VOS_UINT32 DICC_SenderChnInit(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
     VOS_UINT32                          ulReturn;
 
 
-    /* ³õÊ¼»¯¹ý³ÌÍ¬Ò»ºËÐèÒª»¥³â, ÓÉÍâ²¿µ÷ÓÃÕßÈ·±£ */
+    /* åˆå§‹åŒ–è¿‡ç¨‹åŒä¸€æ ¸éœ€è¦äº’æ–¥, ç”±å¤–éƒ¨è°ƒç”¨è€…ç¡®ä¿ */
 
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
-    /* Í¨µÀºÅ */
+    /* é€šé“å· */
     pstDiccChnCtrl->ucChanId               = ucChnId;
     pstDiccChnCtrl->usChnBlkNum            = penChnInfo->usChnBlkNum;
     pstDiccChnCtrl->ucPriDataLen           = (VOS_UINT8)(penChnInfo->usChnBlkSize);
     pstDiccChnCtrl->ulTtfRingQStAddrOffSet = g_astChanRole[enCpuId].pastDICCMgmt->ulCurrSize;
 
-    /* pstDiccChnCtrl->ulQueueNodeAddrOffSet¼ÓÉÏÍ¨µÀTFFRINGQSTµÄ´óÐ¡ */
+    /* pstDiccChnCtrl->ulQueueNodeAddrOffSetåŠ ä¸Šé€šé“TFFRINGQSTçš„å¤§å° */
     pstDiccChnCtrl->ulQueueNodeAddrOffSet = pstDiccChnCtrl->ulTtfRingQStAddrOffSet
         + (penChnInfo->usChnBlkNum * sizeof(VOS_VOID *));
 
-    /* Í¨µÀÉêÇëµÄ×Ü³¤¶È */
+    /* é€šé“ç”³è¯·çš„æ€»é•¿åº¦ */
     ulSize = (penChnInfo->usChnBlkNum) * (sizeof(DICC_QUEUE_NODE_STRU) + sizeof(VOS_VOID *));
 
-    /* ³õÊ¼»¯Í¨µÀµÄ»·ÐÎ»º´æ²¢ÇÒ¹ØÁªºË¼ä¹²Ïí½áµãµØÖ·µ½Í¨µÀ½áµã¶ÓÁÐÖÐ */
+    /* åˆå§‹åŒ–é€šé“çš„çŽ¯å½¢ç¼“å­˜å¹¶ä¸”å…³è”æ ¸é—´å…±äº«ç»“ç‚¹åœ°å€åˆ°é€šé“ç»“ç‚¹é˜Ÿåˆ—ä¸­ */
     ulReturn = DICC_RING_Q_InitAndNodeAddrSet(ulPid, (DICC_CHAN_CTRL_STRU *)pstDiccChnCtrl, enCpuId);
 
     if (DICC_OK != ulReturn)
@@ -909,36 +909,36 @@ VOS_UINT32 DICC_SenderChnInit(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
         return DICC_ERR_RING_QUEUE_FAIL;
     }
 
-    /* ÉÏ×ÔÐýËø, ×¢Òâ×ÔÐýËø¼Ä´æÆ÷µÄ±£»¤, ÊÇÍ¨¹ý´Ëº¯ÊýµÄµ÷ÓÃÕßtasklockÊµÏÖµÄ */
+    /* ä¸Šè‡ªæ—‹é”, æ³¨æ„è‡ªæ—‹é”å¯„å­˜å™¨çš„ä¿æŠ¤, æ˜¯é€šè¿‡æ­¤å‡½æ•°çš„è°ƒç”¨è€…tasklockå®žçŽ°çš„ */
     DICC_SPIN_LOCK();
 
-    /* Í¨µÀ×´Ì¬³õÊ¼»¯ */
+    /* é€šé“çŠ¶æ€åˆå§‹åŒ– */
     pstDiccChnCtrl->ucStateMask &= ~DICC_CHAN_SENDER_OPEN_MASK;
     pstDiccChnCtrl->enValidFlag = DICC_CHAN_STATUS_INITIALED;
 
-    /* ¸üÐÂºË¼äÍ¨µÀ¿ØÖÆ½á¹¹ */
+    /* æ›´æ–°æ ¸é—´é€šé“æŽ§åˆ¶ç»“æž„ */
     g_astChanRole[enCpuId].pastDICCMgmt->ulCurrSize += (ulSize);
 
-    /* ½â×ÔÐýËø */
+    /* è§£è‡ªæ—‹é” */
     DICC_SPIN_UNLOCK();
 
     return DICC_OK;
 }    /* DICC_SenderChanInit */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_ChnIsrInit
-¹¦ÄÜÃèÊö  : DICCÓÃ»§Í¨µÀ³õÊ¼»¯²ÎÊý¼ì²éº¯Êý
-ÊäÈë²ÎÊý  : enServiceType - ·þÎñÀà±ðºÅ
-            pfuncRecvIsr - ÖÐ¶Ï·þÎñ³ÌÐò
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_ChnIsrInit
+åŠŸèƒ½æè¿°  : DICCç”¨æˆ·é€šé“åˆå§‹åŒ–å‚æ•°æ£€æŸ¥å‡½æ•°
+è¾“å…¥å‚æ•°  : enServiceType - æœåŠ¡ç±»åˆ«å·
+            pfuncRecvIsr - ä¸­æ–­æœåŠ¡ç¨‹åº
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ8ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ8æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_ChnIsrInit(VOS_UINT32 ulPid, VOS_UINT32 ulIntLevel,
                            VOIDFUNCPTR pfuncRecvIsr, DICC_INT_OP_STRU *pstIntOp)
@@ -946,13 +946,13 @@ VOS_UINT32 DICC_ChnIsrInit(VOS_UINT32 ulPid, VOS_UINT32 ulIntLevel,
     VOS_INT32  lIntRet;
 
 
-    /* ¹Ò½ÓÖÐ¶Ï */
+    /* æŒ‚æŽ¥ä¸­æ–­ */
 #ifndef WTTF_PS_FUSION_PC_ST
     lIntRet = DRV_IPC_INTCONNECT(((IPC_INT_LEV_E)ulIntLevel), ((VOIDFUNCPTR)pfuncRecvIsr), VOS_NULL);
 #else
     lIntRet = VHW_IPC_IntConnect(ulPid,((IPC_INT_LEV_E)ulIntLevel), ((VOIDFUNCPTR)pfuncRecvIsr), VOS_NULL);
 #endif
-    /* ÔÚ´Ë½«ÖÐ¶Ï²Ù×÷¼ÇÂ¼ÏÂÀ´ */
+    /* åœ¨æ­¤å°†ä¸­æ–­æ“ä½œè®°å½•ä¸‹æ¥ */
     pstIntOp->ulIntLevel = ulIntLevel;
     pstIntOp->lResult = lIntRet;
 
@@ -964,27 +964,27 @@ VOS_UINT32 DICC_ChnIsrInit(VOS_UINT32 ulPid, VOS_UINT32 ulIntLevel,
         return DICC_ERR_ISR_CONNECT_FAIL;
     }
 
-    /* Ê¹ÄÜÍ¨ÖªÖÐ¶Ï */
+    /* ä½¿èƒ½é€šçŸ¥ä¸­æ–­ */
     DRV_IPC_INTENABLE((IPC_INT_LEV_E)ulIntLevel);
 
     return DICC_OK;
 }    /* DICC_ChnIsrInit */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_RecverChnInit
-¹¦ÄÜÃèÊö  : Í¨µÀ½ÓÊÕ¶Ë³õÊ¼»¯
-ÊäÈë²ÎÊý  : ulPid - ²Ù×÷PID
-            enServiceType - ·þÎñÀà±ðºÅ
-            pfuncRecvIsr - ÖÐ¶Ï·þÎñ³ÌÐò
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_RecverChnInit
+åŠŸèƒ½æè¿°  : é€šé“æŽ¥æ”¶ç«¯åˆå§‹åŒ–
+è¾“å…¥å‚æ•°  : ulPid - æ“ä½œPID
+            enServiceType - æœåŠ¡ç±»åˆ«å·
+            pfuncRecvIsr - ä¸­æ–­æœåŠ¡ç¨‹åº
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ12ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ12æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_RecverChnInit(VOS_UINT32                        ulPid,
                               DICC_SERVICE_TYPE_ENUM_UINT8      enServiceType,
@@ -998,20 +998,20 @@ VOS_UINT32 DICC_RecverChnInit(VOS_UINT32                        ulPid,
     VOS_UINT32                          ulReturn;
     VOS_UINT32                          ulIntLevel;
 
-    /* ³õÊ¼»¯¹ý³ÌÍ¬Ò»ºËÐèÒª»¥³â, Ä¿Ç°ÊÇÓÉÍâ²¿µ÷ÓÃÕßÈ·±£ */
+    /* åˆå§‹åŒ–è¿‡ç¨‹åŒä¸€æ ¸éœ€è¦äº’æ–¥, ç›®å‰æ˜¯ç”±å¤–éƒ¨è°ƒç”¨è€…ç¡®ä¿ */
 
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
-    /* Í¨µÀºÅ */
+    /* é€šé“å· */
     pstDiccChnCtrl->ucChanId = ucChnId;
 
-    /* ÉÏ×ÔÐýËø, ×¢Òâ×ÔÐýËø¼Ä´æÆ÷µÄ±£»¤, ÊÇÍ¨¹ý´Ëº¯ÊýµÄµ÷ÓÃÕßtasklockÊµÏÖµÄ */
+    /* ä¸Šè‡ªæ—‹é”, æ³¨æ„è‡ªæ—‹é”å¯„å­˜å™¨çš„ä¿æŠ¤, æ˜¯é€šè¿‡æ­¤å‡½æ•°çš„è°ƒç”¨è€…tasklockå®žçŽ°çš„ */
     DICC_SPIN_LOCK();
 
-    /* Í¨µÀ×´Ì¬³õÊ¼»¯ */
+    /* é€šé“çŠ¶æ€åˆå§‹åŒ– */
     pstDiccChnCtrl->ucStateMask &= ~DICC_CHAN_RECVER_OPEN_MASK;
 
-    /* ½â×ÔÐýËø */
+    /* è§£è‡ªæ—‹é” */
     DICC_SPIN_UNLOCK();
 
     if (DICC_SERVICE_TYPE_0 == enServiceType)
@@ -1029,19 +1029,19 @@ VOS_UINT32 DICC_RecverChnInit(VOS_UINT32                        ulPid,
 }    /* DICC_RecverChanInit */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_ChkChnInit
-¹¦ÄÜÃèÊö  : DICCÓÃ»§Í¨µÀ³õÊ¼»¯²ÎÊý¼ì²éº¯Êý
-ÊäÈë²ÎÊý  : enServiceType - ·þÎñÀà±ðºÅ
-            pstInitChanInfo - Í¨µÀµÄ»ù±¾ÐÅÏ¢
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_ChkChnInit
+åŠŸèƒ½æè¿°  : DICCç”¨æˆ·é€šé“åˆå§‹åŒ–å‚æ•°æ£€æŸ¥å‡½æ•°
+è¾“å…¥å‚æ•°  : enServiceType - æœåŠ¡ç±»åˆ«å·
+            pstInitChanInfo - é€šé“çš„åŸºæœ¬ä¿¡æ¯
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ7ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ7æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_ChkChnServiceInfo(DICC_SERVICE_TYPE_ENUM_UINT8 enServiceType,
                            DICC_INIT_CHN_INFO_STRU     *pstInitChanInfo,
@@ -1058,14 +1058,14 @@ VOS_UINT32 DICC_ChkChnServiceInfo(DICC_SERVICE_TYPE_ENUM_UINT8 enServiceType,
 
     if (DICC_CHAN_ROLE_SENDER == pstInitChanInfo->enUserRole)
     {
-        /* ¼ì²éÍ¨µÀÊÇ·ñÒÑ¾­³õÊ¼»¯ */
+        /* æ£€æŸ¥é€šé“æ˜¯å¦å·²ç»åˆå§‹åŒ– */
         ulRet = DICC_CheckChnInitStatus(enServiceType, enCpuId);
         if (DICC_OK != ulRet)
         {
             return ulRet;
         }
 
-        /* ¼ì²éºË¼äÊÇ·ñ»¹ÓÐ×ã¹»µÄ¿Õ¼äÀ´³õÊ¼»¯Í¨µÀ */
+        /* æ£€æŸ¥æ ¸é—´æ˜¯å¦è¿˜æœ‰è¶³å¤Ÿçš„ç©ºé—´æ¥åˆå§‹åŒ–é€šé“ */
         ulRet = DICC_CheckIsExistEnoughMem(&(pstInitChanInfo->u.stSndInitInfo.stSndChnInfo), enCpuId);
         if (DICC_OK != ulRet)
         {
@@ -1074,7 +1074,7 @@ VOS_UINT32 DICC_ChkChnServiceInfo(DICC_SERVICE_TYPE_ENUM_UINT8 enServiceType,
     }
     else if (DICC_CHAN_ROLE_RECVER == pstInitChanInfo->enUserRole)
     {
-        if (VOS_NULL_PTR == pstInitChanInfo->u.stRcvInitInfo.pfuncRecvIsr)    /* ÖÐ¶Ï·þÎñ³ÌÐòÎª¿Õ */
+        if (VOS_NULL_PTR == pstInitChanInfo->u.stRcvInitInfo.pfuncRecvIsr)    /* ä¸­æ–­æœåŠ¡ç¨‹åºä¸ºç©º */
         {
             DICC_LOG2(PS_PRINT_WARNING,
                 "[LOCAL CPU_ID: DICC_ChkChnInit] pfuncRecvIsr is NULL, <enServiceType> <enUserRole>",
@@ -1093,22 +1093,22 @@ VOS_UINT32 DICC_ChkChnServiceInfo(DICC_SERVICE_TYPE_ENUM_UINT8 enServiceType,
 }   /* DICC_ChkChnInit */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_Sync
-¹¦ÄÜÃèÊö  : DICCË«ºË¹²ÏíÄÚ´æ³õÊ¼»¯Í¬²½
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-Ëµ    Ã÷  : ³õÊ¼»¯¹ý³ÌÍ¬Ò»ºËÐèÒª»¥³â
-            ·ÀÖ¹ÖØ¸´´´½¨Ó²¼þÐÅºÅÁ¿, ËøÖÐ¶Ï, Ö±µ½Õû¸ö²Ù×÷½áÊø,
-            ·ñÔòÒ»µ©¹ÜÀí½á¹¹Ã»ÓÐÍê³É³õÊ¼»¯, ±»¸ßÓÅÏÈ¼¶ÈÎÎñÇÀ×ß, ÅÐ¶ÏucSemCreatedÎª1,
-            Àë¿ª´Ëº¯Êý, Êµ¼ÊÉÏ´ËÊ±²¢Ã»ÓÐÍê³ÉsyncµÄ³õÊ¼»¯
+å‡½ æ•° å  : DICC_Sync
+åŠŸèƒ½æè¿°  : DICCåŒæ ¸å…±äº«å†…å­˜åˆå§‹åŒ–åŒæ­¥
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+è¯´    æ˜Ž  : åˆå§‹åŒ–è¿‡ç¨‹åŒä¸€æ ¸éœ€è¦äº’æ–¥
+            é˜²æ­¢é‡å¤åˆ›å»ºç¡¬ä»¶ä¿¡å·é‡, é”ä¸­æ–­, ç›´åˆ°æ•´ä¸ªæ“ä½œç»“æŸ,
+            å¦åˆ™ä¸€æ—¦ç®¡ç†ç»“æž„æ²¡æœ‰å®Œæˆåˆå§‹åŒ–, è¢«é«˜ä¼˜å…ˆçº§ä»»åŠ¡æŠ¢èµ°, åˆ¤æ–­ucSemCreatedä¸º1,
+            ç¦»å¼€æ­¤å‡½æ•°, å®žé™…ä¸Šæ­¤æ—¶å¹¶æ²¡æœ‰å®Œæˆsyncçš„åˆå§‹åŒ–
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê10ÔÂ20ÈÕ
-   ×÷    Õß   : wangrong
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´10æœˆ20æ—¥
+   ä½œ    è€…   : wangrong
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_Sync(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum, VOS_UINT32 ulPid,
                DICC_CPU_ID_ENUM_UINT8 enCpuId)
@@ -1133,7 +1133,7 @@ VOS_UINT32 DICC_Sync(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum, VOS_UINT32 ulPid
     }
     else
     {
-        /* ×¢ÒâDICC_MEM_INIT_MAGIC_NUM_ADDR²»ÔÚµ×Èí±£ÁôµØÖ·ÖÐ, ÐèÒªµ÷ÓÃLinux IO_ADDRESS½øÐÐµØÖ·×ª»» */
+        /* æ³¨æ„DICC_MEM_INIT_MAGIC_NUM_ADDRä¸åœ¨åº•è½¯ä¿ç•™åœ°å€ä¸­, éœ€è¦è°ƒç”¨Linux IO_ADDRESSè¿›è¡Œåœ°å€è½¬æ¢ */
         pulDiccMagicAddr = (VOS_UINT32 *)DICC_DRV_PHY_TO_VIRT(DICC_MEM_INIT_MAGIC_NUM_ADDR);
 
         pucStartAddr = (VOS_UINT8 *)DICC_TTF_PHY_TO_VIRT(DICC_MEM_START_PHY_ADDR);
@@ -1143,23 +1143,23 @@ VOS_UINT32 DICC_Sync(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum, VOS_UINT32 ulPid
     pucStartAddr = (VOS_UINT8 *)DICC_TTF_PHY_TO_VIRT(DICC_MEM_START_PHY_ADDR);
 #endif
 
-    if (1 == g_astChanRole[enCpuId].ucSemCreated)    /* ±¾CPUÒÑ´´½¨Ó²¼þÐÅºÅÁ¿ */
+    if (1 == g_astChanRole[enCpuId].ucSemCreated)    /* æœ¬CPUå·²åˆ›å»ºç¡¬ä»¶ä¿¡å·é‡ */
     {
         SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
             ID_DICC_TRACE_FUNC_MARK_SYNC, __LINE__, DICC_TRACE_OK);
 
-        return DICC_OK;    /* ·ÀÖ¹ÖØ¸´´´½¨ */
+        return DICC_OK;    /* é˜²æ­¢é‡å¤åˆ›å»º */
     }
 
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_SYNC, __LINE__, DICC_TRACE_OK);
 
-    /* ´´½¨ÓÃÓÚÁ½ºËÍ¬²½DICCÄÚ´æÇåÁãµÄÓ²¼þÐÅºÅÁ¿ */
+    /* åˆ›å»ºç”¨äºŽä¸¤æ ¸åŒæ­¥DICCå†…å­˜æ¸…é›¶çš„ç¡¬ä»¶ä¿¡å·é‡ */
     DRV_IPC_SEMCREATE(IPC_SEM_DICC);
 
-    g_astChanRole[enCpuId].ucSemCreated = 1;    /* ÒÑ¾­´´½¨Ó²¼þÐÅºÅÁ¿ */
+    g_astChanRole[enCpuId].ucSemCreated = 1;    /* å·²ç»åˆ›å»ºç¡¬ä»¶ä¿¡å·é‡ */
 
-    /* »ñÈ¡Ó²¼þÐÅºÅÁ¿, ËüµÄ¼Ä´æÆ÷±£»¤ÊÇÍ¨¹ýÍâ²¿µ÷ÓÃÕßÓÃtasklock±£»¤µÄ */
+    /* èŽ·å–ç¡¬ä»¶ä¿¡å·é‡, å®ƒçš„å¯„å­˜å™¨ä¿æŠ¤æ˜¯é€šè¿‡å¤–éƒ¨è°ƒç”¨è€…ç”¨tasklockä¿æŠ¤çš„ */
     stSyncPara.stHwSemPara.ulSingnalNum = IPC_SEM_DICC;
     stSyncPara.stHwSemPara.lTimeout     = 0;
     stSyncPara.stHwSemPara.lResult      = DRV_IPC_SEMTAKE(IPC_SEM_DICC, 0);
@@ -1181,7 +1181,7 @@ VOS_UINT32 DICC_Sync(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum, VOS_UINT32 ulPid
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_SYNC, __LINE__, DICC_TRACE_OK);
 
-    /* takeµ½ÐÅºÅÁ¿ºó£¬ÐèÒª¼ì²éÄ§Êõ×Ö£¬Èç¹ûÃ»ÓÐÉèÖÃ£¬Ôò¿ÉÒÔ½øÐÐÄÚ´æÇå0 */
+    /* takeåˆ°ä¿¡å·é‡åŽï¼Œéœ€è¦æ£€æŸ¥é­”æœ¯å­—ï¼Œå¦‚æžœæ²¡æœ‰è®¾ç½®ï¼Œåˆ™å¯ä»¥è¿›è¡Œå†…å­˜æ¸…0 */
     if (0 == (*pulDiccMagicAddr))
     {
         DICC_LOG1(PS_PRINT_INFO, "[<LOCAL CPU_ID>: DICC_Sync] <DICC MAGIC NUM> ",
@@ -1203,7 +1203,7 @@ VOS_UINT32 DICC_Sync(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum, VOS_UINT32 ulPid
 
     stSyncPara.ulDiccMagic = (*pulDiccMagicAddr);
 
-    /* ·ÀÖ¹³öÏÖMAGIC-NUMÒòAXIÄÚ´æÉÏµçÃ»ÓÐÇåÁã¶ø²ÐÁô»òÕß±»´Û¸Ä */
+    /* é˜²æ­¢å‡ºçŽ°MAGIC-NUMå› AXIå†…å­˜ä¸Šç”µæ²¡æœ‰æ¸…é›¶è€Œæ®‹ç•™æˆ–è€…è¢«ç¯¡æ”¹ */
     if (DICC_MEM_INIT_MAGIC_NUM != stSyncPara.ulDiccMagic)
     {
         SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
@@ -1216,7 +1216,7 @@ VOS_UINT32 DICC_Sync(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum, VOS_UINT32 ulPid
         DICC_LOG1(PS_PRINT_ERROR, "[<LOCAL CPU_ID>: DICC_Sync] <ulDiccMagic> tempered",
             (VOS_INT)stSyncPara.ulDiccMagic);
 
-        /* ÊÍ·ÅÓ²¼þÐÅºÅÁ¿ */
+        /* é‡Šæ”¾ç¡¬ä»¶ä¿¡å·é‡ */
         DRV_IPC_SEMGIVE(IPC_SEM_DICC);
 
         return DICC_ERR_MAGIC_MEM_TEMPERED;
@@ -1225,13 +1225,13 @@ VOS_UINT32 DICC_Sync(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum, VOS_UINT32 ulPid
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_SYNC, __LINE__, DICC_TRACE_OK);
 
-    /* ³õÊ¼»¯Í¨µÀ¹ÜÀí½á¹¹µÄÈ«¾Ö±äÁ¿Ê×µØÖ· */
+    /* åˆå§‹åŒ–é€šé“ç®¡ç†ç»“æž„çš„å…¨å±€å˜é‡é¦–åœ°å€ */
     g_astChanRole[enCpuId].pastDICCMgmt = (DICC_CTRL_STRU *)pucStartAddr;
     DEBUG_PRINT("DICC_MemInit Succ! virtual: 0x%0x\n", (int)(g_astChanRole[enCpuId].pastDICCMgmt));
 
-    /* ³õÊ¼»¯Í¨µÀ¿ØÖÆ½á¹¹µÄ±äÁ¿, ½öÓÉÒ»ºË½«DICC¿ØÖÆÄÚ´æ´óÐ¡¼ÇÂ¼ÉÏÈ¥
-       ÁíÒ»ºË¿ÉÄÜÒò´Ë¸üÐÂ¹ýCurrSize, ±ÈÈçÒÑ¾­½«Ä³Ð©Í¨µÀinitÁË, ´ËÊ±±¾ºË²ÅÖ´ÐÐµ½ÕâÀï,
-       Òò´ËÐèÒªÅÐ¶ÏÊÇ·ñÎª0, ¼´Ã»ÓÐ¼ÇÂ¼¹ý */
+    /* åˆå§‹åŒ–é€šé“æŽ§åˆ¶ç»“æž„çš„å˜é‡, ä»…ç”±ä¸€æ ¸å°†DICCæŽ§åˆ¶å†…å­˜å¤§å°è®°å½•ä¸ŠåŽ»
+       å¦ä¸€æ ¸å¯èƒ½å› æ­¤æ›´æ–°è¿‡CurrSize, æ¯”å¦‚å·²ç»å°†æŸäº›é€šé“initäº†, æ­¤æ—¶æœ¬æ ¸æ‰æ‰§è¡Œåˆ°è¿™é‡Œ,
+       å› æ­¤éœ€è¦åˆ¤æ–­æ˜¯å¦ä¸º0, å³æ²¡æœ‰è®°å½•è¿‡ */
     if (0 == g_astChanRole[enCpuId].pastDICCMgmt->ulCurrSize)
     {
         g_astChanRole[enCpuId].pastDICCMgmt->ulCurrSize = sizeof(DICC_CTRL_STRU) + (DICC_MAX_CHAN_NUM * sizeof(DICC_CHAN_CTRL_STRU));
@@ -1243,27 +1243,27 @@ VOS_UINT32 DICC_Sync(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum, VOS_UINT32 ulPid
     g_astChanRole[enCpuId].pastDICCMgmt->stDFx.enDFxEnabled = PS_FALSE;
 #endif
 
-    /* ÊÍ·ÅÓ²¼þÐÅºÅÁ¿ */
+    /* é‡Šæ”¾ç¡¬ä»¶ä¿¡å·é‡ */
     DRV_IPC_SEMGIVE(IPC_SEM_DICC);
 
     return DICC_OK;
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_SingleChnInit
-¹¦ÄÜÃèÊö  : DICCÓÃ»§µ¥Í¨µÀ³õÊ¼»¯API(°´ÕÕ·þÎñÀà±ð³õÊ¼»¯Ò»¸öÍ¨µÀ)
-ÊäÈë²ÎÊý  : ulPid - µ÷ÓÃ´Ë½Ó¿ÚµÄPID
-            enServiceType - ·þÎñÀà±ðºÅ
-            pstInitChanInfo - Òª³õÊ¼»¯µÄÍ¨µÀµÄ¾ßÌå²ÎÊý
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_SingleChnInit
+åŠŸèƒ½æè¿°  : DICCç”¨æˆ·å•é€šé“åˆå§‹åŒ–API(æŒ‰ç…§æœåŠ¡ç±»åˆ«åˆå§‹åŒ–ä¸€ä¸ªé€šé“)
+è¾“å…¥å‚æ•°  : ulPid - è°ƒç”¨æ­¤æŽ¥å£çš„PID
+            enServiceType - æœåŠ¡ç±»åˆ«å·
+            pstInitChanInfo - è¦åˆå§‹åŒ–çš„é€šé“çš„å…·ä½“å‚æ•°
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ28ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´11æœˆ28æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_SingleChnInitAction(VOS_UINT32             ulFileId,
                               VOS_UINT32                   ulLineNum,
@@ -1282,7 +1282,7 @@ VOS_UINT32 DICC_SingleChnInitAction(VOS_UINT32             ulFileId,
         return ulRet;
     }
 
-    /* ×¢ÒâÔÚ´ËÖ®Ç°, ÎÞ·¨È·ÈÏenCpuIdÊÇ·ñÕý³£, Ö±½ÓÈëÊý×éÏÂ±ê¿ÉÄÜ»á³öÏÖÎÊÌâ, ¹Ê²»ÄÜµ÷ÓÃTRACE */
+    /* æ³¨æ„åœ¨æ­¤ä¹‹å‰, æ— æ³•ç¡®è®¤enCpuIdæ˜¯å¦æ­£å¸¸, ç›´æŽ¥å…¥æ•°ç»„ä¸‹æ ‡å¯èƒ½ä¼šå‡ºçŽ°é—®é¢˜, æ•…ä¸èƒ½è°ƒç”¨TRACE */
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_SINGLE_CHAN_INIT, __LINE__, DICC_TRACE_OK);
 
@@ -1297,7 +1297,7 @@ VOS_UINT32 DICC_SingleChnInitAction(VOS_UINT32             ulFileId,
     }
 
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
-    /* ¸ßÓÅÏÈ¼¶ÈÎÎñÇÀÕ¼Ê±£¬¿ÉÄÜ»á³öÏÖÖØ¸´³õÊ¼»¯g_stDiccSpinLockµÄÇé¿ö */
+    /* é«˜ä¼˜å…ˆçº§ä»»åŠ¡æŠ¢å æ—¶ï¼Œå¯èƒ½ä¼šå‡ºçŽ°é‡å¤åˆå§‹åŒ–g_stDiccSpinLockçš„æƒ…å†µ */
     if( DICC_MUTEX_SEM_NOT_CREATE == g_ulDiccMultiCoreFlag )
     {
         spin_lock_init(&g_stDiccSpinLock);
@@ -1310,7 +1310,7 @@ VOS_UINT32 DICC_SingleChnInitAction(VOS_UINT32             ulFileId,
 
     if( DICC_MUTEX_SEM_NOT_CREATE == g_ulDiccMultiCoreFlag )
     {
-        /* ´´½¨±¾µØ»¥³âÐÅºÅÁ¿(µÚÒ»¸ö²ÎÊýÖ»ÔÊÐí4×Ö½Ú, DICC Local Mutex, ËõÐ´ÎªDLM) */
+        /* åˆ›å»ºæœ¬åœ°äº’æ–¥ä¿¡å·é‡(ç¬¬ä¸€ä¸ªå‚æ•°åªå…è®¸4å­—èŠ‚, DICC Local Mutex, ç¼©å†™ä¸ºDLM) */
         ulRet = VOS_SmMCreate("DLM", VOS_SEMA4_FIFO,
                 (VOS_SEM *)(&(g_astChanRole[enCpuId].ulDiccLocalMutexSem)));
 
@@ -1345,7 +1345,7 @@ VOS_UINT32 DICC_SingleChnInitAction(VOS_UINT32             ulFileId,
         return DICC_ERR_LOCAL_SEMPHORE_FAIL;
     }
 
-    /* ½øÐÐDICC¿ØÖÆ½á¹¹ÄÚ´æÇåÁã²Ù×÷Í¬²½ */
+    /* è¿›è¡ŒDICCæŽ§åˆ¶ç»“æž„å†…å­˜æ¸…é›¶æ“ä½œåŒæ­¥ */
     ulRet = DICC_Sync(ulFileId, ulLineNum, ulPid, enCpuId);
     if (DICC_OK != ulRet)
     {
@@ -1357,7 +1357,7 @@ VOS_UINT32 DICC_SingleChnInitAction(VOS_UINT32             ulFileId,
         return ulRet;
     }
 
-    /* ÔÚ´Ë½«ÓÃ»§²ÎÊý¼ÇÂ¼ÏÂÀ´ */
+    /* åœ¨æ­¤å°†ç”¨æˆ·å‚æ•°è®°å½•ä¸‹æ¥ */
     stInitChanInfo.enServiceType = enServiceType;
     VOS_MemCpy(&(stInitChanInfo.stInitPara),
                pstInitChanInfo, sizeof(stInitChanInfo.stInitPara));
@@ -1438,19 +1438,19 @@ VOS_UINT32 DICC_SingleChnInitAction(VOS_UINT32             ulFileId,
 }    /* DICC_SingleChnInit */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_OpenChannelByRole
-¹¦ÄÜÃèÊö  : °´ÕÕ½ÇÉ«´ò¿ªºË¼äÍ¨ÐÅÍ¨µÀ
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-            enUserRole - ÔÚµ±Ç°CPUÉÏ±¾¶ËÔÚÍ¨µÀÉÏ°çÑÝµÄ½ÇÉ«
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ÎÞ
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_OpenChannelByRole
+åŠŸèƒ½æè¿°  : æŒ‰ç…§è§’è‰²æ‰“å¼€æ ¸é—´é€šä¿¡é€šé“
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+            enUserRole - åœ¨å½“å‰CPUä¸Šæœ¬ç«¯åœ¨é€šé“ä¸Šæ‰®æ¼”çš„è§’è‰²
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ— 
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ11ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ11æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_OpenChannelByRole(DICC_CHAN_ID_ENUM_UINT8      ucChnId,
                                 DICC_CHAN_ROLE_ENUM_UINT8      enUserRole,
@@ -1474,7 +1474,7 @@ VOS_UINT32 DICC_OpenChannelByRole(DICC_CHAN_ID_ENUM_UINT8      ucChnId,
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_OPEN, __LINE__, DICC_TRACE_OK);
 
-    /* ÈÎÎñÇÀÕ¼µÄÎÊÌâ, ÓÉ±¾µØ»¥³âÐÅºÅÁ¿À´±£»¤×ÔÐýËø */
+    /* ä»»åŠ¡æŠ¢å çš„é—®é¢˜, ç”±æœ¬åœ°äº’æ–¥ä¿¡å·é‡æ¥ä¿æŠ¤è‡ªæ—‹é” */
     pstLocalSemPara->ulResult = VOS_SmP(g_astChanRole[enCpuId].ulDiccLocalMutexSem, 0);
     if (VOS_OK != pstLocalSemPara->ulResult)
     {
@@ -1491,17 +1491,17 @@ VOS_UINT32 DICC_OpenChannelByRole(DICC_CHAN_ID_ENUM_UINT8      ucChnId,
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_OPEN, __LINE__, DICC_TRACE_OK);
 
-    /* ÉÏ×ÔÐýËø */
+    /* ä¸Šè‡ªæ—‹é” */
     DICC_SPIN_LOCK();
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
     pstDiccChnCtrl               = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
     pstDiccChnCtrl->ucStateMask |= ucStateMask;
 
-    /* ½â×ÔÐýËø */
+    /* è§£è‡ªæ—‹é” */
     DICC_SPIN_UNLOCK();
 
-    /* ÊÍ·ÅÐÅºÅÁ¿ */
+    /* é‡Šæ”¾ä¿¡å·é‡ */
     VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
@@ -1514,18 +1514,18 @@ VOS_UINT32 DICC_OpenChannelByRole(DICC_CHAN_ID_ENUM_UINT8      ucChnId,
 }    /* DICC_SenderOpenChannel */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_CheckChanOpPara
-¹¦ÄÜÃèÊö  : ¼ì²éÍ¨µÀ²Ù×÷µÄ»ù±¾²ÎÊý
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ¼ì²éºÏ·¨Óë·ñ, DICC_OK - ºÏ·¨, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_CheckChanOpPara
+åŠŸèƒ½æè¿°  : æ£€æŸ¥é€šé“æ“ä½œçš„åŸºæœ¬å‚æ•°
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ£€æŸ¥åˆæ³•ä¸Žå¦, DICC_OK - åˆæ³•, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ15ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ15æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_CheckChanOpPara(DICC_CHAN_ID_ENUM_UINT8 ucChnId,
                DICC_CPU_ID_ENUM_UINT8 enCpuId)
@@ -1545,25 +1545,25 @@ VOS_UINT32 DICC_CheckChanOpPara(DICC_CHAN_ID_ENUM_UINT8 ucChnId,
         return DICC_ERR_INVALID_CHAN_ID;
     }
 
-    /* ²»¼ì²épstDiccChnCtrl->ucValidFlag, ·ÀÖ¹Íâ²¿Ê¹ÓÃÕßÒì³£Ê±, ¼ì²é¹ýÑÏ */
+    /* ä¸æ£€æŸ¥pstDiccChnCtrl->ucValidFlag, é˜²æ­¢å¤–éƒ¨ä½¿ç”¨è€…å¼‚å¸¸æ—¶, æ£€æŸ¥è¿‡ä¸¥ */
 
     return DICC_OK;
 }    /* DICC_CheckChanOpPara */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_CheckOpenPara
-¹¦ÄÜÃèÊö  : ¼ì²éÍ¨µÀ²Ù×÷µÄ²ÎÊý
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-            enUserRole - ÔÚµ±Ç°CPUÉÏ±¾¶ËÔÚÍ¨µÀÉÏ°çÑÝµÄ½ÇÉ«
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ¼ì²éºÏ·¨Óë·ñ, DICC_OK - ºÏ·¨, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_CheckOpenPara
+åŠŸèƒ½æè¿°  : æ£€æŸ¥é€šé“æ“ä½œçš„å‚æ•°
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+            enUserRole - åœ¨å½“å‰CPUä¸Šæœ¬ç«¯åœ¨é€šé“ä¸Šæ‰®æ¼”çš„è§’è‰²
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ£€æŸ¥åˆæ³•ä¸Žå¦, DICC_OK - åˆæ³•, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ15ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ15æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_CheckOpenPara(DICC_CHAN_ID_ENUM_UINT8   ucChnId,
                               DICC_CHAN_ROLE_ENUM_UINT8 enUserRole,
@@ -1610,10 +1610,10 @@ VOS_UINT32 DICC_CheckOpenPara(DICC_CHAN_ID_ENUM_UINT8   ucChnId,
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_OPEN, __LINE__, DICC_TRACE_OK);
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹  */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„  */
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
-    /* ÅÐ¶Ï±¾¶ËÊÇ·ñÒÑ¾­´ò¿ª */
+    /* åˆ¤æ–­æœ¬ç«¯æ˜¯å¦å·²ç»æ‰“å¼€ */
     if (ucStateMask == (ucStateMask & pstDiccChnCtrl->ucStateMask))
     {
         SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
@@ -1629,20 +1629,20 @@ VOS_UINT32 DICC_CheckOpenPara(DICC_CHAN_ID_ENUM_UINT8   ucChnId,
 }    /* DICC_CheckOpenPara */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_OpenChannel
-¹¦ÄÜÃèÊö  : ´ò¿ªºË¼äÍ¨ÐÅÍ¨µÀAPI
-ÊäÈë²ÎÊý  : ulPid - µ÷ÓÃ´Ë½Ó¿ÚµÄPID
-            ucChanId - Í¨µÀID
-            enUserRole - ÔÚµ±Ç°CPUÉÏ±¾¶ËÔÚÍ¨µÀÉÏ°çÑÝµÄ½ÇÉ«
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, VOS_OK - ³É¹¦, VOS_ERR - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_OpenChannel
+åŠŸèƒ½æè¿°  : æ‰“å¼€æ ¸é—´é€šä¿¡é€šé“API
+è¾“å…¥å‚æ•°  : ulPid - è°ƒç”¨æ­¤æŽ¥å£çš„PID
+            ucChanId - é€šé“ID
+            enUserRole - åœ¨å½“å‰CPUä¸Šæœ¬ç«¯åœ¨é€šé“ä¸Šæ‰®æ¼”çš„è§’è‰²
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, VOS_OK - æˆåŠŸ, VOS_ERR - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ11ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ11æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_OpenChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
                             DICC_CHAN_ROLE_ENUM_UINT8 enUserRole,
@@ -1658,13 +1658,13 @@ VOS_UINT32 DICC_OpenChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
         return ulRet;
     }
 
-    /* ×¢ÒâÔÚ´ËÖ®Ç°, ÎÞ·¨È·ÈÏenCpuIdÊÇ·ñÕý³£, Ö±½ÓÈëÊý×éÏÂ±ê¿ÉÄÜ»á³öÏÖÎÊÌâ, ¹Ê²»ÄÜµ÷ÓÃTRACE */
+    /* æ³¨æ„åœ¨æ­¤ä¹‹å‰, æ— æ³•ç¡®è®¤enCpuIdæ˜¯å¦æ­£å¸¸, ç›´æŽ¥å…¥æ•°ç»„ä¸‹æ ‡å¯èƒ½ä¼šå‡ºçŽ°é—®é¢˜, æ•…ä¸èƒ½è°ƒç”¨TRACE */
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_OPEN, __LINE__, DICC_TRACE_OK);
 
     ulRet = DICC_CheckOpenPara(ucChnId, enUserRole, ulPid, enCpuId);
 
-    /* ±£´æ²ÎÊý */
+    /* ä¿å­˜å‚æ•° */
     stOpenPara.ucChnId    = ucChnId;
     stOpenPara.enUserRole = enUserRole;
 
@@ -1689,19 +1689,19 @@ VOS_UINT32 DICC_OpenChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
 }    /* DICC_SenderOpenChannel */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_CloseChannel
-¹¦ÄÜÃèÊö  : ¹Ø±ÕºË¼äÍ¨ÐÅÍ¨µÀAPI
-ÊäÈë²ÎÊý  : ulPid - µ÷ÓÃ´Ë½Ó¿ÚµÄPID
-            ucChanId - Í¨µÀID
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, VOS_OK - ³É¹¦, VOS_ERR - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_CloseChannel
+åŠŸèƒ½æè¿°  : å…³é—­æ ¸é—´é€šä¿¡é€šé“API
+è¾“å…¥å‚æ•°  : ulPid - è°ƒç”¨æ­¤æŽ¥å£çš„PID
+            ucChanId - é€šé“ID
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, VOS_OK - æˆåŠŸ, VOS_ERR - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ11ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ11æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
                DICC_CPU_ID_ENUM_UINT8 enCpuId)
@@ -1714,7 +1714,7 @@ VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
     DICC_CHAN_CLOSE_FLUSH_EVENT_STRU    stEvent;
     PS_BOOL_ENUM_UINT8                  enFlushData = PS_FALSE;
 
-    /* ±£´æ²ÎÊý */
+    /* ä¿å­˜å‚æ•° */
     stClosePara.ucChnId = ucChnId;
 
     ulRet = DICC_CheckCpuId(enCpuId);
@@ -1723,7 +1723,7 @@ VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
         return ulRet;
     }
 
-    /* ×¢ÒâÔÚ´ËÖ®Ç°, ÎÞ·¨È·ÈÏenCpuIdÊÇ·ñÕý³£, Ö±½ÓÈëÊý×éÏÂ±ê¿ÉÄÜ»á³öÏÖÎÊÌâ, ¹Ê²»ÄÜµ÷ÓÃTRACE */
+    /* æ³¨æ„åœ¨æ­¤ä¹‹å‰, æ— æ³•ç¡®è®¤enCpuIdæ˜¯å¦æ­£å¸¸, ç›´æŽ¥å…¥æ•°ç»„ä¸‹æ ‡å¯èƒ½ä¼šå‡ºçŽ°é—®é¢˜, æ•…ä¸èƒ½è°ƒç”¨TRACE */
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_CLOSE, __LINE__, DICC_TRACE_OK);
 
@@ -1740,11 +1740,11 @@ VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_CLOSE, __LINE__, DICC_TRACE_OK);
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
     enUserRole = g_astChanRole[enCpuId].aenRole[ucChnId];
 
-    /* ÈÎÎñÇÀÕ¼µÄÎÊÌâ, ÓÉ±¾µØ»¥³âÐÅºÅÁ¿À´±£»¤×ÔÐýËø */
+    /* ä»»åŠ¡æŠ¢å çš„é—®é¢˜, ç”±æœ¬åœ°äº’æ–¥ä¿¡å·é‡æ¥ä¿æŠ¤è‡ªæ—‹é” */
     stClosePara.stLocalSemPara.ulResult = VOS_SmP(g_astChanRole[enCpuId].ulDiccLocalMutexSem, 0);
     if (VOS_OK != stClosePara.stLocalSemPara.ulResult)
     {
@@ -1761,12 +1761,12 @@ VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
         ID_DICC_TRACE_FUNC_MARK_CLOSE, __LINE__, DICC_TRACE_OK);
 
-    /* ÉÏ×ÔÐýËø */
+    /* ä¸Šè‡ªæ—‹é” */
     DICC_SPIN_LOCK();
 
     if (DICC_CHAN_ROLE_SENDER == enUserRole)
     {
-        /* ÉèÖÃ±¾¶ËÎª¹Ø±Õ×´Ì¬ */
+        /* è®¾ç½®æœ¬ç«¯ä¸ºå…³é—­çŠ¶æ€ */
         pstDiccChnCtrl->ucStateMask &= ~DICC_CHAN_SENDER_OPEN_MASK;
     }
 
@@ -1774,10 +1774,10 @@ VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
     {
         if (DICC_CHAN_SENDER_OPEN_MASK == (DICC_CHAN_SENDER_OPEN_MASK & pstDiccChnCtrl->ucStateMask))
         {
-            /* ½â×ÔÐýËø */
+            /* è§£è‡ªæ—‹é” */
             DICC_SPIN_UNLOCK();
 
-            /* ÊÍ·ÅÐÅºÅÁ¿ */
+            /* é‡Šæ”¾ä¿¡å·é‡ */
             VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
             SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
@@ -1790,7 +1790,7 @@ VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
             return DICC_ERR_CLOSE_BEFORE_SENDER_CLOSED;
         }
 
-        /* ÉèÖÃ±¾¶ËÎª¹Ø±Õ×´Ì¬ */
+        /* è®¾ç½®æœ¬ç«¯ä¸ºå…³é—­çŠ¶æ€ */
         pstDiccChnCtrl->ucStateMask &= ~DICC_CHAN_RECVER_OPEN_MASK;
     }
 
@@ -1798,7 +1798,7 @@ VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
         ID_DICC_TRACE_FUNC_MARK_CLOSE, __LINE__, DICC_TRACE_OK);
 
     ulCnt = 0;
-    /* Í¨µÀ×´Ì¬ÎªÁ½¶Ë¹Ø±Õ */
+    /* é€šé“çŠ¶æ€ä¸ºä¸¤ç«¯å…³é—­ */
     if (DICC_CHAN_BOTH_CLOSE_MASK == pstDiccChnCtrl->ucStateMask)
     {
         ulCnt = DICC_GetChannelCurrDataCnt(ulPid, ucChnId, enCpuId);
@@ -1806,14 +1806,14 @@ VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
         {
             enFlushData = PS_TRUE;
         }
-        /* ½«Ê×Î²Ö¸Õë¹éÁã */
+        /* å°†é¦–å°¾æŒ‡é’ˆå½’é›¶ */
         TTF_RING_Q_Flush(ulPid, (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
     }
 
-    /* ½â×ÔÐýËø */
+    /* è§£è‡ªæ—‹é” */
     DICC_SPIN_UNLOCK();
 
-    /* ÊÍ·ÅÐÅºÅÁ¿ */
+    /* é‡Šæ”¾ä¿¡å·é‡ */
     VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
     SET_DICC_TRACE_INFO_RECORD(&g_stDiccTraceInfo[enCpuId], enCpuId, ulPid,
@@ -1833,18 +1833,18 @@ VOS_UINT32 DICC_CloseChannel(VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
 }    /* DICC_CloseChannel */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_CheckTrigPara
-¹¦ÄÜÃèÊö  : ¼ì²é´¥·¢ºË¼äÖÐ¶Ï²Ù×÷µÄ²ÎÊý
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ¼ì²éºÏ·¨Óë·ñ, DICC_OK - ºÏ·¨, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_CheckTrigPara
+åŠŸèƒ½æè¿°  : æ£€æŸ¥è§¦å‘æ ¸é—´ä¸­æ–­æ“ä½œçš„å‚æ•°
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ£€æŸ¥åˆæ³•ä¸Žå¦, DICC_OK - åˆæ³•, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ15ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ15æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_CheckTrigPara(DICC_CHAN_ID_ENUM_UINT8 ucChnId,
                               DICC_CPU_ID_ENUM_UINT8 enCpuId)
@@ -1870,26 +1870,26 @@ VOS_UINT32 DICC_CheckTrigPara(DICC_CHAN_ID_ENUM_UINT8 ucChnId,
 }    /* DICC_CheckTrigPara */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_TriggerChanDataTx
-¹¦ÄÜÃèÊö  : ´¥·¢ºË¼äÍ¨ÐÅÖÐ¶ÏAPI
-            ´¥·¢ºË¼äÍ¨ÐÅÖÐ¶Ï, ÒÔÖª»á¶Ô¶Ë½ÓÊÕ´«µÝµÄÐÅÏ¢
-ÊäÈë²ÎÊý  : ulPid  - µ÷ÓÃ´Ë½Ó¿ÚµÄPID
-            ucChanId - Í¨µÀID
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, VOS_OK - ³É¹¦, VOS_ERR - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_TriggerChanDataTx
+åŠŸèƒ½æè¿°  : è§¦å‘æ ¸é—´é€šä¿¡ä¸­æ–­API
+            è§¦å‘æ ¸é—´é€šä¿¡ä¸­æ–­, ä»¥çŸ¥ä¼šå¯¹ç«¯æŽ¥æ”¶ä¼ é€’çš„ä¿¡æ¯
+è¾“å…¥å‚æ•°  : ulPid  - è°ƒç”¨æ­¤æŽ¥å£çš„PID
+            ucChanId - é€šé“ID
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, VOS_OK - æˆåŠŸ, VOS_ERR - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ15ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ15æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_TriggerChanDataTx(VOS_UINT32 ulPid,
                DICC_CHAN_ID_ENUM_UINT8 ucChnId, DICC_CPU_ID_ENUM_UINT8 enCurrCpuId)
 {
     VOS_UINT32                     ulDiccIsrIntLev;
-    VOS_INT32                      lIsrRet;    /* ÖÐ¶Ï²Ù×÷·µ»ØÖµ */
+    VOS_INT32                      lIsrRet;    /* ä¸­æ–­æ“ä½œè¿”å›žå€¼ */
 #if (1 == DICC_DFX_SWITCH)
     DICC_DFX_STRU                 *pstDFx;
 #endif
@@ -1908,7 +1908,7 @@ VOS_UINT32 DICC_TriggerChanDataTx(VOS_UINT32 ulPid,
         return ulRet;
     }
 
-    /* ¸ù¾ÝÍ¨µÀID»ñÈ¡ºË¼äÍ¨ÐÅÖÐ¶ÏºÅ */
+    /* æ ¹æ®é€šé“IDèŽ·å–æ ¸é—´é€šä¿¡ä¸­æ–­å· */
     if (ucChnId == g_astChanRole[enCurrCpuId].aenSender[DICC_SERVICE_TYPE_0])
     {
         ulDiccIsrIntLev = DICC_SERVICE_0_INT_LEVEL;
@@ -1919,7 +1919,7 @@ VOS_UINT32 DICC_TriggerChanDataTx(VOS_UINT32 ulPid,
     }
 
 #if (1 == DICC_DFX_SWITCH)
-    /* ´¥·¢ÖÐ¶Ï´ÎÊý++ */
+    /* è§¦å‘ä¸­æ–­æ¬¡æ•°++ */
     pstDFx = DICC_GET_CHAN_DFX(g_astChanRole[enCurrCpuId].pastDICCMgmt);
     (pstDFx->astChanStatus[ucChnId].stStatistics.ulTrigIsrCnt)++;
     pstDFx->astChanStatus[ucChnId].stStatistics.ulTrigIsrPid = ulPid;
@@ -1927,7 +1927,7 @@ VOS_UINT32 DICC_TriggerChanDataTx(VOS_UINT32 ulPid,
 #endif
 
 #ifndef WTTF_PS_FUSION_PC_ST
-    /* ´¥·¢ºË¼äÊý¾Ý´«µÝÖÐ¶ÏÍ¨Öª¶Ô·½CPU */
+    /* è§¦å‘æ ¸é—´æ•°æ®ä¼ é€’ä¸­æ–­é€šçŸ¥å¯¹æ–¹CPU */
     if (DICC_CPU_ID_CCPU == enCurrCpuId)
     {
         enDstCore = IPC_CORE_APPARM;
@@ -1964,19 +1964,19 @@ VOS_UINT32 DICC_TriggerChanDataTx(VOS_UINT32 ulPid,
 }    /* DICC_TriggerChanDataTx */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_TimeDiff
-¹¦ÄÜÃèÊö  : ¼ÆËãÁ½¸öÊ±¿ÌµÄÊ±¼ä²î
-ÊäÈë²ÎÊý  : ulTimeStart  - ÆðÊ¼Ê±¿Ì
-            ulTimeEnd - ½áÊøÊ±¿Ì
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : Ê±¼ä²î
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_TimeDiff
+åŠŸèƒ½æè¿°  : è®¡ç®—ä¸¤ä¸ªæ—¶åˆ»çš„æ—¶é—´å·®
+è¾“å…¥å‚æ•°  : ulTimeStart  - èµ·å§‹æ—¶åˆ»
+            ulTimeEnd - ç»“æŸæ—¶åˆ»
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ—¶é—´å·®
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ14ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ14æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_TimeDiff(VOS_UINT32 ulTimeStart, VOS_UINT32 ulTimeEnd)
 {
@@ -1988,9 +1988,9 @@ VOS_UINT32 DICC_TimeDiff(VOS_UINT32 ulTimeStart, VOS_UINT32 ulTimeEnd)
     }
     else
     {
-        /* ½«Ê±´Á¼ä¼ÆËã·ÖÎªÁ½²¿·Ö: 0xFFFFFFFFºÍulTimeEndÖ®¼ä, ulTimeStartºÍ0Ö®¼ä
-           Ç°ÕßÎª(PS_NULL_UINT32 - ulTimeEnd + 1) ¼Ó1µÄÔ­Òò:slice=PS_NULL_UINT32±¾ÉíÒ²ÐèÒª¼ÆÊý,
-           ºóÕßÎª(ulCurrTime - 0 ) slice=0ÒÑ¾­¼ÆËãÔÚÄÚ */
+        /* å°†æ—¶æˆ³é—´è®¡ç®—åˆ†ä¸ºä¸¤éƒ¨åˆ†: 0xFFFFFFFFå’ŒulTimeEndä¹‹é—´, ulTimeStartå’Œ0ä¹‹é—´
+           å‰è€…ä¸º(PS_NULL_UINT32 - ulTimeEnd + 1) åŠ 1çš„åŽŸå› :slice=PS_NULL_UINT32æœ¬èº«ä¹Ÿéœ€è¦è®¡æ•°,
+           åŽè€…ä¸º(ulCurrTime - 0 ) slice=0å·²ç»è®¡ç®—åœ¨å†… */
         ulTimeDiff = (PS_NULL_UINT32 - ulTimeEnd + 1) + ( ulTimeStart - 0);
     }
 
@@ -1998,19 +1998,19 @@ VOS_UINT32 DICC_TimeDiff(VOS_UINT32 ulTimeStart, VOS_UINT32 ulTimeEnd)
 }    /* DICC_TimeDiff */
 #if 0
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_ChanStayInFullState
-¹¦ÄÜÃèÊö  : ¶ÓÁÐÊý¾ÝÂú´¦Àí
-ÊäÈë²ÎÊý  : ulPid - µ÷ÓÃ´Ë½Ó¿ÚµÄPID
-            pstDiccChnCtrl - Í¨µÀµÄ¿ØÖÆÊý¾Ý½á¹¹ÆðÊ¼µØÖ·
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ÎÞ
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_ChanStayInFullState
+åŠŸèƒ½æè¿°  : é˜Ÿåˆ—æ•°æ®æ»¡å¤„ç†
+è¾“å…¥å‚æ•°  : ulPid - è°ƒç”¨æ­¤æŽ¥å£çš„PID
+            pstDiccChnCtrl - é€šé“çš„æŽ§åˆ¶æ•°æ®ç»“æž„èµ·å§‹åœ°å€
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ— 
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ14ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ14æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_VOID DICC_ChanStayInFullState(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum,
                                   VOS_UINT32 ulPid,
@@ -2034,7 +2034,7 @@ VOS_VOID DICC_ChanStayInFullState(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum,
         ucTraceBlkCnt = (VOS_UINT8)TTF_MIN(pstDiccChnCtrl->usChnBlkNum, DICC_MAX_TRACE_QUEUE_DATA_CNT);
         pstTraceQueue->ucDataCnt = ucTraceBlkCnt;
 
-        /* ½«Í¨µÀÖÐ×îÇ°ÃæµÄ10¿éÊý¾ÝËÑ¼¯ÆðÀ´ */
+        /* å°†é€šé“ä¸­æœ€å‰é¢çš„10å—æ•°æ®æœé›†èµ·æ¥ */
         for (ulTraceBlkLoop = 0; ulTraceBlkLoop < ucTraceBlkCnt; ulTraceBlkLoop++)
         {
             pstQueueNode = (DICC_QUEUE_NODE_STRU*)TTF_RING_Q_Out(ulPid,
@@ -2045,13 +2045,13 @@ VOS_VOID DICC_ChanStayInFullState(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum,
             VOS_MemCpy(pstQueueData->aucPriData, pstQueueNode->aucPriData, pstQueueNode->ucPriDataLen);
         }
 
-        /* ½«³ö´íµÄÍ¨µÀµÄ×´Ì¬ÐÅÏ¢´øÉÏ */
+        /* å°†å‡ºé”™çš„é€šé“çš„çŠ¶æ€ä¿¡æ¯å¸¦ä¸Š */
         pstDFx = DICC_GET_CHAN_DFX(g_astChanRole[enCpuId].pastDICCMgmt);
         VOS_MemCpy(&(pstDiccExcp->stIsrDbg), &(pstDFx->stIsrDbg), sizeof(pstDiccExcp->stIsrDbg));
         VOS_MemCpy(&(pstDiccExcp->stChanStatus), &(pstDFx->astChanStatus[pstTraceQueue->ucChanId]),
                    sizeof(pstDiccExcp->stChanStatus));
 
-        /* µ÷ÓÃOM API½øÐÐµ¥°å¸´Î» */
+        /* è°ƒç”¨OM APIè¿›è¡Œå•æ¿å¤ä½ */
         VOS_ProtectionReboot(TTF_SOFT_REBOOT_MODULE_ID_DICC_CHAN_ALWAYS_FULL,
             (VOS_INT)ulFileId, (VOS_INT)ulLineNum, (VOS_CHAR *)(pstDiccExcp),
             sizeof(DICC_CHAN_EXECPTION_STRU) );
@@ -2063,19 +2063,19 @@ VOS_VOID DICC_ChanStayInFullState(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum,
 }    /* DICC_ChanStayInFullState */
 #endif
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_CheckInsertPara
-¹¦ÄÜÃèÊö  : ¼ì²é²åÈëÊý¾Ý²Ù×÷µÄ²ÎÊý
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-            pstDscpBlk - ºË¼ä´«µÝÃèÊö×Ö¶Î
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ¼ì²éºÏ·¨Óë·ñ, DICC_OK - ºÏ·¨, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_CheckInsertPara
+åŠŸèƒ½æè¿°  : æ£€æŸ¥æ’å…¥æ•°æ®æ“ä½œçš„å‚æ•°
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+            pstDscpBlk - æ ¸é—´ä¼ é€’æè¿°å­—æ®µ
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ£€æŸ¥åˆæ³•ä¸Žå¦, DICC_OK - åˆæ³•, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ15ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ15æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_CheckInsertPara(DICC_CHAN_ID_ENUM_UINT8    ucChnId,
                                 DICC_INSERT_DSCP_BLK_STRU *pstDscpBlk,
@@ -2115,7 +2115,7 @@ VOS_UINT32 DICC_CheckInsertPara(DICC_CHAN_ID_ENUM_UINT8    ucChnId,
         return DICC_ERR_INSERT_DESP_BLK_DATA_NULL;
     }
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
     if (pstDiccChnCtrl->ucPriDataLen < (VOS_UINT16)(pstDscpBlk->ucDataLen))
@@ -2126,8 +2126,8 @@ VOS_UINT32 DICC_CheckInsertPara(DICC_CHAN_ID_ENUM_UINT8    ucChnId,
         return DICC_ERR_DLV_DATA_BLK_SIZE;
     }
 
-    /* ÕâÀï²»ÐèÒª±£»¤, ¶ÔÍ¬Ò»ºË¶øÑÔ, Ö»Òª²»ÊÇÁ½ºË¶¼´ò¿ª, Ôò²»ÄÜ²åÈë;
-       ÁíÒ»ºËÉÏmaskÊÇÎÞ·¨ÔÚsender¶ËÃ»ÓÐ¹Ø±ÕÇ°, recver¶ËÎÞ·¨¹Ø±Õ */
+    /* è¿™é‡Œä¸éœ€è¦ä¿æŠ¤, å¯¹åŒä¸€æ ¸è€Œè¨€, åªè¦ä¸æ˜¯ä¸¤æ ¸éƒ½æ‰“å¼€, åˆ™ä¸èƒ½æ’å…¥;
+       å¦ä¸€æ ¸ä¸Šmaskæ˜¯æ— æ³•åœ¨senderç«¯æ²¡æœ‰å…³é—­å‰, recverç«¯æ— æ³•å…³é—­ */
     if (DICC_CHAN_BOTH_OPEN_MASK != pstDiccChnCtrl->ucStateMask)
     {
         DICC_LOG3(PS_PRINT_WARNING,
@@ -2140,23 +2140,23 @@ VOS_UINT32 DICC_CheckInsertPara(DICC_CHAN_ID_ENUM_UINT8    ucChnId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_InsertChannelDataAction
-¹¦ÄÜÃèÊö  : ½«´ý´«µÝµÄÐÅÏ¢Êý¾Ý×ªÒÆµ½ºË¼äAPI
-            Èç¹ûÃèÊö¿é½á¹¹ÖÐenAutoTrigTxÖÃÎª0Ê±, ²»»á´¥·¢´«µÝÐÐÎª,
-            ´ËÊ±ÐèÒªÓÉ·¢ËÍ¶ËÀ´´¥·¢µ÷ÓÃDICC_TriggerChanDataTx´«µÝ;
-            Ö»ÓÐÔÚÍ¨µÀ´ò¿ªºó, ÐÅÏ¢²Å»áÕæÕý´«µÝµ½¶Ô¶Ë
-            ·¢ËÍ¶ËºÍ½ÓÊÕ¶ËÈÎÒâÒ»¶ËÎ´´ò¿ª, ÏòºË¼ä×ªÒÆ´ý´«µÝµÄÐÅÏ¢Êý¾Ý²Ù×÷Ê§°Ü
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-            pstDscpBlk - ºË¼ä´«µÝÃèÊö×Ö¶Î
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, VOS_OK - ³É¹¦, VOS_ERR - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_InsertChannelDataAction
+åŠŸèƒ½æè¿°  : å°†å¾…ä¼ é€’çš„ä¿¡æ¯æ•°æ®è½¬ç§»åˆ°æ ¸é—´API
+            å¦‚æžœæè¿°å—ç»“æž„ä¸­enAutoTrigTxç½®ä¸º0æ—¶, ä¸ä¼šè§¦å‘ä¼ é€’è¡Œä¸º,
+            æ­¤æ—¶éœ€è¦ç”±å‘é€ç«¯æ¥è§¦å‘è°ƒç”¨DICC_TriggerChanDataTxä¼ é€’;
+            åªæœ‰åœ¨é€šé“æ‰“å¼€åŽ, ä¿¡æ¯æ‰ä¼šçœŸæ­£ä¼ é€’åˆ°å¯¹ç«¯
+            å‘é€ç«¯å’ŒæŽ¥æ”¶ç«¯ä»»æ„ä¸€ç«¯æœªæ‰“å¼€, å‘æ ¸é—´è½¬ç§»å¾…ä¼ é€’çš„ä¿¡æ¯æ•°æ®æ“ä½œå¤±è´¥
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+            pstDscpBlk - æ ¸é—´ä¼ é€’æè¿°å­—æ®µ
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, VOS_OK - æˆåŠŸ, VOS_ERR - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ11ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ11æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_InsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum,
                                         VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
@@ -2192,13 +2192,13 @@ VOS_UINT32 DICC_InsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNu
         return ulRet;
     }
 
-    /* ³É¹¦Ê±¼ÇÂ¼ÓÃ»§²ÎÊý */
+    /* æˆåŠŸæ—¶è®°å½•ç”¨æˆ·å‚æ•° */
     stInsertPara.ucChnId = ucChnId;
     stInsertPara.enChanInitFlag = PS_TRUE;
     stInsertPara.ucChanStateMask = DICC_CHAN_BOTH_OPEN_MASK;
     VOS_MemCpy(&(stInsertPara.stDscpBlk), pstDscpBlk, sizeof((stInsertPara.stDscpBlk)));
 
-    /* ÓÉ±¾µØ»¥³âÐÅºÅÁ¿À´ÊµÏÖ±¾ºË¸ÃAPI²»ÖØÈë */
+    /* ç”±æœ¬åœ°äº’æ–¥ä¿¡å·é‡æ¥å®žçŽ°æœ¬æ ¸è¯¥APIä¸é‡å…¥ */
     stInsertPara.stLocalSemPara.ulResult = VOS_SmP(g_astChanRole[enCpuId].ulDiccLocalMutexSem, 0);
     if (VOS_OK != stInsertPara.stLocalSemPara.ulResult)
     {
@@ -2209,20 +2209,20 @@ VOS_UINT32 DICC_InsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNu
         return DICC_ERR_LOCAL_SEMPHORE_FAIL;
     }
 
-    ulCurrTime = OM_GetSlice();    /* »ñÈ¡µ±Ç°Ê±´Á */
+    ulCurrTime = OM_GetSlice();    /* èŽ·å–å½“å‰æ—¶æˆ³ */
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
     ulIsQFull = TTF_RING_Q_IsFull(ulPid, (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
 
-    if (PS_TRUE != ulIsQFull)    /* ¶ÓÁÐ²»Âú */
+    if (PS_TRUE != ulIsQFull)    /* é˜Ÿåˆ—ä¸æ»¡ */
     {
-        /* »ñÈ¡ºË¼ä´«µÝ½áµã */
+        /* èŽ·å–æ ¸é—´ä¼ é€’ç»“ç‚¹ */
         pstQueueNode = (DICC_QUEUE_NODE_STRU*)TTF_RING_Q_Rear(ulPid,
             (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
         if (VOS_NULL_PTR == pstQueueNode)
         {
-            /* ÊÍ·ÅÐÅºÅÁ¿ */
+            /* é‡Šæ”¾ä¿¡å·é‡ */
             VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
             DICC_LOG(PS_PRINT_WARNING,
@@ -2230,19 +2230,19 @@ VOS_UINT32 DICC_InsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNu
             return DICC_ERR_GET_NODE_FAIL;
         }
 
-        /* Êý¾Ý´òÉÏÊ±´Á */
+        /* æ•°æ®æ‰“ä¸Šæ—¶æˆ³ */
         pstQueueNode->ulInsertTime = ulCurrTime;
 
-        /* ²»Á¬Ðø³öÏÖ¶ÓÁÐÂú, ±äÁ¿ulConsecutiveQueueFullCnt¹éÁã */
+        /* ä¸è¿žç»­å‡ºçŽ°é˜Ÿåˆ—æ»¡, å˜é‡ulConsecutiveQueueFullCntå½’é›¶ */
         pstDFx = DICC_GET_CHAN_DFX(g_astChanRole[enCpuId].pastDICCMgmt);
         pstDFx->astChanStatus[ucChnId].stStatistics.ulConsecutiveQueueFullCnt = 0;
 
-        /* ¿½±´¹¹ÔìºË¼ä´«µÝ½áµã */
+        /* æ‹·è´æž„é€ æ ¸é—´ä¼ é€’ç»“ç‚¹ */
         VOS_MemCpy((VOS_UINT8 *)pstQueueNode->aucPriData, pstDscpBlk->pucUserData, pstDscpBlk->ucDataLen);
         pstQueueNode->ucPriDataLen = pstDscpBlk->ucDataLen;
 
 #if (1 == DICC_DFX_SWITCH)
-        /* ²åÈë´ÎÊý++ */
+        /* æ’å…¥æ¬¡æ•°++ */
         (pstDFx->astChanStatus[ucChnId].stStatistics.ulInsertCnt)++;
         pstDFx->astChanStatus[ucChnId].stStatistics.ulInsertPid      = ulPid;
         pstDFx->astChanStatus[ucChnId].stStatistics.ulLastInsertTime = ulCurrTime;
@@ -2250,7 +2250,7 @@ VOS_UINT32 DICC_InsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNu
 
         DICC_PrintDebugData((VOS_VOID *)(pstQueueNode->aucPriData), pstQueueNode->ucPriDataLen);
 
-        /* ÏòºË¼ä²åÈëÐÅÏ¢Êý¾Ý */
+        /* å‘æ ¸é—´æ’å…¥ä¿¡æ¯æ•°æ® */
         TTF_RING_Q_In(ulPid, (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
 
         if (PS_TRUE == pstDscpBlk->enAutoTrigTx)
@@ -2266,61 +2266,61 @@ VOS_UINT32 DICC_InsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNu
         ulTemp = pstDFx->astChanStatus[ucChnId].stStatistics.ulConsecutiveQueueFullCnt % DICC_CHAN_QUEUE_FULL_REPORT_TIMES;
         if (0 == ulTemp)
         {
-            /* ´´½¨ÊÂ¼þ */
+            /* åˆ›å»ºäº‹ä»¶ */
             stQueueFullEvent.ulOpPid        = ulPid;
             stQueueFullEvent.ucChnId        = ucChnId;
             stQueueFullEvent.ulQueueFullCnt = pstDFx->astChanStatus[ucChnId].stStatistics.ulQueueFullCnt;
 
             DICC_SndEvent(ID_DICC_MNTN_QUEUE_FULL_EVENT, &stQueueFullEvent, sizeof(stQueueFullEvent), enCpuId);
 
-            /* ÉÏ±¨ÏûÏ¢ºó, ½«ulConsecutiveQueueFullCnt¹éÁã */
+            /* ä¸ŠæŠ¥æ¶ˆæ¯åŽ, å°†ulConsecutiveQueueFullCntå½’é›¶ */
             pstDFx->astChanStatus[ucChnId].stStatistics.ulConsecutiveQueueFullCnt = 0;
         }
 
-/* ÒòÎª¶Ôµ¥°å½øÐÐÈí¸´Î», µ×ÈíÖ»ÔÚexec.binÖÐ¼ÇÂ¼½øÐÐÈí¸´Î»µÄºËÉÏµÄCPU¹ì¼£ÒÔ¼°Õ»µÈÐÅÏ¢,
-   ¶ø¶ÔÁíÒ»ºËÉÏ, Ã»ÓÐ¼°Ê±¼ÇÂ¼ÐÅÏ¢, Òò´ËÈí¸´Î»ºó, ½«ÎÞ·¨ÖªÏþÁ½ºË×´¿ö, ²»ÀûÓÚ¶¨Î»,
-   Òò´ËÓÊ¼þ½»Á÷¾ö¶¨¸ÄÎªÉÏ±¨ÊÂ¼þÀ´·¢ÏÖ´Ë³¡¾° */
+/* å› ä¸ºå¯¹å•æ¿è¿›è¡Œè½¯å¤ä½, åº•è½¯åªåœ¨exec.binä¸­è®°å½•è¿›è¡Œè½¯å¤ä½çš„æ ¸ä¸Šçš„CPUè½¨è¿¹ä»¥åŠæ ˆç­‰ä¿¡æ¯,
+   è€Œå¯¹å¦ä¸€æ ¸ä¸Š, æ²¡æœ‰åŠæ—¶è®°å½•ä¿¡æ¯, å› æ­¤è½¯å¤ä½åŽ, å°†æ— æ³•çŸ¥æ™“ä¸¤æ ¸çŠ¶å†µ, ä¸åˆ©äºŽå®šä½,
+   å› æ­¤é‚®ä»¶äº¤æµå†³å®šæ”¹ä¸ºä¸ŠæŠ¥äº‹ä»¶æ¥å‘çŽ°æ­¤åœºæ™¯ */
 #if 0
         pstQueueNode = (DICC_QUEUE_NODE_STRU*)TTF_RING_Q_Front(ulPid,
             (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
 
-        /* È¡¶ÓÊ×½áµãµÄÊ±´Á */
+        /* å–é˜Ÿé¦–ç»“ç‚¹çš„æ—¶æˆ³ */
         ulFirstInsertTime = pstQueueNode->ulInsertTime;
 
         ulTimeDiff = DICC_TimeDiff(ulFirstInsertTime, ulCurrTime);
-        if (DICC_CHAN_QUEUE_FULL_TIME <= ulTimeDiff)    /* ¶ÓÊ×½áµãÈë¶ÓÊ±¼ä¾à½ñÒÑ¾­³¬¹ý1s */
+        if (DICC_CHAN_QUEUE_FULL_TIME <= ulTimeDiff)    /* é˜Ÿé¦–ç»“ç‚¹å…¥é˜Ÿæ—¶é—´è·ä»Šå·²ç»è¶…è¿‡1s */
         {
-            /* ½«Í¨µÀÖÐ×îÇ°ÃæµÄ10¿éÊý¾ÝËÑ¼¯ÆðÀ´, µ÷ÓÃOM API½øÐÐµ¥°å¸´Î» */
+            /* å°†é€šé“ä¸­æœ€å‰é¢çš„10å—æ•°æ®æœé›†èµ·æ¥, è°ƒç”¨OM APIè¿›è¡Œå•æ¿å¤ä½ */
             DICC_ChanStayInFullState(ulFileId, ulLineNum, ulPid, pstDiccChnCtrl, enCpuId);
         }
 #endif
 
-        /* ÊÍ·ÅÐÅºÅÁ¿ */
+        /* é‡Šæ”¾ä¿¡å·é‡ */
         VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
         return DICC_ERR_CHAN_FULL;
     }
 
-    /* ÊÍ·ÅÐÅºÅÁ¿ */
+    /* é‡Šæ”¾ä¿¡å·é‡ */
     VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
     return DICC_OK;
 }    /* DICC_InsertChannelData */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_CheckRemovePara
-¹¦ÄÜÃèÊö  : ¼ì²éÈ¡³öÊý¾Ý²Ù×÷µÄ²ÎÊý
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-            pucUsrData - ´ÓºË¼äÈ¡³öµÄÊý¾Ý¿½±´µ½´Ë, Íâ²¿Ê¹ÓÃÕß±£Ö¤Ö¸Õë·Ç¿Õ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ¼ì²éºÏ·¨Óë·ñ, DICC_OK - ºÏ·¨, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_CheckRemovePara
+åŠŸèƒ½æè¿°  : æ£€æŸ¥å–å‡ºæ•°æ®æ“ä½œçš„å‚æ•°
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+            pucUsrData - ä»Žæ ¸é—´å–å‡ºçš„æ•°æ®æ‹·è´åˆ°æ­¤, å¤–éƒ¨ä½¿ç”¨è€…ä¿è¯æŒ‡é’ˆéžç©º
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ£€æŸ¥åˆæ³•ä¸Žå¦, DICC_OK - åˆæ³•, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ15ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ15æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_CheckRemovePara(DICC_CHAN_ID_ENUM_UINT8 ucChnId,
                                 VOS_UINT8              *pucUsrData,
@@ -2355,20 +2355,20 @@ VOS_UINT32 DICC_CheckRemovePara(DICC_CHAN_ID_ENUM_UINT8 ucChnId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_RemoveChannelData
-¹¦ÄÜÃèÊö  : ½«´«µÝµÄÐÅÏ¢´ÓºË¼ä»·ÐÎ¹²Ïí»º³åÖÐÈ¡³öAPI
-ÊäÈë²ÎÊý  : ulPid - µ÷ÓÃ´Ë½Ó¿ÚµÄPID
-            ucChanId - Í¨µÀID
-            pucUsrData - ´ÓºË¼äÈ¡³öµÄÊý¾Ý¿½±´µ½´Ë, Íâ²¿Ê¹ÓÃÕß±£Ö¤Ö¸Õë·Ç¿Õ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_RemoveChannelData
+åŠŸèƒ½æè¿°  : å°†ä¼ é€’çš„ä¿¡æ¯ä»Žæ ¸é—´çŽ¯å½¢å…±äº«ç¼“å†²ä¸­å–å‡ºAPI
+è¾“å…¥å‚æ•°  : ulPid - è°ƒç”¨æ­¤æŽ¥å£çš„PID
+            ucChanId - é€šé“ID
+            pucUsrData - ä»Žæ ¸é—´å–å‡ºçš„æ•°æ®æ‹·è´åˆ°æ­¤, å¤–éƒ¨ä½¿ç”¨è€…ä¿è¯æŒ‡é’ˆéžç©º
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ11ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ11æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_RemoveChannelData(VOS_UINT32              ulPid,
                                   DICC_CHAN_ID_ENUM_UINT8 ucChnId,
@@ -2398,17 +2398,17 @@ VOS_UINT32 DICC_RemoveChannelData(VOS_UINT32              ulPid,
         return ulRet;
     }
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
-    /* ³É¹¦ºó¼ÇÂ¼ÓÃ»§²Ù×÷²ÎÊý */
+    /* æˆåŠŸåŽè®°å½•ç”¨æˆ·æ“ä½œå‚æ•° */
     stRemovePara.ucChnId          = ucChnId;
     stRemovePara.enChanInitFlag   = PS_TRUE;
     stRemovePara.ucChanStateMask  = pstDiccChnCtrl->ucStateMask;
     stRemovePara.ucFlushData      = 0;
     stRemovePara.pucToSaveUsrData = pucUsrData;
 
-    /* ÓÉ±¾µØ»¥³âÐÅºÅÁ¿À´ÊµÏÖ±¾ºË¸ÃAPI²»ÖØÈë */
+    /* ç”±æœ¬åœ°äº’æ–¥ä¿¡å·é‡æ¥å®žçŽ°æœ¬æ ¸è¯¥APIä¸é‡å…¥ */
     stRemovePara.stLocalSemPara.ulResult = VOS_SmP(g_astChanRole[enCpuId].ulDiccLocalMutexSem, 0);
     if (VOS_OK != stRemovePara.stLocalSemPara.ulResult)
     {
@@ -2419,18 +2419,18 @@ VOS_UINT32 DICC_RemoveChannelData(VOS_UINT32              ulPid,
         return DICC_ERR_LOCAL_SEMPHORE_FAIL;
     }
 
-    /* ½ÓÊÕ¶ËÃ»ÓÐ¹Ø±Õ, Ôò¿ÉÒÔ¼ÌÐøÈ¡Êý */
+    /* æŽ¥æ”¶ç«¯æ²¡æœ‰å…³é—­, åˆ™å¯ä»¥ç»§ç»­å–æ•° */
     if (DICC_CHAN_RECVER_OPEN_MASK == (DICC_CHAN_RECVER_OPEN_MASK & pstDiccChnCtrl->ucStateMask))
     {
         if (0 != TTF_RING_Q_GetCnt(ulPid, (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer))))
         {
-            /* »ñÈ¡ÏÂÒ»¸öºË¼ä´«µÝ½áµã */
+            /* èŽ·å–ä¸‹ä¸€ä¸ªæ ¸é—´ä¼ é€’ç»“ç‚¹ */
             pstQueueNode = (DICC_QUEUE_NODE_STRU*)TTF_RING_Q_Out(ulPid,
                 (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
 
             if (VOS_NULL_PTR == pstQueueNode)
             {
-                /* ÊÍ·ÅÐÅºÅÁ¿ */
+                /* é‡Šæ”¾ä¿¡å·é‡ */
                 VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
                 DICC_LOG(PS_PRINT_WARNING,
@@ -2439,7 +2439,7 @@ VOS_UINT32 DICC_RemoveChannelData(VOS_UINT32              ulPid,
             }
 
 #if (1 == DICC_DFX_SWITCH)
-            /* È¡³ö´ÎÊý++ */
+            /* å–å‡ºæ¬¡æ•°++ */
             pstDFx = DICC_GET_CHAN_DFX(g_astChanRole[enCpuId].pastDICCMgmt);
             (pstDFx->astChanStatus[ucChnId].stStatistics.ulRemoveCnt)++;
             pstDFx->astChanStatus[ucChnId].stStatistics.ulRemovePid = ulPid;
@@ -2451,10 +2451,10 @@ VOS_UINT32 DICC_RemoveChannelData(VOS_UINT32              ulPid,
 
             if (DICC_MAGIC_NUM_VALUE != pstQueueNode->usMagicNum)
             {
-                /* ÊÍ·ÅÐÅºÅÁ¿ */
+                /* é‡Šæ”¾ä¿¡å·é‡ */
                 VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
-                /* ´´½¨ÊÂ¼þ */
+                /* åˆ›å»ºäº‹ä»¶ */
                 stMagicEvent.ulOpPid    = ulPid;
                 stMagicEvent.ucChnId    = ucChnId;
                 PS_MEM_CPY(&(stMagicEvent.stQueueNode), (VOS_UINT8*)pstQueueNode, sizeof(stMagicEvent.stQueueNode));
@@ -2473,12 +2473,12 @@ VOS_UINT32 DICC_RemoveChannelData(VOS_UINT32              ulPid,
             DEBUG_PRINT("DICC_RemoveChannelData print remove data start:\n");
             DICC_PrintDebugData(pucUsrData, pstQueueNode->ucPriDataLen);
 
-            /* ¿¼ÂÇµ½´«µÝÐÅÏ¢¿ÉÄÜÓÐÖ¸ÕëÖ®Àà, ÎªÁË°²È«, Çå³ý´«µÝÐÅÏ¢ */
+            /* è€ƒè™‘åˆ°ä¼ é€’ä¿¡æ¯å¯èƒ½æœ‰æŒ‡é’ˆä¹‹ç±», ä¸ºäº†å®‰å…¨, æ¸…é™¤ä¼ é€’ä¿¡æ¯ */
             VOS_MemSet((VOS_VOID *)pstQueueNode->aucPriData, 0x0, sizeof(pstQueueNode->aucPriData));
         }
     }
 
-    /* ÊÍ·ÅÐÅºÅÁ¿ */
+    /* é‡Šæ”¾ä¿¡å·é‡ */
     VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
     return DICC_OK;
@@ -2491,7 +2491,7 @@ VOS_UINT8 DICC_IsCurrChnOpen(DICC_CHAN_ID_ENUM_UINT8 ucChnId,
     volatile DICC_CHAN_CTRL_STRU *pstDiccChnCtrl = VOS_NULL_PTR;
     DICC_CHAN_ROLE_ENUM_UINT8     enUserRole = DICC_CHAN_ROLE_BUTT;
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
     enUserRole = g_astChanRole[enCpuId].aenRole[ucChnId];
@@ -2555,21 +2555,21 @@ VOS_UINT32 DICC_CheckGetNodeCntPara(DICC_CHAN_ID_ENUM_UINT8          ucChnId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_GetChannelNodeCnt
-¹¦ÄÜÃèÊö  : ¼ì²é»ñÈ¡Í¨µÀÖÐÊý¾Ý¿éÊýµÄ²ÎÊý
-ÊäÈë²ÎÊý  : ulPid - µ÷ÓÃ´Ë½Ó¿ÚµÄPID
-            ucChanId - Í¨µÀID
-            enGetChnNodeCntType - Ö¸Ê¾»ñÈ¡Í¨µÀÖÐÒÑ¾­´æ·ÅµÄÊý¾Ý¸öÊý,
-                                  »òÕßÍ¨µÀÖÐ¿ÉÒÔ¼ÌÐø´æ·ÅµÄ¸öÊý
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_GetChannelNodeCnt
+åŠŸèƒ½æè¿°  : æ£€æŸ¥èŽ·å–é€šé“ä¸­æ•°æ®å—æ•°çš„å‚æ•°
+è¾“å…¥å‚æ•°  : ulPid - è°ƒç”¨æ­¤æŽ¥å£çš„PID
+            ucChanId - é€šé“ID
+            enGetChnNodeCntType - æŒ‡ç¤ºèŽ·å–é€šé“ä¸­å·²ç»å­˜æ”¾çš„æ•°æ®ä¸ªæ•°,
+                                  æˆ–è€…é€šé“ä¸­å¯ä»¥ç»§ç»­å­˜æ”¾çš„ä¸ªæ•°
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ11ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ11æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_GetChannelNodeCnt(VOS_UINT32                       ulPid,
                                   DICC_CHAN_ID_ENUM_UINT8          ucChnId,
@@ -2589,10 +2589,10 @@ VOS_UINT32 DICC_GetChannelNodeCnt(VOS_UINT32                       ulPid,
 
     if (PS_TRUE == DICC_IsCurrChnOpen(ucChnId, enCpuId))
     {
-        /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+        /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
         pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
-        /* »ñÈ¡Í¨µÀÖÐµ±Ç°´æ·ÅµÄÐÅÏ¢¿éÊý */
+        /* èŽ·å–é€šé“ä¸­å½“å‰å­˜æ”¾çš„ä¿¡æ¯å—æ•° */
         ulTmpCnt = TTF_RING_Q_GetCnt(ulPid, (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
         if (DICC_GET_CHN_CURR_DATA_CNT == enGetChnNodeCntType)
         {
@@ -2609,19 +2609,19 @@ VOS_UINT32 DICC_GetChannelNodeCnt(VOS_UINT32                       ulPid,
 
 #if (VOS_WIN32 != VOS_OS_VER)
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_Info
-¹¦ÄÜÃèÊö  : DICCÍ¨µÀ¹ÜÀí½á¹¹Êä³ö
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ÎÞ
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-Ëµ    Ã÷  : µ¥°åÉÏ¿É²â¿ÉÎ¬º¯Êý, Ö±½ÓÊ¹ÓÃvos_printfÏò´®¿Ú´òÓ¡
+å‡½ æ•° å  : DICC_Info
+åŠŸèƒ½æè¿°  : DICCé€šé“ç®¡ç†ç»“æž„è¾“å‡º
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ— 
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+è¯´    æ˜Ž  : å•æ¿ä¸Šå¯æµ‹å¯ç»´å‡½æ•°, ç›´æŽ¥ä½¿ç”¨vos_printfå‘ä¸²å£æ‰“å°
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ27ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ27æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_VOID DICC_Info()
 {
@@ -2654,7 +2654,7 @@ VOS_VOID DICC_Info()
 
     for (ucChanLoop = 0; ucChanLoop < DICC_MAX_CHAN_NUM; ucChanLoop++)
     {
-        /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+        /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
         pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChanLoop, enCpuId);
         if (VOS_NULL_PTR != pstDiccChnCtrl)
         {
@@ -2686,19 +2686,19 @@ VOS_VOID DICC_Info()
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_Chan_Info
-¹¦ÄÜÃèÊö  : DICCÍ¨µÀÏÖ×´Êä³ö
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ÎÞ
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-Ëµ    Ã÷  : µ¥°åÉÏ¿É²â¿ÉÎ¬º¯Êý, Ö±½ÓÊ¹ÓÃvos_printfÏò´®¿Ú´òÓ¡
+å‡½ æ•° å  : DICC_Chan_Info
+åŠŸèƒ½æè¿°  : DICCé€šé“çŽ°çŠ¶è¾“å‡º
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ— 
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+è¯´    æ˜Ž  : å•æ¿ä¸Šå¯æµ‹å¯ç»´å‡½æ•°, ç›´æŽ¥ä½¿ç”¨vos_printfå‘ä¸²å£æ‰“å°
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ27ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ27æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_VOID DICC_Chan_Info(VOS_INT32 lChanId)
 {
@@ -2735,7 +2735,7 @@ VOS_VOID DICC_Chan_Info(VOS_INT32 lChanId)
     if (PS_FALSE == pastDICCMgmt->stDFx.enDFxEnabled)
     {
         vos_printf("enDFxEnabled is disable\n");
-        return;    /* Î´Í³¼Æ, ·µ»Ø */
+        return;    /* æœªç»Ÿè®¡, è¿”å›ž */
     }
 
     pstStatistics = &(pastDICCMgmt->stDFx.astChanStatus[ucChanId].stStatistics);
@@ -2763,46 +2763,46 @@ VOS_VOID DICC_Chan_Info(VOS_INT32 lChanId)
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_Help
-¹¦ÄÜÃèÊö  : µ¥°åÉÏ¿É²â¿ÉÎ¬º¯Êý
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ÎÞ
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_Help
+åŠŸèƒ½æè¿°  : å•æ¿ä¸Šå¯æµ‹å¯ç»´å‡½æ•°
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ— 
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ27ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ27æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_VOID DICC_Help()
 {
     vos_printf("===============================================\n");
     vos_printf("DICC_Info\n");
-    vos_printf("DICC_Chan_Info  ²ÎÊý:Í¨µÀID[0-3]\n");
-    vos_printf("Í¨µÀ0:ÉÏÐÐCSDÒµÎñÊý¾Ý´«µÝÍ¨µÀ, Êý¾Ý·½Ïò:A->C\n");
-    vos_printf("Í¨µÀ1:ÊÍ·ÅÉÏÐÐÓÃ»§ÒµÎñÊý¾Ý´«µÝÍ¨µÀ, Êý¾Ý·½Ïò:C->A\n");
-    vos_printf("Í¨µÀ2:ÏÂÐÐCSDÒµÎñÊý¾Ý´«µÝÍ¨µÀ, Êý¾Ý·½Ïò:C->A\n");
-    vos_printf("Í¨µÀ3:ÊÍ·ÅÏÂÐÐÓÃ»§ÒµÎñÊý¾Ý´«µÝÍ¨µÀ, Êý¾Ý·½Ïò:A->C\n");
+    vos_printf("DICC_Chan_Info  å‚æ•°:é€šé“ID[0-3]\n");
+    vos_printf("é€šé“0:ä¸Šè¡ŒCSDä¸šåŠ¡æ•°æ®ä¼ é€’é€šé“, æ•°æ®æ–¹å‘:A->C\n");
+    vos_printf("é€šé“1:é‡Šæ”¾ä¸Šè¡Œç”¨æˆ·ä¸šåŠ¡æ•°æ®ä¼ é€’é€šé“, æ•°æ®æ–¹å‘:C->A\n");
+    vos_printf("é€šé“2:ä¸‹è¡ŒCSDä¸šåŠ¡æ•°æ®ä¼ é€’é€šé“, æ•°æ®æ–¹å‘:C->A\n");
+    vos_printf("é€šé“3:é‡Šæ”¾ä¸‹è¡Œç”¨æˆ·ä¸šåŠ¡æ•°æ®ä¼ é€’é€šé“, æ•°æ®æ–¹å‘:A->C\n");
     vos_printf("===============================================\n");
 }  /* DICC_Help */
 #endif    /* end of #if (VOS_WIN32 != VOS_OS_VER) */
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_CheckBatRemovePara
-¹¦ÄÜÃèÊö  : ¼ì²éÈ¡³öÊý¾Ý²Ù×÷µÄ²ÎÊý
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-            pucUsrData - ´ÓºË¼äÈ¡³öµÄÊý¾Ý¿½±´µ½´Ë, Íâ²¿Ê¹ÓÃÕß±£Ö¤Ö¸Õë·Ç¿Õ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ¼ì²éºÏ·¨Óë·ñ, DICC_OK - ºÏ·¨, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_CheckBatRemovePara
+åŠŸèƒ½æè¿°  : æ£€æŸ¥å–å‡ºæ•°æ®æ“ä½œçš„å‚æ•°
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+            pucUsrData - ä»Žæ ¸é—´å–å‡ºçš„æ•°æ®æ‹·è´åˆ°æ­¤, å¤–éƒ¨ä½¿ç”¨è€…ä¿è¯æŒ‡é’ˆéžç©º
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ£€æŸ¥åˆæ³•ä¸Žå¦, DICC_OK - åˆæ³•, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ15ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ15æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_CheckBatRemovePara(DICC_CHAN_ID_ENUM_UINT8  ucChnId,
                                 VOS_UINT16                  usNeedRemoveCnt,
@@ -2856,20 +2856,20 @@ VOS_UINT32 DICC_CheckBatRemovePara(DICC_CHAN_ID_ENUM_UINT8  ucChnId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_BatRemoveChannelData
-¹¦ÄÜÃèÊö  : ½«´«µÝµÄÐÅÏ¢´ÓºË¼ä»·ÐÎ¹²Ïí»º³åÖÐÈ¡³öAPI
-ÊäÈë²ÎÊý  : ulPid - µ÷ÓÃ´Ë½Ó¿ÚµÄPID
-            ucChanId - Í¨µÀID
-            pucUsrData - ´ÓºË¼äÈ¡³öµÄÊý¾Ý¿½±´µ½´Ë, Íâ²¿Ê¹ÓÃÕß±£Ö¤Ö¸Õë·Ç¿Õ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, DICC_OK - ³É¹¦, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_BatRemoveChannelData
+åŠŸèƒ½æè¿°  : å°†ä¼ é€’çš„ä¿¡æ¯ä»Žæ ¸é—´çŽ¯å½¢å…±äº«ç¼“å†²ä¸­å–å‡ºAPI
+è¾“å…¥å‚æ•°  : ulPid - è°ƒç”¨æ­¤æŽ¥å£çš„PID
+            ucChanId - é€šé“ID
+            pucUsrData - ä»Žæ ¸é—´å–å‡ºçš„æ•°æ®æ‹·è´åˆ°æ­¤, å¤–éƒ¨ä½¿ç”¨è€…ä¿è¯æŒ‡é’ˆéžç©º
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, DICC_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ11ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ11æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_BatRemoveChannelData(VOS_UINT32            ulPid,
                                   DICC_CHAN_ID_ENUM_UINT8  ucChnId,
@@ -2909,10 +2909,10 @@ VOS_UINT32 DICC_BatRemoveChannelData(VOS_UINT32            ulPid,
         return ulRet;
     }
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
-    /* ÓÉ±¾µØ»¥³âÐÅºÅÁ¿À´ÊµÏÖ±¾ºË¸ÃAPI²»ÖØÈë */
+    /* ç”±æœ¬åœ°äº’æ–¥ä¿¡å·é‡æ¥å®žçŽ°æœ¬æ ¸è¯¥APIä¸é‡å…¥ */
     ulResult = VOS_SmP(g_astChanRole[enCpuId].ulDiccLocalMutexSem, 0);
     if (VOS_OK != ulResult)
     {
@@ -2923,24 +2923,24 @@ VOS_UINT32 DICC_BatRemoveChannelData(VOS_UINT32            ulPid,
         return DICC_ERR_LOCAL_SEMPHORE_FAIL;
     }
 
-    /* ½ÓÊÕ¶ËÃ»ÓÐ¹Ø±Õ, Ôò¿ÉÒÔ¼ÌÐøÈ¡Êý */
+    /* æŽ¥æ”¶ç«¯æ²¡æœ‰å…³é—­, åˆ™å¯ä»¥ç»§ç»­å–æ•° */
     if (DICC_CHAN_RECVER_OPEN_MASK == (DICC_CHAN_RECVER_OPEN_MASK & pstDiccChnCtrl->ucStateMask))
     {
         ulRingQCnt      = TTF_RING_Q_GetCnt(ulPid, (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
-        ulActiveNeedCnt = PS_MIN(ulRingQCnt, usNeedRemoveCnt);    /* Ó¦¶ÔÓÃ»§Ìá¹©µÄ¸öÊý²»×¼È· */
+        ulActiveNeedCnt = PS_MIN(ulRingQCnt, usNeedRemoveCnt);    /* åº”å¯¹ç”¨æˆ·æä¾›çš„ä¸ªæ•°ä¸å‡†ç¡® */
         *pusActiveRemoveCnt = 0;
         ulCopyLen       = 0;
         ulCurrTime      = OM_GetSlice();
 
         while (0 != ulActiveNeedCnt)
         {
-            /* »ñÈ¡ÏÂÒ»¸öºË¼ä´«µÝ½áµã */
+            /* èŽ·å–ä¸‹ä¸€ä¸ªæ ¸é—´ä¼ é€’ç»“ç‚¹ */
             pstQueueNode = (DICC_QUEUE_NODE_STRU*)TTF_RING_Q_Out(ulPid,
                 (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
 
             if (VOS_NULL_PTR == pstQueueNode)
             {
-                /* ÊÍ·ÅÐÅºÅÁ¿ */
+                /* é‡Šæ”¾ä¿¡å·é‡ */
                 VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
                 DICC_LOG(PS_PRINT_WARNING,
@@ -2949,7 +2949,7 @@ VOS_UINT32 DICC_BatRemoveChannelData(VOS_UINT32            ulPid,
             }
 
 #if (1 == DICC_DFX_SWITCH)
-            /* È¡³ö´ÎÊý++ */
+            /* å–å‡ºæ¬¡æ•°++ */
             pstDFx = DICC_GET_CHAN_DFX(g_astChanRole[enCpuId].pastDICCMgmt);
             (pstDFx->astChanStatus[ucChnId].stStatistics.ulRemoveCnt)++;
             pstDFx->astChanStatus[ucChnId].stStatistics.ulRemovePid = ulPid;
@@ -2961,10 +2961,10 @@ VOS_UINT32 DICC_BatRemoveChannelData(VOS_UINT32            ulPid,
 
             if (DICC_MAGIC_NUM_VALUE != pstQueueNode->usMagicNum)
             {
-                /* ÊÍ·ÅÐÅºÅÁ¿ */
+                /* é‡Šæ”¾ä¿¡å·é‡ */
                 VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
-                /* ´´½¨ÊÂ¼þ */
+                /* åˆ›å»ºäº‹ä»¶ */
                 stMagicEvent.ulOpPid    = ulPid;
                 stMagicEvent.ucChnId    = ucChnId;
                 PS_MEM_CPY(&(stMagicEvent.stQueueNode), (VOS_UINT8*)pstQueueNode, sizeof(stMagicEvent.stQueueNode));
@@ -2980,17 +2980,17 @@ VOS_UINT32 DICC_BatRemoveChannelData(VOS_UINT32            ulPid,
             VOS_MemCpy(&aucUsrData[ulCopyLen], (VOS_UINT8 *)pstQueueNode->aucPriData, pstQueueNode->ucPriDataLen);
             ulCopyLen += pstQueueNode->ucPriDataLen;
 
-            /* ¿¼ÂÇµ½´«µÝÐÅÏ¢¿ÉÄÜÓÐÖ¸ÕëÖ®Àà, ÎªÁË°²È«, Çå³ý´«µÝÐÅÏ¢ */
+            /* è€ƒè™‘åˆ°ä¼ é€’ä¿¡æ¯å¯èƒ½æœ‰æŒ‡é’ˆä¹‹ç±», ä¸ºäº†å®‰å…¨, æ¸…é™¤ä¼ é€’ä¿¡æ¯ */
             VOS_MemSet((VOS_VOID *)pstQueueNode->aucPriData, 0x0, sizeof(pstQueueNode->aucPriData));
 
-            /* ¼ì²éÍ¨¹ý¿½±´Êý¾Ýºó²ÅÔö¼Ó¼ÆÊý */
+            /* æ£€æŸ¥é€šè¿‡æ‹·è´æ•°æ®åŽæ‰å¢žåŠ è®¡æ•° */
             (*pusActiveRemoveCnt)++;
 
             ulActiveNeedCnt--;
         }
     }
 
-    /* ÊÍ·ÅÐÅºÅÁ¿ */
+    /* é‡Šæ”¾ä¿¡å·é‡ */
     VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
     return DICC_OK;
@@ -2998,19 +2998,19 @@ VOS_UINT32 DICC_BatRemoveChannelData(VOS_UINT32            ulPid,
 
 VOS_UINT8 g_ucCheckBatInsert = 1;
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_CheckBatInsertPara
-¹¦ÄÜÃèÊö  : ¼ì²é²åÈëÊý¾Ý²Ù×÷µÄ²ÎÊý
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-            pstDscpBlk - ºË¼ä´«µÝÃèÊö×Ö¶Î
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ¼ì²éºÏ·¨Óë·ñ, DICC_OK - ºÏ·¨, ÆäËü - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_CheckBatInsertPara
+åŠŸèƒ½æè¿°  : æ£€æŸ¥æ’å…¥æ•°æ®æ“ä½œçš„å‚æ•°
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+            pstDscpBlk - æ ¸é—´ä¼ é€’æè¿°å­—æ®µ
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ£€æŸ¥åˆæ³•ä¸Žå¦, DICC_OK - åˆæ³•, å…¶å®ƒ - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ15ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ15æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_CheckBatInsertPara(VOS_UINT32 ulPid,
                                 DICC_CHAN_ID_ENUM_UINT8    ucChnId,
@@ -3053,7 +3053,7 @@ VOS_UINT32 DICC_CheckBatInsertPara(VOS_UINT32 ulPid,
         return DICC_ERR_INSERT_DESP_BLK_DATA_CNT;
     }
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
 
     if (1 == g_ucCheckBatInsert)
@@ -3078,8 +3078,8 @@ VOS_UINT32 DICC_CheckBatInsertPara(VOS_UINT32 ulPid,
         }
     }
 
-    /* ÕâÀï²»ÐèÒª±£»¤, ¶ÔÍ¬Ò»ºË¶øÑÔ, Ö»Òª²»ÊÇÁ½ºË¶¼´ò¿ª, Ôò²»ÄÜ²åÈë;
-       ÁíÒ»ºËÉÏmaskÊÇÎÞ·¨ÔÚsender¶ËÃ»ÓÐ¹Ø±ÕÇ°, recver¶ËÎÞ·¨¹Ø±Õ */
+    /* è¿™é‡Œä¸éœ€è¦ä¿æŠ¤, å¯¹åŒä¸€æ ¸è€Œè¨€, åªè¦ä¸æ˜¯ä¸¤æ ¸éƒ½æ‰“å¼€, åˆ™ä¸èƒ½æ’å…¥;
+       å¦ä¸€æ ¸ä¸Šmaskæ˜¯æ— æ³•åœ¨senderç«¯æ²¡æœ‰å…³é—­å‰, recverç«¯æ— æ³•å…³é—­ */
     if (DICC_CHAN_BOTH_OPEN_MASK != pstDiccChnCtrl->ucStateMask)
     {
         DICC_LOG3(PS_PRINT_WARNING,
@@ -3088,7 +3088,7 @@ VOS_UINT32 DICC_CheckBatInsertPara(VOS_UINT32 ulPid,
         return DICC_ERR_CHAN_NOT_OPEN_IN_BOTH_SIDES;
     }
 
-    /* »ñÈ¡Í¨µÀÖÐµ±Ç°´æ·ÅµÄÐÅÏ¢¿éÊý */
+    /* èŽ·å–é€šé“ä¸­å½“å‰å­˜æ”¾çš„ä¿¡æ¯å—æ•° */
     ulCurrCnt = TTF_RING_Q_GetCnt(ulPid, (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
     if ((pstBatDscpBlk->ucInsertCnt + ulCurrCnt) >= pstDiccChnCtrl->usChnBlkNum)
     {
@@ -3102,23 +3102,23 @@ VOS_UINT32 DICC_CheckBatInsertPara(VOS_UINT32 ulPid,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : DICC_BatInsertChannelDataAction
-¹¦ÄÜÃèÊö  : ½«´ý´«µÝµÄÐÅÏ¢Êý¾Ý×ªÒÆµ½ºË¼äAPI
-            Èç¹ûÃèÊö¿é½á¹¹ÖÐenAutoTrigTxÖÃÎª0Ê±, ²»»á´¥·¢´«µÝÐÐÎª,
-            ´ËÊ±ÐèÒªÓÉ·¢ËÍ¶ËÀ´´¥·¢µ÷ÓÃDICC_TriggerChanDataTx´«µÝ;
-            Ö»ÓÐÔÚÍ¨µÀ´ò¿ªºó, ÐÅÏ¢²Å»áÕæÕý´«µÝµ½¶Ô¶Ë
-            ·¢ËÍ¶ËºÍ½ÓÊÕ¶ËÈÎÒâÒ»¶ËÎ´´ò¿ª, ÏòºË¼ä×ªÒÆ´ý´«µÝµÄÐÅÏ¢Êý¾Ý²Ù×÷Ê§°Ü
-ÊäÈë²ÎÊý  : ucChanId - Í¨µÀID
-            pstDscpBlk - ºË¼ä´«µÝÃèÊö×Ö¶Î
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, VOS_OK - ³É¹¦, VOS_ERR - Ê§°Ü
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
+å‡½ æ•° å  : DICC_BatInsertChannelDataAction
+åŠŸèƒ½æè¿°  : å°†å¾…ä¼ é€’çš„ä¿¡æ¯æ•°æ®è½¬ç§»åˆ°æ ¸é—´API
+            å¦‚æžœæè¿°å—ç»“æž„ä¸­enAutoTrigTxç½®ä¸º0æ—¶, ä¸ä¼šè§¦å‘ä¼ é€’è¡Œä¸º,
+            æ­¤æ—¶éœ€è¦ç”±å‘é€ç«¯æ¥è§¦å‘è°ƒç”¨DICC_TriggerChanDataTxä¼ é€’;
+            åªæœ‰åœ¨é€šé“æ‰“å¼€åŽ, ä¿¡æ¯æ‰ä¼šçœŸæ­£ä¼ é€’åˆ°å¯¹ç«¯
+            å‘é€ç«¯å’ŒæŽ¥æ”¶ç«¯ä»»æ„ä¸€ç«¯æœªæ‰“å¼€, å‘æ ¸é—´è½¬ç§»å¾…ä¼ é€’çš„ä¿¡æ¯æ•°æ®æ“ä½œå¤±è´¥
+è¾“å…¥å‚æ•°  : ucChanId - é€šé“ID
+            pstDscpBlk - æ ¸é—´ä¼ é€’æè¿°å­—æ®µ
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, VOS_OK - æˆåŠŸ, VOS_ERR - å¤±è´¥
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
 
-ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê8ÔÂ11ÈÕ
-   ×÷    Õß   : liukai
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´8æœˆ11æ—¥
+   ä½œ    è€…   : liukai
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 DICC_BatInsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLineNum,
                                         VOS_UINT32 ulPid, DICC_CHAN_ID_ENUM_UINT8 ucChnId,
@@ -3148,7 +3148,7 @@ VOS_UINT32 DICC_BatInsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLin
         return ulRet;
     }
 
-    /* ÓÉ±¾µØ»¥³âÐÅºÅÁ¿À´ÊµÏÖ±¾ºË¸ÃAPI²»ÖØÈë */
+    /* ç”±æœ¬åœ°äº’æ–¥ä¿¡å·é‡æ¥å®žçŽ°æœ¬æ ¸è¯¥APIä¸é‡å…¥ */
     ulResult = VOS_SmP(g_astChanRole[enCpuId].ulDiccLocalMutexSem, 0);
     if (VOS_OK != ulResult)
     {
@@ -3159,19 +3159,19 @@ VOS_UINT32 DICC_BatInsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLin
         return DICC_ERR_LOCAL_SEMPHORE_FAIL;
     }
 
-    /* ¸ù¾ÝÍ¨µÀºÅ²éÕÒµ½ºË¼äÊý¾Ý¹ÜÀí¿ØÖÆ½á¹¹ */
+    /* æ ¹æ®é€šé“å·æŸ¥æ‰¾åˆ°æ ¸é—´æ•°æ®ç®¡ç†æŽ§åˆ¶ç»“æž„ */
     pstDiccChnCtrl = (DICC_CHAN_CTRL_STRU *)DICC_GetCtrlChnAddr(ucChnId, enCpuId);
     ulActiveInsertCnt = 0;
-    ulCurrTime = OM_GetSlice();    /* »ñÈ¡µ±Ç°Ê±´Á */
+    ulCurrTime = OM_GetSlice();    /* èŽ·å–å½“å‰æ—¶æˆ³ */
 
     while (ulActiveInsertCnt < pstBatDscpBlk->ucInsertCnt)
     {
-        /* »ñÈ¡ºË¼ä´«µÝ½áµã */
+        /* èŽ·å–æ ¸é—´ä¼ é€’ç»“ç‚¹ */
         pstQueueNode = (DICC_QUEUE_NODE_STRU*)TTF_RING_Q_Rear(ulPid,
             (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
         if (VOS_NULL_PTR == pstQueueNode)
         {
-            /* ÊÍ·ÅÐÅºÅÁ¿ */
+            /* é‡Šæ”¾ä¿¡å·é‡ */
             VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
             DICC_LOG(PS_PRINT_WARNING,
@@ -3179,21 +3179,21 @@ VOS_UINT32 DICC_BatInsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLin
             return DICC_ERR_GET_NODE_FAIL;
         }
 
-        /* Êý¾Ý´òÉÏÊ±´Á */
+        /* æ•°æ®æ‰“ä¸Šæ—¶æˆ³ */
         pstQueueNode->ulInsertTime = ulCurrTime;
 
-        /* ²»Á¬Ðø³öÏÖ¶ÓÁÐÂú, ±äÁ¿ulConsecutiveQueueFullCnt¹éÁã */
+        /* ä¸è¿žç»­å‡ºçŽ°é˜Ÿåˆ—æ»¡, å˜é‡ulConsecutiveQueueFullCntå½’é›¶ */
         pstDFx = DICC_GET_CHAN_DFX(g_astChanRole[enCpuId].pastDICCMgmt);
         pstDFx->astChanStatus[ucChnId].stStatistics.ulConsecutiveQueueFullCnt = 0;
 
-        /* ¿½±´¹¹ÔìºË¼ä´«µÝ½áµã */
+        /* æ‹·è´æž„é€ æ ¸é—´ä¼ é€’ç»“ç‚¹ */
         VOS_MemCpy((VOS_UINT8 *)pstQueueNode->aucPriData,
                    pstBatDscpBlk->apucUserData[ulActiveInsertCnt],
                    pstBatDscpBlk->aucDataLen[ulActiveInsertCnt]);
         pstQueueNode->ucPriDataLen = pstBatDscpBlk->aucDataLen[ulActiveInsertCnt];
 
 #if (1 == DICC_DFX_SWITCH)
-        /* ²åÈë´ÎÊý++ */
+        /* æ’å…¥æ¬¡æ•°++ */
         (pstDFx->astChanStatus[ucChnId].stStatistics.ulInsertCnt)++;
         pstDFx->astChanStatus[ucChnId].stStatistics.ulInsertPid      = ulPid;
         pstDFx->astChanStatus[ucChnId].stStatistics.ulLastInsertTime = ulCurrTime;
@@ -3201,7 +3201,7 @@ VOS_UINT32 DICC_BatInsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLin
 
         ulActiveInsertCnt ++;
 
-        /* ÏòºË¼ä²åÈëÐÅÏ¢Êý¾Ý */
+        /* å‘æ ¸é—´æ’å…¥ä¿¡æ¯æ•°æ® */
         TTF_RING_Q_In(ulPid, (TTF_RING_Q_ST *)(&(pstDiccChnCtrl->stRingBuffer)));
     }
 
@@ -3210,7 +3210,7 @@ VOS_UINT32 DICC_BatInsertChannelDataAction(VOS_UINT32 ulFileId, VOS_UINT32 ulLin
         DICC_TriggerChanDataTx(ulPid, ucChnId, enCpuId);
     }
 
-    /* ÊÍ·ÅÐÅºÅÁ¿ */
+    /* é‡Šæ”¾ä¿¡å·é‡ */
     VOS_SmV(g_astChanRole[enCpuId].ulDiccLocalMutexSem);
 
     return DICC_OK;

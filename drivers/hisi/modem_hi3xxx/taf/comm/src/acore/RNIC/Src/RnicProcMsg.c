@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "RnicCtx.h"
 #include "RnicProcMsg.h"
@@ -31,17 +31,17 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_RNIC_PROCMSG_C
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
-/* RNICÄ£¿é¶¨Ê±Æ÷³¬Ê±ÏûÏ¢´¦Àíº¯Êý¶ÔÓ¦±í */
+/* RNICæ¨¡å—å®šæ—¶å™¨è¶…æ—¶æ¶ˆæ¯å¤„ç†å‡½æ•°å¯¹åº”è¡¨ */
 const RNIC_RCV_TI_EXPRIED_PROC_STRU g_astRnicTiExpriedProcTab[]=
 {
-    /* ÏûÏ¢ID */                            /* ¶¨Ê±Æ÷³¬Ê±´¦Àíº¯Êý */
+    /* æ¶ˆæ¯ID */                            /* å®šæ—¶å™¨è¶…æ—¶å¤„ç†å‡½æ•° */
     {TI_RNIC_DSFLOW_STATS_0,                RNIC_RcvTiDsflowStatsExpired},
     {TI_RNIC_DSFLOW_STATS_1,                RNIC_RcvTiDsflowStatsExpired},
     {TI_RNIC_DSFLOW_STATS_2,                RNIC_RcvTiDsflowStatsExpired},
@@ -57,7 +57,7 @@ const RNIC_RCV_TI_EXPRIED_PROC_STRU g_astRnicTiExpriedProcTab[]=
 extern VOS_UINT32 OM_AcpuTraceMsgHook(VOS_VOID* pMsg);
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 
@@ -65,7 +65,7 @@ VOS_VOID RNIC_MNTN_TraceDialConnEvt(VOS_VOID)
 {
     RNIC_MNTN_DIAL_CONN_EVT_STRU       *pstDialEvt = VOS_NULL_PTR;
 
-    /* ¹¹ÔìÏûÏ¢ */
+    /* æž„é€ æ¶ˆæ¯ */
     pstDialEvt = (RNIC_MNTN_DIAL_CONN_EVT_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                         ACPU_PID_RNIC,
                         sizeof(RNIC_MNTN_DIAL_CONN_EVT_STRU));
@@ -75,12 +75,12 @@ VOS_VOID RNIC_MNTN_TraceDialConnEvt(VOS_VOID)
         return;
     }
 
-    /* ÌîÐ´ÏûÏ¢ */
+    /* å¡«å†™æ¶ˆæ¯ */
     pstDialEvt->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstDialEvt->ulReceiverPid   = ACPU_PID_RNIC;
     pstDialEvt->enMsgId         = ID_RNIC_MNTN_EVT_DIAL_CONNECT;
 
-    /* ¹³³ö¿ÉÎ¬¿É²âÏûÏ¢ */
+    /* é’©å‡ºå¯ç»´å¯æµ‹æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ACPU_PID_RNIC, pstDialEvt))
     {
         RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_MNTN_TraceDialConnEvt():WARNING:SEND MSG FIAL");
@@ -95,7 +95,7 @@ VOS_VOID RNIC_MNTN_TraceDialDisconnEvt(
 {
     RNIC_MNTN_DIAL_DISCONN_EVT_STRU    *pstDialEvt = VOS_NULL_PTR;
 
-    /* ¹¹ÔìÏûÏ¢ */
+    /* æž„é€ æ¶ˆæ¯ */
     pstDialEvt = (RNIC_MNTN_DIAL_DISCONN_EVT_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                         ACPU_PID_RNIC,
                         sizeof(RNIC_MNTN_DIAL_DISCONN_EVT_STRU));
@@ -105,16 +105,16 @@ VOS_VOID RNIC_MNTN_TraceDialDisconnEvt(
         return;
     }
 
-    /* ÌîÐ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     pstDialEvt->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstDialEvt->ulReceiverPid   = ACPU_PID_RNIC;
     pstDialEvt->enMsgId         = ID_RNIC_MNTN_EVT_DIAL_DISCONNECT;
 
-    /* ÌîÐ´ÏûÏ¢ÄÚÈÝ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     pstDialEvt->ulPktNum        = ulPktNum;
     pstDialEvt->ulUsrExistFlg   = ulUsrExistFlg;
 
-    /* ¹³³ö¿ÉÎ¬¿É²âÏûÏ¢ */
+    /* é’©å‡ºå¯ç»´å¯æµ‹æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ACPU_PID_RNIC, pstDialEvt))
     {
         RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_MNTN_TraceDialDisconnEvt():WARNING:SEND MSG FIAL");
@@ -130,7 +130,7 @@ VOS_UINT32 RNIC_SendDialInfoMsg(
     RNIC_DIAL_MODE_STRU                *pstDialMode;
 
 
-    /* ÄÚ´æ·ÖÅä */
+    /* å†…å­˜åˆ†é… */
     pstDialInfo = (RNIC_NOTIFY_MSG_STRU *)PS_ALLOC_MSG(ACPU_PID_RNIC,
                                                       sizeof(RNIC_NOTIFY_MSG_STRU) - VOS_MSG_HEAD_LENGTH);
     if (VOS_NULL_PTR == pstDialInfo)
@@ -141,7 +141,7 @@ VOS_UINT32 RNIC_SendDialInfoMsg(
 
     pstDialMode                         = RNIC_GetDialModeAddr();
 
-    /* Ìî³äÏûÏ¢ */
+    /* å¡«å……æ¶ˆæ¯ */
     pstDialInfo->ulSenderCpuId          = VOS_LOCAL_CPUID;
     pstDialInfo->ulSenderPid            = ACPU_PID_RNIC;
     pstDialInfo->ulReceiverCpuId        = VOS_LOCAL_CPUID;
@@ -175,7 +175,7 @@ VOS_UINT32 RNIC_SendDialEvent(
     stEvent.event_code                  = (VOS_INT)ulEventId;
     stEvent.len                         = 0;
 
-    /* ÉÏ±¨°´Ðè²¦ºÅÊÂ¼þ*/
+    /* ä¸ŠæŠ¥æŒ‰éœ€æ‹¨å·äº‹ä»¶*/
     ulRet = (VOS_UINT32)device_event_report(&stEvent, (VOS_INT)ulSize);
 
     if (VOS_OK != ulRet)
@@ -276,19 +276,19 @@ VOS_UINT32 RNIC_BuildRabIdByModemId(
 {
     if (MODEM_ID_0 == enModemId)
     {
-        /* Modem0µÄRABIDµÄ¸ßÁ½Î»ÓÃ00±íÊ¾ */
+        /* Modem0çš„RABIDçš„é«˜ä¸¤ä½ç”¨00è¡¨ç¤º */
         *pucRabId = ucRabId;
     }
 #if (FEATURE_ON == FEATURE_MULTI_MODEM)
     else if (MODEM_ID_1 == enModemId)
     {
-        /* Modem1µÄRABIDµÄ¸ßÁ½Î»ÓÃ01±íÊ¾ */
+        /* Modem1çš„RABIDçš„é«˜ä¸¤ä½ç”¨01è¡¨ç¤º */
         *pucRabId = ucRabId | RNIC_RABID_TAKE_MODEM_1_MASK;
     }
 #endif
     else
     {
-        /* ¼È²»ÊÇModem0Ò²²»ÊÇModem1µÄ£¬·µ»ØÊ§°Ü */
+        /* æ—¢ä¸æ˜¯Modem0ä¹Ÿä¸æ˜¯Modem1çš„ï¼Œè¿”å›žå¤±è´¥ */
         return VOS_ERR;
     }
 
@@ -308,7 +308,7 @@ VOS_UINT32 RNIC_SaveNetIdByRabId(
         return VOS_ERR;
     }
 
-    /* »ñÈ¡Ö¸¶¨ModemµÄRABIDÐÅÏ¢ */
+    /* èŽ·å–æŒ‡å®šModemçš„RABIDä¿¡æ¯ */
     pstRabIdInfo = RNIC_GET_SPEC_MODEM_RABID_INFO(enModemId);
 
     pstRabIdInfo->aucRmNetId[ucRabId - RNIC_RAB_ID_OFFSET] = ucRmNetId;
@@ -333,13 +333,13 @@ VOS_UINT32 RNIC_RcvAtIpv4PdpActInd(
 
     ucRmNetId                           = pstRcvInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpAddr                          = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
     ucRabid                             = RNIC_RAB_ID_INVALID;
 
-    /* ¸ù¾Ýmodem idºÍÍø¿¨id£¬Ìî³äRabid */
+    /* æ ¹æ®modem idå’Œç½‘å¡idï¼Œå¡«å……Rabid */
     if (VOS_OK != RNIC_BuildRabIdByModemId(pstSpecNetCardCtx->enModemId,
                                            pstRcvInd->ucRabId,
                                            &ucRabid))
@@ -348,7 +348,7 @@ VOS_UINT32 RNIC_RcvAtIpv4PdpActInd(
         return VOS_ERR;
     }
 
-    /* ´æ´¢RABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* å­˜å‚¨RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstRcvInd->ucRabId,
                                         ucRmNetId))
@@ -359,24 +359,24 @@ VOS_UINT32 RNIC_RcvAtIpv4PdpActInd(
 
     pstSpecNetCardCtx->enModemType        = RNIC_MODEM_TYPE_INSIDE;
 
-    /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+    /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
     pstPdpAddr->stIpv4PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
     pstPdpAddr->stIpv4PdpInfo.ucRabId     = pstRcvInd->ucRabId;
     pstPdpAddr->stIpv4PdpInfo.ulIpv4Addr  = pstRcvInd->ulIpv4Addr;
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Æô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+    /* å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
     RNIC_StartTimer(enTimerId, TI_RNIC_DSFLOW_STATS_LEN);
 
-    /* Í£Ö¹°´Ðè²¦ºÅ±£»¤¶¨Ê±Æ÷ */
+    /* åœæ­¢æŒ‰éœ€æ‹¨å·ä¿æŠ¤å®šæ—¶å™¨ */
     if (RNIC_RM_NET_ID_0 == ucRmNetId)
     {
         RNIC_StopTimer(TI_RNIC_DEMAND_DIAL_PROTECT);
     }
 
-    /* ×¢²áÏÂÐÐ·¢ËÍº¯Êý£¬ADSµ÷ÓÃ×¢²áµÄº¯Êý·¢ËÍÏÂÐÐÊý¾Ý */
+    /* æ³¨å†Œä¸‹è¡Œå‘é€å‡½æ•°ï¼ŒADSè°ƒç”¨æ³¨å†Œçš„å‡½æ•°å‘é€ä¸‹è¡Œæ•°æ® */
     ADS_DL_RegDlDataCallback(ucRabid, (RCV_DL_DATA_FUNC)RNIC_RcvAdsDlData);
 
     return VOS_OK;
@@ -396,13 +396,13 @@ VOS_UINT32 RNIC_RcvAtIpv6PdpActInd(
 
     ucRmNetId                           = pstRcvInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpAddr                          = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
     ucRabid                             = RNIC_RAB_ID_INVALID;
 
-    /* ¸ù¾Ýmodem idºÍÍø¿¨id£¬Ìî³äRabid */
+    /* æ ¹æ®modem idå’Œç½‘å¡idï¼Œå¡«å……Rabid */
     if (VOS_OK != RNIC_BuildRabIdByModemId(pstSpecNetCardCtx->enModemId,
                                            pstRcvInd->ucRabId,
                                            &ucRabid))
@@ -411,7 +411,7 @@ VOS_UINT32 RNIC_RcvAtIpv6PdpActInd(
         return VOS_ERR;
     }
 
-    /* ´æ´¢RABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* å­˜å‚¨RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstRcvInd->ucRabId,
                                         ucRmNetId))
@@ -422,20 +422,20 @@ VOS_UINT32 RNIC_RcvAtIpv6PdpActInd(
 
     pstSpecNetCardCtx->enModemType        = RNIC_MODEM_TYPE_INSIDE;
 
-    /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+    /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
     pstPdpAddr->stIpv6PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
     pstPdpAddr->stIpv6PdpInfo.ucRabId     = pstRcvInd->ucRabId;
     VOS_MemCpy(pstPdpAddr->stIpv6PdpInfo.aucIpv6Addr,
                pstRcvInd->aucIpv6Addr,
                RNICITF_MAX_IPV6_ADDR_LEN);
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Æô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+    /* å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
     RNIC_StartTimer(enTimerId, TI_RNIC_DSFLOW_STATS_LEN);
 
-    /* ×¢²áÏÂÐÐ·¢ËÍº¯Êý£¬ADSµ÷ÓÃ×¢²áµÄº¯Êý·¢ËÍÏÂÐÐÊý¾Ý */
+    /* æ³¨å†Œä¸‹è¡Œå‘é€å‡½æ•°ï¼ŒADSè°ƒç”¨æ³¨å†Œçš„å‡½æ•°å‘é€ä¸‹è¡Œæ•°æ® */
     ADS_DL_RegDlDataCallback(ucRabid, (RCV_DL_DATA_FUNC)RNIC_RcvAdsDlData);
 
     return VOS_OK;
@@ -456,13 +456,13 @@ VOS_UINT32 RNIC_RcvAtIpv4v6PdpActInd(
 
     ucRmNetId                           = pstRcvInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpAddr                          = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
     ucRabid                             = RNIC_RAB_ID_INVALID;
 
-    /* ¸ù¾Ýmodem idºÍÍø¿¨id£¬Ìî³äRabid */
+    /* æ ¹æ®modem idå’Œç½‘å¡idï¼Œå¡«å……Rabid */
     if (VOS_OK != RNIC_BuildRabIdByModemId(pstSpecNetCardCtx->enModemId,
                                            pstRcvInd->ucRabId,
                                            &ucRabid))
@@ -471,7 +471,7 @@ VOS_UINT32 RNIC_RcvAtIpv4v6PdpActInd(
         return VOS_ERR;
     }
 
-    /* ´æ´¢RABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* å­˜å‚¨RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstRcvInd->ucRabId,
                                         ucRmNetId))
@@ -482,22 +482,22 @@ VOS_UINT32 RNIC_RcvAtIpv4v6PdpActInd(
 
     pstSpecNetCardCtx->enModemType          = RNIC_MODEM_TYPE_INSIDE;
 
-    /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+    /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
     pstPdpAddr->stIpv4v6PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
     pstPdpAddr->stIpv4v6PdpInfo.ucRabId     = pstRcvInd->ucRabId;
     pstPdpAddr->stIpv4PdpInfo.ucRabId       = pstRcvInd->ucRabId;
     pstPdpAddr->stIpv6PdpInfo.ucRabId       = pstRcvInd->ucRabId;
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Æô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+    /* å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
     RNIC_StartTimer(enTimerId, TI_RNIC_DSFLOW_STATS_LEN);
 
-    /* Í£Ö¹°´Ðè²¦ºÅ±£»¤¶¨Ê±Æ÷ */
+    /* åœæ­¢æŒ‰éœ€æ‹¨å·ä¿æŠ¤å®šæ—¶å™¨ */
     RNIC_StopTimer(TI_RNIC_DEMAND_DIAL_PROTECT);
 
-    /* ×¢²áÏÂÐÐ·¢ËÍº¯Êý£¬ADSµ÷ÓÃ×¢²áµÄº¯Êý·¢ËÍÏÂÐÐÊý¾Ý */
+    /* æ³¨å†Œä¸‹è¡Œå‘é€å‡½æ•°ï¼ŒADSè°ƒç”¨æ³¨å†Œçš„å‡½æ•°å‘é€ä¸‹è¡Œæ•°æ® */
     ADS_DL_RegDlDataCallback(ucRabid, (RCV_DL_DATA_FUNC)RNIC_RcvAdsDlData);
 
     return VOS_OK;
@@ -522,31 +522,31 @@ VOS_UINT32 RNIC_RcvAtPdpDeactInd(
 
     ucRmNetId                           = pstRcvInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpCtxAddr                       = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
-    /* »ñÈ¡ÉÏÏÂÐÐÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–ä¸Šä¸‹è¡Œä¸Šä¸‹æ–‡åœ°å€ */
     pstUlCtxAddr                        = RNIC_GetUlCtxAddr(ucRmNetId);
     pstDlCtxAddr                        = RNIC_GetDlCtxAddr(ucRmNetId);
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Èç¹ûÊÇIPV4 PDPÈ¥¼¤»î */
+    /* å¦‚æžœæ˜¯IPV4 PDPåŽ»æ¿€æ´» */
     if ((pstPdpCtxAddr->stIpv4PdpInfo.ucRabId == pstRcvInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4PdpCtx(&pstPdpCtxAddr->stIpv4PdpInfo);
 
-        /* ÔÚÍø¿¨0ÉÏ²ÅÓÐ°´Ðè²¦ºÅµÄ¹¦ÄÜ */
+        /* åœ¨ç½‘å¡0ä¸Šæ‰æœ‰æŒ‰éœ€æ‹¨å·çš„åŠŸèƒ½ */
         if (RNIC_RM_NET_ID_0 == ucRmNetId)
         {
-            /* Í£Ö¹°´Ðè²¦ºÅ¶Ï¿ª¶¨Ê±Æ÷ */
+            /* åœæ­¢æŒ‰éœ€æ‹¨å·æ–­å¼€å®šæ—¶å™¨ */
             RNIC_StopTimer(TI_RNIC_DEMAND_DIAL_DISCONNECT);
 
-            /* Çå¿Õ²¦ºÅ¶Ï¿ª¶¨Ê±Æ÷³¬Ê±Í³¼Æ */
+            /* æ¸…ç©ºæ‹¨å·æ–­å¼€å®šæ—¶å™¨è¶…æ—¶ç»Ÿè®¡ */
             RNIC_ClearTiDialDownExpCount();
         }
     }
@@ -554,26 +554,26 @@ VOS_UINT32 RNIC_RcvAtPdpDeactInd(
     if ((pstPdpCtxAddr->stIpv6PdpInfo.ucRabId == pstRcvInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv6PdpCtx(&pstPdpCtxAddr->stIpv6PdpInfo);
     }
 
     if ((pstPdpCtxAddr->stIpv4v6PdpInfo.ucRabId == pstRcvInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4V6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4V6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4v6PdpCtx(&pstPdpCtxAddr->stIpv4v6PdpInfo, ucRmNetId);
     }
 
-    /* PDP¶¼Î´¼¤»îµÄÊ±ºò */
+    /* PDPéƒ½æœªæ¿€æ´»çš„æ—¶å€™ */
     if ((RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
     {
-        /* Í£Ö¹Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+        /* åœæ­¢æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
         RNIC_StopTimer(enTimerId);
 
-        /* Çå¿ÕÉÏÏÂÐÐÊý¾Ý */
+        /* æ¸…ç©ºä¸Šä¸‹è¡Œæ•°æ® */
         RNIC_InitUlCtx(pstUlCtxAddr);
         RNIC_InitDlCtx(pstDlCtxAddr);
 
@@ -581,11 +581,11 @@ VOS_UINT32 RNIC_RcvAtPdpDeactInd(
     }
 
 #if (FEATURE_ON == FEATURE_LTE)
-    /* ÔÚ¶Ï¿ª²¦ºÅ³É¹¦Ê±½â³ýÍ¶Æ±Ë¯Ãß£¬ÒÔ±ãÄÜ½øÈëÉîË¯ */
+    /* åœ¨æ–­å¼€æ‹¨å·æˆåŠŸæ—¶è§£é™¤æŠ•ç¥¨ç¡çœ ï¼Œä»¥ä¾¿èƒ½è¿›å…¥æ·±ç¡ */
     DRV_PWRCTRL_SLEEPVOTE_UNLOCK(PWRCTRL_SLEEP_RNIC);
 #endif
 
-    /* Çå³ýRABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* æ¸…é™¤RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstRcvInd->ucRabId,
                                         RNIC_RM_NET_ID_BUTT))
@@ -625,7 +625,7 @@ VOS_UINT32 RNIC_RcvAtDialModeReq(
     RNIC_DIAL_MODE_STRU                *pstDialMode;
     RNIC_AT_DIAL_MODE_CNF_STRU         *pstSndMsg;
 
-    /* ÄÚ´æ·ÖÅä */
+    /* å†…å­˜åˆ†é… */
     pstSndMsg = (RNIC_AT_DIAL_MODE_CNF_STRU *)PS_ALLOC_MSG(ACPU_PID_RNIC,
                         sizeof(RNIC_AT_DIAL_MODE_CNF_STRU) - VOS_MSG_HEAD_LENGTH);
     if (VOS_NULL_PTR == pstSndMsg)
@@ -636,22 +636,22 @@ VOS_UINT32 RNIC_RcvAtDialModeReq(
 
     pstRcvInd                           = (AT_RNIC_DIAL_MODE_REQ_STRU *)pstMsg;
 
-    /* »ñÈ¡°´Ðè²¦ºÅµÄÄ£Ê½ÒÔ¼°Ê±³¤µÄµØÖ· */
+    /* èŽ·å–æŒ‰éœ€æ‹¨å·çš„æ¨¡å¼ä»¥åŠæ—¶é•¿çš„åœ°å€ */
     pstDialMode                         = RNIC_GetDialModeAddr();
     pstSndMsg->clientId                 = pstRcvInd->clientId;
     pstSndMsg->ulDialMode               = pstDialMode->enDialMode;
     pstSndMsg->ulIdleTime               = pstDialMode->ulIdleTime;
     pstSndMsg->ulEventReportFlag        = pstDialMode->enEventReportFlag;
 
-    /* Í¨¹ýID_RNIC_AT_DIAL_MODE_CNFÏûÏ¢·¢ËÍ¸øATÄ£¿é */
-    /* Ìî³äÏûÏ¢ */
+    /* é€šè¿‡ID_RNIC_AT_DIAL_MODE_CNFæ¶ˆæ¯å‘é€ç»™ATæ¨¡å— */
+    /* å¡«å……æ¶ˆæ¯ */
     pstSndMsg->ulSenderCpuId            = VOS_LOCAL_CPUID;
     pstSndMsg->ulSenderPid              = ACPU_PID_RNIC;
     pstSndMsg->ulReceiverCpuId          = VOS_LOCAL_CPUID;
     pstSndMsg->ulReceiverPid            = WUEPS_PID_AT;
     pstSndMsg->enMsgId                  = ID_RNIC_AT_DIAL_MODE_CNF;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ACPU_PID_RNIC, pstSndMsg))
     {
         RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_RcvAtDialModeReq: Send msg failed!");
@@ -668,7 +668,7 @@ VOS_UINT32 RNIC_RcvAtDsflowInd(
     RNIC_PDP_CTX_STRU                  *pstPdpAddr;
     RNIC_AT_DSFLOW_RSP_STRU            *pstDsflowRsp;
 
-    /* ÄÚ´æ·ÖÅä */
+    /* å†…å­˜åˆ†é… */
     pstDsflowRsp = (RNIC_AT_DSFLOW_RSP_STRU *)PS_ALLOC_MSG(ACPU_PID_RNIC,
                         sizeof(RNIC_AT_DSFLOW_RSP_STRU) - VOS_MSG_HEAD_LENGTH);
     if (VOS_NULL_PTR == pstDsflowRsp)
@@ -682,11 +682,11 @@ VOS_UINT32 RNIC_RcvAtDsflowInd(
 
     pstPdpAddr                              = RNIC_GetPdpCtxAddr(pstRcvInd->enRnicRmNetId);
 
-    /* ²úÆ·ÒªÇóÎ´²¦ÉÏºÅ£¬ËÙÂÊÎª0 */
+    /* äº§å“è¦æ±‚æœªæ‹¨ä¸Šå·ï¼Œé€ŸçŽ‡ä¸º0 */
     pstDsflowRsp->stRnicDataRate.ulDLDataRate = 0;
     pstDsflowRsp->stRnicDataRate.ulULDataRate = 0;
 
-    /* PDP¼¤»îµÄÊ±ºò£¬»ñÈ¡µ±Ç°µÄÉÏÏÂÐÐËÙÂÊ */
+    /* PDPæ¿€æ´»çš„æ—¶å€™ï¼ŒèŽ·å–å½“å‰çš„ä¸Šä¸‹è¡Œé€ŸçŽ‡ */
     if ((RNIC_PDP_REG_STATUS_ACTIVE == pstPdpAddr->stIpv4PdpInfo.enRegStatus)
      || (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpAddr->stIpv6PdpInfo.enRegStatus)
      || (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpAddr->stIpv4v6PdpInfo.enRegStatus))
@@ -695,15 +695,15 @@ VOS_UINT32 RNIC_RcvAtDsflowInd(
         pstDsflowRsp->stRnicDataRate.ulULDataRate = RNIC_GetCurrentUlRate(pstRcvInd->enRnicRmNetId);
     }
 
-    /* Í¨¹ýID_RNIC_AT_DSFLOW_RSPÏûÏ¢·¢ËÍ¸øATÄ£¿é */
-    /* Ìî³äÏûÏ¢ */
+    /* é€šè¿‡ID_RNIC_AT_DSFLOW_RSPæ¶ˆæ¯å‘é€ç»™ATæ¨¡å— */
+    /* å¡«å……æ¶ˆæ¯ */
     pstDsflowRsp->ulSenderCpuId               = VOS_LOCAL_CPUID;
     pstDsflowRsp->ulSenderPid                 = ACPU_PID_RNIC;
     pstDsflowRsp->ulReceiverCpuId             = VOS_LOCAL_CPUID;
     pstDsflowRsp->ulReceiverPid               = WUEPS_PID_AT;
     pstDsflowRsp->enMsgId                     = ID_RNIC_AT_DSFLOW_RSP;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ACPU_PID_RNIC, pstDsflowRsp))
     {
         RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_RcvAtDsflowInd: Send msg failed!");
@@ -730,12 +730,12 @@ VOS_UINT32 RNIC_RcvAtPdnInfoCfgInd(
     pstRnicPdnCfgInd = (AT_RNIC_PDN_INFO_CFG_IND_STRU *)pstMsg;
     ucRmNetId        = pstRnicPdnCfgInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpAddr                          = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
     ucRabid                             = RNIC_RAB_ID_INVALID;
 
-    /* ¸ù¾Ýmodem idÌî³äRabid */
+    /* æ ¹æ®modem idå¡«å……Rabid */
     if (VOS_OK != RNIC_BuildRabIdByModemId(pstSpecNetCardCtx->enModemId,
                                            pstRnicPdnCfgInd->ucRabId,
                                            &ucRabid))
@@ -744,7 +744,7 @@ VOS_UINT32 RNIC_RcvAtPdnInfoCfgInd(
         return VOS_ERR;
     }
 
-    /* ´æ´¢RABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* å­˜å‚¨RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstRnicPdnCfgInd->ucRabId,
                                         ucRmNetId))
@@ -757,12 +757,12 @@ VOS_UINT32 RNIC_RcvAtPdnInfoCfgInd(
 
     if (VOS_TRUE == pstRnicPdnCfgInd->bitOpIpv4PdnInfo)
     {
-        /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         pstPdpAddr->stIpv4PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
         pstPdpAddr->stIpv4PdpInfo.ucRabId     = pstRnicPdnCfgInd->ucRabId;
         pstPdpAddr->stIpv4PdpInfo.ulIpv4Addr  = pstRnicPdnCfgInd->stIpv4PdnInfo.ulPdnAddr;
 
-        /* ¸üÐÂ¹ýÂËIPµØÖ·ÐÅÏ¢ */
+        /* æ›´æ–°è¿‡æ»¤IPåœ°å€ä¿¡æ¯ */
         stFilterIpAddr.bitOpIpv4Addr          = VOS_TRUE;
         PS_MEM_CPY(stFilterIpAddr.aucIpv4Addr,
                    (VOS_UINT8 *)&pstRnicPdnCfgInd->stIpv4PdnInfo.ulPdnAddr,
@@ -771,27 +771,27 @@ VOS_UINT32 RNIC_RcvAtPdnInfoCfgInd(
 
     if (VOS_TRUE == pstRnicPdnCfgInd->bitOpIpv6PdnInfo)
     {
-        /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         pstPdpAddr->stIpv6PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
         pstPdpAddr->stIpv6PdpInfo.ucRabId     = pstRnicPdnCfgInd->ucRabId;
         PS_MEM_CPY(pstPdpAddr->stIpv6PdpInfo.aucIpv6Addr,
                    pstRnicPdnCfgInd->stIpv6PdnInfo.aucPdnAddr,
                    RNICITF_MAX_IPV6_ADDR_LEN);
 
-        /* ¸üÐÂ¹ýÂËIPµØÖ·ÐÅÏ¢ */
+        /* æ›´æ–°è¿‡æ»¤IPåœ°å€ä¿¡æ¯ */
         stFilterIpAddr.bitOpIpv6Addr          = VOS_TRUE;
         PS_MEM_CPY(stFilterIpAddr.aucIpv6Addr,
                    pstRnicPdnCfgInd->stIpv6PdnInfo.aucPdnAddr,
                    ADS_IPV6_ADDR_LEN);
     }
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Æô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+    /* å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
     RNIC_StartTimer(enTimerId, TI_RNIC_DSFLOW_STATS_LEN);
 
-    /* ×¢²áÏÂÐÐ¹ýÂË»Øµ÷º¯Êý£¬ADSµ÷ÓÃ×¢²áµÄº¯Êý·¢ËÍÏÂÐÐÊý¾Ý */
+    /* æ³¨å†Œä¸‹è¡Œè¿‡æ»¤å›žè°ƒå‡½æ•°ï¼ŒADSè°ƒç”¨æ³¨å†Œçš„å‡½æ•°å‘é€ä¸‹è¡Œæ•°æ® */
     ADS_DL_RegFilterDataCallback(ucRabid, &stFilterIpAddr, (RCV_DL_DATA_FUNC)RNIC_RcvAdsDlData);
 
     return VOS_OK;
@@ -814,55 +814,55 @@ VOS_UINT32 RNIC_RcvAtPdnInfoRelInd(
 
     ucRmNetId                           = pstRnicPdnRelInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpCtxAddr                       = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
-    /* »ñÈ¡ÉÏÏÂÐÐÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–ä¸Šä¸‹è¡Œä¸Šä¸‹æ–‡åœ°å€ */
     pstUlCtxAddr                        = RNIC_GetUlCtxAddr(ucRmNetId);
     pstDlCtxAddr                        = RNIC_GetDlCtxAddr(ucRmNetId);
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+    /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
     if ((pstPdpCtxAddr->stIpv4PdpInfo.ucRabId == pstRnicPdnRelInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4PdpCtx(&pstPdpCtxAddr->stIpv4PdpInfo);
     }
 
     if ((pstPdpCtxAddr->stIpv6PdpInfo.ucRabId == pstRnicPdnRelInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv6PdpCtx(&pstPdpCtxAddr->stIpv6PdpInfo);
     }
 
     if ((pstPdpCtxAddr->stIpv4v6PdpInfo.ucRabId == pstRnicPdnRelInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4V6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4V6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4v6PdpCtx(&pstPdpCtxAddr->stIpv4v6PdpInfo, ucRmNetId);
     }
 
-    /* PDP¶¼Î´¼¤»îµÄÊ±ºò */
+    /* PDPéƒ½æœªæ¿€æ´»çš„æ—¶å€™ */
     if ((RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
     {
-        /* Í£Ö¹Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+        /* åœæ­¢æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
         RNIC_StopTimer(enTimerId);
 
         pstSpecNetCardCtx->enModemType        = RNIC_MODEM_TYPE_INSIDE;
 
-        /* Çå¿ÕÉÏÏÂÐÐÊý¾Ý */
+        /* æ¸…ç©ºä¸Šä¸‹è¡Œæ•°æ® */
         RNIC_InitUlCtx(pstUlCtxAddr);
         RNIC_InitDlCtx(pstDlCtxAddr);
     }
 
-    /* Çå³ýRABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* æ¸…é™¤RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstRnicPdnRelInd->ucRabId,
                                         RNIC_RM_NET_ID_BUTT))
@@ -870,7 +870,7 @@ VOS_UINT32 RNIC_RcvAtPdnInfoRelInd(
         return VOS_ERR;
     }
 
-    /* È¥×¢²áÏÂÐÐ¹ýÂË»Øµ÷º¯Êý */
+    /* åŽ»æ³¨å†Œä¸‹è¡Œè¿‡æ»¤å›žè°ƒå‡½æ•° */
     ADS_DL_DeregFilterDataCallback(pstRnicPdnRelInd->ucRabId);
 
     return VOS_OK;
@@ -887,30 +887,30 @@ VOS_UINT32  RNIC_RcvTiDsflowStatsExpired(
     RNIC_DL_CTX_STRU                   *pstDlCtx;
     RNIC_TIMER_ID_ENUM_UINT16           enTimerId;
 
-    /* »ñÈ¡ÉÏÏÂÐÐÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–ä¸Šä¸‹è¡Œä¸Šä¸‹æ–‡åœ°å€ */
     pstUlCtx                            = RNIC_GetUlCtxAddr(ucRmNetId);
     pstDlCtx                            = RNIC_GetDlCtxAddr(ucRmNetId);
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
     RNIC_StopTimer(enTimerId);
 
-    /* »ñÈ¡2ÃëµÄÏÂÐÐÁ÷Á¿ */
+    /* èŽ·å–2ç§’çš„ä¸‹è¡Œæµé‡ */
     ulTaBytes = pstDlCtx->stDLDataStats.ulDLPeriodRcvBytes;
 
-    /* ²úÆ·ÒªÇóÃ¿2ÃëÖÓ¼ÆËãÒ»´Î,µ¥Î»Îª:byte/s */
+    /* äº§å“è¦æ±‚æ¯2ç§’é’Ÿè®¡ç®—ä¸€æ¬¡,å•ä½ä¸º:byte/s */
     ulRate = ulTaBytes>>1;
     RNIC_SetCurrentDlRate(ulRate, ucRmNetId);
 
-    /* »ñÈ¡2ÃëµÄÉÏÐÐÁ÷Á¿ */
+    /* èŽ·å–2ç§’çš„ä¸Šè¡Œæµé‡ */
     ulTaBytes = pstUlCtx->stULDataStats.ulULPeriodSndBytes;
 
-    /* ²úÆ·ÒªÇóÃ¿2ÃëÖÓ¼ÆËãÒ»´Î,µ¥Î»Îª:byte/s */
+    /* äº§å“è¦æ±‚æ¯2ç§’é’Ÿè®¡ç®—ä¸€æ¬¡,å•ä½ä¸º:byte/s */
     ulRate = ulTaBytes>>1;
     RNIC_SetCurrentUlRate(ulRate, ucRmNetId);
 
-    /* Ã¿¸öÁ÷Á¿Í³¼ÆÖÜÆÚ½áÊøºó£¬ÐèÒª½«ÖÜÆÚÍ³¼ÆByteÊýÇå³ý */
+    /* æ¯ä¸ªæµé‡ç»Ÿè®¡å‘¨æœŸç»“æŸåŽï¼Œéœ€è¦å°†å‘¨æœŸç»Ÿè®¡Byteæ•°æ¸…é™¤ */
     pstDlCtx->stDLDataStats.ulDLPeriodRcvBytes = 0;
     pstUlCtx->stULDataStats.ulULPeriodSndBytes = 0;
 
@@ -930,36 +930,36 @@ VOS_UINT32 RNIC_RcvTiDemandDialDisconnectExpired(
     RNIC_DIAL_MODE_STRU                *pstDialMode;
     RNIC_UL_CTX_STRU                   *pstUlCtx;
 
-    /* »ñÈ¡ÉÏÏÂÐÐÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–ä¸Šä¸‹è¡Œä¸Šä¸‹æ–‡åœ°å€ */
     pstUlCtx                            = RNIC_GetUlCtxAddr(ucRmNetId);
 
-    /* »ñÈ¡°´Ðè²¦ºÅµÄÄ£Ê½ÒÔ¼°Ê±³¤µÄµØÖ· */
+    /* èŽ·å–æŒ‰éœ€æ‹¨å·çš„æ¨¡å¼ä»¥åŠæ—¶é•¿çš„åœ°å€ */
     pstDialMode                         = RNIC_GetDialModeAddr();
 
-    /* ½«ÓÃ»§ÉèÖÃµÄÊ±³¤°´¶¨Ê±Æ÷Ê±³¤µÈ·Ö */
+    /* å°†ç”¨æˆ·è®¾ç½®çš„æ—¶é•¿æŒ‰å®šæ—¶å™¨æ—¶é•¿ç­‰åˆ† */
     ulExpiredCount                      = (pstDialMode->ulIdleTime * TI_RNIC_UNIT) / TI_RNIC_DEMAND_DIAL_DISCONNECT_LEN;
 
     RNIC_StopTimer(TI_RNIC_DEMAND_DIAL_DISCONNECT);
 
-    /* Èç¹ûµ±Ç°ÊÇÊÖ¶¯²¦ºÅ,ÔòÖ±½Ó·µ»Ø,²»ÐèÒªÍ¨Öª */
+    /* å¦‚æžœå½“å‰æ˜¯æ‰‹åŠ¨æ‹¨å·,åˆ™ç›´æŽ¥è¿”å›ž,ä¸éœ€è¦é€šçŸ¥ */
     if (AT_RNIC_DIAL_MODE_DEMAND_CONNECT != pstDialMode->enDialMode)
     {
         RNIC_NORMAL_LOG(ACPU_PID_RNIC, "RNIC_RcvTiDemandDialDisconnectExpired: Dialmode is manual!");
         return VOS_OK;
     }
 
-    /* »ñÈ¡ÔÚ¶¨Ê±Æ÷Æô¶¯ºóÉÏÏÂÐÐÍ³¼ÆµÄÊý¾Ý°üÊýÒÔ¼°µ±Ç°ÓÃ»§Á¬½Ó×´Ì¬ */
+    /* èŽ·å–åœ¨å®šæ—¶å™¨å¯åŠ¨åŽä¸Šä¸‹è¡Œç»Ÿè®¡çš„æ•°æ®åŒ…æ•°ä»¥åŠå½“å‰ç”¨æˆ·è¿žæŽ¥çŠ¶æ€ */
     ulPktsNum = pstUlCtx->stULDataStats.ulULPeriodSndPkts;
     ulUserExistFlg  = DRV_AT_GET_USER_EXIST_FLAG();
 
-    /* °´Ðè²¦ºÅ¶Ï¿ªÂß¼­ÈçÏÂ:
-         ÓÐÓÃ»§Á¬½ÓÇÒÓÐÊý¾Ý°ü:
-             ¼ÆÊýÆ÷ÇåÁã
-         ÆäËûÇé¿ö:
-             ¼ÆÊýÆ÷++
-       ÒÔÏÂ³¡¾°ÎÞ·¨Ê¶±ð:
-          µ±Ç°Á¬½ÓUSB£¬µ«ÓÃ»§ÎÞÊý¾Ý·¢ËÍ£¬¶øÍøÂçÓÐÊý¾ÝÏÂ·¢£¬µ¼ÖÂÒ²»áÈÏÎª
-          ÊÇÓÐÓÃ»§Á¬½ÓÇÒÓÐÊý¾Ý°ü£¬¶øÖØÐÂ¼ÆÊý¡£
+    /* æŒ‰éœ€æ‹¨å·æ–­å¼€é€»è¾‘å¦‚ä¸‹:
+         æœ‰ç”¨æˆ·è¿žæŽ¥ä¸”æœ‰æ•°æ®åŒ…:
+             è®¡æ•°å™¨æ¸…é›¶
+         å…¶ä»–æƒ…å†µ:
+             è®¡æ•°å™¨++
+       ä»¥ä¸‹åœºæ™¯æ— æ³•è¯†åˆ«:
+          å½“å‰è¿žæŽ¥USBï¼Œä½†ç”¨æˆ·æ— æ•°æ®å‘é€ï¼Œè€Œç½‘ç»œæœ‰æ•°æ®ä¸‹å‘ï¼Œå¯¼è‡´ä¹Ÿä¼šè®¤ä¸º
+          æ˜¯æœ‰ç”¨æˆ·è¿žæŽ¥ä¸”æœ‰æ•°æ®åŒ…ï¼Œè€Œé‡æ–°è®¡æ•°ã€‚
     */
     if ((0 != ulPktsNum)
      && (VOS_TRUE == ulUserExistFlg))
@@ -971,16 +971,16 @@ VOS_UINT32 RNIC_RcvTiDemandDialDisconnectExpired(
         RNIC_IncTiDialDownExpCount();
     }
 
-    /* ÅÐ¶ÏÍ³¼Æ¼ÆÊýÆ÷ÊÇ·ñ´óÓÚµÈÓÚÓÃ»§ÉèÖÃ¶Ï¿ª²¦ºÅÊ±³¤Óë¶¨Ê±Æ÷Ê±³¤µÈ·Ö */
+    /* åˆ¤æ–­ç»Ÿè®¡è®¡æ•°å™¨æ˜¯å¦å¤§äºŽç­‰äºŽç”¨æˆ·è®¾ç½®æ–­å¼€æ‹¨å·æ—¶é•¿ä¸Žå®šæ—¶å™¨æ—¶é•¿ç­‰åˆ† */
     ulCount = RNIC_GetTiDialDownExpCount();
 
     if ((ulCount >= ulExpiredCount)
        &&(RNIC_ALLOW_EVENT_REPORT == pstDialMode->enEventReportFlag))
     {
-        /*Í¨ÖªÓ¦ÓÃ¶Ï¿ª²¦ºÅ */
+        /*é€šçŸ¥åº”ç”¨æ–­å¼€æ‹¨å· */
         if (VOS_OK == RNIC_SendDialEvent(DEVICE_ID_WAN, RNIC_DAIL_EVENT_DOWN))
         {
-            /* ÉÏ±¨¶Ï¿ª²¦ºÅÊÂ¼þºóÍ¶Æ±²»½øÈëË¯Ãß£¬ÔÚ¶Ï¿ª²¦ºÅ³É¹¦Ê±½â³ý */
+            /* ä¸ŠæŠ¥æ–­å¼€æ‹¨å·äº‹ä»¶åŽæŠ•ç¥¨ä¸è¿›å…¥ç¡çœ ï¼Œåœ¨æ–­å¼€æ‹¨å·æˆåŠŸæ—¶è§£é™¤ */
 #if (FEATURE_ON == FEATURE_LTE)
             DRV_PWRCTRL_SLEEPVOTE_LOCK(PWRCTRL_SLEEP_RNIC);
 #endif
@@ -1005,7 +1005,7 @@ VOS_UINT32 RNIC_RcvTiDemandDialProtectExpired(
     VOS_UINT8                           ucRmNetId
 )
 {
-    /* Í£Ö¹°´Ðè²¦ºÅ±£»¤¶¨Ê±Æ÷ */
+    /* åœæ­¢æŒ‰éœ€æ‹¨å·ä¿æŠ¤å®šæ—¶å™¨ */
     RNIC_StopTimer(TI_RNIC_DEMAND_DIAL_PROTECT);
 
     return VOS_OK;
@@ -1015,10 +1015,10 @@ RNIC_RCV_TI_EXPRIED_PROC_FUNC RNIC_GetTiExpiredFuncByMsgId(VOS_UINT32 ulMsgId)
     VOS_UINT8                           i;
     VOS_UINT32                          ulTableSize;
 
-    /* ´Óg_astRnicTiExpriedProcTabÖÐ»ñÈ¡²Ù×÷¸öÊý */
+    /* ä»Žg_astRnicTiExpriedProcTabä¸­èŽ·å–æ“ä½œä¸ªæ•° */
     ulTableSize = sizeof(g_astRnicTiExpriedProcTab)/sizeof(RNIC_RCV_TI_EXPRIED_PROC_STRU);
 
-    /* g_astRnicTiExpriedProcTab²é±í£¬½øÐÐÏûÏ¢´¦ÀíµÄ·Ö·¢ */
+    /* g_astRnicTiExpriedProcTabæŸ¥è¡¨ï¼Œè¿›è¡Œæ¶ˆæ¯å¤„ç†çš„åˆ†å‘ */
     for (i = 0; i < ulTableSize; i++)
     {
         if (g_astRnicTiExpriedProcTab[i].ulMsgId== ulMsgId)
@@ -1040,58 +1040,58 @@ VOS_UINT32 RNIC_RcvCcpuResetStartInd(
 
     pstRnicCtx                          = RNIC_GetRnicCtxAddr();
 
-    /* Í£Ö¹ËùÓÐÆô¶¯µÄ¶¨Ê±Æ÷ */
+    /* åœæ­¢æ‰€æœ‰å¯åŠ¨çš„å®šæ—¶å™¨ */
     RNIC_StopAllTimer();
 
     for (ucIndex = 0 ; ucIndex < RNIC_NET_ID_MAX_NUM ; ucIndex++)
     {
-        /* ³õÊ¼»¯RNICÉÏÐÐÉÏÏÂÎÄ */
+        /* åˆå§‹åŒ–RNICä¸Šè¡Œä¸Šä¸‹æ–‡ */
         RNIC_InitUlCtx(&(pstRnicCtx->astSpecCtx[ucIndex].stUlCtx));
 
-        /* ³õÊ¼»¯RNICÏÂÐÐÉÏÏÂÎÄ */
+        /* åˆå§‹åŒ–RNICä¸‹è¡Œä¸Šä¸‹æ–‡ */
         RNIC_InitDlCtx(&(pstRnicCtx->astSpecCtx[ucIndex].stDlCtx));
 
-        /* ³õÊ¼»¯RNIC PDPÉÏÏÂÎÄ */
+        /* åˆå§‹åŒ–RNIC PDPä¸Šä¸‹æ–‡ */
         RNIC_InitPdpCtx(&(pstRnicCtx->astSpecCtx[ucIndex].stPdpCtx), ucIndex);
 
-        /* ³õÊ¼»¯Á÷¿Ø×´Ì¬ */
+        /* åˆå§‹åŒ–æµæŽ§çŠ¶æ€ */
         pstRnicCtx->astSpecCtx[ucIndex].enFlowCtrlStatus = RNIC_FLOW_CTRL_STATUS_STOP;
 
-        /* ³õÊ¼»¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+        /* åˆå§‹åŒ–æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
         pstRnicCtx->astSpecCtx[ucIndex].enTiDsFlowStats  = TI_RNIC_DSFLOW_STATS_0 + ucIndex;
 
-        /* ³õÊ¼»¯Ä£¿éID */
-        /* ³õÊ¼»¯µÄÊ±ºò¾ÍÒÑ¾­È·¶¨ÁËÄÄÕÅÍø¿¨¶ÔÓ¦ÄÄ¸öMODEM */
+        /* åˆå§‹åŒ–æ¨¡å—ID */
+        /* åˆå§‹åŒ–çš„æ—¶å€™å°±å·²ç»ç¡®å®šäº†å“ªå¼ ç½‘å¡å¯¹åº”å“ªä¸ªMODEM */
         pstRnicCtx->astSpecCtx[ucIndex].enModemId        = RNIC_GET_MODEM_ID_BY_NET_ID(ucIndex);
 
         pstRnicCtx->astSpecCtx[ucIndex].enModemType      = RNIC_MODEM_TYPE_INSIDE;
     }
 
-    /* ³õÊ¼»¯RABIDÐÅÏ¢ */
+    /* åˆå§‹åŒ–RABIDä¿¡æ¯ */
     for (ucIndex = 0 ; ucIndex < RNIC_MODEM_ID_MAX_NUM ; ucIndex++)
     {
         RNIC_InitRabidInfo(&pstRnicCtx->astRabIdInfo[ucIndex]);
     }
 
-    /* ³õÊ¼»¯PDNIDÐÅÏ¢ */
+    /* åˆå§‹åŒ–PDNIDä¿¡æ¯ */
     RNIC_InitPdnIdInfo(&(pstRnicCtx->stPdnIdInfo));
 
-    /* ³õÊ¼»¯RNIC¶¨Ê±Æ÷ÉÏÏÂÎÄ */
+    /* åˆå§‹åŒ–RNICå®šæ—¶å™¨ä¸Šä¸‹æ–‡ */
     RNIC_InitAllTimers(pstRnicCtx->astTimerCtx);
 
-    /* ³õÊ¼»¯²¦ºÅÄ£Ê½ÐÅÏ¢ */
+    /* åˆå§‹åŒ–æ‹¨å·æ¨¡å¼ä¿¡æ¯ */
     RNIC_ResetDialMode(&(pstRnicCtx->stDialMode));
 
-    /* ³õÊ¼»¯²¦ºÅ¶Ï¿ª¶¨Ê±Æ÷³¬Ê±´ÎÊý²ÎÊýÍ³¼Æ */
+    /* åˆå§‹åŒ–æ‹¨å·æ–­å¼€å®šæ—¶å™¨è¶…æ—¶æ¬¡æ•°å‚æ•°ç»Ÿè®¡ */
     RNIC_ClearTiDialDownExpCount();
 
-    /* ³õÊ¼»¯TIMER4»½ÐÑ±êÖ¾ */
+    /* åˆå§‹åŒ–TIMER4å”¤é†’æ ‡å¿— */
     RNIC_SetTimer4WakeFlg(VOS_FALSE);
 
-    /* ÊÍ·ÅÐÅºÅÁ¿£¬Ê¹µÃµ÷ÓÃAPIÈÎÎñ¼ÌÐøÔËÐÐ */
+    /* é‡Šæ”¾ä¿¡å·é‡ï¼Œä½¿å¾—è°ƒç”¨APIä»»åŠ¡ç»§ç»­è¿è¡Œ */
     VOS_SmV(RNIC_GetResetSem());
 
-    /* ´Ë´¦ÊÇ·ñÒªÇå¿ÕsdioÏÂÐÐ×¢²áº¯Êý */
+    /* æ­¤å¤„æ˜¯å¦è¦æ¸…ç©ºsdioä¸‹è¡Œæ³¨å†Œå‡½æ•° */
 
     return VOS_OK;
 }
@@ -1110,15 +1110,15 @@ VOS_UINT32 RNIC_RcvImsaPdnActInd(
 
     pstRcvInd                           = (IMSA_RNIC_PDN_ACT_IND_STRU *)pstMsg;
 
-    /* Ö¸¶¨Ò»ÕÅ×¨ÃÅµÄÍø¿¨ÓÃÓÚVTÊÓÆµÊý¾Ý´«Êä */
+    /* æŒ‡å®šä¸€å¼ ä¸“é—¨çš„ç½‘å¡ç”¨äºŽVTè§†é¢‘æ•°æ®ä¼ è¾“ */
     ucRmNetId                           = RNIC_RM_NET_ID_VT;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpAddr                          = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
     ucRabid                             = RNIC_RAB_ID_INVALID;
 
-    /* ¸ù¾Ýmodem idºÍÍø¿¨id£¬Ìî³äRabid */
+    /* æ ¹æ®modem idå’Œç½‘å¡idï¼Œå¡«å……Rabid */
     if (VOS_OK != RNIC_BuildRabIdByModemId(pstSpecNetCardCtx->enModemId,
                                            pstRcvInd->stPdnInfo.ucRabId,
                                            &ucRabid))
@@ -1127,7 +1127,7 @@ VOS_UINT32 RNIC_RcvImsaPdnActInd(
         return VOS_ERR;
     }
 
-    /* ´æ´¢RABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* å­˜å‚¨RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstRcvInd->stPdnInfo.ucRabId,
                                         ucRmNetId))
@@ -1138,30 +1138,30 @@ VOS_UINT32 RNIC_RcvImsaPdnActInd(
 
     pstSpecNetCardCtx->enModemType        = RNIC_MODEM_TYPE_INSIDE;
 
-    /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+    /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
 
-    /* IPV4¼¤»î */
+    /* IPV4æ¿€æ´» */
     if (VOS_TRUE == pstRcvInd->stPdnInfo.bitOpIpv4PdnInfo)
     {
         pstPdpAddr->stIpv4PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
         pstPdpAddr->stIpv4PdpInfo.ucRabId     = pstRcvInd->stPdnInfo.ucRabId;
     }
 
-    /* IPV6¼¤»î */
+    /* IPV6æ¿€æ´» */
     if (VOS_TRUE == pstRcvInd->stPdnInfo.bitOpIpv6PdnInfo)
     {
         pstPdpAddr->stIpv6PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
         pstPdpAddr->stIpv6PdpInfo.ucRabId     = pstRcvInd->stPdnInfo.ucRabId;
     }
 
-    /* IPV4V6¼¤»î */
+    /* IPV4V6æ¿€æ´» */
     if (VOS_TRUE == (pstRcvInd->stPdnInfo.bitOpIpv4PdnInfo & pstRcvInd->stPdnInfo.bitOpIpv6PdnInfo))
     {
         pstPdpAddr->stIpv4v6PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
         pstPdpAddr->stIpv4v6PdpInfo.ucRabId     = pstRcvInd->stPdnInfo.ucRabId;
     }
 
-    /* ×¢²áÏÂÐÐ·¢ËÍº¯Êý£¬ADSµ÷ÓÃ×¢²áµÄº¯Êý·¢ËÍÏÂÐÐÊý¾Ý */
+    /* æ³¨å†Œä¸‹è¡Œå‘é€å‡½æ•°ï¼ŒADSè°ƒç”¨æ³¨å†Œçš„å‡½æ•°å‘é€ä¸‹è¡Œæ•°æ® */
     ADS_DL_RegDlDataCallback(ucRabid, (RCV_DL_DATA_FUNC)RNIC_RcvAdsDlData);
 
     return VOS_OK;
@@ -1179,40 +1179,40 @@ VOS_UINT32 RNIC_RcvImsaPdnDeactInd(
 
     pstRcvInd                           = (IMSA_RNIC_PDN_DEACT_IND_STRU *)pstMsg;
 
-    /* Ö¸¶¨Ò»ÕÅ×¨ÃÅµÄÍø¿¨ÓÃÓÚVTÊÓÆµÊý¾Ý´«Êä */
+    /* æŒ‡å®šä¸€å¼ ä¸“é—¨çš„ç½‘å¡ç”¨äºŽVTè§†é¢‘æ•°æ®ä¼ è¾“ */
     ucRmNetId                           = RNIC_RM_NET_ID_VT;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpCtxAddr                       = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
-    /* »ñÈ¡ÉÏÏÂÐÐÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–ä¸Šä¸‹è¡Œä¸Šä¸‹æ–‡åœ°å€ */
     pstUlCtxAddr                        = RNIC_GetUlCtxAddr(ucRmNetId);
     pstDlCtxAddr                        = RNIC_GetDlCtxAddr(ucRmNetId);
 
-    /* Èç¹ûÊÇIPV4 PDPÈ¥¼¤»î */
+    /* å¦‚æžœæ˜¯IPV4 PDPåŽ»æ¿€æ´» */
     if ((pstPdpCtxAddr->stIpv4PdpInfo.ucRabId == pstRcvInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4PdpCtx(&pstPdpCtxAddr->stIpv4PdpInfo);
     }
 
     if ((pstPdpCtxAddr->stIpv6PdpInfo.ucRabId == pstRcvInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv6PdpCtx(&pstPdpCtxAddr->stIpv6PdpInfo);
     }
 
     if ((pstPdpCtxAddr->stIpv4v6PdpInfo.ucRabId == pstRcvInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4V6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4V6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4v6PdpCtx(&pstPdpCtxAddr->stIpv4v6PdpInfo, ucRmNetId);
     }
 
-    /* ¸ÃÍø¿¨ÉÏÃæPDP¶¼È¥¼¤»îµÄÊ±ºò£¬Çå¿Õ¸ÃÍø¿¨µÄÉÏÏÂÎÄÐÅÏ¢ */
+    /* è¯¥ç½‘å¡ä¸Šé¢PDPéƒ½åŽ»æ¿€æ´»çš„æ—¶å€™ï¼Œæ¸…ç©ºè¯¥ç½‘å¡çš„ä¸Šä¸‹æ–‡ä¿¡æ¯ */
     if ((RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
@@ -1222,7 +1222,7 @@ VOS_UINT32 RNIC_RcvImsaPdnDeactInd(
         pstSpecNetCardCtx->enModemType = RNIC_MODEM_TYPE_INSIDE;
     }
 
-    /* Çå³ýRABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* æ¸…é™¤RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstRcvInd->ucRabId,
                                         RNIC_RM_NET_ID_BUTT))
@@ -1245,13 +1245,13 @@ VOS_VOID RNIC_ProcInsideModemIpv4ActInd(
 
     ucRmNetId                           = pstPdpStatusInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpAddr                          = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
     ucRabid                             = RNIC_RAB_ID_INVALID;
 
-    /* ¸ù¾Ýmodem idºÍÍø¿¨id£¬Ìî³äRabid */
+    /* æ ¹æ®modem idå’Œç½‘å¡idï¼Œå¡«å……Rabid */
     if (VOS_OK != RNIC_BuildRabIdByModemId(pstSpecNetCardCtx->enModemId,
                                            pstPdpStatusInd->ucRabId,
                                            &ucRabid))
@@ -1260,7 +1260,7 @@ VOS_VOID RNIC_ProcInsideModemIpv4ActInd(
         return;
     }
 
-    /* ´æ´¢RABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* å­˜å‚¨RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstPdpStatusInd->ucRabId,
                                         ucRmNetId))
@@ -1271,23 +1271,23 @@ VOS_VOID RNIC_ProcInsideModemIpv4ActInd(
 
     pstSpecNetCardCtx->enModemType        = RNIC_MODEM_TYPE_INSIDE;
 
-    /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+    /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
     pstPdpAddr->stIpv4PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
     pstPdpAddr->stIpv4PdpInfo.ucRabId     = pstPdpStatusInd->ucRabId;
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Æô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+    /* å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
     RNIC_StartTimer(enTimerId, TI_RNIC_DSFLOW_STATS_LEN);
 
-    /* Í£Ö¹°´Ðè²¦ºÅ±£»¤¶¨Ê±Æ÷ */
+    /* åœæ­¢æŒ‰éœ€æ‹¨å·ä¿æŠ¤å®šæ—¶å™¨ */
     if (RNIC_RM_NET_ID_0 == ucRmNetId)
     {
         RNIC_StopTimer(TI_RNIC_DEMAND_DIAL_PROTECT);
     }
 
-    /* ×¢²áÏÂÐÐ·¢ËÍº¯Êý£¬ADSµ÷ÓÃ×¢²áµÄº¯Êý·¢ËÍÏÂÐÐÊý¾Ý */
+    /* æ³¨å†Œä¸‹è¡Œå‘é€å‡½æ•°ï¼ŒADSè°ƒç”¨æ³¨å†Œçš„å‡½æ•°å‘é€ä¸‹è¡Œæ•°æ® */
     ADS_DL_RegDlDataCallback(ucRabid, (RCV_DL_DATA_FUNC)RNIC_RcvAdsDlData);
 
     return;
@@ -1307,13 +1307,13 @@ VOS_VOID RNIC_ProcInsideModemIpv6ActInd(
 
     ucRmNetId                           = pstPdpStatusInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpAddr                          = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
     ucRabid                             = RNIC_RAB_ID_INVALID;
 
-    /* ¸ù¾Ýmodem idºÍÍø¿¨id£¬Ìî³äRabid */
+    /* æ ¹æ®modem idå’Œç½‘å¡idï¼Œå¡«å……Rabid */
     if (VOS_OK != RNIC_BuildRabIdByModemId(pstSpecNetCardCtx->enModemId,
                                            pstPdpStatusInd->ucRabId,
                                            &ucRabid))
@@ -1322,7 +1322,7 @@ VOS_VOID RNIC_ProcInsideModemIpv6ActInd(
         return;
     }
 
-    /* ´æ´¢RABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* å­˜å‚¨RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstPdpStatusInd->ucRabId,
                                         ucRmNetId))
@@ -1333,17 +1333,17 @@ VOS_VOID RNIC_ProcInsideModemIpv6ActInd(
 
     pstSpecNetCardCtx->enModemType        = RNIC_MODEM_TYPE_INSIDE;
 
-    /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+    /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
     pstPdpAddr->stIpv6PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
     pstPdpAddr->stIpv6PdpInfo.ucRabId     = pstPdpStatusInd->ucRabId;
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Æô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+    /* å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
     RNIC_StartTimer(enTimerId, TI_RNIC_DSFLOW_STATS_LEN);
 
-    /* ×¢²áÏÂÐÐ·¢ËÍº¯Êý£¬ADSµ÷ÓÃ×¢²áµÄº¯Êý·¢ËÍÏÂÐÐÊý¾Ý */
+    /* æ³¨å†Œä¸‹è¡Œå‘é€å‡½æ•°ï¼ŒADSè°ƒç”¨æ³¨å†Œçš„å‡½æ•°å‘é€ä¸‹è¡Œæ•°æ® */
     ADS_DL_RegDlDataCallback(ucRabid, (RCV_DL_DATA_FUNC)RNIC_RcvAdsDlData);
 
     return;
@@ -1352,18 +1352,18 @@ VOS_VOID RNIC_ProcRnicPdpActInd(
     RNIC_RMNET_CONFIG_REQ_STRU           *pstPdpStatusInd
 )
 {
-    /* Ä¬ÈÏipv4ºÍipv6¼¤»î³É¹¦·ÖÁ½´ÎÏÂ·¢ */
+    /* é»˜è®¤ipv4å’Œipv6æ¿€æ´»æˆåŠŸåˆ†ä¸¤æ¬¡ä¸‹å‘ */
     if (RNIC_MODEM_TYPE_INSIDE == pstPdpStatusInd->enModemType)
     {
         if (RNIC_IP_TYPE_IPV4 == pstPdpStatusInd->enIpType)
         {
-            /* balong modem ipv4¼¤»î */
+            /* balong modem ipv4æ¿€æ´» */
             RNIC_ProcInsideModemIpv4ActInd(pstPdpStatusInd);
         }
 
         if (RNIC_IP_TYPE_IPV6 == pstPdpStatusInd->enIpType)
         {
-            /* balong modem ipv6¼¤»î */
+            /* balong modem ipv6æ¿€æ´» */
             RNIC_ProcInsideModemIpv6ActInd(pstPdpStatusInd);
         }
     }
@@ -1373,13 +1373,13 @@ VOS_VOID RNIC_ProcRnicPdpActInd(
     {
         if (RNIC_IP_TYPE_IPV4 == pstPdpStatusInd->enIpType)
         {
-            /* ÍâÖÃmodem ipv4¼¤»î*/
+            /* å¤–ç½®modem ipv4æ¿€æ´»*/
             RNIC_ProcOutsideModemIpv4ActInd(pstPdpStatusInd);
         }
 
         if (RNIC_IP_TYPE_IPV6 == pstPdpStatusInd->enIpType)
         {
-            /* ÍâÖÃmodem ipv6¼¤»î*/
+            /* å¤–ç½®modem ipv6æ¿€æ´»*/
             RNIC_ProcOutsideModemIpv6ActInd(pstPdpStatusInd);
         }
     }
@@ -1402,7 +1402,7 @@ VOS_UINT32 RNIC_SaveNetIdByPdnId(
         return VOS_ERR;
     }
 
-    /* »ñÈ¡Ö¸¶¨ModemµÄRABIDÐÅÏ¢ */
+    /* èŽ·å–æŒ‡å®šModemçš„RABIDä¿¡æ¯ */
     pstPdnIdInfo = RNIC_GET_SPEC_MODEM_PDNID_INFO();
 
     pstPdnIdInfo->aucRmNetId[ucPdnId - RNIC_PDN_ID_OFFSET] = ucRmNetId;
@@ -1422,13 +1422,13 @@ VOS_VOID RNIC_ProcOutsideModemIpv4ActInd(
 
     ucRmNetId                           = pstPdpStatusInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpAddr                          = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
     ucPdnId                             = pstPdpStatusInd->ucPdnId;
 
-    /* ´æ´¢PDNID¶ÔÓ¦µÄÍø¿¨ID */
+    /* å­˜å‚¨PDNIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByPdnId(ucPdnId,
                                         ucRmNetId))
     {
@@ -1438,17 +1438,17 @@ VOS_VOID RNIC_ProcOutsideModemIpv4ActInd(
 
     pstSpecNetCardCtx->enModemType        = RNIC_MODEM_TYPE_OUTSIDE;
 
-    /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+    /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
     pstPdpAddr->stIpv4PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
     pstPdpAddr->stIpv4PdpInfo.ucPdnId     = ucPdnId;
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Æô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+    /* å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
     RNIC_StartTimer(enTimerId, TI_RNIC_DSFLOW_STATS_LEN);
 
-    /* ×¢²áÏÂÐÐ·¢ËÍº¯Êý£¬ADSµ÷ÓÃ×¢²áµÄº¯Êý·¢ËÍÏÂÐÐÊý¾Ý */
+    /* æ³¨å†Œä¸‹è¡Œå‘é€å‡½æ•°ï¼ŒADSè°ƒç”¨æ³¨å†Œçš„å‡½æ•°å‘é€ä¸‹è¡Œæ•°æ® */
     SDIO_DL_RegDataCallback(ucPdnId, (RCV_C_DL_DATA_FUNC)RNIC_RcvSdioDlData);
 
     return;
@@ -1468,13 +1468,13 @@ VOS_VOID RNIC_ProcOutsideModemIpv6ActInd(
 
     ucRmNetId                           = pstPdpStatusInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpAddr                          = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
     ucPdnId                             = pstPdpStatusInd->ucPdnId;
 
-    /* ´æ´¢PDNID¶ÔÓ¦µÄÍø¿¨ID */
+    /* å­˜å‚¨PDNIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByPdnId(ucPdnId,
                                         ucRmNetId))
     {
@@ -1484,17 +1484,17 @@ VOS_VOID RNIC_ProcOutsideModemIpv6ActInd(
 
     pstSpecNetCardCtx->enModemType        = RNIC_MODEM_TYPE_OUTSIDE;
 
-    /* ¸üÐÂPDPÉÏÏÂÎÄÐÅÏ¢ */
+    /* æ›´æ–°PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
     pstPdpAddr->stIpv6PdpInfo.enRegStatus = RNIC_PDP_REG_STATUS_ACTIVE;
     pstPdpAddr->stIpv6PdpInfo.ucPdnId     = ucPdnId;
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Æô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+    /* å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
     RNIC_StartTimer(enTimerId, TI_RNIC_DSFLOW_STATS_LEN);
 
-    /* ×¢²áÏÂÐÐ·¢ËÍº¯Êý£¬ADSµ÷ÓÃ×¢²áµÄº¯Êý·¢ËÍÏÂÐÐÊý¾Ý */
+    /* æ³¨å†Œä¸‹è¡Œå‘é€å‡½æ•°ï¼ŒADSè°ƒç”¨æ³¨å†Œçš„å‡½æ•°å‘é€ä¸‹è¡Œæ•°æ® */
     SDIO_DL_RegDataCallback(ucPdnId, (RCV_C_DL_DATA_FUNC)RNIC_RcvSdioDlData);
 
     return;
@@ -1517,8 +1517,8 @@ VOS_VOID RNIC_ClearIpv4PdpCtxInSwitch(
     pstSpecNetCardCtx = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
     usModemId         = pstSpecNetCardCtx->enModemId;
 
-    /* ¸ù¾ÝPDP¼¤»îÀàÐÍ£¬Çå¿ÕPDN ID ºÍ RAB ID¶ÔÓ¦µÄÍø¿¨idÐÅÏ¢ */
-    /* ¶ÔÓÚÍâÖÃmodemÐèÒªÖÃ¿ÕÏÂÐÐÊý¾Ý·¢ËÍÖ¸Õë */
+    /* æ ¹æ®PDPæ¿€æ´»ç±»åž‹ï¼Œæ¸…ç©ºPDN ID å’Œ RAB IDå¯¹åº”çš„ç½‘å¡idä¿¡æ¯ */
+    /* å¯¹äºŽå¤–ç½®modeméœ€è¦ç½®ç©ºä¸‹è¡Œæ•°æ®å‘é€æŒ‡é’ˆ */
     if (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtx->stIpv4PdpInfo.enRegStatus)
     {
         if (RNIC_PDN_ID_INVALID != pstPdpCtx->stIpv4PdpInfo.ucPdnId)
@@ -1544,7 +1544,7 @@ VOS_VOID RNIC_ClearIpv4PdpCtxInSwitch(
         }
     }
 
-    /* Çå¿ÕipÉÏÏÂÎÄ */
+    /* æ¸…ç©ºipä¸Šä¸‹æ–‡ */
     RNIC_InitIpv4PdpCtx(&(pstPdpCtx->stIpv4PdpInfo));
     return;
 }
@@ -1564,8 +1564,8 @@ VOS_VOID RNIC_ClearIpv6PdpCtxInSwitch(
     pstSpecNetCardCtx = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
     usModemId         = pstSpecNetCardCtx->enModemId;
 
-    /* ¸ù¾ÝPDP¼¤»îÀàÐÍ£¬Çå¿ÕPDN ID ºÍ RAB ID¶ÔÓ¦µÄÍø¿¨idÐÅÏ¢ */
-    /* ¶ÔÓÚÍâÖÃmodemÐèÒªÖÃ¿ÕÏÂÐÐÊý¾Ý·¢ËÍÖ¸Õë */
+    /* æ ¹æ®PDPæ¿€æ´»ç±»åž‹ï¼Œæ¸…ç©ºPDN ID å’Œ RAB IDå¯¹åº”çš„ç½‘å¡idä¿¡æ¯ */
+    /* å¯¹äºŽå¤–ç½®modeméœ€è¦ç½®ç©ºä¸‹è¡Œæ•°æ®å‘é€æŒ‡é’ˆ */
     if (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtx->stIpv6PdpInfo.enRegStatus)
     {
         if (RNIC_PDN_ID_INVALID != pstPdpCtx->stIpv6PdpInfo.ucPdnId)
@@ -1591,7 +1591,7 @@ VOS_VOID RNIC_ClearIpv6PdpCtxInSwitch(
         }
     }
 
-    /* Çå¿ÕipÉÏÏÂÎÄ */
+    /* æ¸…ç©ºipä¸Šä¸‹æ–‡ */
     RNIC_InitIpv6PdpCtx(&(pstPdpCtx->stIpv6PdpInfo));
     return;
 }
@@ -1611,8 +1611,8 @@ VOS_VOID RNIC_ClearIpv4v6PdpCtxInSwitch(
     pstSpecNetCardCtx = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
     usModemId         = pstSpecNetCardCtx->enModemId;
 
-    /* ¸ù¾ÝPDP¼¤»îÀàÐÍ£¬Çå¿ÕPDN ID ºÍ RAB ID¶ÔÓ¦µÄÍø¿¨idÐÅÏ¢ */
-    /* ¶ÔÓÚÍâÖÃmodemÐèÒªÖÃ¿ÕÏÂÐÐÊý¾Ý·¢ËÍÖ¸Õë */
+    /* æ ¹æ®PDPæ¿€æ´»ç±»åž‹ï¼Œæ¸…ç©ºPDN ID å’Œ RAB IDå¯¹åº”çš„ç½‘å¡idä¿¡æ¯ */
+    /* å¯¹äºŽå¤–ç½®modeméœ€è¦ç½®ç©ºä¸‹è¡Œæ•°æ®å‘é€æŒ‡é’ˆ */
     if (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtx->stIpv4v6PdpInfo.enRegStatus)
     {
         if (RNIC_PDN_ID_INVALID != pstPdpCtx->stIpv4v6PdpInfo.ucPdnId)
@@ -1638,7 +1638,7 @@ VOS_VOID RNIC_ClearIpv4v6PdpCtxInSwitch(
         }
     }
 
-    /* Çå¿ÕipÉÏÏÂÎÄ */
+    /* æ¸…ç©ºipä¸Šä¸‹æ–‡ */
     RNIC_InitIpv4v6PdpCtx(&(pstPdpCtx->stIpv4v6PdpInfo), ucRmNetId);
     return;
 }
@@ -1650,18 +1650,18 @@ VOS_VOID RNIC_ClearPdpCtxInSwitch(
 
     pstSpecNetCardCtx = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
-    /* ¸ù¾ÝPDP¼¤»îÀàÐÍ£¬·Ö±ðÇå¿ÕPDN ID ºÍ RAB ID¶ÔÓ¦µÄÍø¿¨idÐÅÏ¢ */
-    /* ¶ÔÓÚÍâÖÃmodemÐèÒªÖÃ¿ÕÏÂÐÐÊý¾Ý·¢ËÍÖ¸Õë */
-    /* Çå¿Õipv4 pdpÉÏÏÂÎÄ */
+    /* æ ¹æ®PDPæ¿€æ´»ç±»åž‹ï¼Œåˆ†åˆ«æ¸…ç©ºPDN ID å’Œ RAB IDå¯¹åº”çš„ç½‘å¡idä¿¡æ¯ */
+    /* å¯¹äºŽå¤–ç½®modeméœ€è¦ç½®ç©ºä¸‹è¡Œæ•°æ®å‘é€æŒ‡é’ˆ */
+    /* æ¸…ç©ºipv4 pdpä¸Šä¸‹æ–‡ */
     RNIC_ClearIpv4PdpCtxInSwitch(ucRmNetId);
 
-    /* Çå¿Õipv6 pdpÉÏÏÂÎÄ */
+    /* æ¸…ç©ºipv6 pdpä¸Šä¸‹æ–‡ */
     RNIC_ClearIpv6PdpCtxInSwitch(ucRmNetId);
 
-    /* Çå¿Õipv4v6 pdpÉÏÏÂÎÄ */
+    /* æ¸…ç©ºipv4v6 pdpä¸Šä¸‹æ–‡ */
     RNIC_ClearIpv4v6PdpCtxInSwitch(ucRmNetId);
 
-    /* ÖØÖÃmodem type */
+    /* é‡ç½®modem type */
     pstSpecNetCardCtx->enModemType = RNIC_MODEM_TYPE_INSIDE;
 
     return;
@@ -1678,17 +1678,17 @@ VOS_VOID RNIC_ProcRnicPdpHandoverInd(
     ucRmNetId                           = pstPdpStatusInd->ucRmNetId;
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
-    /* handover´¦ÀíÁ÷³Ì·ÖÎªÁ½²½£¬
-       1¡¢Ê×´ÎhandoverÇå³ýreqÏûÏ¢´¦ÀíÖ®Ç°pdpÉÏÏÂÎÄºÍÍø¿¨ÐÅÏ¢
-       2¡¢±£´æ±¾´ÎreqÖÐPDPÉÏÏÂÎÄ£¬¸ÃÁ÷³Ì´¦ÀíÓëPDP¼¤»îÁ÷³ÌÒ»ÖÂ*/
+    /* handoverå¤„ç†æµç¨‹åˆ†ä¸ºä¸¤æ­¥ï¼Œ
+       1ã€é¦–æ¬¡handoveræ¸…é™¤reqæ¶ˆæ¯å¤„ç†ä¹‹å‰pdpä¸Šä¸‹æ–‡å’Œç½‘å¡ä¿¡æ¯
+       2ã€ä¿å­˜æœ¬æ¬¡reqä¸­PDPä¸Šä¸‹æ–‡ï¼Œè¯¥æµç¨‹å¤„ç†ä¸ŽPDPæ¿€æ´»æµç¨‹ä¸€è‡´*/
 
-    /* step1:Ê×´ÎhandoverÇå³ýpdpÉÏÏÂÎÄºÍÍø¿¨ÐÅÏ¢ */
+    /* step1:é¦–æ¬¡handoveræ¸…é™¤pdpä¸Šä¸‹æ–‡å’Œç½‘å¡ä¿¡æ¯ */
     if (pstPdpStatusInd->enModemType != pstSpecNetCardCtx->enModemType)
     {
         RNIC_ClearPdpCtxInSwitch(ucRmNetId);
     }
 
-    /* step2:±£´æPDPÉÏÏÂÎÄ */
+    /* step2:ä¿å­˜PDPä¸Šä¸‹æ–‡ */
     RNIC_ProcRnicPdpActInd(pstPdpStatusInd);
 
     return;
@@ -1708,58 +1708,58 @@ VOS_VOID RNIC_ProcOutsideModemDeactInd(
 
     ucRmNetId                           = pstPdpStatusInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpCtxAddr                       = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
-    /* »ñÈ¡ÉÏÏÂÐÐÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–ä¸Šä¸‹è¡Œä¸Šä¸‹æ–‡åœ°å€ */
     pstUlCtxAddr                        = RNIC_GetUlCtxAddr(ucRmNetId);
     pstDlCtxAddr                        = RNIC_GetDlCtxAddr(ucRmNetId);
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Èç¹ûÊÇIPV4 PDPÈ¥¼¤»î */
+    /* å¦‚æžœæ˜¯IPV4 PDPåŽ»æ¿€æ´» */
     if ((pstPdpCtxAddr->stIpv4PdpInfo.ucPdnId == pstPdpStatusInd->ucPdnId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4PdpCtx(&pstPdpCtxAddr->stIpv4PdpInfo);
     }
 
     if ((pstPdpCtxAddr->stIpv6PdpInfo.ucPdnId == pstPdpStatusInd->ucPdnId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv6PdpCtx(&pstPdpCtxAddr->stIpv6PdpInfo);
     }
 
     if ((pstPdpCtxAddr->stIpv4v6PdpInfo.ucPdnId == pstPdpStatusInd->ucPdnId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4V6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4V6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4v6PdpCtx(&pstPdpCtxAddr->stIpv4v6PdpInfo, ucRmNetId);
     }
 
-    /* PDP¶¼Î´¼¤»îµÄÊ±ºò */
+    /* PDPéƒ½æœªæ¿€æ´»çš„æ—¶å€™ */
     if ((RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
     {
-        /* Í£Ö¹Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+        /* åœæ­¢æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
         RNIC_StopTimer(enTimerId);
 
-        /* Çå¿ÕÉÏÏÂÐÐÊý¾Ý */
+        /* æ¸…ç©ºä¸Šä¸‹è¡Œæ•°æ® */
         RNIC_InitUlCtx(pstUlCtxAddr);
         RNIC_InitDlCtx(pstDlCtxAddr);
 
         pstSpecNetCardCtx->enModemType = RNIC_MODEM_TYPE_INSIDE;
     }
 
-    /* Çå³ý×¢²á¸øSDIOµÄ»Øµ÷º¯Êý */
+    /* æ¸…é™¤æ³¨å†Œç»™SDIOçš„å›žè°ƒå‡½æ•° */
     SDIO_DL_RegDataCallback(pstPdpStatusInd->ucPdnId, (RCV_C_DL_DATA_FUNC)VOS_NULL_PTR);
 
-    /* Çå³ýPDNID¶ÔÓ¦µÄÍø¿¨ID */
+    /* æ¸…é™¤PDNIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByPdnId(pstPdpStatusInd->ucPdnId,
                                         RNIC_RM_NET_ID_BUTT))
     {
@@ -1785,31 +1785,31 @@ VOS_VOID RNIC_ProcInsideModemDeactInd(
 
     ucRmNetId                           = pstPdpStatusInd->ucRmNetId;
 
-    /* »ñÈ¡PDPÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–PDPä¸Šä¸‹æ–‡åœ°å€ */
     pstPdpCtxAddr                       = RNIC_GetPdpCtxAddr(ucRmNetId);
     pstSpecNetCardCtx                   = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
-    /* »ñÈ¡ÉÏÏÂÐÐÉÏÏÂÎÄµØÖ· */
+    /* èŽ·å–ä¸Šä¸‹è¡Œä¸Šä¸‹æ–‡åœ°å€ */
     pstUlCtxAddr                        = RNIC_GetUlCtxAddr(ucRmNetId);
     pstDlCtxAddr                        = RNIC_GetDlCtxAddr(ucRmNetId);
 
-    /* ¸ù¾ÝÍø¿¨ID»ñÈ¡Á÷Á¿Í³¼ÆµÄ¶¨Ê±Æ÷ID */
+    /* æ ¹æ®ç½‘å¡IDèŽ·å–æµé‡ç»Ÿè®¡çš„å®šæ—¶å™¨ID */
     enTimerId = RNIC_GetDsflowTimerIdByNetId(ucRmNetId);
 
-    /* Èç¹ûÊÇIPV4 PDPÈ¥¼¤»î */
+    /* å¦‚æžœæ˜¯IPV4 PDPåŽ»æ¿€æ´» */
     if ((pstPdpCtxAddr->stIpv4PdpInfo.ucRabId == pstPdpStatusInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4PdpCtx(&pstPdpCtxAddr->stIpv4PdpInfo);
 
-        /* ÔÚÍø¿¨0ÉÏ²ÅÓÐ°´Ðè²¦ºÅµÄ¹¦ÄÜ */
+        /* åœ¨ç½‘å¡0ä¸Šæ‰æœ‰æŒ‰éœ€æ‹¨å·çš„åŠŸèƒ½ */
         if (RNIC_RM_NET_ID_0 == ucRmNetId)
         {
-            /* Í£Ö¹°´Ðè²¦ºÅ¶Ï¿ª¶¨Ê±Æ÷ */
+            /* åœæ­¢æŒ‰éœ€æ‹¨å·æ–­å¼€å®šæ—¶å™¨ */
             RNIC_StopTimer(TI_RNIC_DEMAND_DIAL_DISCONNECT);
 
-            /* Çå¿Õ²¦ºÅ¶Ï¿ª¶¨Ê±Æ÷³¬Ê±Í³¼Æ */
+            /* æ¸…ç©ºæ‹¨å·æ–­å¼€å®šæ—¶å™¨è¶…æ—¶ç»Ÿè®¡ */
             RNIC_ClearTiDialDownExpCount();
         }
     }
@@ -1817,26 +1817,26 @@ VOS_VOID RNIC_ProcInsideModemDeactInd(
     if ((pstPdpCtxAddr->stIpv6PdpInfo.ucRabId == pstPdpStatusInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv6PdpCtx(&pstPdpCtxAddr->stIpv6PdpInfo);
     }
 
     if ((pstPdpCtxAddr->stIpv4v6PdpInfo.ucRabId == pstPdpStatusInd->ucRabId)
      && (RNIC_PDP_REG_STATUS_ACTIVE == pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
     {
-        /* Çå¿ÕIPV4V6 PDPÉÏÏÂÎÄÐÅÏ¢ */
+        /* æ¸…ç©ºIPV4V6 PDPä¸Šä¸‹æ–‡ä¿¡æ¯ */
         RNIC_InitIpv4v6PdpCtx(&pstPdpCtxAddr->stIpv4v6PdpInfo, ucRmNetId);
     }
 
-    /* PDP¶¼Î´¼¤»îµÄÊ±ºò */
+    /* PDPéƒ½æœªæ¿€æ´»çš„æ—¶å€™ */
     if ((RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv6PdpInfo.enRegStatus)
      && (RNIC_PDP_REG_STATUS_ACTIVE != pstPdpCtxAddr->stIpv4v6PdpInfo.enRegStatus))
     {
-        /* Í£Ö¹Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+        /* åœæ­¢æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
         RNIC_StopTimer(enTimerId);
 
-        /* Çå¿ÕÉÏÏÂÐÐÊý¾Ý */
+        /* æ¸…ç©ºä¸Šä¸‹è¡Œæ•°æ® */
         RNIC_InitUlCtx(pstUlCtxAddr);
         RNIC_InitDlCtx(pstDlCtxAddr);
 
@@ -1844,11 +1844,11 @@ VOS_VOID RNIC_ProcInsideModemDeactInd(
     }
 
 #if (FEATURE_ON == FEATURE_LTE)
-    /* ÔÚ¶Ï¿ª²¦ºÅ³É¹¦Ê±½â³ýÍ¶Æ±Ë¯Ãß£¬ÒÔ±ãÄÜ½øÈëÉîË¯ */
+    /* åœ¨æ–­å¼€æ‹¨å·æˆåŠŸæ—¶è§£é™¤æŠ•ç¥¨ç¡çœ ï¼Œä»¥ä¾¿èƒ½è¿›å…¥æ·±ç¡ */
     DRV_PWRCTRL_SLEEPVOTE_UNLOCK(PWRCTRL_SLEEP_RNIC);
 #endif
 
-    /* Çå³ýRABID¶ÔÓ¦µÄÍø¿¨ID */
+    /* æ¸…é™¤RABIDå¯¹åº”çš„ç½‘å¡ID */
     if (VOS_OK != RNIC_SaveNetIdByRabId(pstSpecNetCardCtx->enModemId,
                                         pstPdpStatusInd->ucRabId,
                                         RNIC_RM_NET_ID_BUTT))
@@ -1862,16 +1862,16 @@ VOS_VOID RNIC_ProcRnicPdpDeactInd(
     RNIC_RMNET_CONFIG_REQ_STRU           *pstPdpStatusInd
 )
 {
-    /* Çå¿Õ¶ÔÓ¦Íø¿¨µÄPDPÉÏÏÂÎÄ */
+    /* æ¸…ç©ºå¯¹åº”ç½‘å¡çš„PDPä¸Šä¸‹æ–‡ */
     if (RNIC_MODEM_TYPE_INSIDE == pstPdpStatusInd->enModemType)
     {
-        /* Çå³ýÄÚ²¿modem PDPÈ¥¼¤»îÏà¹ØÉÏÏÂÎÄ */
+        /* æ¸…é™¤å†…éƒ¨modem PDPåŽ»æ¿€æ´»ç›¸å…³ä¸Šä¸‹æ–‡ */
         RNIC_ProcInsideModemDeactInd(pstPdpStatusInd);
     }
 #if (FEATURE_ON == FEATURE_CL_INTERWORK)
     if (RNIC_MODEM_TYPE_OUTSIDE == pstPdpStatusInd->enModemType)
     {
-        /* Çå³ýÍâ²¿modem PDPÈ¥¼¤»îÏà¹ØÉÏÏÂÎÄ */
+        /* æ¸…é™¤å¤–éƒ¨modem PDPåŽ»æ¿€æ´»ç›¸å…³ä¸Šä¸‹æ–‡ */
         RNIC_ProcOutsideModemDeactInd(pstPdpStatusInd);
     }
 #endif
@@ -1889,10 +1889,10 @@ VOS_UINT32 RNIC_RcvRnicRmnetConfigReq(
     ucRmNetId               = pstRmnetConfigReq->ucRmNetId;
     pstSpecNetCardCtx       = RNIC_GetSpecNetCardCtxAddr(ucRmNetId);
 
-    /* pdp¼¤»î³É¹¦£¬rnicÍø¿¨up */
+    /* pdpæ¿€æ´»æˆåŠŸï¼Œrnicç½‘å¡up */
     if (RNIC_RMNET_STATUS_UP == pstRmnetConfigReq->enRmnetStatus)
     {
-        /* RNIC_MODEM_TYPE_BUTTÐÞ¸ÄÎªRNIC_MODEM_TYPE_INSIDE£¬Ö÷ÒªÎªÁËÊÊÅäv3r3°´Ðè²¦ºÅ¹¦ÄÜ */
+        /* RNIC_MODEM_TYPE_BUTTä¿®æ”¹ä¸ºRNIC_MODEM_TYPE_INSIDEï¼Œä¸»è¦ä¸ºäº†é€‚é…v3r3æŒ‰éœ€æ‹¨å·åŠŸèƒ½ */
         if ((pstSpecNetCardCtx->enModemType == pstRmnetConfigReq->enModemType)
          || (RNIC_MODEM_TYPE_INSIDE == pstSpecNetCardCtx->enModemType))
         {
@@ -1900,13 +1900,13 @@ VOS_UINT32 RNIC_RcvRnicRmnetConfigReq(
         }
     }
 #if (FEATURE_ON == FEATURE_CL_INTERWORK)
-    /* ÄÚÍâmodem psÓòhandover£¬rnicÍø¿¨switch */
+    /* å†…å¤–modem psåŸŸhandoverï¼Œrnicç½‘å¡switch */
     else if (RNIC_RMNET_STATUS_SWITCH == pstRmnetConfigReq->enRmnetStatus)
     {
         RNIC_ProcRnicPdpHandoverInd(pstRmnetConfigReq);
     }
 #endif
-    /* pdpÈ¥¼¤»î³É¹¦£¬rnicÍø¿¨down */
+    /* pdpåŽ»æ¿€æ´»æˆåŠŸï¼Œrnicç½‘å¡down */
     else
     {
         if (pstSpecNetCardCtx->enModemType == pstRmnetConfigReq->enModemType)
@@ -1980,10 +1980,10 @@ VOS_UINT32 RNIC_RcvTimerMsg(MsgBlock *pstMsg)
     pTiExpriedProcFunc = VOS_NULL_PTR;
     pstRcvMsg = (REL_TIMER_MSG *)pstMsg;
 
-    /* ¸ù¾Ý¶¨Ê±Æ÷ID»ñÈ¡Íø¿¨ID */
+    /* æ ¹æ®å®šæ—¶å™¨IDèŽ·å–ç½‘å¡ID */
     ucRmNetId = RNIC_GetNetIdByTimerId(pstRcvMsg->ulName);
 
-    /* ²éÕÒ¶¨Ê±Æ÷³¬Ê±´¦Àí±íÖÐÏûÏ¢´¦Àí²Ù×÷ */
+    /* æŸ¥æ‰¾å®šæ—¶å™¨è¶…æ—¶å¤„ç†è¡¨ä¸­æ¶ˆæ¯å¤„ç†æ“ä½œ */
     pTiExpriedProcFunc = RNIC_GetTiExpiredFuncByMsgId(pstRcvMsg->ulName);
     if (VOS_NULL_PTR != pTiExpriedProcFunc)
     {
@@ -2070,31 +2070,31 @@ VOS_UINT32 RNIC_ProcMsg (MsgBlock *pstMsg)
         return VOS_ERR;
     }
 
-    /* ÏûÏ¢µÄ·Ö·¢´¦Àí */
+    /* æ¶ˆæ¯çš„åˆ†å‘å¤„ç† */
     switch (pstMsg->ulSenderPid)
     {
         case WUEPS_PID_AT:
 
-            /* ½ÓÊÕATÏûÏ¢ */
+            /* æŽ¥æ”¶ATæ¶ˆæ¯ */
             RNIC_RcvAtMsg(pstMsg);
             break;
 
         case VOS_PID_TIMER:
 
-            /* ½ÓÊÕ¶¨Ê±Æ÷³¬Ê±ÏûÏ¢ */
+            /* æŽ¥æ”¶å®šæ—¶å™¨è¶…æ—¶æ¶ˆæ¯ */
             RNIC_RcvTimerMsg(pstMsg);
             break;
 
         case ACPU_PID_RNIC:
 
-            /* ½ÓÊÕRNICµÄÏûÏ¢*/
+            /* æŽ¥æ”¶RNICçš„æ¶ˆæ¯*/
             RNIC_RcvRnicMsg(pstMsg);
             break;
 
 #if (FEATURE_ON == FEATURE_IMS)
         case PS_PID_IMSA:
 
-            /* ½ÓÊÕIMSAµÄÏûÏ¢*/
+            /* æŽ¥æ”¶IMSAçš„æ¶ˆæ¯*/
             RNIC_RcvImsaMsg(pstMsg);
             break;
 #endif
@@ -2112,7 +2112,7 @@ VOS_UINT32 RNIC_SndRnicRmnetConfigReq(
 {
     RNIC_RMNET_CONFIG_REQ_STRU         *pstSndMsg = VOS_NULL_PTR;
 
-    /* ÄÚ´æ·ÖÅä */
+    /* å†…å­˜åˆ†é… */
     pstSndMsg = (RNIC_RMNET_CONFIG_REQ_STRU *)PS_ALLOC_MSG(ACPU_PID_RNIC,
                         sizeof(RNIC_RMNET_CONFIG_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
 
@@ -2122,14 +2122,14 @@ VOS_UINT32 RNIC_SndRnicRmnetConfigReq(
         return VOS_ERR;
     }
 
-    /* Ìî³äÏûÏ¢Í· */
+    /* å¡«å……æ¶ˆæ¯å¤´ */
     pstSndMsg->ulSenderCpuId            = VOS_LOCAL_CPUID;
     pstSndMsg->ulSenderPid              = ACPU_PID_RNIC;
     pstSndMsg->ulReceiverCpuId          = VOS_LOCAL_CPUID;
     pstSndMsg->ulReceiverPid            = ACPU_PID_RNIC;
     pstSndMsg->enMsgId                  = ID_RNIC_RMNET_CONFIG_REQ;
 
-    /* Ìî³äÏûÏ¢ */
+    /* å¡«å……æ¶ˆæ¯ */
     pstSndMsg->enModemType              = pstConfigInfo->enModemType;
     pstSndMsg->enRmnetStatus            = pstConfigInfo->enRmnetStatus;
     pstSndMsg->enIpType                 = pstConfigInfo->enIpType;
@@ -2138,7 +2138,7 @@ VOS_UINT32 RNIC_SndRnicRmnetConfigReq(
     pstSndMsg->ucRmNetId                = pstConfigInfo->ucRmNetId;
     pstSndMsg->usModemId                = pstConfigInfo->usModemId;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ACPU_PID_RNIC, pstSndMsg))
     {
         RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_SndRnicRmnetConfigMsg: Send msg failed!");
@@ -2155,7 +2155,7 @@ VOS_VOID RNIC_MNTN_SndRmnetConfigInfoMsg(
 {
     RNIC_RMNET_CONFIG_REQ_STRU          *pstSndMsg = VOS_NULL_PTR;
 
-    /* ÄÚ´æ·ÖÅä */
+    /* å†…å­˜åˆ†é… */
     pstSndMsg = (RNIC_RMNET_CONFIG_REQ_STRU *)PS_ALLOC_MSG(ACPU_PID_RNIC,
                         sizeof(RNIC_RMNET_CONFIG_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
 
@@ -2165,7 +2165,7 @@ VOS_VOID RNIC_MNTN_SndRmnetConfigInfoMsg(
         return;
     }
 
-    /* Ìî³äÏûÏ¢ */
+    /* å¡«å……æ¶ˆæ¯ */
     pstSndMsg->enModemType              = pstConfigInfo->enModemType;
     pstSndMsg->enRmnetStatus            = pstConfigInfo->enRmnetStatus;
     pstSndMsg->enIpType                 = pstConfigInfo->enIpType;
@@ -2180,7 +2180,7 @@ VOS_VOID RNIC_MNTN_SndRmnetConfigInfoMsg(
     pstSndMsg->ulReceiverPid            = ACPU_PID_RNIC;
     pstSndMsg->enMsgId                  = ID_RNIC_MNTN_RMNET_CONFIG_INFO;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ACPU_PID_RNIC, pstSndMsg))
     {
         RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_SndRnicRmnetConfigMsg: Send msg failed!");

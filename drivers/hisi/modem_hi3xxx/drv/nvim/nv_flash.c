@@ -102,7 +102,7 @@ u32 nv_sec_off_count(struct nv_flash_file_header_stru* ffp,u32 vir_off,u32* phy_
     u32 block_size = ffp->mtd->erasesize;
     u32 block_count;
 
-    block_count = vir_off/block_size;/*vir off Ù”⁄µ⁄º∏∏ˆ∫√øÈ*/
+    block_count = vir_off/block_size;/*vir offÂ±û‰∫éÁ¨¨Âá†‰∏™Â•ΩÂùó*/
     *phy_off = vir_off % block_size;
 
     switch(ffp->flash_type)
@@ -269,7 +269,7 @@ u32 nv_dload_file_info_init(void)
     /*second count file total len*/
     total_len = sizeof(nv_dload);
     total_len += ((nv_dload.nv_bin.magic_num == NV_FILE_EXIST)?nv_dload.nv_bin.len:0);
-    for(i=0;i<2;i++)/*À´ø®À´¥˝”–À´∑›xml ˝æ›*/
+    for(i=0;i<2;i++)/*ÂèåÂç°ÂèåÂæÖÊúâÂèå‰ªΩxmlÊï∞ÊçÆ*/
     {
         /* coverity[uninit_use] */
         total_len += ((nv_dload.xnv_xml[i].magic_num == NV_FILE_EXIST)?nv_dload.xnv_xml[i].len:0);
@@ -290,7 +290,7 @@ u32 nv_dload_file_info_init(void)
 }
 
 /*
- * ∂¡nandΩ”ø⁄
+ * ËØªnandÊé•Âè£
  * mtd      :   mtd device
  * off      :   loggic offset in this file,need
  * len      :   data len write to flash ,len <= mtd->erasesize
@@ -299,7 +299,7 @@ u32 nv_dload_file_info_init(void)
 u32 nv_mtd_read(struct nv_flash_file_header_stru* ffp,FSZ off,u32 len,u8* ptr)
 {
     u32 ret;
-    u32 offset = 0;    /*¥´Ω¯¿¥µƒ∆´“∆œ‡∂‘”⁄Œƒº˛Õ∑µƒ¬ﬂº≠∆´“∆*/
+    u32 offset = 0;    /*‰º†ËøõÊù•ÁöÑÂÅèÁßªÁõ∏ÂØπ‰∫éÊñá‰ª∂Â§¥ÁöÑÈÄªËæëÂÅèÁßª*/
     struct mtd_info* mtd = ffp->mtd;
 
     ret = nv_sec_off_count(ffp,off,&offset);
@@ -314,7 +314,7 @@ u32 nv_mtd_read(struct nv_flash_file_header_stru* ffp,FSZ off,u32 len,u8* ptr)
 
 
 /*
- * –¥nandΩ”ø⁄
+ * ÂÜônandÊé•Âè£
  * mtd      :   mtd device
  * off      :   loggic offset in this file,need
  * len      :   data len write to flash ,len <= mtd->erasesize
@@ -323,7 +323,7 @@ u32 nv_mtd_read(struct nv_flash_file_header_stru* ffp,FSZ off,u32 len,u8* ptr)
 u32 nv_mtd_write(struct nv_flash_file_header_stru* ffp,FSZ off,u32 len,u8* ptr)
 {
     u32 ret;
-    u32 offset = 0;    /*¥´Ω¯¿¥µƒ∆´“∆œ‡∂‘”⁄Œƒº˛Õ∑µƒ¬ﬂº≠∆´“∆*/
+    u32 offset = 0;    /*‰º†ËøõÊù•ÁöÑÂÅèÁßªÁõ∏ÂØπ‰∫éÊñá‰ª∂Â§¥ÁöÑÈÄªËæëÂÅèÁßª*/
     struct mtd_info* mtd = ffp->mtd;
 
     ret = nv_sec_off_count(ffp,off,&offset);
@@ -623,7 +623,7 @@ s32 nv_flash_read(u8* ptr, u32 size, u32 count, FILE* fp)
 
     real_size = ((ffp->seek+len) < ffp->length)? len: (ffp->length - ffp->seek );
 
-    ret = (s32)nv_mtd_read(ffp,(ffp->off+ffp->seek),real_size,ptr);/*∂¡»°◊¢“‚Œƒº˛seekŒª÷√*/
+    ret = (s32)nv_mtd_read(ffp,(ffp->off+ffp->seek),real_size,ptr);/*ËØªÂèñÊ≥®ÊÑèÊñá‰ª∂seek‰ΩçÁΩÆ*/
     if(ret != NAND_OK)
     {
         nv_file_debug(NV_FILE_READ_API,2,(u32)ret,real_size,ffp->flash_type);

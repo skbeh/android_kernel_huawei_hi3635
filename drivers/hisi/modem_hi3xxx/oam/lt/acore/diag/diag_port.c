@@ -19,7 +19,7 @@ extern "C" {
 #include "diag_debug.h"
 /*lint -restore*/
 
-/*lint -save -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -save -e767 åŽŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_DIAG_PORT_C
 /*lint -restore*/
 
@@ -56,7 +56,7 @@ VOS_VOID diag_PortAddToDataBuf(DIAG_PORT_PHY_BEAR_ENUM enPort, VOS_UINT8 * data,
 {
     DIAG_PORT_DATA_BUF_STRU * pNewNode = NULL;
 
-    /*ÉêÇëÒ»¸ö½Úµã´óÐ¡*/
+    /*ç”³è¯·ä¸€ä¸ªèŠ‚ç‚¹å¤§å°*/
     pNewNode = (DIAG_PORT_DATA_BUF_STRU *)VOS_MemAlloc(MSP_PID_DIAG_APP_AGENT, DYNAMIC_MEM_PT, sizeof(DIAG_PORT_DATA_BUF_STRU));
     if (NULL == pNewNode)
     {
@@ -64,7 +64,7 @@ VOS_VOID diag_PortAddToDataBuf(DIAG_PORT_PHY_BEAR_ENUM enPort, VOS_UINT8 * data,
         return;
     }
 
-    /*ÉêÇëÊý¾Ý¿Õ¼ä*/
+    /*ç”³è¯·æ•°æ®ç©ºé—´*/
     pNewNode->dataBuf = (VOS_UINT8 *)VOS_MemAlloc(MSP_PID_DIAG_APP_AGENT, DYNAMIC_MEM_PT, dataSize);
     if (NULL == pNewNode->dataBuf)
     {
@@ -76,7 +76,7 @@ VOS_VOID diag_PortAddToDataBuf(DIAG_PORT_PHY_BEAR_ENUM enPort, VOS_UINT8 * data,
     VOS_MemCpy(pNewNode->dataBuf, data, dataSize);
 
     (VOS_VOID)VOS_SmP(g_diagPortSem,0);
-    /* ²åÈë½Úµãµ½Á´±íÎ²²¿ */
+    /* æ’å…¥èŠ‚ç‚¹åˆ°é“¾è¡¨å°¾éƒ¨ */
     blist_add_tail(&pNewNode->dataList, &g_diagPortDataBuf.dataList);
     (VOS_VOID)VOS_SmV(g_diagPortSem);
 }
@@ -121,18 +121,18 @@ VOS_VOID diag_PortSetTraceSw(VOS_BOOL sw)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : diag_PortSetConnStaCB
- ¹¦ÄÜÃèÊö  : Í¨µÀÁ¬½ÓÊÂ¼þ´¦Àí×¢²áº¯Êý
- ÊäÈë²ÎÊý  : pfnReg: »Øµ÷º¯ÊýÖ¸Õë
+ å‡½ æ•° å  : diag_PortSetConnStaCB
+ åŠŸèƒ½æè¿°  : é€šé“è¿žæŽ¥äº‹ä»¶å¤„ç†æ³¨å†Œå‡½æ•°
+ è¾“å…¥å‚æ•°  : pfnReg: å›žè°ƒå‡½æ•°æŒ‡é’ˆ
 
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-	 ×÷    Õß  : heliping
-	 ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+	 ä½œ    è€…  : heliping
+	 ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_VOID diag_PortSetConnStaCB(DIAG_PORT_CONNECT_STA_PFN pfnReg)
@@ -168,7 +168,7 @@ VOS_UINT32 diag_PhyWriteAsync(DIAG_PORT_PHY_BEAR_ENUM enPort,VOS_UINT8 *pucDataB
     }
 
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
-    /* ¹¤¾ßÒÑÏÂ·¢¶Ï¿ªÁ¬½ÓÃüÁî£¬¶ªÊý¾Ý */
+    /* å·¥å…·å·²ä¸‹å‘æ–­å¼€è¿žæŽ¥å‘½ä»¤ï¼Œä¸¢æ•°æ® */
     if(!(g_ulDiagCfgInfo & (1 << 1)))
     {
         SCM_RlsDestBuf(DIAG_PORT_GET_CODE_DES(enPort),ulLen);
@@ -195,23 +195,23 @@ VOS_UINT32 diag_PhyWriteAsync(DIAG_PORT_PHY_BEAR_ENUM enPort,VOS_UINT8 *pucDataB
     }
 
     SCM_RlsDestBuf(DIAG_PORT_GET_CODE_DES(enPort),ulLen);
-    return  (VOS_UINT32)ret;/* [false alarm]:ÆÁ±ÎFortify */
+    return  (VOS_UINT32)ret;/* [false alarm]:å±è”½Fortify */
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : writeAtData
-¹¦ÄÜÃèÊö  : DIAGÐ´Êý¾Ý×ÜÈë¿Ú
-ÊäÈë²ÎÊý  : ucQueId: Êý¾ÝÀàÐÍ
-          aucDataBuf: ·¢ËÍÊý¾ÝÖ¸Õë
-          ulLen:·¢ËÍ³¤¶È
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  : ERR_MSP_FAILURE/ERR_MSP_SUCCESS
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  : diag_WriteData
-ÐÞ¸ÄÀúÊ·  :
-1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-  ×÷    Õß  : heliping
-  ÐÞ¸ÄÄÚÈÝ  : Creat Function
+å‡½ æ•° å  : writeAtData
+åŠŸèƒ½æè¿°  : DIAGå†™æ•°æ®æ€»å…¥å£
+è¾“å…¥å‚æ•°  : ucQueId: æ•°æ®ç±»åž‹
+          aucDataBuf: å‘é€æ•°æ®æŒ‡é’ˆ
+          ulLen:å‘é€é•¿åº¦
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  : ERR_MSP_FAILURE/ERR_MSP_SUCCESS
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  : diag_WriteData
+ä¿®æ”¹åŽ†å²  :
+1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+  ä½œ    è€…  : heliping
+  ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_UINT32 diag_WriteData( VOS_UINT8* aucDataBuf, VOS_UINT32 enChanID,VOS_UINT32 ulLen)
@@ -229,7 +229,7 @@ VOS_UINT32 diag_WriteData( VOS_UINT8* aucDataBuf, VOS_UINT32 enChanID,VOS_UINT32
     }
     else if (DIAG_PORT_GET_CONN_PORT() == EN_DIAG_USB_BEARER_DIAG_CTRL)
     {
-        //»Ø¸´ºÍÖ÷¶¯ÉÏ±¨·Ö¿ªÍ¨µÀ·¢ËÍ
+        //å›žå¤å’Œä¸»åŠ¨ä¸ŠæŠ¥åˆ†å¼€é€šé“å‘é€
         if(enChanID == SOCP_CODER_DST_LOM_CNF)
         {
         	return diag_PhyWriteAsync(EN_DIAG_USB_BEARER_DIAG_CTRL,(VOS_UINT8 *)aucDataBuf,(VOS_UINT32)ulLen);
@@ -245,7 +245,7 @@ VOS_UINT32 diag_WriteData( VOS_UINT8* aucDataBuf, VOS_UINT32 enChanID,VOS_UINT32
                 drx_msp_fid_vote_lock(DRX_DIAG_LOG_SAVE_VOTE);
                 diag_StorDataToSD(aucDataBuf, ulLen);
 
-                /* ¸Ã´¦ÐèÒªÖ±½Óread data done*/
+                /* è¯¥å¤„éœ€è¦ç›´æŽ¥read data done*/
                 SCM_RlsDestBuf(DIAG_PORT_GET_CODE_DES(EN_DIAG_USB_BEARER_DIAG_APP),ulLen);
                 drx_msp_fid_vote_unlock(DRX_DIAG_LOG_SAVE_VOTE);
                 return ERR_MSP_SUCCESS;
@@ -254,7 +254,7 @@ VOS_UINT32 diag_WriteData( VOS_UINT8* aucDataBuf, VOS_UINT32 enChanID,VOS_UINT32
     }
 	else if (DIAG_PORT_GET_CONN_PORT() == EN_DIAG_HSIC_BEARER_DIAG_CTRL)
     {
-        //»Ø¸´ºÍÖ÷¶¯ÉÏ±¨·Ö¿ªÍ¨µÀ·¢ËÍ
+        //å›žå¤å’Œä¸»åŠ¨ä¸ŠæŠ¥åˆ†å¼€é€šé“å‘é€
         if(enChanID == SOCP_CODER_DST_LOM_CNF)
         {
         	return diag_PhyWriteAsync(EN_DIAG_HSIC_BEARER_DIAG_CTRL,(VOS_UINT8 *)aucDataBuf,(VOS_UINT32)ulLen);
@@ -267,7 +267,7 @@ VOS_UINT32 diag_WriteData( VOS_UINT8* aucDataBuf, VOS_UINT32 enChanID,VOS_UINT32
     /*APP VCOM*/
 	else if (DIAG_PORT_GET_CONN_PORT() == EN_DIAG_VCOM_BEABER_DIAG_CTRL)
     {
-        //»Ø¸´ºÍÖ÷¶¯ÉÏ±¨·Ö¿ªÍ¨µÀ·¢ËÍ
+        //å›žå¤å’Œä¸»åŠ¨ä¸ŠæŠ¥åˆ†å¼€é€šé“å‘é€
         if(enChanID == SOCP_CODER_DST_LOM_CNF)
         {
         	return diag_VcomWriteSync(EN_DIAG_VCOM_BEABER_DIAG_CTRL,DIAG_APPVCOM_CHAN_CTRL,\
@@ -290,20 +290,20 @@ VOS_UINT32 diag_WriteData( VOS_UINT8* aucDataBuf, VOS_UINT32 enChanID,VOS_UINT32
 
 
 //*****************************************************************************/
-// ¹¦ÄÜÃèÊö  :´¦ÀíHDLC±àÂëÄ¿±êÍ¨µÀÊý¾Ý£¬³õÊ¼»¯Ê±×¢²áµ½CDMÄ£¿é
-// ²ÎÊýËµÃ÷  : ulChanID:Ä¿±êÍ¨µÀID
-//                         pBuf: Êý¾ÝÖ¸Õë
-//                        ulDataSize: Êý¾Ý³¤¶È
+// åŠŸèƒ½æè¿°  :å¤„ç†HDLCç¼–ç ç›®æ ‡é€šé“æ•°æ®ï¼Œåˆå§‹åŒ–æ—¶æ³¨å†Œåˆ°CDMæ¨¡å—
+// å‚æ•°è¯´æ˜Ž  : ulChanID:ç›®æ ‡é€šé“ID
+//                         pBuf: æ•°æ®æŒ‡é’ˆ
+//                        ulDataSize: æ•°æ®é•¿åº¦
 //
-// ·µ»ØÖµ    :  ERR_MSP_SUCCESS   ²Ù×÷³É¹¦
-//                       ERR_MSP_INVALID_PARAMETER    ²ÎÊý³ö´í
+// è¿”å›žå€¼    :  ERR_MSP_SUCCESS   æ“ä½œæˆåŠŸ
+//                       ERR_MSP_INVALID_PARAMETER    å‚æ•°å‡ºé”™
 //*****************************************************************************/
 VOS_UINT32 diag_SocpCodeDesDataProc(SOCP_CODER_DST_ENUM_U32 enChanID,VOS_UINT8 *pucData, VOS_UINT8 *pucPHYData,VOS_UINT32 ulSize)
 {
     VOS_UINT32 Ret;
     VOS_UINT32 send_len = 0;
 
-    /*SCM ´úÂëÖÐÃ»ÓÐÏÞÖÆ·¢ËÍ×î´ó³¤¶È*/
+    /*SCM ä»£ç ä¸­æ²¡æœ‰é™åˆ¶å‘é€æœ€å¤§é•¿åº¦*/
     if(DIAG_SOCP_SEND_SIZE_MAX < ulSize)
     {
         send_len = DIAG_SOCP_SEND_SIZE_MAX;
@@ -331,18 +331,18 @@ VOS_UINT32 diag_SocpCodeDesDataProc(SOCP_CODER_DST_ENUM_U32 enChanID,VOS_UINT8 *
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : diag_PortEvtCB
- ¹¦ÄÜÃèÊö  : Í¨µÀÁ¬½ÓÊÂ¼þ´¦Àí×¢²áº¯Êý
- ÊäÈë²ÎÊý  : pfnReg: »Øµ÷º¯ÊýÖ¸Õë
+ å‡½ æ•° å  : diag_PortEvtCB
+ åŠŸèƒ½æè¿°  : é€šé“è¿žæŽ¥äº‹ä»¶å¤„ç†æ³¨å†Œå‡½æ•°
+ è¾“å…¥å‚æ•°  : pfnReg: å›žè°ƒå‡½æ•°æŒ‡é’ˆ
 
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-	 ×÷    Õß  : heliping
-	 ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+	 ä½œ    è€…  : heliping
+	 ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_VOID diag_PortEvtCB(ACM_EVT_E  ulEvt,DIAG_PORT_PHY_BEAR_ENUM enPort)
@@ -363,7 +363,7 @@ VOS_VOID diag_PortEvtCB(ACM_EVT_E  ulEvt,DIAG_PORT_PHY_BEAR_ENUM enPort)
             return ;
         }
 
-        //Í¨ÖªÂß¼­Í¨µÀ×´Ì¬
+        //é€šçŸ¥é€»è¾‘é€šé“çŠ¶æ€
         if(pfnConn!=NULL)
         {
             pfnConn(DIAG_DISCONN);
@@ -374,17 +374,17 @@ VOS_VOID diag_PortEvtCB(ACM_EVT_E  ulEvt,DIAG_PORT_PHY_BEAR_ENUM enPort)
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : diag_PortWrtCB
-¹¦ÄÜÃèÊö  :
-ÊäÈë²ÎÊý  :
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  :
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-ÐÞ¸ÄÀúÊ·  :
-	1.ÈÕ	ÆÚ	: 2012Äê8ÔÂ27ÈÕ
-	 ×÷    Õß  : heliping
-	 ÐÞ¸ÄÄÚÈÝ  : Creat Function
+å‡½ æ•° å  : diag_PortWrtCB
+åŠŸèƒ½æè¿°  :
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  :
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®æ”¹åŽ†å²  :
+	1.æ—¥	æœŸ	: 2012å¹´8æœˆ27æ—¥
+	 ä½œ    è€…  : heliping
+	 ä¿®æ”¹å†…å®¹  : Creat Function
 
 *****************************************************************************/
 VOS_VOID diag_PortWrtCB (DIAG_PORT_PHY_BEAR_ENUM enPort,VOS_CHAR* pDoneBuff, VOS_INT s32DoneSize)
@@ -397,30 +397,30 @@ VOS_VOID diag_PortWrtCB (DIAG_PORT_PHY_BEAR_ENUM enPort,VOS_CHAR* pDoneBuff, VOS
 
         DIAG_DEBUG_SDM_FUN((DIAG_DEBUG_MSG_ID_ENUM)(EN_DIAG_DEBUG_TCP_WRT_CB_ERR+(VOS_UINT32)enPort),0 , (VOS_UINT32)s32DoneSize, 0);
 
-         //ÊÍ·Å±àÂëÄ¿±êÍ¨µÀµÄbuf
+         //é‡Šæ”¾ç¼–ç ç›®æ ‡é€šé“çš„buf
         SCM_RlsDestBuf(DIAG_PORT_GET_CODE_DES(enPort),0);
         return ;
     }
 
 
-    //ÊÍ·Å±àÂëÄ¿±êÍ¨µÀµÄbuf
+    //é‡Šæ”¾ç¼–ç ç›®æ ‡é€šé“çš„buf
     SCM_RlsDestBuf(DIAG_PORT_GET_CODE_DES(enPort),(VOS_UINT32)s32DoneSize);
 
      return;
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : diag_PortRdCB
-¹¦ÄÜÃèÊö  :
-ÊäÈë²ÎÊý  :
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  :
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-ÐÞ¸ÄÀúÊ·  :
-	1.ÈÕ	ÆÚ	: 2012Äê8ÔÂ27ÈÕ
-	 ×÷    Õß  : heliping
-	 ÐÞ¸ÄÄÚÈÝ  : Creat Function
+å‡½ æ•° å  : diag_PortRdCB
+åŠŸèƒ½æè¿°  :
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  :
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®æ”¹åŽ†å²  :
+	1.æ—¥	æœŸ	: 2012å¹´8æœˆ27æ—¥
+	 ä½œ    è€…  : heliping
+	 ä¿®æ”¹å†…å®¹  : Creat Function
 
 *****************************************************************************/
 VOS_VOID diag_PortRdCB(DIAG_PORT_PHY_BEAR_ENUM enPort)
@@ -451,7 +451,7 @@ VOS_VOID diag_PortRdCB(DIAG_PORT_PHY_BEAR_ENUM enPort)
     }
 
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
-    /*¶Ë¿ÚÇÐ»»£¬¶ªÆúÁ´±íÖÐÊý¾Ý*/
+    /*ç«¯å£åˆ‡æ¢ï¼Œä¸¢å¼ƒé“¾è¡¨ä¸­æ•°æ®*/
     if(DIAG_PORT_GET_CONN_PORT() != enPort)
     {
         for(;;)
@@ -477,7 +477,7 @@ VOS_VOID diag_PortRdCB(DIAG_PORT_PHY_BEAR_ENUM enPort)
 
     DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_UDI_READ_START,ulTotalLen,ulDataLen,0);
 
-    /*ÉèÖÃµ±Ç°ÎïÀíÍ¨µÀ¼°Í¨µÀÁ¬½Ó×´Ì¬*/
+    /*è®¾ç½®å½“å‰ç‰©ç†é€šé“åŠé€šé“è¿žæŽ¥çŠ¶æ€*/
     DIAG_PORT_PORT_SWITCH(enPort);
 
     DIAG_PORT_CHAN_STATE_SWITCH(enPort,ACM_EVT_DEV_READY);
@@ -486,7 +486,7 @@ VOS_VOID diag_PortRdCB(DIAG_PORT_PHY_BEAR_ENUM enPort)
     diag_TraceDebug(pdata, ulDataLen);
 
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
-    /*SOCP²»¿ÉÓÃ»òÕß»º´æ·Ç¿Õ*/
+    /*SOCPä¸å¯ç”¨æˆ–è€…ç¼“å­˜éžç©º*/
     if((g_diagSocpIsEnable != TRUE) || (ERR_MSP_SUCCESS != diag_PortDataBufIsEmpty()))
     {
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_UDI_READ_END,0,0,3);
@@ -525,17 +525,17 @@ VOS_VOID diag_PortRdCB(DIAG_PORT_PHY_BEAR_ENUM enPort)
 
 }
 /*****************************************************************************
-º¯ Êý Ãû  : diag_PortClose
-¹¦ÄÜÃèÊö  :
-ÊäÈë²ÎÊý  :
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  :
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-ÐÞ¸ÄÀúÊ·  :
-	1.ÈÕ	ÆÚ	: 2012Äê8ÔÂ27ÈÕ
-	 ×÷    Õß  : heliping
-	 ÐÞ¸ÄÄÚÈÝ  : Creat Function
+å‡½ æ•° å  : diag_PortClose
+åŠŸèƒ½æè¿°  :
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  :
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®æ”¹åŽ†å²  :
+	1.æ—¥	æœŸ	: 2012å¹´8æœˆ27æ—¥
+	 ä½œ    è€…  : heliping
+	 ä¿®æ”¹å†…å®¹  : Creat Function
 
 *****************************************************************************/
 VOS_UINT32 diag_PortClose(DIAG_PORT_PHY_BEAR_ENUM enPort)
@@ -566,17 +566,17 @@ VOS_UINT32 diag_PortClose(DIAG_PORT_PHY_BEAR_ENUM enPort)
 
 }
 /*****************************************************************************
-º¯ Êý Ãû  : diag_PortOpen
-¹¦ÄÜÃèÊö  :
-ÊäÈë²ÎÊý  :
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  :
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-ÐÞ¸ÄÀúÊ·  :
-	1.ÈÕ	ÆÚ	: 2012Äê8ÔÂ27ÈÕ
-	 ×÷    Õß  : heliping
-	 ÐÞ¸ÄÄÚÈÝ  : Creat Function
+å‡½ æ•° å  : diag_PortOpen
+åŠŸèƒ½æè¿°  :
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  :
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®æ”¹åŽ†å²  :
+	1.æ—¥	æœŸ	: 2012å¹´8æœˆ27æ—¥
+	 ä½œ    è€…  : heliping
+	 ä¿®æ”¹å†…å®¹  : Creat Function
 
 *****************************************************************************/
 VOS_UINT32 diag_PortOpen(DIAG_PORT_PHY_BEAR_ENUM enPort,UDI_ACM_DEV_TYPE devid,\
@@ -603,8 +603,8 @@ VOS_UINT32 diag_PortOpen(DIAG_PORT_PHY_BEAR_ENUM enPort,UDI_ACM_DEV_TYPE devid,\
         return ERR_MSP_FAILURE;
     }
 
-    DIAG_PORT_HANDLE_SWITCH(enPort,slUartHd);   /*ÐÞ¸Ä¶Ë¿Ú¾ä±ú*/
-    DIAG_PORT_CHAN_STATE_SWITCH(enPort,ACM_EVT_DEV_READY);/*´ò¿ªÖ®ºóÐÞ¸Ä¶Ë¿Ú×´Ì¬*/
+    DIAG_PORT_HANDLE_SWITCH(enPort,slUartHd);   /*ä¿®æ”¹ç«¯å£å¥æŸ„*/
+    DIAG_PORT_CHAN_STATE_SWITCH(enPort,ACM_EVT_DEV_READY);/*æ‰“å¼€ä¹‹åŽä¿®æ”¹ç«¯å£çŠ¶æ€*/
 
     stReadParam.u32BuffSize = DIAG_DATA_READ_BUFFER_SIZE;
     stReadParam.u32BuffNum  = DIAG_DATA_MAX_BUFFER_COUNT;
@@ -652,24 +652,24 @@ VOS_UINT32 diag_PortOpen(DIAG_PORT_PHY_BEAR_ENUM enPort,UDI_ACM_DEV_TYPE devid,\
 ERR_OUT:
     udi_close(slUartHd);
 
-    DIAG_PORT_HANDLE_SWITCH(enPort,UDI_INVALID_HANDLE);   /*ÐÞ¸Ä¶Ë¿Ú¾ä±ú*/
-    DIAG_PORT_CHAN_STATE_SWITCH(enPort,ACM_EVT_DEV_SUSPEND);/*´ò¿ªÖ®ºóÐÞ¸Ä¶Ë¿Ú×´Ì¬*/
+    DIAG_PORT_HANDLE_SWITCH(enPort,UDI_INVALID_HANDLE);   /*ä¿®æ”¹ç«¯å£å¥æŸ„*/
+    DIAG_PORT_CHAN_STATE_SWITCH(enPort,ACM_EVT_DEV_SUSPEND);/*æ‰“å¼€ä¹‹åŽä¿®æ”¹ç«¯å£çŠ¶æ€*/
 
     return ret;
 
 }
 /*****************************************************************************
-º¯ Êý Ãû  : diag_LogPortSwitch
-¹¦ÄÜÃèÊö  :
-ÊäÈë²ÎÊý  :
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  :
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-ÐÞ¸ÄÀúÊ·  :
-	1.ÈÕ	ÆÚ	: 2012Äê8ÔÂ27ÈÕ
-	 ×÷    Õß  : heliping
-	 ÐÞ¸ÄÄÚÈÝ  : Creat Function
+å‡½ æ•° å  : diag_LogPortSwitch
+åŠŸèƒ½æè¿°  :
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  :
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®æ”¹åŽ†å²  :
+	1.æ—¥	æœŸ	: 2012å¹´8æœˆ27æ—¥
+	 ä½œ    è€…  : heliping
+	 ä¿®æ”¹å†…å®¹  : Creat Function
 
 *****************************************************************************/
 VOS_UINT32 diag_LogPortSwitch(VOS_UINT32 ulLogPort)
@@ -691,23 +691,23 @@ VOS_UINT32 diag_LogPortSwitch(VOS_UINT32 ulLogPort)
 
     if(DIAG_PORT_GET_CONN_PORT() != ulDevChan)
     {
-        /*¹Ø±Õµ±Ç°¶Ë¿Ú£¬´ò¿ªÖ¸¶¨¶Ë¿Ú*/
+        /*å…³é—­å½“å‰ç«¯å£ï¼Œæ‰“å¼€æŒ‡å®šç«¯å£*/
         DIAG_PORT_PORT_SWITCH((DIAG_PORT_PHY_BEAR_ENUM)ulDevChan);
     }
     return ERR_MSP_SUCCESS;
 }
 /*****************************************************************************
-º¯ Êý Ãû  : diag_getLogPort
-¹¦ÄÜÃèÊö  : »ñÈ¡µ±Ç°log ÉÏ±¨½Ó¿Ú
-ÊäÈë²ÎÊý  :
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  :
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-ÐÞ¸ÄÀúÊ·  :
-	1.ÈÕ	ÆÚ	: 2012Äê8ÔÂ27ÈÕ
-	 ×÷    Õß  : heliping
-	 ÐÞ¸ÄÄÚÈÝ  : Creat Function
+å‡½ æ•° å  : diag_getLogPort
+åŠŸèƒ½æè¿°  : èŽ·å–å½“å‰log ä¸ŠæŠ¥æŽ¥å£
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  :
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®æ”¹åŽ†å²  :
+	1.æ—¥	æœŸ	: 2012å¹´8æœˆ27æ—¥
+	 ä½œ    è€…  : heliping
+	 ä¿®æ”¹å†…å®¹  : Creat Function
 
 *****************************************************************************/
 VOS_UINT32 diag_getLogPort(VOS_VOID)
@@ -783,7 +783,7 @@ VOS_UINT32 diag_PortInit(VOS_VOID)
         diag_printf("[%s]:sd init err!\n",__FUNCTION__);
     }
 
-    // ÏòCDMÄ£¿é×¢²á±àÂëÄ¿±êÍ¨µÀÊý¾Ý´¦Àíº¯Êý
+    // å‘CDMæ¨¡å—æ³¨å†Œç¼–ç ç›®æ ‡é€šé“æ•°æ®å¤„ç†å‡½æ•°
     SCM_RegCoderDestProc(SOCP_CODER_DST_LOM_CNF,(SCM_CODERDESTFUCN)diag_SocpCodeDesDataProc);
     SCM_RegCoderDestProc(SOCP_CODER_DST_LOM_IND,(SCM_CODERDESTFUCN)diag_SocpCodeDesDataProc);
 
@@ -797,14 +797,14 @@ VOS_UINT32 diag_PortInit(VOS_VOID)
     return ERR_MSP_SUCCESS;
 }
 /*****************************************************************************
-º¯ Êý Ãû  : diag_PortTask
-¹¦ÄÜÃèÊö  : ×¢²á×Ô´¦ÀíÈÎÎñ
-ÊäÈë²ÎÊý  :
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  :
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-ÐÞ¸ÄÀúÊ·  :
+å‡½ æ•° å  : diag_PortTask
+åŠŸèƒ½æè¿°  : æ³¨å†Œè‡ªå¤„ç†ä»»åŠ¡
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  :
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®æ”¹åŽ†å²  :
 *****************************************************************************/
 VOS_VOID diag_PortTask(VOS_VOID)
 {

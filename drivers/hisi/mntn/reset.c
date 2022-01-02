@@ -485,27 +485,27 @@ void finish_reset_sub(void)
     return;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : reset_set_cpu_status
- ¹¦ÄÜÃèÊö  : µ±hifi»òÕßccpu¸´Î»Ê±£¬¼ÇÏÂ×´Ì¬£¬ÓÃÓÚmailboxÀ¹»÷·¢Ïòhifi  µÄmail.
- ÊäÈë²ÎÊı  : unsigned int iOff  1-²»Ê¹ÄÜ;0-¹Ø±Õ
-             unsigned int iflag ±êÊ¶cpu×´Ì¬¶ÔÓ¦µÄÆ«ÒÆ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : reset_set_cpu_status
+ åŠŸèƒ½æè¿°  : å½“hifiæˆ–è€…ccpuå¤ä½æ—¶ï¼Œè®°ä¸‹çŠ¶æ€ï¼Œç”¨äºmailboxæ‹¦å‡»å‘å‘hifi  çš„mail.
+ è¾“å…¥å‚æ•°  : unsigned int iOff  1-ä¸ä½¿èƒ½;0-å…³é—­
+             unsigned int iflag æ ‡è¯†cpuçŠ¶æ€å¯¹åº”çš„åç§»
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êı Ãû  : BSP_CPU_StateSet
- ¹¦ÄÜÃèÊö  : µ±hifi»òÕßccpu¸´Î»Ê±£¬µ÷ÓÃ´Ëº¯Êı¼ÇÂ¼cpu×´Ì¬
-             mailbox¿ÉÒÔÒÀ´ËÀ¹½Ø·¢Íùhifi¡¢ccpu¡¢mcuµÈcoreµÄmail
- ÊäÈë²ÎÊı  : unsigned int iOff  :1-²»Ê¹ÄÜ(²»ÄÜ·¢ËÍ);0-¹Ø±Õ(mail¿ÉÒÔ·¢ËÍ)
-             unsigned int offset:±êÊ¶cpu×´Ì¬¶ÔÓ¦µÄÆ«ÒÆ£¬
-             ¸ÃÈë²Î½ö¿ÉÊ¹ÓÃreset.hÖĞµÄÈçÏÂºê
+ å‡½ æ•° å  : BSP_CPU_StateSet
+ åŠŸèƒ½æè¿°  : å½“hifiæˆ–è€…ccpuå¤ä½æ—¶ï¼Œè°ƒç”¨æ­¤å‡½æ•°è®°å½•cpuçŠ¶æ€
+             mailboxå¯ä»¥ä¾æ­¤æ‹¦æˆªå‘å¾€hifiã€ccpuã€mcuç­‰coreçš„mail
+ è¾“å…¥å‚æ•°  : unsigned int iOff  :1-ä¸ä½¿èƒ½(ä¸èƒ½å‘é€);0-å…³é—­(mailå¯ä»¥å‘é€)
+             unsigned int offset:æ ‡è¯†cpuçŠ¶æ€å¯¹åº”çš„åç§»ï¼Œ
+             è¯¥å…¥å‚ä»…å¯ä½¿ç”¨reset.hä¸­çš„å¦‚ä¸‹å®
              #define RESET_CPU_CCORE_STATUS_OFF            0x00000001
              #define RESET_CPU_MCU_STATUS_OFF              0x00000002
              #define RESET_CPU_HIFI_STATUS_OFF             0x00000004
 
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 void BSP_CPU_StateSet(unsigned int iOff,unsigned int offset)
 {
@@ -523,11 +523,11 @@ void BSP_CPU_StateSet(unsigned int iOff,unsigned int offset)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : BSP_CPU_StateGet
- ¹¦ÄÜÃèÊö  : Ìá¹©¸ømailboxÄ£¿é£¬ÓÃÓÚ»ñµÃÏà¹Øcpu×´Ì¬
- ÊäÈë²ÎÊı  : int CpuID, MCU, HIFI,CCPU
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int,1:Ê¹ÄÜ£»0:²»Ê¹ÄÜ
+ å‡½ æ•° å  : BSP_CPU_StateGet
+ åŠŸèƒ½æè¿°  : æä¾›ç»™mailboxæ¨¡å—ï¼Œç”¨äºè·å¾—ç›¸å…³cpuçŠ¶æ€
+ è¾“å…¥å‚æ•°  : int CpuID, MCU, HIFI,CCPU
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int,1:ä½¿èƒ½ï¼›0:ä¸ä½¿èƒ½
 *****************************************************************************/
 int BSP_CPU_StateGet(int CpuID)
 {
@@ -549,11 +549,11 @@ int BSP_CPU_StateGet(int CpuID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : reset_clean_wdt_int
- ¹¦ÄÜÃèÊö  : ÊÕµ½¸´Î»ÖĞ¶Ïºó£¬ÇåÀícºË/hifi¹·ÖĞ¶Ï
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : reset_clean_wdt_int
+ åŠŸèƒ½æè¿°  : æ”¶åˆ°å¤ä½ä¸­æ–­åï¼Œæ¸…ç†cæ ¸/hifiç‹—ä¸­æ–­
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 void reset_clean_wdt_int(ereset_module emodule)
 {
@@ -662,7 +662,7 @@ static void init_reset_irq_do_work(struct work_struct *work)
     reset_pm_notifier.notifier_call = reset_pm_notify;
     reset_pm_notifier.priority = INT_MIN;
     register_pm_notifier(&reset_pm_notifier);
-    /*modemµ¥¶À¸´Î»×¢²ánotifier*/
+    /*modemå•ç‹¬å¤ä½æ³¨å†Œnotifier*/
 
     RESET_WORK_INIT(mcu_panic);
     RESET_WORK_INIT(hifi_freeze);
@@ -891,24 +891,24 @@ int drv_read_bin(const char *partion_name, unsigned int offset, unsigned int len
         return BSP_RESET_ERROR;
     }
 
-    /*»ñÈ¡×ÊÔ´*/
+    /*è·å–èµ„æº*/
     pathname = (char *)kmalloc(DRV_RESET_NAME_MAX, GFP_KERNEL);
     if (!pathname) {
         mlog_e("pathname malloc failed" );
         return BSP_RESET_ERROR;
     }
 
-    /*´ÓCºË·ÃÎÊµÄÄ¿Â¼ÎÄ¼ş×ª»»ÎªAºËÄ¿Â¼ÎÄ¼ş*/
+    /*ä»Cæ ¸è®¿é—®çš„ç›®å½•æ–‡ä»¶è½¬æ¢ä¸ºAæ ¸ç›®å½•æ–‡ä»¶*/
     arry_number = sizeof(partitions) / sizeof(struct partition);
 
-    /*´ò¿ªÎÄ¼ş*/
+    /*æ‰“å¼€æ–‡ä»¶*/
     for (i = 0; i < arry_number; i++) {
         if (NULL == partitions[i].name) {
             mlog_e("partitions[%d].name: now we get a NULL pointer!", i);
             continue;
         }
 
-        /*ÏàµÈ*/
+        /*ç›¸ç­‰*/
         if (!strcmp(partion_name, partitions[i].name)) {
             mlog_n("partitions[%d]:%s is we want(%s)", i, partitions[i].name, partion_name);
             memset(pathname, 0, DRV_RESET_NAME_MAX);
@@ -955,7 +955,7 @@ int drv_read_bin(const char *partion_name, unsigned int offset, unsigned int len
     filp_close(fp, NULL);
 
 
-    /*ÊÍ·Å×ÊÔ´*/
+    /*é‡Šæ”¾èµ„æº*/
     if(NULL != pathname) {
        kfree(pathname);
        pathname = NULL;
@@ -970,7 +970,7 @@ error2:
 
 error:
 
-    /*ÊÍ·Å×ÊÔ´2*/
+    /*é‡Šæ”¾èµ„æº2*/
     if(NULL != pathname) {
        kfree(pathname);
        pathname = NULL;

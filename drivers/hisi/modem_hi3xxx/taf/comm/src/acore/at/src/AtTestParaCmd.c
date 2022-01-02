@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-   1 Í·ÎÄ¼þ°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 
 #include "AtCheckFunc.h"
@@ -145,7 +145,7 @@ VOS_UINT32 At_TestCgcmod(VOS_UINT8 ucIndex)
 {
 
 
-    /* CGEQNEGµÄ²âÊÔÃüÁîºÍCGCMODEµÄ·µ»ØÖµÏàÍ¬£¬Ê¹ÓÃÏàÍ¬µÄº¯Êý */
+    /* CGEQNEGçš„æµ‹è¯•å‘½ä»¤å’ŒCGCMODEçš„è¿”å›žå€¼ç›¸åŒï¼Œä½¿ç”¨ç›¸åŒçš„å‡½æ•° */
    return At_TestCgeqnegPara(ucIndex);
 
 
@@ -153,7 +153,7 @@ VOS_UINT32 At_TestCgcmod(VOS_UINT8 ucIndex)
 VOS_UINT32 At_TestCgpaddr(VOS_UINT8 ucIndex)
 {
 
-    /* Ö´ÐÐÃüÁî²Ù×÷ */
+    /* æ‰§è¡Œå‘½ä»¤æ“ä½œ */
     if ( VOS_OK != TAF_PS_GetPdpContextInfo(WUEPS_PID_AT,
                                             gastAtClientTab[ucIndex].usClientId,
                                             0) )
@@ -319,17 +319,17 @@ VOS_UINT32 At_TestCgtftrdp(VOS_UINT8 ucIndex)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : AT_TestChrgEnablePara
- ¹¦ÄÜÃèÊö  : ^TCHRENABLE=? ²éÑ¯ÊÇ·ñÐèÒª²¹µç
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : AT_TestChrgEnablePara
+ åŠŸèƒ½æè¿°  : ^TCHRENABLE=? æŸ¥è¯¢æ˜¯å¦éœ€è¦è¡¥ç”µ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê3ÔÂ16ÈÕ
-    ×÷    Õß   : ´Þ¾üÇ¿
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´3æœˆ16æ—¥
+    ä½œ    è€…   : å´”å†›å¼º
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 AT_TestChrgEnablePara(VOS_UINT8 ucIndex)
@@ -337,7 +337,7 @@ VOS_UINT32 AT_TestChrgEnablePara(VOS_UINT8 ucIndex)
     VOS_INT32                           lChargeEnable = 0;
 
     lChargeEnable = DRV_CHG_STATE_GET(); /* BSP_TBAT_CHRStGet()) */
-    /* Ö»ÓÐTRUE/FLASEµÄ·µ»ØÖµÊÇÓÐÐ§µÄ */
+    /* åªæœ‰TRUE/FLASEçš„è¿”å›žå€¼æ˜¯æœ‰æ•ˆçš„ */
     if((lChargeEnable == TRUE)||( lChargeEnable == FALSE))
     {
         gstAtSendData.usBufLen = (TAF_UINT16)At_sprintf(AT_CMD_MAX_LEN,
@@ -357,13 +357,13 @@ VOS_UINT32 AT_TestChrgEnablePara(VOS_UINT8 ucIndex)
 
 VOS_UINT32 AT_TestCposrPara(VOS_UINT8 ucIndex)
 {
-    /* Í¨µÀ¼ì²é */
+    /* é€šé“æ£€æŸ¥ */
     if (VOS_FALSE == AT_IsApPort(ucIndex))
     {
         return AT_ERROR;
     }
 
-    /* ´òÓ¡Êä³ö+CPOSRÖ§³ÖµÄ²ÎÊýÉèÖÃ·¶Î§ */
+    /* æ‰“å°è¾“å‡º+CPOSRæ”¯æŒçš„å‚æ•°è®¾ç½®èŒƒå›´ */
     gstAtSendData.usBufLen = (VOS_UINT16)At_sprintf(AT_CMD_MAX_LEN,
                                                    (VOS_CHAR*)pgucAtSndCodeAddr,
                                                    (VOS_CHAR*)pgucAtSndCodeAddr,
@@ -391,7 +391,7 @@ VOS_UINT32 AT_TestCmutPara(VOS_UINT8 ucIndex)
 
 
 
-/* ÈçÏÂº¯Êý²¢·Ç´ËÏîÄ¿ÖÐÐÂÔö, Ö»ÊÇ´ÓAtExtendCmd.cÎÄ¼þÖÐÒÆ¶¯µ½´ËÎÄ¼þ¶øÒÑ */
+/* å¦‚ä¸‹å‡½æ•°å¹¶éžæ­¤é¡¹ç›®ä¸­æ–°å¢ž, åªæ˜¯ä»ŽAtExtendCmd.cæ–‡ä»¶ä¸­ç§»åŠ¨åˆ°æ­¤æ–‡ä»¶è€Œå·² */
 
 VOS_UINT32 At_TestVtsPara(VOS_UINT8 ucIndex)
 {
@@ -547,7 +547,7 @@ VOS_UINT32 AT_TestCnmaPara(VOS_UINT8 ucIndex)
 
     pstSmsCtx = AT_GetModemSmsCtxAddrFromClientId(ucIndex);
 
-    if(AT_CMGF_MSG_FORMAT_PDU == pstSmsCtx->enCmgfMsgFormat)    /* TEXT·½Ê½²ÎÊý¼ì²é */
+    if(AT_CMGF_MSG_FORMAT_PDU == pstSmsCtx->enCmgfMsgFormat)    /* TEXTæ–¹å¼å‚æ•°æ£€æŸ¥ */
     {
         gstAtSendData.usBufLen = (TAF_UINT16)VOS_sprintf((TAF_CHAR*)pgucAtSndCodeAddr,
                                           "%s: (0-2)",
@@ -614,10 +614,10 @@ VOS_UINT32 At_TestCopsPara(TAF_UINT8 ucIndex)
 {
     if (AT_SUCCESS == Taf_PhonePlmnList(gastAtClientTab[ucIndex].usClientId, 0,TAF_PLMN_LIST))
     {
-        /* ÉèÖÃµ±Ç°²Ù×÷ÀàÐÍ */
+        /* è®¾ç½®å½“å‰æ“ä½œç±»åž‹ */
         gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_COPS_TEST;
 
-        /* ·µ»ØÃüÁî´¦Àí¹ÒÆð×´Ì¬ */
+        /* è¿”å›žå‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€ */
         return AT_WAIT_ASYNC_RETURN;
     }
     else
@@ -653,8 +653,8 @@ VOS_UINT32 At_TestCpolPara(VOS_UINT8 ucIndex)
 VOS_UINT32 At_TestCgeqnegPara(VOS_UINT8 ucIndex)
 {
 
-    /*CGEQNEGµÄ²âÊÔÃüÁîºÍCGACTµÄ²éÑ¯ÃüÁîµÄ¹¦ÄÜÀàËÆ,¶¼Òª»ñÈ¡µ±Ç°¸÷CIDµÄ¼¤»î
-    Çé¿ö,ÏòTAF²éÑ¯µ±Ç°¸÷CIDµÄ¼¤»îÇé¿ö*/
+    /*CGEQNEGçš„æµ‹è¯•å‘½ä»¤å’ŒCGACTçš„æŸ¥è¯¢å‘½ä»¤çš„åŠŸèƒ½ç±»ä¼¼,éƒ½è¦èŽ·å–å½“å‰å„CIDçš„æ¿€æ´»
+    æƒ…å†µ,å‘TAFæŸ¥è¯¢å½“å‰å„CIDçš„æ¿€æ´»æƒ…å†µ*/
 
     if ( VOS_OK != TAF_PS_GetPdpContextState(WUEPS_PID_AT,
                                              gastAtClientTab[ucIndex].usClientId,
@@ -663,18 +663,18 @@ VOS_UINT32 At_TestCgeqnegPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /*·¢ËÍ²éÑ¯ÏûÏ¢³É¹¦ºó,½«ÃüÁî×´Ì¬¸ÄÎªCGEQNEG*/
+    /*å‘é€æŸ¥è¯¢æ¶ˆæ¯æˆåŠŸåŽ,å°†å‘½ä»¤çŠ¶æ€æ”¹ä¸ºCGEQNEG*/
     if(AT_SUCCESS != At_StartTimer(AT_QRY_PARA_TIME,ucIndex))
     {
         AT_ERR_LOG("At_TestParaCmd:ERROR:Start Timer");
         return AT_ERROR;
     }
 
-    /* ÉèÖÃµ±Ç°²Ù×÷ÀàÐÍ */
+    /* è®¾ç½®å½“å‰æ“ä½œç±»åž‹ */
     gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_CGEQNEG_TEST;
-    return AT_WAIT_ASYNC_RETURN;    /* ·µ»ØÃüÁî´¦Àí¹ÒÆð×´Ì¬ */
+    return AT_WAIT_ASYNC_RETURN;    /* è¿”å›žå‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€ */
 
-    /*½ÓÏÂÀ´µ½TAFÊÂ¼þÉÏ±¨µÄµØ·½,»ñÈ¡µ±Ç°ÄÄÐ©CID±»¼¤»î,²¢´òÓ¡µ±Ç°ÄÄÐ©CID±»¼¤»î.*/
+    /*æŽ¥ä¸‹æ¥åˆ°TAFäº‹ä»¶ä¸ŠæŠ¥çš„åœ°æ–¹,èŽ·å–å½“å‰å“ªäº›CIDè¢«æ¿€æ´»,å¹¶æ‰“å°å½“å‰å“ªäº›CIDè¢«æ¿€æ´».*/
 
 
 }
@@ -755,7 +755,7 @@ VOS_UINT32 At_TestCgdnsPara(VOS_UINT8 ucIndex)
 
 
 
-    /* CGDNSµÄ²âÊÔÃüÁîºÍCGCMODEµÄ·µ»ØÖµÏàÍ¬£¬Ê¹ÓÃÏàÍ¬µÄº¯Êý */
+    /* CGDNSçš„æµ‹è¯•å‘½ä»¤å’ŒCGCMODEçš„è¿”å›žå€¼ç›¸åŒï¼Œä½¿ç”¨ç›¸åŒçš„å‡½æ•° */
     return At_TestCgeqnegPara(ucIndex);
 
 }
@@ -805,13 +805,13 @@ VOS_UINT32 AT_TestNCellMonitorPara(VOS_UINT8 ucIndex)
 
 VOS_UINT32 AT_TestRefclkfreqPara(VOS_UINT8 ucIndex)
 {
-    /* Í¨µÀ¼ì²é */
+    /* é€šé“æ£€æŸ¥ */
     if (VOS_FALSE == AT_IsApPort(ucIndex))
     {
         return AT_ERROR;
     }
 
-    /* ´òÓ¡Êä³ö^REFCLKFREQÖ§³ÖµÄ²ÎÊýÉèÖÃ·¶Î§ */
+    /* æ‰“å°è¾“å‡º^REFCLKFREQæ”¯æŒçš„å‚æ•°è®¾ç½®èŒƒå›´ */
     gstAtSendData.usBufLen = (VOS_UINT16)At_sprintf(AT_CMD_MAX_LEN,
                                                    (VOS_CHAR*)pgucAtSndCodeAddr,
                                                    (VOS_CHAR*)pgucAtSndCodeAddr,

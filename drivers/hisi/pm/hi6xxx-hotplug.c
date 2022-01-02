@@ -124,13 +124,13 @@ void platform_cpu_power_down(int cpu)
     }while(1);
     local_irq_save(flag);
 
-	/*Ôö¼Ó¹Ø±ÕHPMµÄ²Ù×÷*/
+	/*å¢åŠ å…³é—­HPMçš„æ“ä½œ*/
     writel(0x1, (unsigned long)&(acpu_core_sc->acpu_sc_isoen));
     do{
         tmp = readl((unsigned long)&(acpu_core_sc->acpu_sc_isostat)) & 0x1;
      } while (0x1 != tmp);
 
-	/*¿ÉÒÔÒ»Æğ¸´Î»*/
+	/*å¯ä»¥ä¸€èµ·å¤ä½*/
     writel(0x1F, (unsigned long)&(acpu_core_sc->acpu_sc_rsten));
     do{
         tmp = readl((unsigned long)&(acpu_core_sc->acpu_sc_rststat)) & 0x1F;
@@ -166,7 +166,7 @@ void platform_cluster1_power_on_detect(void)
     {
         printk(KERN_ERR"cluster1_power_detect,1.\n");
         /*pwc_clr_bits(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(SOC_ACPU_SCTRL_BASE_ADDR),BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_set_acinactm_high1_START));  */
-        /*ÏµÍ³ÅäÖÃ¿ØÖÆ×´Ì¬»ú¿ªÊ¼Snoop½ÓÊÕ´ò¿ª×´Ì¬¼ì²â*/
+        /*ç³»ç»Ÿé…ç½®æ§åˆ¶çŠ¶æ€æœºå¼€å§‹Snoopæ¥æ”¶æ‰“å¼€çŠ¶æ€æ£€æµ‹*/
         //pwc_clr_bits(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(SOC_ACPU_SCTRL_BASE_ADDR),BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start1_START));
         tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(acpu_sctrl_base_addr));
         tmp &= ~ BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start1_START);
@@ -174,12 +174,12 @@ void platform_cluster1_power_on_detect(void)
     }
     printk(KERN_ERR"cluster1_power_detect,2.\n");
 
-    /*CPU0ÅäÖÃµçÔ´ÎÈ¶¨Ê±¼äÊıÖµACPU_SC_A53_1_MTCMOS_TIMER[15:0]Îª16'hff£¬±íÊ¾MTCMOS¿ªÆôµÄÎÈ¶¨Ê±¼äÔ¼Îª13.3us£¬²Î¿¼Ê±ÖÓÎª19.2MHz£»*/
+    /*CPU0é…ç½®ç”µæºç¨³å®šæ—¶é—´æ•°å€¼ACPU_SC_A53_1_MTCMOS_TIMER[15:0]ä¸º16'hffï¼Œè¡¨ç¤ºMTCMOSå¼€å¯çš„ç¨³å®šæ—¶é—´çº¦ä¸º13.3usï¼Œå‚è€ƒæ—¶é’Ÿä¸º19.2MHzï¼›*/
     tmp = 0xff;
     writel(tmp,SOC_ACPU_SCTRL_ACPU_SC_A53_1_MTCMOS_TIMER_ADDR(acpu_sctrl_base_addr));
     printk(KERN_ERR"cluster1_power_detect,3.\n");
 
-    /*¸´Î»*/
+    /*å¤ä½*/
     /*tmp = pwc_read_reg32(SOC_ACPU_SCTRL_ACPU_SC_RSTEN_ADDR(SOC_ACPU_SCTRL_BASE_ADDR));*/
 	tmp = 0;
     tmp |= BIT(SOC_ACPU_SCTRL_ACPU_SC_RSTEN_srst_aarm_l2_1_rsten_START);
@@ -194,7 +194,7 @@ void platform_cluster1_power_on_detect(void)
 
     printk(KERN_ERR"cluster1_power_detect,4.\n");
 
-    /*CPU0ÅäÖÃACPU_SC_A53_CLUSTER_MTCMOS_EN[pw_mtcmos_en_a53_1_en]Îª1'b1£¬µÈ´ıACPU_SC_A53_MTCMOS_TIMER_STAT[pw_mtcmos_en_a53_1_sta]=1,±íÊ¾µçÔ´¿É¿¿ÎÈ¶¨£»*/
+    /*CPU0é…ç½®ACPU_SC_A53_CLUSTER_MTCMOS_EN[pw_mtcmos_en_a53_1_en]ä¸º1'b1ï¼Œç­‰å¾…ACPU_SC_A53_MTCMOS_TIMER_STAT[pw_mtcmos_en_a53_1_sta]=1,è¡¨ç¤ºç”µæºå¯é ç¨³å®šï¼›*/
     tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_MTCMOS_EN_ADDR(acpu_sctrl_base_addr));
     tmp |= BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_MTCMOS_EN_pw_mtcmos_en_a53_1_en_START);
     writel(tmp,SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_MTCMOS_EN_ADDR(acpu_sctrl_base_addr));
@@ -204,7 +204,7 @@ void platform_cluster1_power_on_detect(void)
 
     printk(KERN_ERR"cluster1_power_detect,5.\n");
 
-    /*CPU0¸ù¾İĞèÒªÅäÖÃACPU_SC_CLKEN [hpm_l2_1_clken ]=1£¬ÅĞ¶ÏACPU_SC_CLK_STAT [hpm_l2_1_clksta]=1±êÊ¾hpm l2cache 1Ê±ÖÓ´ò¿ª£»*/
+    /*CPU0æ ¹æ®éœ€è¦é…ç½®ACPU_SC_CLKEN [hpm_l2_1_clken ]=1ï¼Œåˆ¤æ–­ACPU_SC_CLK_STAT [hpm_l2_1_clksta]=1æ ‡ç¤ºhpm l2cache 1æ—¶é’Ÿæ‰“å¼€ï¼›*/
     tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_CLKEN_ADDR(acpu_sctrl_base_addr));
     tmp |= BIT(SOC_ACPU_SCTRL_ACPU_SC_CLKEN_hpm_l2_1_clken_START);
     writel(tmp,SOC_ACPU_SCTRL_ACPU_SC_CLKEN_ADDR(acpu_sctrl_base_addr));
@@ -223,7 +223,7 @@ void platform_cluster1_power_on_detect(void)
 
     printk(KERN_ERR"cluster1_power_detect,7.\n");
 
-    /*½âISO*/
+    /*è§£ISO*/
     writel(BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_DIS_pw_iso_a53_1_dis_START),SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_DIS_ADDR(acpu_sctrl_base_addr));
     do{
         tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_STA_ADDR(acpu_sctrl_base_addr)) & BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_STA_pw_iso_a53_1_sta_START);
@@ -231,7 +231,7 @@ void platform_cluster1_power_on_detect(void)
 
     printk(KERN_ERR"cluster1_power_detect,8.\n");
 
-    /*½â¸´Î»*/
+    /*è§£å¤ä½*/
     /*tmp = pwc_read_reg32(SOC_ACPU_SCTRL_ACPU_SC_RSTDIS_ADDR(SOC_ACPU_SCTRL_BASE_ADDR));*/
 	tmp = 0;
     tmp |= BIT(SOC_ACPU_SCTRL_ACPU_SC_RSTDIS_srst_aarm_l2_1_rstdis_START);
@@ -263,7 +263,7 @@ void platform_cluster_power_down(int clusterId)
 			}
 			/*-------------cluster1--------------*/
 
-			/*ÏµÍ³ÅäÖÃ¿ØÖÆ×´Ì¬»ú¹Ø±ÕSnoop½ÓÊÕ´ò¿ª×´Ì¬¼ì²â*/
+			/*ç³»ç»Ÿé…ç½®æ§åˆ¶çŠ¶æ€æœºå…³é—­Snoopæ¥æ”¶æ‰“å¼€çŠ¶æ€æ£€æµ‹*/
 
 	             tmp=readl(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(acpu_sctrl_base_addr))|(BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start1_START));
 	             writel(tmp,SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(acpu_sctrl_base_addr));
@@ -320,7 +320,7 @@ void platform_cluster_power_down(int clusterId)
 				return;
 			}
 
-			/*ÏµÍ³ÅäÖÃ¿ØÖÆ×´Ì¬»ú¹Ø±ÕSnoop½ÓÊÕ´ò¿ª×´Ì¬¼ì²â*/
+			/*ç³»ç»Ÿé…ç½®æ§åˆ¶çŠ¶æ€æœºå…³é—­Snoopæ¥æ”¶æ‰“å¼€çŠ¶æ€æ£€æµ‹*/
                      tmp=readl(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(acpu_sctrl_base_addr))|(BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start0_START));
 	              writel(tmp,SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(acpu_sctrl_base_addr));
 			/*pwc_set_bits(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(SOC_ACPU_SCTRL_BASE_ADDR),BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_set_acinactm_high0_START)); */
@@ -388,15 +388,15 @@ void platform_cluster_power_up(int clusterId)
 				return;
 			}
 		        /*pwc_clr_bits(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(SOC_ACPU_SCTRL_BASE_ADDR),BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_set_acinactm_high0_START));*/
-		        /*ÏµÍ³ÅäÖÃ¿ØÖÆ×´Ì¬»ú¿ªÊ¼Snoop½ÓÊÕ´ò¿ª×´Ì¬¼ì²â*/
+		        /*ç³»ç»Ÿé…ç½®æ§åˆ¶çŠ¶æ€æœºå¼€å§‹Snoopæ¥æ”¶æ‰“å¼€çŠ¶æ€æ£€æµ‹*/
 			 local_irq_save(flag);
 			 tmp=readl(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(acpu_sctrl_base_addr))&(~BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start0_START));
 		        writel(tmp,SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(acpu_sctrl_base_addr));
-		        /*Ê±ÖÓÅäÖÃ*/
+		        /*æ—¶é’Ÿé…ç½®*/
 		        tmp = 0xff;
 		        writel(tmp,SOC_ACPU_SCTRL_ACPU_SC_A53_0_MTCMOS_TIMER_ADDR(acpu_sctrl_base_addr));
 
-		        /*¸´Î»*/
+		        /*å¤ä½*/
 		        /*tmp = pwc_read_reg32(SOC_ACPU_SCTRL_ACPU_SC_RSTEN_ADDR(SOC_ACPU_SCTRL_BASE_ADDR));*/
 			 tmp = 0;
 		        tmp |= BIT(SOC_ACPU_SCTRL_ACPU_SC_RSTEN_srst_aarm_l2_rsten_START);
@@ -409,12 +409,12 @@ void platform_cluster_power_up(int clusterId)
 		        }while((0 == (tmp&BIT(SOC_ACPU_SCTRL_ACPU_SC_RST_STAT_srst_aarm_l2_rststa_START)))||(0 == (tmp&BIT(SOC_ACPU_SCTRL_ACPU_SC_RST_STAT_srst_l2_hpm_rststa_START))) || \
 		        (0 == (tmp&BIT(SOC_ACPU_SCTRL_ACPU_SC_RST_STAT_srst_cluster0_rststa_START)))||(0 ==( tmp&BIT(SOC_ACPU_SCTRL_ACPU_SC_RST_STAT_srst_preset0_rststa_START))));
 
-		        /*MTCMOSÊ¹ÄÜ*/
+		        /*MTCMOSä½¿èƒ½*/
 		        writel(BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_MTCMOS_EN_pw_mtcmos_en_a53_0_en_START),SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_MTCMOS_EN_ADDR(acpu_sctrl_base_addr));
 		        do{
 		            tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_A53_0_MTCMOS_TIMER_STAT_ADDR(acpu_sctrl_base_addr)) & BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_0_MTCMOS_TIMER_STAT_a53_0_mtcmos_timer_sta_START);
 		        } while (0x0 == tmp);
-		        /*CPU0¸ù¾İĞèÒªÅäÖÃACPU_SC_CLKEN [hpm_l2_1_clken ]=1£¬ÅĞ¶ÏACPU_SC_CLK_STAT [hpm_l2_1_clksta]=1±êÊ¾hpm l2cache 1Ê±ÖÓ´ò¿ª£»*/
+		        /*CPU0æ ¹æ®éœ€è¦é…ç½®ACPU_SC_CLKEN [hpm_l2_1_clken ]=1ï¼Œåˆ¤æ–­ACPU_SC_CLK_STAT [hpm_l2_1_clksta]=1æ ‡ç¤ºhpm l2cache 1æ—¶é’Ÿæ‰“å¼€ï¼›*/
 		        writel(BIT(SOC_ACPU_SCTRL_ACPU_SC_CLKEN_hpm_l2_clken_START),SOC_ACPU_SCTRL_ACPU_SC_CLKEN_ADDR(acpu_sctrl_base_addr));
 		        do{
 		            tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_CLK_STAT_ADDR(acpu_sctrl_base_addr)) & BIT(SOC_ACPU_SCTRL_ACPU_SC_CLK_STAT_hpm_l2_clksta_START);
@@ -425,12 +425,12 @@ void platform_cluster_power_up(int clusterId)
 		        } while (0x0 == tmp);
 
 
-		        /*½âISO*/
+		        /*è§£ISO*/
 		        writel(BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_DIS_pw_iso_a53_0_dis_START),SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_DIS_ADDR(acpu_sctrl_base_addr));
 		        do{
 		            tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_STA_ADDR(acpu_sctrl_base_addr)) & BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_STA_pw_iso_a53_0_sta_START);
 		        } while (0x0 != tmp);
-		        /*½â¸´Î»*/
+		        /*è§£å¤ä½*/
 		        /*tmp = pwc_read_reg32(SOC_ACPU_SCTRL_ACPU_SC_RSTDIS_ADDR(SOC_ACPU_SCTRL_BASE_ADDR));*/
 				tmp = 0;
 		        tmp |= BIT(SOC_ACPU_SCTRL_ACPU_SC_RSTDIS_srst_aarm_l2_rstdis_START);
@@ -453,17 +453,17 @@ void platform_cluster_power_up(int clusterId)
 					return;
 				}
 		            /*pwc_clr_bits(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(SOC_ACPU_SCTRL_BASE_ADDR),BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_set_acinactm_high1_START));  */
-		            /*ÏµÍ³ÅäÖÃ¿ØÖÆ×´Ì¬»ú¿ªÊ¼Snoop½ÓÊÕ´ò¿ª×´Ì¬¼ì²â*/
+		            /*ç³»ç»Ÿé…ç½®æ§åˆ¶çŠ¶æ€æœºå¼€å§‹Snoopæ¥æ”¶æ‰“å¼€çŠ¶æ€æ£€æµ‹*/
 				local_irq_save(flag);
 		             tmp=readl(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(acpu_sctrl_base_addr))&(~BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start1_START));
 		             writel(tmp,SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(acpu_sctrl_base_addr));
 
 
-		            /*CPU0ÅäÖÃµçÔ´ÎÈ¶¨Ê±¼äÊıÖµACPU_SC_A53_1_MTCMOS_TIMER[15:0]Îª16'hff£¬±íÊ¾MTCMOS¿ªÆôµÄÎÈ¶¨Ê±¼äÔ¼Îª13.3us£¬²Î¿¼Ê±ÖÓÎª19.2MHz£»*/
+		            /*CPU0é…ç½®ç”µæºç¨³å®šæ—¶é—´æ•°å€¼ACPU_SC_A53_1_MTCMOS_TIMER[15:0]ä¸º16'hffï¼Œè¡¨ç¤ºMTCMOSå¼€å¯çš„ç¨³å®šæ—¶é—´çº¦ä¸º13.3usï¼Œå‚è€ƒæ—¶é’Ÿä¸º19.2MHzï¼›*/
 		            tmp = 0xff;
 		            writel(tmp,SOC_ACPU_SCTRL_ACPU_SC_A53_1_MTCMOS_TIMER_ADDR(acpu_sctrl_base_addr));
 
-		            /*¸´Î»*/
+		            /*å¤ä½*/
 		            /*tmp = pwc_read_reg32(SOC_ACPU_SCTRL_ACPU_SC_RSTEN_ADDR(SOC_ACPU_SCTRL_BASE_ADDR));*/
 					tmp = 0;
 		            tmp |= BIT(SOC_ACPU_SCTRL_ACPU_SC_RSTEN_srst_aarm_l2_1_rsten_START);
@@ -477,12 +477,12 @@ void platform_cluster_power_up(int clusterId)
 		            (0 == (tmp&BIT(SOC_ACPU_SCTRL_ACPU_SC_RST_STAT_srst_cluster1_rststa_START)))||(0 == (tmp&BIT(SOC_ACPU_SCTRL_ACPU_SC_RST_STAT_srst_preset1_rststa_START))));
 
 
-		            /*CPU0ÅäÖÃACPU_SC_A53_CLUSTER_MTCMOS_EN[pw_mtcmos_en_a53_1_en]Îª1'b1£¬µÈ´ıACPU_SC_A53_MTCMOS_TIMER_STAT[pw_mtcmos_en_a53_1_sta]=1,±íÊ¾µçÔ´¿É¿¿ÎÈ¶¨£»*/
+		            /*CPU0é…ç½®ACPU_SC_A53_CLUSTER_MTCMOS_EN[pw_mtcmos_en_a53_1_en]ä¸º1'b1ï¼Œç­‰å¾…ACPU_SC_A53_MTCMOS_TIMER_STAT[pw_mtcmos_en_a53_1_sta]=1,è¡¨ç¤ºç”µæºå¯é ç¨³å®šï¼›*/
 		            writel(BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_MTCMOS_EN_pw_mtcmos_en_a53_1_en_START),SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_MTCMOS_EN_ADDR(acpu_sctrl_base_addr));
 		            do{
 		                tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_A53_1_MTCMOS_TIMER_STAT_ADDR(acpu_sctrl_base_addr)) & BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_1_MTCMOS_TIMER_STAT_a53_1_mtcmos_timer_sta_START);
 		            } while (0x0 == tmp);
-		            /*CPU0¸ù¾İĞèÒªÅäÖÃACPU_SC_CLKEN [hpm_l2_1_clken ]=1£¬ÅĞ¶ÏACPU_SC_CLK_STAT [hpm_l2_1_clksta]=1±êÊ¾hpm l2cache 1Ê±ÖÓ´ò¿ª£»*/
+		            /*CPU0æ ¹æ®éœ€è¦é…ç½®ACPU_SC_CLKEN [hpm_l2_1_clken ]=1ï¼Œåˆ¤æ–­ACPU_SC_CLK_STAT [hpm_l2_1_clksta]=1æ ‡ç¤ºhpm l2cache 1æ—¶é’Ÿæ‰“å¼€ï¼›*/
 		            writel(BIT(SOC_ACPU_SCTRL_ACPU_SC_CLKEN_hpm_l2_1_clken_START),SOC_ACPU_SCTRL_ACPU_SC_CLKEN_ADDR(acpu_sctrl_base_addr));
 		            do{
 		                tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_CLK_STAT_ADDR(acpu_sctrl_base_addr)) & BIT(SOC_ACPU_SCTRL_ACPU_SC_CLK_STAT_hpm_l2_1_clksta_START);
@@ -491,12 +491,12 @@ void platform_cluster_power_up(int clusterId)
 		            do{
 		                tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_CLK_STAT_ADDR(acpu_sctrl_base_addr)) & BIT(SOC_ACPU_SCTRL_ACPU_SC_CLK_STAT_g_cpu_1_clksta_START);
 		            } while (0x0 == tmp);
-		            /*½âISO*/
+		            /*è§£ISO*/
 		            writel(BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_DIS_pw_iso_a53_1_dis_START),SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_DIS_ADDR(acpu_sctrl_base_addr));
 		            do{
 		                tmp = readl(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_STA_ADDR(acpu_sctrl_base_addr)) & BIT(SOC_ACPU_SCTRL_ACPU_SC_A53_CLUSTER_ISO_STA_pw_iso_a53_1_sta_START);
 		            } while (0x0 != tmp);
-		            /*½â¸´Î»*/
+		            /*è§£å¤ä½*/
 		            /*tmp = pwc_read_reg32(SOC_ACPU_SCTRL_ACPU_SC_RSTDIS_ADDR(SOC_ACPU_SCTRL_BASE_ADDR));*/
 					tmp = 0;
 		            tmp |= BIT(SOC_ACPU_SCTRL_ACPU_SC_RSTDIS_srst_aarm_l2_1_rstdis_START);
@@ -548,7 +548,7 @@ void platform_cpu_power_on(int cpu)
     }
 
     local_irq_save(flag);
-	/*Ôö¼Ó´ò¿ªHPM²Ù×÷*/
+	/*å¢åŠ æ‰“å¼€HPMæ“ä½œ*/
     /*power on cpu*/
     writel(0x1, (unsigned long)&(acpu_core_sc->acpu_sc_mtcmos_en));
     do{
@@ -565,7 +565,7 @@ void platform_cpu_power_on(int cpu)
         tmp = readl((unsigned long)&(acpu_core_sc->acpu_sc_isostat)) & 0x1;
      } while (0x0 != tmp);
 
-	/*¿ÉÒÔºÏ²¢*/
+	/*å¯ä»¥åˆå¹¶*/
     writel(0x1F, (unsigned long)&(acpu_core_sc->acpu_sc_rstdis));
     do{
         tmp = readl((unsigned long)&(acpu_core_sc->acpu_sc_rststat)) & 0x1F;

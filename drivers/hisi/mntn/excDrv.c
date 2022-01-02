@@ -1,7 +1,7 @@
 
 
 /*******************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *******************************************************************************/
 #include <asm/current.h>
 #include <linux/sched.h>
@@ -77,7 +77,7 @@ struct dir_list
 #define PID_PPID_GET(task_tcb)  get_pid_ppid_of_task(task_tcb)
 
 /*******************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *******************************************************************************/
 static EH_ROOT* g_pExchRoot = NULL;
 static char g_reset_log_buf[EXCH_RST_LOG_BUF_SIZE] = {0};
@@ -139,7 +139,7 @@ static struct clk *g_codec_ade_clk = NULL;
 unsigned int     g_acpu_unlock_flag_tmp = 0;
 static exch_mdm_panic_reg g_exch_mdm_panic_reg = NULL;
 /*******************************************************************************
-  3 º¯ÊıÉùÃ÷
+  3 å‡½æ•°å£°æ˜
 *******************************************************************************/
 extern void copy_err_sys_logger(void * uaddr,size_t len);
 extern void copy_err_media_logger(void * uaddr,size_t len);
@@ -221,7 +221,7 @@ static struct notifier_block exch_die_block = {
 };
 
 /*******************************************************************************
-  4 º¯ÊıÊµÏÖ
+  4 å‡½æ•°å®ç°
 *******************************************************************************/
 
 void exch_save_pointer_wdg(unsigned long pvalue)
@@ -240,8 +240,8 @@ void exch_save_slice_wdg(unsigned long pvalue)
 EXPORT_SYMBOL(exch_save_pointer_wdg);
 EXPORT_SYMBOL(exch_save_slice_wdg);
 /*******************************************************************************
- º¯ Êı Ãû: get_pid_ppid_of_task
- ¹¦ÄÜÃèÊö: Add this function only for pc-lint warning clean!!
+ å‡½ æ•° å: get_pid_ppid_of_task
+ åŠŸèƒ½æè¿°: Add this function only for pc-lint warning clean!!
  instead of the original definition of PID_PPID_GET, original is:
 ((((struct task_struct *)task_tcb)->pid & 0xffff)| \
              ((((struct task_struct *)task_tcb)->real_parent->pid & 0xffff)<< 16))
@@ -260,11 +260,11 @@ static unsigned int get_pid_ppid_of_task(struct task_struct * ptask)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: get_domain_access_status
- ¹¦ÄÜÃèÊö: ÓÃÓÚÅĞ¶ÏÄ³¸öÓòµÄµØÖ·ÊÇ·ñ¿ÉÒÔ·ÃÎÊ
- ÊäÈë²ÎÊı: eACCESS_DOMAIN_TYPE etype, Óò¶¨Òå
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: 1:¿ÉÒÔ·ÃÎÊ£»0:²»ÄÜ·ÃÎÊ
+ å‡½ æ•° å: get_domain_access_status
+ åŠŸèƒ½æè¿°: ç”¨äºåˆ¤æ–­æŸä¸ªåŸŸçš„åœ°å€æ˜¯å¦å¯ä»¥è®¿é—®
+ è¾“å…¥å‚æ•°: eACCESS_DOMAIN_TYPE etype, åŸŸå®šä¹‰
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: 1:å¯ä»¥è®¿é—®ï¼›0:ä¸èƒ½è®¿é—®
 *******************************************************************************/
 int get_domain_access_status(eACCESS_DOMAIN_TYPE etype)
 {
@@ -363,13 +363,13 @@ int get_domain_access_status(eACCESS_DOMAIN_TYPE etype)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: reg_save
- ¹¦ÄÜÃèÊö: ¼Ä´æÆ÷±¸·İ
- ÊäÈë²ÎÊı: ulRamAddr ±¸·İµØÖ·ĞÅÏ¢
-           ulReg     ´ı±¸·İ¼Ä´æÆ÷
-           ulSize    ±¸·İ¼Ä´æÆ÷´óĞ¡
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: reg_save
+ åŠŸèƒ½æè¿°: å¯„å­˜å™¨å¤‡ä»½
+ è¾“å…¥å‚æ•°: ulRamAddr å¤‡ä»½åœ°å€ä¿¡æ¯
+           ulReg     å¾…å¤‡ä»½å¯„å­˜å™¨
+           ulSize    å¤‡ä»½å¯„å­˜å™¨å¤§å°
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 void reg_save(unsigned int* ulRamAddr, unsigned int* ulReg, unsigned int ulSize)
 {
@@ -397,11 +397,11 @@ void reg_save(unsigned int* ulRamAddr, unsigned int* ulReg, unsigned int ulSize)
 EXPORT_SYMBOL(reg_save);
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_pid_to_tid
- ¹¦ÄÜÃèÊö: Í¨¹ıtask_structµÄpidĞÅÏ¢»ñÈ¡tidĞÅÏ¢
- ÊäÈë²ÎÊı: pid taskµÄpidĞÅÏ¢
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: EXCH_ERROR-»ñÈ¡Ê§°Ü£¬ÆäËû-taskµÄpid
+ å‡½ æ•° å: exch_pid_to_tid
+ åŠŸèƒ½æè¿°: é€šè¿‡task_structçš„pidä¿¡æ¯è·å–tidä¿¡æ¯
+ è¾“å…¥å‚æ•°: pid taskçš„pidä¿¡æ¯
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: EXCH_ERROR-è·å–å¤±è´¥ï¼Œå…¶ä»–-taskçš„pid
 *******************************************************************************/
 static struct task_struct * exch_pid_to_tid(pid_t exc_pid)
 {
@@ -424,11 +424,11 @@ static struct task_struct * exch_pid_to_tid(pid_t exc_pid)
 *******************************************************************************/
 
 /*******************************************************************************
- º¯ Êı Ãû:exch_slice_timer_get
- ¹¦ÄÜÃèÊö:»ñÈ¡ÏµÍ³timerµÄÏà¶ÔsliceÖµ
- ÊäÈë²ÎÊı:ÎŞ
- Êä³ö²ÎÊı:ÎŞ
- ·µ »Ø Öµ:timer slice value
+ å‡½ æ•° å:exch_slice_timer_get
+ åŠŸèƒ½æè¿°:è·å–ç³»ç»Ÿtimerçš„ç›¸å¯¹sliceå€¼
+ è¾“å…¥å‚æ•°:æ— 
+ è¾“å‡ºå‚æ•°:æ— 
+ è¿” å› å€¼:timer slice value
 *******************************************************************************/
 static unsigned int exch_slice_timer_get(void)
 {
@@ -436,11 +436,11 @@ static unsigned int exch_slice_timer_get(void)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû:exch_slice_timer_tick_get
- ¹¦ÄÜÃèÊö:»ñÈ¡ÏµÍ³timerµÄÏà¶ÔtickÖµ
- ÊäÈë²ÎÊı:ÎŞ
- Êä³ö²ÎÊı:ÎŞ
- ·µ »Ø Öµ:timer tick value
+ å‡½ æ•° å:exch_slice_timer_tick_get
+ åŠŸèƒ½æè¿°:è·å–ç³»ç»Ÿtimerçš„ç›¸å¯¹tickå€¼
+ è¾“å…¥å‚æ•°:æ— 
+ è¾“å‡ºå‚æ•°:æ— 
+ è¿” å› å€¼:timer tick value
 *******************************************************************************/
 static unsigned int exch_slice_timer_tick_get(void)
 {
@@ -453,11 +453,11 @@ static unsigned int exch_slice_timer_tick_get(void)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_rtc_time_get
- ¹¦ÄÜÃèÊö: »ñÈ¡ÏµÍ³rtcÊ±¼ä
- ÊäÈë²ÎÊı: ÎŞ
- Êä³ö²ÎÊı: rtc time value
- ·µ »Ø Öµ: EXCH_OK rtcÊ±¼ä»ñÈ¡³É¹¦£¬EXCH_ERROR »ñÈ¡Ê§°Ü
+ å‡½ æ•° å: exch_rtc_time_get
+ åŠŸèƒ½æè¿°: è·å–ç³»ç»Ÿrtcæ—¶é—´
+ è¾“å…¥å‚æ•°: æ— 
+ è¾“å‡ºå‚æ•°: rtc time value
+ è¿” å› å€¼: EXCH_OK rtcæ—¶é—´è·å–æˆåŠŸï¼ŒEXCH_ERROR è·å–å¤±è´¥
 *******************************************************************************/
 unsigned int exch_rtc_time_get(char *time)
 {
@@ -472,11 +472,11 @@ unsigned int exch_rtc_time_get(char *time)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_rtc_time_to_string
- ¹¦ÄÜÃèÊö: ½«rtcÊ±¼ä×ª»»ÎªÌØ¶¨¸ñÊ½µÄ×Ö·û´®ĞÎÊ½
- ÊäÈë²ÎÊı: exc_tm  rtcÊ±¼ä
- Êä³ö²ÎÊı: rtc_str rtcÊ±¼ä×Ö·û´®
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: exch_rtc_time_to_string
+ åŠŸèƒ½æè¿°: å°†rtcæ—¶é—´è½¬æ¢ä¸ºç‰¹å®šæ ¼å¼çš„å­—ç¬¦ä¸²å½¢å¼
+ è¾“å…¥å‚æ•°: exc_tm  rtcæ—¶é—´
+ è¾“å‡ºå‚æ•°: rtc_str rtcæ—¶é—´å­—ç¬¦ä¸²
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 static void exch_rtc_time_to_string(struct rtc_time *exc_tm, char *rtc_str)
 {
@@ -501,22 +501,22 @@ static void exch_rtc_time_to_string(struct rtc_time *exc_tm, char *rtc_str)
 *                               external funciton                              *
 *******************************************************************************/
 /*******************************************************************************
- º¯ Êı Ãû: exch_get_drv_addr
- ¹¦ÄÜÃèÊö: ÁÙÖÕÒÅÑÔÄ£¿éÌá¹©¶ÔÍâ½Ó¿Ú£¬ÓÃÓÚ·µ»ØDRV¿ÉÊ¹ÓÃµÄÒì³£¼ÇÂ¼µØÖ·
- ÊäÈë²ÎÊı: NA
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÓÃ»§¿ÉÊ¹ÓÃµØÖ·¿Õ¼ä
+ å‡½ æ•° å: exch_get_drv_addr
+ åŠŸèƒ½æè¿°: ä¸´ç»ˆé—è¨€æ¨¡å—æä¾›å¯¹å¤–æ¥å£ï¼Œç”¨äºè¿”å›DRVå¯ä½¿ç”¨çš„å¼‚å¸¸è®°å½•åœ°å€
+ è¾“å…¥å‚æ•°: NA
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: ç”¨æˆ·å¯ä½¿ç”¨åœ°å€ç©ºé—´
 *******************************************************************************/
 void* exch_get_drv_addr(void)
 {
     return EXCH_DRV_CUSTOM_INFO_ADDR;
 }
 /*******************************************************************************
- º¯ Êı Ãû: save_ddrc_info
- ¹¦ÄÜÃèÊö: ±£´æsoc ÒªÇóµÄddrcÊı¾İ
- ÊäÈë²ÎÊı: NA
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: NULL
+ å‡½ æ•° å: save_ddrc_info
+ åŠŸèƒ½æè¿°: ä¿å­˜soc è¦æ±‚çš„ddrcæ•°æ®
+ è¾“å…¥å‚æ•°: NA
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: NULL
 *******************************************************************************/
 static void save_ddrc_info(unsigned char* uaddr, unsigned int usize)
 {
@@ -531,130 +531,130 @@ static void save_ddrc_info(unsigned char* uaddr, unsigned int usize)
         if (pddrc != NULL)
         {
             local_addr = uaddr;
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x600;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x600);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x610;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x610);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x8280;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x8280);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x8284;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x8284);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x8288;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x8288);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x8290;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x8290);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x8294;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x8294);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x8298;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x8298);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x82a0;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x82a0);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x82a4;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x82a4);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0xc008;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0xc008);
 
             local_addr = local_addr + sizeof(int);
-            /*µØÖ·*/
+            /*åœ°å€*/
             *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x4178;
-            /*Êı¾İ*/
+            /*æ•°æ®*/
             local_addr = local_addr + sizeof(int);
             *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x4178);
 
             for (i = 1;i < 5;i++)
             {
                 local_addr = local_addr + sizeof(int);
-                /*µØÖ·*/
+                /*åœ°å€*/
                 *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x1000 + 0x400*i + 0x004;
-                /*Êı¾İ*/
+                /*æ•°æ®*/
                 local_addr = local_addr + sizeof(int);
                 *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x1000 + 0x400*i + 0x004);
 
                 local_addr = local_addr + sizeof(int);
-                /*µØÖ·*/
+                /*åœ°å€*/
                 *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x1000 + 0x400*i + 0x020;
-                /*Êı¾İ*/
+                /*æ•°æ®*/
                 local_addr = local_addr + sizeof(int);
                 *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x1000 + 0x400*i + 0x020);
 
                 local_addr = local_addr + sizeof(int);
-                /*µØÖ·*/
+                /*åœ°å€*/
                 *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x1000 + 0x400*i + 0x024;
-                /*Êı¾İ*/
+                /*æ•°æ®*/
                 local_addr = local_addr + sizeof(int);
                 *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x1000 + 0x400*i + 0x024);
 
                 local_addr = local_addr + sizeof(int);
-                /*µØÖ·*/
+                /*åœ°å€*/
                 *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x1000 + 0x400*i + 0x080;
-                /*Êı¾İ*/
+                /*æ•°æ®*/
                 local_addr = local_addr + sizeof(int);
                 *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x1000 + 0x400*i + 0x080);
 
                 local_addr = local_addr + sizeof(int);
-                /*µØÖ·*/
+                /*åœ°å€*/
                 *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x1000 + 0x400*i + 0x084;
-                /*Êı¾İ*/
+                /*æ•°æ®*/
                 local_addr = local_addr + sizeof(int);
                 *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x1000 + 0x400*i + 0x084);
 
                 local_addr = local_addr + sizeof(int);
-                /*µØÖ·*/
+                /*åœ°å€*/
                 *(unsigned int*)local_addr = SOC_MDDRC_AXI_BASE_ADDR + 0x1000 + 0x400*i + 0x088;
-                /*Êı¾İ*/
+                /*æ•°æ®*/
                 local_addr = local_addr + sizeof(int);
                 *(unsigned int*)local_addr = *(unsigned int*)(pddrc + 0x1000 + 0x400*i + 0x088);
 
@@ -674,11 +674,11 @@ static void save_ddrc_info(unsigned char* uaddr, unsigned int usize)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: sc_reg_save
- ¹¦ÄÜÃèÊö: ÏµÍ³¿ØÖÆ¼Ä´æÆ÷±¸·İ
- ÊäÈë²ÎÊı: void
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: sc_reg_save
+ åŠŸèƒ½æè¿°: ç³»ç»Ÿæ§åˆ¶å¯„å­˜å™¨å¤‡ä»½
+ è¾“å…¥å‚æ•°: void
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 void sc_reg_save(void)
 {
@@ -741,15 +741,15 @@ void sc_reg_save(void)
 }
 EXPORT_SYMBOL(sc_reg_save);
 /*******************************************************************************
- º¯ Êı Ãû: systemError
- ¹¦ÄÜÃèÊö: ÁÙÖÕÒÅÑÔÄ£¿éÌá¹©¶ÔÍâ½Ó¿Ú£¬ÓÃÓÚÒì³£ĞÅÏ¢¼ÇÂ¼¼°¸´Î»
- ÊäÈë²ÎÊı: modId Ä£¿éID
-           arg1  ¸´Î»Ô­Òò£¬ÓëmodIdÒ»Æğ±íÕ÷¸´Î»Ô­Òò
-           arg2  ±£Áô²ÎÊı
-           arg3  ¶©ÖÆĞÅÏ¢buffer
-           arg3Length    ¶©ÖÆĞÅÏ¢³¤¶È
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: systemError
+ åŠŸèƒ½æè¿°: ä¸´ç»ˆé—è¨€æ¨¡å—æä¾›å¯¹å¤–æ¥å£ï¼Œç”¨äºå¼‚å¸¸ä¿¡æ¯è®°å½•åŠå¤ä½
+ è¾“å…¥å‚æ•°: modId æ¨¡å—ID
+           arg1  å¤ä½åŸå› ï¼Œä¸modIdä¸€èµ·è¡¨å¾å¤ä½åŸå› 
+           arg2  ä¿ç•™å‚æ•°
+           arg3  è®¢åˆ¶ä¿¡æ¯buffer
+           arg3Length    è®¢åˆ¶ä¿¡æ¯é•¿åº¦
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
 {
@@ -786,12 +786,12 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
 
     hisi_io_memset(&pstCbBuf, 0, sizeof(exch_cb_buf_t));
 
-    /* Ä£¿éÉĞÎ´³õÊ¼»¯£¬Ö±½Ó¸´Î» */
+    /* æ¨¡å—å°šæœªåˆå§‹åŒ–ï¼Œç›´æ¥å¤ä½ */
     if (EXCH_READY != g_exc_is_ready)
     {
         printk("systemError: not ready modId[0x%x], arg1[0x%x]\n", modId, arg1);
 
-        /*ÏµÍ³¸´Î»*/
+        /*ç³»ç»Ÿå¤ä½*/
         //EXC_WRITE_REG(SOC_SCtrl_SC_SYS_STAT0_ADDR(SOC_SCTRL_BASE_ADDR), 0x48698284);
         machine_restart(NULL);
         return;
@@ -799,12 +799,12 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
 
     if (1 == g_pExchRoot->share_value.is_rebooting)
     {
-        /* AºËÒÑ¾­½øÈëÖØÆô×´Ì¬£¬Ö±½Ó·µ»Ø */
+        /* Aæ ¸å·²ç»è¿›å…¥é‡å¯çŠ¶æ€ï¼Œç›´æ¥è¿”å› */
         return;
     }
 
 
-    systemErrorCcore(BSP_MODU_MNTN, 0, BSP_MNTN_CACHE_FLUSH, 0, 0, 0); /*Ë¢ĞÂCºËcache*/
+    systemErrorCcore(BSP_MODU_MNTN, 0, BSP_MNTN_CACHE_FLUSH, 0, 0, 0); /*åˆ·æ–°Cæ ¸cache*/
 
     if(!in_atomic() && !irqs_disabled() && !in_irq())
     {
@@ -813,19 +813,19 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
     }
 
 
-    /* ¸´Î»ÖĞ...½ûÖ¹ÇÀÕ¼£¬½ûÖĞ¶Ï (·ÀÖØÈë) */
+    /* å¤ä½ä¸­...ç¦æ­¢æŠ¢å ï¼Œç¦ä¸­æ–­ (é˜²é‡å…¥) */
     spin_lock_irqsave(g_pExchRoot->spinlock, flags);
 
-    /* ÊÍ·Å¹³×Óº¯Êı */
+    /* é‡Šæ”¾é’©å­å‡½æ•° */
     //task_switch_hook_delete();
     int_switch_hook_delete();
     exc_hook_delete();
 
-    /* AºË½øÈëÖØÆô×´Ì¬ */
+    /* Aæ ¸è¿›å…¥é‡å¯çŠ¶æ€ */
     g_pExchRoot->share_value.is_rebooting = 1;
     *(g_pExchRoot->share_addr.is_rebooting) = 1;
 
-    /* ¼ÇÂ¼¸´Î»Ô­ÒòÓë¸´Î»ºË */
+    /* è®°å½•å¤ä½åŸå› ä¸å¤ä½æ ¸ */
     g_pExchRoot->share_value.reboot_reason = (unsigned int)arg1;
     *(g_pExchRoot->share_addr.reboot_reason) = (unsigned int)arg1;
     g_pExchRoot->reboot_src = EXCH_REBOOT_FROM_EXC;
@@ -833,14 +833,14 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
     ulRebootCore = *(g_pExchRoot->share_addr.reboot_core);
     if (!((EXCH_C_CORE == ulRebootCore) || (EXCH_M_CORE == ulRebootCore)))
     {
-        /* AºËÒıÆğ¸´Î»£¬Ğ´¸´Î»ºË±êÖ¾£¬Í¨ÖªMCU½øĞĞÈ«ÏµÍ³¸´Î» */
+        /* Aæ ¸å¼•èµ·å¤ä½ï¼Œå†™å¤ä½æ ¸æ ‡å¿—ï¼Œé€šçŸ¥MCUè¿›è¡Œå…¨ç³»ç»Ÿå¤ä½ */
         MNTN_PRINT("systemError: A core bring reboot\n");
 
         g_pExchRoot->share_value.reboot_core = EXCH_A_CORE;
         *(g_pExchRoot->share_addr.reboot_core) = EXCH_A_CORE;
     }
 
-    /* ¼ÇÂ¼µ±Ç°ÏµÍ³»ù±¾ĞÅÏ¢£¬ÕâĞ©ĞÅÏ¢¿ÉÄÜÏÔÊ¾ÔÚ½âÎö¹¤¾ßÉÏ */
+    /* è®°å½•å½“å‰ç³»ç»ŸåŸºæœ¬ä¿¡æ¯ï¼Œè¿™äº›ä¿¡æ¯å¯èƒ½æ˜¾ç¤ºåœ¨è§£æå·¥å…·ä¸Š */
     g_pExchRoot->dumpMagic = EXCH_SYSTEM_ERROR;
     g_pExchRoot->modId = (unsigned int)modId;
     g_pExchRoot->arg1 = arg1;
@@ -849,22 +849,22 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
     g_pExchRoot->rebootTicks = exch_slice_timer_tick_get();
     g_pExchRoot->omTimer = exch_slice_timer_get();
 
-    /* »ñÈ¡ÏµÍ³RTCÊ±¼ä */
+    /* è·å–ç³»ç»ŸRTCæ—¶é—´ */
     exch_rtc_time_get(g_pExchRoot->rtcTime);
 
-    /* ±£´æ¶©ÖÆĞÅÏ¢ */
+    /* ä¿å­˜è®¢åˆ¶ä¿¡æ¯ */
     if (NULL != arg3)
     {
         len = (arg3Length > EXCH_CUSTOM_ARG_SIZE) ? EXCH_CUSTOM_ARG_SIZE : arg3Length;
         hisi_io_memcpy((void *)g_pExchRoot->customAddr, (const void * )arg3, (size_t)len);
     }
 
-    /*±£´æAºËµÄGICµÄ×´Ì¬¼Ä´æÆ÷*/
+    /*ä¿å­˜Aæ ¸çš„GICçš„çŠ¶æ€å¯„å­˜å™¨*/
     reg_save((unsigned int*)EXCH_A_GIC_INT_STS_ADDR, (unsigned int*)GIC_INT_SPI_STS, 32);
 
     sc_reg_save();
 
-    /*modIdµÚ24 bitÎª1Ê±,arg1±íÊ¾pid,´òÓ¡¸Ãpidµ÷ÓÃÕ»*/
+    /*modIdç¬¬24 bitä¸º1æ—¶,arg1è¡¨ç¤ºpid,æ‰“å°è¯¥pidè°ƒç”¨æ ˆ*/
     if(modId & EXCH_MODID_PIDMASK)
     {
         pPid = pid_task(find_vpid(arg1), PIDTYPE_PID);
@@ -874,14 +874,14 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
             show_stack(pPid, NULL);
         }
     }
-    /* ·Çdie¸´Î»¼ÇÂ¼ÈÎÎñÕ»ĞÅÏ¢£¬die¸´Î»ÔÚhookº¯ÊıÖĞÒÑÊµÏÖ */
+    /* édieå¤ä½è®°å½•ä»»åŠ¡æ ˆä¿¡æ¯ï¼Œdieå¤ä½åœ¨hookå‡½æ•°ä¸­å·²å®ç° */
     if (!(((int)EXCH_S_DIE == arg1) || ((int)EXCH_S_PANIC == arg1)))
     {
         printk("backtrace for current task:\n");
         show_stack(current, NULL);
     }
 
-    /* ±£´æ×îºóÒ»¸öÈÎÎñµÄTCB¡¢ÈÎÎñÃû¼°¶ÑÕ»µ½Òì³£ĞÅÏ¢Çø */
+    /* ä¿å­˜æœ€åä¸€ä¸ªä»»åŠ¡çš„TCBã€ä»»åŠ¡ååŠå †æ ˆåˆ°å¼‚å¸¸ä¿¡æ¯åŒº */
     for (i = 0; i < count; i++)
     {
         ptcb = (struct task_struct *)(g_pExchRoot->taskId[i]);
@@ -892,27 +892,27 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
         }
     }
 
-    /* ±£´æËùÓĞÈÎÎñµÄÈÎÎñÃû */
+    /* ä¿å­˜æ‰€æœ‰ä»»åŠ¡çš„ä»»åŠ¡å */
     ulSize = (sizeof(TASK_NAME_STRU)/sizeof(unsigned int)) * sizeof(unsigned int);
     ulTcbSize = EXCH_TASK_TCB_SIZE < sizeof(struct task_struct) ?
         EXCH_TASK_TCB_SIZE : sizeof(struct task_struct);
 
     for_each_process(pTid)
     {
-        /* ×î¶à¼ÇÂ¼124Ìõ */
+        /* æœ€å¤šè®°å½•124æ¡ */
         if(ulTaskNum >=  EXCH_RECORD_TASK_NUM_MAX)
         {
             break;
         }
 
-        /* ±£´æÈÎÎñPID(ppid|pid)*/
+        /* ä¿å­˜ä»»åŠ¡PID(ppid|pid)*/
         *(unsigned int *)(taskAllName) = (unsigned int)PID_PPID_GET(pTid);
 
-        /*¼ÇÂ¼ÈÎÎñÃû*/
+        /*è®°å½•ä»»åŠ¡å*/
         strncpy((char * )(taskAllName + sizeof(unsigned int)), pTid->comm, EXCH_TASK_NAME_PART_LEN);
         taskAllName += ulSize;
 
-        /*¼ÇÂ¼ÈÎÎñTCB, Ç°16×Ö½Ú¼ÇÂ¼ÈÎÎñPIDÓëÈÎÎñÃû */
+        /*è®°å½•ä»»åŠ¡TCB, å‰16å­—èŠ‚è®°å½•ä»»åŠ¡PIDä¸ä»»åŠ¡å */
         *(unsigned int *)(taskAllTCB) = (unsigned int)PID_PPID_GET(pTid);
         strncpy((char * )(taskAllTCB + sizeof(unsigned int)), pTid->comm, EXCH_TASK_NAME_PART_LEN);
 
@@ -922,30 +922,30 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
         ulTaskNum++;
     }
 
-    /* ±£´æÉÏ²ã¶©ÖÆÈÎÎñÕ»ĞÅÏ¢ */
+    /* ä¿å­˜ä¸Šå±‚è®¢åˆ¶ä»»åŠ¡æ ˆä¿¡æ¯ */
     for (i = 0; i < EXCH_CUST_TASK_NUM_MAX; i++)
     {
-        /* Í¨¹ıPID»ñÈ¡TCB */
+        /* é€šè¿‡PIDè·å–TCB */
         tempPid = (pid_t *)&(pqTask->data[i*sizeof(pid_t)]);
         exc_pid = (pid_t)*tempPid;
         ptcb = exch_pid_to_tid(exc_pid);
         if (NULL != ptcb)
         {
-            /* Ç°16×Ö½Ú¼ÇÂ¼ÈÎÎñPIDÓëÈÎÎñÃû */
+            /* å‰16å­—èŠ‚è®°å½•ä»»åŠ¡PIDä¸ä»»åŠ¡å */
             *((unsigned int *)pulCustTaskStack) = (unsigned int)exc_pid;
             strncpy((char * )(pulCustTaskStack + sizeof(pid_t)), (const char *)(ptcb->comm), EXCH_TASK_NAME_PART_LEN);
-            /* ºó(8K-16)×Ö½Ú¼ÇÂ¼ÈÎÎñÕ»ĞÅÏ¢ */
+            /* å(8K-16)å­—èŠ‚è®°å½•ä»»åŠ¡æ ˆä¿¡æ¯ */
             hisi_io_memcpy((void * )((char *)pulCustTaskStack + sizeof(TASK_NAME_STRU)),
                 (const void *)(ptcb->stack), (size_t )(EXCH_8K_SIZE - sizeof(TASK_NAME_STRU)));
             pulCustTaskStack = (char *)pulCustTaskStack + EXCH_8K_SIZE;
         }
     }
 
-    /* ±£´æÉÏ²ã¶©ÖÆbufferĞÅÏ¢ */
+    /* ä¿å­˜ä¸Šå±‚è®¢åˆ¶bufferä¿¡æ¯ */
     for (i = 0; i < EXCH_CUST_FUNC_NUM_MAX; i++)
     {
 
-        /* »ñÈ¡CB */
+        /* è·å–CB */
         unsigned long * pdata = (unsigned long *)&pqCb->data[i*sizeof(exch_CBReg)];
         exch_CBReg ulCb = (exch_CBReg)*pdata;
         if (ulCb)
@@ -953,7 +953,7 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
             ret = ((exch_CBReg)ulCb)(&pstCbBuf);
             if (ret > 0)
             {
-                /* Ê£Óà¿Õ¼ä¼ÇÂ¼»Øµ÷·µ»ØĞÅÏ¢Êı¾İ¶Î */
+                /* å‰©ä½™ç©ºé—´è®°å½•å›è°ƒè¿”å›ä¿¡æ¯æ•°æ®æ®µ */
                 len = EXCH_CB_NAME_SIZE + sizeof(unsigned int);
                 ulCopyLen =  pstCbBuf.ulDataLen;
 
@@ -963,9 +963,9 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
                     break;
                 }
 
-                /* Ç°32×Ö½Ú¼ÇÂ¼»Øµ÷Ö¸¶¨±êÊ¶ĞÅÏ¢ */
+                /* å‰32å­—èŠ‚è®°å½•å›è°ƒæŒ‡å®šæ ‡è¯†ä¿¡æ¯ */
                 hisi_io_memcpy((void * )pulCustFuncInfo, (void * )(pstCbBuf.aucName), EXCH_CB_NAME_SIZE);
-                /* ºó4×Ö½Ú¼ÇÂ¼»Øµ÷·µ»ØĞÅÏ¢Êı¾İ¶Î³¤¶È */
+                /* å4å­—èŠ‚è®°å½•å›è°ƒè¿”å›ä¿¡æ¯æ•°æ®æ®µé•¿åº¦ */
                 hisi_io_memcpy((void * )(pulCustFuncInfo + EXCH_CB_NAME_SIZE),
                     (void * )(&(pstCbBuf.ulDataLen)), sizeof(unsigned int));
 
@@ -998,17 +998,17 @@ void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length)
 	    }
        }while(1);
     }
-    /*ÏµÍ³¸´Î»*/
+    /*ç³»ç»Ÿå¤ä½*/
     machine_restart(NULL);
     spin_unlock_irqrestore(g_pExchRoot->spinlock, flags);
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: DRV_EXCH_TASK_INFO_ADD
- ¹¦ÄÜÃèÊö: ÁÙÖÕÒÅÑÔÄ£¿éÌá¹©¶ÔÍâ½Ó¿Ú£¬¹©ÉÏ²ãÖ¸¶¨¸´Î»Ê±ĞèÒª¼ÇÂ¼¸½¼ÓÈÎÎñĞÅÏ¢
- ÊäÈë²ÎÊı: taskPid Ö¸¶¨µÄÈÎÎñpid
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: 0-Ìí¼Ó³É¹¦£¬ÆäËû-Ìí¼ÓÊ§°Ü
+ å‡½ æ•° å: DRV_EXCH_TASK_INFO_ADD
+ åŠŸèƒ½æè¿°: ä¸´ç»ˆé—è¨€æ¨¡å—æä¾›å¯¹å¤–æ¥å£ï¼Œä¾›ä¸Šå±‚æŒ‡å®šå¤ä½æ—¶éœ€è¦è®°å½•é™„åŠ ä»»åŠ¡ä¿¡æ¯
+ è¾“å…¥å‚æ•°: taskPid æŒ‡å®šçš„ä»»åŠ¡pid
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: 0-æ·»åŠ æˆåŠŸï¼Œå…¶ä»–-æ·»åŠ å¤±è´¥
 *******************************************************************************/
 int DRV_EXCH_TASK_INFO_ADD(int taskPid)
 {
@@ -1020,21 +1020,21 @@ int DRV_EXCH_TASK_INFO_ADD(int taskPid)
     int ret = 0;
     unsigned int i = 0;
 
-    /* Èë²Î·Ç·¨ */
+    /* å…¥å‚éæ³• */
     if (exc_pid < 0)
     {
         printk("DRV_EXCH_TASK_INFO_ADD:Invalid param \n");
         return EXCH_ERROR;
     }
 
-    /* Ä£¿éÉĞÎ´³õÊ¼»¯ */
+    /* æ¨¡å—å°šæœªåˆå§‹åŒ– */
     if (EXCH_READY != g_exc_is_ready)
     {
         printk("DRV_EXCH_TASK_INFO_ADD:exch module is not init exc_pid[0X%x]\n", exc_pid);
         return EXCH_ERROR;
     }
 
-    /* ÏµÍ³ÒÑ½øÈë¸´Î»Á÷³Ì£¬²»ÔÙ½ÓÊÕÈÎÎñÌí¼Ó */
+    /* ç³»ç»Ÿå·²è¿›å…¥å¤ä½æµç¨‹ï¼Œä¸å†æ¥æ”¶ä»»åŠ¡æ·»åŠ  */
     if (0 != g_pExchRoot->share_value.is_rebooting)
     {
         printk("DRV_EXCH_TASK_INFO_ADD:A core is rebooting [0X%x]\n", exc_pid);
@@ -1045,7 +1045,7 @@ int DRV_EXCH_TASK_INFO_ADD(int taskPid)
 
     spin_lock(&pqTask->lock);
 
-    /* ¶ÓÁĞÉĞÎ´³õÊ¼»¯(ÁÙÖÕÒÅÑÔÄ£¿éÉĞÎ´×¼±¸ºÃ) */
+    /* é˜Ÿåˆ—å°šæœªåˆå§‹åŒ–(ä¸´ç»ˆé—è¨€æ¨¡å—å°šæœªå‡†å¤‡å¥½) */
     if (0 == pqTask->max)
     {
         spin_unlock(&pqTask->lock);
@@ -1053,7 +1053,7 @@ int DRV_EXCH_TASK_INFO_ADD(int taskPid)
         return EXCH_ERROR;
     }
 
-    /* ¶ÓÁĞÒÑÂú */
+    /* é˜Ÿåˆ—å·²æ»¡ */
     ret = _queue_leftroom(pqTask);
     if (sizeof(exc_pid) > ret)
     {
@@ -1063,7 +1063,7 @@ int DRV_EXCH_TASK_INFO_ADD(int taskPid)
         return EXCH_ERROR;
     }
 
-    /* ±éÀúÈÎÎñÁĞ±í²éÕÒÖ¸¶¨ÈÎÎñ */
+    /* éå†ä»»åŠ¡åˆ—è¡¨æŸ¥æ‰¾æŒ‡å®šä»»åŠ¡ */
     for_each_process(pTid)
     {
         if (exc_pid == pTid->pid)
@@ -1081,7 +1081,7 @@ int DRV_EXCH_TASK_INFO_ADD(int taskPid)
                 i += sizeof(exc_pid) ;
          }
 
-            /* ÈÎÎñpidÈë¶ÓÁĞ */
+            /* ä»»åŠ¡pidå…¥é˜Ÿåˆ— */
             pdata = (pid_t*)&(pqTask->data[pqTask->head]);
             *pdata = exc_pid;
             pqTask->head = MOD_ADD(pqTask->head, sizeof(exc_pid), pqTask->max);
@@ -1096,11 +1096,11 @@ int DRV_EXCH_TASK_INFO_ADD(int taskPid)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: DRV_EXCH_CUST_FUNC_REG
- ¹¦ÄÜÃèÊö: ÁÙÖÕÒÅÑÔÄ£¿éÌá¹©¶ÔÍâ½Ó¿Ú£¬¹©ÉÏ²ã×¢²á»Øµ÷£¬ÓÃÓÚ¸´Î»Ê±±£´æÉÏ²ãÖ¸¶¨ĞÅÏ¢
- ÊäÈë²ÎÊı: cb ÉÏ²ãÖ¸¶¨»Øµ÷½Ó¿Ú
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: 0-Ìí¼Ó³É¹¦£¬ÆäËû-Ìí¼ÓÊ§°Ü
+ å‡½ æ•° å: DRV_EXCH_CUST_FUNC_REG
+ åŠŸèƒ½æè¿°: ä¸´ç»ˆé—è¨€æ¨¡å—æä¾›å¯¹å¤–æ¥å£ï¼Œä¾›ä¸Šå±‚æ³¨å†Œå›è°ƒï¼Œç”¨äºå¤ä½æ—¶ä¿å­˜ä¸Šå±‚æŒ‡å®šä¿¡æ¯
+ è¾“å…¥å‚æ•°: cb ä¸Šå±‚æŒ‡å®šå›è°ƒæ¥å£
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: 0-æ·»åŠ æˆåŠŸï¼Œå…¶ä»–-æ·»åŠ å¤±è´¥
 *******************************************************************************/
 int echc_cust_funt_func_reg(exch_CBReg cb)
 {
@@ -1110,21 +1110,21 @@ int echc_cust_funt_func_reg(exch_CBReg cb)
     unsigned long *pdata = NULL;
     exch_CBReg  tempFuc;
 
-    /* Èë²ÎÎª¿Õ */
+    /* å…¥å‚ä¸ºç©º */
     if (!cb)
     {
         printk("DRV_EXCH_CUST_FUNC_REG:Invalid param NULL\n");
         return EXCH_ERROR;
     }
 
-    /* Ä£¿éÉĞÎ´³õÊ¼»¯ */
+    /* æ¨¡å—å°šæœªåˆå§‹åŒ– */
     if (EXCH_READY != g_exc_is_ready)
     {
         printk("DRV_EXCH_CUST_FUNC_REG:exch module is not init [0X%lx]\n", (unsigned long)cb);
         return EXCH_ERROR;
     }
 
-    /* ÏµÍ³ÒÑ½øÈë¸´Î»Á÷³Ì£¬²»ÔÙ½ÓÊÕ»Øµ÷Ìí¼Ó */
+    /* ç³»ç»Ÿå·²è¿›å…¥å¤ä½æµç¨‹ï¼Œä¸å†æ¥æ”¶å›è°ƒæ·»åŠ  */
     if (0 != g_pExchRoot->share_value.is_rebooting)
     {
         printk("DRV_EXCH_CUST_FUNC_REG:A core is rebooting [0X%lx]\n", (unsigned long)cb);
@@ -1135,7 +1135,7 @@ int echc_cust_funt_func_reg(exch_CBReg cb)
 
     spin_lock(&pqCb->lock);
 
-    /* ¶ÓÁĞÉĞÎ´³õÊ¼»¯(ÁÙÖÕÒÅÑÔÄ£¿éÉĞÎ´×¼±¸ºÃ) */
+    /* é˜Ÿåˆ—å°šæœªåˆå§‹åŒ–(ä¸´ç»ˆé—è¨€æ¨¡å—å°šæœªå‡†å¤‡å¥½) */
     if (0 == pqCb->max)
     {
         spin_unlock(&pqCb->lock);
@@ -1144,7 +1144,7 @@ int echc_cust_funt_func_reg(exch_CBReg cb)
     }
 
 
-    /* ¶ÓÁĞÒÑÂú */
+    /* é˜Ÿåˆ—å·²æ»¡ */
     ret = _queue_leftroom(pqCb);
     if (sizeof(void *) > ret)
     {
@@ -1154,7 +1154,7 @@ int echc_cust_funt_func_reg(exch_CBReg cb)
         return EXCH_ERROR;
     }
 
-    /*ÈÎÎñÒÑÔÚ¶ÓÁĞÖĞ£¬ÔòÖ±½Ó·µ»Ø*/
+    /*ä»»åŠ¡å·²åœ¨é˜Ÿåˆ—ä¸­ï¼Œåˆ™ç›´æ¥è¿”å›*/
     i = pqCb->tail;
     while(i != pqCb->head)
     {
@@ -1169,7 +1169,7 @@ int echc_cust_funt_func_reg(exch_CBReg cb)
         i += sizeof(exch_CBReg) ;
     }
 
-    /*cbÈë¶ÓÁĞ*/
+    /*cbå…¥é˜Ÿåˆ—*/
     pdata = (unsigned long *)&(pqCb->data[pqCb->head]);
     *pdata = (unsigned long)cb;
     pqCb->head = MOD_ADD(pqCb->head, sizeof(exch_CBReg), pqCb->max);
@@ -1178,11 +1178,11 @@ int echc_cust_funt_func_reg(exch_CBReg cb)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exchMemMalloc
- ¹¦ÄÜÃèÊö: ÁÙÖÕÒÅÑÔÄ£¿éÌá¹©¶ÔÍâ½Ó¿Ú£¬ÓÃÓÚ½«ÎªOMÔ¤ÁôµÄDDRµØÖ··µ»Ø¸øOMÄ£¿é
- ÊäÈë²ÎÊı: ulSize ÄÚ´æ·ÖÅä´óĞ¡
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: 0-ÎŞ¿Õ¼ä£¬ÆäËû-ÄÚ´æÆğÊ¼µØÖ·
+ å‡½ æ•° å: exchMemMalloc
+ åŠŸèƒ½æè¿°: ä¸´ç»ˆé—è¨€æ¨¡å—æä¾›å¯¹å¤–æ¥å£ï¼Œç”¨äºå°†ä¸ºOMé¢„ç•™çš„DDRåœ°å€è¿”å›ç»™OMæ¨¡å—
+ è¾“å…¥å‚æ•°: ulSize å†…å­˜åˆ†é…å¤§å°
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: 0-æ— ç©ºé—´ï¼Œå…¶ä»–-å†…å­˜èµ·å§‹åœ°å€
 *******************************************************************************/
 void* exchMemMalloc(unsigned int ulSize)
 {
@@ -1216,13 +1216,13 @@ EXPORT_SYMBOL(echc_cust_funt_func_reg);
 #endif
 
 /*******************************************************************************
- º¯ Êı Ãû: exchTaskSwitchHook
- ¹¦ÄÜÃèÊö: ¹³×Óº¯Êı£¬ÓÃÓÚ¼ÇÂ¼ÈÎÎñÇĞ»»ĞÅÏ¢
-           ¸ñÊ½:pid_ppid(4B)|omTimer(4B)|cpu(4B)|reserved(4B)|taskName(16B)
- ÊäÈë²ÎÊı: pOldTcb  ¾ÉTCB
-           pNewTcb  ĞÂTCB
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: exchTaskSwitchHook
+ åŠŸèƒ½æè¿°: é’©å­å‡½æ•°ï¼Œç”¨äºè®°å½•ä»»åŠ¡åˆ‡æ¢ä¿¡æ¯
+           æ ¼å¼:pid_ppid(4B)|omTimer(4B)|cpu(4B)|reserved(4B)|taskName(16B)
+ è¾“å…¥å‚æ•°: pOldTcb  æ—§TCB
+           pNewTcb  æ–°TCB
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 void exchTaskSwitchHook(void *pOldTcb, void *pNewTcb)
 {
@@ -1247,14 +1247,14 @@ void exchTaskSwitchHook(void *pOldTcb, void *pNewTcb)
 
 
 /*******************************************************************************
- º¯ Êı Ãû: exchIntSwitchHook
- ¹¦ÄÜÃèÊö: ¹³×Óº¯Êı£¬ÓÃÓÚ¼ÇÂ¼ÖĞ¶ÏÇĞ»»ĞÅÏ¢
-           ¸ñÊ½:vec(4B)|omTimer(4B)
- ÊäÈë²ÎÊı: dir     ·½Ïò£¬0-½øÈë£¬1-ÍË³ö
-           oldVec  ¾Évec
-           newVec  ĞÂvec
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: exchIntSwitchHook
+ åŠŸèƒ½æè¿°: é’©å­å‡½æ•°ï¼Œç”¨äºè®°å½•ä¸­æ–­åˆ‡æ¢ä¿¡æ¯
+           æ ¼å¼:vec(4B)|omTimer(4B)
+ è¾“å…¥å‚æ•°: dir     æ–¹å‘ï¼Œ0-è¿›å…¥ï¼Œ1-é€€å‡º
+           oldVec  æ—§vec
+           newVec  æ–°vec
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 void exchIntSwitchHook(unsigned int dir, unsigned int oldVec, unsigned int newVec)
 {
@@ -1276,13 +1276,13 @@ void exchIntSwitchHook(unsigned int dir, unsigned int oldVec, unsigned int newVe
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exchDieHook
- ¹¦ÄÜÃèÊö: ¹³×Óº¯Êı£¬ÓÃÓÚÏµÍ³die´¦Àí
- ÊäÈë²ÎÊı: currentTaskId  µ±Ç°ÈÎÎñID
-           vec   vecĞÅÏ¢(´íÎóÀàĞÍ)
-           pReg  ¼Ä´æÆ÷ĞÅÏ¢
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: exchDieHook
+ åŠŸèƒ½æè¿°: é’©å­å‡½æ•°ï¼Œç”¨äºç³»ç»Ÿdieå¤„ç†
+ è¾“å…¥å‚æ•°: currentTaskId  å½“å‰ä»»åŠ¡ID
+           vec   vecä¿¡æ¯(é”™è¯¯ç±»å‹)
+           pReg  å¯„å­˜å™¨ä¿¡æ¯
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 void exchDieHook(void * currentTaskId, int vec, void * pReg)
 {
@@ -1314,7 +1314,7 @@ void exchDieHook(void * currentTaskId, int vec, void * pReg)
     g_pExchRoot->vec = (unsigned int)vec;
     g_pExchRoot->cpsr = *((unsigned int *)&(pulReg[16]));
 
-    /*¿½±´¼Ä´æÆ÷ĞÅÏ¢*/
+    /*æ‹·è´å¯„å­˜å™¨ä¿¡æ¯*/
     if (pReg)
     {
         hisi_io_memcpy((void * )(g_pExchRoot->regSet), (const void * )(pReg),
@@ -1322,17 +1322,17 @@ void exchDieHook(void * currentTaskId, int vec, void * pReg)
     }
 #endif
 
-    /*½øĞĞÈ«¾Ö¸´Î»*/ //ºóĞø´Ëµ÷ÓÃÔÚMCUÖĞ¶ÏÍ¨Öª´¦½øĞĞ
+    /*è¿›è¡Œå…¨å±€å¤ä½*/ //åç»­æ­¤è°ƒç”¨åœ¨MCUä¸­æ–­é€šçŸ¥å¤„è¿›è¡Œ
     systemError((int)BSP_MODU_MNTN, (int)EXCH_S_DIE, 0, 0, 0);
 }
 /*******************************************************************************
- º¯ Êı Ãû: acpu_panic_loop_notify
- ¹¦ÄÜÃèÊö: ¹³×Óº¯Êı£¬ÓÃÓÚÏµÍ³panic´¦ÀíÖ®Ç°ËÀÑ­»·£¬Ê¹ÏÖ³¡±£Áô
- ÊäÈë²ÎÊı: nb
+ å‡½ æ•° å: acpu_panic_loop_notify
+ åŠŸèƒ½æè¿°: é’©å­å‡½æ•°ï¼Œç”¨äºç³»ç»Ÿpanicå¤„ç†ä¹‹å‰æ­»å¾ªç¯ï¼Œä½¿ç°åœºä¿ç•™
+ è¾“å…¥å‚æ•°: nb
            event
            buf
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: NOTIFY_OK
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: NOTIFY_OK
 *******************************************************************************/
 static int acpu_panic_loop_notify(struct notifier_block *nb, unsigned long event, void *buf)
 {
@@ -1349,13 +1349,13 @@ static int acpu_panic_loop_notify(struct notifier_block *nb, unsigned long event
     return NOTIFY_OK;
 }
 /*******************************************************************************
- º¯ Êı Ãû: exch_panic_notify
- ¹¦ÄÜÃèÊö: ¹³×Óº¯Êı£¬ÓÃÓÚÏµÍ³panic´¦Àí
- ÊäÈë²ÎÊı: nb
+ å‡½ æ•° å: exch_panic_notify
+ åŠŸèƒ½æè¿°: é’©å­å‡½æ•°ï¼Œç”¨äºç³»ç»Ÿpanicå¤„ç†
+ è¾“å…¥å‚æ•°: nb
            event
            buf
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: NOTIFY_OK
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: NOTIFY_OK
 *******************************************************************************/
 static int exch_panic_notify(struct notifier_block *nb, unsigned long event, void *buf)
 {
@@ -1381,21 +1381,21 @@ static int exch_panic_notify(struct notifier_block *nb, unsigned long event, voi
 		printk(KERN_ERR "%s: failed to stop other CPUs\n", __FUNCTION__);
 	}
 
-	/*½øĞĞÈ«¾Ö¸´Î»*/
-	/*Çë×¢Òâ£¬arg3±£³ÖÎª0£¬ÒòÎªÔÚsystemErrorÖĞ±£´æÁËnocºÍddrcĞÅÏ¢*/
+	/*è¿›è¡Œå…¨å±€å¤ä½*/
+	/*è¯·æ³¨æ„ï¼Œarg3ä¿æŒä¸º0ï¼Œå› ä¸ºåœ¨systemErrorä¸­ä¿å­˜äº†nocå’Œddrcä¿¡æ¯*/
 	systemError((int)BSP_MODU_MNTN, (int)EXCH_S_PANIC, 0, 0, 0);
 
 	return NOTIFY_OK;
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_die_notify
- ¹¦ÄÜÃèÊö: ¹³×Óº¯Êı£¬ÓÃÓÚÏµÍ³die´¦Àí
- ÊäÈë²ÎÊı: nb
+ å‡½ æ•° å: exch_die_notify
+ åŠŸèƒ½æè¿°: é’©å­å‡½æ•°ï¼Œç”¨äºç³»ç»Ÿdieå¤„ç†
+ è¾“å…¥å‚æ•°: nb
            event
            pReg
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: NOTIFY_OK
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: NOTIFY_OK
 *******************************************************************************/
 static int exch_die_notify(struct notifier_block *nb, unsigned long event, void *pReg)
 {
@@ -1430,7 +1430,7 @@ static int exch_die_notify(struct notifier_block *nb, unsigned long event, void 
 *                                memory funciton                               *
 *******************************************************************************/
 
-/* Èı¶ÎµØÖ·Á¬Ğø£¬Ë³ĞòÎªACM£¬¹ÊAºËĞéÄâµØÖ·Óë»ùµØÖ·ÏàÍ¬ */
+/* ä¸‰æ®µåœ°å€è¿ç»­ï¼Œé¡ºåºä¸ºACMï¼Œæ•…Aæ ¸è™šæ‹Ÿåœ°å€ä¸åŸºåœ°å€ç›¸åŒ */
 static int exch_get_a_core_base_addr(void)
 {
     g_exch_a_core_base_addr = ioremap(ANDROID_DUMP_LOG_ADDR, ANDROID_DUMP_LOG_SIZE);
@@ -1439,14 +1439,14 @@ static int exch_get_a_core_base_addr(void)
     return EXCH_OK;
 }
 
-/* CºËĞéÄâµØÖ·ÎªAºËĞéÄâµØÖ·±ãÒË2M */
+/* Cæ ¸è™šæ‹Ÿåœ°å€ä¸ºAæ ¸è™šæ‹Ÿåœ°å€ä¾¿å®œ2M */
 static int exch_get_c_core_base_addr(void)
 {
     g_exch_c_core_base_addr = ioremap(MODEM_DUMP_LOG_ADDR, MODEM_DUMP_LOG_SIZE);
     return EXCH_OK;
 }
 
-/* MºËĞéÄâµØÖ·ÎªCºËĞéÄâµØÖ·±ãÒË2M */
+/* Mæ ¸è™šæ‹Ÿåœ°å€ä¸ºCæ ¸è™šæ‹Ÿåœ°å€ä¾¿å®œ2M */
 static int exch_get_m_core_base_addr(void)
 {
     g_exch_m_core_base_addr = ioremap(MCU_DUMP_LOG_ADDR, MCU_DUMP_LOG_SIZE);
@@ -1458,12 +1458,12 @@ static int exch_get_m_core_base_addr(void)
 *******************************************************************************/
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_dev_create
- ¹¦ÄÜÃèÊö: ´Ë´¦ÎªÄ£¿é´´½¨Ò»ĞéÄâÉè±¸£¬ÓÃÓÚÊµÏÖ±¾Ä£¿éÓëÎÄ¼şÏµÍ³µÄÍ¬²½£¬µ±ÓÃÓÚ±£´æ
-           Òì³£ĞÅÏ¢µÄÎÄ¼şÏµÍ³¹Ò½ÓÍê³É£¬»áÍ¨¹ı¸ÃÉè±¸Í¨ÖªÄÚºË£¬ÄÚºË¿ªÊ¼Ä£¿é³õÊ¼»¯
- ÊäÈë²ÎÊı: ÎŞ
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: exch_dev_create
+ åŠŸèƒ½æè¿°: æ­¤å¤„ä¸ºæ¨¡å—åˆ›å»ºä¸€è™šæ‹Ÿè®¾å¤‡ï¼Œç”¨äºå®ç°æœ¬æ¨¡å—ä¸æ–‡ä»¶ç³»ç»Ÿçš„åŒæ­¥ï¼Œå½“ç”¨äºä¿å­˜
+           å¼‚å¸¸ä¿¡æ¯çš„æ–‡ä»¶ç³»ç»ŸæŒ‚æ¥å®Œæˆï¼Œä¼šé€šè¿‡è¯¥è®¾å¤‡é€šçŸ¥å†…æ ¸ï¼Œå†…æ ¸å¼€å§‹æ¨¡å—åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°: æ— 
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 static int exch_dev_create(void)
 {
@@ -1495,17 +1495,17 @@ static int exch_dev_create(void)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_init_ready_show
- ¹¦ÄÜÃèÊö: ±¾½Ó¿ÚÎªÉè±¸Êä³ö½Ó¿Ú£¬ÔİÎ´Ê¹ÓÃ
- ÊäÈë²ÎÊı: dev  Éè±¸¾ä±ú
-           attr Éè±¸ÊôĞÔ
-           buf  ÊäÈëÊı¾İ
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: buf³¤¶È
+ å‡½ æ•° å: exch_init_ready_show
+ åŠŸèƒ½æè¿°: æœ¬æ¥å£ä¸ºè®¾å¤‡è¾“å‡ºæ¥å£ï¼Œæš‚æœªä½¿ç”¨
+ è¾“å…¥å‚æ•°: dev  è®¾å¤‡å¥æŸ„
+           attr è®¾å¤‡å±æ€§
+           buf  è¾“å…¥æ•°æ®
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: bufé•¿åº¦
 *******************************************************************************/
 static ssize_t exch_init_ready_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-    /*Èç¹ûÄ£¿é×¼±¸ºÃÁË£¬½«1=EXCH_READY´æÈëbufÖĞ*/
+    /*å¦‚æœæ¨¡å—å‡†å¤‡å¥½äº†ï¼Œå°†1=EXCH_READYå­˜å…¥bufä¸­*/
     if (EXCH_READY == g_exc_is_ready)
     {
         strncpy(buf, "1\n", sizeof("1\n"));
@@ -1519,14 +1519,14 @@ static ssize_t exch_init_ready_show(struct device *dev, struct device_attribute 
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_init_ready_store
- ¹¦ÄÜÃèÊö: ±¾½Ó¿ÚÎªÉè±¸ÊäÈë½Ó¿Ú£¬Ö´ĞĞÄ£¿é³õÊ¼»¯²Ù×÷£¬ÎÄ¼şÏµÍ³¹Ò½ÓÍê³ÉÊ±´¥·¢
- ÊäÈë²ÎÊı: dev   Éè±¸¾ä±ú
-           attr  Éè±¸ÊôĞÔ
-           buf   Êä³öÊı¾İ
-           count ·µ»Ø´óĞ¡
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: EXCH_READY
+ å‡½ æ•° å: exch_init_ready_store
+ åŠŸèƒ½æè¿°: æœ¬æ¥å£ä¸ºè®¾å¤‡è¾“å…¥æ¥å£ï¼Œæ‰§è¡Œæ¨¡å—åˆå§‹åŒ–æ“ä½œï¼Œæ–‡ä»¶ç³»ç»ŸæŒ‚æ¥å®Œæˆæ—¶è§¦å‘
+ è¾“å…¥å‚æ•°: dev   è®¾å¤‡å¥æŸ„
+           attr  è®¾å¤‡å±æ€§
+           buf   è¾“å‡ºæ•°æ®
+           count è¿”å›å¤§å°
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: EXCH_READY
 *******************************************************************************/
 static ssize_t exch_init_ready_store
 (
@@ -1540,7 +1540,7 @@ static ssize_t exch_init_ready_store
 
     pr_info("exch_init_ready_store: %s \n", buf);
 
-    /* ÈôÄ£¿éÉĞÎ´×¼±¸ºÃ£¬Ö´ĞĞ³õÊ¼»¯ */
+    /* è‹¥æ¨¡å—å°šæœªå‡†å¤‡å¥½ï¼Œæ‰§è¡Œåˆå§‹åŒ– */
     if (EXCH_READY != g_exc_is_ready)
     {
         exch_init();
@@ -1550,13 +1550,13 @@ static ssize_t exch_init_ready_store
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_exc_file_show
- ¹¦ÄÜÃèÊö: ±¾½Ó¿ÚÎªÉè±¸Êä³ö½Ó¿Ú£¬ÊÇ·ñĞèÒªÉú²úexcÎÄ¼ş
- ÊäÈë²ÎÊı: dev  Éè±¸¾ä±ú
-           attr Éè±¸ÊôĞÔ
-           buf  ÊäÈëÊı¾İ
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: buf³¤¶È
+ å‡½ æ•° å: exch_exc_file_show
+ åŠŸèƒ½æè¿°: æœ¬æ¥å£ä¸ºè®¾å¤‡è¾“å‡ºæ¥å£ï¼Œæ˜¯å¦éœ€è¦ç”Ÿäº§excæ–‡ä»¶
+ è¾“å…¥å‚æ•°: dev  è®¾å¤‡å¥æŸ„
+           attr è®¾å¤‡å±æ€§
+           buf  è¾“å…¥æ•°æ®
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: bufé•¿åº¦
 *******************************************************************************/
 static ssize_t exch_exc_file_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
@@ -1574,14 +1574,14 @@ static ssize_t exch_exc_file_show(struct device *dev, struct device_attribute *a
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_exc_file_store
- ¹¦ÄÜÃèÊö: ±¾½Ó¿ÚÎªÉè±¸ÊäÈë½Ó¿Ú£¬Ö´ĞĞÄ£¿é³õÊ¼»¯²Ù×÷.
- ÊäÈë²ÎÊı: dev   Éè±¸¾ä±ú
-           attr  Éè±¸ÊôĞÔ
-           buf   Êä³öÊı¾İ
-           count ·µ»Ø´óĞ¡
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: EXCH_READY
+ å‡½ æ•° å: exch_exc_file_store
+ åŠŸèƒ½æè¿°: æœ¬æ¥å£ä¸ºè®¾å¤‡è¾“å…¥æ¥å£ï¼Œæ‰§è¡Œæ¨¡å—åˆå§‹åŒ–æ“ä½œ.
+ è¾“å…¥å‚æ•°: dev   è®¾å¤‡å¥æŸ„
+           attr  è®¾å¤‡å±æ€§
+           buf   è¾“å‡ºæ•°æ®
+           count è¿”å›å¤§å°
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: EXCH_READY
 *******************************************************************************/
 static ssize_t exch_exc_file_store
 (
@@ -1605,13 +1605,13 @@ static ssize_t exch_exc_file_store
 
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_reboot_info_show
- ¹¦ÄÜÃèÊö: ±¾½Ó¿ÚÎªÉè±¸Êä³ö½Ó¿Ú£¬ÓÃÓÚ»ñÈ¡¸´Î»ĞÅÏ¢
- ÊäÈë²ÎÊı: dev  Éè±¸¾ä±ú
-           attr Éè±¸ÊôĞÔ
-           buf  ÊäÈëÊı¾İ
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: buf³¤¶È
+ å‡½ æ•° å: exch_reboot_info_show
+ åŠŸèƒ½æè¿°: æœ¬æ¥å£ä¸ºè®¾å¤‡è¾“å‡ºæ¥å£ï¼Œç”¨äºè·å–å¤ä½ä¿¡æ¯
+ è¾“å…¥å‚æ•°: dev  è®¾å¤‡å¥æŸ„
+           attr è®¾å¤‡å±æ€§
+           buf  è¾“å…¥æ•°æ®
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: bufé•¿åº¦
 *******************************************************************************/
 static ssize_t exch_reboot_info_show(struct device *dev,
                         struct device_attribute *attr, char *buf)
@@ -1622,14 +1622,14 @@ static ssize_t exch_reboot_info_show(struct device *dev,
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_reboot_info_store
- ¹¦ÄÜÃèÊö: ±¾½Ó¿ÚÎªÉè±¸ÊäÈë½Ó¿Ú£¬ÔİÎ´Ê¹ÓÃ
- ÊäÈë²ÎÊı: dev   Éè±¸¾ä±ú
-           attr  Éè±¸ÊôĞÔ
-           buf   Êä³öÊı¾İ
-           count ·µ»Ø´óĞ¡
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: EXCH_OK
+ å‡½ æ•° å: exch_reboot_info_store
+ åŠŸèƒ½æè¿°: æœ¬æ¥å£ä¸ºè®¾å¤‡è¾“å…¥æ¥å£ï¼Œæš‚æœªä½¿ç”¨
+ è¾“å…¥å‚æ•°: dev   è®¾å¤‡å¥æŸ„
+           attr  è®¾å¤‡å±æ€§
+           buf   è¾“å‡ºæ•°æ®
+           count è¿”å›å¤§å°
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: EXCH_OK
 *******************************************************************************/
 static ssize_t exch_reboot_info_store
 (
@@ -1645,19 +1645,19 @@ static ssize_t exch_reboot_info_store
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_get_reset_info
- ¹¦ÄÜÃèÊö: »ñÈ¡¸´Î»ĞÅÏ¢£¬°üÀ¨¸´Î»Ô­ÒòÓë¸´Î»ºË
- ÊäÈë²ÎÊı: ÎŞ
- Êä³ö²ÎÊı: reason  ¸´Î»Ô­Òò
-           core    ¸´Î»ºË
- ·µ »Ø Öµ: EXCH_ERROR »ñÈ¡Ê§°Ü£¬EXCH_OK »ñÈ¡³É¹¦
+ å‡½ æ•° å: exch_get_reset_info
+ åŠŸèƒ½æè¿°: è·å–å¤ä½ä¿¡æ¯ï¼ŒåŒ…æ‹¬å¤ä½åŸå› ä¸å¤ä½æ ¸
+ è¾“å…¥å‚æ•°: æ— 
+ è¾“å‡ºå‚æ•°: reason  å¤ä½åŸå› 
+           core    å¤ä½æ ¸
+ è¿” å› å€¼: EXCH_ERROR è·å–å¤±è´¥ï¼ŒEXCH_OK è·å–æˆåŠŸ
 *******************************************************************************/
 static int exch_get_reset_info(char *reason, char *core)
 {
     unsigned int reboot_core = 0;
     unsigned int reboot_reason = 0;
 
-    /* È·ÈÏ¸´Î»Ô­Òò */
+    /* ç¡®è®¤å¤ä½åŸå›  */
 	reboot_reason = g_pExchRoot->share_value.reboot_reason;
     if (g_pExchRoot->modId >= 0x10000000 && g_pExchRoot->modId < 0x2fffffff)
     {
@@ -1672,7 +1672,7 @@ static int exch_get_reset_info(char *reason, char *core)
 	    snprintf(reason, sizeof("OTHERS"), "OTHERS");
 	}
 
-    /* È·ÈÏ¸´Î»ºË */
+    /* ç¡®è®¤å¤ä½æ ¸ */
     reboot_core = g_pExchRoot->share_value.reboot_core;
     switch (reboot_core)
     {
@@ -1714,8 +1714,8 @@ void set_himntn(int feature, int val)
 
 
 /*
-Èôhimntn[feature]Îª'1'£¬Ôòº¯Êıcheck_himntn·µ»Ø1
-Èôhimntn[feature]Îª'0'£¬Ôòº¯Êıcheck_himntn·µ»Ø0
+è‹¥himntn[feature]ä¸º'1'ï¼Œåˆ™å‡½æ•°check_himntnè¿”å›1
+è‹¥himntn[feature]ä¸º'0'ï¼Œåˆ™å‡½æ•°check_himntnè¿”å›0
 */
 int  check_himntn(int feature)
 {
@@ -1758,11 +1758,11 @@ static irqreturn_t fake_wdg_irq_handler(int irq, void *dev)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_init
- ¹¦ÄÜÃèÊö: Ä£¿é³õÊ¼»¯Èë¿Ú
- ÊäÈë²ÎÊı: ÎŞ
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: EXCH_ERROR ³õÊ¼»¯Ê§°Ü£¬EXCH_OK ³õÊ¼»¯³É¹¦
+ å‡½ æ•° å: exch_init
+ åŠŸèƒ½æè¿°: æ¨¡å—åˆå§‹åŒ–å…¥å£
+ è¾“å…¥å‚æ•°: æ— 
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: EXCH_ERROR åˆå§‹åŒ–å¤±è´¥ï¼ŒEXCH_OK åˆå§‹åŒ–æˆåŠŸ
 *******************************************************************************/
 static int exch_init(void)
 {
@@ -1774,21 +1774,21 @@ static int exch_init(void)
 	
     pr_info("exch_init: enter \n");
 
-    /* ĞÅÏ¢´¦Àí½áÊø£¬Çå¿ÕDDRÄÚ´æÖĞA/C/MÒì³£ĞÅÏ¢Çø */
-    /* 2MÒì³£¼ÇÂ¼ÇøÇå0£¬³ıÁËEXCH_LOG_KMSG_ADDRÇøÓò*/
+    /* ä¿¡æ¯å¤„ç†ç»“æŸï¼Œæ¸…ç©ºDDRå†…å­˜ä¸­A/C/Må¼‚å¸¸ä¿¡æ¯åŒº */
+    /* 2Må¼‚å¸¸è®°å½•åŒºæ¸…0ï¼Œé™¤äº†EXCH_LOG_KMSG_ADDRåŒºåŸŸ*/
     (void)hisi_io_memset((void *)EXCH_BASE_ADDR, 0, (size_t )(EXCH_LOG_KMSG_ADDR - EXCH_BASE_ADDR));
     (void)hisi_io_memset((void *)PWRCTRL_EXC_ACPU_ADDR, 0, (size_t )(EXCH_EXC_BIN_SIZE - (PWRCTRL_EXC_ACPU_ADDR - EXCH_BASE_ADDR)));
 
     g_pExchRoot->spinlock = &spinlock;
     spin_lock_init(g_pExchRoot->spinlock);
 
-    /*±£Áô²úÆ·ºÍ°æ±¾ĞÅÏ¢*/
+    /*ä¿ç•™äº§å“å’Œç‰ˆæœ¬ä¿¡æ¯*/
     hisi_io_memcpy((void * )g_pExchRoot->version, (const void * )PRODUCT_CFG_FULL_VERSION_STR, ((size_t )strlen(PRODUCT_CFG_FULL_VERSION_STR) + 1));
 
     g_pExchRoot->excSize = EXCH_A_CORE_SIZE;
     exch_rtc_time_get(g_pExchRoot->rtcTime);
 
-    /* ·ÖÅäÒì³£ĞÅÏ¢Çø */
+    /* åˆ†é…å¼‚å¸¸ä¿¡æ¯åŒº */
     g_pExchRoot->excBaseAddr   = (unsigned char*)g_pExchRoot;
     g_pExchRoot->taskTcbAddr   = EXCH_LAST_TASK_TCB_ADDR;
     g_pExchRoot->intStackAddr  = EXCH_LAST_INT_STACK_ADDR;
@@ -1804,17 +1804,17 @@ static int exch_init(void)
     g_pExchRoot->customFuncQueueAddr = EXCH_CUSTOM_FUNC_QUEUE_ADDR;
     g_pExchRoot->customFuncInfoAddr  = EXCH_CUSTOM_FUNC_INFO_ADDR;
 
-    /* ¹²ÏíĞÅÏ¢ÄÚ´æÇø·ÖÅä */
+    /* å…±äº«ä¿¡æ¯å†…å­˜åŒºåˆ†é… */
     g_pExchRoot->share_addr.reboot_reason = (unsigned int*)(EXCH_CORES_SHARE_ADDR);
     g_pExchRoot->share_addr.reboot_core   = (unsigned int*)(EXCH_CORES_SHARE_ADDR + sizeof(void*));
     g_pExchRoot->share_addr.mem_ready     = (unsigned int*)(EXCH_CORES_SHARE_ADDR + sizeof(void*)*2);
     g_pExchRoot->share_addr.is_rebooting  = (unsigned int*)(EXCH_CORES_SHARE_ADDR + sizeof(void*)*3);
 
-    /* Òì³£ÎÄ¼ş±£´æÍê³É£¬ÄÚ´æÇåÁã£¬ÆäËûºË¿ÉÒÔ¿ªÊ¼³õÊ¼»¯ÁÙÖÕÒÅÑÔÄ£¿é */ //ÖĞ¶ÏÍ¨Öª???
+    /* å¼‚å¸¸æ–‡ä»¶ä¿å­˜å®Œæˆï¼Œå†…å­˜æ¸…é›¶ï¼Œå…¶ä»–æ ¸å¯ä»¥å¼€å§‹åˆå§‹åŒ–ä¸´ç»ˆé—è¨€æ¨¡å— */ //ä¸­æ–­é€šçŸ¥???
     g_pExchRoot->share_value.mem_ready = EXCH_MEM_IS_READY;
     *(volatile unsigned int *) (g_pExchRoot->share_addr.mem_ready) = EXCH_MEM_IS_READY;
 
-    /* Éú³ÉÑ­»·¶ÓÁĞ */
+    /* ç”Ÿæˆå¾ªç¯é˜Ÿåˆ— */
     queue_init((struct queue *)(g_pExchRoot->customTaskQueueAddr), "CustTaskQue",  (EXCH_CUST_TASK_NUM_MAX + 1) * sizeof(unsigned int));
     queue_init((struct queue *)(g_pExchRoot->customTaskInfoAddr),  "CustTaskInfo", (EXCH_CUST_TASK_NUM_MAX + 1) * sizeof(unsigned int));
     queue_init((struct queue *)(g_pExchRoot->customFuncQueueAddr), "CustFuncQue",  (EXCH_CUST_FUNC_NUM_MAX + 1) * sizeof(void*));
@@ -1893,24 +1893,24 @@ static int exch_init(void)
         printk(KERN_ERR"exch_init,g_acpu_watchdog_flag remap error.\n");
     }
 
-	/*ÎªÁË¹æ±ÜIRQ_ACPU_SOFT_FIQµÍ¸ÅÂÊÒÔIRQÀàĞÍ·¢³öµÄÎÊÌâ*/
+	/*ä¸ºäº†è§„é¿IRQ_ACPU_SOFT_FIQä½æ¦‚ç‡ä»¥IRQç±»å‹å‘å‡ºçš„é—®é¢˜*/
     ret = request_irq(IRQ_ACPU_SOFT_FIQ, fake_wdg_irq_handler, IRQF_NO_SUSPEND, "irq_watchdog", NULL);
     if (ret)
     {
         printk(KERN_ERR"exch_init, fail to request irq for IRQ_ACPU_SOFT_FIQ.\n");
     }
-    /* ÁÙÖÕÒÅÑÔÄ£¿é³õÊ¼»¯Íê³É */
+    /* ä¸´ç»ˆé—è¨€æ¨¡å—åˆå§‹åŒ–å®Œæˆ */
     g_exc_is_ready = EXCH_READY;
 
     return EXCH_OK;
 
 }
 /*******************************************************************************
- º¯ Êı Ãû: exch_entry
- ¹¦ÄÜÃèÊö: ÁÙÖÕÒÅÑÔÄ£¿éÈë¿Ú
- ÊäÈë²ÎÊı: ÎŞ
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: EXCH_OK ³õÊ¼»¯³É¹¦£¬EXCH_ERROR ³õÊ¼»¯Ê§°Ü
+ å‡½ æ•° å: exch_entry
+ åŠŸèƒ½æè¿°: ä¸´ç»ˆé—è¨€æ¨¡å—å…¥å£
+ è¾“å…¥å‚æ•°: æ— 
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: EXCH_OK åˆå§‹åŒ–æˆåŠŸï¼ŒEXCH_ERROR åˆå§‹åŒ–å¤±è´¥
 *******************************************************************************/
 static int __init exch_entry(void)
 {
@@ -1922,7 +1922,7 @@ static int __init exch_entry(void)
     pr_info("exch_entry: enter\n");
     pr_info("size is:0x%x\n",(unsigned int)sizeof(EH_ROOT));
 
-    /* Ä£¿é³õÊ¼»¯£¬ÏÈ»ñÈ¡¸÷ºËDDRÄÚ´æµØÖ· */
+    /* æ¨¡å—åˆå§‹åŒ–ï¼Œå…ˆè·å–å„æ ¸DDRå†…å­˜åœ°å€ */
     /*move to early init*/
     exch_dev_create();
 
@@ -1937,12 +1937,12 @@ static int __init exch_entry(void)
 
     *(char*)(g_pExchRoot->rtcTime + EXCH_RTC_TIME_LEN - 1) = '\0';
 
-    /* ¹¹½¨reset logÄÚÈİ¼°Æä³¤¶ÈĞÅÏ¢ */
+    /* æ„å»ºreset logå†…å®¹åŠå…¶é•¿åº¦ä¿¡æ¯ */
     snprintf(g_reset_log_buf, sizeof(g_reset_log_buf), " %s\n", reboot_reason);
 
     printk("exch_save:reboot_reason[%s] core[%s]\n", reboot_reason, reboot_core);
 
-    /* Õı³£¸´Î»»òÕß¿ª»ú£¬Ôò¿ªÊ¼Ä£¿é³õÊ¼»¯ */
+    /* æ­£å¸¸å¤ä½æˆ–è€…å¼€æœºï¼Œåˆ™å¼€å§‹æ¨¡å—åˆå§‹åŒ– */
     if (0 == g_pExchRoot->modId)
     {
          exch_init();
@@ -2014,7 +2014,7 @@ static int __init exch_postcore_init(void)
     return 0;
 }
 
-/*·ÀÖ¹Òì³£·¢ÉúÊ±£¬Ñ­»·dabtÆÆ»µÏÖ³¡*/
+/*é˜²æ­¢å¼‚å¸¸å‘ç”Ÿæ—¶ï¼Œå¾ªç¯dabtç ´åç°åœº*/
 void exch_stand_guard(struct task_struct *tsk)
 {
 	if (!himntn_gobal_resetlog)
@@ -2044,11 +2044,11 @@ void exch_stand_guard(struct task_struct *tsk)
 *******************************************************************************/
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_task_stack_dump
- ¹¦ÄÜÃèÊö: ÏÔÊ¾ÁÙÖÕÒÅÑÔÄ£¿éÖ¸¶¨ÈÎÎñµ÷ÓÃÕ»ĞÅÏ¢
- ÊäÈë²ÎÊı: taskPid  Ö¸¶¨ÈÎÎñPID
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: exch_task_stack_dump
+ åŠŸèƒ½æè¿°: æ˜¾ç¤ºä¸´ç»ˆé—è¨€æ¨¡å—æŒ‡å®šä»»åŠ¡è°ƒç”¨æ ˆä¿¡æ¯
+ è¾“å…¥å‚æ•°: taskPid  æŒ‡å®šä»»åŠ¡PID
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 void exch_task_stack_dump(int taskPid)
 {
@@ -2073,12 +2073,12 @@ void exch_task_stack_dump(int taskPid)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_buf_show
- ¹¦ÄÜÃèÊö: ÏÔÊ¾ÁÙÖÕÒÅÑÔÄ£¿éÖ¸¶¨ÄÚ´æµØÖ·ÄÚµÄÄÚÈİ
- ÊäÈë²ÎÊı: offset  DDRÄÚ´æÖĞµÄÆ«ÒÆµØÖ·
-           size    ÏÔÊ¾ÄÚÈİ´óĞ¡
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: exch_buf_show
+ åŠŸèƒ½æè¿°: æ˜¾ç¤ºä¸´ç»ˆé—è¨€æ¨¡å—æŒ‡å®šå†…å­˜åœ°å€å†…çš„å†…å®¹
+ è¾“å…¥å‚æ•°: offset  DDRå†…å­˜ä¸­çš„åç§»åœ°å€
+           size    æ˜¾ç¤ºå†…å®¹å¤§å°
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 void exch_buf_show(unsigned int offset, unsigned int size)
 {
@@ -2095,13 +2095,13 @@ void exch_buf_show(unsigned int offset, unsigned int size)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû: exch_hex_dump
- ¹¦ÄÜÃèÊö: ´òÓ¡bufĞÅÏ¢£¬ÈôÎªASCII×Ö·ûÔò´òÓ¡×Ö·û
- ÊäÈë²ÎÊı: buf     ´ıdumpµØÖ·
-           size    ÄÚÈİ´óĞ¡
-           per_row Ã¿ĞĞ´òÓ¡Êı¾İÁ¿
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: exch_hex_dump
+ åŠŸèƒ½æè¿°: æ‰“å°bufä¿¡æ¯ï¼Œè‹¥ä¸ºASCIIå­—ç¬¦åˆ™æ‰“å°å­—ç¬¦
+ è¾“å…¥å‚æ•°: buf     å¾…dumpåœ°å€
+           size    å†…å®¹å¤§å°
+           per_row æ¯è¡Œæ‰“å°æ•°æ®é‡
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 void exch_hex_dump(unsigned char *buf, unsigned int size, unsigned char per_row)
 {
@@ -2135,7 +2135,7 @@ void exch_hex_dump(unsigned char *buf, unsigned int size, unsigned char per_row)
             line[(i * 3)] = TO_CHAR(val >> 4);
             line[(i * 3) + 1] = TO_CHAR(val & 0x0F);
 
-            /* ÈôÎª¿ÉÏÔÊ¾ASCII×Ö·û£¬Ôò´òÓ¡¸Ã×Ö·û£¬·ñÔò´òÓ¡"." */
+            /* è‹¥ä¸ºå¯æ˜¾ç¤ºASCIIå­—ç¬¦ï¼Œåˆ™æ‰“å°è¯¥å­—ç¬¦ï¼Œå¦åˆ™æ‰“å°"." */
             line[(per_row * 3) + 2 + i] = IS_PRINTABLE(val) ? val : '.';
         }
 
@@ -2191,11 +2191,11 @@ IFC_GEN_CALL5(MAILBOX_IFC_ACPU_TO_CCPU_SYSTEMERROR, systemErrorCcore,
 *******************************************************************************/
 #ifdef EXCH_TEST_FUNCTION_ON
 /*******************************************************************************
- º¯ Êı Ãû: exchTest
- ¹¦ÄÜÃèÊö: ²âÊÔ½Ó¿Ú£¬ÓÃÓÚ´¥·¢²»Í¬ÀàĞÍÏµÍ³Òì³£
- ÊäÈë²ÎÊı: exc_type  Òì³£ÀàĞÍ
- Êä³ö²ÎÊı: ÎŞ
- ·µ »Ø Öµ: ÎŞ
+ å‡½ æ•° å: exchTest
+ åŠŸèƒ½æè¿°: æµ‹è¯•æ¥å£ï¼Œç”¨äºè§¦å‘ä¸åŒç±»å‹ç³»ç»Ÿå¼‚å¸¸
+ è¾“å…¥å‚æ•°: exc_type  å¼‚å¸¸ç±»å‹
+ è¾“å‡ºå‚æ•°: æ— 
+ è¿” å› å€¼: æ— 
 *******************************************************************************/
 
 int exchUNDEF(void *arg)
@@ -2269,7 +2269,7 @@ int exchPANIC(void *arg)
 
     return 0;
 }
-/*´¥·¢¿ÕÖ¸Õë²Ù×÷Ê±´ò¿ª
+/*è§¦å‘ç©ºæŒ‡é’ˆæ“ä½œæ—¶æ‰“å¼€
 void test_void_point(void)
 {
     int* p = NULL;
@@ -2318,7 +2318,7 @@ void exchTest(int exc_type)
 }
 #endif
 
-/* ²â¹¦aºËÒì³£ÎÄ¼şµÄ¼ÇÂ¼ */
+/* æµ‹åŠŸaæ ¸å¼‚å¸¸æ–‡ä»¶çš„è®°å½• */
 void tsAcorePanic(int flag)
 {
     if (0 == flag)
@@ -2341,11 +2341,11 @@ void tsAcorePanic(int flag)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû:omTimerGet
- ¹¦ÄÜÃèÊö:»ñÈ¡ÏµÍ³timerµÄÏà¶ÔsliceÖµ
- ÊäÈë²ÎÊı:ÎŞ
- Êä³ö²ÎÊı:ÎŞ
- ·µ »Ø Öµ:timer slice value
+ å‡½ æ•° å:omTimerGet
+ åŠŸèƒ½æè¿°:è·å–ç³»ç»Ÿtimerçš„ç›¸å¯¹sliceå€¼
+ è¾“å…¥å‚æ•°:æ— 
+ è¾“å‡ºå‚æ•°:æ— 
+ è¿” å› å€¼:timer slice value
 *******************************************************************************/
 unsigned int omTimerGet(void)
 {
@@ -2357,12 +2357,12 @@ unsigned int omTimerGet(void)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû:exch_mdm_panic_cb_reg
- ¹¦ÄÜÃèÊö:Ìá¹©¸øCP,ÓÃÓÚ×¢²ámodem panicÊ±ËùĞèÖ´ĞĞµÄ»Øµ÷º¯Êı£»
- ÊäÈë²ÎÊı:exch_mdm_panic_reg: pfunc ´ı×¢²áµÄ»Øµ÷º¯ÊıÖ¸Õë
+ å‡½ æ•° å:exch_mdm_panic_cb_reg
+ åŠŸèƒ½æè¿°:æä¾›ç»™CP,ç”¨äºæ³¨å†Œmodem panicæ—¶æ‰€éœ€æ‰§è¡Œçš„å›è°ƒå‡½æ•°ï¼›
+ è¾“å…¥å‚æ•°:exch_mdm_panic_reg: pfunc å¾…æ³¨å†Œçš„å›è°ƒå‡½æ•°æŒ‡é’ˆ
 
- Êä³ö²ÎÊı:ÎŞ
- ·µ »Ø Öµ:
+ è¾“å‡ºå‚æ•°:æ— 
+ è¿” å› å€¼:
 *******************************************************************************/
 unsigned int exch_mdm_panic_cb_reg(exch_mdm_panic_reg pfunc)
 {
@@ -2376,12 +2376,12 @@ unsigned int exch_mdm_panic_cb_reg(exch_mdm_panic_reg pfunc)
 }
 
 /*******************************************************************************
- º¯ Êı Ãû:exch_exc_mdm_panic_cb
- ¹¦ÄÜÃèÊö:AP ²àµ÷ÓÃ»Øµ÷º¯Êı£¬Ö´ĞĞmodem panic²Ù×÷£»
- ÊäÈë²ÎÊı:ÎŞ
- Êä³ö²ÎÊı:ÎŞ
- ±»µ÷º¯Êı:
- ·µ »Ø Öµ:
+ å‡½ æ•° å:exch_exc_mdm_panic_cb
+ åŠŸèƒ½æè¿°:AP ä¾§è°ƒç”¨å›è°ƒå‡½æ•°ï¼Œæ‰§è¡Œmodem panicæ“ä½œï¼›
+ è¾“å…¥å‚æ•°:æ— 
+ è¾“å‡ºå‚æ•°:æ— 
+ è¢«è°ƒå‡½æ•°:
+ è¿” å› å€¼:
 *******************************************************************************/
 void exch_exc_mdm_panic_cb(void)
 {

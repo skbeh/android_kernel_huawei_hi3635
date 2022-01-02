@@ -4,7 +4,7 @@
   Author       : ---
   Version      : V200R001
   Date         : 2005-11-18
-  Description  : PPPËùÓÃµÄ¹«ÓÐµÄºêÓë±äÁ¿ÒÔ¼°½á¹¹¶¨Òå
+  Description  : PPPæ‰€ç”¨çš„å…¬æœ‰çš„å®ä¸Žå˜é‡ä»¥åŠç»“æž„å®šä¹‰
 
   Function List:
         ---
@@ -16,12 +16,12 @@
      Modification:Create
   2. 2006-03-13 MODIFY BY F49086 FOR A32D02478
 
-  3.ÈÕ    ÆÚ   : 2006Äê4ÔÂ5ÈÕ
-    ×÷    Õß   : liuyang id:48197
-    ÐÞ¸ÄÄÚÈÝ   : ÎÊÌâµ¥ºÅ:A32D01738
-  3.ÈÕ    ÆÚ   : 2006Äê5ÔÂ17ÈÕ
-    ×÷    Õß   : L47619
-    ÐÞ¸ÄÄÚÈÝ   : ÎÊÌâµ¥ºÅ:A32D04462
+  3.æ—¥    æœŸ   : 2006å¹´4æœˆ5æ—¥
+    ä½œ    è€…   : liuyang id:48197
+    ä¿®æ”¹å†…å®¹   : é—®é¢˜å•å·:A32D01738
+  3.æ—¥    æœŸ   : 2006å¹´5æœˆ17æ—¥
+    ä½œ    è€…   : L47619
+    ä¿®æ”¹å†…å®¹   : é—®é¢˜å•å·:A32D04462
  ************************************************************************/
 #ifndef __PPP_PUBLIC_H__
 #define __PPP_PUBLIC_H__
@@ -33,7 +33,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼þ°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "vos.h"
 #include "AtPppInterface.h"
@@ -51,7 +51,7 @@ extern "C" {
 #pragma pack(4)
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 
 #if (VOS_OS_VER == VOS_WIN32)
@@ -139,22 +139,22 @@ extern "C" {
         *(((VOS_CHAR*)tgt)+1) = *((VOS_CHAR*)src);
 
 #endif
-/*ÏµÍ³×î¶àÐèÒªµÄPPP IDµÄÊýÄ¿£¬Êµ¼ÊÐèÒªµÄ¿Õ¼äÊÇ
-¸ÃÖµ¼ÓÒ»£¬ÒòÎªÍ·ÊÇ²»±»·ÖÅäµÄ*/
+/*ç³»ç»Ÿæœ€å¤šéœ€è¦çš„PPP IDçš„æ•°ç›®ï¼Œå®žé™…éœ€è¦çš„ç©ºé—´æ˜¯
+è¯¥å€¼åŠ ä¸€ï¼Œå› ä¸ºå¤´æ˜¯ä¸è¢«åˆ†é…çš„*/
 /*#define PPP_MAX_ID_NUM 1*/
 #define PPP_MAX_ID_NUM_ALLOC (PPP_MAX_ID_NUM+1)
 
-/*½ÓÊÕµ½µÄ±¨ÎÄÏòÏµÍ³ÉêÇë¿Õ¼ä£¬ÐèÒªÔ¤ÁôµÄÌí¼ÓÍ·²¿µÄ*/
+/*æŽ¥æ”¶åˆ°çš„æŠ¥æ–‡å‘ç³»ç»Ÿç”³è¯·ç©ºé—´ï¼Œéœ€è¦é¢„ç•™çš„æ·»åŠ å¤´éƒ¨çš„*/
 #define PPP_RECIEVE_RESERVE_FOR_HEAD 4
 
-/*½ÓÊÕµ½µÄ±¨ÎÄÏòÏµÍ³ÉêÇë¿Õ¼ä£¬ÐèÒªÔ¤ÁôµÄÌí¼ÓÎ²²¿µÄ*/
+/*æŽ¥æ”¶åˆ°çš„æŠ¥æ–‡å‘ç³»ç»Ÿç”³è¯·ç©ºé—´ï¼Œéœ€è¦é¢„ç•™çš„æ·»åŠ å°¾éƒ¨çš„*/
 #define PPP_RECIEVE_RESERVE_FOR_TAIL 2
 
-#define PPPoE_RESERVE_HEADER_LEN    20     /*Ô¤ÁôµÄ×Ö½ÚÊý£¬¹©PPPoEÌîÐ´ÒÔÌ«Ö¡Í·²¿ºÍPPPoEÍ·²¿*/
+#define PPPoE_RESERVE_HEADER_LEN    20     /*é¢„ç•™çš„å­—èŠ‚æ•°ï¼Œä¾›PPPoEå¡«å†™ä»¥å¤ªå¸§å¤´éƒ¨å’ŒPPPoEå¤´éƒ¨*/
 
-#define PPP_FEATURE_PPP         0          /*Ê¹ÓÃPPP*/
+#define PPP_FEATURE_PPP         0          /*ä½¿ç”¨PPP*/
 
-#define PPP_FEATURE             PPP_FEATURE_PPP   /*µ±Ç°Ñ¡ÔñPPP*/
+#define PPP_FEATURE             PPP_FEATURE_PPP   /*å½“å‰é€‰æ‹©PPP*/
 
 #define PPP_MAX_DATA_CNT_IN_QUEUE (2000)
 
@@ -165,7 +165,7 @@ extern "C" {
     ( TAF_SUCCESS == At_PppId2PsRab((usPppId), pucRabId) )
 
 
-/* PPPÄ£¿é´òÓ¡ÔÝ¶¨·½°¸ */
+/* PPPæ¨¡å—æ‰“å°æš‚å®šæ–¹æ¡ˆ */
 #ifndef __PPP_RELEASE__
 #define PPP_MNTN_LOG(ModulePID, SubMod, Level, String) \
             PPP_PrintLog(ModulePID, SubMod, Level, String)
@@ -190,13 +190,13 @@ extern "C" {
             PS_LOG4(ModulePID, SubMod, Level, String, Para1, Para2, Para3, Para4)
  #endif
 
-/* --------------Áã¿½±´²Ù×÷Ïà¹Øºê-------------- */
+/* --------------é›¶æ‹·è´æ“ä½œç›¸å…³å®-------------- */
 typedef IMM_ZC_STRU      PPP_ZC_STRU;
 typedef IMM_ZC_HEAD_STRU PPP_ZC_QUEUE_STRU;
 
-#define PPP_ZC_MAX_DATA_LEN                  (IMM_MAX_ETH_FRAME_LEN)            /* AºËÄÚ¿ÉÉêÇëÄÚ´æ¿é×î´ó³¤¶È */
-#define PPP_ZC_UL_RESERVE_LEN                (IMM_MAC_HEADER_RES_LEN)           /* MACÍ·³¤¶È£¬ÉÏÐÐ·½ÏòÐèÒª±£Áô */
-#define PPP_ZC_DL_RESERVE_LEN                (0)                                /* ÏÂÐÐ·½Ïò²»ÐèÒª±£Áô */
+#define PPP_ZC_MAX_DATA_LEN                  (IMM_MAX_ETH_FRAME_LEN)            /* Aæ ¸å†…å¯ç”³è¯·å†…å­˜å—æœ€å¤§é•¿åº¦ */
+#define PPP_ZC_UL_RESERVE_LEN                (IMM_MAC_HEADER_RES_LEN)           /* MACå¤´é•¿åº¦ï¼Œä¸Šè¡Œæ–¹å‘éœ€è¦ä¿ç•™ */
+#define PPP_ZC_DL_RESERVE_LEN                (0)                                /* ä¸‹è¡Œæ–¹å‘ä¸éœ€è¦ä¿ç•™ */
 
 #define PPP_ZC_MEM_ALLOC(ulLen)              (IMM_ZcStaticAlloc(ulLen))
 #define PPP_ZC_MEM_FREE(pstMem)              (IMM_ZcFree(pstMem))
@@ -220,34 +220,34 @@ typedef IMM_ZC_HEAD_STRU PPP_ZC_QUEUE_STRU;
 
 
 
-/* AºË¿ÉÎ¬¿É²â½Ó¿Ú */
+/* Aæ ¸å¯ç»´å¯æµ‹æŽ¥å£ */
 #define PPP_MNTN_TRACE_MSG(pMsg)                OM_AcpuTraceMsgHook(pMsg)
 
 /*****************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æžšä¸¾å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  4 È«¾Ö±äÁ¿ÉùÃ÷
+  4 å…¨å±€å˜é‡å£°æ˜Ž
 *****************************************************************************/
 extern VOS_UINT32                       g_ulPppDebugLevel;
 
 
 /*****************************************************************************
-  5 ÏûÏ¢Í·¶¨Òå
+  5 æ¶ˆæ¯å¤´å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  6 ÏûÏ¢¶¨Òå
+  6 æ¶ˆæ¯å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  7 STRUCT¶¨Òå
+  7 STRUCTå®šä¹‰
 *****************************************************************************/
-/*IPµØÖ·*/
+/*IPåœ°å€*/
 struct ppp_in_addr
 {
     VOS_UINT32 s_addr;
@@ -255,44 +255,44 @@ struct ppp_in_addr
 
 typedef struct
 {
-    VOS_UINT32                  ulUplinkCnt;                /* ÉÏÐÐÊý¾Ý°ü×Ü¸öÊý */
-    VOS_UINT32                  ulUplinkDropCnt;            /* ÉÏÐÐ¶ª°üÊý */
-    VOS_UINT32                  ulUplinkSndDataCnt;         /* ÉÏÐÐ·¢°üÊý */
+    VOS_UINT32                  ulUplinkCnt;                /* ä¸Šè¡Œæ•°æ®åŒ…æ€»ä¸ªæ•° */
+    VOS_UINT32                  ulUplinkDropCnt;            /* ä¸Šè¡Œä¸¢åŒ…æ•° */
+    VOS_UINT32                  ulUplinkSndDataCnt;         /* ä¸Šè¡Œå‘åŒ…æ•° */
 
-    VOS_UINT32                  ulDownlinkCnt;              /* ÏÂÐÐÊý¾Ý°ü×Ü¸öÊý */
-    VOS_UINT32                  ulDownlinkDropCnt;          /* ÏÂÐÐ¶ª°üÊý */
-    VOS_UINT32                  ulDownlinkSndDataCnt;       /* ÏÂÐÐ·¢°üÊý */
+    VOS_UINT32                  ulDownlinkCnt;              /* ä¸‹è¡Œæ•°æ®åŒ…æ€»ä¸ªæ•° */
+    VOS_UINT32                  ulDownlinkDropCnt;          /* ä¸‹è¡Œä¸¢åŒ…æ•° */
+    VOS_UINT32                  ulDownlinkSndDataCnt;       /* ä¸‹è¡Œå‘åŒ…æ•° */
 
-    VOS_UINT32                  ulMemAllocDownlinkCnt;      /* ÏÂÐÐÄÚ´æÉêÇë´ÎÊý */
-    VOS_UINT32                  ulMemAllocDownlinkFailCnt;  /* ÏÂÐÐÄÚ´æÉêÇëÊ§°Ü´ÎÊý */
-    VOS_UINT32                  ulMemAllocUplinkCnt;        /* ÉÏÐÐÄÚ´æÉêÇë´ÎÊý */
-    VOS_UINT32                  ulMemAllocUplinkFailCnt;    /* ÉÏÐÐÄÚ´æÉêÇëÊ§°Ü´ÎÊý */
-    VOS_UINT32                  ulMemFreeCnt;               /* ÆäËûÄÚ´æÊÍ·Å´ÎÊý */
+    VOS_UINT32                  ulMemAllocDownlinkCnt;      /* ä¸‹è¡Œå†…å­˜ç”³è¯·æ¬¡æ•° */
+    VOS_UINT32                  ulMemAllocDownlinkFailCnt;  /* ä¸‹è¡Œå†…å­˜ç”³è¯·å¤±è´¥æ¬¡æ•° */
+    VOS_UINT32                  ulMemAllocUplinkCnt;        /* ä¸Šè¡Œå†…å­˜ç”³è¯·æ¬¡æ•° */
+    VOS_UINT32                  ulMemAllocUplinkFailCnt;    /* ä¸Šè¡Œå†…å­˜ç”³è¯·å¤±è´¥æ¬¡æ•° */
+    VOS_UINT32                  ulMemFreeCnt;               /* å…¶ä»–å†…å­˜é‡Šæ”¾æ¬¡æ•° */
 
-    VOS_UINT32                  ulQMaxCnt;                  /* ¶ÓÁÐÖÐ³öÏÖ¹ýµÄ×î´ó½áµã¸öÊý */
-    VOS_UINT32                  ulSndMsgCnt;                /* DataNotifyÏûÏ¢·¢ËÍÊý */
-    VOS_UINT32                  ulProcMsgCnt;               /* DataNotifyÏûÏ¢´¦ÀíÊý */
+    VOS_UINT32                  ulQMaxCnt;                  /* é˜Ÿåˆ—ä¸­å‡ºçŽ°è¿‡çš„æœ€å¤§ç»“ç‚¹ä¸ªæ•° */
+    VOS_UINT32                  ulSndMsgCnt;                /* DataNotifyæ¶ˆæ¯å‘é€æ•° */
+    VOS_UINT32                  ulProcMsgCnt;               /* DataNotifyæ¶ˆæ¯å¤„ç†æ•° */
 } PPP_DATA_Q_STAT_ST;
 
 typedef struct
 {
-    PPP_ZC_QUEUE_STRU           stDataQ;                    /* PPPÊý¾Ý¶ÓÁÐ£¬ÉÏÏÂÐÐÊý¾Ý¶¼ÔÚÆäÖÐ */
-    PPP_DATA_Q_STAT_ST          stStat;                     /* PPPÊý¾Ý¶ÓÁÐµÄÍ³¼ÆÐÅÏ¢ */
-    volatile VOS_UINT32         ulNotifyMsgCnt;             /* PPPÏûÏ¢¶ÓÁÐÖÐ´ý´¦ÀíµÄÏûÏ¢¸öÊý */
+    PPP_ZC_QUEUE_STRU           stDataQ;                    /* PPPæ•°æ®é˜Ÿåˆ—ï¼Œä¸Šä¸‹è¡Œæ•°æ®éƒ½åœ¨å…¶ä¸­ */
+    PPP_DATA_Q_STAT_ST          stStat;                     /* PPPæ•°æ®é˜Ÿåˆ—çš„ç»Ÿè®¡ä¿¡æ¯ */
+    volatile VOS_UINT32         ulNotifyMsgCnt;             /* PPPæ¶ˆæ¯é˜Ÿåˆ—ä¸­å¾…å¤„ç†çš„æ¶ˆæ¯ä¸ªæ•° */
 }PPP_DATA_Q_CTRL_ST;
 
 /*****************************************************************************
-  8 UNION¶¨Òå
+  8 UNIONå®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  9 OTHERS¶¨Òå
+  9 OTHERSå®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  10 º¯ÊýÉùÃ÷
+  10 å‡½æ•°å£°æ˜Ž
 *****************************************************************************/
 extern PPP_ZC_STRU *PPP_MemAlloc(VOS_UINT16 usLen, VOS_UINT16 usReserveLen);
 extern PPP_ZC_STRU *PPP_MemCopyAlloc(VOS_UINT8 *pSrc, VOS_UINT16 usLen, VOS_UINT16 usReserveLen);

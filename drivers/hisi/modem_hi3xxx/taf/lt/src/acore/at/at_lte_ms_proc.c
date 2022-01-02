@@ -13,7 +13,7 @@
 #include "LPsNvInterface.h"
 #endif
 
-/*lint -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -e767 åŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_AT_LTE_MS_PROC_C
 /*lint +e767 */
 
@@ -26,17 +26,17 @@ extern VOS_BOOL AT_IsNVWRAllowedNvId(VOS_UINT16 usNvId);
 
 
 //*****************************************************************************
-// o¡¥¨ºy??3?: atSetNVRDLenPara
-// 1|?¨¹?¨¨¨º?: ?¨¢NV3¡è?¨¨Y
+// oË‰Ãªy??3?: atSetNVRDLenPara
+// 1|?Ã¼?Ã¨Ãª?: ?Ã¡NV3Â¤?Ã¨Y
 //
-// 2?¨ºy?¦Ì?¡Â:
-//   ulIndex [in] ¨®??¡ì?¡Â¨°y
+// 2?Ãªy?Î¼?Ã·:
+//   ulIndex [in] Ã³??Â§?Ã·Ã²y
 //
-// ¡¤¦Ì ?? ?¦Ì:
+// ãƒ»Î¼ ?? ?Î¼:
 //    TODO: ...
 //
-// ¦Ì¡Â¨®?¨°a?¨®: TODO: ...
-// ¦Ì¡Â¨®??¨´¨¤y: TODO: ...
+// Î¼Ã·Ã³?Ã²a?Ã³: TODO: ...
+// Î¼Ã·Ã³??Ã¹Ã y: TODO: ...
 //*****************************************************************************
 VOS_UINT32 atSetNVRDLenPara(VOS_UINT8 ucClientId)
 {
@@ -431,9 +431,9 @@ VOS_UINT32 AT_SetIsmcoexPara(VOS_UINT8 ucIndex)
 {
     VOS_INT32  ret;
     VOS_UINT32 ulRet, i, j;
-    VOS_UINT32 *pulVal;     /* ½«Òª´æ´¢µÄÖµÖ¸Õë */
-    VOS_UINT8 *pucPara;     /* ²ÎÊı×Ö·û´®Í·Ö¸Õë */
-    VOS_UINT8 *pucCur;      /* ½âÎö×Ö·û´®Ê±µÄµ±Ç°Ö¸Õë */
+    VOS_UINT32 *pulVal;     /* å°†è¦å­˜å‚¨çš„å€¼æŒ‡é’ˆ */
+    VOS_UINT8 *pucPara;     /* å‚æ•°å­—ç¬¦ä¸²å¤´æŒ‡é’ˆ */
+    VOS_UINT8 *pucCur;      /* è§£æå­—ç¬¦ä¸²æ—¶çš„å½“å‰æŒ‡é’ˆ */
     L4A_ISMCOEX_REQ_STRU stReq = {0};
 
     if((AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
@@ -565,13 +565,13 @@ VOS_UINT32 At_QryCnmrPara(VOS_UINT8 ucIndex)
     stCnmr.stCtrl.ulPid = WUEPS_PID_AT;
     stCnmr.n = gastAtParaList[0].ulParaValue;
 
-    /* ²ÎÊı¹ı¶à */
+    /* å‚æ•°è¿‡å¤š */
     if(gucAtParaIndex != 1)
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /*LÄ£µ÷ÓÃÈçÏÂ½Ó¿Ú×ª·¢*/
+    /*Læ¨¡è°ƒç”¨å¦‚ä¸‹æ¥å£è½¬å‘*/
     ulRet = atSendDataMsg(MSP_L4_L4A_PID, ID_MSG_L4A_CNMR_REQ, (VOS_VOID*)(&stCnmr), sizeof(L4A_READ_CNMR_REQ_STRU));
     if(ERR_MSP_SUCCESS == ulRet)
     {
@@ -607,7 +607,7 @@ VOS_UINT32 At_SetLFromConnToIdlePara(VOS_UINT8 ucIndex)
     stReq.stCtrl.ulOpId = 0;
     stReq.stCtrl.ulPid = WUEPS_PID_AT;
 
-    /* ²ÎÊı¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if(AT_CMD_OPT_SET_CMD_NO_PARA != g_stATParseCmd.ucCmdOptType)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -623,7 +623,7 @@ VOS_UINT32 At_SetLFromConnToIdlePara(VOS_UINT8 ucIndex)
         return AT_OK;
     }
 
-    /*LÄ£µ÷ÓÃÈçÏÂ½Ó¿Ú×ª·¢*/
+    /*Læ¨¡è°ƒç”¨å¦‚ä¸‹æ¥å£è½¬å‘*/
     ulRet = atSendDataMsg(MSP_L4_L4A_PID, ID_MSG_L4A_LTE_TO_IDLE_REQ, (VOS_VOID*)(&stReq), sizeof(L4A_SET_LTE_TO_IDLE_REQ_STRU));
     if(ERR_MSP_SUCCESS == ulRet)
     {
@@ -653,7 +653,7 @@ VOS_UINT32 At_SetLWThresholdCfgPara(VOS_UINT8 ucIndex)
         return AT_OK;
     }
 
-    /*LÄ£µ÷ÓÃÈçÏÂ½Ó¿Ú×ª·¢*/
+    /*Læ¨¡è°ƒç”¨å¦‚ä¸‹æ¥å£è½¬å‘*/
     ulRet = atSendDataMsg(MSP_L4_L4A_PID, ID_MSG_L4A_LW_THRESHOLD_REQ, (VOS_VOID*)(&stReq), sizeof(L4A_LW_THREASHOLD_CFG_REQ_STRU));
     if(ERR_MSP_SUCCESS == ulRet)
     {
@@ -668,7 +668,7 @@ VOS_UINT32 AT_SetLFastDormPara(VOS_UINT8 ucIndex)
     L4A_SET_FAST_DORM_REQ_STRU stReq = {0};
     LPS_SWITCH_PARA_STRU stDrxControlFlag = {0};
 
-    /* ²ÎÊı¼ì²éÔÚATÈë¿ÚÒÑ×ö */
+    /* å‚æ•°æ£€æŸ¥åœ¨ATå…¥å£å·²åš */
 
     stReq.stCtrl.ulClientId = gastAtClientTab[ucIndex].usClientId;
     stReq.stCtrl.ulOpId = 0;
@@ -686,7 +686,7 @@ VOS_UINT32 AT_SetLFastDormPara(VOS_UINT8 ucIndex)
         return AT_OK;
     }
 
-    /*LÄ£µ÷ÓÃÈçÏÂ½Ó¿Ú×ª·¢*/
+    /*Læ¨¡è°ƒç”¨å¦‚ä¸‹æ¥å£è½¬å‘*/
     ulRet = atSendDataMsg(MSP_L4_L4A_PID, ID_MSG_L4A_FAST_DORM_REQ, (VOS_VOID*)(&stReq), sizeof(L4A_SET_FAST_DORM_REQ_STRU));
     if(ERR_MSP_SUCCESS == ulRet)
     {
@@ -701,7 +701,7 @@ VOS_UINT32 At_SetLCellInfoPara(VOS_UINT8 ucIndex)
     L4A_READ_CELL_INFO_REQ_STRU         stCellInfo;
     VOS_UINT32                          ulRet = ERR_MSP_SUCCESS;
 
-    /* ²ÎÊı¹ı¶à */
+    /* å‚æ•°è¿‡å¤š */
     if(gucAtParaIndex != 1)
     {
         return AT_CME_INCORRECT_PARAMETERS;

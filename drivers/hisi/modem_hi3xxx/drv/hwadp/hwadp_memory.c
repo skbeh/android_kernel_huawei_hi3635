@@ -20,7 +20,7 @@
 #include <bsp_dump_drv.h>
 
 #endif
-/* È«¾ÖµÄ½á¹¹Ìå£¬¼ÇÂ¼AXIÄÚ´æ¶Î·ÖÅäÐÅÏ¢ */
+/* å…¨å±€çš„ç»“æž„ä½“ï¼Œè®°å½•AXIå†…å­˜æ®µåˆ†é…ä¿¡æ¯ */
 BSP_AXI_SECT_INFO g_stAxiSectInfo[BSP_AXI_SECT_TYPE_BUTTOM] =
 {
     {BSP_AXI_SECT_TYPE_TEMPERATURE,     0,	0,  SRAM_TEMP_PROTECT_SIZE},
@@ -29,7 +29,7 @@ BSP_AXI_SECT_INFO g_stAxiSectInfo[BSP_AXI_SECT_TYPE_BUTTOM] =
     {BSP_AXI_SECT_TYPE_TTF_BBP, 	    0,	0,	SRAM_GU_MAC_HEADER_SIZE}
 };
 
-/* È«¾ÖµÄ½á¹¹Ìå£¬¼ÇÂ¼DDRÄÚ´æ¶Î·ÖÅäÐÅÏ¢ */
+/* å…¨å±€çš„ç»“æž„ä½“ï¼Œè®°å½•DDRå†…å­˜æ®µåˆ†é…ä¿¡æ¯ */
 BSP_DDR_SECT_INFO g_stDdrSectInfo[BSP_DDR_SECT_TYPE_BUTTOM] = {
     {BSP_DDR_SECT_TYPE_TTF,       BSP_DDR_SECT_ATTR_NONCACHEABLE, (void*)0 ,         (void*) ECS_TTF_BASE_ADDR,              ECS_TTF_SIZE},
     {BSP_DDR_SECT_TYPE_ARMDSP,    BSP_DDR_SECT_ATTR_NONCACHEABLE, (void*)ECS_ARM_DSP_BUFFER_BASE_ADDR,     (void*)ECS_ARM_DSP_BUFFER_BASE_ADDR,   ECS_ARM_DSP_BUFFER_SIZE},
@@ -39,7 +39,7 @@ BSP_DDR_SECT_INFO g_stDdrSectInfo[BSP_DDR_SECT_TYPE_BUTTOM] = {
     {BSP_DDR_SECT_TYPE_ET,        BSP_DDR_SECT_ATTR_NONCACHEABLE, (void*)ECS_ET_BASE_ADDR,                 (void*)ECS_ET_BASE_ADDR,               ECS_ET_SIZE},
     {BSP_DDR_SECT_TYPE_BBPMASTER, BSP_DDR_SECT_ATTR_NONCACHEABLE, (void*)ECS_BBP_MASTER_BASE_ADDR,         (void*)ECS_BBP_MASTER_BASE_ADDR,       ECS_BBP_MASTER_SIZE},
 
-    /* GU NV/DICCÄÚ´æÉÏ²ãÒªÇóC/AºËÐéµØÖ·±ØÐëÒ»ÖÂ£¬by ³ÂÓ­¹ú */
+    /* GU NV/DICCå†…å­˜ä¸Šå±‚è¦æ±‚C/Aæ ¸è™šåœ°å€å¿…é¡»ä¸€è‡´ï¼Œby é™ˆè¿Žå›½ */
     {BSP_DDR_SECT_TYPE_NV,        BSP_DDR_SECT_ATTR_NONCACHEABLE, (void*)0,            (void*)ECS_NV_BASE_ADDR,               ECS_NV_SIZE},
     {BSP_DDR_SECT_TYPE_DICC,      BSP_DDR_SECT_ATTR_NONCACHEABLE, (void*)0,            (void*)ECS_TTF_DICC_ADDR,              ECS_TTF_DICC_SIZE},
 
@@ -76,11 +76,11 @@ static int BSP_HwMem_Init(void)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_AXI_GetSectInfo
- ¹¦ÄÜÃèÊö  : AXIÄÚ´æ¶Î²éÑ¯½Ó¿Ú
- ÊäÈë²ÎÊý  : enSectType: ÐèÒª²éÑ¯µÄÄÚ´æ¶ÎÀàÐÍ
- Êä³ö²ÎÊý  : pstSectInfo:  ²éÑ¯µ½µÄÄÚ´æ¶ÎÐÅÏ¢
- ·µ»ØÖµ    £ºBSP_OK/BSP_ERROR
+ å‡½ æ•° å  : BSP_AXI_GetSectInfo
+ åŠŸèƒ½æè¿°  : AXIå†…å­˜æ®µæŸ¥è¯¢æŽ¥å£
+ è¾“å…¥å‚æ•°  : enSectType: éœ€è¦æŸ¥è¯¢çš„å†…å­˜æ®µç±»åž‹
+ è¾“å‡ºå‚æ•°  : pstSectInfo:  æŸ¥è¯¢åˆ°çš„å†…å­˜æ®µä¿¡æ¯
+ è¿”å›žå€¼    ï¼šBSP_OK/BSP_ERROR
 *****************************************************************************/
 s32 BSP_AXI_GetSectInfo(BSP_AXI_SECT_TYPE_E enSectType, BSP_AXI_SECT_INFO *pstSectInfo)
 {
@@ -94,11 +94,11 @@ s32 BSP_AXI_GetSectInfo(BSP_AXI_SECT_TYPE_E enSectType, BSP_AXI_SECT_INFO *pstSe
     return BSP_OK;
 }
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_DDR_GetSectInfo
- ¹¦ÄÜÃèÊö  : DDRÄÚ´æ¶Î²éÑ¯½Ó¿Ú
- ÊäÈë²ÎÊý  : pstSectQuery: ÐèÒª²éÑ¯µÄÄÚ´æ¶ÎÀàÐÍ¡¢ÊôÐÔ
- Êä³ö²ÎÊý  : pstSectInfo:  ²éÑ¯µ½µÄÄÚ´æ¶ÎÐÅÏ¢
- ·µ»ØÖµ    £ºBSP_OK/BSP_ERROR
+ å‡½ æ•° å  : BSP_DDR_GetSectInfo
+ åŠŸèƒ½æè¿°  : DDRå†…å­˜æ®µæŸ¥è¯¢æŽ¥å£
+ è¾“å…¥å‚æ•°  : pstSectQuery: éœ€è¦æŸ¥è¯¢çš„å†…å­˜æ®µç±»åž‹ã€å±žæ€§
+ è¾“å‡ºå‚æ•°  : pstSectInfo:  æŸ¥è¯¢åˆ°çš„å†…å­˜æ®µä¿¡æ¯
+ è¿”å›žå€¼    ï¼šBSP_OK/BSP_ERROR
 *****************************************************************************/
 s32 BSP_DDR_GetSectInfo(BSP_DDR_SECT_QUERY *pstSectQuery, BSP_DDR_SECT_INFO *pstSectInfo)
 {
@@ -113,11 +113,11 @@ s32 BSP_DDR_GetSectInfo(BSP_DDR_SECT_QUERY *pstSectQuery, BSP_DDR_SECT_INFO *pst
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_DDR_ShowSectInfo
- ¹¦ÄÜÃèÊö  : ´òÓ¡DDRÄÚ´æ¶ÎÐÅÏ¢
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÎÞ
+ å‡½ æ•° å  : BSP_DDR_ShowSectInfo
+ åŠŸèƒ½æè¿°  : æ‰“å°DDRå†…å­˜æ®µä¿¡æ¯
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šæ— 
 *****************************************************************************/
 BSP_VOID BSP_DDR_ShowSectInfo(BSP_VOID)
 {
@@ -135,13 +135,13 @@ BSP_VOID BSP_DDR_ShowSectInfo(BSP_VOID)
     }
 }
 
-/*************************ÄÚ´æÐéÊµ×ª»» start*********************************/
+/*************************å†…å­˜è™šå®žè½¬æ¢ start*********************************/
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_DDR_VIRT_TO_PHY
- ¹¦ÄÜÃèÊö  : DDRÄÚ´æÐéµØÖ·ÍùÊµµØÖ·×ª»»
- ÊäÈë²ÎÊý  : ulVAddr£»ÐéµØÖ·
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÊµµØÖ·
+ å‡½ æ•° å  : DRV_DDR_VIRT_TO_PHY
+ åŠŸèƒ½æè¿°  : DDRå†…å­˜è™šåœ°å€å¾€å®žåœ°å€è½¬æ¢
+ è¾“å…¥å‚æ•°  : ulVAddrï¼›è™šåœ°å€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šå®žåœ°å€
 *****************************************************************************/
 void* DRV_DDR_VIRT_TO_PHY(void* ulVAddr)
 {
@@ -163,11 +163,11 @@ void* DRV_DDR_VIRT_TO_PHY(void* ulVAddr)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_DDR_PHY_TO_VIRT
- ¹¦ÄÜÃèÊö  : DDRÄÚ´æÐéµØÖ·ÍùÊµµØÖ·×ª»»
- ÊäÈë²ÎÊý  : ulPAddr£»ÊµµØÖ·
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÐéµØÖ·
+ å‡½ æ•° å  : DRV_DDR_PHY_TO_VIRT
+ åŠŸèƒ½æè¿°  : DDRå†…å­˜è™šåœ°å€å¾€å®žåœ°å€è½¬æ¢
+ è¾“å…¥å‚æ•°  : ulPAddrï¼›å®žåœ°å€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šè™šåœ°å€
 *****************************************************************************/
 void* DRV_DDR_PHY_TO_VIRT(void* ulPAddr)
 {
@@ -187,11 +187,11 @@ void* DRV_DDR_PHY_TO_VIRT(void* ulPAddr)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : TTF_VIRT_TO_PHY
- ¹¦ÄÜÃèÊö  : TTFÄÚ´æÐéµØÖ·ÍùÊµµØÖ·×ª»»
- ÊäÈë²ÎÊý  : ulVAddr£»ÐéµØÖ·
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÊµµØÖ·
+ å‡½ æ•° å  : TTF_VIRT_TO_PHY
+ åŠŸèƒ½æè¿°  : TTFå†…å­˜è™šåœ°å€å¾€å®žåœ°å€è½¬æ¢
+ è¾“å…¥å‚æ•°  : ulVAddrï¼›è™šåœ°å€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šå®žåœ°å€
 *****************************************************************************/
 void* TTF_VIRT_TO_PHY(void* ulVAddr)
 {
@@ -199,11 +199,11 @@ void* TTF_VIRT_TO_PHY(void* ulVAddr)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : TTF_PHY_TO_VIRT
- ¹¦ÄÜÃèÊö  : TTFÄÚ´æÊµµØÖ·ÍùÐéµØÖ·×ª»»
- ÊäÈë²ÎÊý  : ulPAddr£»ÊµµØÖ·
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÐéµØÖ·
+ å‡½ æ•° å  : TTF_PHY_TO_VIRT
+ åŠŸèƒ½æè¿°  : TTFå†…å­˜å®žåœ°å€å¾€è™šåœ°å€è½¬æ¢
+ è¾“å…¥å‚æ•°  : ulPAddrï¼›å®žåœ°å€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šè™šåœ°å€
 *****************************************************************************/
 void* TTF_PHY_TO_VIRT(void* ulPAddr)
 {
@@ -211,11 +211,11 @@ void* TTF_PHY_TO_VIRT(void* ulPAddr)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_AXI_VIRT_TO_PHY
- ¹¦ÄÜÃèÊö  : AXIÄÚÐéµØÖ·ÍùÊµµØÖ·×ª»»
- ÊäÈë²ÎÊý  : ulVAddr£»ÐéµØÖ·
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÐéµØÖ·
+ å‡½ æ•° å  : DRV_AXI_VIRT_TO_PHY
+ åŠŸèƒ½æè¿°  : AXIå†…è™šåœ°å€å¾€å®žåœ°å€è½¬æ¢
+ è¾“å…¥å‚æ•°  : ulVAddrï¼›è™šåœ°å€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šè™šåœ°å€
 *****************************************************************************/
 void* DRV_AXI_VIRT_TO_PHY(void* ulVAddr)
 {
@@ -223,11 +223,11 @@ void* DRV_AXI_VIRT_TO_PHY(void* ulVAddr)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_AXI_PHY_TO_VIRT
- ¹¦ÄÜÃèÊö  : AXIÄÚÊµµØÖ·ÍùÐéµØÖ·×ª»»
- ÊäÈë²ÎÊý  : ulVAddr£»ÊµµØÖ·
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÐéµØÖ·
+ å‡½ æ•° å  : DRV_AXI_PHY_TO_VIRT
+ åŠŸèƒ½æè¿°  : AXIå†…å®žåœ°å€å¾€è™šåœ°å€è½¬æ¢
+ è¾“å…¥å‚æ•°  : ulVAddrï¼›å®žåœ°å€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šè™šåœ°å€
 *****************************************************************************/
 void* DRV_AXI_PHY_TO_VIRT(void* ulPAddr)
 {
@@ -235,11 +235,11 @@ void* DRV_AXI_PHY_TO_VIRT(void* ulPAddr)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : show_global_ddr_status
- ¹¦ÄÜÃèÊö  : DDRÄÚ´æ¶ÎÐÅÏ¢´òÓ¡
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÎÞ
+ å‡½ æ•° å  : show_global_ddr_status
+ åŠŸèƒ½æè¿°  : DDRå†…å­˜æ®µä¿¡æ¯æ‰“å°
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šæ— 
 *****************************************************************************/
 void show_global_ddr_status(void)
 {
@@ -258,16 +258,16 @@ void show_global_ddr_status(void)
     printf("%-30s%10x%10x\n", "DDR_MDM_ACP_ADDR", DDR_MDM_ACP_ADDR, DDR_MDM_ACP_SIZE);
 }
 /*****************************************************************************
- º¯ Êý Ãû  : show_sram_status
- ¹¦ÄÜÃèÊö  : SRAMÄÚ´æ¶ÎÐÅÏ¢´òÓ¡
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÎÞ
+ å‡½ æ•° å  : show_sram_status
+ åŠŸèƒ½æè¿°  : SRAMå†…å­˜æ®µä¿¡æ¯æ‰“å°
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šæ— 
 *****************************************************************************/
 
 void show_sram_status(void)
 {
-	/*ÇëÒÀÕÕÏÈºóË³ÐòÔö¼Ó´òÓ¡Êä³öÏî*/
+	/*è¯·ä¾ç…§å…ˆåŽé¡ºåºå¢žåŠ æ‰“å°è¾“å‡ºé¡¹*/
 	int total_size = SRAM_TOP_RESERVE_SIZE + SRAM_MCU_RESERVE_SIZE + SRAM_ICC_SIZE + SRAM_RTT_SLEEP_FLAG_SIZE +
                      SRAM_GU_MAC_HEADER_SIZE;
 	printf("%-30s%10s%10s%10s\n", "name", "phy addr", "virt addr", "size");
@@ -305,16 +305,16 @@ void show_sram_status(void)
     printf("%-30s%10lx%10p\n", "SRAM_DUMP_POWER_OFF_FLAG_ADDR", SRAM_V2P(SRAM_DUMP_POWER_OFF_FLAG_ADDR), SRAM_DUMP_POWER_OFF_FLAG_ADDR);
 }
 /*****************************************************************************
- º¯ Êý Ãû  : show_shared_ddr_status
- ¹¦ÄÜÃèÊö  : ¹²ÏíÄÚ´æÄÚ´æ¶ÎÐÅÏ¢´òÓ¡
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºÎÞ
+ å‡½ æ•° å  : show_shared_ddr_status
+ åŠŸèƒ½æè¿°  : å…±äº«å†…å­˜å†…å­˜æ®µä¿¡æ¯æ‰“å°
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šæ— 
 *****************************************************************************/
 /*lint --e{713}*/
 void show_shared_ddr_status(void)
 {
-	/*ÇëÒÀÕÕÏÈºóË³ÐòÔö¼Ó´òÓ¡Êä³öÏî*/
+	/*è¯·ä¾ç…§å…ˆåŽé¡ºåºå¢žåŠ æ‰“å°è¾“å‡ºé¡¹*/
         unsigned long total_size = SHM_MEM_APPA9_PM_BOOT_SIZE + SHM_MEM_MDMA9_PM_BOOT_SIZE + SHM_MEM_SYNC_SIZE          + SHM_MEM_ICC_SIZE +
                      SHM_MEM_IPF_SIZE           + SHM_MEM_WAN_SIZE           + SHM_MEM_NV_SIZE            + SHM_MEM_M3_MNTN_SIZE +
                      SHM_MEM_HIFI_SIZE          + SHM_MEM_HIFI_MBX_SIZE      + SHM_DDM_LOAD_SIZE          + SHM_TIMESTAMP_SIZE   +

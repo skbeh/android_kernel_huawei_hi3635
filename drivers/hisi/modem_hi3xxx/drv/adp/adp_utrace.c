@@ -9,11 +9,11 @@ extern "C"
 
 #ifndef ENABLE_BUILD_UTRACE
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_UTRACE_START
- ¹¦ÄÜÃèÊö  : USB TraceÆô¶¯½Ó¿Ú, ¿ªÆôTrace²É¼¯
- ÊäÈë²ÎÊý  : pData: Trace²É¼¯Æô¶¯Êý¾Ý½á¹¹Ê×µØÖ·
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : ³É¹¦:0 Ê§°Ü:·Ç0
+ å‡½ æ•° å  : DRV_UTRACE_START
+ åŠŸèƒ½æè¿°  : USB Traceå¯åŠ¨æŽ¥å£, å¼€å¯Traceé‡‡é›†
+ è¾“å…¥å‚æ•°  : pData: Traceé‡‡é›†å¯åŠ¨æ•°æ®ç»“æž„é¦–åœ°å€
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : æˆåŠŸ:0 å¤±è´¥:éž0
 *****************************************************************************/
 BSP_U32 DRV_UTRACE_START(BSP_U8 * pData)
 {
@@ -21,11 +21,11 @@ BSP_U32 DRV_UTRACE_START(BSP_U8 * pData)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_UTRACE_TERMINATE
- ¹¦ÄÜÃèÊö  : USB TraceÖÕÖ¹½Ó¿Ú£¬Í£Ö¹»òÕßÒì³£µ¼³ö
- ÊäÈë²ÎÊý  : pData  : TraceÖÕÖ¹Êý¾Ý½á¹¹Ö¸Õë          
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³É¹¦:0 Ê§°Ü:·Ç0
+ å‡½ æ•° å  : DRV_UTRACE_TERMINATE
+ åŠŸèƒ½æè¿°  : USB Traceç»ˆæ­¢æŽ¥å£ï¼Œåœæ­¢æˆ–è€…å¼‚å¸¸å¯¼å‡º
+ è¾“å…¥å‚æ•°  : pData  : Traceç»ˆæ­¢æ•°æ®ç»“æž„æŒ‡é’ˆ          
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æˆåŠŸ:0 å¤±è´¥:éž0
 *****************************************************************************/
 BSP_U32 DRV_UTRACE_TERMINATE(BSP_U8 * pData)
 {
@@ -34,11 +34,11 @@ BSP_U32 DRV_UTRACE_TERMINATE(BSP_U8 * pData)
 
 #else
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_UTRACE_START
- ¹¦ÄÜÃèÊö  : USB TraceÆô¶¯½Ó¿Ú, ¿ªÆôTrace²É¼¯
- ÊäÈë²ÎÊý  : pData: Trace²É¼¯Æô¶¯Êý¾Ý½á¹¹Ê×µØÖ·
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : ³É¹¦:0 Ê§°Ü:·Ç0
+ å‡½ æ•° å  : DRV_UTRACE_START
+ åŠŸèƒ½æè¿°  : USB Traceå¯åŠ¨æŽ¥å£, å¼€å¯Traceé‡‡é›†
+ è¾“å…¥å‚æ•°  : pData: Traceé‡‡é›†å¯åŠ¨æ•°æ®ç»“æž„é¦–åœ°å€
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : æˆåŠŸ:0 å¤±è´¥:éž0
 *****************************************************************************/
 BSP_U32 DRV_UTRACE_START(BSP_U8 * pData)
 {
@@ -46,11 +46,11 @@ BSP_U32 DRV_UTRACE_START(BSP_U8 * pData)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_UTRACE_TERMINATE
- ¹¦ÄÜÃèÊö  : USB TraceÖÕÖ¹½Ó¿Ú£¬Í£Ö¹»òÕßÒì³£µ¼³ö
- ÊäÈë²ÎÊý  : pData  : TraceÖÕÖ¹Êý¾Ý½á¹¹Ö¸Õë          
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³É¹¦:0 Ê§°Ü:·Ç0
+ å‡½ æ•° å  : DRV_UTRACE_TERMINATE
+ åŠŸèƒ½æè¿°  : USB Traceç»ˆæ­¢æŽ¥å£ï¼Œåœæ­¢æˆ–è€…å¼‚å¸¸å¯¼å‡º
+ è¾“å…¥å‚æ•°  : pData  : Traceç»ˆæ­¢æ•°æ®ç»“æž„æŒ‡é’ˆ          
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æˆåŠŸ:0 å¤±è´¥:éž0
 *****************************************************************************/
 BSP_U32 DRV_UTRACE_TERMINATE(BSP_U8 * pData)
 {

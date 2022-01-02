@@ -483,7 +483,7 @@ hi6xxx_mdev_irq_request(struct hisi_mbox_device *mdev,
 
 	mdev->irq_handler = handler;
 
-	/*64λϵͳ��Ҫע���޸�*/
+	/*64位系统需要注意修改*/
 	ret = BSP_IPC_IntConnect(priv->irq, hi6xxx_mdev_irq_handle, priv->irq);
 	if(0 != ret) {
 		MDEV_PR_ERR("mdev %s request irq %d failed\n",

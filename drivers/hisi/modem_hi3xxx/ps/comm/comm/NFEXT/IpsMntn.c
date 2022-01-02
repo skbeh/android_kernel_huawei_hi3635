@@ -1,21 +1,21 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2005-2007, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2005-2007, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
 
-  ÎÄ ¼þ Ãû   : IpsMntn.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : ·ë¼Ò÷ë
-  Éú³ÉÈÕÆÚ   : 2011/7/22
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : IPS MNTNÄ£¿éÊµÏÖ
-  º¯ÊýÁÐ±í   :
+  æ–‡ ä»¶ å   : IpsMntn.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : å†¯å®¶éºŸ
+  ç”Ÿæˆæ—¥æœŸ   : 2011/7/22
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : IPS MNTNæ¨¡å—å®žçŽ°
+  å‡½æ•°åˆ—è¡¨   :
 
-  ËµÃ÷       :
+  è¯´æ˜Ž       :
 *****************************************************************************/
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼þ°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "v_typdef.h"
 #include "IpsMntn.h"
@@ -30,53 +30,53 @@
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e767 */
 #define    THIS_FILE_ID        PS_FILE_ID_ACPU_IPS_MNTN_C
 /*lint -e767 */
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 
 /*******************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æžšä¸¾å®šä¹‰
 *******************************************************************************/
 
 /*****************************************************************************
-  2 ½á¹¹¶¨Òå
+  2 ç»“æž„å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  3 È«¾Ö±äÁ¿ÉùÃ÷
+  3 å…¨å±€å˜é‡å£°æ˜Ž
 *****************************************************************************/
 #if (FEATURE_ON == FEATURE_NFEXT)
-IPS_MNTN_TRACE_CONFIG_REQ_STRU          g_stIpsTraceMsgCfg;     /*TCP/IPÐ­ÒéÕ»¿ÉÎ¬¿É²âÅäÖÃÐÅÏ¢*/
-IPS_MNTN_INFO_ENTITY                    g_stIpsMntnInfoEntity;  /*TCP/IPÐ­ÒéÕ»¿ÉÎ¬¿É²âÊµÌå*/
+IPS_MNTN_TRACE_CONFIG_REQ_STRU          g_stIpsTraceMsgCfg;     /*TCP/IPåè®®æ ˆå¯ç»´å¯æµ‹é…ç½®ä¿¡æ¯*/
+IPS_MNTN_INFO_ENTITY                    g_stIpsMntnInfoEntity;  /*TCP/IPåè®®æ ˆå¯ç»´å¯æµ‹å®žä½“*/
 #endif      /* #if (FEATURE_ON == FEATURE_NFEXT) */
 
-IPS_MNTN_IP_INFO_CONFIG_REQ_STRU        g_stIpsMntnIPInfoCfg;   /*IPÊý¾Ý°üÅäÖÃÐÅÏ¢*/
+IPS_MNTN_IP_INFO_CONFIG_REQ_STRU        g_stIpsMntnIPInfoCfg;   /*IPæ•°æ®åŒ…é…ç½®ä¿¡æ¯*/
 
 /*****************************************************************************
-  4 ÏûÏ¢Í·¶¨Òå
+  4 æ¶ˆæ¯å¤´å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  5 ÏûÏ¢¶¨Òå
+  5 æ¶ˆæ¯å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  6 UNION¶¨Òå
+  6 UNIONå®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  7 OTHERS¶¨Òå
+  7 OTHERSå®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  8 º¯ÊýÉùÃ÷
+  8 å‡½æ•°å£°æ˜Ž
 *****************************************************************************/
 
 
@@ -87,7 +87,7 @@ VOS_VOID IPS_MNTN_FillMsg(OM_APP_TRACE_STRU *pstAppTrace, VOS_UINT32 ulMsgName, 
         return;
     }
 
-    /* Ìî³äÐÅÏ¢ */
+    /* å¡«å……ä¿¡æ¯ */
     pstAppTrace->stAppHeader.ucFuncType = OM_TRANS_FUNC;
     pstAppTrace->stAppHeader.usLength   = (VOS_UINT16)(ulMsgLen - VOS_OM_HEADER_LEN);
 
@@ -106,7 +106,7 @@ VOS_VOID IPS_MNTN_SndCfgCnf2Om
     VOS_UINT16                   usIpsMntnToOmMsgLen;
     PS_OM_TRANS_IND_STRU        *pstIpsMntnToOmMsg = VOS_NULL_PTR;
 
-    /*ÉêÇëÏûÏ¢*/
+    /*ç”³è¯·æ¶ˆæ¯*/
     usIpsMntnToOmMsgLen = PS_OM_TRANS_DATA_OFFSET_LEN + usTransMsgContentLen;
     pstIpsMntnToOmMsg   = (PS_OM_TRANS_IND_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(ACPU_PID_NFEXT, usIpsMntnToOmMsgLen);
 
@@ -118,18 +118,18 @@ VOS_VOID IPS_MNTN_SndCfgCnf2Om
         return;
     }
 
-    /* Ìî³ä µ½ OMµÄÍ¸Ã÷ÏûÏ¢ */
+    /* å¡«å…… åˆ° OMçš„é€æ˜Žæ¶ˆæ¯ */
     IPS_FILL_MSG_HEADER(pstIpsMntnToOmMsg, ACPU_PID_OM);
 
-    pstIpsMntnToOmMsg->usTransPrimId    = OM_TRANS_PRIMID;          /*Í¸´«ÏûÏ¢¹Ì¶¨ÌîÎª0x5001*/
-    pstIpsMntnToOmMsg->ucFuncType       = OM_TRANS_FUNC;            /*Í¸´«¹¦ÄÜ*/
-    pstIpsMntnToOmMsg->usAppLength      = usIpsMntnToOmMsgLen - PS_OM_TRANS_OM_HEADER_LEN; /*¼õÈ¥usAppLength¼°ÆäÖ®Ç°µÄie³¤¶È*/
-    pstIpsMntnToOmMsg->ulSn             = 0;                        /*ÔÝÊ±Ìî0*/
+    pstIpsMntnToOmMsg->usTransPrimId    = OM_TRANS_PRIMID;          /*é€ä¼ æ¶ˆæ¯å›ºå®šå¡«ä¸º0x5001*/
+    pstIpsMntnToOmMsg->ucFuncType       = OM_TRANS_FUNC;            /*é€ä¼ åŠŸèƒ½*/
+    pstIpsMntnToOmMsg->usAppLength      = usIpsMntnToOmMsgLen - PS_OM_TRANS_OM_HEADER_LEN; /*å‡åŽ»usAppLengthåŠå…¶ä¹‹å‰çš„ieé•¿åº¦*/
+    pstIpsMntnToOmMsg->ulSn             = 0;                        /*æš‚æ—¶å¡«0*/
     pstIpsMntnToOmMsg->ulTimeStamp      = OM_GetSlice();
-    pstIpsMntnToOmMsg->usPrimId         = usPrimId;                 /*¸ù¾ÝÊäÈëÏûÏ¢IDÌîÐ´*/
-    pstIpsMntnToOmMsg->usToolsId        = 0;                        /*¹¤¾ßID,Ä¿Ç°ÔÝÃ»ÓÐÊ¹ÓÃ*/
+    pstIpsMntnToOmMsg->usPrimId         = usPrimId;                 /*æ ¹æ®è¾“å…¥æ¶ˆæ¯IDå¡«å†™*/
+    pstIpsMntnToOmMsg->usToolsId        = 0;                        /*å·¥å…·ID,ç›®å‰æš‚æ²¡æœ‰ä½¿ç”¨*/
 
-    /* Ìî³äÈ·ÈÏÐÅÏ¢ */
+    /* å¡«å……ç¡®è®¤ä¿¡æ¯ */
     if ( (0 != usTransMsgContentLen) && (VOS_NULL_PTR != pTransMsgContent) )
     {
         PS_MEM_CPY(pstIpsMntnToOmMsg->aucData, pTransMsgContent, usTransMsgContentLen);
@@ -168,7 +168,7 @@ VOS_UINT32 IPS_MNTN_TransMsg
 
 
 
-    /*ÉêÇëÏûÏ¢*/
+    /*ç”³è¯·æ¶ˆæ¯*/
     ulTraceMsgLen   = OM_TRANS_DATA_OFFSET_LEN + ulTransMsgContentLen;
     pstAppTrace     = (OM_APP_TRACE_STRU *)pucTransMsg;
 
@@ -196,7 +196,7 @@ VOS_UINT32 IPS_MNTN_GetPktLenByTraceCfg
 {
     *pulDataLen    =   0;
 
-    /*ÅÐ¶Ï¶¨Ê±Æ÷ÊÇ·ñÆô¶¯*/
+    /*åˆ¤æ–­å®šæ—¶å™¨æ˜¯å¦å¯åŠ¨*/
     switch ( pstTraceCfg->ulChoice )
     {
         case IPS_MNTN_TRACE_NULL_CHOSEN:
@@ -240,7 +240,7 @@ VOS_VOID IPS_MNTN_PktInfoCB
         return;
     }
 
-    /*¸ù¾ÝÏûÏ¢ÀàÐÍÑ¡Ôñ¶ÔÓ¦ÅäÖÃÐÅÏ¢*/
+    /*æ ¹æ®æ¶ˆæ¯ç±»åž‹é€‰æ‹©å¯¹åº”é…ç½®ä¿¡æ¯*/
     if(ID_IPS_TRACE_INPUT_DATA_INFO == usType)
     {
         pstTraceCfg = &(g_stIpsTraceMsgCfg.stPreRoutingTraceCfg);
@@ -255,24 +255,24 @@ VOS_VOID IPS_MNTN_PktInfoCB
     }
     else
     {
-        /*´òÓ¡¾¯¸æÐÅÏ¢,ÏûÏ¢ÀàÐÍ²»Æ¥Åä*/
+        /*æ‰“å°è­¦å‘Šä¿¡æ¯,æ¶ˆæ¯ç±»åž‹ä¸åŒ¹é…*/
         PS_LOG( ACPU_PID_NFEXT, 0, PS_PRINT_ERROR,
                 "IPS, IPS_MNTN_PktInfoCB : ERROR : usType is not Expectes!" );
         return;
     }
 
-    /*¸ù¾ÝÏûÏ¢ÅäÖÃÐÅÏ¢£¬»ñÈ¡Êä³ö±¨ÎÄ³¤¶È*/
+    /*æ ¹æ®æ¶ˆæ¯é…ç½®ä¿¡æ¯ï¼ŒèŽ·å–è¾“å‡ºæŠ¥æ–‡é•¿åº¦*/
     ulRst = IPS_MNTN_GetPktLenByTraceCfg(pstTraceCfg, usPktLen, &ulDataLen);
     if(PS_FALSE == ulRst)
     {
-        /*²»²¶»ñ¸Ã±¨ÎÄ*/
+        /*ä¸æ•èŽ·è¯¥æŠ¥æ–‡*/
         return;
     }
 
     ulDataLen           = PS_MIN(IPS_MNTN_TRACE_MAX_BYTE_LEN, ulDataLen);
     ulTransDataLen      = MNTN_PKT_INFO_OFFSET_LEN + ulDataLen;
 
-    /* ´ÓLinuxÄÚºËÉêÇëÄÚ´æ */
+    /* ä»ŽLinuxå†…æ ¸ç”³è¯·å†…å­˜ */
     pucTraceData = NF_EXT_MEM_ALLOC(ACPU_PID_NFEXT, ulTransDataLen + OM_TRANS_DATA_OFFSET_LEN);
 
     if (VOS_NULL_PTR == pucTraceData)
@@ -282,7 +282,7 @@ VOS_VOID IPS_MNTN_PktInfoCB
         return;
     }
 
-    /*¹¹½¨Í¸Ã÷ÏûÏ¢*/
+    /*æž„å»ºé€æ˜Žæ¶ˆæ¯*/
     pstTraceMsg         = (IPS_MNTN_PKT_INFO_STRU *)(pucTraceData + OM_TRANS_DATA_OFFSET_LEN);
     pstTraceMsg->usLen  = usPktLen;
     DRV_RT_MEMCPY(pstTraceMsg->aucNetIfName, pucNetIfName, IPS_IFNAMSIZ);
@@ -323,31 +323,31 @@ VOS_VOID IPS_MNTN_BridgePktInfoCB
         return;
     }
 
-    /*¸ù¾ÝÏûÏ¢ÀàÐÍÑ¡Ôñ¶ÔÓ¦ÅäÖÃÐÅÏ¢*/
+    /*æ ¹æ®æ¶ˆæ¯ç±»åž‹é€‰æ‹©å¯¹åº”é…ç½®ä¿¡æ¯*/
     if( usType < ID_IPS_TRACE_MSG_TYPE_BUTT )
     {
         pstTraceCfg = &(g_stIpsTraceMsgCfg.stBridgeArpTraceCfg);
     }
     else
     {
-        /*´òÓ¡¾¯¸æÐÅÏ¢,ÏûÏ¢ÀàÐÍ²»Æ¥Åä*/
+        /*æ‰“å°è­¦å‘Šä¿¡æ¯,æ¶ˆæ¯ç±»åž‹ä¸åŒ¹é…*/
         PS_LOG( ACPU_PID_NFEXT, 0, PS_PRINT_ERROR,
                 "IPS, IPS_MNTN_BridgePktInfoCB : ERROR : usType is not Expectes!" );
         return;
     }
 
-    /*¸ù¾ÝÏûÏ¢ÅäÖÃÐÅÏ¢£¬»ñÈ¡Êä³ö±¨ÎÄ³¤¶È*/
+    /*æ ¹æ®æ¶ˆæ¯é…ç½®ä¿¡æ¯ï¼ŒèŽ·å–è¾“å‡ºæŠ¥æ–‡é•¿åº¦*/
     ulRst = IPS_MNTN_GetPktLenByTraceCfg(pstTraceCfg, usPktLen, &ulDataLen);
     if(PS_FALSE == ulRst)
     {
-        /*²»²¶»ñ¸Ã±¨ÎÄ*/
+        /*ä¸æ•èŽ·è¯¥æŠ¥æ–‡*/
         return;
     }
 
     ulDataLen           = PS_MIN(IPS_MNTN_TRACE_MAX_BYTE_LEN, ulDataLen);
     ulTransDataLen      = (MNTN_BRIDGE_PKT_INFO_OFFSET_LEN + ulDataLen);
 
-    /* ´ÓLinuxÄÚºËÉêÇëÄÚ´æ */
+    /* ä»ŽLinuxå†…æ ¸ç”³è¯·å†…å­˜ */
     pucTraceData = NF_EXT_MEM_ALLOC(ACPU_PID_NFEXT, ulTransDataLen + OM_TRANS_DATA_OFFSET_LEN);
 
     if (VOS_NULL_PTR == pucTraceData)
@@ -357,7 +357,7 @@ VOS_VOID IPS_MNTN_BridgePktInfoCB
         return;
     }
 
-    /*¹¹½¨Í¸Ã÷ÏûÏ¢*/
+    /*æž„å»ºé€æ˜Žæ¶ˆæ¯*/
     pstTraceMsg = (IPS_MNTN_BRIDGE_PKT_INFO_STRU *)(pucTraceData + OM_TRANS_DATA_OFFSET_LEN);
     pstTraceMsg->usLen  = usPktLen;
 
@@ -410,7 +410,7 @@ VOS_VOID IPS_MNTN_CtrlPktInfoCB
     ulDataLen           = PS_MIN(IPS_MNTN_TRACE_MAX_BYTE_LEN, usPktLen);
     ulTransDataLen      = (MNTN_PKT_INFO_OFFSET_LEN + ulDataLen);
 
-    /* ´ÓLinuxÄÚºËÉêÇëÄÚ´æ */
+    /* ä»ŽLinuxå†…æ ¸ç”³è¯·å†…å­˜ */
     pucTraceData = NF_EXT_MEM_ALLOC(ACPU_PID_NFEXT, ulTransDataLen + OM_TRANS_DATA_OFFSET_LEN);
 
     if (VOS_NULL_PTR == pucTraceData)
@@ -420,7 +420,7 @@ VOS_VOID IPS_MNTN_CtrlPktInfoCB
         return;
     }
 
-    /*¹¹½¨Í¸Ã÷ÏûÏ¢*/
+    /*æž„å»ºé€æ˜Žæ¶ˆæ¯*/
     pstTraceMsg = (IPS_MNTN_PKT_INFO_STRU *)(pucTraceData + OM_TRANS_DATA_OFFSET_LEN);
     pstTraceMsg->usLen  = usPktLen;
     DRV_RT_MEMCPY(pstTraceMsg->aucNetIfName, pucNetIfName, IPS_IFNAMSIZ);
@@ -475,13 +475,13 @@ PS_BOOL_ENUM_UINT8  IPS_MNTN_TraceCfgChkParam(IPS_MNTN_TRACE_CONFIG_REQ_STRU *pR
 
 PS_BOOL_ENUM_UINT8  IPS_MNTN_TraceAdvancedCfgChkParam(IPS_MNTN_TRACE_CONFIG_REQ_STRU *pRcvMsg)
 {
-    /*TCP/IPÐ­ÒéÕ»±¨ÎÄ¹³°üÅäÖÃ²ÎÊý¼ì²é*/
+    /*TCP/IPåè®®æ ˆæŠ¥æ–‡é’©åŒ…é…ç½®å‚æ•°æ£€æŸ¥*/
     if(PS_FALSE == IPS_MNTN_TraceCfgChkParam(pRcvMsg))
     {
         return PS_FALSE;
     }
 
-    /*ÍøÇÅÖÐ×ª±¨ÎÄ¹³°üÅäÖÃ²ÎÊý¼ì²é*/
+    /*ç½‘æ¡¥ä¸­è½¬æŠ¥æ–‡é’©åŒ…é…ç½®å‚æ•°æ£€æŸ¥*/
     if(PS_FALSE == IPS_MNTN_BridgeTraceCfgChkParam(pRcvMsg))
     {
         return  PS_FALSE;
@@ -500,12 +500,12 @@ VOS_VOID IPS_MNTN_TraceAdvancedCfgReq(VOS_VOID *pMsg)
 
     pRcvMsg = (IPS_MNTN_TRACE_CONFIG_REQ_STRU *) (((OM_PS_PARAM_REQ_STRU *)pMsg)->aucData);
 
-    /*¼ì²âÅäÖÃ²ÎÊýÊÇ·ñºÏ·¨*/
+    /*æ£€æµ‹é…ç½®å‚æ•°æ˜¯å¦åˆæ³•*/
     enResult = IPS_MNTN_TraceAdvancedCfgChkParam(pRcvMsg);
 
     if ( PS_FALSE == enResult )
     {
-        /*Èç¹û²ÎÊý¼ì²â²»ºÏ·¨£¬ÏòOM»Ø¸´ÅäÖÃÊ§°Ü*/
+        /*å¦‚æžœå‚æ•°æ£€æµ‹ä¸åˆæ³•ï¼Œå‘OMå›žå¤é…ç½®å¤±è´¥*/
         stIpsTraceCfgCnf.enRslt =   PS_FAIL;
         IPS_MNTN_SndCfgCnf2Om(ID_IPS_OM_ADVANCED_TRACE_CONFIG_CNF,
             sizeof(IPS_MNTN_TRACE_CONFIG_CNF_STRU), &stIpsTraceCfgCnf );
@@ -518,7 +518,7 @@ VOS_VOID IPS_MNTN_TraceAdvancedCfgReq(VOS_VOID *pMsg)
     enResult = NFExt_ConfigEffective(pRcvMsg);
     if( PS_FALSE == enResult )
     {
-        /*Èç¹û×¢²á¹³×Óº¯ÊýÊ§°Ü£¬ÏòOM»Ø¸´ÅäÖÃÊ§°Ü*/
+        /*å¦‚æžœæ³¨å†Œé’©å­å‡½æ•°å¤±è´¥ï¼Œå‘OMå›žå¤é…ç½®å¤±è´¥*/
         stIpsTraceCfgCnf.enRslt =   PS_FAIL;
         IPS_MNTN_SndCfgCnf2Om(ID_IPS_OM_ADVANCED_TRACE_CONFIG_CNF,
             sizeof(IPS_MNTN_TRACE_CONFIG_CNF_STRU), &stIpsTraceCfgCnf );
@@ -528,10 +528,10 @@ VOS_VOID IPS_MNTN_TraceAdvancedCfgReq(VOS_VOID *pMsg)
         return;
     }
 
-    /*±£´æÅäÖÃ²ÎÊý*/
+    /*ä¿å­˜é…ç½®å‚æ•°*/
     PS_MEM_CPY(&g_stIpsTraceMsgCfg, pRcvMsg, sizeof(IPS_MNTN_TRACE_CONFIG_REQ_STRU));
 
-    /*ÏòOM»Ø¸´ÅäÖÃ³É¹¦*/
+    /*å‘OMå›žå¤é…ç½®æˆåŠŸ*/
     stIpsTraceCfgCnf.enRslt =   PS_SUCC;
     IPS_MNTN_SndCfgCnf2Om(ID_IPS_OM_ADVANCED_TRACE_CONFIG_CNF,
             sizeof(IPS_MNTN_TRACE_CONFIG_CNF_STRU), &stIpsTraceCfgCnf );
@@ -551,7 +551,7 @@ VOS_VOID IPS_MNTN_SendTranMsgDirect(OM_APP_TRACE_STRU *pstAppTrace, VOS_UINT32 u
 
     ulTraceMsgLen   = OM_TRANS_DATA_OFFSET_LEN + ulMsgContenLen;
 
-    /* ×ªÎªOMÍ¸Ã÷ÏûÏ¢½á¹¹ */
+    /* è½¬ä¸ºOMé€æ˜Žæ¶ˆæ¯ç»“æž„ */
     IPS_MNTN_FillMsg(pstAppTrace, ulMsgName, ulTraceMsgLen);
 
     OM_AcpuSendData((OM_RSP_PACKET_STRU*)pstAppTrace, (VOS_UINT16)ulTraceMsgLen);
@@ -594,12 +594,12 @@ VOS_VOID IPS_MNTN_IPInfoCfgReq(VOS_VOID *pMsg)
 
     pRcvIpInfoCfg   = (IPS_MNTN_IP_INFO_CONFIG_REQ_STRU *) (((OM_PS_PARAM_REQ_STRU *)pMsg)->aucData);
 
-    /*¼ì²âÅäÖÃ²ÎÊýÊÇ·ñºÏ·¨*/
+    /*æ£€æµ‹é…ç½®å‚æ•°æ˜¯å¦åˆæ³•*/
     enResult        = IPS_MNTN_IPInfoCfgChkParam(pRcvIpInfoCfg);
 
     if ( PS_FALSE == enResult )
     {
-        /*Èç¹û²ÎÊý¼ì²â²»ºÏ·¨£¬ÏòOM»Ø¸´ÅäÖÃÊ§°Ü*/
+        /*å¦‚æžœå‚æ•°æ£€æµ‹ä¸åˆæ³•ï¼Œå‘OMå›žå¤é…ç½®å¤±è´¥*/
         stIpsTraceCfgCnf.enRslt = PS_FAIL;
         IPS_MNTN_SndCfgCnf2Om(ID_IPS_OM_MNTN_IP_INFO_CONFIG_CNF,
             sizeof(IPS_MNTN_TRACE_CONFIG_CNF_STRU), &stIpsTraceCfgCnf );
@@ -608,7 +608,7 @@ VOS_VOID IPS_MNTN_IPInfoCfgReq(VOS_VOID *pMsg)
         return;
     }
 
-    /*±£´æÅäÖÃ²ÎÊý*/
+    /*ä¿å­˜é…ç½®å‚æ•°*/
     PS_MEM_CPY(&g_stIpsMntnIPInfoCfg, pRcvIpInfoCfg, sizeof(IPS_MNTN_IP_INFO_CONFIG_REQ_STRU));
 
     if (PS_TRUE == g_stIpsMntnIPInfoCfg.enUsbIPConfig)
@@ -620,7 +620,7 @@ VOS_VOID IPS_MNTN_IPInfoCfgReq(VOS_VOID *pMsg)
         DRV_USB_REG_IPS_TRACECB(NULL);
     }
 
-    /*ÏòOM»Ø¸´ÅäÖÃ³É¹¦*/
+    /*å‘OMå›žå¤é…ç½®æˆåŠŸ*/
     stIpsTraceCfgCnf.enRslt = PS_SUCC;
     IPS_MNTN_SndCfgCnf2Om(ID_IPS_OM_MNTN_IP_INFO_CONFIG_CNF,
             sizeof(IPS_MNTN_TRACE_CONFIG_CNF_STRU), &stIpsTraceCfgCnf );
@@ -721,7 +721,7 @@ VOS_VOID IPS_MNTN_TraceIpInfo(struct sk_buff *skb,VOS_UINT16 usType)
     ulRst = IPS_MNTN_GetIPInfoCfg(usType);
     if(PS_FALSE == ulRst)
     {
-        /*²»²¶»ñ¸Ã±¨ÎÄ*/
+        /*ä¸æ•èŽ·è¯¥æŠ¥æ–‡*/
         return;
     }
 
@@ -732,7 +732,7 @@ VOS_VOID IPS_MNTN_TraceIpInfo(struct sk_buff *skb,VOS_UINT16 usType)
         return;
     }
 
-    /* USB×¥È¡µÄskb data¿ÉÄÜÊÇIPÊý¾Ý°ü»òÕßÊÇ´øMACÍ·µÄIPÊý¾Ý°ü*/
+    /* USBæŠ“å–çš„skb dataå¯èƒ½æ˜¯IPæ•°æ®åŒ…æˆ–è€…æ˜¯å¸¦MACå¤´çš„IPæ•°æ®åŒ…*/
     pIpData         = skb->data;
 
     if (IP_IPV4_VER_AND_HEAD == *pIpData)
@@ -753,11 +753,11 @@ VOS_VOID IPS_MNTN_TraceIpInfo(struct sk_buff *skb,VOS_UINT16 usType)
         pIpData     += MAC_HEAD_LEN;
     }
 
-    /*¹¹½¨Í¸Ã÷ÏûÏ¢*/
+    /*æž„å»ºé€æ˜Žæ¶ˆæ¯*/
     pstIpInfo               = (IPS_MNTN_IP_INFO_STRU *)(aucData + OM_TRANS_DATA_OFFSET_LEN);
     pstIpInfo->ucIpVer      = *pIpData>>IP_PROTO_VERSION_POS;
 
-    /* IP±¨ÎÄ½âÎöTCP,UDP,ICMP£¬²»½âÎöIPµÄÀ©Õ¹Í·*/
+    /* IPæŠ¥æ–‡è§£æžTCP,UDP,ICMPï¼Œä¸è§£æžIPçš„æ‰©å±•å¤´*/
     if (IP_IPV4_PROTO_VERSION == pstIpInfo->ucIpVer)
     {
         pstIpInfo->usDataLen  = IP_GET_VAL_NTOH_U16(pIpData, IP_IPV4_DATA_LEN_POS);

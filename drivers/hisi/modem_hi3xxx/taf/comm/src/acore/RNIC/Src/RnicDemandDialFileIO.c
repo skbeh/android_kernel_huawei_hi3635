@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "vos.h"
 #include "pslog.h"
@@ -30,7 +30,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e960*/
 #define    THIS_FILE_ID        PS_FILE_ID_RNIC_DEMAND_DIAL_FILE_IO_C
@@ -38,7 +38,7 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 #if (VOS_OS_VER == VOS_LINUX)
 
@@ -68,7 +68,7 @@ static const struct file_operations g_stIdleTimerOutFileOps ;
 static const struct file_operations g_stDialEventReportFileOps;
 #endif
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 VOS_UINT32 RNIC_TransferStringToInt(VOS_CHAR *pcString)
@@ -114,7 +114,7 @@ ssize_t RNIC_ReadOnDemandFile(
 
     PS_MEM_SET(acModeTemp, 0x00, RNIC_ONDEMAND_FILE_LEN);
 
-    /* »ñÈ¡°´Ðè²¦ºÅµÄÄ£Ê½ÒÔ¼°Ê±³¤µÄµØÖ· */
+    /* èŽ·å–æŒ‰éœ€æ‹¨å·çš„æ¨¡å¼ä»¥åŠæ—¶é•¿çš„åœ°å€ */
     pstDialMode                         = RNIC_GetDialModeAddr();
 
     VOS_sprintf((VOS_CHAR *)acModeTemp, "%d", pstDialMode->enDialMode);
@@ -123,7 +123,7 @@ ssize_t RNIC_ReadOnDemandFile(
 
     len             = PS_MIN(len, ulDialModeLen);
 
-    /*¿½±´ÄÚºË¿Õ¼äÊý¾Ýµ½ÓÃ»§¿Õ¼äÉÏÃæ*/
+    /*æ‹·è´å†…æ ¸ç©ºé—´æ•°æ®åˆ°ç”¨æˆ·ç©ºé—´ä¸Šé¢*/
     if (0 == copy_to_user(buf,(VOS_VOID *)acModeTemp, len))
     {
         *ppos += (loff_t)len;
@@ -152,7 +152,7 @@ ssize_t RNIC_WriteOnDemandFile(
 
     PS_MEM_SET(acModeTemp, 0x00, RNIC_ONDEMAND_FILE_LEN);
 
-    /* »ñÈ¡°´Ðè²¦ºÅµÄÄ£Ê½ÒÔ¼°Ê±³¤µÄµØÖ· */
+    /* èŽ·å–æŒ‰éœ€æ‹¨å·çš„æ¨¡å¼ä»¥åŠæ—¶é•¿çš„åœ°å€ */
     pstDialMode                         = RNIC_GetDialModeAddr();
 
     vos_printf("RNIC_WriteOnDemandFile:buf%x len %d \n", *buf, len);
@@ -163,7 +163,7 @@ ssize_t RNIC_WriteOnDemandFile(
         return -ENOSPC;
     }
 
-    /*¿½±´ÓÃ»§¿Õ¼äÊý¾Ýµ½ÄÚºË¿Õ¼äÉÏÃæ*/
+    /*æ‹·è´ç”¨æˆ·ç©ºé—´æ•°æ®åˆ°å†…æ ¸ç©ºé—´ä¸Šé¢*/
     if (copy_from_user((VOS_VOID *)acModeTemp, (VOS_VOID *)buf, len)  > 0)
     {
         RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_WriteOnDemandFile:copy_from_user ERR!");
@@ -176,7 +176,7 @@ ssize_t RNIC_WriteOnDemandFile(
 
     stDialMode.enDialMode = RNIC_TransferStringToInt(acModeTemp);
 
-    /* °´Ðè²¦ºÅ */
+    /* æŒ‰éœ€æ‹¨å· */
     if (AT_RNIC_DIAL_MODE_DEMAND_CONNECT == stDialMode.enDialMode)
     {
         RNIC_StartTimer(TI_RNIC_DEMAND_DIAL_DISCONNECT, TI_RNIC_DEMAND_DIAL_DISCONNECT_LEN);
@@ -186,7 +186,7 @@ ssize_t RNIC_WriteOnDemandFile(
         RNIC_StopTimer(TI_RNIC_DEMAND_DIAL_DISCONNECT);
     }
 
-    /* ±£´æ²¦ºÅÄ£Ê½ÉÏÏÂÎÄÖÐ */
+    /* ä¿å­˜æ‹¨å·æ¨¡å¼ä¸Šä¸‹æ–‡ä¸­ */
     pstDialMode->enDialMode             = stDialMode.enDialMode;
 
 
@@ -202,7 +202,7 @@ VOS_UINT32 RNIC_InitOnDemandFile(struct proc_dir_entry *pstParentFileDirEntry)
 
     if (VOS_NULL_PTR == pstParentFileDirEntry)
     {
-        /*´´½¨OnDemandÐéÄâÎÄ¼þ*/
+        /*åˆ›å»ºOnDemandè™šæ‹Ÿæ–‡ä»¶*/
         pstOnDemandEntry                   = proc_create("dial/ondemand",
                                                         RNIC_VFILE_CRT_LEVEL,
                                                         pstParentFileDirEntry,
@@ -218,7 +218,7 @@ VOS_UINT32 RNIC_InitOnDemandFile(struct proc_dir_entry *pstParentFileDirEntry)
     }
     else
     {
-        /*´´½¨OnDemandÐéÄâÎÄ¼þ*/
+        /*åˆ›å»ºOnDemandè™šæ‹Ÿæ–‡ä»¶*/
         pstOnDemandEntry                   = proc_create("ondemand",
                                                         RNIC_VFILE_CRT_LEVEL,
                                                         pstParentFileDirEntry,
@@ -257,7 +257,7 @@ ssize_t RNIC_ReadIdleTimerOutFile(
     PS_MEM_SET(acIdleTimeTemp, 0x00, RNIC_IDLETIMEROUT_FILE_LEN);
 
 
-    /* »ñÈ¡°´Ðè²¦ºÅµÄÄ£Ê½ÒÔ¼°Ê±³¤µÄµØÖ· */
+    /* èŽ·å–æŒ‰éœ€æ‹¨å·çš„æ¨¡å¼ä»¥åŠæ—¶é•¿çš„åœ°å€ */
     pstDialMode                         = RNIC_GetDialModeAddr();
 
     VOS_sprintf(acIdleTimeTemp, "%d", pstDialMode->ulIdleTime);
@@ -266,7 +266,7 @@ ssize_t RNIC_ReadIdleTimerOutFile(
 
     len            = PS_MIN(len, ulIdleTimeLen);
 
-    /*¿½±´ÄÚºË¿Õ¼äÊý¾Ýµ½ÓÃ»§¿Õ¼äÉÏÃæ*/
+    /*æ‹·è´å†…æ ¸ç©ºé—´æ•°æ®åˆ°ç”¨æˆ·ç©ºé—´ä¸Šé¢*/
     if (0 == copy_to_user(buf,(VOS_VOID *)acIdleTimeTemp, len))
     {
         *ppos += (loff_t)len;
@@ -301,7 +301,7 @@ ssize_t RNIC_WriteIdleTimerOutFile(
         return -ENOSPC;
     }
 
-    /*¿½±´ÓÃ»§¿Õ¼äÊý¾Ýµ½ÄÚºË¿Õ¼äÉÏÃæ*/
+    /*æ‹·è´ç”¨æˆ·ç©ºé—´æ•°æ®åˆ°å†…æ ¸ç©ºé—´ä¸Šé¢*/
     if (copy_from_user((VOS_VOID *)acIdleTimeTemp, (VOS_VOID *)buf, len) > 0)
     {
         RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_WriteIdleTimerOutFile:copy_from_user ERR!");
@@ -312,13 +312,13 @@ ssize_t RNIC_WriteIdleTimerOutFile(
 
     stDialMode.ulIdleTime = RNIC_TransferStringToInt(acIdleTimeTemp);
 
-    /* »ñÈ¡°´Ðè²¦ºÅµÄÄ£Ê½ÒÔ¼°Ê±³¤µÄµØÖ· */
+    /* èŽ·å–æŒ‰éœ€æ‹¨å·çš„æ¨¡å¼ä»¥åŠæ—¶é•¿çš„åœ°å€ */
     pstDialMode                         = RNIC_GetDialModeAddr();
 
     if (AT_RNIC_DIAL_MODE_DEMAND_DISCONNECT == pstDialMode->enDialMode)
     {
 
-        /* PDP¼¤»î£¬ÇÒÓëÉÏ´ÎÉèÖÃµÄÊ±³¤²»Ò»ÖÂ£¬ÐèÒªÆô¶¯²¦ºÅ¶Ï¿ª¶¨Ê±Æ÷ */
+        /* PDPæ¿€æ´»ï¼Œä¸”ä¸Žä¸Šæ¬¡è®¾ç½®çš„æ—¶é•¿ä¸ä¸€è‡´ï¼Œéœ€è¦å¯åŠ¨æ‹¨å·æ–­å¼€å®šæ—¶å™¨ */
         if ( pstDialMode->ulIdleTime != stDialMode.ulIdleTime)
         {
             RNIC_StopTimer(TI_RNIC_DEMAND_DIAL_DISCONNECT);
@@ -339,7 +339,7 @@ VOS_UINT32 RNIC_InitIdleTimerOutFile(struct proc_dir_entry *pstParentFileDirEntr
 
     if (VOS_NULL_PTR == pstParentFileDirEntry )
     {
-        /*´´½¨IdleTimeOutÐéÄâÎÄ¼þ*/
+        /*åˆ›å»ºIdleTimeOutè™šæ‹Ÿæ–‡ä»¶*/
         pstIdleTimeOutEntry                 = proc_create("dial/idle_timeout",
                                                          RNIC_VFILE_CRT_LEVEL,
                                                          pstParentFileDirEntry,
@@ -354,7 +354,7 @@ VOS_UINT32 RNIC_InitIdleTimerOutFile(struct proc_dir_entry *pstParentFileDirEntr
     }
     else
     {
-        /*´´½¨IdleTimeOutÐéÄâÎÄ¼þ*/
+        /*åˆ›å»ºIdleTimeOutè™šæ‹Ÿæ–‡ä»¶*/
         pstIdleTimeOutEntry                 = proc_create("idle_timeout",
                                                          RNIC_VFILE_CRT_LEVEL,
                                                          pstParentFileDirEntry,
@@ -392,7 +392,7 @@ ssize_t RNIC_ReadDialEventReportFile(
     PS_MEM_SET(acDialEventTemp, 0x00, RNIC_EVENTFLAG_FILE_LEN);
 
 
-    /* »ñÈ¡°´Ðè²¦ºÅµÄÄ£Ê½ÒÔ¼°Ê±³¤µÄµØÖ· */
+    /* èŽ·å–æŒ‰éœ€æ‹¨å·çš„æ¨¡å¼ä»¥åŠæ—¶é•¿çš„åœ°å€ */
     pstDialMode                         = RNIC_GetDialModeAddr();
 
     VOS_sprintf(acDialEventTemp, "%d", pstDialMode->enEventReportFlag);
@@ -401,7 +401,7 @@ ssize_t RNIC_ReadDialEventReportFile(
 
     len            = PS_MIN(len, ulDialEventLen);
 
-    /*¿½±´ÄÚºË¿Õ¼äÊý¾Ýµ½ÓÃ»§¿Õ¼äÉÏÃæ*/
+    /*æ‹·è´å†…æ ¸ç©ºé—´æ•°æ®åˆ°ç”¨æˆ·ç©ºé—´ä¸Šé¢*/
     if (0 == copy_to_user(buf, (VOS_VOID *)acDialEventTemp, len))
     {
         *ppos += (loff_t)len;
@@ -437,7 +437,7 @@ ssize_t RNIC_WriteDialEventReportFile(
         return -ENOSPC;
     }
 
-    /*¿½±´ÓÃ»§¿Õ¼äÊý¾Ýµ½ÄÚºË¿Õ¼äÉÏÃæ*/
+    /*æ‹·è´ç”¨æˆ·ç©ºé—´æ•°æ®åˆ°å†…æ ¸ç©ºé—´ä¸Šé¢*/
     if (copy_from_user((VOS_VOID *)acDialEventTemp, (VOS_VOID *)buf, len) > 0)
     {
         RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_WriteDialEventReportFile:copy_from_user ERR!");
@@ -450,10 +450,10 @@ ssize_t RNIC_WriteDialEventReportFile(
 
     stDialMode.enEventReportFlag    = RNIC_TransferStringToInt(acDialEventTemp);
 
-    /* »ñÈ¡°´Ðè²¦ºÅµÄÄ£Ê½ÒÔ¼°Ê±³¤µÄµØÖ· */
+    /* èŽ·å–æŒ‰éœ€æ‹¨å·çš„æ¨¡å¼ä»¥åŠæ—¶é•¿çš„åœ°å€ */
     pstDialMode                         = RNIC_GetDialModeAddr();
 
-    /* ±£´æ²¦ºÅÄ£Ê½µ½ÉÏÏÂÎÄÖÐ */
+    /* ä¿å­˜æ‹¨å·æ¨¡å¼åˆ°ä¸Šä¸‹æ–‡ä¸­ */
     pstDialMode->enEventReportFlag      = stDialMode.enEventReportFlag;
 
     RNIC_SendDialInfoMsg(ID_RNIC_MNTN_EVENT_REPORT_INFO);
@@ -466,7 +466,7 @@ VOS_UINT32 RNIC_InitDialEventReportFile(struct proc_dir_entry *pstParentFileDirE
 
     if (VOS_NULL_PTR == pstParentFileDirEntry)
     {
-        /*´´½¨dial_event_reportÐéÄâÎÄ¼þ*/
+        /*åˆ›å»ºdial_event_reportè™šæ‹Ÿæ–‡ä»¶*/
         pstDialEventReportEntry             = proc_create("dial/dial_event_report",
                                                           RNIC_VFILE_CRT_LEVEL,
                                                           pstParentFileDirEntry,
@@ -483,7 +483,7 @@ VOS_UINT32 RNIC_InitDialEventReportFile(struct proc_dir_entry *pstParentFileDirE
     else
     {
 
-        /*´´½¨dial_event_reportÐéÄâÎÄ¼þ*/
+        /*åˆ›å»ºdial_event_reportè™šæ‹Ÿæ–‡ä»¶*/
         pstDialEventReportEntry             = proc_create("dial_event_report",
                                                           RNIC_VFILE_CRT_LEVEL,
                                                           pstParentFileDirEntry,

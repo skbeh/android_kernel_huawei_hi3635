@@ -116,21 +116,21 @@ int drv_hifi_load_sec(u32 hifi_base_virt)
 				   (void*)((char*)head + head->sections[i].src_offset),
 				   head->sections[i].size);
 
-			/* Ìî³ä¶ÎĞÅÏ¢Í· */
+			/* å¡«å……æ®µä¿¡æ¯å¤´ */
 			dynamic_sec->sec_source_addr
 				= (unsigned int)(&(sec_info->sec_data[sec_data_num]));
 			dynamic_sec->sec_length    = head->sections[i].size;
 			dynamic_sec->sec_dest_addr = head->sections[i].des_addr;
 
-			/* ¿½±´¶ÎÊı¾İµ½¹²ÏíÄÚ´æ */
+			/* æ‹·è´æ®µæ•°æ®åˆ°å…±äº«å†…å­˜ */
 			memcpy((void*)(dynamic_sec->sec_source_addr),
 				   (void*)((char*)head + head->sections[i].src_offset),
 				   head->sections[i].size);
 
-			/* ¸üĞÂ¶ÎÊı¾İµØÖ· */
+			/* æ›´æ–°æ®µæ•°æ®åœ°å€ */
 			sec_data_num += head->sections[i].size;
 
-			/* ¸üĞÂ·Çµ¥´Î¼ÓÔØ¶ÎµÄ¸öÊı */
+			/* æ›´æ–°éå•æ¬¡åŠ è½½æ®µçš„ä¸ªæ•° */
 			dynamic_sec_num++;
 
 		} else if ((unsigned char)DRV_HIFI_IMAGE_SEC_UNLOAD == head->sections[i].load_attib) {
@@ -142,7 +142,7 @@ int drv_hifi_load_sec(u32 hifi_base_virt)
 
 	}
 
-	/* Ìî³ä¶ÎĞÅÏ¢Í·£¬·Çµ¥´Î¼ÓÔØ¶ÎµÄ¸öÊı */
+	/* å¡«å……æ®µä¿¡æ¯å¤´ï¼Œéå•æ¬¡åŠ è½½æ®µçš„ä¸ªæ•° */
 	sec_info->sec_num = dynamic_sec_num;
 	return 0;
 }

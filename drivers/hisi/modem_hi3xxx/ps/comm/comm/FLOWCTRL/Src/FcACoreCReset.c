@@ -1,26 +1,26 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : FcACoreCReset.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : caikai
-  Éú³ÉÈÕÆÚ   : 2013Äê4ÔÂ22ÈÕ
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : CºËµ¥¶À¸´Î»ÖÐFcACoreµÄ´¦Àí
-  º¯ÊýÁÐ±í   :
-  ÐÞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2013Äê4ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : ´´½¨ÎÄ¼þ
+  æ–‡ ä»¶ å   : FcACoreCReset.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : caikai
+  ç”Ÿæˆæ—¥æœŸ   : 2013å¹´4æœˆ22æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : Cæ ¸å•ç‹¬å¤ä½ä¸­FcACoreçš„å¤„ç†
+  å‡½æ•°åˆ—è¡¨   :
+  ä¿®æ”¹åŽ†å²   :
+  1.æ—¥    æœŸ   : 2013å¹´4æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "product_config.h"
 #if(FEATURE_ON == FEATURE_ACPU_FC_POINT_REG)
@@ -39,39 +39,39 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_ACORE_CRESET_FLOW_CTRL_C
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
-VOS_SEM         g_ulFcACoreCResetDoneSem;    /* FcACoreÍê³É»Øµ÷ÊÂÎñÐÅºÅÁ¿ */
+VOS_SEM         g_ulFcACoreCResetDoneSem;    /* FcACoreå®Œæˆå›žè°ƒäº‹åŠ¡ä¿¡å·é‡ */
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_ACORE_CResetSendNotify
- ¹¦ÄÜÃèÊö  : µ×ÈíCºË¸´Î»¹ý³ÌÄ£¿éÍ¨ÖªFcACore½øÐÐ¸´Î»´¦Àí»òÕß·¢ËÍ¸´Î»³É¹¦µÄÍ¨Öª
- ÊäÈë²ÎÊý  : FC_MSG_TYPE_ENUM_UINT16     usMsgName      ÏûÏ¢Ãû³Æ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK/VOS_ERR
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_ACORE_CResetSendNotify
+ åŠŸèƒ½æè¿°  : åº•è½¯Cæ ¸å¤ä½è¿‡ç¨‹æ¨¡å—é€šçŸ¥FcACoreè¿›è¡Œå¤ä½å¤„ç†æˆ–è€…å‘é€å¤ä½æˆåŠŸçš„é€šçŸ¥
+ è¾“å…¥å‚æ•°  : FC_MSG_TYPE_ENUM_UINT16     usMsgName      æ¶ˆæ¯åç§°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK/VOS_ERR
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê4ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´4æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32  FC_ACORE_CResetSendNotify(FC_MSG_TYPE_ENUM_UINT16     usMsgName)
 {
     FC_ACORE_CRESET_IND_STRU    *pstMsg;
 
-    /* ÉêÇëÏûÏ¢ÄÚ´æ */
+    /* ç”³è¯·æ¶ˆæ¯å†…å­˜ */
     pstMsg = (FC_ACORE_CRESET_IND_STRU *) VOS_AllocMsg( UEPS_PID_FLOWCTRL_A,
         sizeof(FC_ACORE_CRESET_IND_STRU) - VOS_MSG_HEAD_LENGTH );
 
@@ -81,12 +81,12 @@ VOS_UINT32  FC_ACORE_CResetSendNotify(FC_MSG_TYPE_ENUM_UINT16     usMsgName)
         return VOS_ERR;
     }
 
-    /* ÌîÐ´ÏûÏ¢ÄÚÈÝ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     pstMsg->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstMsg->ulReceiverPid   = UEPS_PID_FLOWCTRL_A;
     pstMsg->usMsgName       = usMsgName;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     VOS_SendMsg(UEPS_PID_FLOWCTRL, pstMsg);
 
     return VOS_OK;
@@ -95,19 +95,19 @@ VOS_UINT32  FC_ACORE_CResetSendNotify(FC_MSG_TYPE_ENUM_UINT16     usMsgName)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_ACORE_CResetCallback
- ¹¦ÄÜÃèÊö  : FcACoreÐèÒª×¢²áµ½µ×ÈíCºË¸´Î»½Ó¿ÚÖÐµÄ»Øµ÷º¯Êý
- ÊäÈë²ÎÊý  : DRV_RESET_CALLCBFUN_MOMENT enParam Ö¸Ê¾Ê±¸´Î»´¦ÀíÇ°»¹ÊÇ¸´Î»³É¹¦ºó
-             int userdata                       ÓÃ»§×Ô¶¨ÒåÊý¾Ý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK/VOS_ERR
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_ACORE_CResetCallback
+ åŠŸèƒ½æè¿°  : FcACoreéœ€è¦æ³¨å†Œåˆ°åº•è½¯Cæ ¸å¤ä½æŽ¥å£ä¸­çš„å›žè°ƒå‡½æ•°
+ è¾“å…¥å‚æ•°  : DRV_RESET_CALLCBFUN_MOMENT enParam æŒ‡ç¤ºæ—¶å¤ä½å¤„ç†å‰è¿˜æ˜¯å¤ä½æˆåŠŸåŽ
+             int userdata                       ç”¨æˆ·è‡ªå®šä¹‰æ•°æ®
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK/VOS_ERR
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê4ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´4æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_INT FC_ACORE_CResetCallback(DRV_RESET_CALLCBFUN_MOMENT enParam, VOS_INT userdata)
@@ -115,7 +115,7 @@ VOS_INT FC_ACORE_CResetCallback(DRV_RESET_CALLCBFUN_MOMENT enParam, VOS_INT user
     VOS_UINT32                   ulResult;
 
 
-    if ( DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam )      /* ¸´Î»´¦ÀíÊ±µ÷ÓÃ */
+    if ( DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam )      /* å¤ä½å¤„ç†æ—¶è°ƒç”¨ */
     {
         FC_ACORE_CResetSendNotify(ID_FC_ACORE_CRESET_START_IND);
 
@@ -128,7 +128,7 @@ VOS_INT FC_ACORE_CResetCallback(DRV_RESET_CALLCBFUN_MOMENT enParam, VOS_INT user
             return VOS_ERR;
         }
     }
-    else if ( DRV_RESET_CALLCBFUN_RESET_AFTER == enParam )   /* ¸´Î»³É¹¦ºóµ÷ÓÃ */
+    else if ( DRV_RESET_CALLCBFUN_RESET_AFTER == enParam )   /* å¤ä½æˆåŠŸåŽè°ƒç”¨ */
     {
         FC_ACORE_CResetSendNotify(ID_FC_ACORE_CRESET_END_IND);
     }
@@ -142,18 +142,18 @@ VOS_INT FC_ACORE_CResetCallback(DRV_RESET_CALLCBFUN_MOMENT enParam, VOS_INT user
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_ACORE_CResetProc
- ¹¦ÄÜÃèÊö  : FcACoreÊÕµ½µ×ÈíCºË¸´Î»¹ý³Ì´¦ÀíÄ£¿é·¢À´µÄ¸´Î»¼°¸´Î»³É¹¦µÄÍ¨ÖªºóµÄ´¦Àíº¯Êý
- ÊäÈë²ÎÊý  : FC_ACORE_CRESET_MOMENT_ENUM_UINT8 enCResetMoment Ö¸Ê¾Ê±¸´Î»´¦ÀíÇ°»¹ÊÇ¸´Î»³É¹¦ºó
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK/VOS_ERR
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_ACORE_CResetProc
+ åŠŸèƒ½æè¿°  : FcACoreæ”¶åˆ°åº•è½¯Cæ ¸å¤ä½è¿‡ç¨‹å¤„ç†æ¨¡å—å‘æ¥çš„å¤ä½åŠå¤ä½æˆåŠŸçš„é€šçŸ¥åŽçš„å¤„ç†å‡½æ•°
+ è¾“å…¥å‚æ•°  : FC_ACORE_CRESET_MOMENT_ENUM_UINT8 enCResetMoment æŒ‡ç¤ºæ—¶å¤ä½å¤„ç†å‰è¿˜æ˜¯å¤ä½æˆåŠŸåŽ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK/VOS_ERR
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê4ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´4æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 FC_ACORE_CResetProc(FC_ACORE_CRESET_MOMENT_ENUM_UINT8 enCResetMoment)
@@ -172,7 +172,7 @@ VOS_UINT32 FC_ACORE_CResetProc(FC_ACORE_CRESET_MOMENT_ENUM_UINT8 enCResetMoment)
     {
         usMsgName           = ID_FC_ACORE_CRESET_START_RSP;
 
-        /* ¸´Î»´¦ÀíÊ±±éÀúÃ¿¸öÁ÷¿Øµã£¬Ö´ÐÐÁ÷¿ØµãÉÏÍâ²¿Ä£¿é×¢²áµÄresetº¯Êý */
+        /* å¤ä½å¤„ç†æ—¶éåŽ†æ¯ä¸ªæµæŽ§ç‚¹ï¼Œæ‰§è¡ŒæµæŽ§ç‚¹ä¸Šå¤–éƒ¨æ¨¡å—æ³¨å†Œçš„resetå‡½æ•° */
         for ( ulFcPointLoop = 0; ulFcPointLoop < g_stFcPointMgr.ulPointNum; ulFcPointLoop++ )
         {
             pFcPoint    = &g_stFcPointMgr.astFcPoint[ulFcPointLoop];
@@ -195,7 +195,7 @@ VOS_UINT32 FC_ACORE_CResetProc(FC_ACORE_CRESET_MOMENT_ENUM_UINT8 enCResetMoment)
         return VOS_ERR;
     }
 
-    /* ÉêÇëÏûÏ¢ÄÚ´æ: */
+    /* ç”³è¯·æ¶ˆæ¯å†…å­˜: */
     pstMsg = (FC_ACORE_CRESET_RSP_STRU *) VOS_AllocMsg( UEPS_PID_FLOWCTRL_A,
         sizeof(FC_ACORE_CRESET_RSP_STRU) - VOS_MSG_HEAD_LENGTH );
 
@@ -205,13 +205,13 @@ VOS_UINT32 FC_ACORE_CResetProc(FC_ACORE_CRESET_MOMENT_ENUM_UINT8 enCResetMoment)
         return VOS_ERR;
     }
 
-    /*ÌîÐ´ÏûÏ¢ÄÚÈÝ:*/
+    /*å¡«å†™æ¶ˆæ¯å†…å®¹:*/
     pstMsg->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstMsg->ulReceiverPid   = UEPS_PID_FLOWCTRL_A;
     pstMsg->usMsgName       = usMsgName;
     pstMsg->ulResult        = ulRspResult;
 
-    /*·¢ËÍÏûÏ¢:*/
+    /*å‘é€æ¶ˆæ¯:*/
     VOS_SendMsg(UEPS_PID_FLOWCTRL, pstMsg);
 
     return VOS_OK;
@@ -219,18 +219,18 @@ VOS_UINT32 FC_ACORE_CResetProc(FC_ACORE_CRESET_MOMENT_ENUM_UINT8 enCResetMoment)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_ACORE_CResetRcvStartRsp
- ¹¦ÄÜÃèÊö  : ÊÕµ½ID_FC_ACORE_CRESET_START_RSPÏûÏ¢ºóµÄ´¦Àí
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_ACORE_CResetRcvStartRsp
+ åŠŸèƒ½æè¿°  : æ”¶åˆ°ID_FC_ACORE_CRESET_START_RSPæ¶ˆæ¯åŽçš„å¤„ç†
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê4ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´4æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID FC_ACORE_CResetRcvStartRsp(VOS_VOID)

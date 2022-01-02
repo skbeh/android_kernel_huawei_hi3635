@@ -48,41 +48,41 @@ static void mmc0_to_gpio_save(void)
 
     if(HW_VER_PRODUCT_UDP ==product_type)
     {
-/*еДжцMMC0ё╗6╦ЖPINё╘ё╗SD MASTER/SDIO SLAVEё╘*/
-    /*gpio1[7]╧э╫е╦╢сцеДжц╠ё╢Ф*/
+/*И┘█Г╫╝MMC0О╪┬6Д╦╙PINО╪┴О╪┬SD MASTER/SDIO SLAVEО╪┴*/
+    /*gpio1[7]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_MF_CTRL1);
     add_ios_list(IOS_PD_AF_CTRL3);
-    /*gpio1[7]╧э╫еDrive╣ГаВеДжц╠ё╢Ф*/
+    /*gpio1[7]Г╝║Х└ DriveГ■╣Ф╣│И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_IOM_CTRL21);
 
-    /*gpio1[8]╧э╫е╦╢сцеДжц╠ё╢Ф*/
+    /*gpio1[8]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_MF_CTRL1);
     add_ios_list(IOS_PD_AF_CTRL3);
-    /*gpio1[8]╧э╫еиообю╜еДжц╠ё╢Ф*/
+    /*gpio1[8]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_IOM_CTRL22);
 
-    /*gpio1[9]╧э╫е╦╢сцеДжц╠ё╢Ф*/
+    /*gpio1[9]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_MF_CTRL1);
     add_ios_list(IOS_PD_AF_CTRL3);
-    /*gpio1[9]╧э╫еиообю╜еДжц╠ё╢Ф*/
+    /*gpio1[9]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_IOM_CTRL23);
 
-    /*gpio1[10]╧э╫е╦╢сцеДжц╠ё╢Ф*/
+    /*gpio1[10]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_MF_CTRL1);
     add_ios_list(IOS_PD_AF_CTRL3);
-    /*gpio1[10]╧э╫еиообю╜еДжц╠ё╢Ф*/
+    /*gpio1[10]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_IOM_CTRL24);
 
-    /*gpio1[11]╧э╫е╦╢сцеДжц╠ё╢Ф*/
+    /*gpio1[11]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_MF_CTRL1);
     add_ios_list(IOS_PD_AF_CTRL3);
-    /*gpio1[11]╧э╫еиообю╜еДжц╠ё╢Ф*/
+    /*gpio1[11]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_IOM_CTRL25);
 
-    /*gpio1[12]╧э╫е╦╢сцеДжц╠ё╢Ф*/
+    /*gpio1[12]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_MF_CTRL1);
     add_ios_list(IOS_PD_AF_CTRL3);
-    /*gpio1[12]╧э╫еиообю╜еДжц╠ё╢Ф*/
+    /*gpio1[12]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝Д©²Е╜≤*/
     add_ios_list(IOS_PD_IOM_CTRL26);
 	}
 #endif
@@ -122,50 +122,50 @@ void mmc0_to_gpio_mux(void)
         
         bsp_ipc_spin_lock(IPC_SEM_GPIO);
         
-    	/*gpio1[7]╧э╫е╦╢сцеДжц*/
+    	/*gpio1[7]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝*/
     	SET_IOS_GPIO1_7_CTRL1_1;
     	CLR_IOS_MMC0_CLK_CTRL1_1;
     	CLR_IOS_JTAG1_CTRL1_1;
     	CLR_IOS_PCM_CTRL2_2;
-    	/*gpio1[7]╧э╫еDrive╣ГаВеДжц*/
+    	/*gpio1[7]Г╝║Х└ DriveГ■╣Ф╣│И┘█Г╫╝*/
     	PDSET_IOS_PD_IOM_CTRL21;
 
-    	/*gpio1[8]╧э╫е╦╢сцеДжц*/
+    	/*gpio1[8]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝*/
     	SET_IOS_GPIO1_8_CTRL1_1;
     	CLR_IOS_MMC0_CTRL1_1;
     	CLR_IOS_JTAG1_CTRL1_1;
     	CLR_IOS_PCM_CTRL2_2;
-    	/*gpio1[8]╧э╫еиообю╜еДжц*/
+    	/*gpio1[8]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝*/
     	PDSET_IOS_PD_IOM_CTRL22;    	
 
-    	/*gpio1[9]╧э╫е╦╢сцеДжц*/
+    	/*gpio1[9]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝*/
     	SET_IOS_GPIO1_9_CTRL1_1;
     	CLR_IOS_MMC0_CTRL1_1;
     	CLR_IOS_JTAG1_CTRL1_1;
     	CLR_IOS_PCM_CTRL2_2;
-    	/*gpio1[9]╧э╫еиообю╜еДжц*/
+    	/*gpio1[9]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝*/
     	PDSET_IOS_PD_IOM_CTRL23;    	
 
-    	/*gpio1[10]╧э╫е╦╢сцеДжц*/
+    	/*gpio1[10]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝*/
     	SET_IOS_GPIO1_10_CTRL1_1;
     	CLR_IOS_MMC0_CTRL1_1;
     	CLR_IOS_JTAG1_CTRL1_1;
     	CLR_IOS_PCM_CTRL2_2;
-    	/*gpio1[10]╧э╫еиообю╜еДжц*/
+    	/*gpio1[10]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝*/
     	PDSET_IOS_PD_IOM_CTRL24;
 
-    	/*gpio1[11]╧э╫е╦╢сцеДжц*/
+    	/*gpio1[11]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝*/
     	SET_IOS_GPIO1_11_CTRL1_1;
     	CLR_IOS_MMC0_CTRL1_1;
     	CLR_IOS_JTAG1_CTRL1_1;
-    	/*gpio1[11]╧э╫еиообю╜еДжц*/
+    	/*gpio1[11]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝*/
     	PDSET_IOS_PD_IOM_CTRL25;
 
-    	/*gpio1[12]╧э╫е╦╢сцеДжц*/
+    	/*gpio1[12]Г╝║Х└ Е╓█Г■╗И┘█Г╫╝*/
     	SET_IOS_GPIO1_12_CTRL1_1;
     	CLR_IOS_MMC0_CTRL1_1;
     	CLR_IOS_JTAG1_CTRL1_1;
-    	/*gpio1[12]╧э╫еиообю╜еДжц*/
+    	/*gpio1[12]Г╝║Х└ Д╦┼Д╦▀Ф▀┴И┘█Г╫╝*/
     	PDSET_IOS_PD_IOM_CTRL26;
         
         mmc0_to_gpio_save();

@@ -2,7 +2,7 @@
 
 
 /*****************************************************************************
-  1 м╥нд╪Ч╟Э╨╛
+  1 Е╓╢Ф√┤Д╩╤Е▄┘Е░╚
 *****************************************************************************/
 #include "RnicCtx.h"
 #include "RnicEntity.h"
@@ -21,7 +21,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    п╜рИу╩╢Рс║╢Р╣Ц╥╫й╫об╣д.Cнд╪Ч╨Й╤╗рЕ
+    Е█▐Х╝╝Ф═┬Ф┴⌠Е█╟Ф┴⌠Г┌╧Ф√╧Е╪▐Д╦▀Г └.CФ√┤Д╩╤Е╝▐Е╝ Д╧┴
 *****************************************************************************/
 /*lint -e960*/
 #define    THIS_FILE_ID        PS_FILE_ID_RNIC_CTX_C
@@ -29,10 +29,10 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 х╚╬ж╠Да©╤╗рЕ
+  2 Е┘╗Е╠─Е▐≤И┤▐Е╝ Д╧┴
 *****************************************************************************/
 
-/* RNIC CTX,сцсз╠ё╢ФRNIC╣дх╚╬ж╠Да© */
+/* RNIC CTX,Г■╗Д╨▌Д©²Е╜≤RNICГ └Е┘╗Е╠─Е▐≤И┤▐ */
 RNIC_CTX_STRU                           g_stRnicCtx;
 
 extern RNIC_STATS_INFO_STRU                    g_astRnicStats[RNIC_NET_ID_MAX_NUM];
@@ -49,52 +49,52 @@ VOS_VOID RNIC_InitCtx(
 
     for (ucIndex = 0 ; ucIndex < RNIC_NET_ID_MAX_NUM ; ucIndex++)
     {
-        /* ЁУй╪╩╞RNICиоппиообнд */
+        /* Е┬²Е╖▀Е▄√RNICД╦┼Х║▄Д╦┼Д╦▀Ф√┤ */
         RNIC_InitUlCtx(&(pstRnicCtx->astSpecCtx[ucIndex].stUlCtx));
 
-        /* ЁУй╪╩╞RNICобппиообнд */
+        /* Е┬²Е╖▀Е▄√RNICД╦▀Х║▄Д╦┼Д╦▀Ф√┤ */
         RNIC_InitDlCtx(&(pstRnicCtx->astSpecCtx[ucIndex].stDlCtx));
 
-        /* ЁУй╪╩╞RNIC PDPиообнд */
+        /* Е┬²Е╖▀Е▄√RNIC PDPД╦┼Д╦▀Ф√┤ */
         RNIC_InitPdpCtx(&(pstRnicCtx->astSpecCtx[ucIndex].stPdpCtx), ucIndex);
 
-        /* ЁУй╪╩╞аВ©ьв╢л╛ */
+        /* Е┬²Е╖▀Е▄√Ф╣│Ф▌╖Г┼╤Ф─│ */
         pstRnicCtx->astSpecCtx[ucIndex].enFlowCtrlStatus = RNIC_FLOW_CTRL_STATUS_STOP;
 
-        /* ЁУй╪╩╞аВа©мЁ╪ф╤╗й╠фВ */
+        /* Е┬²Е╖▀Е▄√Ф╣│И┤▐Г╩÷Х╝║Е╝ Ф≈╤Е≥╗ */
         pstRnicCtx->astSpecCtx[ucIndex].enTiDsFlowStats  = TI_RNIC_DSFLOW_STATS_0 + ucIndex;
 
-        /* ЁУй╪╩╞дё©ИID */
-        /* ЁУй╪╩╞╣дй╠╨Р╬мря╬╜х╥╤╗акддуемЬ©╗╤тс╕дд╦ЖMODEM */
+        /* Е┬²Е╖▀Е▄√Ф╗║Е²≈ID */
+        /* Е┬²Е╖▀Е▄√Г └Ф≈╤Е─≥Е╟╠Е╥╡Г╩▐Г║╝Е╝ Д╨├Е⌠╙Е╪═Г╫▒Е█║Е╞╧Е╨■Е⌠╙Д╦╙MODEM */
         pstRnicCtx->astSpecCtx[ucIndex].enModemId        = RNIC_GET_MODEM_ID_BY_NET_ID(ucIndex);
 
         pstRnicCtx->astSpecCtx[ucIndex].enModemType      = RNIC_MODEM_TYPE_INSIDE;
 
-        /* ЁУй╪╩╞мЬ©╗к╫сппео╒ */
+        /* Е┬²Е╖▀Е▄√Г╫▒Е█║Г╖│Ф°┴Д©║Ф│╞ */
         pstRnicCtx->astSpecCtx[ucIndex].pstNetDevInfo    = VOS_NULL_PTR;
     }
 
-    /* ЁУй╪╩╞RABIDпео╒ */
+    /* Е┬²Е╖▀Е▄√RABIDД©║Ф│╞ */
     for (ucIndex = 0 ; ucIndex < RNIC_MODEM_ID_MAX_NUM ; ucIndex++)
     {
         RNIC_InitRabidInfo(&pstRnicCtx->astRabIdInfo[ucIndex]);
     }
 
-    /* ЁУй╪╩╞PDNIDпео╒ */
+    /* Е┬²Е╖▀Е▄√PDNIDД©║Ф│╞ */
     RNIC_InitPdnIdInfo(&pstRnicCtx->stPdnIdInfo);
 
-    /* ЁУй╪╩╞RNIC╤╗й╠фВиообнд */
+    /* Е┬²Е╖▀Е▄√RNICЕ╝ Ф≈╤Е≥╗Д╦┼Д╦▀Ф√┤ */
     RNIC_InitAllTimers(pstRnicCtx->astTimerCtx);
 
-    /* ЁУй╪╩╞╡╕╨едёй╫пео╒ */
+    /* Е┬²Е╖▀Е▄√Ф▀╗Е▐╥Ф╗║Е╪▐Д©║Ф│╞ */
     RNIC_InitDialMode(&(pstRnicCtx->stDialMode));
 
-    /* ЁУй╪╩╞╡╕╨е╤о©╙╤╗й╠фВЁ╛й╠╢нйЩ╡нйЩмЁ╪ф */
+    /* Е┬²Е╖▀Е▄√Ф▀╗Е▐╥Ф√╜Е╪─Е╝ Ф≈╤Е≥╗Х╤┘Ф≈╤Ф╛║Ф∙╟Е▐┌Ф∙╟Г╩÷Х╝║ */
     RNIC_ClearTiDialDownExpCount();
 
     RNIC_SetTimer4WakeFlg(VOS_FALSE);
 
-    /* ЁУй╪╩╞╦╢н╩пе╨еа© */
+    /* Е┬²Е╖▀Е▄√Е╓█Д╫█Д©║Е▐╥И┤▐ */
     RNIC_InitResetSem();
 
     return;
@@ -241,7 +241,7 @@ VOS_VOID RNIC_InitIpv4v6PdpCtx(
 {
     RNIC_PDP_CTX_STRU                  *pstPdpAddr;
 
-    /* ╩Ях║PDPиообнд╣ьж╥ */
+    /* Х▌╥Е▐√PDPД╦┼Д╦▀Ф√┤Е°╟Е²─ */
     pstPdpAddr                              = RNIC_GetPdpCtxAddr(ucRmNetId);
 
     pstIpv4v6PdpCtx->enRegStatus            = RNIC_PDP_REG_STATUS_DEACTIVE;
@@ -263,7 +263,7 @@ VOS_VOID RNIC_InitResetSem(VOS_VOID)
 {
     g_stRnicCtx.hResetSem  = VOS_NULL_PTR;
 
-    /* ╥жеД╤Ч╫Ьжфпе╨еа© */
+    /* Е┬├И┘█Д╨▄Х©⌡Е┬╤Д©║Е▐╥И┤▐ */
     if (VOS_OK != VOS_SmBCreate( "RNIC", 0, VOS_SEMA4_FIFO, &g_stRnicCtx.hResetSem))
     {
         vos_printf("Create rnic acpu cnf sem failed!\r\n");

@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "drv_mailbox.h"
 #include "drv_mailbox_cfg.h"
@@ -17,19 +17,19 @@ extern "C" {
 #ifdef CONFIG_HIFI
 
 /*****************************************************************************
-    ¿ÉÎ¬¿É²âĞÅÏ¢ÖĞ°üº¬µÄCÎÄ¼ş±àºÅºê¶¨Òå
+    å¯ç»´å¯æµ‹ä¿¡æ¯ä¸­åŒ…å«çš„Cæ–‡ä»¶ç¼–å·å®å®šä¹‰
 *****************************************************************************/
 #undef  _MAILBOX_FILE_
 #define _MAILBOX_FILE_   "msg"
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 extern int BSP_CPU_StateGet(int CpuID);
 
 
 void mailbox_msg_receiver(void *mb_buf, void *handle, void *data)
 {
-    struct mb_queue * queue;  /*ÓÊÏäbufferÁÙÊ±¾ä±ú£¬ÓÃÓÚ´«¸øÓÃ»§»Øµ÷*/
+    struct mb_queue * queue;  /*é‚®ç®±bufferä¸´æ—¶å¥æŸ„ï¼Œç”¨äºä¼ ç»™ç”¨æˆ·å›è°ƒ*/
     struct mb_buff  * mbuf = ( struct mb_buff  *)mb_buf;
     mb_msg_cb  func = (mb_msg_cb)handle;
 
@@ -62,28 +62,28 @@ MAILBOX_EXTERN unsigned int mailbox_try_send_msg(
         goto exit_out;
 
     }
-    /*»ñÈ¡ÓÊÏäbuffer*/
+    /*è·å–é‚®ç®±buffer*/
     ret_val = mailbox_request_buff(mailcode, (void *)&mb_buf);
     if (MAILBOX_OK != ret_val) {
         goto exit_out;
     }
 
-    /*Ìî³äÓÃ»§Êı¾İ*/
+    /*å¡«å……ç”¨æˆ·æ•°æ®*/
     queue = &mb_buf->usr_queue;
     if ( length != (unsigned int)mailbox_write_buff( queue, pdata, length)) {
          ret_val = mailbox_logerro_p1(MAILBOX_FULL, mailcode);
          goto exit_out;
     }
 
-    /*·âĞÅ*/
+    /*å°ä¿¡*/
     ret_val = mailbox_sealup_buff( mb_buf,  length);
     if (MAILBOX_OK == ret_val) {
-         /*·¢ËÍÓÊ¼ş*/
+         /*å‘é€é‚®ä»¶*/
         ret_val = mailbox_send_buff(mb_buf);
     }
 
 exit_out:
-    /*ÊÍ·ÅÓÊÏäbuffer*/
+    /*é‡Šæ”¾é‚®ç®±buffer*/
     if (MAILBOX_NULL != mb_buf) {
         mailbox_release_buff(mb_buf);
     }
@@ -105,7 +105,7 @@ MAILBOX_GLOBAL unsigned int mailbox_read_msg_data(
         return (unsigned int)mailbox_logerro_p1(MAILBOX_ERR_GUT_USER_BUFFER_SIZE_TOO_SMALL, *size);
     }
 
-    /*¼ì²éÓÃ»§´«»ØµÄÓÊÏäÊı¾İ¶ÓÁĞ¾ä±úµÄÓĞĞ§ĞÔ*/
+    /*æ£€æŸ¥ç”¨æˆ·ä¼ å›çš„é‚®ç®±æ•°æ®é˜Ÿåˆ—å¥æŸ„çš„æœ‰æ•ˆæ€§*/
     if ((0 == pMailQueue->length) ||
         ((unsigned int)(pMailQueue->front - pMailQueue->base) >  pMailQueue->length ) ||
         ((unsigned int)(pMailQueue->rear - pMailQueue->base) >  pMailQueue->length )) {
@@ -141,7 +141,7 @@ MAILBOX_EXTERN unsigned int mailbox_send_msg(
     ret_val = (int)mailbox_try_send_msg(mailcode, data, length);
 
     if (MAILBOX_FALSE == mailbox_int_context()) {
-        /*·¢ËÍÂúµÈ´ıÂÖÑ¯³¢ÊÔ*/
+        /*å‘é€æ»¡ç­‰å¾…è½®è¯¢å°è¯•*/
         while ((int)MAILBOX_FULL == ret_val) {
             mailbox_delivery(mailbox_get_channel_id(mailcode));
             try_go_on = (unsigned int)mailbox_scene_delay(MAILBOX_DELAY_SCENE_MSG_FULL, &try_times);

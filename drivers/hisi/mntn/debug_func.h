@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼ş°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #ifndef __DEBUG_FUNC_H__
 #define __DEBUG_FUNC_H__
@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-ºêÒÔ¼°±äÁ¿¶¨Òå
+å®ä»¥åŠå˜é‡å®šä¹‰
 *****************************************************************************/
 /*it's ecall an variable, if the first input parameter is this value
 the same as the one defined in ecall.c*/
@@ -30,13 +30,13 @@ keep the same as the one defined in ecall.c*/
 #define DBG_ECALL_FUNC_ARGS_MAXNUMB     6
 /*for mcu wdg*/
 #define MCU_WDT_UNLOCK_VALUE              (0x1ACCE551)
-#define M3_WDT_GLOBAL_FREQUENCY       (32768)/*Ê¹ÓÃ32.768KÊ±ÖÓ*/
-#define M3_WDT_NOT_GLOBAL_FREQUENCY   (32768)/*Ê¹ÓÃ32.768KÊ±ÖÓ*/
+#define M3_WDT_GLOBAL_FREQUENCY       (32768)/*ä½¿ç”¨32.768Kæ—¶é’Ÿ*/
+#define M3_WDT_NOT_GLOBAL_FREQUENCY   (32768)/*ä½¿ç”¨32.768Kæ—¶é’Ÿ*/
 
 /*for c core wdg*/
 #define CCORE_WDT_REG_VALUE_UNLOCK        0x1ACCE551
 #define CCORE_WDT_REG_VALUE_LOCK          0x00000000
-#define CCORE_WDT_CLK_CNT_PER_S               32768   /* ¿´ÃÅ¹·µÄÊ±ÖÓÆµÂÊ */
+#define CCORE_WDT_CLK_CNT_PER_S               32768   /* çœ‹é—¨ç‹—çš„æ—¶é’Ÿé¢‘ç‡ */
 
 #define DEBUG_FUNC_MARK         "_func"
 #define DEBUG_FUNC_MARK_LEN         strlen(DEBUG_FUNC_MARK)

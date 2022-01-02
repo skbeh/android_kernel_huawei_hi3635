@@ -3,7 +3,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "product_config.h"
 #if(FEATURE_ON == FEATURE_ACPU_FC_POINT_REG)
@@ -33,23 +33,23 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_ACORE_FLOW_CTRL_C
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
-/* ÍøÇÅËÙÂÊÍ³¼ÆÊ¹ÓÃµÄ±äÁ¿ */
+/* ç½‘æ¡¥é€ŸçŽ‡ç»Ÿè®¡ä½¿ç”¨çš„å˜é‡ */
 FC_BRIDGE_RATE_STRU                     g_stFcBridgeRate;
 
-/* CDSÁ÷¿ØÊ¹ÓÃµÄÈ«¾Ö±äÁ¿£¬FC IdRABÓ³Éä¹ØÏµ */
+/* CDSæµæŽ§ä½¿ç”¨çš„å…¨å±€å˜é‡ï¼ŒFC IdRABæ˜ å°„å…³ç³» */
 
 FC_RAB_MAPPING_INFO_SET_STRU            g_astFcRabMappingInfoSet[MODEM_ID_BUTT];
 
-/* CPUÁ÷¿ØÊ¹ÓÃ£¬°üÀ¨Æ½»¬´ÎÊý£¬¶¨Ê±Æ÷ */
+/* CPUæµæŽ§ä½¿ç”¨ï¼ŒåŒ…æ‹¬å¹³æ»‘æ¬¡æ•°ï¼Œå®šæ—¶å™¨ */
 FC_CPU_CTRL_STRU                        g_stFcCpuACtrl;
 
 FC_CPU_DRV_ASSEM_CONFIG_PARA_STRU       g_stCpuDriverAssePara =
@@ -59,7 +59,7 @@ FC_CPU_DRV_ASSEM_CONFIG_PARA_STRU       g_stCpuDriverAssePara =
     5,
     0,
     {
-    /* cpuload, PCÇý¶¯×é°üÊ±ÑÓ£¬UEÇý¶¯TX×é°ü¸öÊý, UEÇý¶¯TXÊ±ÑÓ£¬UEÇý¶¯RX×é°ü¸öÊý£¬UEÇý¶¯RX×é°üÊ±ÑÓ£¬±£ÁôÓò */
+    /* cpuload, PCé©±åŠ¨ç»„åŒ…æ—¶å»¶ï¼ŒUEé©±åŠ¨TXç»„åŒ…ä¸ªæ•°, UEé©±åŠ¨TXæ—¶å»¶ï¼ŒUEé©±åŠ¨RXç»„åŒ…ä¸ªæ•°ï¼ŒUEé©±åŠ¨RXç»„åŒ…æ—¶å»¶ï¼Œä¿ç•™åŸŸ */
         {
             85,{20, 40, 10, 10, 10, 56, {0, 0}}
         },
@@ -78,13 +78,13 @@ FC_CPU_DRV_ASSEM_CONFIG_PARA_STRU       g_stCpuDriverAssePara =
     }
 };
 
-/* Çý¶¯×é°ü²ÎÊýÊµÌå½á¹¹ */
+/* é©±åŠ¨ç»„åŒ…å‚æ•°å®žä½“ç»“æž„ */
 FC_CPU_DRV_ASSEM_PARA_ENTITY_STRU  g_stDrvAssemParaEntity = {0, 0, 0, 0, 0, {0, 0, 0, 0}, {100, {0, 0, 0, 0, 0, 0, {0, 0}}}, VOS_NULL_PTR, VOS_NULL_PTR};
 
 VOS_SPINLOCK                       g_stFcMemSpinLock;
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 #if(FEATURE_ON == FEATURE_NFEXT)
 
@@ -105,7 +105,7 @@ VOS_VOID  FC_BRIDGE_CalcRate( VOS_UINT32 ulPeriod )
     ulCurrentByteCnt    = NFExt_GetBrBytesCnt();
     ulDeltaPacketCnt    = (ulCurrentByteCnt - ulLastByteCnt);
 
-    /* »»Ëã³Ébps,×¢Òâ·ÀÖ¹¼ÆËãÒç³ö */
+    /* æ¢ç®—æˆbps,æ³¨æ„é˜²æ­¢è®¡ç®—æº¢å‡º */
     if (ulDeltaPacketCnt < ulPeriod)
     {
         ulRate = (ulDeltaPacketCnt * 1000 * 8) / ulPeriod ;
@@ -138,7 +138,7 @@ VOS_UINT32  FC_BRIDGE_GetRate( VOS_VOID )
 
 VOS_UINT32  FC_RmRateJudge( VOS_VOID )
 {
-    /* Èç¹ûÍøÇÅËÙÂÊ³¬¹ýÃÅÏÞ£¬ÔòÈÏÎªÊÇËÙÂÊ¸ßÒýÆðCPU¸ß */
+    /* å¦‚æžœç½‘æ¡¥é€ŸçŽ‡è¶…è¿‡é—¨é™ï¼Œåˆ™è®¤ä¸ºæ˜¯é€ŸçŽ‡é«˜å¼•èµ·CPUé«˜ */
     if (g_stFcBridgeRate.ulRate > g_stFcCfg.stFcCfgCpuA.ulRmRateThreshold)
     {
         return VOS_TRUE;
@@ -217,7 +217,7 @@ VOS_VOID FC_DrvAssemInit(VOS_VOID)
 
     ulRst = NV_ReadEx(MODEM_ID_0, en_NV_Item_FC_ACPU_DRV_ASSEMBLE_PARA, &stCpuDrvAssemPara, sizeof(FC_CPU_DRV_ASSEM_PARA_NV_STRU));
 
-    /* NVÈç¹û¶ÁÈ¡Ê§°ÜÊ¹ÓÃÄ¬ÈÏÖµ */
+    /* NVå¦‚æžœè¯»å–å¤±è´¥ä½¿ç”¨é»˜è®¤å€¼ */
     if (NV_OK != ulRst)
     {
         FC_LOG(PS_PRINT_ERROR, "FC_DrvAssemInit Read NV fail!\n");
@@ -229,29 +229,29 @@ VOS_VOID FC_DrvAssemInit(VOS_VOID)
     g_stDrvAssemParaEntity.ulCurLev                 = FC_ACPU_DRV_ASSEM_LEV_1;
     g_stDrvAssemParaEntity.ucSetDrvFailCnt          = 0;
 
-    /* NVµÄ³¤¶ÈÓë½á¹¹ÌåµÄ³¤¶È¶¨Òå²»Ò»ÑùÖ»¿½NVµÄ²¿·Ö */
+    /* NVçš„é•¿åº¦ä¸Žç»“æž„ä½“çš„é•¿åº¦å®šä¹‰ä¸ä¸€æ ·åªæ‹·NVçš„éƒ¨åˆ† */
     PS_MEM_CPY(&g_stCpuDriverAssePara, &stCpuDrvAssemPara, sizeof(FC_CPU_DRV_ASSEM_PARA_NV_STRU));
 }
 
 
 VOS_VOID FC_JudgeAssemSmoothFactor(FC_CPU_DRV_ASSEM_PARA_STRU *pstDrvAssemPara)
 {
-    /* Æ½»¬ÏµÊý¼ÆËã£¬Á¬Ðø¶à´Î³¬¹ý²Å×ö³öµ÷Õû */
+    /* å¹³æ»‘ç³»æ•°è®¡ç®—ï¼Œè¿žç»­å¤šæ¬¡è¶…è¿‡æ‰åšå‡ºè°ƒæ•´ */
     if (g_stDrvAssemParaEntity.stCurAssemPara.ulCpuLoad > pstDrvAssemPara->ulCpuLoad)
     {
-        /* ÏÂµ÷µµÎ»Æ½»¬ */
+        /* ä¸‹è°ƒæ¡£ä½å¹³æ»‘ */
         g_stDrvAssemParaEntity.ucSmoothCntDown++;
         g_stDrvAssemParaEntity.ucSmoothCntUp = 0;
     }
     else if (g_stDrvAssemParaEntity.stCurAssemPara.ulCpuLoad < pstDrvAssemPara->ulCpuLoad)
     {
-        /* ÉÏµ÷µµÎ»Æ½»¬ */
+        /* ä¸Šè°ƒæ¡£ä½å¹³æ»‘ */
         g_stDrvAssemParaEntity.ucSmoothCntUp++;
         g_stDrvAssemParaEntity.ucSmoothCntDown = 0;
     }
     else
     {
-        /* Èç¹ûÐèÒªµ÷ÕûµµÒÑ¾­Óëµ±Ç°ÏàÍ¬£¬Æ½»¬ÏµÊýÇåÁã */
+        /* å¦‚æžœéœ€è¦è°ƒæ•´æ¡£å·²ç»ä¸Žå½“å‰ç›¸åŒï¼Œå¹³æ»‘ç³»æ•°æ¸…é›¶ */
         g_stDrvAssemParaEntity.ucSmoothCntUp    = 0;
         g_stDrvAssemParaEntity.ucSmoothCntDown  = 0;
     }
@@ -302,12 +302,12 @@ FC_CPU_DRV_ASSEM_PARA_STRU* FC_GetCurrentAssemPara(VOS_UINT32 ulAssemLev)
 {
     FC_CPU_DRV_ASSEM_PARA_STRU *pstDrvAssemPara = VOS_NULL_PTR;
 
-    /* ÏòÉÏµ÷ÕûÒ»²½µ÷µ½Î» */
+    /* å‘ä¸Šè°ƒæ•´ä¸€æ­¥è°ƒåˆ°ä½ */
     if (g_stDrvAssemParaEntity.ucSmoothCntUp >= g_stCpuDriverAssePara.ucSmoothCntUpLev)
     {
         g_stDrvAssemParaEntity.ulCurLev = ulAssemLev;
     }
-    /* ÏòÏÂµ÷ÕûÒ»¸öµµÎ»Ò»¸öµµÎ»µ÷Õû */
+    /* å‘ä¸‹è°ƒæ•´ä¸€ä¸ªæ¡£ä½ä¸€ä¸ªæ¡£ä½è°ƒæ•´ */
     else if (g_stDrvAssemParaEntity.ucSmoothCntDown >= g_stCpuDriverAssePara.ucSmoothCntDownLev)
     {
         if (g_stDrvAssemParaEntity.ulCurLev < (FC_ACPU_DRV_ASSEM_LEV_BUTT - 1))
@@ -334,16 +334,16 @@ VOS_VOID FC_DoJudgeDrvAssem(FC_CPU_DRV_ASSEM_PARA_STRU *pstDrvAssemPara)
         FC_JudgeCdsDlThres(pstDrvAssemPara->stDrvAssemPara.ucCdsGuDlThres);
     }
 
-    /* Ê¹ÄÜ¿ª¹Ø´ò¿ª */
+    /* ä½¿èƒ½å¼€å…³æ‰“å¼€ */
     if (FC_ACPU_DRV_ASSEM_UE_ON_MASK == (FC_ACPU_DRV_ASSEM_UE_ON_MASK & g_stCpuDriverAssePara.ucEnableMask))
     {
         if (VOS_NULL_PTR != g_stDrvAssemParaEntity.pDrvSetAssemParaFuncUe)
         {
-            /* µ÷ÓÃ»Øµ÷º¯Êýµ÷ÕûÇý¶¯×é°ü²ÎÊý,Õâ¸öµØ·½ÊÇµ÷ÕûUE²à×é°ü·½°¸ */
+            /* è°ƒç”¨å›žè°ƒå‡½æ•°è°ƒæ•´é©±åŠ¨ç»„åŒ…å‚æ•°,è¿™ä¸ªåœ°æ–¹æ˜¯è°ƒæ•´UEä¾§ç»„åŒ…æ–¹æ¡ˆ */
             if (VOS_OK != g_stDrvAssemParaEntity.pDrvSetAssemParaFuncUe(&(pstDrvAssemPara->stDrvAssemPara)))
             {
                 FC_LOG(PS_PRINT_ERROR, "Set Driver Assemble parameter fail!\n");
-                /* ÉèÖÃÊ§°Ü¼ÆÊý */
+                /* è®¾ç½®å¤±è´¥è®¡æ•° */
                 g_stDrvAssemParaEntity.ucSetDrvFailCnt++;
 
                 return;
@@ -352,16 +352,16 @@ VOS_VOID FC_DoJudgeDrvAssem(FC_CPU_DRV_ASSEM_PARA_STRU *pstDrvAssemPara)
     }
 #endif
 
-    /* Ê¹ÄÜ¿ª¹Ø´ò¿ª */
+    /* ä½¿èƒ½å¼€å…³æ‰“å¼€ */
     if (FC_ACPU_DRV_ASSEM_PC_ON_MASK == (FC_ACPU_DRV_ASSEM_PC_ON_MASK & g_stCpuDriverAssePara.ucEnableMask))
     {
         if (VOS_NULL_PTR != g_stDrvAssemParaEntity.pDrvSetAssemParaFuncPc)
         {
-            /* µ÷ÓÃ»Øµ÷º¯Êýµ÷ÕûÇý¶¯×é°ü²ÎÊý£¬ÕâÀïµ÷ÕûPC²à×é°ü·½°¸ */
+            /* è°ƒç”¨å›žè°ƒå‡½æ•°è°ƒæ•´é©±åŠ¨ç»„åŒ…å‚æ•°ï¼Œè¿™é‡Œè°ƒæ•´PCä¾§ç»„åŒ…æ–¹æ¡ˆ */
             if (VOS_OK != g_stDrvAssemParaEntity.pDrvSetAssemParaFuncPc(&(pstDrvAssemPara->stDrvAssemPara)))
             {
                 FC_LOG(PS_PRINT_ERROR, "Set Driver Assemble parameter fail!\n");
-                /* ÉèÖÃÊ§°Ü¼ÆÊý */
+                /* è®¾ç½®å¤±è´¥è®¡æ•° */
                 g_stDrvAssemParaEntity.ucSetDrvFailCnt++;
 
                 return;
@@ -369,17 +369,17 @@ VOS_VOID FC_DoJudgeDrvAssem(FC_CPU_DRV_ASSEM_PARA_STRU *pstDrvAssemPara)
         }
     }
 
-    /* ×é°üÏµÊýÇåÁã */
+    /* ç»„åŒ…ç³»æ•°æ¸…é›¶ */
     g_stDrvAssemParaEntity.ucSmoothCntUp    = 0;
     g_stDrvAssemParaEntity.ucSmoothCntDown  = 0;
 
-    /* ÉèÖÃÊ§°Ü´ÎÊýÇåÁã */
+    /* è®¾ç½®å¤±è´¥æ¬¡æ•°æ¸…é›¶ */
     g_stDrvAssemParaEntity.ucSetDrvFailCnt  = 0;
 
-    /* ±£´æµ±Ç°µµÎ»ÐÅÏ¢ */
+    /* ä¿å­˜å½“å‰æ¡£ä½ä¿¡æ¯ */
     PS_MEM_CPY(&g_stDrvAssemParaEntity.stCurAssemPara, pstDrvAssemPara, sizeof(FC_CPU_DRV_ASSEM_PARA_STRU));
 
-    /* ¿ÉÎ¬¿É²â */
+    /* å¯ç»´å¯æµ‹ */
     FC_MNTN_TraceDrvAssemPara(&(pstDrvAssemPara->stDrvAssemPara));
 
 }
@@ -392,7 +392,7 @@ VOS_VOID FC_JudgeDrvAssemAction(VOS_UINT32 ulAssemLev)
 
     pstDrvAssemPara = FC_GetCurrentAssemPara(ulAssemLev);
 
-    /* ³¬¹ýÆ½»¬ÏµÊýµÄË®ÏßÖ®ºóÔÙ×ö³öµ÷Õû */
+    /* è¶…è¿‡å¹³æ»‘ç³»æ•°çš„æ°´çº¿ä¹‹åŽå†åšå‡ºè°ƒæ•´ */
     if ( VOS_NULL_PTR != pstDrvAssemPara)
     {
         FC_DoJudgeDrvAssem(pstDrvAssemPara);
@@ -402,7 +402,7 @@ VOS_VOID FC_JudgeDrvToMaxPara(VOS_VOID)
 {
     FC_CPU_DRV_ASSEM_PARA_STRU *pstDrvAssemPara = VOS_NULL_PTR;
 
-    /* Ö±½Óµ÷Õûµ½×î´óµµÎ» */
+    /* ç›´æŽ¥è°ƒæ•´åˆ°æœ€å¤§æ¡£ä½ */
     g_stDrvAssemParaEntity.ulCurLev = FC_ACPU_DRV_ASSEM_LEV_1;
 
     pstDrvAssemPara =  FC_GetCpuDrvAssemPara(FC_ACPU_DRV_ASSEM_LEV_1);
@@ -415,7 +415,7 @@ FC_CPU_DRV_ASSEM_PARA_STRU* FC_SelectDrvAssemParaRule(VOS_UINT32 ulCpuLoad, VOS_
     FC_CPU_DRV_ASSEM_PARA_STRU      *pstCpuDrvAssemPara     = VOS_NULL_PTR;
     VOS_INT                          i                      = 0;
 
-    /* Ñ¡³öµ±Ç°ÐèÒªµ÷ÕûµµÎ» */
+    /* é€‰å‡ºå½“å‰éœ€è¦è°ƒæ•´æ¡£ä½ */
     for (i = 0; i < FC_ACPU_DRV_ASSEM_LEV_BUTT; i++)
     {
         pstCpuDrvAssemPara = &g_stCpuDriverAssePara.stCpuDrvAssemPara[i];
@@ -433,10 +433,10 @@ FC_CPU_DRV_ASSEM_PARA_STRU* FC_SelectDrvAssemParaRule(VOS_UINT32 ulCpuLoad, VOS_
 VOS_VOID FC_JudgeDrvAssemPara(VOS_UINT32 ulCpuLoad)
 {
     FC_CPU_DRV_ASSEM_PARA_STRU *pstDrvAssemPara  = VOS_NULL_PTR;
-    /* Ä¬ÈÏ×î¸ßµµ */
+    /* é»˜è®¤æœ€é«˜æ¡£ */
     VOS_UINT32                  ulAssemLev       = FC_ACPU_DRV_ASSEM_LEV_1;
 
-    /* Ê¹ÄÜ¿ª¹ØÎ´´ò¿ªÊ±£¬²»ÔÙ¼ÌÐøÏÂÃæ²½Öè */
+    /* ä½¿èƒ½å¼€å…³æœªæ‰“å¼€æ—¶ï¼Œä¸å†ç»§ç»­ä¸‹é¢æ­¥éª¤ */
     if (0 == g_stCpuDriverAssePara.ucEnableMask)
     {
         return;
@@ -449,7 +449,7 @@ VOS_VOID FC_JudgeDrvAssemPara(VOS_UINT32 ulCpuLoad)
         return;
     }
 
-    /* ¸ù¾ÝCPU¸ºÔØÇé¿öÑ¡Ôñ¶ÔÓ¦µµÎ» */
+    /* æ ¹æ®CPUè´Ÿè½½æƒ…å†µé€‰æ‹©å¯¹åº”æ¡£ä½ */
     pstDrvAssemPara = FC_SelectDrvAssemParaRule(ulCpuLoad, &ulAssemLev);
 
     if (VOS_NULL_PTR == pstDrvAssemPara)
@@ -459,10 +459,10 @@ VOS_VOID FC_JudgeDrvAssemPara(VOS_UINT32 ulCpuLoad)
         return;
     }
 
-    /* ¸ù¾Ýµ±Ç°µµÎ»¼ÆËãÆ½»¬Òò×Ó */
+    /* æ ¹æ®å½“å‰æ¡£ä½è®¡ç®—å¹³æ»‘å› å­ */
     FC_JudgeAssemSmoothFactor(pstDrvAssemPara);
 
-    /* ¶ÔÇý¶¯×ö³öµ÷Õû */
+    /* å¯¹é©±åŠ¨åšå‡ºè°ƒæ•´ */
     FC_JudgeDrvAssemAction(ulAssemLev);
 }
 VOS_UINT32  FC_UmRateOverThreshold( VOS_VOID )
@@ -471,11 +471,11 @@ VOS_UINT32  FC_UmRateOverThreshold( VOS_VOID )
     VOS_UINT32                          ulDlRate;
 
 
-    /* »ñÈ¡UM¿ÚËÙÂÊ */
+    /* èŽ·å–UMå£é€ŸçŽ‡ */
     ADS_GetCurrentRate(&ulUlRate, &ulDlRate);
 
 
-    /* Èç¹ûÉÏÐÐ»òÏÂÐÐËÙÂÊ³¬¹ýÃÅÏÞ£¬ÔòÈÏÎªÊÇËÙÂÊ¸ßÒýÆðCPU¸ß */
+    /* å¦‚æžœä¸Šè¡Œæˆ–ä¸‹è¡Œé€ŸçŽ‡è¶…è¿‡é—¨é™ï¼Œåˆ™è®¤ä¸ºæ˜¯é€ŸçŽ‡é«˜å¼•èµ·CPUé«˜ */
     if ( (ulUlRate > g_stFcCfg.stFcCfgCpuA.ulUmUlRateThreshold)
         || (ulDlRate > g_stFcCfg.stFcCfgCpuA.ulUmDlRateThreshold) )
     {
@@ -490,8 +490,8 @@ VOS_UINT32  FC_UmRateOverThreshold( VOS_VOID )
 VOS_UINT32  FC_PsRateJudge( VOS_VOID )
 {
     /*
-    STICKÐÎÌ¬ÅÐ¶Ï¿Õ¿ÚËÙÂÊ
-    E5ÐÎÌ¬ÅÐ¶ÏÍøÇÅËÙÂÊ
+    STICKå½¢æ€åˆ¤æ–­ç©ºå£é€ŸçŽ‡
+    E5å½¢æ€åˆ¤æ–­ç½‘æ¡¥é€ŸçŽ‡
     */
 #if(FEATURE_ON == FEATURE_NFEXT)
     return (FC_RmRateJudge());
@@ -504,33 +504,33 @@ VOS_UINT32  FC_PsRateJudge( VOS_VOID )
 
 VOS_VOID  FC_GetPsRate( VOS_UINT32 *pulUlRate, VOS_UINT32 *pulDlRate )
 {
-    /* E5ÐÎÌ¬ÏÂ£¬»ñÈ¡ÍøÇÅËÙÂÊ */
+    /* E5å½¢æ€ä¸‹ï¼ŒèŽ·å–ç½‘æ¡¥é€ŸçŽ‡ */
 #if(FEATURE_ON == FEATURE_NFEXT)
-   /* ÍøÇÅÉÏ£¬ÉÏÏÂÐÐËÙÂÊ¶¼¸³Öµ³ÉÍøÇÅËÙÂÊ */
+   /* ç½‘æ¡¥ä¸Šï¼Œä¸Šä¸‹è¡Œé€ŸçŽ‡éƒ½èµ‹å€¼æˆç½‘æ¡¥é€ŸçŽ‡ */
    *pulUlRate   = FC_BRIDGE_GetRate();
    *pulDlRate   = *pulUlRate;
 #else
-    /* STICKÐÎÌ¬ÏÂ£¬»ñÈ¡ÍøÇÅËÙÂÊ */
+    /* STICKå½¢æ€ä¸‹ï¼ŒèŽ·å–ç½‘æ¡¥é€ŸçŽ‡ */
     ADS_GetCurrentRate(pulUlRate, pulDlRate);
 #endif
 }
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_CPUA_UpJudge
- ¹¦ÄÜÃèÊö  : ÊÇ·ñ´¥·¢CPUÁ÷¿Ø£¬µÚÒ»´Î»á×öÆ½»¬´¦Àí
- ÊäÈë²ÎÊý  : ulCpuLoad   -- µ±Ç°CPU¿ÕÏÐÁ¿0~100
-              pstFcCfgCpu -- CPUÁ÷¿ØÅäÖÃÏî
-              pstFcPolicy -- CPUÁ÷¿Ø²ßÂÔÊµÌå
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_TRUE:ÐèÒª½øÐÐÁ÷¿Ø£¬VOS_FALSE:²»ÐèÒª
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_CPUA_UpJudge
+ åŠŸèƒ½æè¿°  : æ˜¯å¦è§¦å‘CPUæµæŽ§ï¼Œç¬¬ä¸€æ¬¡ä¼šåšå¹³æ»‘å¤„ç†
+ è¾“å…¥å‚æ•°  : ulCpuLoad   -- å½“å‰CPUç©ºé—²é‡0~100
+              pstFcCfgCpu -- CPUæµæŽ§é…ç½®é¡¹
+              pstFcPolicy -- CPUæµæŽ§ç­–ç•¥å®žä½“
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_TRUE:éœ€è¦è¿›è¡ŒæµæŽ§ï¼ŒVOS_FALSE:ä¸éœ€è¦
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 FC_CPUA_UpJudge
@@ -549,15 +549,15 @@ VOS_UINT32 FC_CPUA_UpJudge
         return VOS_FALSE;
     }
 
-    /* ÒÑ¾­´ïµ½CPUÁ÷¿ØµÄ×î¸ß¼¶±ð£¬²»ÓÃÔÙ½øÒ»²½Á÷¿Ø */
+    /* å·²ç»è¾¾åˆ°CPUæµæŽ§çš„æœ€é«˜çº§åˆ«ï¼Œä¸ç”¨å†è¿›ä¸€æ­¥æµæŽ§ */
     if (pstFcPolicy->enHighestPri <= pstFcPolicy->enDonePri)
     {
         return VOS_FALSE;
     }
 
 
-    /* ÊÇ·ñ½øÐÐÆ½»¬ºÍËÙÂÊÅÐ¶Ï  */
-    /* Èç¹ûÒÑ¾­¿ªÊ¼½øÐÐCPUÁ÷¿Ø£¬Ôò¼ÌÐø½øÐÐÁ÷¿Ø£¬²»ÔÙ½øÐÐÆ½»¬ºÍËÙÂÊµÄÅÐ¶Ï */
+    /* æ˜¯å¦è¿›è¡Œå¹³æ»‘å’Œé€ŸçŽ‡åˆ¤æ–­  */
+    /* å¦‚æžœå·²ç»å¼€å§‹è¿›è¡ŒCPUæµæŽ§ï¼Œåˆ™ç»§ç»­è¿›è¡ŒæµæŽ§ï¼Œä¸å†è¿›è¡Œå¹³æ»‘å’Œé€ŸçŽ‡çš„åˆ¤æ–­ */
     if ( FC_PRI_NULL != pstFcPolicy->enDonePri )
     {
         return VOS_TRUE;
@@ -576,14 +576,14 @@ VOS_UINT32 FC_CPUA_UpJudge
     }
 
 #if(FEATURE_ON == FEATURE_ACPU_STAT)
-    /* AºËulSmoothTimerLen >= 2£¬Ïê¼ûFC_CFG_CheckParamº¯ÊýÄÚ×¢ÊÍ */
+    /* Aæ ¸ulSmoothTimerLen >= 2ï¼Œè¯¦è§FC_CFG_CheckParamå‡½æ•°å†…æ³¨é‡Š */
     FC_BRIDGE_CalcRate((pstFcCfgCpu->ulSmoothTimerLen - 1) * CPULOAD_GetRegularTimerLen());
 #endif
 
     g_stFcCpuACtrl.ulSmoothTimerLen  = 0;
 
 
-    /* Êý´«ËÙÂÊÊÇ·ñÊÇCPU¸ßµÄÔ­Òò */
+    /* æ•°ä¼ é€ŸçŽ‡æ˜¯å¦æ˜¯CPUé«˜çš„åŽŸå›  */
     ulResult    = FC_PsRateJudge();
     if (VOS_FALSE == ulResult)
     {
@@ -595,20 +595,20 @@ VOS_UINT32 FC_CPUA_UpJudge
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_CPUA_DownJudge
- ¹¦ÄÜÃèÊö  : ÊÇ·ñ´¥·¢CPU½â³ýÁ÷¿Ø
- ÊäÈë²ÎÊý  : ulCpuLoad   -- µ±Ç°CPU¿ÕÏÐÁ¿0~100
-              pstFcCfgCpu -- CPUÁ÷¿ØÅäÖÃÏî
-              pstFcPolicy -- CPUÁ÷¿Ø²ßÂÔÊµÌå
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_TRUE:ÐèÒª½â³ýÁ÷¿Ø£¬VOS_FALSE:²»ÐèÒª
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_CPUA_DownJudge
+ åŠŸèƒ½æè¿°  : æ˜¯å¦è§¦å‘CPUè§£é™¤æµæŽ§
+ è¾“å…¥å‚æ•°  : ulCpuLoad   -- å½“å‰CPUç©ºé—²é‡0~100
+              pstFcCfgCpu -- CPUæµæŽ§é…ç½®é¡¹
+              pstFcPolicy -- CPUæµæŽ§ç­–ç•¥å®žä½“
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_TRUE:éœ€è¦è§£é™¤æµæŽ§ï¼ŒVOS_FALSE:ä¸éœ€è¦
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 FC_CPUA_DownJudge
@@ -629,18 +629,18 @@ VOS_UINT32 FC_CPUA_DownJudge
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_RcvCpuLoad
- ¹¦ÄÜÃèÊö  : AºËÁ÷¿ØÄ£¿éÌá¹©µÄCPU¸ºÔØ´¦Àí½Ó¿Ú
- ÊäÈë²ÎÊý  : ulCpuLoad  --  µ±Ç°CPU¸ºÔØ0~100
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_RcvCpuLoad
+ åŠŸèƒ½æè¿°  : Aæ ¸æµæŽ§æ¨¡å—æä¾›çš„CPUè´Ÿè½½å¤„ç†æŽ¥å£
+ è¾“å…¥å‚æ•°  : ulCpuLoad  --  å½“å‰CPUè´Ÿè½½0~100
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID FC_CPUA_RcvCpuLoad(VOS_UINT32  ulCpuLoad)
@@ -652,25 +652,25 @@ VOS_VOID FC_CPUA_RcvCpuLoad(VOS_UINT32  ulCpuLoad)
     VOS_UINT32                          ulDlRate;
 
 
-    /* Í¨¹ýCPU LOADµ÷ÕûÇý¶¯×é°ü²ÎÊý£¬²»ÊÜCPUÁ÷¿Ø¿ª¹Ø¿ØÖÆ */
+    /* é€šè¿‡CPU LOADè°ƒæ•´é©±åŠ¨ç»„åŒ…å‚æ•°ï¼Œä¸å—CPUæµæŽ§å¼€å…³æŽ§åˆ¶ */
     FC_JudgeDrvAssemPara(ulCpuLoad);
 
 
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if ( FC_POLICY_MASK_CPU_A != (FC_POLICY_MASK_CPU_A & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* CPUÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* CPUæµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_CPU_ProcessLoad, INFO, CPU FlowCtrl is disabled %d\n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return;
     }
 
-    /* Êä³ö¿ÉÎ¬¿É²â */
+    /* è¾“å‡ºå¯ç»´å¯æµ‹ */
     FC_MNTN_TraceCpuLoad(ID_FC_MNTN_CPU_A_CPULOAD, ulCpuLoad);
 
     if ( 100 < ulCpuLoad )
     {
-        /* ²ÎÊý·Ç·¨ */
+        /* å‚æ•°éžæ³• */
         FC_LOG1(PS_PRINT_WARNING, "FC_CPU_ProcessLoad, WARNING, Invalid Cpu Load %d\n",
                 (VOS_INT32)ulCpuLoad);
         return;
@@ -680,7 +680,7 @@ VOS_VOID FC_CPUA_RcvCpuLoad(VOS_UINT32  ulCpuLoad)
     pstFcCfgCpu = &(g_stFcCfg.stFcCfgCpuA);
     pstFcPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_CPU_A_MODEM_0);
 
-    /* ÊÇ·ñÒª½øÐÐCPUÁ÷¿Ø */
+    /* æ˜¯å¦è¦è¿›è¡ŒCPUæµæŽ§ */
     ulStartCtrl = FC_CPUA_UpJudge(ulCpuLoad, pstFcCfgCpu, pstFcPolicy);
     if (VOS_TRUE == ulStartCtrl)
     {
@@ -690,7 +690,7 @@ VOS_VOID FC_CPUA_RcvCpuLoad(VOS_UINT32  ulCpuLoad)
     }
 
 
-    /* ½øÐÐCPU½âÁ÷¿ØÅÐ¾ö */
+    /* è¿›è¡ŒCPUè§£æµæŽ§åˆ¤å†³ */
     ulStartCtrl = FC_CPUA_DownJudge(ulCpuLoad, pstFcCfgCpu, pstFcPolicy);
     if ( VOS_TRUE ==  ulStartCtrl )
     {
@@ -716,7 +716,7 @@ VOS_UINT32  FC_CPUA_StopFcAttempt( VOS_UINT32 ulParam1, VOS_UINT32 ulParam2 )
     CPULOAD_ResetUserDefLoad();
 #endif
 
-    /*Èç¹û¶¨Ê±Æ÷ÒÑ¾­¿ªÆô£¬Ôò²»ÐèÒªÔÙ´ÎÆô¶¯*/
+    /*å¦‚æžœå®šæ—¶å™¨å·²ç»å¼€å¯ï¼Œåˆ™ä¸éœ€è¦å†æ¬¡å¯åŠ¨*/
     if (VOS_NULL_PTR == g_stFcCpuACtrl.pstStopAttemptTHandle)
     {
         if ( VOS_OK != VOS_StartRelTimer(&g_stFcCpuACtrl.pstStopAttemptTHandle,
@@ -739,12 +739,12 @@ VOS_UINT32  FC_CPUA_UpProcess( VOS_VOID )
     FC_POLICY_STRU                     *pFcPolicy;
 
 
-    /* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pFcPolicy   = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_CPU_A_MODEM_0);
     FC_POLICY_Up(pFcPolicy);
 
 
-    /* ÒÑ¾­ÊÇµ±Ç°²ßÂÔµÄ×î¸ß¼¶±ðÁË£¬Ö´ÐÐ»Øµ÷º¯Êý */
+    /* å·²ç»æ˜¯å½“å‰ç­–ç•¥çš„æœ€é«˜çº§åˆ«äº†ï¼Œæ‰§è¡Œå›žè°ƒå‡½æ•° */
     if (pFcPolicy->enDonePri == pFcPolicy->enHighestPri)
     {
         if (VOS_NULL_PTR != pFcPolicy->pPostFunc)
@@ -763,7 +763,7 @@ VOS_UINT32  FC_CPUA_DownProcess( VOS_VOID )
     FC_POLICY_STRU                      *pPolicy;
 
 
-    /* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_CPU_A_MODEM_0);
     FC_POLICY_Down(pPolicy);
 
@@ -782,7 +782,7 @@ VOS_UINT32  FC_CPUA_StopFlowCtrl( VOS_VOID )
     ulCpuLoad   = CPULOAD_GetUserDefLoad();
 #endif
 
-    /* µ±Ç°CPUÐ¡ÓÚ½âÁ÷¿ØÃÅÏÞÖµ,½âÁ÷¿Ø */
+    /* å½“å‰CPUå°äºŽè§£æµæŽ§é—¨é™å€¼,è§£æµæŽ§ */
     if ( (ulCpuLoad <= pstFcCfgCpu->ulCpuUnderLoadVal)
          && (FC_PRI_NULL < pstFcPolicy->enDonePri) )
     {
@@ -793,16 +793,16 @@ VOS_UINT32  FC_CPUA_StopFlowCtrl( VOS_VOID )
 }
 VOS_UINT32  FC_CPUA_Init( VOS_VOID )
 {
-    /* Ôö¼ÓÊ¹ÓÃºê¿ª¹ØÅÐ¶ÏÊÇ·ñ×¢²á»Øµ÷º¯Êý */
+    /* å¢žåŠ ä½¿ç”¨å®å¼€å…³åˆ¤æ–­æ˜¯å¦æ³¨å†Œå›žè°ƒå‡½æ•° */
 #if(FEATURE_ON == FEATURE_ACPU_STAT)
-    /* ÏòCPU¼à²âÄ£¿é×¢²á»Øµ÷º¯Êý */
+    /* å‘CPUç›‘æµ‹æ¨¡å—æ³¨å†Œå›žè°ƒå‡½æ•° */
     if ( VOS_OK != CPULOAD_RegRptHook((CPULOAD_RPT_HOOK_FUNC)FC_CPUA_RcvCpuLoad) )
     {
         FC_LOG(PS_PRINT_ERROR, "FC_CPUA_Init, ERROR, CPULOAD_RegRptHook return error!\n");
         return VOS_ERR;
     }
 
-    /* AºËCPUÁ÷¿Ø²ßÂÔ³õÊ¼»¯ */
+    /* Aæ ¸CPUæµæŽ§ç­–ç•¥åˆå§‹åŒ– */
     g_astFcPolicy[FC_POLICY_ID_CPU_A].pPostFunc   = FC_CPUA_StopFcAttempt;
 #endif
 
@@ -824,19 +824,19 @@ FC_PRI_ENUM_UINT8  FC_MEM_CalcUpTargetFcPri
     pstMemCfg   = &(g_stFcCfg.stFcCfgMem);
     enTargetPri = pPolicy->enDonePri;
 
-    /* ÄÚ´æ²ßÂÔÖ»×¢²áÁËÒ»¸öÓÅÏÈ¼¶£¬°´ÕÕLev3´¦Àí */
+    /* å†…å­˜ç­–ç•¥åªæ³¨å†Œäº†ä¸€ä¸ªä¼˜å…ˆçº§ï¼ŒæŒ‰ç…§Lev3å¤„ç† */
     if (1 == pPolicy->ucPriCnt)
     {
-        /* ¼ÆËã³öÄ¿±êÁ÷¿ØÓÅÏÈ¼¶ */
+        /* è®¡ç®—å‡ºç›®æ ‡æµæŽ§ä¼˜å…ˆçº§ */
         if (ulMemValue <= pstMemCfg->astThreshold[FC_MEM_THRESHOLD_LEV_3].ulSetThreshold)
         {
             enTargetPri     = pPolicy->enHighestPri;
         }
     }
-    /* ÄÚ´æ²ßÂÔÖ»×¢²áÁË¶à¸öÓÅÏÈ¼¶ */
+    /* å†…å­˜ç­–ç•¥åªæ³¨å†Œäº†å¤šä¸ªä¼˜å…ˆçº§ */
     else
     {
-        /* ¼ÆËã³öÄ¿±êÁ÷¿ØÓÅÏÈ¼¶ */
+        /* è®¡ç®—å‡ºç›®æ ‡æµæŽ§ä¼˜å…ˆçº§ */
         if (ulMemValue <= pstMemCfg->astThreshold[FC_MEM_THRESHOLD_LEV_4].ulSetThreshold)
         {
             enTargetPri     = FC_PRI_FOR_MEM_LEV_4;
@@ -874,19 +874,19 @@ FC_PRI_ENUM_UINT8  FC_MEM_CalcDownTargetFcPri
     pstMemCfg   = &(g_stFcCfg.stFcCfgMem);
     enTargetPri = pPolicy->enDonePri;
 
-    /* ÄÚ´æ²ßÂÔÖ»×¢²áÁËÒ»¸öÓÅÏÈ¼¶ */
+    /* å†…å­˜ç­–ç•¥åªæ³¨å†Œäº†ä¸€ä¸ªä¼˜å…ˆçº§ */
     if (1 == pPolicy->ucPriCnt)
     {
-        /* ¼ÆËã³öÄ¿±êÁ÷¿ØÓÅÏÈ¼¶ */
+        /* è®¡ç®—å‡ºç›®æ ‡æµæŽ§ä¼˜å…ˆçº§ */
         if (ulMemValue > pstMemCfg->astThreshold[FC_MEM_THRESHOLD_LEV_3].ulStopThreshold)
         {
             enTargetPri     = FC_PRI_NULL;
         }
     }
-    /* ÄÚ´æ²ßÂÔÖ»×¢²áÁË¶à¸öÓÅÏÈ¼¶ */
+    /* å†…å­˜ç­–ç•¥åªæ³¨å†Œäº†å¤šä¸ªä¼˜å…ˆçº§ */
     else
     {
-        /* ¼ÆËã³öÄ¿±êÁ÷¿ØÓÅÏÈ¼¶ */
+        /* è®¡ç®—å‡ºç›®æ ‡æµæŽ§ä¼˜å…ˆçº§ */
         if (ulMemValue > pstMemCfg->astThreshold[FC_MEM_THRESHOLD_LEV_1].ulStopThreshold)
         {
             enTargetPri     = FC_PRI_NULL;
@@ -923,16 +923,16 @@ VOS_UINT32  FC_MEM_AdjustPriForUp
     VOS_UINT32                          ulMemValue;
 
 
-    /* »ñÈ¡ÄÚ´æÁ÷¿Ø²ßÂÔºÍÄÚ´æÁ÷¿ØÅäÖÃ */
+    /* èŽ·å–å†…å­˜æµæŽ§ç­–ç•¥å’Œå†…å­˜æµæŽ§é…ç½® */
     pPolicy         = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_MEM_MODEM_0);
 
 
-    /* ¸ù¾ÝÄÚ´æÇé¿ö£¬ÖØÐÂË¢ÐÂÄÚ´æÁ÷¿ØÄ¿±êÓÅÏÈ¼¶ */
+    /* æ ¹æ®å†…å­˜æƒ…å†µï¼Œé‡æ–°åˆ·æ–°å†…å­˜æµæŽ§ç›®æ ‡ä¼˜å…ˆçº§ */
     ulMemValue      = IMM_GetLocalFreeMemCnt();
     enTargetPri     = FC_MEM_CalcUpTargetFcPri(pPolicy, ulMemValue);
 
 
-    /* Ä¿±êÓÅÏÈ¼¶µ÷Õûºó£¬½øÐÐÁ÷¿Ø´¦Àíµ÷Õû£¬·ûºÏÐÂµÄÁ÷¿ØÓÅÏÈ¼¶ */
+    /* ç›®æ ‡ä¼˜å…ˆçº§è°ƒæ•´åŽï¼Œè¿›è¡ŒæµæŽ§å¤„ç†è°ƒæ•´ï¼Œç¬¦åˆæ–°çš„æµæŽ§ä¼˜å…ˆçº§ */
     if (pPolicy->enDonePri < enTargetPri)
     {
         FC_POLICY_UpToTargetPri(pPolicy, enTargetPri);
@@ -959,14 +959,14 @@ VOS_UINT32  FC_MEM_AdjustPriForDown
     VOS_UINT32                          ulMemValue;
 
 
-    /* »ñÈ¡ÄÚ´æÁ÷¿Ø²ßÂÔºÍÄÚ´æÁ÷¿ØÅäÖÃ */
+    /* èŽ·å–å†…å­˜æµæŽ§ç­–ç•¥å’Œå†…å­˜æµæŽ§é…ç½® */
     pPolicy         = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_MEM_MODEM_0);
 
-    /* ¸ù¾ÝÄÚ´æÇé¿ö£¬ÖØÐÂË¢ÐÂÄÚ´æÁ÷¿ØÄ¿±êÓÅÏÈ¼¶ */
+    /* æ ¹æ®å†…å­˜æƒ…å†µï¼Œé‡æ–°åˆ·æ–°å†…å­˜æµæŽ§ç›®æ ‡ä¼˜å…ˆçº§ */
     ulMemValue      = IMM_GetLocalFreeMemCnt();
     enTargetPri     = FC_MEM_CalcDownTargetFcPri(pPolicy, ulMemValue);
 
-    /* Ä¿±êÓÅÏÈ¼¶µ÷Õûºó£¬½øÐÐÁ÷¿Ø´¦Àíµ÷Õû£¬·ûºÏÐÂµÄÁ÷¿ØÓÅÏÈ¼¶ */
+    /* ç›®æ ‡ä¼˜å…ˆçº§è°ƒæ•´åŽï¼Œè¿›è¡ŒæµæŽ§å¤„ç†è°ƒæ•´ï¼Œç¬¦åˆæ–°çš„æµæŽ§ä¼˜å…ˆçº§ */
     if (pPolicy->enDonePri < enTargetPri)
     {
         FC_POLICY_UpToTargetPri(pPolicy, enTargetPri);
@@ -1058,10 +1058,10 @@ VOS_VOID FC_MEM_UpProcess( VOS_UINT32 ulMemValue  )
     FC_PRI_ENUM_UINT8                  enTargetPri;
     VOS_ULONG                           ulFlags = 0UL;
 
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if ( FC_POLICY_MASK_MEM != (FC_POLICY_MASK_MEM & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_MEM_UpProcess, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return;
@@ -1072,7 +1072,7 @@ VOS_VOID FC_MEM_UpProcess( VOS_UINT32 ulMemValue  )
 
     if ((pPolicy->enDonePri < enTargetPri) && (pPolicy->enToPri < enTargetPri))
     {
-        /* Èç¹ûÔÚÈíÖÐ¶ÏÕâÀà²»¿É´ò¶ÏµÄÈÎÎñÖÐ£¬¾Í²»·¢Á÷¿ØÏûÏ¢ */
+        /* å¦‚æžœåœ¨è½¯ä¸­æ–­è¿™ç±»ä¸å¯æ‰“æ–­çš„ä»»åŠ¡ä¸­ï¼Œå°±ä¸å‘æµæŽ§æ¶ˆæ¯ */
         /*lint -e506 -e774*/
         if (likely(preemptible()))
         /*lint +e506 +e774*/
@@ -1081,7 +1081,7 @@ VOS_VOID FC_MEM_UpProcess( VOS_UINT32 ulMemValue  )
             pPolicy->enToPri = enTargetPri;
             VOS_SpinUnlockIntUnlock(&g_stFcMemSpinLock , ulFlags);
 
-            /* ÏûÏ¢·¢ËÍÊ§°Ü»áµ¥°å¸´Î»£¬²»ÔÙ½øÐÐenToPriµÄ»Ö¸´ */
+            /* æ¶ˆæ¯å‘é€å¤±è´¥ä¼šå•æ¿å¤ä½ï¼Œä¸å†è¿›è¡ŒenToPriçš„æ¢å¤ */
             FC_MEM_SndUpToTargetPriIndMsg(enTargetPri, (VOS_UINT16)ulMemValue);
 
         }
@@ -1097,10 +1097,10 @@ VOS_VOID  FC_MEM_DownProcess( VOS_UINT32 ulMemValue )
     FC_PRI_ENUM_UINT8                  enTargetPri;
     VOS_ULONG                           ulFlags = 0UL;
 
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if ( FC_POLICY_MASK_MEM != (FC_POLICY_MASK_MEM & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_MEM_UpProcess, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return;
@@ -1111,7 +1111,7 @@ VOS_VOID  FC_MEM_DownProcess( VOS_UINT32 ulMemValue )
 
     if ((pPolicy->enDonePri > enTargetPri) && (pPolicy->enToPri > enTargetPri))
     {
-        /* Èç¹ûÔÚÈíÖÐ¶ÏÕâÀà²»¿É´ò¶ÏµÄÈÎÎñÖÐ£¬¾Í²»·¢Á÷¿ØÏûÏ¢ */
+        /* å¦‚æžœåœ¨è½¯ä¸­æ–­è¿™ç±»ä¸å¯æ‰“æ–­çš„ä»»åŠ¡ä¸­ï¼Œå°±ä¸å‘æµæŽ§æ¶ˆæ¯ */
         /*lint -e506 -e774*/
         if (likely(preemptible()))
         /*lint +e506 +e774*/
@@ -1120,7 +1120,7 @@ VOS_VOID  FC_MEM_DownProcess( VOS_UINT32 ulMemValue )
             pPolicy->enToPri = enTargetPri;
             VOS_SpinUnlockIntUnlock(&g_stFcMemSpinLock, ulFlags);
 
-            /* ÏûÏ¢·¢ËÍÊ§°Ü»áµ¥°å¸´Î»£¬²»ÔÙ½øÐÐenToPriµÄ»Ö¸´ */
+            /* æ¶ˆæ¯å‘é€å¤±è´¥ä¼šå•æ¿å¤ä½ï¼Œä¸å†è¿›è¡ŒenToPriçš„æ¢å¤ */
             FC_MEM_SndDownToTargetPriIndMsg(enTargetPri, (VOS_UINT16)ulMemValue);
         }
     }
@@ -1136,11 +1136,11 @@ VOS_UINT32  FC_MEM_Init( VOS_VOID )
 
     VOS_SpinLockInit(&g_stFcMemSpinLock);
 
-    /* V9R1ÏîÄ¿ÖÐÅÐ¶ÏACPUÄÚ´æÁ÷¿ØÊ¹ÄÜÔò×¢²á»Øµ÷º¯Êý£¬·ñÔò²»×¢²á */
-    /* ×¢²áÄÚ´æ»Øµ÷º¯Êý */
+    /* V9R1é¡¹ç›®ä¸­åˆ¤æ–­ACPUå†…å­˜æµæŽ§ä½¿èƒ½åˆ™æ³¨å†Œå›žè°ƒå‡½æ•°ï¼Œå¦åˆ™ä¸æ³¨å†Œ */
+    /* æ³¨å†Œå†…å­˜å›žè°ƒå‡½æ•° */
     if ( (FC_POLICY_MASK(FC_POLICY_ID_MEM) == (FC_POLICY_MASK(FC_POLICY_ID_MEM) & g_stFcCfg.ulFcEnbaleMask) ))
     {
-        /* AºËÄÚ´æÁ÷¿Ø²ßÂÔ³õÊ¼»¯ */
+        /* Aæ ¸å†…å­˜æµæŽ§ç­–ç•¥åˆå§‹åŒ– */
         g_astFcPolicy[FC_POLICY_ID_MEM].pAdjustForUpFunc    = FC_MEM_AdjustPriForUp;
         g_astFcPolicy[FC_POLICY_ID_MEM].pAdjustForDownFunc  = FC_MEM_AdjustPriForDown;
 
@@ -1154,7 +1154,7 @@ VOS_UINT32  FC_MEM_Init( VOS_VOID )
     }
     else
     {
-         /* AºËÄÚ´æÁ÷¿Ø²ßÂÔ³õÊ¼»¯ */
+         /* Aæ ¸å†…å­˜æµæŽ§ç­–ç•¥åˆå§‹åŒ– */
         g_astFcPolicy[FC_POLICY_ID_MEM].pAdjustForUpFunc    = VOS_NULL_PTR;
         g_astFcPolicy[FC_POLICY_ID_MEM].pAdjustForDownFunc  = VOS_NULL_PTR;
 
@@ -1171,17 +1171,17 @@ VOS_UINT32  FC_CST_UpProcess( VOS_UINT8 ucRabId )
     FC_POLICY_STRU                     *pPolicy;
 
 
-    /*====================================*//* Ê¹ÄÜ¼ì²é */
+    /*====================================*//* ä½¿èƒ½æ£€æŸ¥ */
     if ( FC_POLICY_MASK_CST != (FC_POLICY_MASK_CST & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_CST_UpProcess, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return VOS_OK;
     }
 
 
-    /* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_CST_MODEM_0);
     FC_POLICY_UpToTargetPri(pPolicy, pPolicy->enHighestPri);
 
@@ -1192,17 +1192,17 @@ VOS_UINT32  FC_CST_DownProcess( VOS_UINT8 ucRabId )
     FC_POLICY_STRU                     *pPolicy;
 
 
-    /*====================================*//* Ê¹ÄÜ¼ì²é */
+    /*====================================*//* ä½¿èƒ½æ£€æŸ¥ */
     if ( FC_POLICY_MASK_CST != (FC_POLICY_MASK_CST & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_CST_DownProcess, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return VOS_OK;
     }
 
 
-    /* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_CST_MODEM_0);
     FC_POLICY_DownToTargetPri(pPolicy, FC_PRI_NULL);
 
@@ -1219,7 +1219,7 @@ FC_RAB_MAPPING_INFO_STRU  *FC_CDS_GetFcInfo( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UI
     pstFcRabMappingInfoSet  = &g_astFcRabMappingInfoSet[enModemId];
     ulRabMask               = (VOS_UINT32)(1UL << ucRabId);
 
-    /*====================================*//* ±éÀúËùÓÐÓ³Éä¹ØÏµ£¬Èç¹ûÕÒµ½°üº¬Ö¸¶¨RAB_IDµÄÓ³Éä¹ØÏµ£¬ÔòÍË³ö */
+    /*====================================*//* éåŽ†æ‰€æœ‰æ˜ å°„å…³ç³»ï¼Œå¦‚æžœæ‰¾åˆ°åŒ…å«æŒ‡å®šRAB_IDçš„æ˜ å°„å…³ç³»ï¼Œåˆ™é€€å‡º */
     for (enFcId = 0; enFcId < pstFcRabMappingInfoSet->enFcIdCnt; enFcId++)
     {
         pstFcRabMappingInfo = &(pstFcRabMappingInfoSet->astFcRabMappingInfo[enFcId]);
@@ -1255,14 +1255,14 @@ VOS_UINT32  FC_CDS_DelFcId( FC_ID_ENUM_UINT8 enFcId, MODEM_ID_ENUM_UINT16 enMode
         return VOS_ERR;
     }
 
-    /* ½«ºóÃæµÄÓ³Éä¹ØÏµ¿½±´¹ýÀ´£¬±£³ÖÊý×éÁ¬ÐøÐÔ */
+    /* å°†åŽé¢çš„æ˜ å°„å…³ç³»æ‹·è´è¿‡æ¥ï¼Œä¿æŒæ•°ç»„è¿žç»­æ€§ */
     for (enShiftFcId = (FC_PRI_ENUM_UINT8)(enFcIdNum + 1); enShiftFcId < pstFcRabMappingInfoSet->enFcIdCnt; enShiftFcId++)
     {
         pstFcRabMappingInfo   = &(pstFcRabMappingInfoSet->astFcRabMappingInfo[enShiftFcId]);
         PS_MEM_CPY((pstFcRabMappingInfo - 1), pstFcRabMappingInfo, sizeof(FC_RAB_MAPPING_INFO_STRU));
     }
 
-    /* ×îºóÒ»¸öÓ³Éä¹ØÏµÎÞ·¨±»¿½±´¸²¸Ç£¬ËùÒÔÐèÒªÊÖ¶¯Çå³ý */
+    /* æœ€åŽä¸€ä¸ªæ˜ å°„å…³ç³»æ— æ³•è¢«æ‹·è´è¦†ç›–ï¼Œæ‰€ä»¥éœ€è¦æ‰‹åŠ¨æ¸…é™¤ */
     PS_MEM_SET(&(pstFcRabMappingInfoSet->astFcRabMappingInfo[enShiftFcId - 1]), 0, sizeof(FC_RAB_MAPPING_INFO_STRU));
     pstFcRabMappingInfoSet->enFcIdCnt--;
 
@@ -1288,7 +1288,7 @@ VOS_UINT32  FC_CDS_AddRab(FC_ID_ENUM_UINT8 enFcId, VOS_UINT8 ucRabId, MODEM_ID_E
         return VOS_ERR;
     }
 
-    /*====================================*//* ±éÀú¸ÃFCµÄÁ÷¿ØÐÅÏ¢£¬Èç¹ûÕÒµ½°üº¬Ö¸¶¨RAB_IDµÄFc Id£¬ÔòÍË³ö */
+    /*====================================*//* éåŽ†è¯¥FCçš„æµæŽ§ä¿¡æ¯ï¼Œå¦‚æžœæ‰¾åˆ°åŒ…å«æŒ‡å®šRAB_IDçš„Fc Idï¼Œåˆ™é€€å‡º */
     for (enFcIdNum = 0; enFcIdNum < pstFcRabMappingInfoSet->enFcIdCnt; enFcIdNum++)
     {
         pstFcRabMappingInfo = &(pstFcRabMappingInfoSet->astFcRabMappingInfo[enFcIdNum]);
@@ -1311,7 +1311,7 @@ VOS_UINT32  FC_CDS_AddRab(FC_ID_ENUM_UINT8 enFcId, VOS_UINT8 ucRabId, MODEM_ID_E
         return VOS_ERR;
     }
 
-    /*====================================*//* Èç¹ûÊÇÐÂµÄFC Id£¬ÔòÌí¼Ó¸ÃFc IdºÍRAB ID */
+    /*====================================*//* å¦‚æžœæ˜¯æ–°çš„FC Idï¼Œåˆ™æ·»åŠ è¯¥Fc Idå’ŒRAB ID */
     pstFcRabMappingInfo = &(pstFcRabMappingInfoSet->astFcRabMappingInfo[pstFcRabMappingInfoSet->enFcIdCnt]);
     pstFcRabMappingInfo->enFcId             = enFcId;
     pstFcRabMappingInfo->ulIncludeRabMask   = ulRabMask;
@@ -1330,14 +1330,14 @@ VOS_UINT32  FC_CDS_DelRab( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemId )
     VOS_UINT32                          ulRabMask;
 
 
-    /*====================================*//* Í¨¹ýRab IdÀ´²éÕÒ¸ÃRab IdËùÔÚµÄFCÊµÌå */
+    /*====================================*//* é€šè¿‡Rab Idæ¥æŸ¥æ‰¾è¯¥Rab Idæ‰€åœ¨çš„FCå®žä½“ */
     pstFcRabMappingInfo                 = FC_CDS_GetFcInfo(ucRabId, enModemId);
     if (VOS_NULL_PTR == pstFcRabMappingInfo)
     {
         return VOS_ERR;
     }
 
-    /* Çå³ý¸ÃRabIdµÄÐÅÏ¢£¬Èç¹û¸ÃFcÉÏÒÑ¾­²»´æÔÚ²»ÐèÒªÁ÷¿ØµÄRabId£¬Ôò½øÐÐÁ÷¿Ø */
+    /* æ¸…é™¤è¯¥RabIdçš„ä¿¡æ¯ï¼Œå¦‚æžœè¯¥Fcä¸Šå·²ç»ä¸å­˜åœ¨ä¸éœ€è¦æµæŽ§çš„RabIdï¼Œåˆ™è¿›è¡ŒæµæŽ§ */
     ulRabMask       = (VOS_UINT32)(1UL << ucRabId);
 
     pstFcRabMappingInfo->ulIncludeRabMask  &= (~ulRabMask);
@@ -1351,7 +1351,7 @@ VOS_UINT32  FC_CDS_DelRab( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemId )
         }
     }
 
-    /* Èç¹ûÉ¾³ýÁËRabIdºó£¬¸ÃFCÉÏÃ»ÓÐÆäËüÐÅÏ¢£¬ÔòÉ¾³ý¸ÃFC ID¶ÔÓ¦µÄÐÅÏ¢ */
+    /* å¦‚æžœåˆ é™¤äº†RabIdåŽï¼Œè¯¥FCä¸Šæ²¡æœ‰å…¶å®ƒä¿¡æ¯ï¼Œåˆ™åˆ é™¤è¯¥FC IDå¯¹åº”çš„ä¿¡æ¯ */
     if (0 == pstFcRabMappingInfo->ulIncludeRabMask)
     {
         FC_CDS_DelFcId(pstFcRabMappingInfo->enFcId, enModemId);
@@ -1373,10 +1373,10 @@ VOS_UINT32  FC_CDS_UpProcess( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemId 
     FC_RAB_MAPPING_INFO_STRU               *pstFcRabMappingInfo;
 
 
-    /*====================================*//* Ê¹ÄÜ¼ì²é */
+    /*====================================*//* ä½¿èƒ½æ£€æŸ¥ */
     if ( FC_POLICY_MASK_CDS != (FC_POLICY_MASK_CDS & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_CST_UpProcess, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return VOS_OK;
@@ -1388,7 +1388,7 @@ VOS_UINT32  FC_CDS_UpProcess( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemId 
         return VOS_ERR;
     }
 
-    /*====================================*//* Í¨¹ýRAB idÀ´²éÕÒ ClientÁ÷¿ØÊµÌå */
+    /*====================================*//* é€šè¿‡RAB idæ¥æŸ¥æ‰¾ ClientæµæŽ§å®žä½“ */
     pstFcRabMappingInfo         = FC_CDS_GetFcInfo(ucRabId, enModemId);
     if (VOS_NULL_PTR == pstFcRabMappingInfo)
     {
@@ -1396,7 +1396,7 @@ VOS_UINT32  FC_CDS_UpProcess( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemId 
     }
 
 
-    /*====================================*//* Èç¹û¸ÃFcÁ÷¿ØÊµÌåÒÑ¾­Á÷¿Ø£¬ÔòÎÞÐè´¦Àí£¬Ö±½Ó·µ»Ø */
+    /*====================================*//* å¦‚æžœè¯¥FcæµæŽ§å®žä½“å·²ç»æµæŽ§ï¼Œåˆ™æ— éœ€å¤„ç†ï¼Œç›´æŽ¥è¿”å›ž */
     if (0 == pstFcRabMappingInfo->ulNoFcRabMask)
     {
         return VOS_OK;
@@ -1404,7 +1404,7 @@ VOS_UINT32  FC_CDS_UpProcess( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemId 
 
 
     /*====================================*/
-    /* È¥³ý¸ÃFC¶ÔÓ¦µÄÃ»ÓÐÁ÷¿ØµÄRABÑÚÂë£¬Èç¹ûÎª0£¬±íÃ÷ËùÓÐRAB¶¼ÒªÇóÁ÷¿Ø£¬¸ÃFC½øÐÐÁ÷¿Ø */
+    /* åŽ»é™¤è¯¥FCå¯¹åº”çš„æ²¡æœ‰æµæŽ§çš„RABæŽ©ç ï¼Œå¦‚æžœä¸º0ï¼Œè¡¨æ˜Žæ‰€æœ‰RABéƒ½è¦æ±‚æµæŽ§ï¼Œè¯¥FCè¿›è¡ŒæµæŽ§ */
     pstFcRabMappingInfo->ulNoFcRabMask   &= (~((VOS_UINT32)1 << ucRabId));
     if (0 == pstFcRabMappingInfo->ulNoFcRabMask)
     {
@@ -1421,10 +1421,10 @@ VOS_UINT32  FC_CDS_DownProcess( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemI
     FC_RAB_MAPPING_INFO_STRU                  *pstFcRabMappingInfo;
 
 
-    /*====================================*//* Ê¹ÄÜ¼ì²é */
+    /*====================================*//* ä½¿èƒ½æ£€æŸ¥ */
     if ( FC_POLICY_MASK_CDS != (FC_POLICY_MASK_CDS & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_CDS_DownProcess, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return VOS_OK;
@@ -1437,7 +1437,7 @@ VOS_UINT32  FC_CDS_DownProcess( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemI
         return VOS_ERR;
     }
 
-    /*====================================*//* Í¨¹ýRAB idÀ´²éÕÒ FCÊµÌå */
+    /*====================================*//* é€šè¿‡RAB idæ¥æŸ¥æ‰¾ FCå®žä½“ */
     pstFcRabMappingInfo                 = FC_CDS_GetFcInfo(ucRabId, enModemId);
     if (VOS_NULL_PTR == pstFcRabMappingInfo)
     {
@@ -1446,7 +1446,7 @@ VOS_UINT32  FC_CDS_DownProcess( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemI
 
 
     /*====================================*/
-    /* Èç¹û¸ÃFCÊµÌåÒÑ¾­½â³ýÁ÷¿Ø£¬ÔòÎÞÐè´¦Àí£¬Ö±½Ó·µ»Ø */
+    /* å¦‚æžœè¯¥FCå®žä½“å·²ç»è§£é™¤æµæŽ§ï¼Œåˆ™æ— éœ€å¤„ç†ï¼Œç›´æŽ¥è¿”å›ž */
     if (0 != pstFcRabMappingInfo->ulNoFcRabMask)
     {
         pstFcRabMappingInfo->ulNoFcRabMask   |= ((VOS_UINT32)1 << ucRabId);
@@ -1455,7 +1455,7 @@ VOS_UINT32  FC_CDS_DownProcess( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16 enModemI
 
 
     /*====================================*/
-    /* Ôö¼Óv¶ÔÓ¦µÄÃ»ÓÐÁ÷¿ØµÄRABÑÚÂë£¬Èç¹ûÎª0£¬Ôò¸ÃFCÊµÌåsÐèÒª½øÐÐ½âÁ÷¿Ø */
+    /* å¢žåŠ vå¯¹åº”çš„æ²¡æœ‰æµæŽ§çš„RABæŽ©ç ï¼Œå¦‚æžœä¸º0ï¼Œåˆ™è¯¥FCå®žä½“séœ€è¦è¿›è¡Œè§£æµæŽ§ */
     pstFcRabMappingInfo->ulNoFcRabMask   |= ((VOS_UINT32)1 << ucRabId);
     FC_POINT_ClrFc(FC_POLICY_MASK_CDS, pstFcRabMappingInfo->enFcId);
 
@@ -1469,17 +1469,17 @@ VOS_UINT32  FC_GPRS_UpProcess( VOS_VOID )
     FC_POLICY_STRU                      *pPolicy;
 
 
-    /*====================================*//* Ê¹ÄÜ¼ì²é */
+    /*====================================*//* ä½¿èƒ½æ£€æŸ¥ */
     if ( FC_POLICY_MASK_GPRS != (FC_POLICY_MASK_GPRS & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_GPRS_UpProcess, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return VOS_OK;
     }
 
 
-    /* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_GPRS_MODEM_0);
     FC_POLICY_UpToTargetPri(pPolicy, pPolicy->enHighestPri);
 
@@ -1490,16 +1490,16 @@ VOS_UINT32  FC_GPRS_DownProcess( VOS_VOID )
     FC_POLICY_STRU                      *pPolicy;
 
 
-    /*====================================*//* Ê¹ÄÜ¼ì²é */
+    /*====================================*//* ä½¿èƒ½æ£€æŸ¥ */
     if ( FC_POLICY_MASK_GPRS != (FC_POLICY_MASK_GPRS & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_GPRS_UpProcess, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return VOS_OK;
     }
 
-    /* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_GPRS_MODEM_0);
     FC_POLICY_DownToTargetPri(pPolicy, FC_PRI_NULL);
 
@@ -1511,7 +1511,7 @@ VOS_VOID  FC_ChannelMapCreate(FC_ID_ENUM_UINT8 enFcId, VOS_UINT8 ucRabId, MODEM_
     VOS_UINT32                          ulResult;
 
 
-    /* ²ÎÊý¼ì²é£¬RabId·¶Î§Îª[5,15] */
+    /* å‚æ•°æ£€æŸ¥ï¼ŒRabIdèŒƒå›´ä¸º[5,15] */
     if ( (FC_UE_MIN_RAB_ID > ucRabId) || (FC_UE_MAX_RAB_ID < ucRabId) )
     {
         FC_LOG1(PS_PRINT_WARNING, "FC_ChannelMapCreate RabId Is Invalid %d\n", ucRabId);
@@ -1524,7 +1524,7 @@ VOS_VOID  FC_ChannelMapCreate(FC_ID_ENUM_UINT8 enFcId, VOS_UINT8 ucRabId, MODEM_
         return;
     }
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     pstMsg = (FC_ADD_RAB_FCID_MAP_IND_STRU *)VOS_AllocMsg(UEPS_PID_FLOWCTRL_A, \
                                     sizeof(FC_ADD_RAB_FCID_MAP_IND_STRU) - VOS_MSG_HEAD_LENGTH);
 
@@ -1558,7 +1558,7 @@ VOS_VOID  FC_ChannelMapDelete( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16  enModemI
     VOS_UINT32                          ulResult;
 
 
-    /* ²ÎÊý¼ì²é£¬RabId·¶Î§Îª[5,15] */
+    /* å‚æ•°æ£€æŸ¥ï¼ŒRabIdèŒƒå›´ä¸º[5,15] */
     if ( (FC_UE_MIN_RAB_ID > ucRabId) || (FC_UE_MAX_RAB_ID < ucRabId) )
     {
         FC_LOG1(PS_PRINT_WARNING, "FC_ChannelMapDelete RabId Is Invalid %d\n", ucRabId);
@@ -1571,7 +1571,7 @@ VOS_VOID  FC_ChannelMapDelete( VOS_UINT8 ucRabId, MODEM_ID_ENUM_UINT16  enModemI
         return;
     }
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     pstMsg = (FC_DEL_RAB_FCID_MAP_IND_STRU *)VOS_AllocMsg(UEPS_PID_FLOWCTRL_A, \
                                     sizeof(FC_DEL_RAB_FCID_MAP_IND_STRU) - VOS_MSG_HEAD_LENGTH);
 
@@ -1644,13 +1644,13 @@ VOS_UINT32  FC_RcvCdsMsg( MsgBlock * pMsg )
 
 VOS_UINT32  FC_ACORE_RegPoint( VOS_VOID )
 {
-/* V9R1ÏîÄ¿ÖÐÔö¼ÓÊ¹ÓÃºê¿ª¹ØÅÐ¶ÏFCÄ£¿éÊÇ·ñÐèÒª½øÐÐÁ÷¿Øµã×¢²á */
+/* V9R1é¡¹ç›®ä¸­å¢žåŠ ä½¿ç”¨å®å¼€å…³åˆ¤æ–­FCæ¨¡å—æ˜¯å¦éœ€è¦è¿›è¡ŒæµæŽ§ç‚¹æ³¨å†Œ */
 #if(FEATURE_ON == FEATURE_NFEXT)
     FC_REG_POINT_STRU                   stFcRegPoint;
 
     PS_MEM_SET(&stFcRegPoint, 0, sizeof(FC_REG_POINT_STRU));
 
-    /* CPU¸ºÔØÁ÷¿Øµã×¢²á */
+    /* CPUè´Ÿè½½æµæŽ§ç‚¹æ³¨å†Œ */
     stFcRegPoint.enPolicyId = FC_POLICY_ID_CPU_A;
     stFcRegPoint.enFcPri    = FC_PRI_FOR_BRIDGE_FORWARD_DISCARD;
     stFcRegPoint.enFcId     = FC_ID_BRIDGE_FORWARD_DISACRD;
@@ -1681,7 +1681,7 @@ VOS_UINT32  FC_ACORE_RegPoint( VOS_VOID )
     stFcRegPoint.pRstFunc   = VOS_NULL_PTR;
     FC_POINT_Reg(&stFcRegPoint);
 
-    /* ÄÚ´æÁ÷¿Øµã×¢²á */
+    /* å†…å­˜æµæŽ§ç‚¹æ³¨å†Œ */
     stFcRegPoint.enPolicyId = FC_POLICY_ID_MEM;
     stFcRegPoint.enFcPri    = FC_PRI_FOR_BRIDGE_FORWARD_DISCARD;
     stFcRegPoint.enFcId     = FC_ID_BRIDGE_FORWARD_DISACRD;
@@ -1870,14 +1870,14 @@ VOS_UINT32  FC_ACORE_Init( VOS_VOID )
 
     FC_DrvAssemInit();
 
-    /* ´´½¨ÐÅºÅÁ¿£¬ÓÃÓÚCºËµ¥¶À¸´Î»Ê±£¬Í¨Öªµ×ÈíFcACoreµÄ»Øµ÷ÊÂÎñÒÑÍê³É */
+    /* åˆ›å»ºä¿¡å·é‡ï¼Œç”¨äºŽCæ ¸å•ç‹¬å¤ä½æ—¶ï¼Œé€šçŸ¥åº•è½¯FcACoreçš„å›žè°ƒäº‹åŠ¡å·²å®Œæˆ */
     if ( VOS_OK != VOS_SmBCreate(ucSmName, 0, VOS_SEMA4_FIFO, (VOS_SEM *)&g_ulFcACoreCResetDoneSem) )
     {
         FC_LOG(PS_PRINT_ERROR,"FC_ACORE_Init, Create Sem Fail\n");
         return VOS_ERR;
     }
 
-    /* ×¢²á»Øµ÷º¯Êýµ½µ×ÈíCºË¸´Î»½Ó¿ÚÖÐ */
+    /* æ³¨å†Œå›žè°ƒå‡½æ•°åˆ°åº•è½¯Cæ ¸å¤ä½æŽ¥å£ä¸­ */
     iRet    = DRV_CCORERESET_REGCBFUNC ("TTF_FcACore", FC_ACORE_CResetCallback, 0, FC_ACORE_CRESET_CALLBACK_PRIOR);
     if ( VOS_OK != iRet )
     {
@@ -1890,18 +1890,18 @@ VOS_UINT32  FC_ACORE_Init( VOS_VOID )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_FidInit
- ¹¦ÄÜÃèÊö  : Á÷¿ØFID³õÊ¼»¯º¯Êý
- ÊäÈë²ÎÊý  : enum VOS_INIT_PHASE_DEFINE enPhase
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_FidInit
+ åŠŸèƒ½æè¿°  : æµæŽ§FIDåˆå§‹åŒ–å‡½æ•°
+ è¾“å…¥å‚æ•°  : enum VOS_INIT_PHASE_DEFINE enPhase
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ14ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ14æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 FC_ACORE_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
 {
@@ -1969,26 +1969,26 @@ VOS_UINT32 FC_ACORE_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
 #else
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "FcInterface.h"
 
 /*****************************************************************************
-  2 º¯ÊýÊµÏÖ
+  2 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 /*****************************************************************************
- º¯ Êý Ãû  : FC_FidInit
- ¹¦ÄÜÃèÊö  : Á÷¿ØFID³õÊ¼»¯º¯Êý
- ÊäÈë²ÎÊý  : enum VOS_INIT_PHASE_DEFINE enPhase
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_FidInit
+ åŠŸèƒ½æè¿°  : æµæŽ§FIDåˆå§‹åŒ–å‡½æ•°
+ è¾“å…¥å‚æ•°  : enum VOS_INIT_PHASE_DEFINE enPhase
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ14ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ14æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 FC_ACORE_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
 {

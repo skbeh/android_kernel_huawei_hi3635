@@ -210,17 +210,17 @@ int mmc_at_rw(struct block_device * blk_dev, unsigned int from,
 
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SD_SG_INIT_TABLE
+* å‡½ æ•° å  : DRV_SD_SG_INIT_TABLE
 *
-* ¹¦ÄÜÃèÊö  : SD¶à¿éÊý¾Ý´«Êäsg list³õÊ¼»¯
+* åŠŸèƒ½æè¿°  : SDå¤šå—æ•°æ®ä¼ è¾“sg liståˆå§‹åŒ–
 *
-* ÊäÈë²ÎÊý  : const void *buf		´ý²Ù×÷µÄbufferµØÖ·
-				  unsigned int buflen	´ý²Ù×÷µÄbuffer´óÐ¡£¬Ð¡ÓÚ32K, ´óÐ¡Îª512BµÄÕûÊý±¶
-				  					´óÓÚ32K, ´óÐ¡Îª32KBµÄÕûÊý±¶£¬×î´óbufferÎª128K
-* Êä³ö²ÎÊý  : NA
+* è¾“å…¥å‚æ•°  : const void *buf		å¾…æ“ä½œçš„bufferåœ°å€
+				  unsigned int buflen	å¾…æ“ä½œçš„bufferå¤§å°ï¼Œå°äºŽ32K, å¤§å°ä¸º512Bçš„æ•´æ•°å€
+				  					å¤§äºŽ32K, å¤§å°ä¸º32KBçš„æ•´æ•°å€ï¼Œæœ€å¤§bufferä¸º128K
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  :  0 : ³É¹¦;  ÆäËü:Ê§°Ü
-* ÆäËüËµÃ÷  : NA
+* è¿” å›ž å€¼  :  0 : æˆåŠŸ;  å…¶å®ƒ:å¤±è´¥
+* å…¶å®ƒè¯´æ˜Ž  : NA
 *
 *****************************************************************************/
 int DRV_SD_SG_INIT_TABLE(const void *buf,unsigned int buflen)
@@ -236,18 +236,18 @@ int DRV_SD_TRANSFER(struct scatterlist *sg,
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SD_MULTI_TRANSFER
+* å‡½ æ•° å  : DRV_SD_MULTI_TRANSFER
 *
-* ¹¦ÄÜÃèÊö  : SD¶à¿éÊý¾Ý´«Êä
+* åŠŸèƒ½æè¿°  : SDå¤šå—æ•°æ®ä¼ è¾“
 *
-* ÊäÈë²ÎÊý  : unsigned dev_addr	´ýÐ´ÈëµÄSD blockµØÖ·
-				  unsigned blocks		´ýÐ´ÈëµÄblock ¸öÊý
-				  unsigned blksz		Ã¿¸öblock µÄ´óÐ¡£¬µ¥Î»×Ö½Ú
-				  int write			¶ÁÐ´±êÖ¾Î»£¬Ð´:1;	¶Á:0
-* Êä³ö²ÎÊý  : NA
+* è¾“å…¥å‚æ•°  : unsigned dev_addr	å¾…å†™å…¥çš„SD blockåœ°å€
+				  unsigned blocks		å¾…å†™å…¥çš„block ä¸ªæ•°
+				  unsigned blksz		æ¯ä¸ªblock çš„å¤§å°ï¼Œå•ä½å­—èŠ‚
+				  int write			è¯»å†™æ ‡å¿—ä½ï¼Œå†™:1;	è¯»:0
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  :  0 : ³É¹¦;  ÆäËü:Ê§°Ü
-* ÆäËüËµÃ÷  : NA
+* è¿” å›ž å€¼  :  0 : æˆåŠŸ;  å…¶å®ƒ:å¤±è´¥
+* å…¶å®ƒè¯´æ˜Ž  : NA
 *
 *****************************************************************************/
 int DRV_SD_MULTI_TRANSFER(unsigned dev_addr, 
@@ -257,11 +257,11 @@ int DRV_SD_MULTI_TRANSFER(unsigned dev_addr,
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SD_GET_CAPACITY
-* ¹¦ÄÜÃèÊö  : ¿¨ÈÝÁ¿²éÑ¯
-* ÊäÈë²ÎÊý  : ÎÞ
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : 0 : Ê§°Ü£»>0: ¿¨ÈÝÁ¿
+* å‡½ æ•° å  : DRV_SD_GET_CAPACITY
+* åŠŸèƒ½æè¿°  : å¡å®¹é‡æŸ¥è¯¢
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : 0 : å¤±è´¥ï¼›>0: å¡å®¹é‡
 *****************************************************************************/
 unsigned int DRV_SD_GET_CAPACITY(void)
 {
@@ -271,11 +271,11 @@ unsigned int DRV_SD_GET_CAPACITY(void)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SD_GET_STATUS
-* ¹¦ÄÜÃèÊö  : ¿¨ÔÚÎ»²éÑ¯
-* ÊäÈë²ÎÊý  : ÎÞ
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : 0 : ÔÚÎ»£»-1: ²»ÔÚÎ»
+* å‡½ æ•° å  : DRV_SD_GET_STATUS
+* åŠŸèƒ½æè¿°  : å¡åœ¨ä½æŸ¥è¯¢
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : 0 : åœ¨ä½ï¼›-1: ä¸åœ¨ä½
 *****************************************************************************/
 int DRV_SD_GET_STATUS(void)
 {	
@@ -299,34 +299,34 @@ unsigned long DRV_SDMMC_GET_OPRT_STATUS(void)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_SDMMC_ATProcess
- ¹¦ÄÜÃèÊö  : at^sd,SD¿¨²Ù×÷£¬Ð´£¬²Á³ý£¬¸ñÊ½»¯²Ù×÷
+ å‡½ æ•° å  : BSP_SDMMC_ATProcess
+ åŠŸèƒ½æè¿°  : at^sd,SDå¡æ“ä½œï¼Œå†™ï¼Œæ“¦é™¤ï¼Œæ ¼å¼åŒ–æ“ä½œ
              0:
- ÊäÈë²ÎÊý  : ²Ù×÷ÀàÐÍ ulOp:
-            0  ¸ñÊ½»¯SD¿¨ÄÚ
-            1  ²Á³ýÕû¸öSD¿¨ÄÚÈÝ£»
-            2  ÓÃÓÚÖ¸¶¨µØÖ·ÄÚÈÝµÄ²Á³ý²Ù×÷£¬Ö¸¶¨²Á³ýµÄÄÚÈÝ³¤¶ÈÎª512×Ö½Ú¡£²Á³ýºóµÄµØÖ·ÖÐÐ´È«1
-            3  Ð´Êý¾Ýµ½SD¿¨µÄÖ¸¶¨µØÖ·ÖÐ£¬ÐèÒª´øµÚ¶þ¸öºÍµÚÈý¸ö²ÎÊý
-            4  ¶ÁÊý¾Ýµ½SD¿¨µÄÖ¸¶¨µØÖ·ÖÐ
+ è¾“å…¥å‚æ•°  : æ“ä½œç±»åž‹ ulOp:
+            0  æ ¼å¼åŒ–SDå¡å†…
+            1  æ“¦é™¤æ•´ä¸ªSDå¡å†…å®¹ï¼›
+            2  ç”¨äºŽæŒ‡å®šåœ°å€å†…å®¹çš„æ“¦é™¤æ“ä½œï¼ŒæŒ‡å®šæ“¦é™¤çš„å†…å®¹é•¿åº¦ä¸º512å­—èŠ‚ã€‚æ“¦é™¤åŽçš„åœ°å€ä¸­å†™å…¨1
+            3  å†™æ•°æ®åˆ°SDå¡çš„æŒ‡å®šåœ°å€ä¸­ï¼Œéœ€è¦å¸¦ç¬¬äºŒä¸ªå’Œç¬¬ä¸‰ä¸ªå‚æ•°
+            4  è¯»æ•°æ®åˆ°SDå¡çš„æŒ‡å®šåœ°å€ä¸­
 
-            ulAddr < address >  µØÖ·£¬ÒÔ512BYTEÎªÒ»¸öµ¥Î»£¬ÓÃÊý×Ön±íÊ¾
+            ulAddr < address >  åœ°å€ï¼Œä»¥512BYTEä¸ºä¸€ä¸ªå•ä½ï¼Œç”¨æ•°å­—nè¡¨ç¤º
 
             ulData
-             < data >            Êý¾ÝÄÚÈÝ£¬±íÊ¾512BYTEµÄÄÚÈÝ£¬Ã¿¸ö×Ö½ÚµÄÄÚÈÝ¾ùÏàÍ¬¡£
-             0       ×Ö½ÚÄÚÈÝÎª0x00
-             1       ×Ö½ÚÄÚÈÝÎª0x55
-             2       ×Ö½ÚÄÚÈÝÎª0xAA
-             3       ×Ö½ÚÄÚÈÝÎª0xFF
+             < data >            æ•°æ®å†…å®¹ï¼Œè¡¨ç¤º512BYTEçš„å†…å®¹ï¼Œæ¯ä¸ªå­—èŠ‚çš„å†…å®¹å‡ç›¸åŒã€‚
+             0       å­—èŠ‚å†…å®¹ä¸º0x00
+             1       å­—èŠ‚å†…å®¹ä¸º0x55
+             2       å­—èŠ‚å†…å®¹ä¸º0xAA
+             3       å­—èŠ‚å†…å®¹ä¸º0xFF
 
- Êä³ö²ÎÊý  : pulErr
- ·µ »Ø Öµ  : 0 £ºOK  ·Ç 0 £ºError
+ è¾“å‡ºå‚æ•°  : pulErr
+ è¿” å›ž å€¼  : 0 ï¼šOK  éž 0 ï¼šError
 
-            ¾ßÌåµÄ´íÎóÖµÌî³äÔÚ*pulErrÖÐ
-            0 ±íÊ¾SD¿¨²»ÔÚÎ»
-            1 ±íÊ¾SD¿¨³õÊ¼»¯Ê§°Ü
-            2 ±íÊ¾<opr>²ÎÊý·Ç·¨£¬¶ÔÓ¦²Ù×÷²»Ö§³Ö(¸Ã´íÎóÓÉATÊ¹ÓÃ,²»ÐèÒªµ×ÈíÊ¹ÓÃ)
-            3 ±íÊ¾<address>µØÖ··Ç·¨£¬³¬¹ýSD¿¨±¾ÉíÈÝÁ¿
-            4 ÆäËûÎ´Öª´íÎó
+            å…·ä½“çš„é”™è¯¯å€¼å¡«å……åœ¨*pulErrä¸­
+            0 è¡¨ç¤ºSDå¡ä¸åœ¨ä½
+            1 è¡¨ç¤ºSDå¡åˆå§‹åŒ–å¤±è´¥
+            2 è¡¨ç¤º<opr>å‚æ•°éžæ³•ï¼Œå¯¹åº”æ“ä½œä¸æ”¯æŒ(è¯¥é”™è¯¯ç”±ATä½¿ç”¨,ä¸éœ€è¦åº•è½¯ä½¿ç”¨)
+            3 è¡¨ç¤º<address>åœ°å€éžæ³•ï¼Œè¶…è¿‡SDå¡æœ¬èº«å®¹é‡
+            4 å…¶ä»–æœªçŸ¥é”™è¯¯
 *****************************************************************************/
 
 unsigned long  DRV_SDMMC_AT_PROCESS(unsigned int type,
@@ -355,7 +355,7 @@ unsigned long  DRV_SDMMC_AT_PROCESS(unsigned int type,
 	if (!blk_dev) {
 		goto out;
 	}
-    /*ÔÚ½øÐÐÏÂÃæµÄsd¿¨²Ù×÷Ç°£¬Ê×ÏÈÒª´ò¿ª¸ÃÉè±¸£¬½¨Á¢block_deviceºÍgendiskµÄ¹ØÁª£¬·ÀÖ¹Îª¿ÕÔì³Éµ¥°åÖØÆô*/
+    /*åœ¨è¿›è¡Œä¸‹é¢çš„sdå¡æ“ä½œå‰ï¼Œé¦–å…ˆè¦æ‰“å¼€è¯¥è®¾å¤‡ï¼Œå»ºç«‹block_deviceå’Œgendiskçš„å…³è”ï¼Œé˜²æ­¢ä¸ºç©ºé€ æˆå•æ¿é‡å¯*/
     ret  = blkdev_get(blk_dev, FMODE_WRITE | FMODE_READ, NULL);
     if (ret)
     {
@@ -395,7 +395,7 @@ out:
 	} else {
 		*err = SDMMC_NO_ERROR_PARA;
 		mmc_at_status = SDMMC_PROCESS_OVER_OR_UNDO;
-        /*ÔÚatÃüÁî´¦Àí½áÊøÊ±£¬¹Ø±Õ¸ÃÉè±¸£¬»Ö¸´Ô­Ê¼×´Ì¬*/
+        /*åœ¨atå‘½ä»¤å¤„ç†ç»“æŸæ—¶ï¼Œå…³é—­è¯¥è®¾å¤‡ï¼Œæ¢å¤åŽŸå§‹çŠ¶æ€*/
         blkdev_put(blk_dev, FMODE_WRITE | FMODE_READ);
 	}
 	return ret;

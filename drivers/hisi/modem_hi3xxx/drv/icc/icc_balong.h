@@ -40,11 +40,11 @@ extern "C"
 #include <bsp_icc.h>
 
 #ifdef __KERNEL__ /* linux */
-/* ÌØĞÔ¿ØÖÆ¿ª¹Ø */
-#undef   ICC_HAS_INDEPENDENT_CHN_FEATURE  /* ÊÇ·ñÓĞ¸ßĞÔÄÜÍ¨µÀ£¬ĞèÒªÆğ¶ÀÁ¢ÈÎºÎºÍÊ¹ÓÃµ¥¶ÀµÄipcÖĞ¶Ï */
-#define  ICC_HAS_SYNC_SEND_FEATURE        /* ÊÇ·ñÓĞÍ¬²½·¢ËÍ½Ó¿Ú */
-#define  ICC_HAS_DEBUG_FEATURE            /* ÊÇ·ñÓĞ»ù±¾µÄdebug¹¦ÄÜ */
-#undef   ICC_DEBUG_FUNCTION_EXT           /* ÊÇ·ñÓĞÀ©Õ¹µÄdebug¹¦ÄÜ */
+/* ç‰¹æ€§æ§åˆ¶å¼€å…³ */
+#undef   ICC_HAS_INDEPENDENT_CHN_FEATURE  /* æ˜¯å¦æœ‰é«˜æ€§èƒ½é€šé“ï¼Œéœ€è¦èµ·ç‹¬ç«‹ä»»ä½•å’Œä½¿ç”¨å•ç‹¬çš„ipcä¸­æ–­ */
+#define  ICC_HAS_SYNC_SEND_FEATURE        /* æ˜¯å¦æœ‰åŒæ­¥å‘é€æ¥å£ */
+#define  ICC_HAS_DEBUG_FEATURE            /* æ˜¯å¦æœ‰åŸºæœ¬çš„debugåŠŸèƒ½ */
+#undef   ICC_DEBUG_FUNCTION_EXT           /* æ˜¯å¦æœ‰æ‰©å±•çš„debugåŠŸèƒ½ */
 
 #define  ICC_SRC_CPU                  (ICC_CPU_APP)
 #define  ICC_SEND_CPU                 (ICC_CPU_MODEM)
@@ -74,11 +74,11 @@ struct icc_init_info
 };
 
 #elif defined(__VXWORKS__) /* vxworks */
-/* ÌØĞÔ¿ØÖÆ¿ª¹Ø */
-#undef   ICC_HAS_INDEPENDENT_CHN_FEATURE  /* ÊÇ·ñÓĞ¸ßĞÔÄÜÍ¨µÀ£¬ĞèÒªÆğ¶ÀÁ¢ÈÎºÎºÍÊ¹ÓÃµ¥¶ÀµÄipcÖĞ¶Ï */
-#define  ICC_HAS_SYNC_SEND_FEATURE        /* ÊÇ·ñÓĞÍ¬²½·¢ËÍ½Ó¿Ú */
-#define  ICC_HAS_DEBUG_FEATURE            /* ÊÇ·ñÓĞ»ù±¾µÄdebug¹¦ÄÜ */
-#undef   ICC_DEBUG_FUNCTION_EXT           /* ÊÇ·ñÓĞÀ©Õ¹µÄdebug¹¦ÄÜ */
+/* ç‰¹æ€§æ§åˆ¶å¼€å…³ */
+#undef   ICC_HAS_INDEPENDENT_CHN_FEATURE  /* æ˜¯å¦æœ‰é«˜æ€§èƒ½é€šé“ï¼Œéœ€è¦èµ·ç‹¬ç«‹ä»»ä½•å’Œä½¿ç”¨å•ç‹¬çš„ipcä¸­æ–­ */
+#define  ICC_HAS_SYNC_SEND_FEATURE        /* æ˜¯å¦æœ‰åŒæ­¥å‘é€æ¥å£ */
+#define  ICC_HAS_DEBUG_FEATURE            /* æ˜¯å¦æœ‰åŸºæœ¬çš„debugåŠŸèƒ½ */
+#undef   ICC_DEBUG_FUNCTION_EXT           /* æ˜¯å¦æœ‰æ‰©å±•çš„debugåŠŸèƒ½ */
 
 #define  ICC_SRC_CPU                  (ICC_CPU_MODEM)
 #define  ICC_SEND_CPU                 (ICC_CPU_APP)
@@ -117,11 +117,11 @@ static inline void wake_lock(struct wake_lock *lock){}
 static inline void wake_unlock(struct wake_lock *lock){}
 
 #elif defined(__CMSIS_RTOS) /* rtx(cm3 os) */
-/* ÌØĞÔ¿ØÖÆ¿ª¹Ø */
-#undef   ICC_HAS_INDEPENDENT_CHN_FEATURE  /* ÊÇ·ñÓĞ¸ßĞÔÄÜÍ¨µÀ£¬ĞèÒªÆğ¶ÀÁ¢ÈÎºÎºÍÊ¹ÓÃµ¥¶ÀµÄipcÖĞ¶Ï */
-#undef   ICC_HAS_SYNC_SEND_FEATURE        /* ÊÇ·ñÓĞÍ¬²½·¢ËÍ½Ó¿Ú */
-#undef   ICC_HAS_DEBUG_FEATURE            /* ÊÇ·ñÓĞ»ù±¾µÄdebug¹¦ÄÜ */
-#undef   ICC_DEBUG_FUNCTION_EXT           /* ÊÇ·ñÓĞÀ©Õ¹µÄdebug¹¦ÄÜ */
+/* ç‰¹æ€§æ§åˆ¶å¼€å…³ */
+#undef   ICC_HAS_INDEPENDENT_CHN_FEATURE  /* æ˜¯å¦æœ‰é«˜æ€§èƒ½é€šé“ï¼Œéœ€è¦èµ·ç‹¬ç«‹ä»»ä½•å’Œä½¿ç”¨å•ç‹¬çš„ipcä¸­æ–­ */
+#undef   ICC_HAS_SYNC_SEND_FEATURE        /* æ˜¯å¦æœ‰åŒæ­¥å‘é€æ¥å£ */
+#undef   ICC_HAS_DEBUG_FEATURE            /* æ˜¯å¦æœ‰åŸºæœ¬çš„debugåŠŸèƒ½ */
+#undef   ICC_DEBUG_FUNCTION_EXT           /* æ˜¯å¦æœ‰æ‰©å±•çš„debugåŠŸèƒ½ */
 
 #define  ICC_SRC_CPU                  (ICC_CPU_MCU)
 #define  ICC_SEND_CPU                 (ICC_CPU_APP)
@@ -163,7 +163,7 @@ static inline void wake_lock_init(struct wake_lock *lock, int lock_id, const cha
 static inline void wake_lock(struct wake_lock *lock){}
 static inline void wake_unlock(struct wake_lock *lock){}
 
-/* ×¢Òâ: M3Ê¹ÓÃosl_sem_initµÄµÚ¶ş¸ö²ÎÊıÓëlinuxºÍvxworksº¬Òå²»Ò»Ñù */
+/* æ³¨æ„: M3ä½¿ç”¨osl_sem_initçš„ç¬¬äºŒä¸ªå‚æ•°ä¸linuxå’Œvxworkså«ä¹‰ä¸ä¸€æ · */
 #define osl_sem_init(val, name)  osSemaphoreCreate(osSemaphore(name), val)
 
 static __inline__ osStatus osl_sem_up(osl_sem_id *sem)
@@ -176,7 +176,7 @@ static __inline__ s32 osl_sem_down(osl_sem_id *sem)
 	return osSemaphoreWait(*sem, osWaitForever);
 }
 
-/* ×¢Òâ: M3µÚ¶ş¸ö²ÎÊıÎªºÁÃëÓëlinuxºÍvxworksº¬Òå²»Ò»Ñù */
+/* æ³¨æ„: M3ç¬¬äºŒä¸ªå‚æ•°ä¸ºæ¯«ç§’ä¸linuxå’Œvxworkså«ä¹‰ä¸ä¸€æ · */
 static __inline__ s32 osl_sem_downtimeout(osl_sem_id *sem, u32 ms)
 {
 	if(osSemaphoreWait(*sem, ms))
@@ -222,7 +222,7 @@ while(0)
 #define GET_CHN_ID(channel_id)    (((channel_id)>>16) & 0xffff)
 #define GET_FUNC_ID(channel_id)   ((channel_id) & 0xffff)
 
-/* ºê¶¨Òåstart */
+/* å®å®šä¹‰start */
 #define ICC_CHN_MAGIC_SIGN    (0x87651234)
 #define ICC_CHN_MAGIC_UNSIGN  (0xabcd8765)
 
@@ -240,7 +240,7 @@ while(0)
 #define ICC_MCCORE_SIZE       (SZ_512)
 #define ICC_MACORE_SIZE       (SZ_512)
 
-/* ddr¹²ÏíÄÚ´æÍ¨µÀµØÖ·¶¨Òå, acoreºÍccore */
+/* ddrå…±äº«å†…å­˜é€šé“åœ°å€å®šä¹‰, acoreå’Œccore */
 #define ICC_DBG_MSG_LEN_IN_DDR  (0x20)
 #define ICC_DBG_MSG_ADDR_IN_DDR (void *) (((unsigned long)(SHM_MEM_ICC_ADDR) + 3) & ~3)
 #define ADDR_IFC_SEND         (ICC_DBG_MSG_ADDR_IN_DDR + ICC_DBG_MSG_LEN_IN_DDR)
@@ -264,7 +264,7 @@ while(0)
 #define ADDR_CSHELL_SEND      (ADDR_GUOM5_RECV  + STRU_SIZE + ICC_GUOM5_SIZE)
 #define ADDR_CSHELL_RECV      (ADDR_CSHELL_SEND + STRU_SIZE + ICC_CSHELL_SIZE)
 #ifndef BSP_ICC_MCHANNEL_USE_LPM3TCM /* BALONGV7R2 */
-/* SRAM(AXI)Í¨µÀµØÖ·¶¨Òå, mcoreºÍccore; mcoreºÍacore */
+/* SRAM(AXI)é€šé“åœ°å€å®šä¹‰, mcoreå’Œccore; mcoreå’Œacore */
 #define ADDR_MCCORE_SEND      (SRAM_ICC_ADDR)
 #else                          /* K3V3 */
 #define ADDR_MCCORE_SEND      (ADDR_CSHELL_RECV + STRU_SIZE + ICC_CSHELL_SIZE)
@@ -280,8 +280,8 @@ while(0)
 #define ICC_SEM_FULL          (1)
 #define ICC_SEM_EMPTY         (0)
 
-/* Ã¶¾Ù¶¨Òåstart */
-/* icc×´Ì¬ */
+/* æšä¸¾å®šä¹‰start */
+/* iccçŠ¶æ€ */
 enum ICC_STATUS
 {
 	ICC_UNINITIALIZED = 0,
@@ -289,7 +289,7 @@ enum ICC_STATUS
 	ICC_STATUS_MAX
 };
 
-/* ÈÎÎñÀà±ğ·ÖÅä */
+/* ä»»åŠ¡ç±»åˆ«åˆ†é… */
 enum ICC_TASK_TYPE
 {
 	ICC_TASK_PRIVATE = 0,
@@ -304,7 +304,7 @@ enum IPC_VEC_TYPE
 	IPC_VEC_TYPE_MAX
 };
 
-/* Í¨µÀ×´Ì¬ */
+/* é€šé“çŠ¶æ€ */
 enum ICC_CHN_STAT
 {
 	ICC_CHN_CLOSED = 0,
@@ -319,17 +319,17 @@ enum ICC_PACKET_RETURN
 	ICC_PACKET_RETURN_MAX
 };
 
-/* Ã¶¾Ù¶¨Òåend */
+/* æšä¸¾å®šä¹‰end */
 
 
-/* Êı¾İÀàĞÍ¶¨Òåstart */
+/* æ•°æ®ç±»å‹å®šä¹‰start */
 struct icc_channel_fifo
 {
-	u32 magic;     /* fifoÄ§Êı£¬±êÊ¶Í¨µÀfifoµÄ×´Ì¬ */
-	u32 size;      /* fifo´óĞ¡ */
-	u32 write;     /* fifo¶ÁÖ¸Õë */
-	u32 read;      /* fifoĞ´Ö¸Õë */
-	u8  data[4];   /* fifoµÄcontext */
+	u32 magic;     /* fifoé­”æ•°ï¼Œæ ‡è¯†é€šé“fifoçš„çŠ¶æ€ */
+	u32 size;      /* fifoå¤§å° */
+	u32 write;     /* fifoè¯»æŒ‡é’ˆ */
+	u32 read;      /* fifoå†™æŒ‡é’ˆ */
+	u8  data[4];   /* fifoçš„context */
 };
 struct icc_pm_debug{
 	FUNCPTR_1 debug_routine;
@@ -338,11 +338,11 @@ struct icc_pm_debug{
 
 struct icc_channel_vector
 {
-	read_cb_func  read_cb;        /* ½ÓÊÕÏòÁ¿µÄ¶Á»Øµ÷º¯ÊıÖ¸Õë */
-	void          *read_context;  /* ½ÓÊÕÏòÁ¿µÄ¶Á»Øµ÷º¯Êıcontext */
-	write_cb_func write_cb;       /* ½ÓÊÕÏòÁ¿µÄĞ´»Øµ÷º¯ÊıÖ¸Õë */
-	void          *write_context; /* ½ÓÊÕÏòÁ¿µÄĞ´»Øµ÷º¯Êıcontext */
-	s32           return_data;    /* ½ÓÊÕÏòÁ¿µÄ·µ»ØÖµ£¬ÓÃÓÚÍ¬²½·¢ËÍµÄº¯Êı½á¹ûµÄ±£´æ */
+	read_cb_func  read_cb;        /* æ¥æ”¶å‘é‡çš„è¯»å›è°ƒå‡½æ•°æŒ‡é’ˆ */
+	void          *read_context;  /* æ¥æ”¶å‘é‡çš„è¯»å›è°ƒå‡½æ•°context */
+	write_cb_func write_cb;       /* æ¥æ”¶å‘é‡çš„å†™å›è°ƒå‡½æ•°æŒ‡é’ˆ */
+	void          *write_context; /* æ¥æ”¶å‘é‡çš„å†™å›è°ƒå‡½æ•°context */
+	s32           return_data;    /* æ¥æ”¶å‘é‡çš„è¿”å›å€¼ï¼Œç”¨äºåŒæ­¥å‘é€çš„å‡½æ•°ç»“æœçš„ä¿å­˜ */
 	struct icc_pm_debug pm_debug;
 };
 
@@ -359,38 +359,38 @@ union ipc_task_shared
 
 struct icc_channel
 {
-	u32                       id;               /* Í¨µÀid */
-	const char                *name;            /* Í¨µÀÃû³Æ */
-	u32                       state;            /* Í¨µÀ×´Ì¬: ±êÊ¶·¢ËÍÍ¨µÀÊÇ·ñ¿ÉÓÃ */
-	u32                       ready_recv;       /* Í¨µÀ×´Ì¬: ±êÊ¶½ÓÊÕÍ¨µÀÊÇ·ñ¿ÉÓÃ */
-	union ipc_task_shared     mode;             /* Í¨µÀ½ÓÊÕ´¦ÀíÈÎÎñÀàĞÍ: shared|private */
-	struct task_struct *               private_task_id;  /* Í¨µÀË½ÓĞµÄ´¦ÀíÈÎÎñid */
-	u32                       ipc_send_irq_id;  /* Í¨µÀË½ÓĞµÄ·¢ËÍÊı¾İÊ¹ÓÃµÄipcÖĞ¶Ï */
-	u32                       ipc_recv_irq_id;  /* Í¨µÀË½ÓĞµÄ½ÓÊÕÊı¾İÊ¹ÓÃµÄipcÖĞ¶Ï */
-	osl_sem_id                private_task_sem; /* »½ĞÑÍ¨µÀË½ÓĞµÄ½ÓÊÕÈÎÎñµÄĞÅºÅÁ¿ */
-	wait_queue_head_t         sen_sync_wq;      /* ÓÃÓÚÍ¬²½·¢ËÍµÄµÈ´ı¶ÓÁĞ */
-	u32                       seq_num_send;     /* ÓÃÓÚÍ¬²½·¢ËÍµÄ·¢ËÍĞòÁĞºÅ: µİÔö */
-	osl_sem_id                seq_num_send_sem; /* ÓÃÓÚ±£»¤seq_num_sendÈ«¾Ö±äÁ¿µÄĞÅºÅÁ¿ */
-	u32                       seq_num_recv;     /* ÓÃÓÚÍ¬²½·¢ËÍµÄ£¬¼ÇÂ¼´ÓÊı¾İ°üÀï¶ÁÈ¡µÄĞòÁĞºÅ */
-	struct icc_channel_fifo   *fifo_recv;       /* ½ÓÊÕfifoµÄÖ¸Õë */
-	struct icc_channel_fifo   *fifo_send;       /* ·¢ËÍfifoµÄÖ¸Õë */
-	spinlock_t                write_lock;       /* ±£»¤Í¨µÀĞ´»¥³âµÄspinËø */
-	spinlock_t                read_lock;        /* ±£»¤Í¨µÀ¶Á»¥³âµÄspinËø */
-	struct icc_channel_vector *rector;          /* ½ÓÊÕÏòÁ¿(×ÓÍ¨µÀ)Ö¸Õë */
-	u32                       func_size;        /* ½ÓÊÕÏòÁ¿(×ÓÍ¨µÀ)´óĞ¡ */
+	u32                       id;               /* é€šé“id */
+	const char                *name;            /* é€šé“åç§° */
+	u32                       state;            /* é€šé“çŠ¶æ€: æ ‡è¯†å‘é€é€šé“æ˜¯å¦å¯ç”¨ */
+	u32                       ready_recv;       /* é€šé“çŠ¶æ€: æ ‡è¯†æ¥æ”¶é€šé“æ˜¯å¦å¯ç”¨ */
+	union ipc_task_shared     mode;             /* é€šé“æ¥æ”¶å¤„ç†ä»»åŠ¡ç±»å‹: shared|private */
+	struct task_struct *               private_task_id;  /* é€šé“ç§æœ‰çš„å¤„ç†ä»»åŠ¡id */
+	u32                       ipc_send_irq_id;  /* é€šé“ç§æœ‰çš„å‘é€æ•°æ®ä½¿ç”¨çš„ipcä¸­æ–­ */
+	u32                       ipc_recv_irq_id;  /* é€šé“ç§æœ‰çš„æ¥æ”¶æ•°æ®ä½¿ç”¨çš„ipcä¸­æ–­ */
+	osl_sem_id                private_task_sem; /* å”¤é†’é€šé“ç§æœ‰çš„æ¥æ”¶ä»»åŠ¡çš„ä¿¡å·é‡ */
+	wait_queue_head_t         sen_sync_wq;      /* ç”¨äºåŒæ­¥å‘é€çš„ç­‰å¾…é˜Ÿåˆ— */
+	u32                       seq_num_send;     /* ç”¨äºåŒæ­¥å‘é€çš„å‘é€åºåˆ—å·: é€’å¢ */
+	osl_sem_id                seq_num_send_sem; /* ç”¨äºä¿æŠ¤seq_num_sendå…¨å±€å˜é‡çš„ä¿¡å·é‡ */
+	u32                       seq_num_recv;     /* ç”¨äºåŒæ­¥å‘é€çš„ï¼Œè®°å½•ä»æ•°æ®åŒ…é‡Œè¯»å–çš„åºåˆ—å· */
+	struct icc_channel_fifo   *fifo_recv;       /* æ¥æ”¶fifoçš„æŒ‡é’ˆ */
+	struct icc_channel_fifo   *fifo_send;       /* å‘é€fifoçš„æŒ‡é’ˆ */
+	spinlock_t                write_lock;       /* ä¿æŠ¤é€šé“å†™äº’æ–¥çš„spiné” */
+	spinlock_t                read_lock;        /* ä¿æŠ¤é€šé“è¯»äº’æ–¥çš„spiné” */
+	struct icc_channel_vector *rector;          /* æ¥æ”¶å‘é‡(å­é€šé“)æŒ‡é’ˆ */
+	u32                       func_size;        /* æ¥æ”¶å‘é‡(å­é€šé“)å¤§å° */
 };
 
 struct icc_control
 {
-	u32                cpu_id;                    /* µ±Ç°ºËcpu id */
-	u32                state;                     /* icc¿ØÖÆ½á¹¹Ìå×´Ì¬: ¿ÉÓÃ|²»¿ÉÓÃ */
-	struct task_struct *        shared_task_id;            /* Í¨µÀ¹²ÏíÈÎÎñid */
-	u32                shared_recv_ipc_irq_id;    /* Í¨µÀ¹²ÏíµÄ½ÓÊÕÊı¾İÊ¹ÓÃipcÖĞ¶Ï */
-	osl_sem_id         shared_task_sem;           /* »½ĞÑÍ¨µÀ¹²ÏíÈÎÎñµÄĞÅºÅÁ¿ */
+	u32                cpu_id;                    /* å½“å‰æ ¸cpu id */
+	u32                state;                     /* iccæ§åˆ¶ç»“æ„ä½“çŠ¶æ€: å¯ç”¨|ä¸å¯ç”¨ */
+	struct task_struct *        shared_task_id;            /* é€šé“å…±äº«ä»»åŠ¡id */
+	u32                shared_recv_ipc_irq_id;    /* é€šé“å…±äº«çš„æ¥æ”¶æ•°æ®ä½¿ç”¨ipcä¸­æ–­ */
+	osl_sem_id         shared_task_sem;           /* å”¤é†’é€šé“å…±äº«ä»»åŠ¡çš„ä¿¡å·é‡ */
 	u32                wake_up_flag;
 	u32                sleep_flag;
-	struct icc_channel *channels[ICC_CHN_ID_MAX]; /* icc_channelµÄ½á¹¹ÌåÖ¸ÕëÊı×é */
-	u32                channel_size;              /* Í¨µÀÊıÄ¿ */
+	struct icc_channel *channels[ICC_CHN_ID_MAX]; /* icc_channelçš„ç»“æ„ä½“æŒ‡é’ˆæ•°ç»„ */
+	u32                channel_size;              /* é€šé“æ•°ç›® */
 	struct             wake_lock wake_lock;
 #ifdef __KERNEL__
 	struct notifier_block pm_notify;
@@ -403,7 +403,7 @@ struct icc_wait_data
 	u32 packet_seq_num;
 };
 
-/* ÏûÏ¢ÀàĞÍ¶¨Òåfor debug */
+/* æ¶ˆæ¯ç±»å‹å®šä¹‰for debug */
 enum ICC_MSG_TYPE
 {
 	ICC_MSG_SEND = 0,
@@ -414,7 +414,7 @@ enum ICC_MSG_TYPE
 #ifdef ICC_HAS_DEBUG_FEATURE
 #define  ICC_STAT_MSG_NUM   10
 
-/*** ·¢ËÍ/½ÓÊÕÏûÏ¢Í³¼Æ£¬ÒÔÏûÏ¢ÎªÎ¬¶È£¬ĞèÒªµ÷ÓÃdump½Ó¿Ú£¬ÒÔ±¸Òì³£Ê±·ÖÎö ***/
+/*** å‘é€/æ¥æ”¶æ¶ˆæ¯ç»Ÿè®¡ï¼Œä»¥æ¶ˆæ¯ä¸ºç»´åº¦ï¼Œéœ€è¦è°ƒç”¨dumpæ¥å£ï¼Œä»¥å¤‡å¼‚å¸¸æ—¶åˆ†æ ***/
 struct icc_uni_msg_info
 {
 	u32 channel_id;
@@ -440,7 +440,7 @@ struct icc_msg_info
 	struct icc_msg_fifo recv;
 };
 
-/*** ·¢ËÍ/½ÓÊÕÏûÏ¢Í³¼Æ£¬ÒÔÍ¨µÀÎªÎ¬¶È£¬·ÖÎöÍ¨µÀÊı¾İ ***/
+/*** å‘é€/æ¥æ”¶æ¶ˆæ¯ç»Ÿè®¡ï¼Œä»¥é€šé“ä¸ºç»´åº¦ï¼Œåˆ†æé€šé“æ•°æ® ***/
 struct icc_channel_stat_info
 {
 	u32 sum_len;
@@ -478,7 +478,7 @@ struct icc_dbg
 	struct icc_channel_info *channel_stat[ICC_CHN_ID_MAX];
 };
 
-/* º¯ÊıÉùÃ÷ */
+/* å‡½æ•°å£°æ˜ */
 void icc_control_dump(void);
 void icc_init_info_dump(u32 real_channel_id);
 void icc_channel_dump(u32 real_channel_id);
@@ -507,7 +507,7 @@ struct icc_dbg
 
 #endif /* ICC_HAS_DEBUG_FEATURE */
 
-/* º¯ÊıÉùÃ÷start */
+/* å‡½æ•°å£°æ˜start */
 void icc_ipc_isr(u32 data);
 u32 bsp_icc_channel_status_get(u32 real_channel_id, u32 *channel_stat);
 u32 bsp_icc_channel_size_get(void);
@@ -516,7 +516,7 @@ u32 fifo_packet_put(struct icc_channel_fifo *fifo, u8 *head_buf, u32 head_len, u
 u32 fifo_get(struct icc_channel_fifo *fifo, u8 *data_buf, u32 data_len, u32 *read);
 s32 bsp_icc_test_init(void);
 s32 bsp_icc_mcore_test_init(void);
-/* º¯ÊıÉùÃ÷end */
+/* å‡½æ•°å£°æ˜end */
 
 #ifdef __cplusplus /* __cplusplus */
 }

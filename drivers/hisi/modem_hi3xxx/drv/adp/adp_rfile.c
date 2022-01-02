@@ -72,7 +72,7 @@ typedef  SEM_ID                 rfile_sem_id;
 
 #endif /* end of __KERNEL__ */
 
-#define RFILE_TIMEOUT_MAX           (2000)           /* ×î³¤µÈ´ı2s */
+#define RFILE_TIMEOUT_MAX           (2000)           /* æœ€é•¿ç­‰å¾…2s */
 
 typedef struct
 {
@@ -262,7 +262,7 @@ int rfile_stdioFpDestroy(RFILE_FILE *fp)
 }
 
 
-/*ÎÄ¼şÏµÍ³½Ó¿Ú*/
+/*æ–‡ä»¶ç³»ç»Ÿæ¥å£*/
 void *BSP_fopen(const char *path, const char *mode)
 {
     int ret;
@@ -276,7 +276,7 @@ void *BSP_fopen(const char *path, const char *mode)
         return 0;
     }
 
-    /* ½«×Ö·û´®²ÎÊı×ª»»³ÉÕûÊı */
+    /* å°†å­—ç¬¦ä¸²å‚æ•°è½¬æ¢æˆæ•´æ•° */
     flags = rfile_getmode(mode, &oflags);
     if(0 == flags)
     {
@@ -496,9 +496,9 @@ struct rfile_dirent_info
 {
     DRV_DIR_STRU        *phandle;
     RFILE_DIRENT_STRU   *pdirent;
-    int                 len;        /* ×Ü³¤¶È */
-    int                 ptr;        /* µ±Ç°Æ«ÒÆ */
-    struct list_head    stlist;     /* Á´±í½Úµã */
+    int                 len;        /* æ€»é•¿åº¦ */
+    int                 ptr;        /* å½“å‰åç§» */
+    struct list_head    stlist;     /* é“¾è¡¨èŠ‚ç‚¹ */
 };
 
 struct rfile_adp_ctrl
@@ -898,10 +898,10 @@ int xcopy_sourcedest(const char *source,const char *dest)
     
     ret = bsp_stat((s8*)dest, &d_stat);
 
-    if(ret < 0) /* Ä¿±êÎÄ¼ş»òÄ¿Â¼²»´æÔÚ */
+    if(ret < 0) /* ç›®æ ‡æ–‡ä»¶æˆ–ç›®å½•ä¸å­˜åœ¨ */
     {
         /* coverity[uninit_use] */
-        if(S_ISDIR(s_stat.mode))    /* Ô´ÊÇÄ¿Â¼ */
+        if(S_ISDIR(s_stat.mode))    /* æºæ˜¯ç›®å½• */
         {
             ret = bsp_mkdir((s8*)dest, 0660);
             if(0 != ret)
@@ -910,7 +910,7 @@ int xcopy_sourcedest(const char *source,const char *dest)
                 return ret;
             }
         }
-        else        /* Ô´ÊÇÎÄ¼ş */
+        else        /* æºæ˜¯æ–‡ä»¶ */
         {
             /* coverity[example_assign] */
             pfile = bsp_open((const s8*)dest, (RFILE_CREAT|RFILE_RDWR), 0755);  /* TODO: mode */
@@ -922,16 +922,16 @@ int xcopy_sourcedest(const char *source,const char *dest)
             }
         }
 
-        /* µİ¹éµ÷ÓÃ */
+        /* é€’å½’è°ƒç”¨ */
         xcopy_sourcedest(source, dest);
     }
-    else    /* Ä¿±êÎÄ¼ş»òÄ¿Â¼´æÔÚ */
+    else    /* ç›®æ ‡æ–‡ä»¶æˆ–ç›®å½•å­˜åœ¨ */
     {
         /* coverity[uninit_use] */
-        if(S_ISDIR(s_stat.mode))    /* Ô´ÊÇÄ¿Â¼ */
+        if(S_ISDIR(s_stat.mode))    /* æºæ˜¯ç›®å½• */
         {
             /* coverity[uninit_use] */
-            if(!S_ISDIR(d_stat.mode))   /* Ä¿±ê²»ÊÇÄ¿Â¼ */
+            if(!S_ISDIR(d_stat.mode))   /* ç›®æ ‡ä¸æ˜¯ç›®å½• */
             {
                 bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_RFILE, "[%s] src is dir,dest is file.\n", __FUNCTION__);
                 return -1;
@@ -944,7 +944,7 @@ int xcopy_sourcedest(const char *source,const char *dest)
                 return -1;
             }
             
-            pdirent = Rfile_Malloc(RFILE_DIRENT_LEN);  /* »º´æ×ÓÄ¿Â¼µÄÃû³Æ */
+            pdirent = Rfile_Malloc(RFILE_DIRENT_LEN);  /* ç¼“å­˜å­ç›®å½•çš„åç§° */
             if(NULL == pdirent)
             {
                 bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_RFILE, "[%s] malloc failed.\n", __FUNCTION__);
@@ -1012,7 +1012,7 @@ int xcopy_sourcedest(const char *source,const char *dest)
                         /* coverity[secure_coding] */
                         strcat(psubdir_d, (char*)pstDirent->d_name);
                         
-                        /* µİ¹éµ÷ÓÃ */
+                        /* é€’å½’è°ƒç”¨ */
                         xcopy_sourcedest(psubdir_s, psubdir_d);
                     
                         Rfile_Free(psubdir_s);
@@ -1024,10 +1024,10 @@ int xcopy_sourcedest(const char *source,const char *dest)
 
             Rfile_Free(pdirent);
         }
-        else        /* Ô´ÊÇÎÄ¼ş */
+        else        /* æºæ˜¯æ–‡ä»¶ */
         {
             /* coverity[uninit_use] */
-            if(S_ISDIR(d_stat.mode))   /* Ä¿±êÊÇÄ¿Â¼ */
+            if(S_ISDIR(d_stat.mode))   /* ç›®æ ‡æ˜¯ç›®å½• */
             {
                 bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_RFILE, "[%s] src is file,dest is dir.\n", __FUNCTION__);
                 return -1;
@@ -1084,7 +1084,7 @@ int xdelete_source(const char *source)
     }
 
     /* coverity[uninit_use] */
-    if(S_ISDIR(s_stat.mode))    /* Ô´ÊÇÄ¿Â¼ */
+    if(S_ISDIR(s_stat.mode))    /* æºæ˜¯ç›®å½• */
     {
         dir = bsp_opendir((s8*)source);
         if(dir < 0)
@@ -1093,7 +1093,7 @@ int xdelete_source(const char *source)
             return -1;
         }
         
-        pdirent = Rfile_Malloc(RFILE_DIRENT_LEN);  /* »º´æ×ÓÄ¿Â¼µÄÃû³Æ */
+        pdirent = Rfile_Malloc(RFILE_DIRENT_LEN);  /* ç¼“å­˜å­ç›®å½•çš„åç§° */
         if(NULL == pdirent)
         {
             bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_RFILE, "[%s] malloc failed.\n", __FUNCTION__);
@@ -1143,7 +1143,7 @@ int xdelete_source(const char *source)
                     /* coverity[secure_coding] */
                     strcat(psubdir_s, (char*)pstDirent->d_name);
                     
-                    /* µİ¹éµ÷ÓÃ */
+                    /* é€’å½’è°ƒç”¨ */
                     xdelete_source(psubdir_s);
                 
                     Rfile_Free(psubdir_s);
@@ -1157,7 +1157,7 @@ int xdelete_source(const char *source)
         
         bsp_rmdir((s8*)source);
     }
-    else        /* Ô´ÊÇÎÄ¼ş */
+    else        /* æºæ˜¯æ–‡ä»¶ */
     {
         bsp_remove((const s8 *)source);
     }

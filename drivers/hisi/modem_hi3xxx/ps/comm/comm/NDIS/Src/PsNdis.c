@@ -26,7 +26,7 @@ extern "C" {
 #include "NasNvInterface.h"
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 /*lint -e767*/
 #define    THIS_FILE_ID          PS_FILE_ID_PSNDIS_C
@@ -35,8 +35,8 @@ extern "C" {
 /*****************************************************************************
   2 Declare the Global Variable
 *****************************************************************************/
-#define C2A_QUE_SIZE                512        /*�ݶ�512*/
-#define USB_DATAREQ_QUE_SIZE        512        /*�ݶ�512*/
+#define C2A_QUE_SIZE                512        /*暂定512*/
+#define USB_DATAREQ_QUE_SIZE        512        /*暂定512*/
 
 #define NDIS_PERIOD_ARP_TMRNAME     1
 #define NDIS_ARP_REQ_TMRNAME        2
@@ -44,46 +44,46 @@ extern "C" {
 /*****************************************************************************
   3 function
 *****************************************************************************/
-/*����ADS�����ݣ���Ŷ���*/
+/*来自ADS的数据，存放队列*/
 LUP_QUEUE_STRU  *g_pstC2ACoreQue        = VOS_NULL_PTR;
 VOS_VOID        *p_aC2AQueBuf[C2A_QUE_SIZE];
 
-/*����USB���ݵĴ�Ŷ���*/
+/*来自USB数据的存放队列*/
 LUP_QUEUE_STRU  *g_pstUsbDataReqQue     = VOS_NULL_PTR;
 VOS_VOID        *p_aUsbQueBuf[USB_DATAREQ_QUE_SIZE];
 
-/*arp�����м䲿�̶ֹ���ֵ*/
+/*arp请求中间部分固定的值*/
 VOS_UINT8       g_aucArpReqFixVal[ETH_ARP_FIXED_MSG_LEN] = {0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01 };
-/*arp��Ӧ�м䲿�̶ֹ���ֵ*/
+/*arp响应中间部分固定的值*/
 VOS_UINT8       g_aucArpRspFixVal[ETH_ARP_FIXED_MSG_LEN] = {0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x02 };
-/*�㲥��ַ��ȫ1*/
+/*广播地址，全1*/
 VOS_UINT8       g_aucBroadCastAddr[ETH_MAC_ADDR_LEN]   = {0xff,0xff,0xff,0xff,0xff,0xff };
 
 VOS_UINT8       g_aucInvalidAddr[IPV4_ADDR_LEN] = {0};
 
-/*ARP����*/
-VOS_UINT32      g_ulPeriodicArpCyc      = 3000;   /*������ARP��������*/
+/*ARP周期*/
+VOS_UINT32      g_ulPeriodicArpCyc      = 3000;   /*周期性ARP发送周期*/
 
-/*Task��Ϣ*/
+/*Task信息*/
 #if 0
-VOS_UINT32      g_ulNdisTaskId = 0;                        /*NDIS����ID*/
-VOS_UINT32      g_ulNdisTaskReadyFlag = PS_FALSE;          /*NDIS��������״̬*/
+VOS_UINT32      g_ulNdisTaskId = 0;                        /*NDIS任务ID*/
+VOS_UINT32      g_ulNdisTaskReadyFlag = PS_FALSE;          /*NDIS任务运行状态*/
 #endif
 
-/*ͳ����Ϣ*/
+/*统计信息*/
 NDIS_STAT_INFO_STRU        g_stNdisStatStru = {0};
 
 NDIS_ENTITY_STRU           g_astNdisEntity[NAS_NDIS_MAX_ITEM] = {{0}};
 NDIS_ENTITY_STRU          *g_pstNdisEntity = g_astNdisEntity;
 
-VOS_UINT32                 g_ulNvMtu = 1500;              /*IPV6 MTUĬ��ȡֵ*/
+VOS_UINT32                 g_ulNvMtu = 1500;              /*IPV6 MTU默认取值*/
 
 VOS_UINT32 g_ulNdisLomSwitch = 0;
 
 /*****************************************************************************
   3 Function
 *****************************************************************************/
-/*����*/
+/*声明*/
 extern VOS_VOID   PppMsgProc( struct MsgCB * pMsg );
 extern VOS_UINT32 PppInit(enum VOS_INIT_PHASE_DEFINE InitPhase );
 extern VOS_UINT32 DIPC_Pid_InitFunc( enum VOS_INIT_PHASE_DEFINE ip );
@@ -111,7 +111,7 @@ VOS_UINT32 Ndis_DlAdsDataRcv(VOS_UINT8 ucExRabId, IMM_ZC_STRU *pData, ADS_PKT_TY
         return PS_FAIL;
     }
 
-    /*���Ӵ�ADS���յ������ݰ�����ͳ��*/
+    /*增加从ADS接收到的数据包个数统计*/
     NDIS_STAT_DL_RECV_ADSPKT_SUCC(1);
 
     Ndis_LomTraceRcvDlData();
@@ -128,24 +128,24 @@ VOS_UINT32 Ndis_DlAdsDataRcv(VOS_UINT8 ucExRabId, IMM_ZC_STRU *pData, ADS_PKT_TY
 }
 
 /*****************************************************************************
- �� �� ��  : AppNdis_UsbReadCb
- ��������  : App�˼�USBͨ��
- �������  : VOS_VOID *pBuf
+ 函 数 名  : AppNdis_UsbReadCb
+ 功能描述  : App核间USB通道
+ 输入参数  : VOS_VOID *pBuf
              VOS_UINT32 ulLen
- �������  : ��
- �� �� ֵ  : VOS_UINT32
- ���ú���  :
- ��������  :
+ 输出参数  : 无
+ 返 回 值  : VOS_UINT32
+ 调用函数  :
+ 被调函数  :
 
- �޸���ʷ      :
-  1.��    ��   : 2011��1��31��
-    ��    ��   : ����
-    �޸�����   : �����ɺ���
+ 修改历史      :
+  1.日    期   : 2011年1月31日
+    作    者   : 韩磊
+    修改内容   : 新生成函数
 
 *****************************************************************************/
 VOS_UINT32 AppNdis_UsbReadCb(UDI_HANDLE ulhandle, VOS_VOID *pPktNode)
 {
-    IMM_ZC_STRU            *pstImmZc = (IMM_ZC_STRU*)pPktNode;    /*ĿǰImmZc��sk_buff��ȫһ�£�ֱ��ǿת*/
+    IMM_ZC_STRU            *pstImmZc = (IMM_ZC_STRU*)pPktNode;    /*目前ImmZc和sk_buff完全一致，直接强转*/
 
     if (VOS_NULL_PTR == pstImmZc)
     {
@@ -160,18 +160,18 @@ VOS_UINT32 AppNdis_UsbReadCb(UDI_HANDLE ulhandle, VOS_VOID *pPktNode)
 }
 
 /*****************************************************************************
- �� �� ��  : Ndis_InitRegToAt
- ��������  : NDIS��ATע��Client
- �������  : VOS_VOID
- �������  : ��
- �� �� ֵ  : VOS_UINT32
- ���ú���  :
- ��������  :
+ 函 数 名  : Ndis_InitRegToAt
+ 功能描述  : NDIS向AT注册Client
+ 输入参数  : VOS_VOID
+ 输出参数  : 无
+ 返 回 值  : VOS_UINT32
+ 调用函数  :
+ 被调函数  :
 
- �޸���ʷ      :
-  1.��    ��   : 2011��4��28��
-    ��    ��   : LPDCP_CIPHERINFO_FOR_ACC
-    �޸�����   : �����ɺ���
+ 修改历史      :
+  1.日    期   : 2011年4月28日
+    作    者   : LPDCP_CIPHERINFO_FOR_ACC
+    修改内容   : 新生成函数
 
 *****************************************************************************/
 VOS_UINT32  Ndis_InitRegToAt( VOS_VOID )
@@ -221,17 +221,17 @@ VOS_UINT32 Ndis_NvItemInit(VOS_VOID)
     NDIS_NV_IPV6_MTU_STRU          stNdisIPv6Mtu;
 
     /*
-        DHCP Lease Time, �趨��ΧΪ[1, 8784]Сʱ
-        Vodafone    24Сʱ
-        ����        72Сʱ
+        DHCP Lease Time, 设定范围为[1, 8784]小时
+        Vodafone    24小时
+        其他        72小时
 
-        ʱ�侭��DHCP Lease Timeһ��ʱ��PC�������������⣬
-        ���DHCP��Լ���ڣ����PCͨ��NDISͨ��������������ݻ����Ŀ�Ĳ��ɴ����
-        Ŀǰ���ԣ���DHCP Lease TimeС�ڵ���4Sʱ����������Ӱ��ϴ����Զ�����С��ԼΪ1Сʱ
-        Ŀǰû����������8���DHCP Lease Time���ݶ�����Ϊ8784Сʱ(366��)
+        时间经过DHCP Lease Time一半时，PC会主动发起续租，
+        如果DHCP租约超期，则从PC通过NDIS通道发往单板的数据会出现目的不可达错误
+        目前测试，当DHCP Lease Time小于等于4S时，对于数传影响较大，所以定义最小租约为1小时
+        目前没有遇到超过8天的DHCP Lease Time，暂定上限为8784小时(366天)
         */
 
-    /* ��NV��ȡ����������Ϣ */
+    /* 从NV读取流控配置信息 */
     /*lint -e718*/
     /*lint -e732*/
 	/*lint -e746*/
@@ -245,7 +245,7 @@ VOS_UINT32 Ndis_NvItemInit(VOS_VOID)
     }
     else
     {
-        /* NVֵ�Ϸ����ж� */
+        /* NV值合法性判断 */
         ulDhcpLeaseHour = stNdisDhcpLeaseHour.ulDhcpLeaseHour;
         if((0 < ulDhcpLeaseHour) && (ulDhcpLeaseHour <= TTF_NDIS_DHCP_MAX_LEASE_HOUR))
         {
@@ -254,7 +254,7 @@ VOS_UINT32 Ndis_NvItemInit(VOS_VOID)
         }
     }
 
-    /* ��NV��ȡIPV6 MTU��Ϣ */
+    /* 从NV读取IPV6 MTU信息 */
     ulRtn = Ndis_NvimItem_Read(en_NV_Item_IPV6_ROUTER_MTU,\
                                     &stNdisIPv6Mtu,\
                                     sizeof(NDIS_NV_IPV6_MTU_STRU));
@@ -269,7 +269,7 @@ VOS_UINT32 Ndis_NvItemInit(VOS_VOID)
     }
     else
     {
-        /* NVֵ�Ϸ����ж� */
+        /* NV值合法性判断 */
         ulIpv6Mtu = stNdisIPv6Mtu.ulIpv6Mtu;
         if(0 == ulIpv6Mtu)
         {
@@ -315,7 +315,7 @@ VOS_UINT32 Ndis_Init( VOS_VOID )
     #endif
 
     /*lint -e746*/
-    pucMacAddr = (VOS_UINT8 *)BSP_GetMacAddr();                                 /*��õ���MAC��ַ*/
+    pucMacAddr = (VOS_UINT8 *)BSP_GetMacAddr();                                 /*获得单板MAC地址*/
     /*lint -e746*/
 
     if (VOS_NULL_PTR == pucMacAddr)
@@ -334,14 +334,14 @@ VOS_UINT32 Ndis_Init( VOS_VOID )
         PS_MEM_CPY(g_astNdisEntity[ulLoop].stIpV4Info.aucMacFrmHdr+ETH_MAC_ADDR_LEN,pucMacAddr,ETH_MAC_ADDR_LEN);
         PS_MEM_CPY(g_astNdisEntity[ulLoop].stIpV4Info.aucMacFrmHdr+(2*ETH_MAC_ADDR_LEN),(VOS_UINT8*)(&usPayLoad),2);
 
-        /*������ARP��ʱ����ʼ��*/
+        /*周期性ARP定时器初始化*/
         pstArpPeriodTimer = &(g_astNdisEntity[ulLoop].stIpV4Info.stArpPeriodTimer);
         pstArpPeriodTimer->hTm          = VOS_NULL_PTR;
         pstArpPeriodTimer->ulName       = NDIS_PERIOD_ARP_TMRNAME;
         pstArpPeriodTimer->ulTimerValue = g_ulPeriodicArpCyc;
     }
 
-    if (PS_SUCC != Ndis_NvItemInit())             /*NV���ʼ��*/
+    if (PS_SUCC != Ndis_NvItemInit())             /*NV项初始化*/
     {
         vos_printf("Ndis_Init, Ndis_NvItemInit Fail!\n");
         return PS_FAIL;
@@ -360,7 +360,7 @@ VOS_UINT32 Ndis_DlSendNcm(VOS_UINT8 ucExRabId, ADS_PKT_TYPE_ENUM_UINT8 ucPktType
     VOS_UINT16                     usApp = 0;
     VOS_UINT16                     usTmpApp = 0;
 
-    /*ʹ��ExRabId��ȡNDISʵ��*/
+    /*使用ExRabId获取NDIS实体*/
     pstNdisEntity = NDIS_GetEntityByRabId(ucExRabId);
     if(IP_NULL_PTR == pstNdisEntity)
     {
@@ -370,8 +370,8 @@ VOS_UINT32 Ndis_DlSendNcm(VOS_UINT8 ucExRabId, ADS_PKT_TYPE_ENUM_UINT8 ucPktType
 
     ulHandle      = pstNdisEntity->ulHandle;
 
-    /*���MAC֡ͷ������ImmZc�ӿڽ�MAC֡ͷ����ImmZc��*/
-    if ((ADS_PKT_TYPE_IPV4 == ucPktType)     /*������ö��*/
+    /*填充MAC帧头，调用ImmZc接口将MAC帧头填入ImmZc中*/
+    if ((ADS_PKT_TYPE_IPV4 == ucPktType)     /*包类型枚举*/
            && (NDIS_ENTITY_IPV4 == (pstNdisEntity->ucRabType & NDIS_ENTITY_IPV4)))
     {
         pucAddData = pstNdisEntity->stIpV4Info.aucMacFrmHdr;
@@ -396,7 +396,7 @@ VOS_UINT32 Ndis_DlSendNcm(VOS_UINT8 ucExRabId, ADS_PKT_TYPE_ENUM_UINT8 ucPktType
 
         if (IP_NDSERVER_TE_ADDR_REACHABLE != enTeAddrState)
         {
-            /*��ucExRabId�����ݰ����ͷ���ImmZc��˽����������*/
+            /*将ucExRabId和数据包类型放入ImmZc的私有数据域中*/
             usTmpApp = (ucPktType & 0xFF);
             usApp    = ((VOS_UINT16)(usTmpApp << 8)) | (ucExRabId);
             IMM_ZcSetUserApp(pstImmZc, usApp);
@@ -405,7 +405,7 @@ VOS_UINT32 Ndis_DlSendNcm(VOS_UINT8 ucExRabId, ADS_PKT_TYPE_ENUM_UINT8 ucPktType
             return PS_SUCC;
         }
     }
-    else   /*���ݰ����������֧�����Ͳ�һ��*/
+    else   /*数据包类型与承载支持类型不一致*/
     {
         NDIS_ERROR_LOG2(NDIS_TASK_PID, "Ndis_DlSendNcm, Rab is different from PktType!", pstNdisEntity->ucRabType, ucPktType);
         NDIS_STAT_DL_PKT_DIFF_RAB_NUM(1);
@@ -419,7 +419,7 @@ VOS_UINT32 Ndis_DlSendNcm(VOS_UINT8 ucExRabId, ADS_PKT_TYPE_ENUM_UINT8 ucPktType
         return PS_FAIL;
     }
 
-    ulSize = IMM_ZcGetUsedLen(pstImmZc);         /*������̫��֡ͷ�ĳ���*/
+    ulSize = IMM_ZcGetUsedLen(pstImmZc);         /*加上以太网帧头的长度*/
 
     /*lint -e718*/
     if (0 != udi_write(ulHandle, pstImmZc, ulSize))
@@ -516,7 +516,7 @@ VOS_VOID Ndis_DHCPPkt_Proc(VOS_VOID *pRcvMsg)
         return;
     }
 
-    /*DHCP����*/
+    /*DHCP处理*/
     NDIS_STAT_UL_RECV_DHCPPKT(1);
     IPV4_DHCP_ProcDhcpPkt(pucData, ucExRabId);
 
@@ -546,7 +546,7 @@ VOS_UINT8 Ndis_FindRabIdByHandle(UDI_HANDLE uchandle, VOS_UINT16 usFrameType)
     {
          pstNdisEntity = &g_astNdisEntity[ulLoop];
          if ((uchandle == pstNdisEntity->ulHandle)
-              && (ucTmpRabType == (pstNdisEntity->ucRabType & ucTmpRabType)))   /*���ݰ��������������һ��*/
+              && (ucTmpRabType == (pstNdisEntity->ucRabType & ucTmpRabType)))   /*数据包类型与承载类型一致*/
          {
              return pstNdisEntity->ucRabId;
          }
@@ -580,7 +580,7 @@ VOS_VOID Ndis_UlNcmFrmProc(UDI_HANDLE ulhandle, IMM_ZC_STRU *pstImmZc)
     pstIpPacket = (ETHFRM_IPV4_PKT_STRU  *)(VOS_VOID*)pucData;
     usFrameType = pstIpPacket->usFrameType;
 
-    /*�����ȡ������չRabId*/
+    /*这里获取的是扩展RabId*/
     ucExRabId = Ndis_FindRabIdByHandle(ulhandle, usFrameType);
 
     if (PS_SUCC != Ndis_ChkRabIdValid(ucExRabId))
@@ -595,20 +595,20 @@ VOS_VOID Ndis_UlNcmFrmProc(UDI_HANDLE ulhandle, IMM_ZC_STRU *pstImmZc)
 
     NDIS_STAT_UL_RECV_USBPKT_SUCC(1);
 
-    /*ARP����*/
+    /*ARP处理*/
     if(ARP_PAYLOAD == usFrameType)
     {
-        /*ARP�����������������RabId��������RabId��ΪNdisʵ���������*/
+        /*ARP处理函数入参中增加RabId，后续以RabId作为Ndis实体遍历索引*/
         (VOS_VOID)Ndis_ProcArpMsg((ETH_ARP_FRAME_STRU*)(VOS_VOID*)pstIpPacket, ucExRabId);
 
-        /*������ARP�����Imm_ZcFree�ͷ�ImmZc*/
+        /*处理完ARP后调用Imm_ZcFree释放ImmZc*/
         /*lint -e522*/
         IMM_ZcFree(pstImmZc);
         /*lint +e522*/
 
         return;
     }
-     /*IPV6����������*/
+     /*IPV6超长包处理*/
     if (IPV6_PAYLOAD == usFrameType)
     {
         ulDataLen = IMM_ZcGetUsedLen(pstImmZc);
@@ -619,7 +619,7 @@ VOS_VOID Ndis_UlNcmFrmProc(UDI_HANDLE ulhandle, IMM_ZC_STRU *pstImmZc)
                                       ((VOS_UINT8*)pstIpPacket + ETH_MAC_HEADER_LEN),
                                       g_ulNvMtu);
 
-            /*����Imm_ZcFree�ͷ�ImmZc*/
+            /*调用Imm_ZcFree释放ImmZc*/
             /*lint -e522*/
             IMM_ZcFree(pstImmZc);
             /*lint +e522*/
@@ -633,7 +633,7 @@ VOS_VOID Ndis_UlNcmFrmProc(UDI_HANDLE ulhandle, IMM_ZC_STRU *pstImmZc)
        ulIpv4Flag = 1;
     }
 
-    /*��MAC����˺�ʣ���IP�����ͣ�ȥ��MAC֡ͷ��ݽ�ADS*/
+    /*经MAC层过滤后剩余的IP包发送，去掉MAC帧头后递交ADS*/
     if (VOS_OK != IMM_ZcRemoveMacHead(pstImmZc))
     {
         /*lint -e522*/
@@ -643,7 +643,7 @@ VOS_VOID Ndis_UlNcmFrmProc(UDI_HANDLE ulhandle, IMM_ZC_STRU *pstImmZc)
         return;
     }
 
-    /*���IPV4�����Ⱥ�ʵ��Skb���ȣ������һ�£����޸�Skb����Ϊʵ��IP������*/
+    /*检查IPV4包长度和实际Skb长度，如果不一致，则修改Skb长度为实际IP包长度*/
     if (1 == ulIpv4Flag)
     {
         pucData = IMM_ZcGetDataPtr(pstImmZc);
@@ -737,7 +737,7 @@ VOS_UINT32 Ndis_SendMacFrm(const VOS_UINT8  *pucBuf, VOS_UINT32 ulLen, VOS_UINT8
         return PS_FAIL;
     }
 
-    ucPdata = (VOS_UINT8*)IMM_ZcPut(pstImmZc, ulLen);             /*��yinweidongȷ�ϵ�*/
+    ucPdata = (VOS_UINT8*)IMM_ZcPut(pstImmZc, ulLen);             /*与yinweidong确认的*/
     if (VOS_NULL_PTR == ucPdata)
     {
         /*lint -e522*/
@@ -761,7 +761,7 @@ VOS_UINT32 Ndis_SendMacFrm(const VOS_UINT8  *pucBuf, VOS_UINT32 ulLen, VOS_UINT8
 
     ulHandle      = pstNdisEntity->ulHandle;
 
-    /*���ݷ���*/
+    /*数据发送*/
     lRtn = udi_write(ulHandle, pstImmZc, ulLen);
 
     if (0 != lRtn)
@@ -794,39 +794,39 @@ VOS_UINT32 Ndis_ProcReqArp(ETH_ARP_FRAME_STRU *pstReqArp, VOS_UINT8 ucRabId)
 
     pstArpV4Info  = &pstNdisEntity->stIpV4Info;
 
-    /*Ŀ���ַ�Ȳ������ص�ַ�� Ҳ�������ص�ַ��ͬһ������*/
+    /*目标地址既不是网关地址， 也不和网关地址在同一网段内*/
     if ( (ulTgtIpAddr != pstArpV4Info->unGwIpInfo.ulIpAddr)
         && ((ulTgtIpAddr & pstArpV4Info->unNmIpInfo.ulIpAddr) !=
-           (pstArpV4Info->unGwIpInfo.ulIpAddr & pstArpV4Info->unNmIpInfo.ulIpAddr)))  /*Ŀ���ַ�����ص�ַ��ͬһ����*/
+           (pstArpV4Info->unGwIpInfo.ulIpAddr & pstArpV4Info->unNmIpInfo.ulIpAddr)))  /*目标地址和网关地址在同一网段*/
     {
         NDIS_ERROR_LOG1(NDIS_TASK_PID, "Ndis_ProcReqArp,  TargetIpaddr Error!", ulTgtIpAddr);
         NDIS_STAT_PROC_ARP_FAIL(1);
         return PS_FAIL;
     }
 
-    if ((0 != pstReqArp->unSenderIP.ulIpAddr)     /*����MAC OS ���ARP����,��Sender IPΪ0*/
+    if ((0 != pstReqArp->unSenderIP.ulIpAddr)     /*兼容MAC OS 免费ARP类型,其Sender IP为0*/
            && (pstArpV4Info->unUeIpInfo.ulIpAddr != pstReqArp->unSenderIP.ulIpAddr))
     {
-        /*ԴUE IP���������ò������������������*/
+        /*源UE IP与网侧配置不符，这种情况不处理*/
         NDIS_ERROR_LOG1(NDIS_TASK_PID, "Ndis_ProcReqArp,  SenderIP Error!", pstReqArp->unSenderIP.ulIpAddr);
         NDIS_STAT_PROC_ARP_FAIL(1);
         return PS_SUCC;
     }
 
-    /*����PC MAC��ַ*/
+    /*更新PC MAC地址*/
     PS_MEM_CPY(pstArpV4Info->aucUeMacAddr,pstReqArp->aucSenderAddr,ETH_MAC_ADDR_LEN);
     PS_MEM_CPY(pstArpV4Info->aucMacFrmHdr,pstReqArp->aucSenderAddr,ETH_MAC_ADDR_LEN);
 
     pstArpV4Info->ulArpInitFlg  = PS_TRUE;
 
-    /*���ARP���ظ���Ӧ*/
+    /*免费ARP不回复响应*/
     if ((pstReqArp->unTargetIP.ulIpAddr == pstReqArp->unSenderIP.ulIpAddr)
         || (0 == pstReqArp->unSenderIP.ulIpAddr))
     {
         return PS_SUCC;
     }
 
-    /*������Ӧ*/
+    /*发送响应*/
     PS_MEM_CPY(pstReqArp->aucDstAddr,pstReqArp->aucSrcAddr,ETH_MAC_ADDR_LEN);
     PS_MEM_CPY(pstReqArp->aucTargetAddr,pstReqArp->aucSrcAddr,ETH_MAC_ADDR_LEN);
     pstReqArp->unTargetIP.ulIpAddr = pstReqArp->unSenderIP.ulIpAddr;
@@ -839,7 +839,7 @@ VOS_UINT32 Ndis_ProcReqArp(ETH_ARP_FRAME_STRU *pstReqArp, VOS_UINT8 ucRabId)
     /*opcode*/
     pstReqArp->usOpCode = ETH_ARP_RSP_TYPE;
 
-    /*����ARP Reply*/
+    /*发送ARP Reply*/
     NDIS_STAT_DL_SEND_ARP_REPLY(1);
     (VOS_VOID)Ndis_SendMacFrm((VOS_UINT8*)pstReqArp,sizeof(ETH_ARP_FRAME_STRU),ucRabId);
 
@@ -862,7 +862,7 @@ VOS_UINT32 Ndis_ProcReplyArp(const ETH_ARP_FRAME_STRU *pstRspArp, VOS_UINT8 ucRa
 
     if (ulTargetIP == pstNdisEntity->stIpV4Info.unGwIpInfo.ulIpAddr)
     {
-        /*����PC MAC��ַ*/
+        /*更新PC MAC地址*/
         PS_MEM_CPY(pstArpV4Info->aucUeMacAddr,pstRspArp->aucSenderAddr,ETH_MAC_ADDR_LEN);
         PS_MEM_CPY(pstArpV4Info->aucMacFrmHdr,pstRspArp->aucSenderAddr,ETH_MAC_ADDR_LEN);
         pstArpV4Info->ulArpInitFlg  = PS_TRUE;
@@ -894,7 +894,7 @@ VOS_VOID  Ndis_Ipv4PdnInfoCfg(const AT_NDIS_IPV4_PDN_INFO_STRU *pstNasNdisInfo,
                pstNasNdisInfo->stSubnetMask.aucIpV4Addr,
                IPV4_ADDR_LEN);
 
-    /*ʹ��������DNS*/
+    /*使能则配置DNS*/
     if (PS_TRUE == pstNasNdisInfo->bitOpDnsPrim)
     {
         PS_MEM_CPY(pstIpV4Info->unPrimDnsAddr.aucIPAddr,
@@ -906,7 +906,7 @@ VOS_VOID  Ndis_Ipv4PdnInfoCfg(const AT_NDIS_IPV4_PDN_INFO_STRU *pstNasNdisInfo,
         pstIpV4Info->unPrimDnsAddr.ulIpAddr = 0;
     }
 
-    /*ʹ�������ø�DNS*/
+    /*使能则配置辅DNS*/
     if (PS_TRUE == pstNasNdisInfo->bitOpDnsSec)
     {
         PS_MEM_CPY(pstIpV4Info->unSecDnsAddr.aucIPAddr,
@@ -918,7 +918,7 @@ VOS_VOID  Ndis_Ipv4PdnInfoCfg(const AT_NDIS_IPV4_PDN_INFO_STRU *pstNasNdisInfo,
         pstIpV4Info->unSecDnsAddr.ulIpAddr = 0;
     }
 
-    /*ʹ����������WINS*/
+    /*使能则配置主WINS*/
     if (PS_TRUE == pstNasNdisInfo->bitOpWinsPrim)
     {
         PS_MEM_CPY(pstIpV4Info->unPrimWinsAddr.aucIPAddr,
@@ -930,7 +930,7 @@ VOS_VOID  Ndis_Ipv4PdnInfoCfg(const AT_NDIS_IPV4_PDN_INFO_STRU *pstNasNdisInfo,
         pstIpV4Info->unPrimWinsAddr.ulIpAddr = 0;
     }
 
-    /*ʹ�������ø�WINS*/
+    /*使能则配置辅WINS*/
     if (PS_TRUE == pstNasNdisInfo->bitOpWinsSec)
     {
         PS_MEM_CPY(pstIpV4Info->unSecWinsAddr.aucIPAddr,
@@ -942,7 +942,7 @@ VOS_VOID  Ndis_Ipv4PdnInfoCfg(const AT_NDIS_IPV4_PDN_INFO_STRU *pstNasNdisInfo,
         pstIpV4Info->unSecWinsAddr.ulIpAddr = 0;
     }
 
-    /*PCSCF��ʱ������,����������*/
+    /*PCSCF暂时不操作,待需求描述*/
 
     pstIpV4Info->ulIpAssignStatus = IPV4_DHCP_ADDR_STATUS_FREE;
 
@@ -954,13 +954,13 @@ VOS_UINT32 Ndis_StartARPTimer(NDIS_ENTITY_STRU *pstNdisEntity)
     NDIS_ARP_PERIOD_TIMER_STRU     *pstArpPeriodTimer;
 
     #if (VOS_OS_VER != VOS_WIN32)
-    /*���ָ���ж�*/
+    /*入参指针判断*/
     if (VOS_NULL_PTR == pstNdisEntity)
     {
         return PS_FAIL;
     }
 
-    /*����Ƿ���Ҫ����ARP��ʱ��*/
+    /*检查是否需要启动ARP定时器*/
     if ((NDIS_ENTITY_IPV4 != (pstNdisEntity->ucRabType & NDIS_ENTITY_IPV4))
             || (PS_TRUE == pstNdisEntity->stIpV4Info.ulArpInitFlg))
     {
@@ -969,7 +969,7 @@ VOS_UINT32 Ndis_StartARPTimer(NDIS_ENTITY_STRU *pstNdisEntity)
 
     pstArpPeriodTimer = &(pstNdisEntity->stIpV4Info.stArpPeriodTimer);
 
-    /*����������У���ͣ��*/
+    /*如果还在运行，则停掉*/
     if (VOS_NULL_PTR != pstArpPeriodTimer->hTm)
     {
         Ndis_StopARPTimer(pstArpPeriodTimer);
@@ -1008,7 +1008,7 @@ VOS_UINT32 Ndis_SndMsgToAt(const VOS_UINT8 *pucBuf,VOS_UINT16 usMsgLen,VOS_UINT3
     AT_FW_CMD_BINARY_MSG_STRU    *pstAtCnf    = VOS_NULL_PTR;
     MsgBlock                     *pstMsgBlock = VOS_NULL_PTR;
 
-    /*��Ϣ���ʵ�ʴ���һ�㣬��������*/
+    /*消息体比实际大了一点，处理方便*/
     ulAllocSize = sizeof(MsgBlock) + sizeof(AT_FW_MSG_STRU)
                   + sizeof(AT_FW_CMD_BINARY_MSG_STRU) + usMsgLen;
 
@@ -1026,7 +1026,7 @@ VOS_UINT32 Ndis_SndMsgToAt(const VOS_UINT8 *pucBuf,VOS_UINT16 usMsgLen,VOS_UINT3
     /*lint +e826*/
     pstAtCnf->usMsgSize  = usMsgLen;
     pstAtCnf->ulMsgId    = ulMsgId;
-    pstAtCnf->ucClientId = EN_AT_FW_CLIENT_ID_NDIS;   /*��MSP����ͷ�ļ�*/
+    pstAtCnf->ucClientId = EN_AT_FW_CLIENT_ID_NDIS;   /*待MSP完整头文件*/
     pstAtCnf->ucSysMode  = AT_FW_SYS_MODE_NULL;
 
     pstMsgBlock->ulSenderPid   = NDIS_TASK_PID;
@@ -1036,7 +1036,7 @@ VOS_UINT32 Ndis_SndMsgToAt(const VOS_UINT8 *pucBuf,VOS_UINT16 usMsgLen,VOS_UINT3
 
     if(VOS_OK != PS_SEND_MSG(NDIS_TASK_PID, pstMsgBlock))
     {
-        /*�쳣��ӡ*/
+        /*异常打印*/
         return PS_FAIL;
     }
 
@@ -1068,11 +1068,11 @@ NDIS_ENTITY_STRU* NDIS_GetEntityByRabId(VOS_UINT8 ucExRabId)
 {
     VOS_UINT16 i = 0;
 
-    /* ��ѯ�Ƿ��Ѵ�����ӦEntity */
+    /* 查询是否已存在相应Entity */
     do{
         if((PS_TRUE == g_astNdisEntity[i].enUsed) && (ucExRabId == g_astNdisEntity[i].ucRabId))
         {
-            /*�ҵ���Ӧʵ��*/
+            /*找到相应实体*/
             return &g_astNdisEntity[i];
         }
 
@@ -1086,11 +1086,11 @@ NDIS_ENTITY_STRU* NDIS_AllocEntity(VOS_VOID)
 {
     VOS_UINT16 i = 0;
 
-    /* ���ص�һ�����е�ʵ��*/
+    /* 返回第一个空闲的实体*/
     do{
         if(PS_FALSE == g_astNdisEntity[i].enUsed)
         {
-            /*�ҵ�����ʵ��*/
+            /*找到空闲实体*/
             return &g_astNdisEntity[i];
         }
 
@@ -1108,7 +1108,7 @@ VOS_UINT32 Ndis_CheckIpv4PdnInfo(const AT_NDIS_IPV4_PDN_INFO_STRU *pstIpv4PdnInf
         return PS_FAIL;
     }
 
-    /*PDN��ַ�����ص�ַ���Ϊȫ0����Ҳʧ��*/
+    /*PDN地址和网关地址如果为全0，则也失败*/
     if (0 == VOS_MemCmp(pstIpv4PdnInfo->stPDNAddrInfo.aucIpV4Addr, g_aucInvalidAddr, IPV4_ADDR_LEN))
     {
         NDIS_ERROR_LOG(NDIS_TASK_PID, "Ndis_CheckIpv4PdnInfo,  stPDNAddrInfo all zero!");
@@ -1125,25 +1125,25 @@ VOS_UINT32 Ndis_CheckIpv4PdnInfo(const AT_NDIS_IPV4_PDN_INFO_STRU *pstIpv4PdnInf
 }
 
 /*****************************************************************************
- �� �� ��  : Ndis_PdnCheckParaValid
- ��������  : ���������ò����Ƿ�Ϸ�
- �������  : ��
- �������  : ��
- �� �� ֵ  :
- ���ú���  :
- ��������  :
+ 函 数 名  : Ndis_PdnCheckParaValid
+ 功能描述  : 检查参数配置参数是否合法
+ 输入参数  : 无
+ 输出参数  : 无
+ 返 回 值  :
+ 调用函数  :
+ 被调函数  :
 
- �޸���ʷ      :
-  1.��    ��   : 2011��12��23��
-    ��    ��   : LPDCP_CIPHERINFO_FOR_ACC
-    �޸�����   : �����ɺ���
+ 修改历史      :
+  1.日    期   : 2011年12月23日
+    作    者   : LPDCP_CIPHERINFO_FOR_ACC
+    修改内容   : 新生成函数
 
 *****************************************************************************/
 VOS_UINT32  Ndis_PdnV4PdnCfg( const AT_NDIS_PDNINFO_CFG_REQ_STRU *pstNasNdisInfo,
                                      NDIS_ENTITY_STRU  *pstNdisEntity)
 {
-    /*IPV4��ַ���*/
-    if (PS_FALSE == pstNasNdisInfo->bitOpIpv4PdnInfo)  /*ԭ��ָʾIPV4��Ϣ��Ч */
+    /*IPV4地址检查*/
+    if (PS_FALSE == pstNasNdisInfo->bitOpIpv4PdnInfo)  /*原语指示IPV4信息无效 */
     {
         NDIS_INFO_LOG(NDIS_TASK_PID, "Ndis_PdnV4PdnCfg,  bitOpIpv4PdnInfo is false!");
         return PS_FAIL;
@@ -1157,7 +1157,7 @@ VOS_UINT32  Ndis_PdnV4PdnCfg( const AT_NDIS_PDNINFO_CFG_REQ_STRU *pstNasNdisInfo
 
     Ndis_Ipv4PdnInfoCfg(&(pstNasNdisInfo->stIpv4PdnInfo),pstNdisEntity);
 
-    /*����NDISʵ���������*/
+    /*更新NDIS实体承载属性*/
     pstNdisEntity->ucRabType |= NDIS_ENTITY_IPV4;
 
     return PS_SUCC;
@@ -1167,8 +1167,8 @@ VOS_UINT32  Ndis_PdnV6PdnCfg( AT_NDIS_PDNINFO_CFG_REQ_STRU *pstNasNdisInfo,
 {
     VOS_UINT8                       ucExRabId;
 
-    /*IPV6��ַ���*/
-    if (PS_FALSE == pstNasNdisInfo->bitOpIpv6PdnInfo)  /*ԭ��ָʾIPV6��Ϣ��Ч*/
+    /*IPV6地址检查*/
+    if (PS_FALSE == pstNasNdisInfo->bitOpIpv6PdnInfo)  /*原语指示IPV6信息无效*/
     {
         NDIS_INFO_LOG(NDIS_TASK_PID, "Ndis_PdnV6PdnCfg,  bitOpIpv6PdnInfo is false!");
         return PS_FAIL;
@@ -1182,10 +1182,10 @@ VOS_UINT32  Ndis_PdnV6PdnCfg( AT_NDIS_PDNINFO_CFG_REQ_STRU *pstNasNdisInfo,
         return PS_FAIL;
     }
 
-    /*��ND SERVER API  ����IPV6��ַ��Ϣ��ND SERVER*/
+    /*调ND SERVER API  配置IPV6地址信息给ND SERVER*/
     NdSer_Ipv6PdnInfoCfg(ucExRabId, &(pstNasNdisInfo->stIpv6PdnInfo));
 
-    /*����NDISʵ������*/
+    /*更新NDIS实体属性*/
     pstNdisEntity->ucRabType |= NDIS_ENTITY_IPV6;
 
     return PS_SUCC;
@@ -1196,27 +1196,27 @@ VOS_UINT8 Ndis_AtCnfResultProc(const AT_NDIS_PDNINFO_CFG_REQ_STRU *pstNasNdisInf
 {
     VOS_UINT8  enResult;
 
-    /*�������ý����AT��������CNFԭ��*/
+    /*根据配置结果向AT返回配置CNF原语*/
     if ((PS_TRUE == pstNasNdisInfo->bitOpIpv4PdnInfo) &&(PS_TRUE == pstNasNdisInfo->bitOpIpv6PdnInfo))
     {
-        if ((PS_SUCC == ulV4Ret) &&(PS_SUCC == ulV6Ret))        /*IPV4��IPV6���ö��ɹ�*/
+        if ((PS_SUCC == ulV4Ret) &&(PS_SUCC == ulV6Ret))        /*IPV4和IPV6配置都成功*/
         {
             enResult = AT_NDIS_PDNCFG_CNF_SUCC;
         }
-        else if (PS_SUCC == ulV4Ret)                             /*ֻ��IPV4���óɹ�*/
+        else if (PS_SUCC == ulV4Ret)                             /*只有IPV4配置成功*/
         {
             enResult = AT_NDIS_PDNCFG_CNF_IPV4ONLY_SUCC;
         }
-        else                                                     /*ֻ��IPV6���óɹ�*/
+        else                                                     /*只有IPV6配置成功*/
         {
             enResult = AT_NDIS_PDNCFG_CNF_IPV6ONLY_SUCC;
         }
     }
-    else if (PS_TRUE == pstNasNdisInfo->bitOpIpv4PdnInfo)  /*ֻ������IPV4*/
+    else if (PS_TRUE == pstNasNdisInfo->bitOpIpv4PdnInfo)  /*只配置了IPV4*/
     {
         enResult = AT_NDIS_PDNCFG_CNF_IPV4ONLY_SUCC;
     }
-    else                                                   /*ֻ������IPV6*/
+    else                                                   /*只配置了IPV6*/
     {
         enResult = AT_NDIS_PDNCFG_CNF_IPV6ONLY_SUCC;
     }
@@ -1238,7 +1238,7 @@ VOS_VOID Ndis_PdnInfoCfgProc(const AT_FW_CMD_BINARY_MSG_STRU *pstAtReq)
 
     NDIS_INFO_LOG(NDIS_TASK_PID, "Ndis_PdnInfoCfgProc entered!");
 
-    /*������չ��RabId*/
+    /*生成扩展的RabId*/
     ucExRabId  = NDIS_FORM_EXBID(pstNasNdisInfo->enModemId, pstNasNdisInfo->ucRabId);
     ulHandle = pstNasNdisInfo->ulHandle;
 
@@ -1246,7 +1246,7 @@ VOS_VOID Ndis_PdnInfoCfgProc(const AT_FW_CMD_BINARY_MSG_STRU *pstAtReq)
     stCfgCnf.ucRabId   = pstNasNdisInfo->ucRabId;
     stCfgCnf.enModemId = pstNasNdisInfo->enModemId;
 
-    /*ExRabId������Χ��Ч�Լ�顣�����ʧ�ܣ���ֱ����AT�ظ�����ʧ��*/
+    /*ExRabId参数范围有效性检查。若检查失败，则直接向AT回复配置失败*/
     if (PS_SUCC != Ndis_ChkRabIdValid(ucExRabId))
     {
         (VOS_VOID)Ndis_SndMsgToAt((VOS_UINT8*)&stCfgCnf,sizeof(AT_NDIS_PDNINFO_CFG_CNF_STRU),ID_AT_NDIS_PDNINFO_CFG_CNF);
@@ -1254,21 +1254,21 @@ VOS_VOID Ndis_PdnInfoCfgProc(const AT_FW_CMD_BINARY_MSG_STRU *pstAtReq)
         return;
     }
 
-    /*�������ExRabId���Ҳ���NDISʵ�壬�����һ�����е�NDISʵ��*/
+    /*如果根据ExRabId查找不到NDIS实体，则分配一个空闲的NDIS实体*/
     pstNdisEntity = NDIS_GetEntityByRabId(ucExRabId);
     if(VOS_NULL_PTR == pstNdisEntity)
     {
-        /*������䲻�����е�NDISʵ�壬�򷵻�*/
+        /*如果分配不到空闲的NDIS实体，则返回*/
         pstNdisEntity = NDIS_AllocEntity();
         if(VOS_NULL_PTR == pstNdisEntity)
         {
-            /*��AT�ظ�PDN����ʧ��*/
+            /*向AT回复PDN配置失败*/
             (VOS_VOID)Ndis_SndMsgToAt((VOS_UINT8*)&stCfgCnf,sizeof(AT_NDIS_PDNINFO_CFG_CNF_STRU),ID_AT_NDIS_PDNINFO_CFG_CNF);
             NDIS_ERROR_LOG(NDIS_TASK_PID, "Ndis_PdnInfoCfgProc,  NDIS_AllocEntity failed!");
             return;
         }
 
-        /*�ó���֮ǰû�ж�Ӧ��NDISʵ�壬������Чֵ*/
+        /*该承载之前没有对应的NDIS实体，故填无效值*/
         pstNdisEntity->ucRabType= NDIS_RAB_NULL;
         pstNdisEntity->ulHandle = NDIS_INVALID_HANDLE;
     }
@@ -1276,36 +1276,36 @@ VOS_VOID Ndis_PdnInfoCfgProc(const AT_FW_CMD_BINARY_MSG_STRU *pstAtReq)
     ulV4Ret = Ndis_PdnV4PdnCfg(pstNasNdisInfo,pstNdisEntity);
     ulV6Ret = Ndis_PdnV6PdnCfg(pstNasNdisInfo,pstNdisEntity);
 
-    if ((PS_FAIL == ulV6Ret) && (PS_FAIL == ulV4Ret))   /*���IPV4��IPV6����ָʾ��Ϣ����Ч��Ҳ��Ϊ����ʧ��*/
+    if ((PS_FAIL == ulV6Ret) && (PS_FAIL == ulV4Ret))   /*如果IPV4和IPV6配置指示信息都无效，也认为配置失败*/
     {
-        /*��AT�ظ�PDN����ʧ��*/
+        /*向AT回复PDN配置失败*/
         (VOS_VOID)Ndis_SndMsgToAt((VOS_UINT8*)&stCfgCnf,sizeof(AT_NDIS_PDNINFO_CFG_CNF_STRU),ID_AT_NDIS_PDNINFO_CFG_CNF);
         NDIS_ERROR_LOG(NDIS_TASK_PID, "Ndis_PdnInfoCfgProc,  Ipv4 and Ipv6 Cfg all fail!");
         return;
     }
 
-    pstNdisEntity->enUsed = PS_TRUE;      /*���ø�NDISʵ��Ϊʹ��״̬*/
-    pstNdisEntity->ucRabId  = ucExRabId;  /*����չRabId�浽��ӦNDISʵ����*/
-    pstNdisEntity->ulHandle = ulHandle;   /*����Handle��NDISʵ����*/
+    pstNdisEntity->enUsed = PS_TRUE;      /*设置该NDIS实体为使用状态*/
+    pstNdisEntity->ucRabId  = ucExRabId;  /*将扩展RabId存到对应NDIS实体中*/
+    pstNdisEntity->ulHandle = ulHandle;   /*保存Handle到NDIS实体中*/
 
     stCfgCnf.enResult  = Ndis_AtCnfResultProc(pstNasNdisInfo, ulV4Ret, ulV6Ret);
     stCfgCnf.ucRabType = pstNdisEntity->ucRabType;
 
-    /*�������ڷ���ARP�Ķ�ʱ��*/
+    /*启动周期发送ARP的定时器*/
     if (PS_SUCC != Ndis_StartARPTimer(pstNdisEntity))
     {
         NDIS_ERROR_LOG(NDIS_TASK_PID, "Ndis_ConfigArpInfo StartTmr Failed!");
         return;
     }
 
-    /*��ADSע�����лص�:ֻע��һ��*/
+    /*向ADS注册下行回调:只注册一次*/
     if (VOS_OK != (ADS_DL_RegDlDataCallback(ucExRabId, Ndis_DlAdsDataRcv)))
     {
         NDIS_ERROR_LOG(NDIS_TASK_PID, "Ndis_PdnInfoCfgProc, ADS_DL_RegDlDataCallback fail!");
         return;
     }
 
-    /*�����ע���������ݽ��ջص�*/
+    /*向底软注册上行数据接收回调*/
     /*lint -e718*/
     if (VOS_OK != DRV_UDI_IOCTL (pstNdisEntity->ulHandle, NCM_IOCTL_REG_UPLINK_RX_FUNC, AppNdis_UsbReadCb))
     {
@@ -1356,22 +1356,22 @@ VOS_VOID Ndis_PdnRel(const AT_FW_CMD_BINARY_MSG_STRU *pstAtReq)
 
     stRelCnf.ucRabType = pstNdisEntity->ucRabType;
 
-    /*���������ARP��ʱ���������У���ͣ��*/
+    /*如果周期性ARP定时器还在运行，则停掉*/
     Ndis_StopARPTimer(pstArpPeriodTimer);
 
-    /*����ND SERVER API �ͷŸ�RabId��ӦND SERVERʵ��*/
+    /*调用ND SERVER API 释放该RabId对应ND SERVER实体*/
     if (NDIS_ENTITY_IPV6 == (pstNdisEntity->ucRabType & NDIS_ENTITY_IPV6))
     {
         NdSer_Ipv6PdnRel(ucExRabId);
     }
 
-    /*���¸�RabId��ӦNDISʵ��Ϊ��*/
+    /*更新该RabId对应NDIS实体为空*/
     pstNdisEntity->ucRabType = NDIS_RAB_NULL;
     pstNdisEntity->ucRabId   = NDIS_INVALID_RABID;
     pstNdisEntity->ulHandle  = NDIS_INVALID_HANDLE;
     pstNdisEntity->enUsed    = PS_FALSE;
 
-    /*NDIS��AT�ظ��ͷ�ȷ��ԭ��*/
+    /*NDIS向AT回复释放确认原语*/
     stRelCnf.enResult  = AT_NDIS_SUCC;
     (VOS_VOID)Ndis_SndMsgToAt((VOS_UINT8*)&stRelCnf,sizeof(AT_NDIS_PDNINFO_REL_CNF_STRU),ID_AT_NDIS_PDNINFO_REL_CNF);
 
@@ -1384,28 +1384,28 @@ VOS_UINT32  Ndis_SendRequestArp(NDIS_IPV4_INFO_STRU  *pstArpInfoItem, VOS_UINT8 
 {
     ETH_ARP_FRAME_STRU  stArpReq;
 
-    /*֮ǰһ�η��͵�Req��δ�ܵ�Reply����*/
+    /*之前一次发送的Req尚未受到Reply反馈*/
     if (PS_FALSE == pstArpInfoItem->ulArpRepFlg)
     {
         NDIS_STAT_ARPREPLY_NOTRECV(1);
-        /*��һ�θ澯��־*/
+        /*做一次告警日志*/
     }
 
     PS_MEM_SET((VOS_UINT8*)&stArpReq, 0, sizeof(ETH_ARP_FRAME_STRU));
 
-    /*��ARP Request*/
+    /*组ARP Request*/
     PS_MEM_CPY(stArpReq.aucDstAddr,g_aucBroadCastAddr,ETH_MAC_ADDR_LEN);
     PS_MEM_CPY(stArpReq.aucSrcAddr,pstArpInfoItem->aucMacFrmHdr+ETH_MAC_ADDR_LEN, ETH_MAC_ADDR_LEN);
     stArpReq.usFrameType = ARP_PAYLOAD;
 
-    /*����Ĺ̶�����*/
+    /*请求的固定部分*/
     PS_MEM_CPY(((VOS_UINT8*)&stArpReq + ETH_MAC_HEADER_LEN),g_aucArpReqFixVal, ETH_ARP_FIXED_MSG_LEN);
 
-    /*Payload���ֵ�MAC��ַ����*/
+    /*Payload部分的MAC地址设置*/
     PS_MEM_SET(stArpReq.aucTargetAddr,0,ETH_MAC_ADDR_LEN);
     PS_MEM_CPY(stArpReq.aucSenderAddr,pstArpInfoItem->aucMacFrmHdr+ETH_MAC_ADDR_LEN,ETH_MAC_ADDR_LEN);
 
-    /*����IP*/
+    /*单板IP*/
     stArpReq.unSenderIP.ulIpAddr = pstArpInfoItem->unGwIpInfo.ulIpAddr;
     stArpReq.unTargetIP.ulIpAddr = pstArpInfoItem->unUeIpInfo.ulIpAddr;
 
@@ -1464,7 +1464,7 @@ VOS_VOID Ndis_AtMsgProc( const MsgBlock *pMsgBlock )
 
     switch (ulMsgId)
     {
-        case ID_AT_NDIS_PDNINFO_CFG_REQ :/*������Ϣ�Ĳ�ͬ����AT��ͬ������*/
+        case ID_AT_NDIS_PDNINFO_CFG_REQ :/*根据消息的不同处理AT不同的请求*/
             Ndis_PdnInfoCfgProc(pstAtMsg);
             break;
 
@@ -1500,13 +1500,13 @@ VOS_VOID Ndis_AdsMsgProc(const MsgBlock* pMsgBlock )
 
     switch (pstAdsNdisMsg->enIpPacketType)
     {
-        case ADS_NDIS_IP_PACKET_TYPE_DHCPV4:                                     /*DHCP��*/
+        case ADS_NDIS_IP_PACKET_TYPE_DHCPV4:                                     /*DHCP包*/
              Ndis_DHCPPkt_Proc(pstAdsNdisMsg);
              break;
-        case ADS_NDIS_IP_PACKET_TYPE_DHCPV6:                                     /*DHCPV6��*/
+        case ADS_NDIS_IP_PACKET_TYPE_DHCPV6:                                     /*DHCPV6包*/
              NdSer_DhcpV6PktProc(pstAdsNdisMsg);
              break;
-        case ADS_NDIS_IP_PACKET_TYPE_ICMPV6:                                     /*ND��ECHO REQUEST��*/
+        case ADS_NDIS_IP_PACKET_TYPE_ICMPV6:                                     /*ND和ECHO REQUEST包*/
              NdSer_NdAndEchoPktProc(pstAdsNdisMsg);
              break;
 
@@ -1515,7 +1515,7 @@ VOS_VOID Ndis_AdsMsgProc(const MsgBlock* pMsgBlock )
              break;
     }
 
-     /*������ɺ��ͷ�ImmZc*/
+     /*处理完成后释放ImmZc*/
      /*lint -e522*/
      IMM_ZcFree(pstAdsNdisMsg->pstSkBuff);
      /*lint +e522*/
@@ -1544,7 +1544,7 @@ VOS_VOID APP_Ndis_PidMsgProc(const MsgBlock* pMsgBlock )
             Ndis_AtMsgProc(pMsgBlock);
             break;
 
-        case ACPU_PID_ADS_UL:          /*ADSͨ��OSA��Ϣ����DHCP��ND SERVER����NDISģ��*/
+        case ACPU_PID_ADS_UL:          /*ADS通过OSA消息发送DHCP和ND SERVER包给NDIS模块*/
             Ndis_AdsMsgProc(pMsgBlock);
             break;
 
@@ -1566,7 +1566,7 @@ VOS_UINT32 APP_NDIS_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
     {
         case   VOS_IP_LOAD_CONFIG:
 
-            /*ע��NDIS PID*/
+            /*注册NDIS PID*/
             ulResult = VOS_RegisterPIDInfo(NDIS_TASK_PID,
                                            (Init_Fun_Type)APP_Ndis_Pid_InitFunc,
                                            (Msg_Fun_Type)APP_Ndis_PidMsgProc);
@@ -1578,7 +1578,7 @@ VOS_UINT32 APP_NDIS_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
 
             if(BOARD_TYPE_LTE_ONLY != BSP_OM_GetBoardType())
             {
-                /*ע��PPP PID*/
+                /*注册PPP PID*/
                 ulResult = VOS_RegisterPIDInfo(PS_PID_APP_PPP,
                                         (Init_Fun_Type)PppInit,
                                         (Msg_Fun_Type)PppMsgProc);
@@ -1589,7 +1589,7 @@ VOS_UINT32 APP_NDIS_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
                 }
             }
 
-            /*ע��ND SERVER PID*/
+            /*注册ND SERVER PID*/
             ulResult = VOS_RegisterPIDInfo(NDIS_NDSERVER_PID,
                                                        (Init_Fun_Type)APP_NdServer_Pid_InitFunc,
                                                        (Msg_Fun_Type)APP_NdServer_PidMsgProc);
@@ -1599,7 +1599,7 @@ VOS_UINT32 APP_NDIS_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
                 return VOS_ERR;
             }
 
-            /*ע��DIPC PID*/
+            /*注册DIPC PID*/
             ulResult = VOS_RegisterPIDInfo(PS_PID_APP_DIPC,
                         (Init_Fun_Type)DIPC_Pid_InitFunc,
                         (Msg_Fun_Type)DIPC_AtMsgProc);
@@ -1610,7 +1610,7 @@ VOS_UINT32 APP_NDIS_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
                 return VOS_ERR;
             }
 
-            /*ע��MUX PID*/
+            /*注册MUX PID*/
             ulResult = VOS_RegisterPIDInfo(PS_PID_APP_MUX,
                         (Init_Fun_Type)MUX_Pid_InitFunc,
                         (Msg_Fun_Type)MUX_AtMsgProc);
@@ -1658,7 +1658,7 @@ VOS_UINT32 APP_NDIS_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
  Return         : None
 
  History:
-      1. z0103912   2010-05-20  ����
+      1. z0103912   2010-05-20  初稿
 
 *****************************************************************************/
 VOS_UINT32 Ndis_MsgHook (const VOS_UINT8 *pucData,VOS_UINT32 ulLength,
@@ -1683,7 +1683,7 @@ VOS_UINT32 Ndis_MsgHook (const VOS_UINT8 *pucData,VOS_UINT32 ulLength,
     stDiagLayerMsg.ulDataSize = ulLength;
     stDiagLayerMsg.pData = (void*)pstTmpMsg;
 
-    /*ʹ��app�ĽӿڰѲ����Ϣ���ͳ�ȥ*/
+    /*使用app的接口把层间消息发送出去*/
     ulReturnCode = DIAG_ReportLayerMessageLog(&stDiagLayerMsg);
     if (VOS_OK != ulReturnCode)
     {
@@ -1710,30 +1710,30 @@ VOS_VOID GU_NDIS_OM_SWITCH_OFF(VOS_VOID)
     return;
 }
 
-/*======================================ͳ����Ϣ==============================*/
+/*======================================统计信息==============================*/
 
 VOS_VOID Ndis_ShowStat(VOS_VOID)
 {
-    vos_printf("���ж��������ݰ�����:                %d\n", g_stNdisStatStru.ulDicardUsbFrmNum);
-    vos_printf("���гɹ��յ�USB�İ�����:             %d\n", g_stNdisStatStru.ulRecvUsbPktSuccNum);
-    vos_printf("���з��͵�ADS�ɹ��İ�����:           %d\n", g_stNdisStatStru.ulSendPktToAdsSucNum);
-    vos_printf("���ж�����ADSҵ�����ݰ�����:         %d\n", g_stNdisStatStru.ulDicardAdsPktNum);
-    vos_printf("���гɹ��յ�ADSҵ�����ݰ�����:       %d\n", g_stNdisStatStru.ulRecvAdsPktSuccNum);
-    vos_printf("���л�ȡIPV6 MAC֡ͷʧ�ܸ���:        %d\n", g_stNdisStatStru.ulGetIpv6MacFailNum);
-    vos_printf("�������ݰ����ͺͳ������Ͳ�һ�¸���:  %d\n", g_stNdisStatStru.ulDlPktDiffRabNum);
-    vos_printf("��������MACͷʧ�ܸ���:               %d\n", g_stNdisStatStru.ulAddMacHdrFailNum);
-    vos_printf("���з���ҵ�����ݰ�ʧ�ܸ���:          %d\n", g_stNdisStatStru.ulDlSendPktFailNum);
-    vos_printf("���з���ҵ�����ݰ��ɹ�����:          %d\n", g_stNdisStatStru.ulDlSendPktSuccNum);
+    vos_printf("上行丢弃的数据包个数:                %d\n", g_stNdisStatStru.ulDicardUsbFrmNum);
+    vos_printf("上行成功收到USB的包个数:             %d\n", g_stNdisStatStru.ulRecvUsbPktSuccNum);
+    vos_printf("上行发送到ADS成功的包个数:           %d\n", g_stNdisStatStru.ulSendPktToAdsSucNum);
+    vos_printf("下行丢弃的ADS业务数据包个数:         %d\n", g_stNdisStatStru.ulDicardAdsPktNum);
+    vos_printf("下行成功收到ADS业务数据包个数:       %d\n", g_stNdisStatStru.ulRecvAdsPktSuccNum);
+    vos_printf("下行获取IPV6 MAC帧头失败个数:        %d\n", g_stNdisStatStru.ulGetIpv6MacFailNum);
+    vos_printf("下行数据包类型和承载类型不一致个数:  %d\n", g_stNdisStatStru.ulDlPktDiffRabNum);
+    vos_printf("下行添加MAC头失败个数:               %d\n", g_stNdisStatStru.ulAddMacHdrFailNum);
+    vos_printf("下行发送业务数据包失败个数:          %d\n", g_stNdisStatStru.ulDlSendPktFailNum);
+    vos_printf("下行发送业务数据包成功个数:          %d\n", g_stNdisStatStru.ulDlSendPktSuccNum);
 
-    vos_printf("\n�յ�DHCP������:                      %d\n", g_stNdisStatStru.ulRecvDhcpPktNum);
-    vos_printf("�յ�ARP Request������:               %d\n", g_stNdisStatStru.ulRecvArpReq);
-    vos_printf("�յ�ARP Reply  ������:               %d\n", g_stNdisStatStru.ulRecvArpReply);
-    vos_printf("�������� ARP   ������:               %d\n", g_stNdisStatStru.ulProcArpError);
-    vos_printf("����ARP Request���ɹ�����:           %d\n", g_stNdisStatStru.ulSendArpReqSucc);
-    vos_printf("����ARP Request��ʧ�ܸ���:           %d\n", g_stNdisStatStru.ulSendArpReqFail);
-    vos_printf("����ARP Reqδ�յ�ARP Reply����:      %d\n", g_stNdisStatStru.ulArpReplyNotRecv);
-    vos_printf("����ARP Reply�� ����:                %d\n", g_stNdisStatStru.ulSendArpReply);
-    vos_printf("����ARP��DHCP��ND��ʧ�ܸ���:         %d\n", g_stNdisStatStru.ulSendArpDhcpNDFailNum);
+    vos_printf("\n收到DHCP包个数:                      %d\n", g_stNdisStatStru.ulRecvDhcpPktNum);
+    vos_printf("收到ARP Request包个数:               %d\n", g_stNdisStatStru.ulRecvArpReq);
+    vos_printf("收到ARP Reply  包个数:               %d\n", g_stNdisStatStru.ulRecvArpReply);
+    vos_printf("处理错误 ARP   包个数:               %d\n", g_stNdisStatStru.ulProcArpError);
+    vos_printf("发送ARP Request包成功个数:           %d\n", g_stNdisStatStru.ulSendArpReqSucc);
+    vos_printf("发送ARP Request包失败个数:           %d\n", g_stNdisStatStru.ulSendArpReqFail);
+    vos_printf("发送ARP Req未收到ARP Reply个数:      %d\n", g_stNdisStatStru.ulArpReplyNotRecv);
+    vos_printf("发送ARP Reply包 个数:                %d\n", g_stNdisStatStru.ulSendArpReply);
+    vos_printf("发送ARP或DHCP或ND包失败个数:         %d\n", g_stNdisStatStru.ulSendArpDhcpNDFailNum);
 
     return;
 }
@@ -1743,11 +1743,11 @@ VOS_VOID Ndis_PrintIpv4Addr(const VOS_UINT8 *pIpaddr)
 {
     if ((pIpaddr[0] == 0) && (pIpaddr[1] == 0) && (pIpaddr[2] == 0) && (pIpaddr[3] == 0) )
     {
-         vos_printf("                      ��ַδ����  %d\n");
+         vos_printf("                      地址未配置  %d\n");
          return;
     }
 
-    vos_printf("                      IPV4��ַ������Ϊ: %d.%d.%d.%d\n",(VOS_UINT32)pIpaddr[0],
+    vos_printf("                      IPV4地址被配置为: %d.%d.%d.%d\n",(VOS_UINT32)pIpaddr[0],
                         (VOS_UINT32)pIpaddr[1],(VOS_UINT32)pIpaddr[2],(VOS_UINT32)pIpaddr[3]);
 
     return;
@@ -1763,43 +1763,43 @@ VOS_VOID Ndis_ShowValidEntity(VOS_UINT16 usModemId, VOS_UINT8 ucRabId)
     pstEntity  =  NDIS_GetEntityByRabId(ucExRabId);
     if(VOS_NULL_PTR == pstEntity)
     {
-        vos_printf("             û�ж�Ӧ��NDISʵ��    \n");
+        vos_printf("             没有对应的NDIS实体    \n");
         return;
     }
 
     vos_printf("                 ModemID:  %d\n", NDIS_GET_MODEMID_FROM_EXBID(pstEntity->ucRabId));
-    vos_printf("                 EPS����ID:  %d\n", NDIS_GET_BID_FROM_EXBID(pstEntity->ucRabId));
-    vos_printf("             ARP�ѻ�ñ�־:  %d\n", pstEntity->stIpV4Info.ulArpInitFlg);
-    vos_printf(" ARP�����ͺ��յ��ظ���־:  %d\n", pstEntity->stIpV4Info.ulArpRepFlg);
+    vos_printf("                 EPS承载ID:  %d\n", NDIS_GET_BID_FROM_EXBID(pstEntity->ucRabId));
+    vos_printf("             ARP已获得标志:  %d\n", pstEntity->stIpV4Info.ulArpInitFlg);
+    vos_printf(" ARP请求发送后收到回复标志:  %d\n", pstEntity->stIpV4Info.ulArpRepFlg);
 
-    vos_printf("             PDN��ַ����Ϊ:    \n");
+    vos_printf("             PDN地址配置为:    \n");
     Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unUeIpInfo.aucIPAddr);
 
-    vos_printf("             ���ص�ַ����Ϊ:    \n");
+    vos_printf("             网关地址配置为:    \n");
     Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unGwIpInfo.aucIPAddr);
 
-    vos_printf("             ������ַ����Ϊ:    \n");
+    vos_printf("             子网地址配置为:    \n");
     Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unNmIpInfo.aucIPAddr);
 
-    vos_printf("            ��DNS��ַ����Ϊ:    \n");
+    vos_printf("            主DNS地址配置为:    \n");
     Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unPrimDnsAddr.aucIPAddr);
 
-    vos_printf("            ��DNS��ַ����Ϊ:    \n");
+    vos_printf("            辅DNS地址配置为:    \n");
     Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unSecDnsAddr.aucIPAddr);
 
-    vos_printf("            ��WINS��ַ����Ϊ:    \n");
+    vos_printf("            主WINS地址配置为:    \n");
     Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unPrimWinsAddr.aucIPAddr);
 
-    vos_printf("            ��WINS��ַ����Ϊ:    \n");
+    vos_printf("            辅WINS地址配置为:    \n");
     Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unSecWinsAddr.aucIPAddr);
 
-    vos_printf("              DHCP�����־λ:  %d\n",pstEntity->stIpV4Info.ulIpAssignStatus);
+    vos_printf("              DHCP分配标志位:  %d\n",pstEntity->stIpV4Info.ulIpAssignStatus);
 
-    vos_printf("               PC��MAC��ַΪ:  %x-%x-%x-%x-%x-%x\n",pstEntity->stIpV4Info.aucUeMacAddr[0],
+    vos_printf("               PC侧MAC地址为:  %x-%x-%x-%x-%x-%x\n",pstEntity->stIpV4Info.aucUeMacAddr[0],
                pstEntity->stIpV4Info.aucUeMacAddr[1],pstEntity->stIpV4Info.aucUeMacAddr[2],
                pstEntity->stIpV4Info.aucUeMacAddr[3],pstEntity->stIpV4Info.aucUeMacAddr[4],
                pstEntity->stIpV4Info.aucUeMacAddr[5]);
-    vos_printf("          ���а���̫��֡ͷΪ:  Ŀ��MAC: %x-%x-%x-%x-%x-%x,ԴMAC: %x-%x-%x-%x-%x-%x,֡����:0x%x\n",
+    vos_printf("          下行包以太网帧头为:  目的MAC: %x-%x-%x-%x-%x-%x,源MAC: %x-%x-%x-%x-%x-%x,帧类型:0x%x\n",
                pstEntity->stIpV4Info.aucMacFrmHdr[0],pstEntity->stIpV4Info.aucMacFrmHdr[1],
                pstEntity->stIpV4Info.aucMacFrmHdr[2],pstEntity->stIpV4Info.aucMacFrmHdr[3],
                pstEntity->stIpV4Info.aucMacFrmHdr[4],pstEntity->stIpV4Info.aucMacFrmHdr[5],
@@ -1824,43 +1824,43 @@ VOS_VOID Ndis_ShowAllEntity(VOS_VOID)
         if (PS_FALSE == pstEntity->enUsed)
         {
             vos_printf("                 ModemID:  %d\n", NDIS_GET_MODEMID_FROM_EXBID(pstEntity->ucRabId));
-            vos_printf("                 EPS����ID %d δ����\n", NDIS_GET_BID_FROM_EXBID(pstEntity->ucRabId));
+            vos_printf("                 EPS承载ID %d 未激活\n", NDIS_GET_BID_FROM_EXBID(pstEntity->ucRabId));
             continue;
         }
 
         vos_printf("                 ModemID:  %d\n", NDIS_GET_MODEMID_FROM_EXBID(pstEntity->ucRabId));
-        vos_printf("                 EPS����ID:  %d\n", NDIS_GET_BID_FROM_EXBID(pstEntity->ucRabId));
-        vos_printf("             ARP�ѻ�ñ�־:  %d\n", pstEntity->stIpV4Info.ulArpInitFlg);
-        vos_printf(" ARP�����ͺ��յ��ظ���־:  %d\n", pstEntity->stIpV4Info.ulArpRepFlg);
+        vos_printf("                 EPS承载ID:  %d\n", NDIS_GET_BID_FROM_EXBID(pstEntity->ucRabId));
+        vos_printf("             ARP已获得标志:  %d\n", pstEntity->stIpV4Info.ulArpInitFlg);
+        vos_printf(" ARP请求发送后收到回复标志:  %d\n", pstEntity->stIpV4Info.ulArpRepFlg);
 
-        vos_printf("             PDN��ַ����Ϊ:    \n");
+        vos_printf("             PDN地址配置为:    \n");
         Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unUeIpInfo.aucIPAddr);
 
-        vos_printf("             ���ص�ַ����Ϊ:    \n");
+        vos_printf("             网关地址配置为:    \n");
         Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unGwIpInfo.aucIPAddr);
 
-        vos_printf("             ������ַ����Ϊ:    \n");
+        vos_printf("             子网地址配置为:    \n");
         Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unNmIpInfo.aucIPAddr);
 
-        vos_printf("            ��DNS��ַ����Ϊ:    \n");
+        vos_printf("            主DNS地址配置为:    \n");
         Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unPrimDnsAddr.aucIPAddr);
 
-        vos_printf("            ��DNS��ַ����Ϊ:    \n");
+        vos_printf("            辅DNS地址配置为:    \n");
         Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unSecDnsAddr.aucIPAddr);
 
-        vos_printf("            ��WINS��ַ����Ϊ:    \n");
+        vos_printf("            主WINS地址配置为:    \n");
         Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unPrimWinsAddr.aucIPAddr);
 
-        vos_printf("            ��WINS��ַ����Ϊ:    \n");
+        vos_printf("            辅WINS地址配置为:    \n");
         Ndis_PrintIpv4Addr(pstEntity->stIpV4Info.unSecWinsAddr.aucIPAddr);
 
-        vos_printf("              DHCP�����־λ:  %d\n",pstEntity->stIpV4Info.ulIpAssignStatus);
+        vos_printf("              DHCP分配标志位:  %d\n",pstEntity->stIpV4Info.ulIpAssignStatus);
 
-        vos_printf("               PC��MAC��ַΪ:  %x-%x-%x-%x-%x-%x\n",pstEntity->stIpV4Info.aucUeMacAddr[0],
+        vos_printf("               PC侧MAC地址为:  %x-%x-%x-%x-%x-%x\n",pstEntity->stIpV4Info.aucUeMacAddr[0],
                    pstEntity->stIpV4Info.aucUeMacAddr[1],pstEntity->stIpV4Info.aucUeMacAddr[2],
                    pstEntity->stIpV4Info.aucUeMacAddr[3],pstEntity->stIpV4Info.aucUeMacAddr[4],
                    pstEntity->stIpV4Info.aucUeMacAddr[5]);
-        vos_printf("          ���а���̫��֡ͷΪ:  Ŀ��MAC: %x-%x-%x-%x-%x-%x,ԴMAC: %x-%x-%x-%x-%x-%x,֡����:0x%x\n",
+        vos_printf("          下行包以太网帧头为:  目的MAC: %x-%x-%x-%x-%x-%x,源MAC: %x-%x-%x-%x-%x-%x,帧类型:0x%x\n",
                    pstEntity->stIpV4Info.aucMacFrmHdr[0],pstEntity->stIpV4Info.aucMacFrmHdr[1],
                    pstEntity->stIpV4Info.aucMacFrmHdr[2],pstEntity->stIpV4Info.aucMacFrmHdr[3],
                    pstEntity->stIpV4Info.aucMacFrmHdr[4],pstEntity->stIpV4Info.aucMacFrmHdr[5],
@@ -1878,13 +1878,13 @@ VOS_VOID Ndis_ShowAllEntity(VOS_VOID)
 
 /*****************************************************************************
  Function Name  : lpsver
- Discription    : ��ѯ�汾��Ϣ
+ Discription    : 查询版本信息
  Input          : None
  Output         : None
  Return         : None
 
  History:
-      1. Lishangfeng 55206   2010-05-20  ����
+      1. Lishangfeng 55206   2010-05-20  初稿
 
 *****************************************************************************/
 /*VOS_VOID lpsver (VOS_VOID)

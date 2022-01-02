@@ -102,10 +102,10 @@ static int wp_tst_set_watchpoint(unsigned int addr, unsigned int type,
     }
     wp.addr = addr;
     if ((type & 0xF0) == 0x00) {
-        /* ÉèÈ«CPU */
+        /* è®¾å…¨CPU */
         ret = wp_set_watchpoints_ex(&wp, ACPUMAX);
     } else {
-        /* ÉèÒ»¸öCPU */
+        /* è®¾ä¸€ä¸ªCPU */
         ret = wp_set_watchpoints_ex(&wp, cpu);
     }
 
@@ -151,7 +151,7 @@ void wp_tst_clear_watchpoint_all(void)
 }
 
 /*
-²âÊÔÓÃº¯Êý
+æµ‹è¯•ç”¨å‡½æ•°
 rw_type : 
   watchpoint r/w type[bit0-3]
     0 - reserved
@@ -214,7 +214,7 @@ int wp_tst_watchpoint(unsigned int rw_type, unsigned int op_type, unsigned int a
         mlog_e("wp_tst_addr_saved exceed(%d)", wp_tst_addr_index);
     }
 
-    /* ÏÔÊ¾Ò»¸öCPU 
+    /* æ˜¾ç¤ºä¸€ä¸ªCPU 
     show_watchpoint_info(cpu, NULL);
     show_watchpoint_regs(cpu, NULL);*/
 
@@ -237,10 +237,10 @@ int wp_tst_watchpoint(unsigned int rw_type, unsigned int op_type, unsigned int a
 //         wp_tst_free_mem(tst_addr, addr_type);
     } else if (0/*clear*/ == op_type) {
         if ((rw_type & 0xF0) == 0x00) {
-            /* È«CPU */
+            /* å…¨CPU */
             wp_clear_watchpoints((unsigned int)tst_addr, ACPUMAX);
         } else {
-            /* Ò»¸öCPU */
+            /* ä¸€ä¸ªCPU */
             wp_clear_watchpoints((unsigned int)tst_addr, cpu);
         }
 
@@ -266,7 +266,7 @@ int wp_tst_watchpoint(unsigned int rw_type, unsigned int op_type, unsigned int a
         /* do nothing */
     }
 
-    /* ÏÔÊ¾Ò»¸öCPU 
+    /* æ˜¾ç¤ºä¸€ä¸ªCPU 
     show_watchpoint_info(cpu, NULL);
     show_watchpoint_regs(cpu, NULL);*/
 

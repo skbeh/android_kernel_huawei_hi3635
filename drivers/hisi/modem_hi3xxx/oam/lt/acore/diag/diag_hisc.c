@@ -120,14 +120,14 @@ VOS_UINT32 diag_HsicClose(VOS_VOID)
 
 	DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_VCOM_DISABLE,0, 0, 0);
 
-	/*�ر�DIAG CTRLͨ��*/
+	/*关闭DIAG CTRL通道*/
 	ulRet = diag_HsicCtrlClose();
 	if(ERR_MSP_SUCCESS!=ulRet)
 	{
 		DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_VCOM_DISABLE_ERR,0, 0, 1);
 	}
 
-	/*�ر�DIAG DATAͨ��*/
+	/*关闭DIAG DATA通道*/
 	ulRet = diag_HsicAppClose();
 	if(ERR_MSP_SUCCESS!=ulRet)
 	{
@@ -163,13 +163,13 @@ VOS_UINT32 diag_HiscInit(VOS_VOID)
 {
     diag_HiscInfo_Init();
 
-    /* ����Ʒ�Ƿ�֧��HSIC���� */
+    /* 检查产品是否支持HSIC特性 */
     if (BSP_MODULE_SUPPORT != DRV_GET_HSIC_SUPPORT())
     {
         return ERR_MSP_FAILURE;
     }
 
-    /* ע��HSICͨ������رջص�*/
+    /* 注册HSIC通道打开与关闭回调*/
 	if (VOS_TRUE == DRV_GET_HSIC_ENUM_STATUS())
     {
         diag_HsicOpen();

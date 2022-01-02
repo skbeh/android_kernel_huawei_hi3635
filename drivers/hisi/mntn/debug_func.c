@@ -9,11 +9,11 @@ extern "C" {
 
 
 /*****************************************************************************
-±äÁ¿ÒýÓÃ
+å˜é‡å¼•ç”¨
 *****************************************************************************/
 
 /*****************************************************************************
-º¯ÊýÉùÃ÷
+å‡½æ•°å£°æ˜Ž
 *****************************************************************************/
 #ifdef CONFIG_ARCH_HI6XXX
 extern unsigned int omTimerGet(void);
@@ -26,7 +26,7 @@ extern void wdg_dbg_disable_all(void);
 
 
 /*****************************************************************************
-º¯Êý¶¨Òå
+å‡½æ•°å®šä¹‰
 *****************************************************************************/
 /***********************************************************
  Function: wdg_dbg_enable
@@ -94,7 +94,7 @@ int wdg_dbg_enable(dbg_wdg_type ewdg_type)
         switch (ewdg_type)
         {
         case DBG_WDG_ACORE:
-        /* ¼à¿ØBalong ACPU£¬ÓÉACPU¸ºÔð¼à¿Ø£¬ÓÉMCU´¦Àí¸´Î»ÇëÇó»òÒýÆðÈ«¾Ö¸´Î» */
+        /* ç›‘æŽ§Balong ACPUï¼Œç”±ACPUè´Ÿè´£ç›‘æŽ§ï¼Œç”±MCUå¤„ç†å¤ä½è¯·æ±‚æˆ–å¼•èµ·å…¨å±€å¤ä½ */
             ulBaseAddr = ioremap(SOC_BALONG_AO_SCTRL_BASE_ADDR,SZ_8K);
             writel(BIT(BALONG_WDG_CLKSTART_BIT),
                   SOC_BALONG_AO_SCTRL_SC_PERIPH_CLKEN4_ADDR(ulBaseAddr));
@@ -205,7 +205,7 @@ int wdg_dbg_disable(dbg_wdg_type ewdg_type)
         switch (ewdg_type)
         {
         case DBG_WDG_ACORE:
-        /* ¼à¿ØBalong ACPU£¬ÓÉACPU¸ºÔð¼à¿Ø£¬ÓÉMCU´¦Àí¸´Î»ÇëÇó»òÒýÆðÈ«¾Ö¸´Î» */
+        /* ç›‘æŽ§Balong ACPUï¼Œç”±ACPUè´Ÿè´£ç›‘æŽ§ï¼Œç”±MCUå¤„ç†å¤ä½è¯·æ±‚æˆ–å¼•èµ·å…¨å±€å¤ä½ */
             ulBaseAddr = ioremap(SOC_BALONG_AO_SCTRL_BASE_ADDR,SZ_8K);
             writel(BIT(BALONG_WDG_CLKSTART_BIT),
                   SOC_BALONG_AO_SCTRL_SC_PERIPH_CLKDIS4_ADDR(ulBaseAddr));
@@ -444,11 +444,11 @@ int wdg_dbg_settime(dbg_wdg_type ewdg_type,int ival_msec)
         case DBG_WDG_LOCAL_MCU:
             /*mcu local wdg*/
             ulBaseAddr = ioremap(SOC_BALONG_WDG_LMCU_ADDR, SZ_4K);
-            /*ÅÐ¶ÏWDTÊÇ·ñ±»Ëø*/
+            /*åˆ¤æ–­WDTæ˜¯å¦è¢«é”*/
             ulRegValue = wdg_dbg_readreg(WDT_WDG_LOCK_ADDR(ulBaseAddr));
             if(0 != ulRegValue)
             {
-                /*½âËø*/
+                /*è§£é”*/
                 writel(MCU_WDT_UNLOCK_VALUE, WDT_WDG_LOCK_ADDR(ulBaseAddr));
             }
 
@@ -459,7 +459,7 @@ int wdg_dbg_settime(dbg_wdg_type ewdg_type,int ival_msec)
 
             /*Set Counter Start Num*/
             writel(ulRegValue, WDT_WDG_LOAD_ADDR(ulBaseAddr));
-            /*Ëø*/
+            /*é”*/
             writel(0, WDT_WDG_LOCK_ADDR(ulBaseAddr));
 
             iounmap((void*)ulBaseAddr);
@@ -469,11 +469,11 @@ int wdg_dbg_settime(dbg_wdg_type ewdg_type,int ival_msec)
         case DBG_WDG_GLOBAL_MCU:
             /*mcu global wdg*/
             ulBaseAddr = ioremap(SOC_BALONG_WDG_GMCU_ADDR, SZ_4K);
-            /*ÅÐ¶ÏWDTÊÇ·ñ±»Ëø*/
+            /*åˆ¤æ–­WDTæ˜¯å¦è¢«é”*/
             ulRegValue = wdg_dbg_readreg(WDT_WDG_LOCK_ADDR(ulBaseAddr));
             if(0 != ulRegValue)
             {
-                /*½âËø*/
+                /*è§£é”*/
                 writel(MCU_WDT_UNLOCK_VALUE, WDT_WDG_LOCK_ADDR(ulBaseAddr));
             }
 
@@ -485,7 +485,7 @@ int wdg_dbg_settime(dbg_wdg_type ewdg_type,int ival_msec)
             /*Set Counter Start Num*/
             writel(ulRegValue, WDT_WDG_LOAD_ADDR(ulBaseAddr));
 
-            /*Ëø*/
+            /*é”*/
             writel(0, WDT_WDG_LOCK_ADDR(ulBaseAddr));
             iounmap((void*)ulBaseAddr);
             ulBaseAddr = NULL;
@@ -506,7 +506,7 @@ int wdg_dbg_settime(dbg_wdg_type ewdg_type,int ival_msec)
  Input: void  *addr_in, addr of memory
             int nbytes,size of memory
             int ibool, ibool>0,vir addr;0>=ibool, phy addr
- Out: ÎÞ
+ Out: æ— 
  Return value: void
  History:
  1.     20140121    Creat
@@ -563,7 +563,7 @@ void show_memory(unsigned long addr_in, unsigned int nbytes, int ibool)
  Function: test_get_slice
  Description: only for testting, to check whether the slices are same.
  Input:
- Out: ÎÞ
+ Out: æ— 
  Return value: void
  History:
  1.     20140121    Creat

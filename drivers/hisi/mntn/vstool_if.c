@@ -33,10 +33,10 @@ extern void hi6xxx_pmic_reg_write (unsigned int reg_addr, unsigned char regval);
 Definition 
 */
 static struct vstool_info vstool_priv;
-/* Ôİ´æ´ı¶Á»òĞ´µÄ¼Ä´æÆ÷£¬¹¤¾ßÊ¹ÓÃ */
+/* æš‚å­˜å¾…è¯»æˆ–å†™çš„å¯„å­˜å™¨ï¼Œå·¥å…·ä½¿ç”¨ */
 static unsigned int g_vs_reg = VST_REG_INVALID;
 static unsigned int g_vs_baseaddr = 0;
-/* soc²¿·ÖÊıÄ¿²»¶¨£¬¹ÊÊ¹ÓÃlist */
+/* socéƒ¨åˆ†æ•°ç›®ä¸å®šï¼Œæ•…ä½¿ç”¨list */
 static LIST_HEAD(soc_info_head);
 static unsigned int g_soc_info_index = 0;
 
@@ -412,7 +412,7 @@ static void vstool_soc_reg_write(unsigned int baseaddr, unsigned int reg, unsign
 }
 
 /*
-ÅúÁ¿¼Ä´æÆ÷Êä³ö ¹«¹²½Ó¿Ú for ip_info
+æ‰¹é‡å¯„å­˜å™¨è¾“å‡º å…¬å…±æ¥å£ for ip_info
 */
 static void vstool_rr_dump(char *buf, unsigned int index)
 {
@@ -435,7 +435,7 @@ static void vstool_rr_dump(char *buf, unsigned int index)
     for (regi = reg_start; regi <= reg_end; regi += reg_step) {
 		ret = func_reg_read(regi, &regi_val);
 		if (ret != 0) {
-			/* ¶Á¿ÉÅĞ¶¨³É¹¦»òÊ§°Ü */
+			/* è¯»å¯åˆ¤å®šæˆåŠŸæˆ–å¤±è´¥ */
 			snprintf(buf, VSTOOL_DBG_SIZE_PAGE, "%s%#04x:error\n", buf, regi);
 		} else {
 			if (1 == reg_step) {
@@ -452,11 +452,11 @@ static void vstool_rr_dump(char *buf, unsigned int index)
 }
 
 /*
-¼Ä´æÆ÷¶ÁĞ´¹«¹²½Ó¿Ú for ip_info
-¶ÔÓÚ²»Í¬µÄ¶ÁÈ¡ÀàĞÍ£¬Èë²Î·Ö±ğÈçÏÂ:
-1 ÎŞ²Î: Ä¬ÈÏÊä³öPAGE
-2 µ¥¼Ä´æÆ÷¶Á: echo "r reg" > rr£¬cat rr
-3 µ¥¼Ä´æÆ÷Ğ´: echo "w reg val"
+å¯„å­˜å™¨è¯»å†™å…¬å…±æ¥å£ for ip_info
+å¯¹äºä¸åŒçš„è¯»å–ç±»å‹ï¼Œå…¥å‚åˆ†åˆ«å¦‚ä¸‹:
+1 æ— å‚: é»˜è®¤è¾“å‡ºPAGE
+2 å•å¯„å­˜å™¨è¯»: echo "r reg" > rrï¼Œcat rr
+3 å•å¯„å­˜å™¨å†™: echo "w reg val"
 */
 static int vstool_rr_read(struct file *file, char __user *user_buf,
                       size_t count, loff_t *ppos, unsigned int index)
@@ -482,7 +482,7 @@ static int vstool_rr_read(struct file *file, char __user *user_buf,
 		/* Single Register Read */
 		ret = func_reg_read(vs_reg_r, &vs_reg_val);
 		if (ret != 0) {
-			/* ¶Á¿ÉÅĞ¶¨³É¹¦»òÊ§°Ü */
+			/* è¯»å¯åˆ¤å®šæˆåŠŸæˆ–å¤±è´¥ */
 			snprintf(kn_buf, VSTOOL_DBG_SIZE_PAGE, "%s%#06x:error\n", kn_buf, vs_reg_r);
 		} else {
 			snprintf(kn_buf, VSTOOL_DBG_SIZE_PAGE, "%s%#06x:%#010x\n", kn_buf, vs_reg_r, vs_reg_val);
@@ -503,12 +503,12 @@ static int vstool_rr_read(struct file *file, char __user *user_buf,
 }
 
 /*
-¼Ä´æÆ÷¶ÁĞ´¹«¹²½Ó¿Ú for ip_info
-¶ÔÓÚ²»Í¬µÄ¶ÁÈ¡ÀàĞÍ£¬Èë²Î·Ö±ğÈçÏÂ:
-1 ÎŞ²Î: Ä¬ÈÏÊä³öPAGE
-2 µ¥¼Ä´æÆ÷¶Á: echo "r reg" > rr£¬cat rr
-3 µ¥¼Ä´æÆ÷Ğ´: echo "w reg val"
-4 ÅúÁ¿¼Ä´æÆ÷¶Á: echo p > rr, cat rr
+å¯„å­˜å™¨è¯»å†™å…¬å…±æ¥å£ for ip_info
+å¯¹äºä¸åŒçš„è¯»å–ç±»å‹ï¼Œå…¥å‚åˆ†åˆ«å¦‚ä¸‹:
+1 æ— å‚: é»˜è®¤è¾“å‡ºPAGE
+2 å•å¯„å­˜å™¨è¯»: echo "r reg" > rrï¼Œcat rr
+3 å•å¯„å­˜å™¨å†™: echo "w reg val"
+4 æ‰¹é‡å¯„å­˜å™¨è¯»: echo p > rr, cat rr
 */
 static int vstool_rr_write(struct file *file, const char __user *user_buf, 
 						size_t count, loff_t *ppos, unsigned int index)
@@ -530,7 +530,7 @@ static int vstool_rr_write(struct file *file, const char __user *user_buf,
     byte_writen = simple_write_to_buffer(kn_buf, VSTOOL_DBG_SIZE_PAGE, ppos, user_buf, count);
 
     if ('w' == kn_buf[0]) {
-        /* Ğ´µ¥¸ö¼Ä´æÆ÷, 2¸ö²ÎÊı */
+        /* å†™å•ä¸ªå¯„å­˜å™¨, 2ä¸ªå‚æ•° */
         num = sscanf(kn_buf, "w 0x%x 0x%x", &vs_reg, &vs_val);
         if (2 == num) {
             func_reg_write(vs_reg, vs_val);
@@ -541,17 +541,17 @@ static int vstool_rr_write(struct file *file, const char __user *user_buf,
         }
 
     } else if ('r' == kn_buf[0]) {
-        /* ¶Áµ¥¸ö¼Ä´æÆ÷£¬¼ÇÂ¼´ı¶ÁÈ¡¼Ä´æÆ÷ */
+        /* è¯»å•ä¸ªå¯„å­˜å™¨ï¼Œè®°å½•å¾…è¯»å–å¯„å­˜å™¨ */
         num = sscanf(kn_buf, "r 0x%x", &g_vs_reg);
         if (1 != num) {
             g_vs_reg = VST_REG_INVALID;
             byte_writen = -EINVAL;
         }
     } else if ('p' == kn_buf[0]) {
-        /* ¶ÁPAGE */
+        /* è¯»PAGE */
         g_vs_reg = VST_REG_INVALID;
     } else {
-        /* Òì³£ */
+        /* å¼‚å¸¸ */
         g_vs_reg = VST_REG_INVALID;
         byte_writen = -EINVAL;
     }
@@ -563,7 +563,7 @@ static int vstool_rr_write(struct file *file, const char __user *user_buf,
 }
 
 /*
-SoC½á¹¹ÌåĞÅÏ¢²éÑ¯ ¹«¹²½Ó¿Ú for soc_info
+SoCç»“æ„ä½“ä¿¡æ¯æŸ¥è¯¢ å…¬å…±æ¥å£ for soc_info
 */
 static void vstool_sr_show(char *buf)
 {
@@ -590,7 +590,7 @@ static void vstool_sr_show(char *buf)
 }
 
 /*
-ÅúÁ¿¼Ä´æÆ÷Êä³ö ¹«¹²½Ó¿Ú for soc_info
+æ‰¹é‡å¯„å­˜å™¨è¾“å‡º å…¬å…±æ¥å£ for soc_info
 */
 static void vstool_sr_dump(char *buf, unsigned int baseaddr)
 {
@@ -621,7 +621,7 @@ static void vstool_sr_dump(char *buf, unsigned int baseaddr)
     for (regi = reg_start; regi <= reg_end; regi += reg_step) {
 		ret = vstool_soc_reg_read(vs_baseaddr_r, regi, &regi_val);
 		if (ret != 0) {
-			/* ¶Á¿ÉÅĞ¶¨³É¹¦»òÊ§°Ü */
+			/* è¯»å¯åˆ¤å®šæˆåŠŸæˆ–å¤±è´¥ */
 			snprintf(buf, VSTOOL_DBG_SIZE_HUGE, "%s%#06x:error not inited\n", buf, regi);
 		} else {
 			snprintf(buf, VSTOOL_DBG_SIZE_HUGE, "%s%#06x:%#010x\n", buf, regi, regi_val);
@@ -635,12 +635,12 @@ Out:
 }
 
 /*
-¼Ä´æÆ÷¶ÁĞ´¹«¹²½Ó¿Ú, for soc_info
-¶ÔÓÚ²»Í¬µÄ¶ÁÈ¡ÀàĞÍ£¬Èë²Î·Ö±ğÈçÏÂ:
-1 ÎŞ²Î: Ä¬ÈÏÊä³önone
-2 µ¥¼Ä´æÆ÷¶Á: echo "r reg baseaddr" > soc£¬cat soc
-3 µ¥¼Ä´æÆ÷Ğ´: echo "w reg val baseaddr"
-4 ÅúÁ¿¼Ä´æÆ÷¶Á: echo "p baseaddr" > soc, cat soc
+å¯„å­˜å™¨è¯»å†™å…¬å…±æ¥å£, for soc_info
+å¯¹äºä¸åŒçš„è¯»å–ç±»å‹ï¼Œå…¥å‚åˆ†åˆ«å¦‚ä¸‹:
+1 æ— å‚: é»˜è®¤è¾“å‡ºnone
+2 å•å¯„å­˜å™¨è¯»: echo "r reg baseaddr" > socï¼Œcat soc
+3 å•å¯„å­˜å™¨å†™: echo "w reg val baseaddr"
+4 æ‰¹é‡å¯„å­˜å™¨è¯»: echo "p baseaddr" > soc, cat soc
 */
 static int vstool_sr_read(struct file *file, char __user *user_buf,
                       size_t count, loff_t *ppos)
@@ -671,7 +671,7 @@ static int vstool_sr_read(struct file *file, char __user *user_buf,
 		/* Single Register Read */
 		ret = vstool_soc_reg_read(vs_baseaddr_r, vs_reg_r, &vs_reg_val);
 		if (ret != 0) {
-			/* ¶Á¿ÉÅĞ¶¨³É¹¦»òÊ§°Ü */
+			/* è¯»å¯åˆ¤å®šæˆåŠŸæˆ–å¤±è´¥ */
 			snprintf(kn_buf, VSTOOL_DBG_SIZE_HUGE, "%s%#06x:error, %#010x not initialized\n", kn_buf, vs_reg_r, vs_baseaddr_r);
 		} else {
 			snprintf(kn_buf, VSTOOL_DBG_SIZE_HUGE, "%s%#06x:%#010x\n", kn_buf, vs_reg_r, vs_reg_val);
@@ -691,12 +691,12 @@ static int vstool_sr_read(struct file *file, char __user *user_buf,
 }
 
 /*
-¼Ä´æÆ÷¶ÁĞ´¹«¹²½Ó¿Ú, for soc_info
-¶ÔÓÚ²»Í¬µÄ¶ÁÈ¡ÀàĞÍ£¬Èë²Î·Ö±ğÈçÏÂ:
-1 ÎŞ²Î: Ä¬ÈÏÊä³önone
-2 µ¥¼Ä´æÆ÷¶Á: echo "r reg baseaddr" > soc£¬cat soc
-3 µ¥¼Ä´æÆ÷Ğ´: echo "w reg val baseaddr"
-4 ÅúÁ¿¼Ä´æÆ÷¶Á: echo "p baseaddr" > soc, cat soc
+å¯„å­˜å™¨è¯»å†™å…¬å…±æ¥å£, for soc_info
+å¯¹äºä¸åŒçš„è¯»å–ç±»å‹ï¼Œå…¥å‚åˆ†åˆ«å¦‚ä¸‹:
+1 æ— å‚: é»˜è®¤è¾“å‡ºnone
+2 å•å¯„å­˜å™¨è¯»: echo "r reg baseaddr" > socï¼Œcat soc
+3 å•å¯„å­˜å™¨å†™: echo "w reg val baseaddr"
+4 æ‰¹é‡å¯„å­˜å™¨è¯»: echo "p baseaddr" > soc, cat soc
 */
 static int vstool_sr_write(struct file *file, const char __user *user_buf, 
 						size_t count, loff_t *ppos)
@@ -717,7 +717,7 @@ static int vstool_sr_write(struct file *file, const char __user *user_buf,
     byte_writen = simple_write_to_buffer(kn_buf, VSTOOL_DBG_SIZE_PAGE, ppos, user_buf, count);
 
     if ('w' == kn_buf[0]) {
-        /* Ğ´µ¥¸ö¼Ä´æÆ÷, 3¸ö²ÎÊı */
+        /* å†™å•ä¸ªå¯„å­˜å™¨, 3ä¸ªå‚æ•° */
         num = sscanf(kn_buf, "w 0x%x 0x%x 0x%x", &vs_reg, &vs_val, &vs_baseaddr);
         if (3 == num) {
             vstool_soc_reg_write(vs_baseaddr, vs_reg, vs_val);
@@ -730,7 +730,7 @@ static int vstool_sr_write(struct file *file, const char __user *user_buf,
         }
 
 	} else if ('r' == kn_buf[0]) {
-		/* ¶Áµ¥¸ö¼Ä´æÆ÷£¬2¸ö²ÎÊı */
+		/* è¯»å•ä¸ªå¯„å­˜å™¨ï¼Œ2ä¸ªå‚æ•° */
 		num = sscanf(kn_buf, "r 0x%x 0x%x", &g_vs_reg, &g_vs_baseaddr);
 		if (2 != num) {
 			g_vs_reg = VST_REG_INVALID;
@@ -739,7 +739,7 @@ static int vstool_sr_write(struct file *file, const char __user *user_buf,
 		}
 
 	} else if ('i' == kn_buf[0]) {
-		/* ³õÊ¼»¯ */
+		/* åˆå§‹åŒ– */
 		num = sscanf(kn_buf, "i 0x%x 0x%x 0x%x 0x%x 0x%x %15s", &vs_baseaddr, &vs_size, &vs_start, &vs_end, &vs_step, vs_name);
 		if (6 == num) {
 			if (0 != vstool_soc_init(vs_baseaddr, vs_size, vs_start, vs_end, vs_step, vs_name)) {
@@ -756,7 +756,7 @@ static int vstool_sr_write(struct file *file, const char __user *user_buf,
 		}
 
     } else if ('p' == kn_buf[0]) {
-        /* ¶ÁPAGE */
+        /* è¯»PAGE */
 		num = sscanf(kn_buf, "p 0x%x", &g_vs_baseaddr);
 		if (1 == num) {
 			g_vs_reg = VST_REG_DUMP;
@@ -767,7 +767,7 @@ static int vstool_sr_write(struct file *file, const char __user *user_buf,
 		}
 
     } else {
-        /* Òì³£ */
+        /* å¼‚å¸¸ */
         g_vs_reg = VST_REG_INVALID;
         byte_writen = -EINVAL;
     }
@@ -876,31 +876,31 @@ static int vstool_tool_init(void)
         return -ENOMEM;
     }
 
-    /* register£¬scharger¶ÁĞ´½Ó¿Ú */
+    /* registerï¼Œschargerè¯»å†™æ¥å£ */
     if (!debugfs_create_file("scharger", VSTOOL_MODE, vstool_priv.df_dir, NULL, &vstool_scharger_fops)) {
         mlog_e("create vstool debugfs scharger\n");
         return -ENOMEM;
     }
 
-    /* register£¬pmu codec¶ÁĞ´½Ó¿Ú */
+    /* registerï¼Œpmu codecè¯»å†™æ¥å£ */
     if (!debugfs_create_file("pcodec", VSTOOL_MODE, vstool_priv.df_dir, NULL, &vstool_pcodec_fops)) {
         mlog_e("create vstool debugfs acodec\n");
         return -ENOMEM;
     }
 
-    /* register£¬soc codec¶ÁĞ´½Ó¿Ú */
+    /* registerï¼Œsoc codecè¯»å†™æ¥å£ */
     if (!debugfs_create_file("scodec", VSTOOL_MODE, vstool_priv.df_dir, NULL, &vstool_scodec_fops)) {
         mlog_e("create vstool debugfs acodec\n");
         return -ENOMEM;
     }
 
-    /* register£¬smartstar pmu¶ÁĞ´½Ó¿Ú */
+    /* registerï¼Œsmartstar pmuè¯»å†™æ¥å£ */
     if (!debugfs_create_file("pmu", VSTOOL_MODE, vstool_priv.df_dir, NULL, &vstool_pmu_fops)) {
         mlog_e("create vstool debugfs pmu\n");
         return -ENOMEM;
     }
 
-    /* register£¬soc¶ÁĞ´½Ó¿Ú */
+    /* registerï¼Œsocè¯»å†™æ¥å£ */
     if (!debugfs_create_file("soc", VSTOOL_MODE, vstool_priv.df_dir, NULL, &vstool_soc_fops)) {
         mlog_e("create vstool debugfs soc\n");
         return -ENOMEM;

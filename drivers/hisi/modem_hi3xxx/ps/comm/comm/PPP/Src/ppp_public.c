@@ -7,50 +7,50 @@
 #endif
 
 /******************************************************************************
-   1 ͷ�ļ�����
+   1 头文件包含
 ******************************************************************************/
 #include "ppp_public.h"
 #include "om.h"
 #include "hdlc_interface.h"
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
-/*lint -e767  �����־�ļ���ID���� */
+/*lint -e767  打点日志文件宏ID定义 */
 #define    THIS_FILE_ID                 PS_FILE_ID_PPP_PUBLIC_C
 /*lint +e767   */
 
 
 /******************************************************************************
-   2 �ⲿ������������
+   2 外部函数变量声明
 ******************************************************************************/
 
 
 
 /******************************************************************************
-   3 ˽�ж���
+   3 私有定义
 ******************************************************************************/
 
 
 #if (FEATURE_ON == FEATURE_PPP)
 /******************************************************************************
-   4 ȫ�ֱ�������
+   4 全局变量定义
 ******************************************************************************/
 extern PPP_DATA_Q_CTRL_ST               g_PppDataQCtrl;
 
 VOS_UINT32                              g_ulPppDebugLevel = PS_PRINT_WARNING;
 /******************************************************************************
-   5 ����ʵ��
+   5 函数实现
 ******************************************************************************/
 
 PPP_ZC_STRU * PPP_MemAlloc(VOS_UINT16 usLen, VOS_UINT16 usReserveLen)
 {
-    /* �ýӿ���������ʱ��Ҫ����MACͷ���ȣ�
-      ������ADS�շ���ΪIP����Ϊ��NDIS��E5�������ݽṹͳһ����Ҫ����MACͷ��
-      �㿽��ָ���C�˷��ص�ʱ��ͳһƫ�ƹ̶��ֽڣ��ҵ��㿽��ͷ����
+    /* 该接口用在上行时需要保留MAC头长度，
+      上行与ADS收发数为IP包，为与NDIS、E5保持数据结构统一，需要保留MAC头，
+      零拷贝指针从C核返回的时候统一偏移固定字节，找到零拷贝头部。
     */
     /*
-       ��������ʱ����������0��������USB�շ�����Ϊ�ֽ�����ʽ��PPP֡����MACͷ
+       用在下行时保留长度填0，下行与USB收发数据为字节流形式的PPP帧，无MAC头
     */
     PPP_ZC_STRU *pstMem = PPP_ZC_MEM_ALLOC(usLen + usReserveLen);
 
@@ -59,21 +59,21 @@ PPP_ZC_STRU * PPP_MemAlloc(VOS_UINT16 usLen, VOS_UINT16 usReserveLen)
     {
         if ( usReserveLen > 0)
         {
-            /* �ճ��������ȣ���PPPģ��������ݳ�����usLen���������������δ��ֵǰ���� */
+            /* 空出保留长度，对PPP模块而言数据长度是usLen，这个函数必须在未赋值前调用 */
             PPP_ZC_RESERVE(pstMem, usReserveLen);
 
-            /* �������������ܴ��� */
+            /* 更新上行申请总次数 */
             g_PppDataQCtrl.stStat.ulMemAllocUplinkCnt++;
 
-            /* ��������Э�̽׶��ͷŵ�������Դ */
+            /* 用于区分协商阶段释放的数据来源 */
             PPP_ZC_SET_DATA_APP(pstMem, (VOS_UINT16)(1 << 8) | (VOS_UINT16)PPP_PULL_PACKET_TYPE);
         }
         else
         {
-            /* �������������ܴ��� */
+            /* 更新下行申请总次数 */
             g_PppDataQCtrl.stStat.ulMemAllocDownlinkCnt++;
 
-            /* ��������Э�̽׶��ͷŵ�������Դ */
+            /* 用于区分协商阶段释放的数据来源 */
             PPP_ZC_SET_DATA_APP(pstMem, (VOS_UINT16)(1 << 8) | (VOS_UINT16)PPP_PUSH_PACKET_TYPE);
         }
     }
@@ -81,12 +81,12 @@ PPP_ZC_STRU * PPP_MemAlloc(VOS_UINT16 usLen, VOS_UINT16 usReserveLen)
     {
         if ( usReserveLen > 0)
         {
-            /* ������������ʧ�ܴ��� */
+            /* 更新上行申请失败次数 */
             g_PppDataQCtrl.stStat.ulMemAllocUplinkFailCnt++;
         }
         else
         {
-            /* ������������ʧ�ܴ��� */
+            /* 更新下行申请失败次数 */
             g_PppDataQCtrl.stStat.ulMemAllocDownlinkFailCnt++;
         }
     }
@@ -95,10 +95,10 @@ PPP_ZC_STRU * PPP_MemAlloc(VOS_UINT16 usLen, VOS_UINT16 usReserveLen)
 }
 VOS_VOID PPP_MemWriteData(PPP_ZC_STRU *pstMem, VOS_UINT8 *pucSrc, VOS_UINT16 usLen)
 {
-    /* ���úý�Ҫд���㿽���ڴ��������ݳ��� */
+    /* 设置好将要写入零拷贝内存数据内容长度 */
     PPP_ZC_SET_DATA_LEN(pstMem, usLen);
 
-    /* �������ڴ����ݲ��� */
+    /* 拷贝至内存数据部分 */
     PPP_MemSingleCopy(PPP_ZC_GET_DATA_PTR(pstMem), pucSrc, usLen);
 
     return;
@@ -114,7 +114,7 @@ PPP_ZC_STRU * PPP_MemCopyAlloc(VOS_UINT8 *pSrc, VOS_UINT16 usLen, VOS_UINT16 usR
 
     if ( VOS_NULL_PTR != pstMem )
     {
-        /* �������ڴ����ݲ��� */
+        /* 拷贝至内存数据部分 */
         PPP_MemWriteData(pstMem, pSrc, usLen);
     }
 
@@ -133,7 +133,7 @@ VOS_UINT32 PPP_MemCutTailData
     VOS_UINT16                          usCurrOffset;
 
 
-    /* ������� */
+    /* 参数检查 */
     if ( (VOS_NULL_PTR == ppMemSrc) ||
          (VOS_NULL_PTR == *ppMemSrc) ||
          (VOS_NULL_PTR == pucDest))
@@ -158,14 +158,14 @@ VOS_UINT32 PPP_MemCutTailData
         return PS_FAIL;
     }
 
-    /* ��β�������������ݣ�ֻ����һ���ڵ� */
+    /* 从尾部拷贝定长数据，只会有一个节点 */
     usCurrOffset = usCurrLen - usLen;
 
     DRV_RT_MEMCPY(pucDest, &(PPP_ZC_GET_DATA_PTR(pCurrMem)[usCurrOffset]), usLen);
 
     if ( usCurrOffset > 0 )
     {
-        /* ����ʣ�����ݣ�Ŀǰû�����㳤�Ȳ���Tailָ��ǰ�ƵĽӿڣ��������� */
+        /* 还有剩余数据，目前没有重算长度并将Tail指针前移的接口，重新申请 */
         (*ppMemSrc) = PPP_MemCopyAlloc(PPP_ZC_GET_DATA_PTR(pCurrMem), usCurrOffset, usReserveLen);
     }
     else
@@ -173,7 +173,7 @@ VOS_UINT32 PPP_MemCutTailData
         (*ppMemSrc) = VOS_NULL_PTR;
     }
 
-    /* �ͷ��ڴ� */
+    /* 释放内存 */
     PPP_MemFree(pCurrMem);
 
     return PS_SUCC;
@@ -203,7 +203,7 @@ VOS_UINT32 PPP_MemCutHeadData
         return PS_FAIL;
     }
 
-    /* �ж�TTF�ڴ��ĳ����Ƿ����Ҫ�� */
+    /* 判断TTF内存块的长度是否符合要求 */
     pCurrMem        = (PPP_ZC_STRU *)(*ppMemSrc);
     usMemSrcLen     = PPP_ZC_GET_DATA_LEN(pCurrMem);
 
@@ -216,17 +216,17 @@ VOS_UINT32 PPP_MemCutHeadData
         return PS_FAIL;
     }
 
-    /* ��ͷ�������������ݣ�ֻ����һ���ڵ� */
+    /* 从头部拷贝定长数据，只会有一个节点 */
     DRV_RT_MEMCPY(pucDest, PPP_ZC_GET_DATA_PTR(pCurrMem), usDataLen);
 
     if ( usMemSrcLen >  usDataLen)
     {
-        /* ����ʣ�����ݣ���������ָ��ͳ��� */
+        /* 还有剩余数据，更新数据指针和长度 */
         PPP_ZC_REMOVE_HDR(pCurrMem, usDataLen);
     }
     else
     {
-        /* �ͷ�ԭʼ�ڴ� */
+        /* 释放原始内存 */
         PPP_MemFree(pCurrMem);
         (*ppMemSrc) = VOS_NULL_PTR;
     }
@@ -240,7 +240,7 @@ VOS_UINT32 PPP_MemGet(PPP_ZC_STRU *pMemSrc, VOS_UINT16 usOffset, VOS_UINT8 *pDes
     VOS_UINT16                          usMemSrcLen;
 
 
-    /* ������� */
+    /* 参数检查 */
     if ( (VOS_NULL_PTR == pMemSrc)||(VOS_NULL_PTR == pDest) )
     {
         PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_WARNING,
@@ -257,7 +257,7 @@ VOS_UINT32 PPP_MemGet(PPP_ZC_STRU *pMemSrc, VOS_UINT16 usOffset, VOS_UINT8 *pDes
         return PS_FAIL;
     }
 
-    /* �ж�TTF�ڴ��ĳ����Ƿ����Ҫ�� */
+    /* 判断TTF内存块的长度是否符合要求 */
     usMemSrcLen = PPP_ZC_GET_DATA_LEN(pMemSrc);
 
     if ( usMemSrcLen < (usOffset + usLen) )
@@ -277,7 +277,7 @@ VOS_UINT32 PPP_MemGet(PPP_ZC_STRU *pMemSrc, VOS_UINT16 usOffset, VOS_UINT8 *pDes
 
 VOS_VOID PPP_MemFree(PPP_ZC_STRU *pstMem)
 {
-    /* �ͷ��㿽���ڴ� */
+    /* 释放零拷贝内存 */
     PPP_ZC_MEM_FREE(pstMem);
 
     g_PppDataQCtrl.stStat.ulMemFreeCnt++;
@@ -286,7 +286,7 @@ VOS_VOID PPP_MemFree(PPP_ZC_STRU *pstMem)
 }
 VOS_VOID PPP_MemSingleCopy(VOS_UINT8 *pucDest, VOS_UINT8 *pucSrc, VOS_UINT32 ulLen)
 {
-    /* ���޸�ΪEDMA���� */
+    /* 待修改为EDMA拷贝 */
     DRV_RT_MEMCPY(pucDest, pucSrc, ulLen);
 
     return;
@@ -390,7 +390,7 @@ VOS_VOID     PPP_PrintLog4
 #else
 VOS_VOID PPP_MemFree(PPP_ZC_STRU *pstMem)
 {
-    /* �ͷ��㿽���ڴ� */
+    /* 释放零拷贝内存 */
     PPP_ZC_MEM_FREE(pstMem);
 
     return;

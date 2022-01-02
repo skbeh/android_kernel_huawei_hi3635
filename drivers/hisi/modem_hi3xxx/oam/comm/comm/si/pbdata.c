@@ -4,7 +4,7 @@
   Author       : zhuli
   Version      : V100R002
   Date         : 2008-5-15
-  Description  : ¸ÃCÎÄ¼ş¸ø³öÁË---Íê³É»º³åÄÚÈİ´¦ÀíÄ£¿éÊµÏÖ
+  Description  : è¯¥Cæ–‡ä»¶ç»™å‡ºäº†---å®Œæˆç¼“å†²å†…å®¹å¤„ç†æ¨¡å—å®ç°
   Function List:
   History      :
  ************************************************************************/
@@ -21,7 +21,7 @@ extern "C" {
 #include "TafTypeDef.h"
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 #define    THIS_FILE_ID PS_FILE_ID_PB_DATA_C
@@ -35,7 +35,7 @@ VOS_UINT32 SI_PB_FindPBOffset(SI_PB_TYPE_ENUM_UINT32  enPBType, VOS_UINT8 *pucOf
 
     for(i=0; i<SI_PB_MAX_NUMBER; i++)
     {
-        if(gastPBContent[i].enPBType == enPBType)   /*µ±Ç°µÄ²éÑ¯ÀàĞÍÒ»ÖÂ*/
+        if(gastPBContent[i].enPBType == enPBType)   /*å½“å‰çš„æŸ¥è¯¢ç±»å‹ä¸€è‡´*/
         {
             PB_INFO_LOG("SI_PB_FindPBOffset Info: Locate the PhoneBook Accurately");
 
@@ -47,7 +47,7 @@ VOS_UINT32 SI_PB_FindPBOffset(SI_PB_TYPE_ENUM_UINT32  enPBType, VOS_UINT8 *pucOf
 
     PB_ERROR_LOG("SI_PB_FindPBOffset Error: The PhoneBook Info is Not Exist");
 
-    return VOS_ERR;             /*µ±Ç°Î´ÕÒµ½Æ«ÒÆ*/
+    return VOS_ERR;             /*å½“å‰æœªæ‰¾åˆ°åç§»*/
 }
 
 
@@ -57,7 +57,7 @@ VOS_UINT32 SI_PB_LocateRecord(SI_PB_TYPE_ENUM_UINT32  enPBType, VOS_UINT16 usInd
     VOS_UINT8   ucPBOffset;
     VOS_UINT32 ulResult;
 
-    ulResult = SI_PB_FindPBOffset(enPBType, &ucPBOffset);    /*Ê×ÏÈ²éÑ¯µ±Ç°µÄ»º³åÎ»ÖÃ*/
+    ulResult = SI_PB_FindPBOffset(enPBType, &ucPBOffset);    /*é¦–å…ˆæŸ¥è¯¢å½“å‰çš„ç¼“å†²ä½ç½®*/
 
     if(VOS_ERR == ulResult)
     {
@@ -66,14 +66,14 @@ VOS_UINT32 SI_PB_LocateRecord(SI_PB_TYPE_ENUM_UINT32  enPBType, VOS_UINT16 usInd
         return TAF_ERR_UNSPECIFIED_ERROR;
     }
 
-    if(PB_NOT_INITIALISED == gastPBContent[ucPBOffset].enInitialState)   /*µ±Ç°µÄµç»°±¾Ã»ÓĞ³õÊ¼»¯Íê±Ï*/
+    if(PB_NOT_INITIALISED == gastPBContent[ucPBOffset].enInitialState)   /*å½“å‰çš„ç”µè¯æœ¬æ²¡æœ‰åˆå§‹åŒ–å®Œæ¯•*/
     {
         PB_ERROR_LOG("SI_PB_LocateRecord:The PhoneBook is Not Initializtion");
 
         return TAF_ERR_SIM_BUSY;
     }
 
-    if(PB_FILE_NOT_EXIST == gastPBContent[ucPBOffset].enInitialState)   /*µ±Ç°µÄµç»°±¾Ã»ÓĞ³õÊ¼»¯Íê±Ï*/
+    if(PB_FILE_NOT_EXIST == gastPBContent[ucPBOffset].enInitialState)   /*å½“å‰çš„ç”µè¯æœ¬æ²¡æœ‰åˆå§‹åŒ–å®Œæ¯•*/
     {
         PB_ERROR_LOG("SI_PB_LocateRecord:The PhoneBook is Not Initializtion");
 
@@ -82,14 +82,14 @@ VOS_UINT32 SI_PB_LocateRecord(SI_PB_TYPE_ENUM_UINT32  enPBType, VOS_UINT16 usInd
 
     if((usIndex1 > gastPBContent[ucPBOffset].usTotalNum)
         || (usIndex2 > gastPBContent[ucPBOffset].usTotalNum)
-        || (usIndex1 > usIndex2))/*µ±Ç°µÄË÷ÒıÒÑ¾­³¬³ö·¶Î§*/
+        || (usIndex1 > usIndex2))/*å½“å‰çš„ç´¢å¼•å·²ç»è¶…å‡ºèŒƒå›´*/
     {
         PB_WARNING_LOG("SI_PB_LocateRecord: The Index is Not in The Range of PhoneBook");
 
         return TAF_ERR_PB_WRONG_INDEX;
     }
 
-    *pucNumber = ucPBOffset;        /*·µ»Øµ±Ç°µÄµç»°±¾»º³åÆ«ÒÆ*/
+    *pucNumber = ucPBOffset;        /*è¿”å›å½“å‰çš„ç”µè¯æœ¬ç¼“å†²åç§»*/
 
     return VOS_OK;
 }
@@ -98,18 +98,18 @@ VOS_UINT32 SI_PB_CountADNRecordNum(VOS_UINT16 usIndex, VOS_UINT16 *pusFileId, VO
     VOS_UINT8 i;
     VOS_UINT16 usTemp = 0;
 
-    for(i=0; i<SI_PB_ADNMAX; i++)   /*¸ù¾İµ±Ç°µÄADNÁĞ±íÄÚÈİÑ­»·*/
+    for(i=0; i<SI_PB_ADNMAX; i++)   /*æ ¹æ®å½“å‰çš„ADNåˆ—è¡¨å†…å®¹å¾ªç¯*/
     {
-        if((usTemp < usIndex)&&(usIndex <= (gstPBCtrlInfo.astADNInfo[i].ucRecordNum + usTemp)))/*Ë÷ÒıºÅÔÚÎÄ¼şµÄ·¶Î§ÄÚ*/
+        if((usTemp < usIndex)&&(usIndex <= (gstPBCtrlInfo.astADNInfo[i].ucRecordNum + usTemp)))/*ç´¢å¼•å·åœ¨æ–‡ä»¶çš„èŒƒå›´å†…*/
         {
-            *pusFileId = gstPBCtrlInfo.astADNInfo[i].usFileID;  /*·µ»Øµ±Ç°µÄÎÄ¼şID*/
-            *pucRecordNum = (VOS_UINT8)(usIndex - usTemp);/*·µ»Øµ±Ç°µÄ¼ÇÂ¼ºÅ*/
+            *pusFileId = gstPBCtrlInfo.astADNInfo[i].usFileID;  /*è¿”å›å½“å‰çš„æ–‡ä»¶ID*/
+            *pucRecordNum = (VOS_UINT8)(usIndex - usTemp);/*è¿”å›å½“å‰çš„è®°å½•å·*/
 
             return VOS_OK;
         }
         else
         {
-            usTemp += gstPBCtrlInfo.astADNInfo[i].ucRecordNum;  /*Ë÷ÒıºÅÀÛ¼Æ*/
+            usTemp += gstPBCtrlInfo.astADNInfo[i].ucRecordNum;  /*ç´¢å¼•å·ç´¯è®¡*/
         }
     }
 
@@ -154,11 +154,11 @@ VOS_VOID SI_PB_BcdToAscii(VOS_UINT8 ucBcdNumLen,VOS_UINT8 *pucBcdNum, VOS_UINT8 
             break;
         }
 
-        ucFirstNumber  = (VOS_UINT8)(pucBcdNum[ucTmp] & 0x0F); /*È¡³ö¸ß°ë×Ö½Ú*/
+        ucFirstNumber  = (VOS_UINT8)(pucBcdNum[ucTmp] & 0x0F); /*å–å‡ºé«˜åŠå­—èŠ‚*/
 
-        ucSecondNumber = (VOS_UINT8)((pucBcdNum[ucTmp] >> 4) & 0x0F);/*È¡³öµÍ°ë×Ö½Ú*/
+        ucSecondNumber = (VOS_UINT8)((pucBcdNum[ucTmp] >> 4) & 0x0F);/*å–å‡ºä½åŠå­—èŠ‚*/
 
-        if(ucFirstNumber <= 9)  /*×ª»»Êı×Ö*/
+        if(ucFirstNumber <= 9)  /*è½¬æ¢æ•°å­—*/
         {
             *pucAsciiNum = ucFirstNumber + 0x30;
 
@@ -166,7 +166,7 @@ VOS_VOID SI_PB_BcdToAscii(VOS_UINT8 ucBcdNumLen,VOS_UINT8 *pucBcdNum, VOS_UINT8 
 
             ucLen++;
         }
-        else if(0x0A == ucFirstNumber)   /*×ª»»*×Ö·û*/
+        else if(0x0A == ucFirstNumber)   /*è½¬æ¢*å­—ç¬¦*/
         {
             *pucAsciiNum = 0x2a;
 
@@ -174,7 +174,7 @@ VOS_VOID SI_PB_BcdToAscii(VOS_UINT8 ucBcdNumLen,VOS_UINT8 *pucBcdNum, VOS_UINT8 
 
             ucLen++;
         }
-        else if(0x0B == ucFirstNumber)   /*×ª»»#×Ö·û*/
+        else if(0x0B == ucFirstNumber)   /*è½¬æ¢#å­—ç¬¦*/
         {
             *pucAsciiNum = 0x23;
 
@@ -182,7 +182,7 @@ VOS_VOID SI_PB_BcdToAscii(VOS_UINT8 ucBcdNumLen,VOS_UINT8 *pucBcdNum, VOS_UINT8 
 
             ucLen++;
         }
-        else if(0x0C == ucFirstNumber)   /*×ª»»'P'×Ö·û*/
+        else if(0x0C == ucFirstNumber)   /*è½¬æ¢'P'å­—ç¬¦*/
         {
             *pucAsciiNum = 0x50;
 
@@ -190,7 +190,7 @@ VOS_VOID SI_PB_BcdToAscii(VOS_UINT8 ucBcdNumLen,VOS_UINT8 *pucBcdNum, VOS_UINT8 
 
             ucLen++;
         }
-        else if(0x0D == ucFirstNumber)   /*×ª»»'?'×Ö·û*/
+        else if(0x0D == ucFirstNumber)   /*è½¬æ¢'?'å­—ç¬¦*/
         {
             *pucAsciiNum = 0x3F;
 
@@ -198,7 +198,7 @@ VOS_VOID SI_PB_BcdToAscii(VOS_UINT8 ucBcdNumLen,VOS_UINT8 *pucBcdNum, VOS_UINT8 
 
             ucLen++;
         }
-        else                                    /*×ª»»×ÖÄ¸*/
+        else                                    /*è½¬æ¢å­—æ¯*/
         {
             *pucAsciiNum = ucFirstNumber + 0x57;
 
@@ -235,7 +235,7 @@ VOS_VOID SI_PB_BcdToAscii(VOS_UINT8 ucBcdNumLen,VOS_UINT8 *pucBcdNum, VOS_UINT8 
 
             ucLen++;
         }
-        else if(0x0C == ucSecondNumber)   /*×ª»»'P'×Ö·û*/
+        else if(0x0C == ucSecondNumber)   /*è½¬æ¢'P'å­—ç¬¦*/
         {
             *pucAsciiNum = 0x50;
 
@@ -243,7 +243,7 @@ VOS_VOID SI_PB_BcdToAscii(VOS_UINT8 ucBcdNumLen,VOS_UINT8 *pucBcdNum, VOS_UINT8 
 
             ucLen++;
         }
-        else if(0x0D == ucSecondNumber)   /*×ª»»'?'×Ö·û*/
+        else if(0x0D == ucSecondNumber)   /*è½¬æ¢'?'å­—ç¬¦*/
         {
             *pucAsciiNum = 0x3F;
 
@@ -272,13 +272,13 @@ VOS_VOID SI_PB_DecodePBName(VOS_UINT8 ucNameMax, VOS_UINT8 *pucName,
 {
     VOS_UINT8 i = 0;
 
-    /* ĞÕÃûÊÇUCS2 80 */
+    /* å§“åæ˜¯UCS2 80 */
     if (SI_PB_ALPHATAG_TYPE_UCS2_80 == pucName[0])
     {
         *pAlphaType = pucName[0];
 
         ucNameMax--;
-        for(i=0;i<(ucNameMax-(ucNameMax%2));i+=2)   /*±éÀúµ±Ç°µÄĞÕÃû³¤¶È*/
+        for(i=0;i<(ucNameMax-(ucNameMax%2));i+=2)   /*éå†å½“å‰çš„å§“åé•¿åº¦*/
         {
             if((pucName[i+1] == 0xFF)&&(pucName[i+2] == 0xFF))
             {
@@ -286,54 +286,54 @@ VOS_VOID SI_PB_DecodePBName(VOS_UINT8 ucNameMax, VOS_UINT8 *pucName,
             }
         }
 
-        *pNameLen = i;      /*ĞÕÃû³¤¶È·µ»Ø*/
+        *pNameLen = i;      /*å§“åé•¿åº¦è¿”å›*/
 
         return;
     }
 
-    /* ĞÕÃûÊÇUCS2 81 */
+    /* å§“åæ˜¯UCS2 81 */
     if (SI_PB_ALPHATAG_TYPE_UCS2_81 == pucName[0])
     {
         *pAlphaType = pucName[0];
 
-        if(pucName[1] > (ucNameMax - 3))/* Èç¹ûµ±Ç°³¤¶ÈĞÅÏ¢³¬¹ı×î´ó³¤¶È£¬ÔòÖ±½Ó½×½Ø¶Ï */
+        if(pucName[1] > (ucNameMax - 3))/* å¦‚æœå½“å‰é•¿åº¦ä¿¡æ¯è¶…è¿‡æœ€å¤§é•¿åº¦ï¼Œåˆ™ç›´æ¥é˜¶æˆªæ–­ */
         {
            i = ucNameMax -1;
         }
         else
         {
-           i = pucName[1] + 2;     /*¼ÆËãµ±Ç°ĞÕÃû³¤¶È*/
+           i = pucName[1] + 2;     /*è®¡ç®—å½“å‰å§“åé•¿åº¦*/
         }
 
-        *pNameLen = i;      /*ĞÕÃû³¤¶È·µ»Ø*/
+        *pNameLen = i;      /*å§“åé•¿åº¦è¿”å›*/
 
         return;
     }
 
-    /* ĞÕÃûÊÇUCS2 82 */
+    /* å§“åæ˜¯UCS2 82 */
     if (SI_PB_ALPHATAG_TYPE_UCS2_82 == pucName[0])
     {
         *pAlphaType = pucName[0];
 
-        if(pucName[1] > (ucNameMax - 4))/* Èç¹ûµ±Ç°³¤¶ÈĞÅÏ¢³¬¹ı×î´ó³¤¶È£¬ÔòÖ±½Ó½×½Ø¶Ï */
+        if(pucName[1] > (ucNameMax - 4))/* å¦‚æœå½“å‰é•¿åº¦ä¿¡æ¯è¶…è¿‡æœ€å¤§é•¿åº¦ï¼Œåˆ™ç›´æ¥é˜¶æˆªæ–­ */
         {
            i = ucNameMax -1;
         }
         else
         {
-           i = pucName[1] + 3;     /*¼ÆËãµ±Ç°ĞÕÃû³¤¶È*/
+           i = pucName[1] + 3;     /*è®¡ç®—å½“å‰å§“åé•¿åº¦*/
         }
 
-        *pNameLen = i;      /*ĞÕÃû³¤¶È·µ»Ø*/
+        *pNameLen = i;      /*å§“åé•¿åº¦è¿”å›*/
 
         return;
     }
 
 
-    /* ĞÕÃûÊÇGSM¸ñÊ½´æ´¢ */
+    /* å§“åæ˜¯GSMæ ¼å¼å­˜å‚¨ */
     *pAlphaType = SI_PB_ALPHATAG_TYPE_GSM;
 
-    for (i = 0; i < ucNameMax; i++)         /*±éÀúµ±Ç°µÄĞÕÃû³¤¶È*/
+    for (i = 0; i < ucNameMax; i++)         /*éå†å½“å‰çš„å§“åé•¿åº¦*/
     {
         if (0xFF == pucName[i])
         {
@@ -341,7 +341,7 @@ VOS_VOID SI_PB_DecodePBName(VOS_UINT8 ucNameMax, VOS_UINT8 *pucName,
         }
     }
 
-    *pNameLen = i;      /*ĞÕÃû³¤¶È·µ»Ø*/
+    *pNameLen = i;      /*å§“åé•¿åº¦è¿”å›*/
 
     return;
 }
@@ -357,30 +357,30 @@ VOS_VOID SI_PB_TransPBFromate(SI_PB_CONTENT_STRU *pstPBContent, VOS_UINT16 usInd
     VOS_UINT8  ucExtNumLen;
     VOS_UINT8  ucXdnNumLen;
 
-    ulResult = SI_PB_CheckContentValidity(pstPBContent, pContent);/*¼ì²éµ±Ç°µÄÄÚÈİÊÇ·ñÓĞĞ§*/
+    ulResult = SI_PB_CheckContentValidity(pstPBContent, pContent);/*æ£€æŸ¥å½“å‰çš„å†…å®¹æ˜¯å¦æœ‰æ•ˆ*/
 
     if(ulResult != VOS_OK)
     {
-        pstRecord->ValidFlag = SI_PB_CONTENT_INVALID;     /*±ê¼Çµ±Ç°µÄÄÚÈİÎŞĞ§*/
+        pstRecord->ValidFlag = SI_PB_CONTENT_INVALID;     /*æ ‡è®°å½“å‰çš„å†…å®¹æ— æ•ˆ*/
 
-        /*È«ÖÃÎª0*/
+        /*å…¨ç½®ä¸º0*/
     }
     else
     {
-        pstRecord->ValidFlag = SI_PB_CONTENT_VALID;/*±ê¼Çµ±Ç°µÄÄÚÈİÓĞĞ§*/
+        pstRecord->ValidFlag = SI_PB_CONTENT_VALID;/*æ ‡è®°å½“å‰çš„å†…å®¹æœ‰æ•ˆ*/
 
         SI_PB_DecodePBName(pstPBContent->ucNameLen, pContent,
                             &pstRecord->AlphaTagType,&pstRecord->ucAlphaTagLength);
 
-        if(pstRecord->ucAlphaTagLength != 0x00)         /*µ±Ç°ĞÕÃû²»Îª¿Õ*/
+        if(pstRecord->ucAlphaTagLength != 0x00)         /*å½“å‰å§“åä¸ä¸ºç©º*/
         {
-            if(pstRecord->AlphaTagType == SI_PB_ALPHATAG_TYPE_GSM)  /*¿½±´Ó¢ÎÄĞÕÃû´ÓÍ·¿ªÊ¼*/
+            if(pstRecord->AlphaTagType == SI_PB_ALPHATAG_TYPE_GSM)  /*æ‹·è´è‹±æ–‡å§“åä»å¤´å¼€å§‹*/
             {
                 VOS_MemCpy(pstRecord->AlphaTag, pContent, pstRecord->ucAlphaTagLength);
             }
-            else                                                                                        /*¿½±´ÖĞÎÄĞÕÃû´ÓµÚ¶ş¸ö×Ö½Ú¿ªÊ¼*/
+            else                                                                                        /*æ‹·è´ä¸­æ–‡å§“åä»ç¬¬äºŒä¸ªå­—èŠ‚å¼€å§‹*/
             {
-                /*ucs2±àÂë£¬¿½±´´Ó³¤¶È×Ö¶Î¿ªÊ¼*/
+                /*ucs2ç¼–ç ï¼Œæ‹·è´ä»é•¿åº¦å­—æ®µå¼€å§‹*/
                 VOS_MemCpy(pstRecord->AlphaTag, pContent+1, pstRecord->ucAlphaTagLength);
             }
         }
@@ -404,7 +404,7 @@ VOS_VOID SI_PB_TransPBFromate(SI_PB_CONTENT_STRU *pstPBContent, VOS_UINT16 usInd
 
         ucExtRecord = ((VOS_NULL_PTR == pucExtContent) ? 0xFF : (ucExtRecord));
 
-        if(pContent[pstPBContent->ucNameLen] < 2)           /*µ±Ç°ºÅÂëÎª¿Õ*/
+        if(pContent[pstPBContent->ucNameLen] < 2)           /*å½“å‰å·ç ä¸ºç©º*/
         {
             pstRecord->NumberLength = 0;
         }
@@ -421,7 +421,7 @@ VOS_VOID SI_PB_TransPBFromate(SI_PB_CONTENT_STRU *pstPBContent, VOS_UINT16 usInd
             SI_PB_BcdToAscii((VOS_UINT8)(ucExtNumLen + (SI_PB_NUM_LEN/2)), aucPhoneNumber,
                                 pstRecord->Number, &pstRecord->NumberLength);
         }
-        else                                                                                /*¿½±´ºÅÂë´ÓÄÚÈİ¿ªÊ¼*/
+        else                                                                                /*æ‹·è´å·ç ä»å†…å®¹å¼€å§‹*/
         {
             ucXdnNumLen = ((pContent[pstPBContent->ucNameLen]-1) > (SI_PB_NUM_LEN/2))?
                            (SI_PB_NUM_LEN/2) : (pContent[pstPBContent->ucNameLen]-1);
@@ -504,7 +504,7 @@ VOS_UINT32 SI_PB_CheckContentValidity(SI_PB_CONTENT_STRU *pstPBContent, VOS_UINT
     }
 
     if(((pContent[pstPBContent->ucNameLen] == 0)||(pContent[pstPBContent->ucNameLen] == 0xFF))
-        &&(pContent[0] == 0xFF))/*¼ì²éĞÕÃûºÍºÅÂëÊÇ·ñÎª¿Õ*/
+        &&(pContent[0] == 0xFF))/*æ£€æŸ¥å§“åå’Œå·ç æ˜¯å¦ä¸ºç©º*/
     {
         PB_INFO_LOG("SI_PB_CheckContentValidity: The PhoneBook Content is Empty");
 
@@ -526,7 +526,7 @@ VOS_UINT32 SI_PB_CheckANRValidity(VOS_UINT8 *pContent)
         return VOS_ERR;
     }
 
-    if((0xFF == pContent[0])||(0xFF == pContent[1])||(0 == pContent[1]))/*¼ì²éºÅÂëÊÇ·ñÎª¿Õ*/
+    if((0xFF == pContent[0])||(0xFF == pContent[1])||(0 == pContent[1]))/*æ£€æŸ¥å·ç æ˜¯å¦ä¸ºç©º*/
     {
         PB_INFO_LOG("SI_PB_CheckANRValidity: The PhoneBook Content is Empty");
 
@@ -547,27 +547,27 @@ VOS_UINT32 SI_PB_CountADNIndex(VOS_UINT16 usFileId, VOS_UINT8 ucRecordNum, VOS_U
     VOS_UINT8 i;
     VOS_UINT16 usIndex = 0;
 
-    for(i=0; i<SI_PB_ADNMAX; i++)       /*¸ù¾İµ±Ç°µÄADN ÎÄ¼şÁĞ±íÄÚÈİÑ­»·*/
+    for(i=0; i<SI_PB_ADNMAX; i++)       /*æ ¹æ®å½“å‰çš„ADN æ–‡ä»¶åˆ—è¡¨å†…å®¹å¾ªç¯*/
     {
-        if(usFileId == gstPBCtrlInfo.astADNInfo[i].usFileID)/*²éÑ¯µ±Ç°µÄÎÄ¼şID ÊÇ·ñÔÚÁĞ±íÖĞ*/
+        if(usFileId == gstPBCtrlInfo.astADNInfo[i].usFileID)/*æŸ¥è¯¢å½“å‰çš„æ–‡ä»¶ID æ˜¯å¦åœ¨åˆ—è¡¨ä¸­*/
         {
-            *pusIndex = usIndex + ucRecordNum;      /*¼ÆËãµ±Ç°µÄ¼ÇÂ¼ºÅµÄË÷ÒıºÅ*/
+            *pusIndex = usIndex + ucRecordNum;      /*è®¡ç®—å½“å‰çš„è®°å½•å·çš„ç´¢å¼•å·*/
 
             return VOS_OK;
         }
         else
         {
-            usIndex += gstPBCtrlInfo.astADNInfo[i].ucRecordNum;/*Ë÷ÒıºÅĞèÒªÀÛ¼Æ*/
+            usIndex += gstPBCtrlInfo.astADNInfo[i].ucRecordNum;/*ç´¢å¼•å·éœ€è¦ç´¯è®¡*/
         }
     }
 
-    return VOS_ERR;             /*µ±Ç°ÎÄ¼ş²»´æÔÚÎÄ¼şÁĞ±íÖĞ*/
+    return VOS_ERR;             /*å½“å‰æ–‡ä»¶ä¸å­˜åœ¨æ–‡ä»¶åˆ—è¡¨ä¸­*/
 }
 VOS_UINT32 SI_PB_GetADNSfi(VOS_UINT8 *pucSFI, VOS_UINT16 usFileId)
 {
     VOS_UINT8 i;
 
-    for(i = 0; i < gstPBCtrlInfo.ulADNFileNum; i++)   /*¸ù¾İµ±Ç°µÄADNÁĞ±íÄÚÈİÑ­»·*/
+    for(i = 0; i < gstPBCtrlInfo.ulADNFileNum; i++)   /*æ ¹æ®å½“å‰çš„ADNåˆ—è¡¨å†…å®¹å¾ªç¯*/
     {
         if(usFileId == gstPBCtrlInfo.astADNInfo[i].usFileID)
         {
@@ -583,7 +583,7 @@ VOS_UINT32 SI_PB_CheckADNFileID(VOS_UINT16 usFileID)
 {
     VOS_UINT8 j;
 
-    for(j=0; j<SI_PB_ADNMAX; j++)/*±È½ÏÎÄ¼şIDÊÇ·ñ´æÔÚÓÚADNÁĞ±íÖĞ*/
+    for(j=0; j<SI_PB_ADNMAX; j++)/*æ¯”è¾ƒæ–‡ä»¶IDæ˜¯å¦å­˜åœ¨äºADNåˆ—è¡¨ä¸­*/
     {
         if(usFileID == gstPBCtrlInfo.astADNInfo[j].usFileID)
         {
@@ -609,7 +609,7 @@ VOS_UINT32 SI_PB_GetXDNPBType(VOS_UINT32 *pulPBType, VOS_UINT16 usFileId)
             *pulPBType = PB_MSISDN_CONTENT;
             break;
         default:
-            ulResult = SI_PB_CheckADNFileID(usFileId);/*¼ì²éÊÇ·ñÊÇADNµÄFID*/
+            ulResult = SI_PB_CheckADNFileID(usFileId);/*æ£€æŸ¥æ˜¯å¦æ˜¯ADNçš„FID*/
 
             if ( VOS_OK == ulResult )
             {
@@ -778,7 +778,7 @@ VOS_UINT32 SI_PB_GetFreeANRRecordNum(VOS_UINT16 usANRFid,VOS_UINT8 *pucRecordNum
     VOS_UINT32 ulOffset = 0;
     VOS_UINT32 ulFlag = VOS_FALSE;
 
-    for(i = 0; i < gstPBCtrlInfo.ulADNFileNum; i++)   /*¸ù¾İµ±Ç°µÄADNÁĞ±íÄÚÈİÑ­»·*/
+    for(i = 0; i < gstPBCtrlInfo.ulADNFileNum; i++)   /*æ ¹æ®å½“å‰çš„ADNåˆ—è¡¨å†…å®¹å¾ªç¯*/
     {
         for(j = 0; j < SI_PB_ANRMAX; j++)
         {
@@ -828,7 +828,7 @@ VOS_UINT32 SI_PB_GetFreeEMLRecordNum(VOS_UINT16 ucEMLFid,VOS_UINT8 *pucRecordNum
     VOS_UINT32 j = 0;
     VOS_UINT32 ulOffset = 0;
 
-    for(i = 0; i < gstPBCtrlInfo.ulEMLFileNum; i++)   /*¸ù¾İµ±Ç°µÄADNÁĞ±íÄÚÈİÑ­»·*/
+    for(i = 0; i < gstPBCtrlInfo.ulEMLFileNum; i++)   /*æ ¹æ®å½“å‰çš„ADNåˆ—è¡¨å†…å®¹å¾ªç¯*/
     {
         if(ucEMLFid == gstPBCtrlInfo.astEMLInfo[i].usEMLFileID)
         {
@@ -891,7 +891,7 @@ VOS_UINT32  SI_PB_FindUnusedExtRecord(SI_EXT_CONTENT_STRU *pstEXTContent,
     VOS_UINT8  *pContent;
     VOS_UINT8  i;
 
-    /* ÒÑÊ¹ÓÃ¼ÇÂ¼ÊıÓë×î´ó¼ÇÂ¼ÊıÏàµÈÊ±±íÃ÷ÒÑ¾­Ã»ÓĞ¿ÉÒÔÊ¹ÓÃµÄEXT¼ÇÂ¼ */
+    /* å·²ä½¿ç”¨è®°å½•æ•°ä¸æœ€å¤§è®°å½•æ•°ç›¸ç­‰æ—¶è¡¨æ˜å·²ç»æ²¡æœ‰å¯ä»¥ä½¿ç”¨çš„EXTè®°å½• */
     if( pstEXTContent->usExtTotalNum == pstEXTContent->usExtUsedNum )
     {
         *pucRecord = 0xFF;
@@ -908,7 +908,7 @@ VOS_UINT32  SI_PB_FindUnusedExtRecord(SI_EXT_CONTENT_STRU *pstEXTContent,
          return VOS_ERR;
     }
 
-    /* ¸ù¾İEXTÎÄ¼şµÄµÚ¶ş¸ö×Ö½ÚÀ´ÅĞ¶ÏÊÇ·ñÎª¿Õ¼ÇÂ¼ */
+    /* æ ¹æ®EXTæ–‡ä»¶çš„ç¬¬äºŒä¸ªå­—èŠ‚æ¥åˆ¤æ–­æ˜¯å¦ä¸ºç©ºè®°å½• */
     for( i = 0 ; i < pstEXTContent->usExtTotalNum ; i++ )
     {
         if( 0xFF == pContent[1] )
@@ -953,7 +953,7 @@ VOS_VOID SI_PB_AsciiToBcd(VOS_UINT8 *pucAsciiNum, VOS_UINT8 ucAsciiNumLen, VOS_U
     {
         k = i % 2;
 
-        if ((*(pucAsciiNum + i) >= 0x30) && (*(pucAsciiNum + i) <= 0x39))/*×ª»»Êı×Ö*/
+        if ((*(pucAsciiNum + i) >= 0x30) && (*(pucAsciiNum + i) <= 0x39))/*è½¬æ¢æ•°å­—*/
         {
             if(k == 0)
             {
@@ -964,7 +964,7 @@ VOS_VOID SI_PB_AsciiToBcd(VOS_UINT8 *pucAsciiNum, VOS_UINT8 ucAsciiNumLen, VOS_U
                 *(pucTemp + (i / 2) ) = (VOS_UINT8)(((VOS_UINT8)(*(pucAsciiNum + i) - 0x30) << 4) | *(pucTemp + (i / 2)));
             }
         }
-        else if('*' == *(pucAsciiNum + i))  /*×ª»»*×Ö·û*/
+        else if('*' == *(pucAsciiNum + i))  /*è½¬æ¢*å­—ç¬¦*/
         {
             if(k == 0)
             {
@@ -975,7 +975,7 @@ VOS_VOID SI_PB_AsciiToBcd(VOS_UINT8 *pucAsciiNum, VOS_UINT8 ucAsciiNumLen, VOS_U
                 *(pucTemp + (i/2)) = (0xa << 4) | *(pucTemp + (i/2));
             }
         }
-        else if('#' == *(pucAsciiNum + i))  /*×ª»»#×Ö·û*/
+        else if('#' == *(pucAsciiNum + i))  /*è½¬æ¢#å­—ç¬¦*/
         {
             if(k == 0)
             {
@@ -986,7 +986,7 @@ VOS_VOID SI_PB_AsciiToBcd(VOS_UINT8 *pucAsciiNum, VOS_UINT8 ucAsciiNumLen, VOS_U
                 *(pucTemp + (i/2)) = (0xb << 4) | *(pucTemp + (i/2));
             }
         }
-        else if('?' == *(pucAsciiNum + i))  /*×ª»»?×Ö·û*/
+        else if('?' == *(pucAsciiNum + i))  /*è½¬æ¢?å­—ç¬¦*/
         {
             if(k == 0)
             {
@@ -999,7 +999,7 @@ VOS_VOID SI_PB_AsciiToBcd(VOS_UINT8 *pucAsciiNum, VOS_UINT8 ucAsciiNumLen, VOS_U
         }
         else if (('P' == *(pucAsciiNum + i))
              || ('p' == *(pucAsciiNum + i))
-             || (',' == *(pucAsciiNum + i)) ) /*×ª»»PAUSE×Ö·û*/
+             || (',' == *(pucAsciiNum + i)) ) /*è½¬æ¢PAUSEå­—ç¬¦*/
         {
             if(k == 0)
             {
@@ -1010,15 +1010,15 @@ VOS_VOID SI_PB_AsciiToBcd(VOS_UINT8 *pucAsciiNum, VOS_UINT8 ucAsciiNumLen, VOS_U
                 *(pucTemp + (i/2)) = (0xc << 4) | *(pucTemp + (i/2));
             }
         }
-        else                                        /*²»ÄÜÊ¶±ğµÄ×Ö·û*/
+        else                                        /*ä¸èƒ½è¯†åˆ«çš„å­—ç¬¦*/
         {
-            PB_WARNING_LOG("SI_PB_AsciiToBcd: The Char is Not Suspensory");/*´òÓ¡¾¯¸æ*/
+            PB_WARNING_LOG("SI_PB_AsciiToBcd: The Char is Not Suspensory");/*æ‰“å°è­¦å‘Š*/
         }
     }
 
     *pucBcdNumLen = ucAsciiNumLen/2;
 
-    if((ucAsciiNumLen % 2) == 1)    /*ÆæÊı×Ö½ÚºóÃæÌíF*/
+    if((ucAsciiNumLen % 2) == 1)    /*å¥‡æ•°å­—èŠ‚åé¢æ·»F*/
     {
         *(pucTemp + (ucAsciiNumLen / 2)) = 0xf0 | *(pucTemp + (ucAsciiNumLen / 2));
 
@@ -1042,14 +1042,14 @@ VOS_UINT32 SI_FindMultiTagInBERTLV(VOS_UINT8 *pType1TagAddr, VOS_UINT8 ucTag,
 
     for(i=0; (i < ulDataLen)&&(ucFindCount < ucTagCount);)
     {
-        if(pucDataBuf[i] == ucTag)   /*·µ»Ø³¤¶È×Ö½ÚÆ«ÒÆ*/
+        if(pucDataBuf[i] == ucTag)   /*è¿”å›é•¿åº¦å­—èŠ‚åç§»*/
         {
             pucOffset[ucFindCount] = i + 1;
 
             ucFindCount++;
         }
 
-        i += pucDataBuf[i+1] + 2; /*Ìøµ½ÏÂÒ»¸öTag*/
+        i += pucDataBuf[i+1] + 2; /*è·³åˆ°ä¸‹ä¸€ä¸ªTag*/
     }
 
     return (0 == ucFindCount)?SI_TAGNOTFOUND:ucFindCount;
@@ -1062,13 +1062,13 @@ VOS_UINT32 SI_FindTagInBERTLV(VOS_UINT8 *pucDataBuf, VOS_UINT8 ucTag, VOS_UINT32
 
     for(i=0; i<ulDataLen;)
     {
-        if(pucDataBuf[i] == ucTag)   /*·µ»Ø³¤¶È×Ö½ÚÆ«ÒÆ*/
+        if(pucDataBuf[i] == ucTag)   /*è¿”å›é•¿åº¦å­—èŠ‚åç§»*/
         {
             return (i+1);
         }
         else
         {
-            i += pucDataBuf[i+1] + 2; /*Ìøµ½ÏÂÒ»¸öTag*/
+            i += pucDataBuf[i+1] + 2; /*è·³åˆ°ä¸‹ä¸€ä¸ªTag*/
         }
     }
 
@@ -1083,14 +1083,14 @@ VOS_UINT32 SI_FindType2FileTagNum(VOS_UINT8 *pucDataBuf, VOS_UINT8 ucTag, VOS_UI
 
     for(i=0; i<ulDataLen;)
     {
-        if(pucDataBuf[i] == ucTag)   /*·µ»ØTag Num*/
+        if(pucDataBuf[i] == ucTag)   /*è¿”å›Tag Num*/
         {
             return ulTagNum;
         }
         else
         {
             ulTagNum++;
-            i += pucDataBuf[i+1] + 2; /*Ìøµ½ÏÂÒ»¸öTag*/
+            i += pucDataBuf[i+1] + 2; /*è·³åˆ°ä¸‹ä¸€ä¸ªTag*/
         }
     }
 
@@ -1103,9 +1103,9 @@ VOS_UINT32 SI_PB_DecodeEFPBR_AdnContent(VOS_UINT8  *pType1TagAddr, VOS_UINT32 i)
 {
     VOS_UINT32 ulOffset;
 
-    ulOffset = SI_FindTagInBERTLV(&pType1TagAddr[2], EFADNDO_TAG, pType1TagAddr[1]);/*²éÑ¯µ±Ç°µÄADNÎÄ¼şID*/
+    ulOffset = SI_FindTagInBERTLV(&pType1TagAddr[2], EFADNDO_TAG, pType1TagAddr[1]);/*æŸ¥è¯¢å½“å‰çš„ADNæ–‡ä»¶ID*/
 
-    if(SI_TAGNOTFOUND == ulOffset)     /*Î´ÕÒµ½ĞÅÏ¢*/
+    if(SI_TAGNOTFOUND == ulOffset)     /*æœªæ‰¾åˆ°ä¿¡æ¯*/
     {
         PB_ERROR_LOG("SI_PB_DecodeEFPBR_AdnContent: Could Not Find the EFADNDO_TAG Tag");
 
@@ -1114,7 +1114,7 @@ VOS_UINT32 SI_PB_DecodeEFPBR_AdnContent(VOS_UINT8  *pType1TagAddr, VOS_UINT32 i)
 
     gstPBCtrlInfo.astADNInfo[i].usFileID = ((pType1TagAddr[ulOffset+3]<<0x08)&0xFF00)+pType1TagAddr[ulOffset+4];
 
-    /*Èç¹ûÓĞSFI£¬ĞèÒª¼ÇÂ¼ÏÂÀ´*/
+    /*å¦‚æœæœ‰SFIï¼Œéœ€è¦è®°å½•ä¸‹æ¥*/
     if(0x03 == pType1TagAddr[ulOffset+2])
     {
         gstPBCtrlInfo.astADNInfo[i].ucSFI = pType1TagAddr[ulOffset+5];
@@ -1128,9 +1128,9 @@ VOS_VOID SI_PB_DecodeEFPBR_UidContent(VOS_UINT8 * pType1TagAddr, VOS_UINT32 i)
 {
     VOS_UINT32 ulOffset;
 
-    ulOffset = SI_FindTagInBERTLV(&pType1TagAddr[2], EFUIDDO_TAG, pType1TagAddr[1]);/*²éÑ¯µ±Ç°µÄUIDÎÄ¼şID*/
+    ulOffset = SI_FindTagInBERTLV(&pType1TagAddr[2], EFUIDDO_TAG, pType1TagAddr[1]);/*æŸ¥è¯¢å½“å‰çš„UIDæ–‡ä»¶ID*/
 
-    if(SI_TAGNOTFOUND == ulOffset) /*Î´ÕÒµ½ĞÅÏ¢*/
+    if(SI_TAGNOTFOUND == ulOffset) /*æœªæ‰¾åˆ°ä¿¡æ¯*/
     {
         PB_WARNING_LOG("SI_PB_DecodeEFPBR_UidContent: Could Not Find the EFUIDDO_TAG Tag");
 
@@ -1147,9 +1147,9 @@ VOS_VOID SI_PB_DecodeEFPBR_PbcContent(VOS_UINT8 * pType1TagAddr, VOS_UINT32 i)
 {
     VOS_UINT32 ulOffset;
 
-    ulOffset = SI_FindTagInBERTLV(&pType1TagAddr[2], EFPBCDO_TAG, pType1TagAddr[1]);/*²éÑ¯µ±Ç°µÄPBCÎÄ¼şID*/
+    ulOffset = SI_FindTagInBERTLV(&pType1TagAddr[2], EFPBCDO_TAG, pType1TagAddr[1]);/*æŸ¥è¯¢å½“å‰çš„PBCæ–‡ä»¶ID*/
 
-    if(SI_TAGNOTFOUND == ulOffset) /*Î´ÕÒµ½ĞÅÏ¢*/
+    if(SI_TAGNOTFOUND == ulOffset) /*æœªæ‰¾åˆ°ä¿¡æ¯*/
     {
         PB_WARNING_LOG("SI_PB_DecodeEFPBR_PbcContent: Could Not Find the EFUIDDO_TAG Tag");
 
@@ -1174,9 +1174,9 @@ VOS_VOID SI_PB_DecodeEFPBR_IapContent(VOS_UINT8 * pType1TagAddr, VOS_UINT32 i)
 {
     VOS_UINT32 ulOffset;
 
-    ulOffset = SI_FindTagInBERTLV(&pType1TagAddr[2], EFIAPDO_TAG, pType1TagAddr[1]);/*²éÑ¯µ±Ç°µÄIAPÎÄ¼şID*/
+    ulOffset = SI_FindTagInBERTLV(&pType1TagAddr[2], EFIAPDO_TAG, pType1TagAddr[1]);/*æŸ¥è¯¢å½“å‰çš„IAPæ–‡ä»¶ID*/
 
-    if(SI_TAGNOTFOUND == ulOffset) /*Î´ÕÒµ½ĞÅÏ¢*/
+    if(SI_TAGNOTFOUND == ulOffset) /*æœªæ‰¾åˆ°ä¿¡æ¯*/
     {
         PB_WARNING_LOG("SI_PB_DecodeEFPBR_IapContent: Could Not Find the EFIAPDO_TAG Tag");
     }
@@ -1191,14 +1191,14 @@ VOS_VOID SI_PB_DecodeEFPBR_IapContent(VOS_UINT8 * pType1TagAddr, VOS_UINT32 i)
 
 VOS_UINT32 SI_PB_DecodeType1EFPBR_AnrContent(VOS_UINT8 * pType1TagAddr, VOS_UINT32 i, VOS_UINT8 *pucOffset)
 {
-    VOS_UINT32 ulANRCount; /*¼ÇÂ¼Ã¿Ìõ¼ÇÂ¼ÖĞµÄANR¸öÊı*/
+    VOS_UINT32 ulANRCount; /*è®°å½•æ¯æ¡è®°å½•ä¸­çš„ANRä¸ªæ•°*/
     VOS_UINT32 ulOffset;
     VOS_UINT32 j;
 
     ulANRCount = SI_FindMultiTagInBERTLV(pType1TagAddr, (VOS_UINT8)EFANRDO_TAG,
-                                       pucOffset,(VOS_UINT8)SI_PB_ANR_MAX);/*²éÑ¯µ±Ç°µÄANRÎÄ¼ş*/
+                                       pucOffset,(VOS_UINT8)SI_PB_ANR_MAX);/*æŸ¥è¯¢å½“å‰çš„ANRæ–‡ä»¶*/
 
-    if(SI_TAGNOTFOUND == ulANRCount) /*Î´ÕÒµ½ĞÅÏ¢*/
+    if(SI_TAGNOTFOUND == ulANRCount) /*æœªæ‰¾åˆ°ä¿¡æ¯*/
     {
         PB_NORMAL_LOG("SI_PB_DecodeType1EFPBR_AnrContent: Could Not Find the EFANRDO_TAG Tag");
     }
@@ -1220,14 +1220,14 @@ VOS_UINT32 SI_PB_DecodeType1EFPBR_AnrContent(VOS_UINT8 * pType1TagAddr, VOS_UINT
 }
 VOS_UINT32 SI_PB_DecodeType2EFPBR_AnrContent(VOS_UINT8 * pType2TagAddr, VOS_UINT32 i, VOS_UINT8 *pucOffset)
 {
-    VOS_UINT32 ulANRCount; /*¼ÇÂ¼Ã¿Ìõ¼ÇÂ¼ÖĞµÄANR¸öÊı*/
+    VOS_UINT32 ulANRCount; /*è®°å½•æ¯æ¡è®°å½•ä¸­çš„ANRä¸ªæ•°*/
     VOS_UINT32 ulOffset;
     VOS_UINT32 j;
 
     ulANRCount = SI_FindMultiTagInBERTLV(pType2TagAddr, (VOS_UINT8)EFANRDO_TAG,
-                                       pucOffset,(VOS_UINT8)SI_PB_ANR_MAX);/*²éÑ¯µ±Ç°µÄANRÎÄ¼ş*/
+                                       pucOffset,(VOS_UINT8)SI_PB_ANR_MAX);/*æŸ¥è¯¢å½“å‰çš„ANRæ–‡ä»¶*/
 
-    if(SI_TAGNOTFOUND == ulANRCount) /*Î´ÕÒµ½ĞÅÏ¢*/
+    if(SI_TAGNOTFOUND == ulANRCount) /*æœªæ‰¾åˆ°ä¿¡æ¯*/
     {
         PB_NORMAL_LOG("SI_PB_DecodeType2EFPBR_AnrContent: Could Not Find the EFANRDO_TAG Tag");
     }
@@ -1254,10 +1254,10 @@ VOS_VOID SI_PB_DecodeEFPBR_ExtContent(VOS_UINT8  *pType3TagAddr)
 {
     VOS_UINT32 ulOffset;
 
-    /* ËùÓĞµÄADNÎÄ¼ş¶¼Ö»¶ÔÓ¦ÓÚÍ¬Ò»¸öEXT1ÎÄ¼ş,Ö»ÒªÔÚÒ»¸öPBRµÄ¼ÇÂ¼ÀïÕÒµ½¾Í¿ÉÒÔÁË */
-    ulOffset = SI_FindTagInBERTLV(pType3TagAddr+2, EFEXT1DO_TAG, pType3TagAddr[1]);/*²éÑ¯µ±Ç°µÄEXTÎÄ¼şID*/
+    /* æ‰€æœ‰çš„ADNæ–‡ä»¶éƒ½åªå¯¹åº”äºåŒä¸€ä¸ªEXT1æ–‡ä»¶,åªè¦åœ¨ä¸€ä¸ªPBRçš„è®°å½•é‡Œæ‰¾åˆ°å°±å¯ä»¥äº† */
+    ulOffset = SI_FindTagInBERTLV(pType3TagAddr+2, EFEXT1DO_TAG, pType3TagAddr[1]);/*æŸ¥è¯¢å½“å‰çš„EXTæ–‡ä»¶ID*/
 
-    /*Î´ÕÒµ½ĞÅÏ¢*/
+    /*æœªæ‰¾åˆ°ä¿¡æ¯*/
     if(SI_TAGNOTFOUND == ulOffset)
     {
         PB_WARNING_LOG("SI_PB_DecodeEFPBR_ExtContent: Could Not Find the EFEXTDO_TAG Tag");
@@ -1282,9 +1282,9 @@ VOS_VOID SI_PB_DecodeType2EFPBR_EmailContent(VOS_UINT8 * pType2TagAddr, VOS_UINT
 {
     VOS_UINT32 ulOffset;
 
-    ulOffset = SI_FindTagInBERTLV(pType2TagAddr+2, EFEMAILDO_TAG, pType2TagAddr[1]);/*²éÑ¯µ±Ç°µÄEXTÎÄ¼şID*/
+    ulOffset = SI_FindTagInBERTLV(pType2TagAddr+2, EFEMAILDO_TAG, pType2TagAddr[1]);/*æŸ¥è¯¢å½“å‰çš„EXTæ–‡ä»¶ID*/
 
-    /*Î´ÕÒµ½ĞÅÏ¢*/
+    /*æœªæ‰¾åˆ°ä¿¡æ¯*/
     if(SI_TAGNOTFOUND == ulOffset)
     {
         PB_NORMAL_LOG("SI_PB_DecodeType2EFPBR_EmailContent: Could Not Find the EFEMAILDO_TAG Tag");
@@ -1306,9 +1306,9 @@ VOS_UINT32 SI_PB_DecodeType1EFPBR_EmailContent(VOS_UINT8 * pType2TagAddr, VOS_UI
 {
     VOS_UINT32 ulOffset;
 
-    ulOffset = SI_FindTagInBERTLV(pType2TagAddr+2, EFEMAILDO_TAG, pType2TagAddr[1]);/*²éÑ¯µ±Ç°µÄEXTÎÄ¼şID*/
+    ulOffset = SI_FindTagInBERTLV(pType2TagAddr+2, EFEMAILDO_TAG, pType2TagAddr[1]);/*æŸ¥è¯¢å½“å‰çš„EXTæ–‡ä»¶ID*/
 
-    /*Î´ÕÒµ½ĞÅÏ¢*/
+    /*æœªæ‰¾åˆ°ä¿¡æ¯*/
     if(SI_TAGNOTFOUND == ulOffset)
     {
         PB_NORMAL_LOG("SI_PB_DecodeType1EFPBR_EmailContent: Could Not Find the EFEMAILDO_TAG Tag");
@@ -1342,12 +1342,12 @@ VOS_UINT32 SI_PB_DecodeEFPBR(VOS_UINT8 ucRecordNum, VOS_UINT8 ucRecordLen, VOS_U
 
     for(i=0; i<ucRecordNum; i++,(ptemp+= ucRecordLen))
     {
-        if((ptemp[0]&0xF0) != 0xA0 ) /*ÅĞ¶Ïµ±Ç°µÄ¼ÇÂ¼ÊÇ·ñÓĞĞ§*/
+        if((ptemp[0]&0xF0) != 0xA0 ) /*åˆ¤æ–­å½“å‰çš„è®°å½•æ˜¯å¦æœ‰æ•ˆ*/
         {
             continue;
         }
 
-        /*½âÎöTpye1ÎÄ¼ş¼ÇÂ¼*/
+        /*è§£æTpye1æ–‡ä»¶è®°å½•*/
         ulOffset = SI_FindTagInBERTLV(ptemp, PB_FILE_TYPE1, ucRecordLen);
 
         if(SI_TAGNOTFOUND == ulOffset)
@@ -1374,10 +1374,10 @@ VOS_UINT32 SI_PB_DecodeEFPBR(VOS_UINT8 ucRecordNum, VOS_UINT8 ucRecordLen, VOS_U
 
         ulType1ANRFlag = SI_PB_DecodeType1EFPBR_AnrContent(pType1TagAddr, i, aucANROffset);
 
-        /*½âÎöTpye2ÎÄ¼ş¼ÇÂ¼*/
+        /*è§£æTpye2æ–‡ä»¶è®°å½•*/
         ulOffset = SI_FindTagInBERTLV(ptemp, PB_FILE_TYPE2, ucRecordLen);
 
-        /*Type2 ÀàĞÍÎÄ¼ş²»´æÔÚ»òÒÑ½âÎö³öType1ÀàĞÍ EmailĞÅÏ¢*/
+        /*Type2 ç±»å‹æ–‡ä»¶ä¸å­˜åœ¨æˆ–å·²è§£æå‡ºType1ç±»å‹ Emailä¿¡æ¯*/
         if(SI_TAGNOTFOUND == ulOffset)
         {
             PB_NORMAL_LOG("SI_PB_DecodeEFPBR: Could Not Find the Type2 Tag");
@@ -1397,7 +1397,7 @@ VOS_UINT32 SI_PB_DecodeEFPBR(VOS_UINT8 ucRecordNum, VOS_UINT8 ucRecordLen, VOS_U
             }
         }
 
-        /*½âÎöTpye3ÎÄ¼ş¼ÇÂ¼*/
+        /*è§£æTpye3æ–‡ä»¶è®°å½•*/
         ulOffset = SI_FindTagInBERTLV(ptemp, PB_FILE_TYPE3, ucRecordLen);
 
         if(SI_TAGNOTFOUND == ulOffset)
@@ -1449,8 +1449,8 @@ VOS_UINT32 SI_PB_DecodeEFPBR(VOS_UINT8 ucRecordNum, VOS_UINT8 ucRecordLen, VOS_U
         }
     }
 
-    /* ¶ÔÓÚUSIM¿¨£¬µç»°±¾ÎÄ¼şµÄ³õÊ¼»¯ÓÅÏÈ²ÉÓÃSEARCHÎÄ¼şÊµÏÖ£¬
-       ³õÊ¼»¯¹ı³ÌÖĞ³öÏÖSEARCH²»³É¹¦Ê±×ªÎªÕı³£¶ÁÈ¡³õÊ¼»¯ */
+    /* å¯¹äºUSIMå¡ï¼Œç”µè¯æœ¬æ–‡ä»¶çš„åˆå§‹åŒ–ä¼˜å…ˆé‡‡ç”¨SEARCHæ–‡ä»¶å®ç°ï¼Œ
+       åˆå§‹åŒ–è¿‡ç¨‹ä¸­å‡ºç°SEARCHä¸æˆåŠŸæ—¶è½¬ä¸ºæ­£å¸¸è¯»å–åˆå§‹åŒ– */
     gstPBInitState.enPBSearchState = PB_SEARCH_ENABLE;
 
     return VOS_OK;
@@ -1462,7 +1462,7 @@ VOS_VOID SI_PB_DecodeEFPBCRecord(VOS_UINT8 *pucContent, VOS_UINT8 ucRecordNum)
 
     if( 1 == ((*pucContent)&0x1) )
     {
-        /*´ÓµÚÒ»¸öÔªËØ¿ªÊ¼¼ÇÂ¼*/
+        /*ä»ç¬¬ä¸€ä¸ªå…ƒç´ å¼€å§‹è®°å½•*/
         gstPBInitState.stPBCUpdate.aucRecord[++gstPBInitState.stPBCUpdate.ucEntryChangeNum] = ucRecordNum;
 
     }
@@ -1545,7 +1545,7 @@ VOS_UINT32 SI_PB_GetEXTContentFromReq(VOS_UINT8 ucRecordNum, VOS_UINT8 **ppucCon
     {
         *ppucContent = gstPBReqUnit.aucEXTContent;
 
-        gstPBReqUnit.usExtIndex = 0;/*ÇåÎªÎŞĞ§Öµ*/
+        gstPBReqUnit.usExtIndex = 0;/*æ¸…ä¸ºæ— æ•ˆå€¼*/
 
         return VOS_OK;
     }
@@ -1556,7 +1556,7 @@ VOS_UINT32 SI_PB_GetEXTContentFromReq(VOS_UINT8 ucRecordNum, VOS_UINT8 **ppucCon
         {
             *ppucContent = gstPBReqUnit.stSPBReq.aucANRExtContent[i];
 
-            gstPBReqUnit.stSPBReq.usANRExtIndex[i] = 0;/*ÇåÎªÎŞĞ§Öµ*/
+            gstPBReqUnit.stSPBReq.usANRExtIndex[i] = 0;/*æ¸…ä¸ºæ— æ•ˆå€¼*/
             return VOS_OK;
         }
     }
@@ -1606,28 +1606,28 @@ VOS_UINT32 SI_PB_BcdCompare(VOS_UINT8 *pucBcdNumSrc, VOS_UINT8 ucBcdSrcLen, VOS_
 
     VOS_MemSet(aucCmpNum, (VOS_CHAR)0xFF, sizeof(aucCmpNum));
 
-    /* µç»°±¾×î³¤Ö§³Ö40¸öºÅÂë£¬BCDÂëµÄ³¤¶È×î³¤20¸ö×Ö½Ú */
+    /* ç”µè¯æœ¬æœ€é•¿æ”¯æŒ40ä¸ªå·ç ï¼ŒBCDç çš„é•¿åº¦æœ€é•¿20ä¸ªå­—èŠ‚ */
     if ((ucBcdSrcLen > SI_PB_NUM_LEN) || (ucFdnBcdLen > SI_PB_NUM_LEN))
     {
         return VOS_ERR;
     }
 
-    /* ½«ÊäÈëµÄºÅÂë×ª»»³ÉASCIIÂëºóÔÙ½øĞĞ±È½Ï */
+    /* å°†è¾“å…¥çš„å·ç è½¬æ¢æˆASCIIç åå†è¿›è¡Œæ¯”è¾ƒ */
     SI_PB_BcdToAscii(ucBcdSrcLen, pucBcdNumSrc, aucCmpNum, &ucCmpNumLen);
 
-    /* ½«ÊäÈëµÄFDNºÅÂë×ª»»³ÉASCIIÂëºóÔÙ½øĞĞ±È½Ï */
+    /* å°†è¾“å…¥çš„FDNå·ç è½¬æ¢æˆASCIIç åå†è¿›è¡Œæ¯”è¾ƒ */
     SI_PB_BcdToAscii(ucFdnBcdLen, pucFdnBcdNum, aucFdnNum, &ucFdnNumLen);
 
-    /* ´æ´¢µÄFDNºÅÂë³¤¶È´óÓÚÒµÎñºÅÂë£¬·µ»ØÊ§°Ü */
+    /* å­˜å‚¨çš„FDNå·ç é•¿åº¦å¤§äºä¸šåŠ¡å·ç ï¼Œè¿”å›å¤±è´¥ */
     if (ucFdnNumLen > ucCmpNumLen)
     {
         return VOS_ERR;
     }
 
-    /* Ñ­»·±È½ÏÁ½¸öºÅÂëµÄASCIIÂë */
+    /* å¾ªç¯æ¯”è¾ƒä¸¤ä¸ªå·ç çš„ASCIIç  */
     for (ucDstIndex = 0; ucDstIndex < ucFdnNumLen; ucDstIndex++)
     {
-        /* Óöµ½'?'Ìø¹ı±È½Ï£¬±È½ÏÏÂÒ»¸öºÅÂë.»òÕßÁ½¸öºÅÂë±ØĞëÏàµÈ */
+        /* é‡åˆ°'?'è·³è¿‡æ¯”è¾ƒï¼Œæ¯”è¾ƒä¸‹ä¸€ä¸ªå·ç .æˆ–è€…ä¸¤ä¸ªå·ç å¿…é¡»ç›¸ç­‰ */
         if ((aucFdnNum[ucDstIndex] == aucCmpNum[ucDstIndex])
             || ('?' == aucFdnNum[ucDstIndex]))
         {
@@ -1639,7 +1639,7 @@ VOS_UINT32 SI_PB_BcdCompare(VOS_UINT8 *pucBcdNumSrc, VOS_UINT8 ucBcdSrcLen, VOS_
         }
     }
 
-    /* Èç¹û±È½Ïµ½½áÎ²ÅĞ¶¨³É¹¦ */
+    /* å¦‚æœæ¯”è¾ƒåˆ°ç»“å°¾åˆ¤å®šæˆåŠŸ */
     if (ucFdnNumLen == ucDstIndex)
     {
         return VOS_OK;
@@ -1669,7 +1669,7 @@ VOS_UINT32 SI_PB_CheckEXT2(VOS_UINT8 ucExtRecord, VOS_UINT32 ulExtInfoNum, VOS_U
 
     pExTemp += (ucExtRecord - 1) * SI_PB_EXT_LEN;
 
-    /* ÅĞ¶ÏEXºÅÂë³¤¶È */
+    /* åˆ¤æ–­EXå·ç é•¿åº¦ */
     if ((0xFF == *(pExTemp+1)) || (0x0 == *(pExTemp+1)))
     {
         PB_ERROR_LOG("SI_PB_CheckFdn: EXT NUM Length is error.\r\n");
@@ -1702,7 +1702,7 @@ VOS_UINT32 SI_PB_CheckFdn(VOS_UINT8 *pucNum, VOS_UINT32 ulNumLength)
     SI_PB_MemSet(SI_PB_NUM_LEN, (VOS_UINT8)0xFF, aucNumber);
     ucNumLen = 0;/* [false alarm]:*/
 
-    /*µ±Ç°µç»°±¾²»´æÔÚ»òÕß³õÊ¼»¯Î´Íê³É*/
+    /*å½“å‰ç”µè¯æœ¬ä¸å­˜åœ¨æˆ–è€…åˆå§‹åŒ–æœªå®Œæˆ*/
     ulResult = SI_PB_LocateRecord(PB_FDN, 1, 1, &ucPBOffset);
     if(VOS_OK != ulResult)
     {
@@ -1722,13 +1722,13 @@ VOS_UINT32 SI_PB_CheckFdn(VOS_UINT8 *pucNum, VOS_UINT32 ulNumLength)
 
     ulExtInfoNum = gastPBContent[ucPBOffset].ulExtInfoNum;
 
-    /*ÔÚµç»°±¾¼ÇÂ¼ÖĞÑ­»·½øĞĞ×Ö·û´®Æ¥Åä£¬Ò»µ©³É¹¦·µ»ØVOS_OK*/
-    for(i=0; i<usTotalNum; i++)   /*¸ù¾İÊı¾İ½á¹¹×î´ó³¤¶ÈÑ­»·*/
+    /*åœ¨ç”µè¯æœ¬è®°å½•ä¸­å¾ªç¯è¿›è¡Œå­—ç¬¦ä¸²åŒ¹é…ï¼Œä¸€æ—¦æˆåŠŸè¿”å›VOS_OK*/
+    for(i=0; i<usTotalNum; i++)   /*æ ¹æ®æ•°æ®ç»“æ„æœ€å¤§é•¿åº¦å¾ªç¯*/
     {
         pTemp = pucFdnContent;
         pTemp += gastPBContent[ucPBOffset].ucNameLen;
 
-        /*¼ì²éºÅÂë³¤¶ÈÊÇ·ñºÏ·¨*/
+        /*æ£€æŸ¥å·ç é•¿åº¦æ˜¯å¦åˆæ³•*/
         if ((0xFF == *pTemp)||(*pTemp < 2))
         {
             pucFdnContent += gastPBContent[ucPBOffset].ucRecordLen;
@@ -1749,7 +1749,7 @@ VOS_UINT32 SI_PB_CheckFdn(VOS_UINT8 *pucNum, VOS_UINT32 ulNumLength)
 
         ucExtRecord = pucFdnContent[gastPBContent[ucPBOffset].ucRecordLen-1];
 
-        /* ¶ÁÈëEXÎÄ¼ş */
+        /* è¯»å…¥EXæ–‡ä»¶ */
         if (0xFF != ucExtRecord)
         {
             if (VOS_OK != SI_PB_CheckEXT2(ucExtRecord, ulExtInfoNum, &(aucNumber[ucNumLen]), &ucExNumLen))
@@ -1760,7 +1760,7 @@ VOS_UINT32 SI_PB_CheckFdn(VOS_UINT8 *pucNum, VOS_UINT32 ulNumLength)
             ucNumLen += ucExNumLen;
         }
 
-        /*±È¶Ô×Ö·û*/
+        /*æ¯”å¯¹å­—ç¬¦*/
         if (VOS_OK == SI_PB_BcdCompare(pucNum, (VOS_UINT8)ulNumLength, aucNumber, ucNumLen))
         {
             PB_ERROR_LOG("SI_PB_CheckFdn: SI_PB_BcdCompare fail");
@@ -1786,16 +1786,16 @@ VOS_VOID SI_PB_TransANRFromate(VOS_UINT8 ucANROffset,VOS_UINT8 *pANRContent, SI_
     VOS_UINT8  ucExtNumLen;
     VOS_UINT8  ucAnrNumLen;
 
-    ulResult = SI_PB_CheckANRValidity(pANRContent);/*¼ì²éµ±Ç°µÄÄÚÈİÊÇ·ñÓĞĞ§*/
+    ulResult = SI_PB_CheckANRValidity(pANRContent);/*æ£€æŸ¥å½“å‰çš„å†…å®¹æ˜¯å¦æœ‰æ•ˆ*/
 
     if(ulResult != VOS_OK)
     {
-        /*È«ÖÃÎª0*/
+        /*å…¨ç½®ä¸º0*/
         pstRecord->AdditionNumber[ucANROffset].NumberLength = 0;
     }
     else
     {
-        pstRecord->ValidFlag = SI_PB_CONTENT_VALID;/*±ê¼Çµ±Ç°µÄÄÚÈİÓĞĞ§*/
+        pstRecord->ValidFlag = SI_PB_CONTENT_VALID;/*æ ‡è®°å½“å‰çš„å†…å®¹æœ‰æ•ˆ*/
 
         pstRecord->AdditionNumber[ucANROffset].NumberType = pANRContent[2];
 
@@ -1816,7 +1816,7 @@ VOS_VOID SI_PB_TransANRFromate(VOS_UINT8 ucANROffset,VOS_UINT8 *pANRContent, SI_
             SI_PB_BcdToAscii( (VOS_UINT8)(ucExtNumLen + (SI_PB_NUM_LEN/2)), aucPhoneNumber,
                                 pstRecord->AdditionNumber[ucANROffset].Number, &pstRecord->AdditionNumber[ucANROffset].NumberLength);
         }
-        else                                                                                /*¿½±´ºÅÂë´ÓÄÚÈİ¿ªÊ¼*/
+        else                                                                                /*æ‹·è´å·ç ä»å†…å®¹å¼€å§‹*/
         {
             ucAnrNumLen = ((pANRContent[1]-1) > (SI_PB_NUM_LEN/2))?
                           (SI_PB_NUM_LEN/2) : (pANRContent[1]-1);

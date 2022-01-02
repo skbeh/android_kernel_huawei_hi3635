@@ -18,7 +18,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 #define    THIS_FILE_ID PS_FILE_ID_PIH_API_C
@@ -50,7 +50,7 @@ VOS_UINT32 SI_PIH_GetReceiverPid(MN_CLIENT_ID_T  ClientId, VOS_UINT32 *pulReceiv
 #if ( FEATURE_MULTI_MODEM == FEATURE_ON )
     MODEM_ID_ENUM_UINT16    enModemID;
 
-    /* µ÷ÓÃ½Ó¿Ú»ñÈ¡Modem ID */
+    /* è°ƒç”¨æŽ¥å£èŽ·å–Modem ID */
     if(VOS_OK != AT_GetModemIdFromClient(ClientId,&enModemID))
     {
         return VOS_ERR;
@@ -339,7 +339,7 @@ SI_UINT32 SI_PIH_CchoSetReq(
     SI_PIH_CCHO_SET_REQ_STRU           *pstMsg;
     VOS_UINT32                          ulReceiverPid;
 
-    /* ²ÎÊý¼ì²â */
+    /* å‚æ•°æ£€æµ‹ */
     if ((0 == pstCchoCmd->ulAIDLen)
         || ((USIMM_AID_LEN_MAX*2) < pstCchoCmd->ulAIDLen))
     {
@@ -355,7 +355,7 @@ SI_UINT32 SI_PIH_CchoSetReq(
         return TAF_FAILURE;
     }
 
-    /* ·ÖÅäÏûÏ¢ÄÚ´æ */
+    /* åˆ†é…æ¶ˆæ¯å†…å­˜ */
     pstMsg  = (SI_PIH_CCHO_SET_REQ_STRU*)VOS_AllocMsg(WUEPS_PID_AT, sizeof(SI_PIH_CCHO_SET_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
 
     if (VOS_NULL_PTR == pstMsg)
@@ -400,7 +400,7 @@ SI_UINT32 SI_PIH_CchcSetReq(
         return TAF_FAILURE;
     }
 
-    /* ·ÖÅäÏûÏ¢ÄÚ´æ */
+    /* åˆ†é…æ¶ˆæ¯å†…å­˜ */
     pstMsg  = (SI_PIH_CCHC_SET_REQ_STRU*)VOS_AllocMsg(WUEPS_PID_AT, sizeof(SI_PIH_CCHC_SET_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
 
     if (VOS_NULL_PTR == pstMsg)
@@ -441,7 +441,7 @@ SI_UINT32 SI_PIH_CglaSetReq(
         return TAF_FAILURE;
     }
 
-    /* ·ÖÅäÏûÏ¢ÄÚ´æ */
+    /* åˆ†é…æ¶ˆæ¯å†…å­˜ */
     pstMsg  = (SI_PIH_CGLA_REQ_STRU *)VOS_AllocMsg(WUEPS_PID_AT,
                                                    sizeof(SI_PIH_CGLA_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
 
@@ -485,7 +485,7 @@ SI_UINT32 SI_PIH_GetCardATRReq(
         return TAF_FAILURE;
     }
 
-    /* ·ÖÅäÏûÏ¢ÄÚ´æ */
+    /* åˆ†é…æ¶ˆæ¯å†…å­˜ */
     pstMsg  = (SI_PIH_MSG_HEADER_STRU *)VOS_AllocMsg(WUEPS_PID_AT,
                                                    sizeof(SI_PIH_MSG_HEADER_STRU) - VOS_MSG_HEAD_LENGTH);
 
@@ -513,20 +513,20 @@ SI_UINT32 SI_PIH_GetCardATRReq(
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_HvSstSet
-¹¦ÄÜÃèÊö  : FDNÈ¥¼¤»î
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : SI_PIH_HvSstSet
+åŠŸèƒ½æè¿°  : FDNåŽ»æ¿€æ´»
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2013Äê03ÔÂ18ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : Create
-2.ÈÕ    ÆÚ  : 2014Äê10ÔÂ9ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : ¸ù¾ÝÇàËÉ²úÆ·ÒªÇó£¬¸Ã½Ó¿Ú²»ÊÜºê¿ØÖÆ
+1.æ—¥    æœŸ  : 2013å¹´03æœˆ18æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : Create
+2.æ—¥    æœŸ  : 2014å¹´10æœˆ9æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : æ ¹æ®é’æ¾äº§å“è¦æ±‚ï¼Œè¯¥æŽ¥å£ä¸å—å®æŽ§åˆ¶
 *****************************************************************************/
 
 VOS_UINT32 SI_PIH_HvSstSet (MN_CLIENT_ID_T                  ClientId,
@@ -577,20 +577,20 @@ VOS_UINT32 SI_PIH_HvSstSet (MN_CLIENT_ID_T                  ClientId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_HvSstQuery
-¹¦ÄÜÃèÊö  : HVSSTÃüÁî²éÑ¯º¯Êý
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : SI_PIH_HvSstQuery
+åŠŸèƒ½æè¿°  : HVSSTå‘½ä»¤æŸ¥è¯¢å‡½æ•°
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2013Äê3ÔÂ18ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : Create
-2.ÈÕ    ÆÚ  : 2014Äê10ÔÂ9ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : ¸ù¾ÝÇàËÉ²úÆ·ÒªÇó£¬¸Ã½Ó¿Ú²»ÊÜºê¿ØÖÆ
+1.æ—¥    æœŸ  : 2013å¹´3æœˆ18æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : Create
+2.æ—¥    æœŸ  : 2014å¹´10æœˆ9æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : æ ¹æ®é’æ¾äº§å“è¦æ±‚ï¼Œè¯¥æŽ¥å£ä¸å—å®æŽ§åˆ¶
 *****************************************************************************/
 VOS_UINT32 SI_PIH_HvSstQuery(MN_CLIENT_ID_T                 ClientId,
                                     MN_OPERATION_ID_T             OpId)
@@ -630,17 +630,17 @@ VOS_UINT32 SI_PIH_HvSstQuery(MN_CLIENT_ID_T                 ClientId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_SciCfgSet
-¹¦ÄÜÃèÊö  : SCICFG Set
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : SI_PIH_SciCfgSet
+åŠŸèƒ½æè¿°  : SCICFG Set
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2014Äê10ÔÂ9ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : ¸ù¾ÝÇàËÉ²úÆ·ÒªÇó£¬ÐÂÔö
+1.æ—¥    æœŸ  : 2014å¹´10æœˆ9æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : æ ¹æ®é’æ¾äº§å“è¦æ±‚ï¼Œæ–°å¢ž
 *****************************************************************************/
 
 VOS_UINT32 SI_PIH_SciCfgSet (MN_CLIENT_ID_T               ClientId,
@@ -687,17 +687,17 @@ VOS_UINT32 SI_PIH_SciCfgSet (MN_CLIENT_ID_T               ClientId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_SciCfgQuery
-¹¦ÄÜÃèÊö  : SCICFG Query
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : SI_PIH_SciCfgQuery
+åŠŸèƒ½æè¿°  : SCICFG Query
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2014Äê10ÔÂ9ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : ¸ù¾ÝÇàËÉ²úÆ·ÒªÇó£¬ÐÂÔö
+1.æ—¥    æœŸ  : 2014å¹´10æœˆ9æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : æ ¹æ®é’æ¾äº§å“è¦æ±‚ï¼Œæ–°å¢ž
 *****************************************************************************/
 
 VOS_UINT32 SI_PIH_SciCfgQuery (MN_CLIENT_ID_T               ClientId,
@@ -739,17 +739,17 @@ VOS_UINT32 SI_PIH_SciCfgQuery (MN_CLIENT_ID_T               ClientId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_AcpuInit
-¹¦ÄÜÃèÊö  : HVTEE Set
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : SI_PIH_AcpuInit
+åŠŸèƒ½æè¿°  : HVTEE Set
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2014Äê10ÔÂ9ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : ¸ù¾ÝÇàËÉ²úÆ·ÒªÇó£¬ÐÂÔö
+1.æ—¥    æœŸ  : 2014å¹´10æœˆ9æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : æ ¹æ®é’æ¾äº§å“è¦æ±‚ï¼Œæ–°å¢ž
 *****************************************************************************/
 VOS_VOID SI_PIH_AcpuInit(VOS_VOID)
 {
@@ -784,7 +784,7 @@ VOS_UINT32 SI_PIH_HvsDHSet(MN_CLIENT_ID_T                ClientId,
     VOS_UINT32                          ulMsgLen;
     VOS_UINT32                          ulReceiverPid;
 
-    /* ²ÎÊý¼ì²â */
+    /* å‚æ•°æ£€æµ‹ */
     if(VOS_NULL_PTR == pstSKey)
     {
         PIH_ERROR_LOG("SI_PIH_HvsDHSet: Para is Error");
@@ -803,7 +803,7 @@ VOS_UINT32 SI_PIH_HvsDHSet(MN_CLIENT_ID_T                ClientId,
         return TAF_FAILURE;
     }
 
-    /* ÓÉÓÚSI_PIH_HVSDH_SET_REQ_STRUÖÐaucData×Ö¶Î¶àÓà£¬ÐèÒª¼õÈ¥sizeof(VOS_UINT32) */
+    /* ç”±äºŽSI_PIH_HVSDH_SET_REQ_STRUä¸­aucDataå­—æ®µå¤šä½™ï¼Œéœ€è¦å‡åŽ»sizeof(VOS_UINT32) */
     ulMsgLen = sizeof(SI_PIH_HVSDH_SET_REQ_STRU) - VOS_MSG_HEAD_LENGTH - sizeof(VOS_UINT32) + pstSKey->ulKeyLen;
 
     pstMsg = (SI_PIH_HVSDH_SET_REQ_STRU*)VOS_AllocMsg(WUEPS_PID_AT, ulMsgLen);
@@ -907,17 +907,17 @@ VOS_UINT32 SI_PIH_HvsContQuery(MN_CLIENT_ID_T           ClientId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_AtFileWrite
-¹¦ÄÜÃèÊö  : RSFWÐ´ÎÄ¼þÇëÇó
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : SI_PIH_AtFileWrite
+åŠŸèƒ½æè¿°  : RSFWå†™æ–‡ä»¶è¯·æ±‚
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2013Äê3ÔÂ30ÈÕ
-  ×÷    Õß  : zhukai
-  ÐÞ¸ÄÄÚÈÝ  : Create
+1.æ—¥    æœŸ  : 2013å¹´3æœˆ30æ—¥
+  ä½œ    è€…  : zhukai
+  ä¿®æ”¹å†…å®¹  : Create
 *****************************************************************************/
 VOS_UINT32 SI_PIH_AtFileWrite(MN_CLIENT_ID_T                  ClientId,
                                     MN_OPERATION_ID_T               OpId,
@@ -951,7 +951,7 @@ VOS_UINT32 SI_PIH_AtFileWrite(MN_CLIENT_ID_T                  ClientId,
         return TAF_FAILURE;
     }
 
-    /* ÓÉÓÚSI_PIH_FILE_WRITE_REQ_STRUÖÐaucData×Ö¶Î¶àÓà£¬ÐèÒª¼õÈ¥sizeof(VOS_UINT32) */
+    /* ç”±äºŽSI_PIH_FILE_WRITE_REQ_STRUä¸­aucDataå­—æ®µå¤šä½™ï¼Œéœ€è¦å‡åŽ»sizeof(VOS_UINT32) */
     ulMsgLen = (sizeof(SI_PIH_FILE_WRITE_REQ_STRU) - VOS_MSG_HEAD_LENGTH)- sizeof(VOS_UINT32)+ pstData->stFileData.ulDataLen;
 
     pstMsg = (SI_PIH_FILE_WRITE_REQ_STRU *)VOS_AllocMsg(WUEPS_PID_AT, ulMsgLen);
@@ -969,7 +969,7 @@ VOS_UINT32 SI_PIH_AtFileWrite(MN_CLIENT_ID_T                  ClientId,
     pstMsg->stMsgHeader.ucOpID        = OpId;
     pstMsg->stMsgHeader.ulEventType   = SI_PIH_EVENT_FILE_WRITE_CNF;
 
-    /*ÏûÏ¢ÄÚÈÝ*/
+    /*æ¶ˆæ¯å†…å®¹*/
     pstMsg->ucIndex         = (VOS_UINT8)pstData->ulIndex;
     pstMsg->ucRef           = (VOS_UINT8)pstData->ulRef;
     pstMsg->ucTotalNum      = (VOS_UINT8)pstData->ulTotalNum;
@@ -991,17 +991,17 @@ VOS_UINT32 SI_PIH_AtFileWrite(MN_CLIENT_ID_T                  ClientId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_HvteeSet
-¹¦ÄÜÃèÊö  : HVTEE Set
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : SI_PIH_HvteeSet
+åŠŸèƒ½æè¿°  : HVTEE Set
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2014Äê10ÔÂ9ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : ¸ù¾ÝÇàËÉ²úÆ·ÒªÇó£¬ÐÂÔö
+1.æ—¥    æœŸ  : 2014å¹´10æœˆ9æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : æ ¹æ®é’æ¾äº§å“è¦æ±‚ï¼Œæ–°å¢ž
 *****************************************************************************/
 
 VOS_UINT32 SI_PIH_HvteeSet(MN_CLIENT_ID_T               ClientId,
@@ -1053,17 +1053,17 @@ VOS_UINT32 SI_PIH_HvteeSet(MN_CLIENT_ID_T               ClientId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_TEETimeOutCB
-¹¦ÄÜÃèÊö  : HVTEE Set
-ÊäÈë²ÎÊý  : ÎÞ
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+å‡½ æ•° å  : SI_PIH_TEETimeOutCB
+åŠŸèƒ½æè¿°  : HVTEE Set
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2014Äê10ÔÂ9ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : ¸ù¾ÝÇàËÉ²úÆ·ÒªÇó£¬ÐÂÔö
+1.æ—¥    æœŸ  : 2014å¹´10æœˆ9æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : æ ¹æ®é’æ¾äº§å“è¦æ±‚ï¼Œæ–°å¢ž
 *****************************************************************************/
 
 VOS_VOID SI_PIH_TEETimeOutCB (TEEC_TIMER_PROPERTY_STRU *pstTimerData)
@@ -1138,19 +1138,19 @@ VOS_UINT32 SI_PIH_HvCheckCardQuery(MN_CLIENT_ID_T           ClientId,
 
 #if (FEATURE_ON == FEATURE_IMS)
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_UiccAuthReq
-¹¦ÄÜÃèÊö  : GBA¼øÈ¨ÇëÇóº¯Êý
-ÊäÈë²ÎÊý  : ClientId:ÓÃ»§ID
+å‡½ æ•° å  : SI_PIH_UiccAuthReq
+åŠŸèƒ½æè¿°  : GBAé‰´æƒè¯·æ±‚å‡½æ•°
+è¾“å…¥å‚æ•°  : ClientId:ç”¨æˆ·ID
             OpId:OP id
-            pstData:¼øÈ¨Êý¾Ý
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+            pstData:é‰´æƒæ•°æ®
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2014Äê3ÔÂ21ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : Create
+1.æ—¥    æœŸ  : 2014å¹´3æœˆ21æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : Create
 *****************************************************************************/
 VOS_UINT32 SI_PIH_UiccAuthReq(MN_CLIENT_ID_T                ClientId,
                                     MN_OPERATION_ID_T               OpId,
@@ -1173,7 +1173,7 @@ VOS_UINT32 SI_PIH_UiccAuthReq(MN_CLIENT_ID_T                ClientId,
         return TAF_FAILURE;
     }
 
-    /* ·ÖÅäÏûÏ¢ÄÚ´æ */
+    /* åˆ†é…æ¶ˆæ¯å†…å­˜ */
     pstMsg  = (SI_PIH_UICCAUTH_REQ_STRU *)VOS_AllocMsg(WUEPS_PID_AT, sizeof(SI_PIH_UICCAUTH_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
 
     if (VOS_NULL_PTR == pstMsg)
@@ -1202,19 +1202,19 @@ VOS_UINT32 SI_PIH_UiccAuthReq(MN_CLIENT_ID_T                ClientId,
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : SI_PIH_AccessUICCFileReq
-¹¦ÄÜÃèÊö  :
-ÊäÈë²ÎÊý  : ClientId:ÓÃ»§ID
+å‡½ æ•° å  : SI_PIH_AccessUICCFileReq
+åŠŸèƒ½æè¿°  :
+è¾“å…¥å‚æ•°  : ClientId:ç”¨æˆ·ID
             OpId:OP id
-            pstData:¼øÈ¨Êý¾Ý
-Êä³ö²ÎÊý  : ÎÞ
-·µ »Ø Öµ  : SI_UINT32 º¯ÊýÖ´ÐÐ½á¹û
-µ÷ÓÃº¯Êý  : ÎÞ
-±»µ÷º¯Êý  : Íâ²¿½Ó¿Ú
+            pstData:é‰´æƒæ•°æ®
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å›ž å€¼  : SI_UINT32 å‡½æ•°æ‰§è¡Œç»“æžœ
+è°ƒç”¨å‡½æ•°  : æ— 
+è¢«è°ƒå‡½æ•°  : å¤–éƒ¨æŽ¥å£
 History     :
-1.ÈÕ    ÆÚ  : 2014Äê3ÔÂ21ÈÕ
-  ×÷    Õß  : zhuli
-  ÐÞ¸ÄÄÚÈÝ  : Create
+1.æ—¥    æœŸ  : 2014å¹´3æœˆ21æ—¥
+  ä½œ    è€…  : zhuli
+  ä¿®æ”¹å†…å®¹  : Create
 *****************************************************************************/
 VOS_UINT32 SI_PIH_AccessUICCFileReq(MN_CLIENT_ID_T       ClientId,
                                     MN_OPERATION_ID_T               OpId,
@@ -1237,7 +1237,7 @@ VOS_UINT32 SI_PIH_AccessUICCFileReq(MN_CLIENT_ID_T       ClientId,
         return TAF_FAILURE;
     }
 
-    /* ·ÖÅäÏûÏ¢ÄÚ´æ */
+    /* åˆ†é…æ¶ˆæ¯å†…å­˜ */
     pstMsg  = (SI_PIH_ACCESSFILE_REQ_STRU *)VOS_AllocMsg(WUEPS_PID_AT, sizeof(SI_PIH_ACCESSFILE_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
 
     if (VOS_NULL_PTR == pstMsg)
@@ -1313,15 +1313,15 @@ VOS_VOID SI_PIH_ChangePollTimer(SI_PIH_TIMER_NAME_ENUM_UINT32      enTimerName,
                                         VOS_UINT32                          ulTimerLen,
                                         USIMM_POLL_FCP_ENUM_UINT32          enData)
 {
-    g_stPIHPollTime[enTimerName].enPollState = enState; /*¸üÐÂ¶¨Ê±Æ÷×´Ì¬*/
-    g_stPIHPollTime[enTimerName].enPollData  = enData;  /*¸üÐÂÊÇ·ñÐèÒª»Ø¸´Êý¾Ý£¬¾¡ÓÃÔÚStatusÃüÁîÉÏ*/
+    g_stPIHPollTime[enTimerName].enPollState = enState; /*æ›´æ–°å®šæ—¶å™¨çŠ¶æ€*/
+    g_stPIHPollTime[enTimerName].enPollData  = enData;  /*æ›´æ–°æ˜¯å¦éœ€è¦å›žå¤æ•°æ®ï¼Œå°½ç”¨åœ¨Statuså‘½ä»¤ä¸Š*/
 
-    if (SI_PIH_TIMER_LEN_NO_CHANGE != ulTimerLen)       /*Èç¹ûÐèÒªÐÞ¸Ä¶¨Ê±Æ÷Ê±³¤*/
+    if (SI_PIH_TIMER_LEN_NO_CHANGE != ulTimerLen)       /*å¦‚æžœéœ€è¦ä¿®æ”¹å®šæ—¶å™¨æ—¶é•¿*/
     {
         g_stPIHPollTime[enTimerName].ulTimeLen   = ulTimerLen;
     }
 
-    SI_PIH_PollTimerPro(&g_stPIHPollTime[enTimerName]); /*´¦Àí¶¨Ê±Æ÷*/
+    SI_PIH_PollTimerPro(&g_stPIHPollTime[enTimerName]); /*å¤„ç†å®šæ—¶å™¨*/
 
     return;
 }
@@ -1334,7 +1334,7 @@ VOS_UINT32 SI_PIH_RegisterPID(VOS_UINT32 ulRegPID, VOS_UINT32 ulRegListNum, VOS_
 
     for (i = 0; i < ulRegListNum; i++)
     {
-        if (ulRegPID == pulRegList[i])  /*ÒÑ¾­×¢²á²»ÔÙÖØ¸´Ð´Èë*/
+        if (ulRegPID == pulRegList[i])  /*å·²ç»æ³¨å†Œä¸å†é‡å¤å†™å…¥*/
         {
             return VOS_OK;
         }
@@ -1342,7 +1342,7 @@ VOS_UINT32 SI_PIH_RegisterPID(VOS_UINT32 ulRegPID, VOS_UINT32 ulRegListNum, VOS_
 
     for (i = 0; i < ulRegListNum; i++)
     {
-        if (VOS_NULL == pulRegList[i])  /*²éÑ¯¿ÕÎ»×Ó*/
+        if (VOS_NULL == pulRegList[i])  /*æŸ¥è¯¢ç©ºä½å­*/
         {
             pulRegList[i] = ulRegPID;
 
@@ -1505,14 +1505,14 @@ VOS_UINT32 PIH_RegISIMCardIndMsg(VOS_UINT32 ulRegPID)
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : PIH_GetVsimAPN
-¹¦ÄÜÃèÊö  : VSIM¿¨APN½Ó¿Ú
-ÊäÈë²ÎÊý  : APNµÄ´æ´¢¿Õ¼ä
-Êä³ö²ÎÊý  : ÎÞ
-ÐÞ¶©¼ÇÂ¼  :
-1. ÈÕ    ÆÚ   : 2014Äê10ÔÂ9ÈÕ
-   ×÷    Õß   : ×£ï®
-   ÐÞ¸ÄÄÚÈÝ   : Creat
+å‡½ æ•° å  : PIH_GetVsimAPN
+åŠŸèƒ½æè¿°  : VSIMå¡APNæŽ¥å£
+è¾“å…¥å‚æ•°  : APNçš„å­˜å‚¨ç©ºé—´
+è¾“å‡ºå‚æ•°  : æ— 
+ä¿®è®¢è®°å½•  :
+1. æ—¥    æœŸ   : 2014å¹´10æœˆ9æ—¥
+   ä½œ    è€…   : ç¥é”‚
+   ä¿®æ”¹å†…å®¹   : Creat
 *****************************************************************************/
 VOS_VOID PIH_GetVsimAPN(VOS_UINT32 ulApnMax, VOS_UINT8 *pucApnData, VOS_UINT8 *pucApnLen)
 {
@@ -1544,7 +1544,7 @@ VOS_VOID PIH_GetVsimAPN(VOS_UINT32 ulApnMax, VOS_UINT8 *pucApnData, VOS_UINT8 *p
 
     if ((VOS_NULL != ulDataLen)&&(ulApnMax >= ulDataLen))
     {
-        VOS_MemCpy(pucApnData, g_aucVsimAPNData, ulDataLen);  /*¿½±´²»°üº¬×Ö·û´®½áÎ²*/
+        VOS_MemCpy(pucApnData, g_aucVsimAPNData, ulDataLen);  /*æ‹·è´ä¸åŒ…å«å­—ç¬¦ä¸²ç»“å°¾*/
 
         *pucApnLen = (VOS_UINT8)ulDataLen;
     }

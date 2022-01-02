@@ -30,7 +30,7 @@ u32 bsp_om_timer_start(void)
 	/* Load Timer Reload value into Timer registers */
 	BSP_REG_WRITE (OM_TIMER_STAMP_BASE,0x0, 0xffffffff);
 
-	/* ²éÑ¯¼ÆÊıÆ÷Ê¹ÄÜÊÇ·ñÉúĞ§ */
+	/* æŸ¥è¯¢è®¡æ•°å™¨ä½¿èƒ½æ˜¯å¦ç”Ÿæ•ˆ */
 	do
 	{
 		BSP_REG_READ(OM_TIMER_STAMP_BASE,0x8, readValueTmp);
@@ -63,15 +63,15 @@ u32 om_timer_tick_get(void)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_int_lock_enter
+* å‡½ æ•° å  : bsp_int_lock_enter
 *
-* ¹¦ÄÜÃèÊö  :ÓÃÓÚËøÖĞ¶ÏÍ³¼Æ
+* åŠŸèƒ½æè¿°  :ç”¨äºé”ä¸­æ–­ç»Ÿè®¡
 *
-* ÊäÈë²ÎÊı  :ÎŞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ËøÖĞ¶Ïºó»ñµÃµÄkey
+* è¿” å› å€¼  : é”ä¸­æ–­åè·å¾—çš„key
 *****************************************************************************/
 void bsp_int_lock_enter(void)
 {
@@ -79,15 +79,15 @@ void bsp_int_lock_enter(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_int_lock_out
+* å‡½ æ•° å  : bsp_int_lock_out
 *
-* ¹¦ÄÜÃèÊö  : ÓÃÓÚËøÖĞ¶ÏÍ³¼Æ
+* åŠŸèƒ½æè¿°  : ç”¨äºé”ä¸­æ–­ç»Ÿè®¡
 *
-* ÊäÈë²ÎÊı  : ËøÖĞ¶Ïºó»ñµÃµÄkey
+* è¾“å…¥å‚æ•°  : é”ä¸­æ–­åè·å¾—çš„key
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 void bsp_int_lock_out(void)
 {
@@ -100,7 +100,7 @@ void error_log(char *fmt ,...)
     va_list arglist;
     /*lint -restore +e40 +e522 */
 	va_start(arglist, fmt);
-	vsnprintf(g_ErrorLogBuffer, 256, fmt, arglist); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+	vsnprintf(g_ErrorLogBuffer, 256, fmt, arglist); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 	va_end(arglist);
 
     bsp_om_append_file(OM_ERROR_LOG, (void*)g_ErrorLogBuffer, (u32)strlen(g_ErrorLogBuffer), OM_ERROR_LOG_MAX);

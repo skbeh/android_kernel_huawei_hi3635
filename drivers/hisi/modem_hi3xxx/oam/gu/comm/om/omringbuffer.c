@@ -45,7 +45,7 @@ extern "C" {
 
 #if(FEATURE_ON == FEATURE_PTM)
 #define OM_RING_BUFF_EX_MAX_LEN  (1024*8)
-#define OM_MAX_RING_BUFFER_NUM   (48)  /* Error logĞÂÔö32*/
+#define OM_MAX_RING_BUFFER_NUM   (48)  /* Error logæ–°å¢32*/
 #else
 #define OM_MAX_RING_BUFFER_NUM   (16)
 #endif
@@ -605,7 +605,7 @@ VOS_BOOL OM_RingBufferIsFull( OM_RING_ID ringId )
 {
     int n = ringId->pToBuf - ringId->pFromBuf + 1;
 
-    return ((n == 0) || (n == ringId->bufSize)); /* [false alarm]: ÆÁ±ÎFortify ´íÎó */
+    return ((n == 0) || (n == ringId->bufSize)); /* [false alarm]: å±è”½Fortify é”™è¯¯ */
 }
 
 /*******************************************************************************

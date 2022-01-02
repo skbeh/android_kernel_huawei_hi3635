@@ -47,7 +47,7 @@
 #include "VosTaskPrioDef.h"
 
 
-/* LINUX ²»Ö§³Ö */
+/* LINUX ä¸æ”¯æŒ */
 #if (VOS_VXWORKS== VOS_OS_VER)
 #include "stdio.h"
 #include "stdlib.h"
@@ -62,7 +62,7 @@ extern "C"{
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_V_TIMER_C
 
@@ -162,14 +162,14 @@ VOS_UINT32               g_ulMagnifyTimerLength = 1;
 
 VOS_VOID VOS_TimerDump(VOS_INT lModId, VOS_UINT32 ulFileID, VOS_UINT32 ulLineNo);
 
-/* ×ÔÐýËø£¬ÓÃÀ´×÷TimerµÄÁÙ½ç×ÊÔ´±£»¤ */
+/* è‡ªæ—‹é”ï¼Œç”¨æ¥ä½œTimerçš„ä¸´ç•Œèµ„æºä¿æŠ¤ */
 VOS_SPINLOCK             g_stVosTimerSpinLock;
 
 #if (VOS_YES == VOS_26M_TIMER_ENABLE_SOC_TIMER)
 
 #define VOS_26M_TIMER_ID     (TIMER_ACPU_OM_TCXO_ID)
 
-/* ¼ÇÂ¼ VOS 26 timer ¿ÉÎ¬¿É²âÐÅÏ¢ */
+/* è®°å½• VOS 26 timer å¯ç»´å¯æµ‹ä¿¡æ¯ */
 VOS_TIMER_SOC_TIMER_INFO_STRU g_st26MSocTimerInfo;
 
 /* the semaphore will be given when 26M's interrupt occures */
@@ -535,7 +535,7 @@ VOS_VOID VOS_TimerTaskFunc( VOS_UINT32 Para0, VOS_UINT32 Para1,
                 }
                 else
                 {
-                    vos_Timer_expire_tail_Ptr->next = vos_TimerCtrlBlkCurrent; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+                    vos_Timer_expire_tail_Ptr->next = vos_TimerCtrlBlkCurrent; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
                     vos_Timer_expire_tail_Ptr = vos_TimerCtrlBlkCurrent;
                 }
 
@@ -599,7 +599,7 @@ VOS_VOID VOS_TimerTaskFunc( VOS_UINT32 Para0, VOS_UINT32 Para1,
 
                 TempValue = (VOS_UINT_PTR)(vos_Timer_expire_head_Ptr->CallBackFunc);
 
-                /* CallBackFuncÐèÒªÓÃ32Î»´«Èë£¬ËùÒÔºÍname»¥»»Î»ÖÃ±£Ö¤Êý¾Ý²»¶ªÊ§ */
+                /* CallBackFuncéœ€è¦ç”¨32ä½ä¼ å…¥ï¼Œæ‰€ä»¥å’Œnameäº’æ¢ä½ç½®ä¿è¯æ•°æ®ä¸ä¸¢å¤± */
                 OM_RecordInfoStart(VOS_EXC_DUMP_MEM_NUM_4, (VOS_UINT32)(vos_Timer_expire_head_Ptr->Pid), vos_Timer_expire_head_Ptr->Name, (VOS_UINT32)TempValue);
 
                 if ( VOS_NULL_PTR == vos_Timer_expire_head_Ptr->CallBackFunc )

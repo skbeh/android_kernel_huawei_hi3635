@@ -13,16 +13,16 @@ extern "C"
 
 #ifndef ENABLE_BUILD_OM
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_OM_SET_HSO_CONN_FLAG
+* å‡½ æ•° å  : DRV_OM_SET_HSO_CONN_FLAG
 *
-* ¹¦ÄÜÃèÊö  : flag :Á¬½Ó±êÖ¾£¬1±íÊ¾Á¬½Ó£¬0±íÊ¾¶Ï¿ª
+* åŠŸèƒ½æè¿°  : flag :è¿žæŽ¥æ ‡å¿—ï¼Œ1è¡¨ç¤ºè¿žæŽ¥ï¼Œ0è¡¨ç¤ºæ–­å¼€
 *
-* ÊäÈë²ÎÊý  :ÎÞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
 *
-* Êä³ö²ÎÊý  :ÎÞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :ÎÞ
+* è¿” å›ž å€¼  :æ— 
 *****************************************************************************/
 
 BSP_VOID DRV_OM_SET_HSO_CONN_FLAG(BSP_U32 flag)
@@ -31,17 +31,17 @@ BSP_VOID DRV_OM_SET_HSO_CONN_FLAG(BSP_U32 flag)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SYSVIEW_SWT_SET
+* å‡½ æ•° å  : DRV_SYSVIEW_SWT_SET
 *
-* ¹¦ÄÜÃèÊö  :sysviewÉÏ±¨¿ª¹ØÉèÖÃ£¬·â×°º¯Êý£¬Ìá¹©¸øMSPÊ¹ÓÃ
+* åŠŸèƒ½æè¿°  :sysviewä¸ŠæŠ¥å¼€å…³è®¾ç½®ï¼Œå°è£…å‡½æ•°ï¼Œæä¾›ç»™MSPä½¿ç”¨
 *
-* ÊäÈë²ÎÊý  :tarce_type :traceÀàÐÍ
-*                        set_swt  :¿ª¹ØÖµ
-*                       period  :ÉÏ±¨ÖÜÆÚ
+* è¾“å…¥å‚æ•°  :tarce_type :traceç±»åž‹
+*                        set_swt  :å¼€å…³å€¼
+*                       period  :ä¸ŠæŠ¥å‘¨æœŸ
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 
 BSP_U32 DRV_SYSVIEW_SWT_SET(BSP_U32 set_type,BSP_U32 set_swt,BSP_U32 period)
@@ -50,17 +50,17 @@ BSP_U32 DRV_SYSVIEW_SWT_SET(BSP_U32 set_type,BSP_U32 set_swt,BSP_U32 period)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_GET_ALL_TASK_ID_NAME
+* å‡½ æ•° å  : DRV_GET_ALL_TASK_ID_NAME
 *
-* ¹¦ÄÜÃèÊö  :»ñÈ¡µ±Ç°ËùÓÐÈÎÎñµÄIDºÍÃû³Æ
+* åŠŸèƒ½æè¿°  :èŽ·å–å½“å‰æ‰€æœ‰ä»»åŠ¡çš„IDå’Œåç§°
 *
-* ÊäÈë²ÎÊý  :p_task_stru:ÈÎÎñÃû³ÆºÍIDÊä³öµÄ½á¹¹Ìå
-*                       param_len:²ÎÊý1µÄ³¤¶È£¬µ¥Î»×Ö½Ú
+* è¾“å…¥å‚æ•°  :p_task_stru:ä»»åŠ¡åç§°å’ŒIDè¾“å‡ºçš„ç»“æž„ä½“
+*                       param_len:å‚æ•°1çš„é•¿åº¦ï¼Œå•ä½å­—èŠ‚
 *
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 BSP_U32 DRV_GET_ALL_TASK_ID_NAME(BSP_VOID *p_task_stru,u32 param_len)
 {
@@ -69,15 +69,15 @@ BSP_U32 DRV_GET_ALL_TASK_ID_NAME(BSP_VOID *p_task_stru,u32 param_len)
 
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_INT_LOCK
+* å‡½ æ•° å  : DRV_INT_LOCK
 *
-* ¹¦ÄÜÃèÊö  :ËøÖÐ¶Ï½Ó¿Ú£¬ÓÃÓÚËøÖÐ¶ÏÍ³¼Æ
+* åŠŸèƒ½æè¿°  :é”ä¸­æ–­æŽ¥å£ï¼Œç”¨äºŽé”ä¸­æ–­ç»Ÿè®¡
 *
-* ÊäÈë²ÎÊý  :ÎÞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ËøÖÐ¶Ïºó»ñµÃµÄkey
+* è¿” å›ž å€¼  : é”ä¸­æ–­åŽèŽ·å¾—çš„key
 *****************************************************************************/
 BSP_S32 DRV_INT_LOCK(BSP_VOID)
 {
@@ -85,15 +85,15 @@ BSP_S32 DRV_INT_LOCK(BSP_VOID)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_INT_UNLOCK
+* å‡½ æ•° å  : DRV_INT_UNLOCK
 *
-* ¹¦ÄÜÃèÊö  : ½âËøÖÐ¶Ï½Ó¿Ú£¬ÓÃÓÚËøÖÐ¶ÏÍ³¼Æ
+* åŠŸèƒ½æè¿°  : è§£é”ä¸­æ–­æŽ¥å£ï¼Œç”¨äºŽé”ä¸­æ–­ç»Ÿè®¡
 *
-* ÊäÈë²ÎÊý  : ËøÖÐ¶Ïºó»ñµÃµÄkey
+* è¾“å…¥å‚æ•°  : é”ä¸­æ–­åŽèŽ·å¾—çš„key
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎÞ
+* è¿” å›ž å€¼  : æ— 
 *****************************************************************************/
 BSP_VOID DRV_INT_UNLOCK(BSP_S32 LockKey)
 {
@@ -102,16 +102,16 @@ BSP_VOID DRV_INT_UNLOCK(BSP_S32 LockKey)
 
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_CHAN_ENABLE
+* å‡½ æ•° å  : DRV_SOCP_CHAN_ENABLE
 *
-* ¹¦ÄÜÃèÊö  : µ×ÈíSOCPÍ¨µÀÊ¹ÄÜ²Ù×÷
+* åŠŸèƒ½æè¿°  : åº•è½¯SOCPé€šé“ä½¿èƒ½æ“ä½œ
 *
-* ÊäÈë²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
 *
-* Êä³ö²ÎÊý  :ÎÞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :ÎÞ
+* è¿” å›ž å€¼  :æ— 
 *****************************************************************************/
 
 BSP_VOID DRV_SOCP_CHAN_ENABLE(BSP_VOID)
@@ -120,16 +120,16 @@ BSP_VOID DRV_SOCP_CHAN_ENABLE(BSP_VOID)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_LOG_BIN_IND
+* å‡½ æ•° å  : DRV_LOG_BIN_IND
 *
-* ¹¦ÄÜÃèÊö  : µ×ÈíÖ÷¶¯ÉÏ±¨½Ó¿Ú
+* åŠŸèƒ½æè¿°  : åº•è½¯ä¸»åŠ¨ä¸ŠæŠ¥æŽ¥å£
 *
-* ÊäÈë²ÎÊý  : 
+* è¾“å…¥å‚æ•°  : 
 *
 *
-* Êä³ö²ÎÊý  :ÎÞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :ÎÞ
+* è¿” å›ž å€¼  :æ— 
 *****************************************************************************/
 BSP_VOID DRV_LOG_BIN_IND(BSP_S32 str_id, BSP_VOID* ind_data, BSP_S32 ind_data_size)
 {
@@ -137,16 +137,16 @@ BSP_VOID DRV_LOG_BIN_IND(BSP_S32 str_id, BSP_VOID* ind_data, BSP_S32 ind_data_si
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_LOG_BIN_IND_REGISTER
+* å‡½ æ•° å  : DRV_LOG_BIN_IND_REGISTER
 *
-* ¹¦ÄÜÃèÊö  : µ×ÈíÖ÷¶¯ÉÏ±¨×¢²á½Ó¿Ú
+* åŠŸèƒ½æè¿°  : åº•è½¯ä¸»åŠ¨ä¸ŠæŠ¥æ³¨å†ŒæŽ¥å£
 *
-* ÊäÈë²ÎÊý  : 
+* è¾“å…¥å‚æ•°  : 
 *
 *
-* Êä³ö²ÎÊý  :ÎÞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :ÎÞ
+* è¿” å›ž å€¼  :æ— 
 *****************************************************************************/
 BSP_VOID DRV_LOG_BIN_IND_REGISTER(log_bin_ind_cb log_ind_cb)
 {
@@ -155,16 +155,16 @@ BSP_VOID DRV_LOG_BIN_IND_REGISTER(log_bin_ind_cb log_ind_cb)
 
 #else
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_OM_SET_HSO_CONN_FLAG
+* å‡½ æ•° å  : DRV_OM_SET_HSO_CONN_FLAG
 *
-* ¹¦ÄÜÃèÊö  : flag :Á¬½Ó±êÖ¾£¬1±íÊ¾Á¬½Ó£¬0±íÊ¾¶Ï¿ª
+* åŠŸèƒ½æè¿°  : flag :è¿žæŽ¥æ ‡å¿—ï¼Œ1è¡¨ç¤ºè¿žæŽ¥ï¼Œ0è¡¨ç¤ºæ–­å¼€
 *
-* ÊäÈë²ÎÊý  :ÎÞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
 *
-* Êä³ö²ÎÊý  :ÎÞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :ÎÞ
+* è¿” å›ž å€¼  :æ— 
 *****************************************************************************/
 
 BSP_VOID DRV_OM_SET_HSO_CONN_FLAG(BSP_U32 flag)
@@ -174,17 +174,17 @@ BSP_VOID DRV_OM_SET_HSO_CONN_FLAG(BSP_U32 flag)
 
 #ifndef ENABLE_BUILD_SYSVIEW
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SYSVIEW_SWT_SET
+* å‡½ æ•° å  : DRV_SYSVIEW_SWT_SET
 *
-* ¹¦ÄÜÃèÊö  :sysviewÉÏ±¨¿ª¹ØÉèÖÃ£¬·â×°º¯Êý£¬Ìá¹©¸øMSPÊ¹ÓÃ
+* åŠŸèƒ½æè¿°  :sysviewä¸ŠæŠ¥å¼€å…³è®¾ç½®ï¼Œå°è£…å‡½æ•°ï¼Œæä¾›ç»™MSPä½¿ç”¨
 *
-* ÊäÈë²ÎÊý  :tarce_type :traceÀàÐÍ
-*                        set_swt  :¿ª¹ØÖµ
-*                       period  :ÉÏ±¨ÖÜÆÚ
+* è¾“å…¥å‚æ•°  :tarce_type :traceç±»åž‹
+*                        set_swt  :å¼€å…³å€¼
+*                       period  :ä¸ŠæŠ¥å‘¨æœŸ
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 
 BSP_U32 DRV_SYSVIEW_SWT_SET(BSP_U32 set_type,BSP_U32 set_swt,BSP_U32 period)
@@ -193,17 +193,17 @@ BSP_U32 DRV_SYSVIEW_SWT_SET(BSP_U32 set_type,BSP_U32 set_swt,BSP_U32 period)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_GET_ALL_TASK_ID_NAME
+* å‡½ æ•° å  : DRV_GET_ALL_TASK_ID_NAME
 *
-* ¹¦ÄÜÃèÊö  :»ñÈ¡µ±Ç°ËùÓÐÈÎÎñµÄIDºÍÃû³Æ
+* åŠŸèƒ½æè¿°  :èŽ·å–å½“å‰æ‰€æœ‰ä»»åŠ¡çš„IDå’Œåç§°
 *
-* ÊäÈë²ÎÊý  :p_task_stru:ÈÎÎñÃû³ÆºÍIDÊä³öµÄ½á¹¹Ìå
-*                       param_len:²ÎÊý1µÄ³¤¶È£¬µ¥Î»×Ö½Ú
+* è¾“å…¥å‚æ•°  :p_task_stru:ä»»åŠ¡åç§°å’ŒIDè¾“å‡ºçš„ç»“æž„ä½“
+*                       param_len:å‚æ•°1çš„é•¿åº¦ï¼Œå•ä½å­—èŠ‚
 *
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 BSP_U32 DRV_GET_ALL_TASK_ID_NAME(BSP_VOID *p_task_stru,u32 param_len)
 {
@@ -212,17 +212,17 @@ BSP_U32 DRV_GET_ALL_TASK_ID_NAME(BSP_VOID *p_task_stru,u32 param_len)
 
 #else
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SYSVIEW_SWT_SET
+* å‡½ æ•° å  : DRV_SYSVIEW_SWT_SET
 *
-* ¹¦ÄÜÃèÊö  :sysviewÉÏ±¨¿ª¹ØÉèÖÃ£¬·â×°º¯Êý£¬Ìá¹©¸øMSPÊ¹ÓÃ
+* åŠŸèƒ½æè¿°  :sysviewä¸ŠæŠ¥å¼€å…³è®¾ç½®ï¼Œå°è£…å‡½æ•°ï¼Œæä¾›ç»™MSPä½¿ç”¨
 *
-* ÊäÈë²ÎÊý  :tarce_type :traceÀàÐÍ
-*                        set_swt  :¿ª¹ØÖµ
-*                       period  :ÉÏ±¨ÖÜÆÚ
+* è¾“å…¥å‚æ•°  :tarce_type :traceç±»åž‹
+*                        set_swt  :å¼€å…³å€¼
+*                       period  :ä¸ŠæŠ¥å‘¨æœŸ
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 
 BSP_U32 DRV_SYSVIEW_SWT_SET(BSP_U32 set_type,BSP_U32 set_swt,BSP_U32 period)
@@ -231,17 +231,17 @@ BSP_U32 DRV_SYSVIEW_SWT_SET(BSP_U32 set_type,BSP_U32 set_swt,BSP_U32 period)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_GET_ALL_TASK_ID_NAME
+* å‡½ æ•° å  : DRV_GET_ALL_TASK_ID_NAME
 *
-* ¹¦ÄÜÃèÊö  :»ñÈ¡µ±Ç°ËùÓÐÈÎÎñµÄIDºÍÃû³Æ
+* åŠŸèƒ½æè¿°  :èŽ·å–å½“å‰æ‰€æœ‰ä»»åŠ¡çš„IDå’Œåç§°
 *
-* ÊäÈë²ÎÊý  :p_task_stru:ÈÎÎñÃû³ÆºÍIDÊä³öµÄ½á¹¹Ìå
-*                       param_len:²ÎÊý1µÄ³¤¶È£¬µ¥Î»×Ö½Ú
+* è¾“å…¥å‚æ•°  :p_task_stru:ä»»åŠ¡åç§°å’ŒIDè¾“å‡ºçš„ç»“æž„ä½“
+*                       param_len:å‚æ•°1çš„é•¿åº¦ï¼Œå•ä½å­—èŠ‚
 *
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 BSP_U32 DRV_GET_ALL_TASK_ID_NAME(BSP_VOID *p_task_stru,u32 param_len)
 {
@@ -250,15 +250,15 @@ BSP_U32 DRV_GET_ALL_TASK_ID_NAME(BSP_VOID *p_task_stru,u32 param_len)
 #endif
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_INT_LOCK
+* å‡½ æ•° å  : DRV_INT_LOCK
 *
-* ¹¦ÄÜÃèÊö  :ËøÖÐ¶Ï½Ó¿Ú£¬ÓÃÓÚËøÖÐ¶ÏÍ³¼Æ
+* åŠŸèƒ½æè¿°  :é”ä¸­æ–­æŽ¥å£ï¼Œç”¨äºŽé”ä¸­æ–­ç»Ÿè®¡
 *
-* ÊäÈë²ÎÊý  :ÎÞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ËøÖÐ¶Ïºó»ñµÃµÄkey
+* è¿” å›ž å€¼  : é”ä¸­æ–­åŽèŽ·å¾—çš„key
 *****************************************************************************/
 BSP_S32 DRV_INT_LOCK(BSP_VOID)
 {
@@ -271,15 +271,15 @@ BSP_S32 DRV_INT_LOCK(BSP_VOID)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_INT_UNLOCK
+* å‡½ æ•° å  : DRV_INT_UNLOCK
 *
-* ¹¦ÄÜÃèÊö  : ½âËøÖÐ¶Ï½Ó¿Ú£¬ÓÃÓÚËøÖÐ¶ÏÍ³¼Æ
+* åŠŸèƒ½æè¿°  : è§£é”ä¸­æ–­æŽ¥å£ï¼Œç”¨äºŽé”ä¸­æ–­ç»Ÿè®¡
 *
-* ÊäÈë²ÎÊý  : ËøÖÐ¶Ïºó»ñµÃµÄkey
+* è¾“å…¥å‚æ•°  : é”ä¸­æ–­åŽèŽ·å¾—çš„key
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎÞ
+* è¿” å›ž å€¼  : æ— 
 *****************************************************************************/
 BSP_VOID DRV_INT_UNLOCK(BSP_S32 LockKey)
 {
@@ -294,16 +294,16 @@ BSP_VOID DRV_INT_UNLOCK(BSP_S32 LockKey)
 
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_CHAN_ENABLE
+* å‡½ æ•° å  : DRV_SOCP_CHAN_ENABLE
 *
-* ¹¦ÄÜÃèÊö  : µ×ÈíSOCPÍ¨µÀÊ¹ÄÜ²Ù×÷
+* åŠŸèƒ½æè¿°  : åº•è½¯SOCPé€šé“ä½¿èƒ½æ“ä½œ
 *
-* ÊäÈë²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
 *
-* Êä³ö²ÎÊý  :ÎÞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :ÎÞ
+* è¿” å›ž å€¼  :æ— 
 *****************************************************************************/
 
 BSP_VOID DRV_SOCP_CHAN_ENABLE(BSP_VOID)

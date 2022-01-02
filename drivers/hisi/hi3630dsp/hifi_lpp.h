@@ -18,10 +18,10 @@ extern "C" {
 #define NOMEM		(-3)
 #define INVAILD 	(-4)
 
-/* IOCTLÈë²ÎºÍ³ö²ÎµÄSIZEÏŞÖÆ */
+/* IOCTLå…¥å‚å’Œå‡ºå‚çš„SIZEé™åˆ¶ */
 #define SIZE_LIMIT_PARAM		(256)
 
-/* HIFI×¨ÓÃÇø */
+/* HIFIä¸“ç”¨åŒº */
 /* |0x37700000~~~~~~~~|0x37c00000~~~~~|0x37c02000~~~~~|0x37c20000~~~~~~|0x37c60000~~~|0x37c75000~~~~~|0x37c75400~~~~~|0x37c75410~~~~~|0x37c80000~~~~~~~~~| */
 /* |~~~~~Code run 5M~~|~~~socp 8K~~~~~|~~reserv1 120K~|~~~~~OCRAM 256K~|~~~~TCM 84K~~|~~~SEC HEAD 1K~|~WTD FLAG 16B~~|~~reserv2 43K~~|~~Code backup 3.5M~| */
 /* |~~~~~~~~no sec~~~~|~~~~~~~no sec~~|~~~~~~~no sec~~|~~~~~~~nosec~~~~|~~~~~~nosec~~|~~~~~~~~nosec~~|~~~~~~~~nosec~~|~~~~~~~no sec~~|~~~~~~~~~sec~~~~~~~| */
@@ -82,10 +82,10 @@ extern "C" {
 
 #define SYS_TIME_STAMP_REG				(0xFFF0A534)
 
-/* ½ÓÊÕHIFIÏûÏ¢£¬Ç°²¿cmd_idÕ¼ÓÃµÄ×Ö½ÚÊı */
+/* æ¥æ”¶HIFIæ¶ˆæ¯ï¼Œå‰éƒ¨cmd_idå ç”¨çš„å­—èŠ‚æ•° */
 #define SIZE_CMD_ID 	   (8)
 
-/* noticeÖ÷¶¯ÉÏ±¨Ò»´Î»º³å */
+/* noticeä¸»åŠ¨ä¸ŠæŠ¥ä¸€æ¬¡ç¼“å†² */
 #define REV_MSG_NOTICE_ID_MAX		2
 
 #define ACPU_TO_HIFI_ASYNC_CMD	  0xFFFFFFFF
@@ -93,7 +93,7 @@ extern "C" {
 #define BUFFER_NUM	8
 
 /*****************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æšä¸¾å®šä¹‰
 *****************************************************************************/
 
 typedef enum {
@@ -126,31 +126,31 @@ typedef enum HIFI_MSG_ID_ {
 	ID_AP_HIFI_VOICE_RECORD_STOP_CMD	= 0xDD41,
 
 	/* voicePP MSG_ID */
-	ID_AP_VOICEPP_START_REQ				= 0xDD42,						/* Æô¶¯VOICEPPÍ¨»° */
+	ID_AP_VOICEPP_START_REQ				= 0xDD42,						/* å¯åŠ¨VOICEPPé€šè¯ */
 	ID_VOICEPP_MSG_START				= ID_AP_VOICEPP_START_REQ,
 	ID_VOICEPP_AP_START_CNF				= 0xDD43,
-	ID_AP_VOICEPP_STOP_REQ				= 0xDD44,						/* ÖÕÖ¹VOICEPPÍ¨»° */
+	ID_AP_VOICEPP_STOP_REQ				= 0xDD44,						/* ç»ˆæ­¢VOICEPPé€šè¯ */
 	ID_VOICEPP_AP_STOP_CNF				= 0xDD45,
-	ID_AP_VOICEPP_SET_DEVICE_REQ		= 0xDD46,						/* ÅäÖÃÊäÈëÊä³öÉè±¸ */
+	ID_AP_VOICEPP_SET_DEVICE_REQ		= 0xDD46,						/* é…ç½®è¾“å…¥è¾“å‡ºè®¾å¤‡ */
 	ID_VOICEPP_AP_SET_DEVICE_CNF		= 0xDD47,
-	ID_AP_VOICEPP_SET_WB_REQ			= 0xDD48,						/* ÉèÖÃ¿íÕ­´ø */
+	ID_AP_VOICEPP_SET_WB_REQ			= 0xDD48,						/* è®¾ç½®å®½çª„å¸¦ */
 	ID_VOICEPP_AP_SET_WB_CNF			= 0xDD49,
 	ID_VOICEPP_MSG_END					= 0xDD4A,
 
-	ID_AP_AUDIO_PLAY_START_REQ			= 0xDD51,/* APÆô¶¯Hifi audio player requestÃüÁî */
-	ID_AUDIO_AP_PLAY_START_CNF			= 0xDD52,/* HifiÆô¶¯audio playerºó»Ø¸´AP confirmÃüÁî */
-	ID_AP_AUDIO_PLAY_PAUSE_REQ			= 0xDD53,/* APÍ£Ö¹Hifi audio player requestÃüÁî */
-	ID_AUDIO_AP_PLAY_PAUSE_CNF			= 0xDD54,/* HifiÍ£Ö¹audio playerºó»Ø¸´AP confirmÃüÁî */
-	ID_AUDIO_AP_PLAY_DONE_IND			= 0xDD56,/* HifiÍ¨ÖªAP audio playerÒ»¿éÊı¾İ²¥·ÅÍê±Ï»òÕß²¥·ÅÖĞ¶Ïindication */
-	ID_AP_AUDIO_PLAY_UPDATE_BUF_CMD 	= 0xDD57,/* APÍ¨ÖªHifiĞÂÊı¾İ¿é¸üĞÂcommand */
-	ID_AP_AUDIO_PLAY_QUERY_TIME_REQ 	= 0xDD59,/* AP²éÑ¯Hifi audio player²¥·Å½ø¶ÈrequestÃüÁî */
+	ID_AP_AUDIO_PLAY_START_REQ			= 0xDD51,/* APå¯åŠ¨Hifi audio player requestå‘½ä»¤ */
+	ID_AUDIO_AP_PLAY_START_CNF			= 0xDD52,/* Hifiå¯åŠ¨audio playeråå›å¤AP confirmå‘½ä»¤ */
+	ID_AP_AUDIO_PLAY_PAUSE_REQ			= 0xDD53,/* APåœæ­¢Hifi audio player requestå‘½ä»¤ */
+	ID_AUDIO_AP_PLAY_PAUSE_CNF			= 0xDD54,/* Hifiåœæ­¢audio playeråå›å¤AP confirmå‘½ä»¤ */
+	ID_AUDIO_AP_PLAY_DONE_IND			= 0xDD56,/* Hifié€šçŸ¥AP audio playerä¸€å—æ•°æ®æ’­æ”¾å®Œæ¯•æˆ–è€…æ’­æ”¾ä¸­æ–­indication */
+	ID_AP_AUDIO_PLAY_UPDATE_BUF_CMD 	= 0xDD57,/* APé€šçŸ¥Hifiæ–°æ•°æ®å—æ›´æ–°command */
+	ID_AP_AUDIO_PLAY_QUERY_TIME_REQ 	= 0xDD59,/* APæŸ¥è¯¢Hifi audio playeræ’­æ”¾è¿›åº¦requestå‘½ä»¤ */
 	ID_AP_AUDIO_PLAY_WAKEUPTHREAD_REQ	= 0xDD5A,
-	ID_AUDIO_AP_PLAY_QUERY_TIME_CNF 	= 0xDD60,/* Hifi»Ø¸´AP audio player²¥·Å½ø¶ÈconfirmÃüÁî */
-	ID_AP_AUDIO_PLAY_QUERY_STATUS_REQ	= 0xDD61,/* AP²éÑ¯Hifi audio player²¥·Å×´Ì¬requestÃüÁî */
-	ID_AUDIO_AP_PLAY_QUERY_STATUS_CNF	= 0xDD62,/* Hifi»Ø¸´AP audio player²¥·Å×´Ì¬confirmÃüÁî */
-	ID_AP_AUDIO_PLAY_SEEK_REQ			= 0xDD63,/* AP seek Hifi audio playerµ½Ä³Ò»Î»ÖÃrequestÃüÁî */
-	ID_AUDIO_AP_PLAY_SEEK_CNF			= 0xDD64,/* Hifi»Ø¸´AP seek½á¹ûconfirmÃüÁî */
-	ID_AP_AUDIO_PLAY_SET_VOL_CMD		= 0xDD70,/* APÉèÖÃÒôÁ¿ÃüÁî */
+	ID_AUDIO_AP_PLAY_QUERY_TIME_CNF 	= 0xDD60,/* Hifiå›å¤AP audio playeræ’­æ”¾è¿›åº¦confirmå‘½ä»¤ */
+	ID_AP_AUDIO_PLAY_QUERY_STATUS_REQ	= 0xDD61,/* APæŸ¥è¯¢Hifi audio playeræ’­æ”¾çŠ¶æ€requestå‘½ä»¤ */
+	ID_AUDIO_AP_PLAY_QUERY_STATUS_CNF	= 0xDD62,/* Hifiå›å¤AP audio playeræ’­æ”¾çŠ¶æ€confirmå‘½ä»¤ */
+	ID_AP_AUDIO_PLAY_SEEK_REQ			= 0xDD63,/* AP seek Hifi audio playeråˆ°æŸä¸€ä½ç½®requestå‘½ä»¤ */
+	ID_AUDIO_AP_PLAY_SEEK_CNF			= 0xDD64,/* Hifiå›å¤AP seekç»“æœconfirmå‘½ä»¤ */
+	ID_AP_AUDIO_PLAY_SET_VOL_CMD		= 0xDD70,/* APè®¾ç½®éŸ³é‡å‘½ä»¤ */
 
 	/* enhance msgid between ap and hifi */
 	ID_AP_HIFI_ENHANCE_START_REQ		= 0xDD81,
@@ -165,12 +165,12 @@ typedef enum HIFI_MSG_ID_ {
 	ID_AP_AUDIO_MLIB_SET_PARA_IND		= 0xDD92,
 } HIFI_MSG_ID;
 
-/*´¦Àíhifi»Ø¸´ÏûÏ¢£¬¼ÇÂ¼cmd_idºÍÊı¾İ*/
+/*å¤„ç†hifiå›å¤æ¶ˆæ¯ï¼Œè®°å½•cmd_idå’Œæ•°æ®*/
 typedef struct {
-	unsigned char *mail_buff;		/* ÓÊÏäÊı¾İ½ÓÊÕµÄbuff */
+	unsigned char *mail_buff;		/* é‚®ç®±æ•°æ®æ¥æ”¶çš„buff */
 	unsigned int mail_buff_len;
-	unsigned int cmd_id;			/* ÓÊÏä½ÓÊÕÊı¾İÇ°4¸ö×Ö½ÚÊÇcmd_id */
-	unsigned char *out_buff_ptr;	/* Ö¸Ïòmail_buff cmd_idºóµÄÎ»ÖÃ */
+	unsigned int cmd_id;			/* é‚®ç®±æ¥æ”¶æ•°æ®å‰4ä¸ªå­—èŠ‚æ˜¯cmd_id */
+	unsigned char *out_buff_ptr;	/* æŒ‡å‘mail_buff cmd_idåçš„ä½ç½® */
 	unsigned int out_buff_len;
 } rev_msg_buff;
 

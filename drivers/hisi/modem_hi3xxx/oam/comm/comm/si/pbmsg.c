@@ -4,7 +4,7 @@
   Author       : zhuli
   Version      : V100R002
   Date         : 2008-5-15
-  Description  : ¸ÃCÎÄ¼ş¸ø³öÁË---Íê³ÉÏûÏ¢´¦ÀíÄ£¿éÊµÏÖ
+  Description  : è¯¥Cæ–‡ä»¶ç»™å‡ºäº†---å®Œæˆæ¶ˆæ¯å¤„ç†æ¨¡å—å®ç°
   Function List:
   History      :
  ************************************************************************/
@@ -28,18 +28,18 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 #define    THIS_FILE_ID PS_FILE_ID_PB_MSG_C
 
 /*****************************************************************************
-    È«¾Ö±äÁ¿¶¨Òå
+    å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 SI_PB_REQ_UINT_STRU             gstPBReqUnit;
 
-/*Ë«ºË¶¼ĞèÒªµÄÈ«¾Ö±äÁ¿£¬A ÉÏÃæµÄÍ¨¹ıÏûÏ¢ºÍ C µÄÍ¬²½*/
+/*åŒæ ¸éƒ½éœ€è¦çš„å…¨å±€å˜é‡ï¼ŒA ä¸Šé¢çš„é€šè¿‡æ¶ˆæ¯å’Œ C çš„åŒæ­¥*/
 SI_PB_CONTROL_STRU              gstPBCtrlInfo;
 SI_PB_CTRL_INFO_ST              gstPBConfigInfo;
 
@@ -135,7 +135,7 @@ VOS_VOID SI_PB_ReadEccProc(VOS_UINT16 usIndexNum,VOS_UINT16 usIndexStar,SI_PB_EV
             ulValidFlag = VOS_TRUE;
 
             SI_PB_BcdToAscii(3, pucContent, pstCnfData->PBEvent.PBReadCnf.PBRecord.Number,
-                            &pstCnfData->PBEvent.PBReadCnf.PBRecord.NumberLength);/*EccºÅÂëÔÚĞÕÃûÇ°Ãæ*/
+                            &pstCnfData->PBEvent.PBReadCnf.PBRecord.NumberLength);/*Eccå·ç åœ¨å§“åå‰é¢*/
 
             pstCnfData->PBEvent.PBReadCnf.PBRecord.NumberType = PB_NUMBER_TYPE_NORMAL;
 
@@ -164,7 +164,7 @@ VOS_VOID SI_PB_ReadEccProc(VOS_UINT16 usIndexNum,VOS_UINT16 usIndexStar,SI_PB_EV
 
         SI_PBCallback(pstCnfData);
 
-        pucContent += gastPBContent[PB_ECC_CONTENT].ucRecordLen;/*ÄÚÈİÖ¸Õë°´ÕÕ¼ÇÂ¼³¤¶ÈÆ«ÒÆ*/
+        pucContent += gastPBContent[PB_ECC_CONTENT].ucRecordLen;/*å†…å®¹æŒ‡é’ˆæŒ‰ç…§è®°å½•é•¿åº¦åç§»*/
     }
 
     return;
@@ -214,7 +214,7 @@ VOS_UINT32 SI_PB_ReadProc(PBMsgBlock *pMsg)
 
     ulResult = SI_PB_LocateRecord(pstMsg->ulStorage, pstMsg->usIndex1, pstMsg->usIndex2, &ucPBoffset);
 
-    if(VOS_OK != ulResult) /*µ±Ç°µç»°±¾ÄÚÈİÎ´ÕÒµ½*/
+    if(VOS_OK != ulResult) /*å½“å‰ç”µè¯æœ¬å†…å®¹æœªæ‰¾åˆ°*/
     {
         PB_WARNING_LOG("SI_PB_ReadProc: SI_PB_LocateRecord Return Error");
 
@@ -229,18 +229,18 @@ VOS_UINT32 SI_PB_ReadProc(PBMsgBlock *pMsg)
     {
         usIndexNum       = gastPBContent[ucPBoffset].usTotalNum;
 
-        pstMsg->usIndex1 = 1;/*´ÓµÚÒ»Ìõ¿ªÊ¼¶ÁÈ¡*/
+        pstMsg->usIndex1 = 1;/*ä»ç¬¬ä¸€æ¡å¼€å§‹è¯»å–*/
 
         pstMsg->usIndex2 = gastPBContent[ucPBoffset].usTotalNum;
     }
     else
     {
-        usIndexNum = (pstMsg->usIndex2 - pstMsg->usIndex1) + 1;/*¼ÆËãÁ½¸öË÷ÒıÖ®¼äµÄ¼ÇÂ¼Êı*/
+        usIndexNum = (pstMsg->usIndex2 - pstMsg->usIndex1) + 1;/*è®¡ç®—ä¸¤ä¸ªç´¢å¼•ä¹‹é—´çš„è®°å½•æ•°*/
     }
 
     stCnfData.PBEvent.PBReadCnf.RecordNum = 1;
 
-    if(PB_ECC == pstMsg->ulStorage) /*½ô¼±ºô½ĞºÅÂëÔÚ»ªÉ½ºÍBalongÉÏÃæ¶¼ÓĞ»º³å*/
+    if(PB_ECC == pstMsg->ulStorage) /*ç´§æ€¥å‘¼å«å·ç åœ¨åå±±å’ŒBalongä¸Šé¢éƒ½æœ‰ç¼“å†²*/
     {
         SI_PB_ReadEccProc(usIndexNum,pstMsg->usIndex1,&stCnfData);
 
@@ -253,15 +253,15 @@ VOS_UINT32 SI_PB_ReadProc(PBMsgBlock *pMsg)
 
     stCnfData.PBLastTag = VOS_FALSE;
 
-    for(i=0; i<usIndexNum; i++)     /*¸ù¾İ¶ÁÈ¡µÄµç»°±¾Ë÷Òı·¶Î§Ñ­»·*/
+    for(i=0; i<usIndexNum; i++)     /*æ ¹æ®è¯»å–çš„ç”µè¯æœ¬ç´¢å¼•èŒƒå›´å¾ªç¯*/
     {
         VOS_MemSet((VOS_UINT8 *)&stCnfData.PBEvent.PBReadCnf, 0, sizeof(SI_PB_EVENT_READ_CNF_STRU));
 
         SI_PB_TransPBFromate(&gastPBContent[ucPBoffset], (VOS_UINT16)(pstMsg->usIndex1+i), pucContent, &stCnfData.PBEvent.PBReadCnf.PBRecord);
 
-        pucContent += gastPBContent[ucPBoffset].ucRecordLen;/*ÄÚÈİÖ¸Õë°´ÕÕ¼ÇÂ¼³¤¶ÈÆ«ÒÆ*/
+        pucContent += gastPBContent[ucPBoffset].ucRecordLen;/*å†…å®¹æŒ‡é’ˆæŒ‰ç…§è®°å½•é•¿åº¦åç§»*/
 
-        if(SI_PB_CONTENT_VALID == SI_PB_GetBitFromBuf(gastPBContent[ucPBoffset].pIndex,pstMsg->usIndex1+i))/*¸ù¾İIndexÅĞ¶ÏSI_PB_CONTENT_VALID == stCnfData.PBEvent.PBReadCnf.PBRecord.ValidFlag) */
+        if(SI_PB_CONTENT_VALID == SI_PB_GetBitFromBuf(gastPBContent[ucPBoffset].pIndex,pstMsg->usIndex1+i))/*æ ¹æ®Indexåˆ¤æ–­SI_PB_CONTENT_VALID == stCnfData.PBEvent.PBReadCnf.PBRecord.ValidFlag) */
         {
             ulValidFlag = VOS_TRUE;
         }
@@ -272,7 +272,7 @@ VOS_UINT32 SI_PB_ReadProc(PBMsgBlock *pMsg)
             stCnfData.PBError = ((VOS_TRUE == ulValidFlag)?TAF_ERR_NO_ERROR:TAF_ERR_PB_NOT_FOUND);
         }
 
-        SI_PBCallback(&stCnfData); /*·µ»Ø×ª»»½á¹û*/
+        SI_PBCallback(&stCnfData); /*è¿”å›è½¬æ¢ç»“æœ*/
     }
 
     return VOS_OK;
@@ -374,18 +374,18 @@ VOS_UINT32 SI_PB_SearchReq(SI_PB_SEARCH_REQ_STRU *pMsg,
 
     if (PB_REQ_SEND == ucSendReqFlag)
     {
-        if(SI_PB_STORAGE_SM == pMsg->ulStorage)   /*Èç¹ûÊÇADNĞèÒª×ª»»Îª¼ÇÂ¼ºÅ*/
+        if(SI_PB_STORAGE_SM == pMsg->ulStorage)   /*å¦‚æœæ˜¯ADNéœ€è¦è½¬æ¢ä¸ºè®°å½•å·*/
         {
             ulResult = SI_PB_CountADNRecordNum(gstPBReqUnit.usCurIndex, &usFileId, &ucRecord);
         }
-        else                                                                    /*·ÃÎÊÆäËüµç»°±¾*/
+        else                                                                    /*è®¿é—®å…¶å®ƒç”µè¯æœ¬*/
         {
             ulResult = SI_PB_GetXDNFileID(pMsg->ulStorage, &usFileId);
 
             ucRecord = (VOS_UINT8)gstPBReqUnit.usCurIndex;
         }
 
-        if(VOS_ERR == ulResult)         /*×ª»»½á¹ûÊ§°Ü*/
+        if(VOS_ERR == ulResult)         /*è½¬æ¢ç»“æœå¤±è´¥*/
         {
             PB_WARNING_LOG("SI_PB_SearchReq: Get the XDN File ID and Record Number is Error");
 
@@ -416,18 +416,18 @@ VOS_UINT32 SI_PB_SearchProc(PBMsgBlock *pMsg)
     stCnfData.PBEventType           = SI_PB_EVENT_SEARCH_CNF;
     stCnfData.PBLastTag             = VOS_TRUE;
 
-    if( TAF_ERR_NO_ERROR != (ulResult = SI_PB_ErrorProc()))/*Èç¹û¶¨Î»Ê§°Ü»òÕß»º³åÄÚÈİ²»´æÔÚ*/
+    if( TAF_ERR_NO_ERROR != (ulResult = SI_PB_ErrorProc()))/*å¦‚æœå®šä½å¤±è´¥æˆ–è€…ç¼“å†²å†…å®¹ä¸å­˜åœ¨*/
     {
         stCnfData.PBError  = ulResult;
         stCnfData.PBLastTag = VOS_TRUE;
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     if(VOS_OK != SI_PB_FindPBOffset(((SI_PB_SEARCH_REQ_STRU*)pMsg)->ulStorage, &ucOffset))
     {
         stCnfData.PBError  = TAF_ERR_UNSPECIFIED_ERROR;
 
-        return SI_PBCallback(&stCnfData); /*·µ»Ø×ª»»½á¹û*/
+        return SI_PBCallback(&stCnfData); /*è¿”å›è½¬æ¢ç»“æœ*/
     }
 
     if( VOS_NULL_PTR == gastPBContent[ucOffset].pContent )
@@ -437,7 +437,7 @@ VOS_UINT32 SI_PB_SearchProc(PBMsgBlock *pMsg)
         {
             stCnfData.PBError  = ulResult;
 
-            SI_PBCallback(&stCnfData); /*·µ»Ø×ª»»½á¹û*/
+            SI_PBCallback(&stCnfData); /*è¿”å›è½¬æ¢ç»“æœ*/
         }
 
         return VOS_OK;
@@ -448,7 +448,7 @@ VOS_UINT32 SI_PB_SearchProc(PBMsgBlock *pMsg)
     {
         stCnfData.PBError  = ulResult;
 
-        SI_PBCallback(&stCnfData); /*·µ»Ø×ª»»½á¹û*/
+        SI_PBCallback(&stCnfData); /*è¿”å›è½¬æ¢ç»“æœ*/
     }
 
     return VOS_OK;
@@ -461,18 +461,18 @@ VOS_UINT32 SI_PB_SReadEMLProc(VOS_UINT16 usIndex, VOS_UINT16 usOffset, SI_PB_REC
     VOS_UINT8 ucType2EMLFileCnt;
     VOS_UINT8   i;
 
-    /*Email,Çø·ÖType1ºÍ2£¬ÏÈ¿´ÊÇ·ñÓĞUSED, Èç¹û´æÔÚ¶ÁÄÚ´æ
-    Type1 Ö±½Ó¸ù¾İIndex¶Á
-    Type2 ¸ù¾İIndex¼°IAP»º´æ×ª»»³öÊµ¼Ê¼ÇÂ¼ºÅ£¬Èç¹û¼ÇÂ¼ºÅÎŞĞ§ÔòÍË³ö*/
+    /*Email,åŒºåˆ†Type1å’Œ2ï¼Œå…ˆçœ‹æ˜¯å¦æœ‰USED, å¦‚æœå­˜åœ¨è¯»å†…å­˜
+    Type1 ç›´æ¥æ ¹æ®Indexè¯»
+    Type2 æ ¹æ®IndexåŠIAPç¼“å­˜è½¬æ¢å‡ºå®é™…è®°å½•å·ï¼Œå¦‚æœè®°å½•å·æ— æ•ˆåˆ™é€€å‡º*/
     if(0 == gstPBCtrlInfo.ulEMLFileNum)
     {
         PB_WARNING_LOG("SI_PB_SReadEMLProc: No Valid Email Record");
         return VOS_OK;
     }
 
-    if(PB_FILE_TYPE1 == gstPBCtrlInfo.astEMLInfo[0].enEMLType)/*EmailÎÄ¼şÀàĞÍ£¬*/
+    if(PB_FILE_TYPE1 == gstPBCtrlInfo.astEMLInfo[0].enEMLType)/*Emailæ–‡ä»¶ç±»å‹ï¼Œ*/
     {
-        /* ¶ÔÓÚTYPE1ÀàĞÍµÄÎÄ¼ş£¬×ªÈëµÄ²ÎÊıusIndex + usOffset²»ÄÜ³¬¹ıEMAILµÄ×Ü¼ÇÂ¼Êı */
+        /* å¯¹äºTYPE1ç±»å‹çš„æ–‡ä»¶ï¼Œè½¬å…¥çš„å‚æ•°usIndex + usOffsetä¸èƒ½è¶…è¿‡EMAILçš„æ€»è®°å½•æ•° */
         if ((usIndex + usOffset) > gstEMLContent.usTotalNum)
         {
             PB_WARNING_LOG("SI_PB_SReadEMLProc: Email Record Index Large than Total Number.");
@@ -490,7 +490,7 @@ VOS_UINT32 SI_PB_SReadEMLProc(VOS_UINT16 usIndex, VOS_UINT16 usOffset, SI_PB_REC
             return TAF_ERR_PB_STORAGE_OP_FAIL;
         }
 
-        /*Type2 EmailÎÄ¼ş£¬ĞèÔÚgstIAPContent.pIAPContentÖĞÕÒµ½ADN ¼ÇÂ¼ºÍEML¼ÇÂ¼¶ÔÓ¦¹ØÏµ*/
+        /*Type2 Emailæ–‡ä»¶ï¼Œéœ€åœ¨gstIAPContent.pIAPContentä¸­æ‰¾åˆ°ADN è®°å½•å’ŒEMLè®°å½•å¯¹åº”å…³ç³»*/
         ucEMLRecordNum = gstIAPContent.pIAPContent[(((usIndex+usOffset)-1)*gstIAPContent.ucRecordLen)
                                                     +(gstPBCtrlInfo.astEMLInfo[0].ulEMLTagNum - 1)];
 
@@ -510,7 +510,7 @@ VOS_UINT32 SI_PB_SReadEMLProc(VOS_UINT16 usIndex, VOS_UINT16 usOffset, SI_PB_REC
         ulEMLContentOffset = (ucEMLRecordNum - 1)
                         * gstPBCtrlInfo.astEMLInfo[ucType2EMLFileCnt - 1].ucRecordLen;
 
-        /* ÓÉÓÚEMAILÎÄ¼şÃ¿¸ö¼ÇÂ¼Êı¿ÉÄÜ²»Ò»ÖÂ£¬ĞèÒªÖğ¸öÀÛ¼ÓÀ´¼ÆËãÆ«ÒÆÁ¿ */
+        /* ç”±äºEMAILæ–‡ä»¶æ¯ä¸ªè®°å½•æ•°å¯èƒ½ä¸ä¸€è‡´ï¼Œéœ€è¦é€ä¸ªç´¯åŠ æ¥è®¡ç®—åç§»é‡ */
         for (i = 0; i < (ucType2EMLFileCnt - 1); i++)
         {
             ulEMLContentOffset += gstPBCtrlInfo.astEMLInfo[i].ucRecordLen
@@ -534,8 +534,8 @@ VOS_UINT32 SI_PB_SReadANRProc(VOS_UINT16 usIndex, VOS_UINT16 usOffset, SI_PB_REC
     VOS_UINT8  ucType2ANRRecord;
     VOS_UINT8  ucType2ANRFileCnt;
 
-    /*ANR,ÏÈ¸ù¾İ»º´æ¸öÊıÅĞ¶ÏÊÇ·ñ´æÔÚUSED£¬Èç¹û´æÔÚ¶ÁÄÚ´æ£¬ÄÚ´æÎª¿ÕÔò³ö´í£¬
-    ÄÚ´æÄÚÈİ¶ÁÉÏÀ´ºóÅĞ¶Ï*/
+    /*ANR,å…ˆæ ¹æ®ç¼“å­˜ä¸ªæ•°åˆ¤æ–­æ˜¯å¦å­˜åœ¨USEDï¼Œå¦‚æœå­˜åœ¨è¯»å†…å­˜ï¼Œå†…å­˜ä¸ºç©ºåˆ™å‡ºé”™ï¼Œ
+    å†…å­˜å†…å®¹è¯»ä¸Šæ¥ååˆ¤æ–­*/
     for(i = 0; i < gstPBCtrlInfo.ulANRStorageNum; i++)
     {
         if(VOS_NULL == gastANRContent[i].pContent)
@@ -544,7 +544,7 @@ VOS_UINT32 SI_PB_SReadANRProc(VOS_UINT16 usIndex, VOS_UINT16 usOffset, SI_PB_REC
             return TAF_ERR_PB_STORAGE_OP_FAIL;
         }
 
-        /*Èç¹ûÎªType2ÀàĞÍANR£¬ĞèÒªÍ¨¹ıIAPÕÒµ½ÕæÊµĞèÒª¶ÁÈ¡µÄ*/
+        /*å¦‚æœä¸ºType2ç±»å‹ANRï¼Œéœ€è¦é€šè¿‡IAPæ‰¾åˆ°çœŸå®éœ€è¦è¯»å–çš„*/
         if(PB_FILE_TYPE2 == gstPBCtrlInfo.astANRInfo[0][i].enANRType)
         {
             if(VOS_NULL == gstIAPContent.pIAPContent)
@@ -563,7 +563,7 @@ VOS_UINT32 SI_PB_SReadANRProc(VOS_UINT16 usIndex, VOS_UINT16 usOffset, SI_PB_REC
                 continue;
             }
 
-            /*Index¶ÔÓ¦µÄType2 ANRÎŞĞ§*/
+            /*Indexå¯¹åº”çš„Type2 ANRæ— æ•ˆ*/
             if ((gstPBCtrlInfo.astANRInfo[ucType2ANRFileCnt - 1][i].ucRecordNum < ucType2ANRRecord)
                 ||(0 == ucType2ANRRecord)||(0xFF == ucType2ANRRecord))
             {
@@ -584,7 +584,7 @@ VOS_UINT32 SI_PB_SReadANRProc(VOS_UINT16 usIndex, VOS_UINT16 usOffset, SI_PB_REC
         }
         else
         {
-            /* ¶ÔÓÚTYPE1ÀàĞÍµÄANRÎÄ¼ş£¬×ªÈëµÄ²ÎÊıusIndex + usOffset²»ÄÜ³¬¹ıANRµÄ×Ü¼ÇÂ¼Êı */
+            /* å¯¹äºTYPE1ç±»å‹çš„ANRæ–‡ä»¶ï¼Œè½¬å…¥çš„å‚æ•°usIndex + usOffsetä¸èƒ½è¶…è¿‡ANRçš„æ€»è®°å½•æ•° */
             if ((usIndex + usOffset) > gastANRContent[i].usTotalNum)
             {
                 continue;
@@ -625,7 +625,7 @@ VOS_UINT32 SI_PB_SReadProc(PBMsgBlock *pMsg)
 
     if((0 == gstPBConfigInfo.ucSPBFlag)||(SI_PB_STORAGE_SM != pstMsg->ulStorage))
     {
-        /*¸ÄÎªOperation not allowed*/
+        /*æ”¹ä¸ºOperation not allowed*/
         stCnfData.PBError = TAF_ERR_CMD_TYPE_ERROR;
 
         PB_WARNING_LOG("SI_PB_SReadProc: Proc is Not Allow");
@@ -646,7 +646,7 @@ VOS_UINT32 SI_PB_SReadProc(PBMsgBlock *pMsg)
 
     ulResult = SI_PB_LocateRecord(pstMsg->ulStorage, pstMsg->usIndex1, pstMsg->usIndex2, &ucPBoffset);
 
-    if(VOS_OK != ulResult) /*µ±Ç°µç»°±¾ÄÚÈİÎ´ÕÒµ½*/
+    if(VOS_OK != ulResult) /*å½“å‰ç”µè¯æœ¬å†…å®¹æœªæ‰¾åˆ°*/
     {
         PB_WARNING_LOG("SI_PB_SReadProc: SI_PB_LocateRecord Return Error");
 
@@ -661,16 +661,16 @@ VOS_UINT32 SI_PB_SReadProc(PBMsgBlock *pMsg)
     {
         usIndexNum       = gastPBContent[ucPBoffset].usTotalNum;
 
-        pstMsg->usIndex1 = 1;/*´ÓµÚÒ»Ìõ¿ªÊ¼¶ÁÈ¡*/
+        pstMsg->usIndex1 = 1;/*ä»ç¬¬ä¸€æ¡å¼€å§‹è¯»å–*/
 
         pstMsg->usIndex2 = gastPBContent[ucPBoffset].usTotalNum;
     }
     else
     {
-        usIndexNum = (pstMsg->usIndex2 - pstMsg->usIndex1) + 1;/*¼ÆËãÁ½¸öË÷ÒıÖ®¼äµÄ¼ÇÂ¼Êı*/
+        usIndexNum = (pstMsg->usIndex2 - pstMsg->usIndex1) + 1;/*è®¡ç®—ä¸¤ä¸ªç´¢å¼•ä¹‹é—´çš„è®°å½•æ•°*/
     }
 
-    if(VOS_NULL == gastPBContent[ucPBoffset].pContent)/*ADNÒ»¶¨´æÔÚ»º´æ*/
+    if(VOS_NULL == gastPBContent[ucPBoffset].pContent)/*ADNä¸€å®šå­˜åœ¨ç¼“å­˜*/
     {
         stCnfData.PBError = TAF_ERR_PB_STORAGE_OP_FAIL;
 
@@ -683,7 +683,7 @@ VOS_UINT32 SI_PB_SReadProc(PBMsgBlock *pMsg)
 
     stCnfData.PBLastTag = VOS_FALSE;
 
-    for(i=0; i<usIndexNum; i++)     /*¸ù¾İ¶ÁÈ¡µÄµç»°±¾Ë÷Òı·¶Î§Ñ­»·*/
+    for(i=0; i<usIndexNum; i++)     /*æ ¹æ®è¯»å–çš„ç”µè¯æœ¬ç´¢å¼•èŒƒå›´å¾ªç¯*/
     {
         stCnfData.PBError = VOS_OK;
 
@@ -693,10 +693,10 @@ VOS_UINT32 SI_PB_SReadProc(PBMsgBlock *pMsg)
 
         stCnfData.PBEvent.PBReadCnf.PBRecord.Index = (VOS_UINT16)(pstMsg->usIndex1+i);
 
-        /*´ËÌõ¼ÇÂ¼ÎŞĞ§£¬ÇÒ²»ÊÇ×îºóÒ»Ìõ*/
-        if(SI_PB_CONTENT_INVALID == SI_PB_GetBitFromBuf(gastPBContent[ucPBoffset].pIndex,pstMsg->usIndex1+i))/*´ÓIndexÖĞ»ñÈ¡ÓĞĞ§ĞÅÏ¢*/
+        /*æ­¤æ¡è®°å½•æ— æ•ˆï¼Œä¸”ä¸æ˜¯æœ€åä¸€æ¡*/
+        if(SI_PB_CONTENT_INVALID == SI_PB_GetBitFromBuf(gastPBContent[ucPBoffset].pIndex,pstMsg->usIndex1+i))/*ä»Indexä¸­è·å–æœ‰æ•ˆä¿¡æ¯*/
         {
-            if(i == (usIndexNum-1))/*×îºóÒ»Ìõ¼ÇÂ¼ÎŞĞ§*/
+            if(i == (usIndexNum-1))/*æœ€åä¸€æ¡è®°å½•æ— æ•ˆ*/
             {
                 stCnfData.PBError = ((VOS_TRUE == ulValidFlag)?TAF_ERR_NO_ERROR:TAF_ERR_PB_NOT_FOUND);
                 stCnfData.PBLastTag = VOS_TRUE;
@@ -711,12 +711,12 @@ VOS_UINT32 SI_PB_SReadProc(PBMsgBlock *pMsg)
 
         ulValidFlag = VOS_TRUE;
 
-        pucTempContent = pucContent + (i*gastPBContent[ucPBoffset].ucRecordLen);/*ÄÚÈİÖ¸Õë°´ÕÕ¼ÇÂ¼³¤¶ÈÆ«ÒÆ*/
+        pucTempContent = pucContent + (i*gastPBContent[ucPBoffset].ucRecordLen);/*å†…å®¹æŒ‡é’ˆæŒ‰ç…§è®°å½•é•¿åº¦åç§»*/
 
         SI_PB_TransPBFromate(&gastPBContent[ucPBoffset], (VOS_UINT16)(pstMsg->usIndex1+i), pucTempContent, &stCnfData.PBEvent.PBReadCnf.PBRecord);
 
-        /*ANR,ÏÈ¸ù¾İ»º´æ¸öÊıÅĞ¶ÏÊÇ·ñ´æÔÚUSED£¬Èç¹û´æÔÚ¶ÁÄÚ´æ£¬ÄÚ´æÎª¿ÕÔò³ö´í£¬
-        ÄÚ´æÄÚÈİ¶ÁÉÏÀ´ºóÅĞ¶Ï*/
+        /*ANR,å…ˆæ ¹æ®ç¼“å­˜ä¸ªæ•°åˆ¤æ–­æ˜¯å¦å­˜åœ¨USEDï¼Œå¦‚æœå­˜åœ¨è¯»å†…å­˜ï¼Œå†…å­˜ä¸ºç©ºåˆ™å‡ºé”™ï¼Œ
+        å†…å­˜å†…å®¹è¯»ä¸Šæ¥ååˆ¤æ–­*/
         ulResult = SI_PB_SReadANRProc(pstMsg->usIndex1, i, &stCnfData.PBEvent.PBReadCnf.PBRecord);
 
         if(VOS_OK != ulResult)
@@ -739,28 +739,28 @@ VOS_UINT32 SI_PB_SReadProc(PBMsgBlock *pMsg)
             return SI_PBCallback(&stCnfData);
         }
 
-        /*¶ÁÈ¡µÄÒÑÊÇ×îºóÒ»Ìõ¼ÇÂ¼£¬ÔòÖÃ±êÖ¾Î»ÎªTrue*/
+        /*è¯»å–çš„å·²æ˜¯æœ€åä¸€æ¡è®°å½•ï¼Œåˆ™ç½®æ ‡å¿—ä½ä¸ºTrue*/
         if(i == (usIndexNum-1))
         {
             stCnfData.PBLastTag = VOS_TRUE;
         }
 
-        SI_PBCallback(&stCnfData); /*·µ»Ø×ª»»½á¹û*/
+        SI_PBCallback(&stCnfData); /*è¿”å›è½¬æ¢ç»“æœ*/
     }
 
     return VOS_OK;
 }
 
 /*****************************************************************************
-º¯ Êı Ãû  : SI_PBUpdateGobal
-¹¦ÄÜÃèÊö  : ÓÃÓÚ´¦ÀíCcpuµç»°±¾·¢ËÍµÄÈ«¾Ö±äÁ¿³õÊ¼»¯Íê±ÏÏûÏ¢
-ÊäÈë²ÎÊı  : Ccpu·¢ËÍµÄÏûÏ¢ÄÚÈİ
-Êä³ö²ÎÊı  : ÎŞ
-·µ »Ø Öµ  : ÎŞ
-ĞŞ¶©¼ÇÂ¼  :
-1.  ÈÕ    ÆÚ   : 2007Äê10ÔÂ15ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : Creat
+å‡½ æ•° å  : SI_PBUpdateGobal
+åŠŸèƒ½æè¿°  : ç”¨äºå¤„ç†Ccpuç”µè¯æœ¬å‘é€çš„å…¨å±€å˜é‡åˆå§‹åŒ–å®Œæ¯•æ¶ˆæ¯
+è¾“å…¥å‚æ•°  : Ccpuå‘é€çš„æ¶ˆæ¯å†…å®¹
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å› å€¼  : æ— 
+ä¿®è®¢è®°å½•  :
+1.  æ—¥    æœŸ   : 2007å¹´10æœˆ15æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : Creat
 
 *****************************************************************************/
 VOS_UINT32 SI_PBUpdateAGlobal(PBMsgBlock *pMsg)
@@ -863,17 +863,17 @@ VOS_UINT32 SI_PBUpdateAGlobal(PBMsgBlock *pMsg)
 }
 
 /*****************************************************************************
-º¯ Êı Ãû  : SI_PBUpdateACurPB
-¹¦ÄÜÃèÊö  : ÓÃÓÚ´¦ÀíCcpu·¢ËÍµÄ¸üĞÂµ±Ç°µç»°±¾ÉèÖÃÏûÏ¢
-ÊäÈë²ÎÊı  : Ccpu·¢ËÍµÄ¸üĞÂÉèÖÃÏûÏ¢
-Êä³ö²ÎÊı  : ÎŞ
-·µ »Ø Öµ  : ÎŞ
-µ÷ÓÃº¯Êı  :
-±»µ÷º¯Êı  :
-ĞŞ¶©¼ÇÂ¼  :
-1.  ÈÕ    ÆÚ   : 2007Äê10ÔÂ15ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : Creat
+å‡½ æ•° å  : SI_PBUpdateACurPB
+åŠŸèƒ½æè¿°  : ç”¨äºå¤„ç†Ccpuå‘é€çš„æ›´æ–°å½“å‰ç”µè¯æœ¬è®¾ç½®æ¶ˆæ¯
+è¾“å…¥å‚æ•°  : Ccpuå‘é€çš„æ›´æ–°è®¾ç½®æ¶ˆæ¯
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å› å€¼  : æ— 
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®è®¢è®°å½•  :
+1.  æ—¥    æœŸ   : 2007å¹´10æœˆ15æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : Creat
 
 *****************************************************************************/
 VOS_UINT32 SI_PBUpdateACurPB(PBMsgBlock *pMsg)
@@ -895,7 +895,7 @@ VOS_UINT8 SI_PB_AlphaTagTruncation(SI_PB_RECORD_STRU *pstRecord, VOS_UINT8 ucOff
     VOS_UINT8  uctemp;
     VOS_UINT8  ucLen;
 
-    /*Èç¹ûĞÕÃû³¤¶ÈÎª0£¬Ôò·µ»ØCopy³¤¶ÈÎª0*/
+    /*å¦‚æœå§“åé•¿åº¦ä¸º0ï¼Œåˆ™è¿”å›Copyé•¿åº¦ä¸º0*/
     if (0 == pstRecord->ucAlphaTagLength)
     {
         PB_INFO_LOG("SI_PB_AlphaTagTruncation: The Name Len is 0");
@@ -905,9 +905,9 @@ VOS_UINT8 SI_PB_AlphaTagTruncation(SI_PB_RECORD_STRU *pstRecord, VOS_UINT8 ucOff
     if (SI_PB_ALPHATAG_TYPE_UCS2_80 == pstRecord->AlphaTagType)
     {
         uctemp = gastPBContent[ucOffset].ucNameLen\
-                    - ((gastPBContent[ucOffset].ucNameLen - 1)%2);/* [false alarm]:Îó¶Ï  */
+                    - ((gastPBContent[ucOffset].ucNameLen - 1)%2);/* [false alarm]:è¯¯æ–­  */
 
-        return (pstRecord->ucAlphaTagLength > uctemp)?uctemp:pstRecord->ucAlphaTagLength;/* [false alarm]:Îó¶Ï  */
+        return (pstRecord->ucAlphaTagLength > uctemp)?uctemp:pstRecord->ucAlphaTagLength;/* [false alarm]:è¯¯æ–­  */
     }
     else if (SI_PB_ALPHATAG_TYPE_GSM == pstRecord->AlphaTagType)
     {
@@ -924,9 +924,9 @@ VOS_UINT8 SI_PB_AlphaTagTruncation(SI_PB_RECORD_STRU *pstRecord, VOS_UINT8 ucOff
 
         return ucLen;
     }
-    else/*Ê£ÏÂ81¡¢82±àÂëÁ½ÖÖÇé¿ö*/
+    else/*å‰©ä¸‹81ã€82ç¼–ç ä¸¤ç§æƒ…å†µ*/
     {
-        /*¼ÆËã±»½ØÈ¥µÄ³¤¶È*/
+        /*è®¡ç®—è¢«æˆªå»çš„é•¿åº¦*/
         uctemp = (pstRecord->ucAlphaTagLength > gastPBContent[ucOffset].ucNameLen)?\
                   gastPBContent[ucOffset].ucNameLen:pstRecord->ucAlphaTagLength;
 
@@ -970,14 +970,14 @@ VOS_UINT32 SI_PB_UpdataXDNFile(VOS_UINT8 ucPBOffset, VOS_UINT16 usFileId, VOS_UI
                 (ulXDNContentOffset += gastPBContent[ucPBOffset].ucRecordLen - 2):
                 (ulXDNContentOffset += gastPBContent[ucPBOffset].ucRecordLen - 1);
 
-        /* ¼ì²éµ±Ç°¸üĞÂµÄ¼ÇÂ¼ÊÇ·ñÒÑ¾­Õ¼ÓÃÁËÒ»¸öEXTÎÄ¼ş¼ÇÂ¼ */
+        /* æ£€æŸ¥å½“å‰æ›´æ–°çš„è®°å½•æ˜¯å¦å·²ç»å ç”¨äº†ä¸€ä¸ªEXTæ–‡ä»¶è®°å½• */
         ucExtRecord  = gastPBContent[ucPBOffset].pContent[ulXDNContentOffset];
         ulExtInfoNum = gastPBContent[ucPBOffset].ulExtInfoNum;
 
-        /* Èç¹ûXDN¼ÇÂ¼¶ÔÓ¦ÒÑ¾­´æÔÚÁËEXT¼ÇÂ¼£¬Ôò²»ĞèÒªÈ¥²éÕÒ¿ÕÏĞµÄEXT¼ÇÂ¼ */
+        /* å¦‚æœXDNè®°å½•å¯¹åº”å·²ç»å­˜åœ¨äº†EXTè®°å½•ï¼Œåˆ™ä¸éœ€è¦å»æŸ¥æ‰¾ç©ºé—²çš„EXTè®°å½• */
         if((0xFF == ucExtRecord)||(0 == ucExtRecord))
         {
-            /* ÕÒµÃµ½¿ÕÏĞµÄEXTÎÄ¼ş¼ÇÂ¼Ê±²Å¸üĞÂEXTÎÄ¼ş£¬ÕÒ²»µ½¾Í²»¸üĞÂ£¬³¬³¤ºÅÂëÒ²²»±¨´í */
+            /* æ‰¾å¾—åˆ°ç©ºé—²çš„EXTæ–‡ä»¶è®°å½•æ—¶æ‰æ›´æ–°EXTæ–‡ä»¶ï¼Œæ‰¾ä¸åˆ°å°±ä¸æ›´æ–°ï¼Œè¶…é•¿å·ç ä¹Ÿä¸æŠ¥é”™ */
             ulResult = SI_PB_FindUnusedExtRecord( gastEXTContent + ulExtInfoNum, &ucExtRecord, 1);
         }
         else
@@ -1004,7 +1004,7 @@ VOS_UINT32 SI_PB_UpdataXDNFile(VOS_UINT8 ucPBOffset, VOS_UINT16 usFileId, VOS_UI
             ulResult = USIMM_SetFileReq(MAPS_PB_PID, 0, &stUpdateReq);
         }
 
-        /* ÏÈ¸üĞÂEXTÎÄ¼şÔÙ¸üĞÂADNÎÄ¼şÄÚÈİ£¬Èç¹û¸üĞÂEXTÎÄ¼şÊ§°Ü£¬¶ÔÓ¦µÄ±êÖ¾Î»ÉèÖÃÎªFF */
+        /* å…ˆæ›´æ–°EXTæ–‡ä»¶å†æ›´æ–°ADNæ–‡ä»¶å†…å®¹ï¼Œå¦‚æœæ›´æ–°EXTæ–‡ä»¶å¤±è´¥ï¼Œå¯¹åº”çš„æ ‡å¿—ä½è®¾ç½®ä¸ºFF */
         if(VOS_OK != ulResult)
         {
             gstPBReqUnit.aucXDNContent[gastPBContent[ucPBOffset].ucNameLen+13] = 0xFF;
@@ -1021,7 +1021,7 @@ VOS_UINT32 SI_PB_UpdataXDNFile(VOS_UINT8 ucPBOffset, VOS_UINT16 usFileId, VOS_UI
         stUpdateReq.ulEfLen         = gastPBContent[ucPBOffset].ucRecordLen;
         stUpdateReq.usEfId          = usFileId;
 
-        /* Èç¹û¸üĞÂXDNÎÄ¼ş³É¹¦£¬ÔòÈÏÎª¸üĞÂEXTÎÄ¼şÒ²ÊÇ³É¹¦µÄ */
+        /* å¦‚æœæ›´æ–°XDNæ–‡ä»¶æˆåŠŸï¼Œåˆ™è®¤ä¸ºæ›´æ–°EXTæ–‡ä»¶ä¹Ÿæ˜¯æˆåŠŸçš„ */
         return USIMM_SetFileReq(MAPS_PB_PID, 0, &stUpdateReq);
     }
 
@@ -1059,17 +1059,17 @@ VOS_UINT32 SI_PB_UpdataADN(SI_PB_RECORD_STRU *pstRecord,
 
     ucCopyLen = SI_PB_AlphaTagTruncation(pstRecord, PB_ADN_CONTENT);
 
-    /*¿½±´´ı¸üĞÂµÄĞÕÃûÄÚÈİµ½±¾µØ*/
+    /*æ‹·è´å¾…æ›´æ–°çš„å§“åå†…å®¹åˆ°æœ¬åœ°*/
     VOS_MemCpy(gstPBReqUnit.aucXDNContent, pstRecord->AlphaTag, ucCopyLen);
 
-    /*´¦ÀíADNºÅÂë*/
+    /*å¤„ç†ADNå·ç */
     if(0 != pstRecord->NumberLength)
     {
         gstPBReqUnit.aucXDNContent[gastPBContent[PB_ADN_CONTENT].ucNameLen+1] = pstRecord->NumberType;
 
         ucNumberLen = (pstRecord->NumberLength > SI_PB_NUM_LEN)?SI_PB_NUM_LEN:pstRecord->NumberLength;
 
-        /*×ª»»²¢¿½±´´ı¸üĞÂºÅÂëÄÚÈİµ½±¾µØ*/
+        /*è½¬æ¢å¹¶æ‹·è´å¾…æ›´æ–°å·ç å†…å®¹åˆ°æœ¬åœ°*/
         SI_PB_AsciiToBcd(pstRecord->Number, ucNumberLen,
                         &gstPBReqUnit.aucXDNContent[gastPBContent[PB_ADN_CONTENT].ucNameLen+2],&ucCopyLen);
 
@@ -1080,27 +1080,27 @@ VOS_UINT32 SI_PB_UpdataADN(SI_PB_RECORD_STRU *pstRecord,
 
     ulEXTContentOffset += gastPBContent[PB_ADN_CONTENT].ucRecordLen - 1;
 
-    /* ¼ì²éµ±Ç°¸üĞÂµÄ¼ÇÂ¼ÊÇ·ñÒÑ¾­Õ¼ÓÃÁËÒ»¸öEXTÎÄ¼ş¼ÇÂ¼ */
+    /* æ£€æŸ¥å½“å‰æ›´æ–°çš„è®°å½•æ˜¯å¦å·²ç»å ç”¨äº†ä¸€ä¸ªEXTæ–‡ä»¶è®°å½• */
     ucExtRecord  = gastPBContent[PB_ADN_CONTENT].pContent[ulEXTContentOffset];
     ucExtRecord = ((ucExtRecord <= gastEXTContent[PB_ADN_CONTENT].usExtTotalNum) ? (ucExtRecord) : 0xFF);
 
     SI_PB_MemSet(sizeof(gstPBReqUnit.aucEXTContent), 0xFF, gstPBReqUnit.aucEXTContent);
 
-    /*ADN³¬³¤ºÅÂë´¦Àí*/
+    /*ADNè¶…é•¿å·ç å¤„ç†*/
     if(pstRecord->NumberLength > SI_PB_NUM_LEN)
     {
         if ( VOS_NULL_PTR == gastEXTContent[PB_ADN_CONTENT].pExtContent)
         {
-            /*³ö´í´¦Àí*/
+            /*å‡ºé”™å¤„ç†*/
             /*Operation not allowed*/
             PB_WARNING_LOG("SI_PB_UpdataADN:Ext Content NULL");
             return TAF_ERR_PB_STORAGE_OP_FAIL;
         }
 
-        /*Èç¹ûÃ»ÓĞ¶ÔÓ¦µÄEXTÎÄ¼ş¼ÇÂ¼ĞèÒªÑ°ÕÒ¿ÕÏĞEXT¼ÇÂ¼*/
+        /*å¦‚æœæ²¡æœ‰å¯¹åº”çš„EXTæ–‡ä»¶è®°å½•éœ€è¦å¯»æ‰¾ç©ºé—²EXTè®°å½•*/
         if(0xFF == ucExtRecord)
         {
-            /* ÕÒµÃµ½¿ÕÏĞµÄEXTÎÄ¼ş¼ÇÂ¼Ê±²Å¸üĞÂEXTÎÄ¼ş£¬ÕÒ²»µ½¾Í²»¸üĞÂ£¬³¬³¤ºÅÂëÒ²²»±¨´í */
+            /* æ‰¾å¾—åˆ°ç©ºé—²çš„EXTæ–‡ä»¶è®°å½•æ—¶æ‰æ›´æ–°EXTæ–‡ä»¶ï¼Œæ‰¾ä¸åˆ°å°±ä¸æ›´æ–°ï¼Œè¶…é•¿å·ç ä¹Ÿä¸æŠ¥é”™ */
             ulResult = SI_PB_FindUnusedExtRecord( &gastEXTContent[PB_ADN_CONTENT], &ucExtRecord, (VOS_UINT8)*pusExtUsedNum);
 
             (*pusExtUsedNum)++;
@@ -1117,7 +1117,7 @@ VOS_UINT32 SI_PB_UpdataADN(SI_PB_RECORD_STRU *pstRecord,
             gstPBReqUnit.aucEXTContent[1] = ucCopyLen;
             gstPBReqUnit.aucXDNContent[gastPBContent[PB_ADN_CONTENT].ucRecordLen-1] = ucExtRecord;
 
-            /*¼ÇÂ¼´ı¸üĞÂµÄEXT¼ÇÂ¼ĞÅÏ¢*/
+            /*è®°å½•å¾…æ›´æ–°çš„EXTè®°å½•ä¿¡æ¯*/
             pstSPBReq->usFileID[*pusFileNum]  = pstPBFid->usExtFileId;
             pstSPBReq->usDataLen[*pusFileNum] = SI_PB_EXT_LEN;
             pstSPBReq->ucRecordNum[*pusFileNum] = ucExtRecord;
@@ -1133,7 +1133,7 @@ VOS_UINT32 SI_PB_UpdataADN(SI_PB_RECORD_STRU *pstRecord,
     }
     else
     {
-        /*Èç¹û¸üĞÂÎÄ¼şÊ±ºÅÂë³¤¶ÈĞ¡ÓÚ20£¬¿ÉÄÜĞèÒª½«EXTºÅÂëÉ¾³ı*/
+        /*å¦‚æœæ›´æ–°æ–‡ä»¶æ—¶å·ç é•¿åº¦å°äº20ï¼Œå¯èƒ½éœ€è¦å°†EXTå·ç åˆ é™¤*/
         if((0xFF != ucExtRecord)&&(0xFFFF != pstPBFid->usExtFileId))
         {
             gstPBReqUnit.aucEXTContent[0] = 0;
@@ -1149,7 +1149,7 @@ VOS_UINT32 SI_PB_UpdataADN(SI_PB_RECORD_STRU *pstRecord,
         gstPBReqUnit.aucXDNContent[gastPBContent[PB_ADN_CONTENT].ucRecordLen-1] = 0xFF;
     }
 
-    /*¼ÇÂ¼´ı¸üĞÂµÄADN¼ÇÂ¼ĞÅÏ¢,ÔÚ¸üĞÂEXTÎÄ¼şÖ®ºó*/
+    /*è®°å½•å¾…æ›´æ–°çš„ADNè®°å½•ä¿¡æ¯,åœ¨æ›´æ–°EXTæ–‡ä»¶ä¹‹å*/
     pstSPBReq->usFileID[*pusFileNum]  = pstPBFid->usADNFileId;
     pstSPBReq->ucRecordNum[*pusFileNum] = pstPBFid->ucRecordNum;
     pstSPBReq->usDataLen[*pusFileNum] = gastPBContent[PB_ADN_CONTENT].ucRecordLen;
@@ -1187,7 +1187,7 @@ VOS_UINT32 SI_PB_UpdataType2ANR(SI_PB_RECORD_STRU *pstRecord,
         }
 
 
-        /*×î¶àÖ§³Ö20¸öType2ÀàĞÍÎÄ¼ş*/
+        /*æœ€å¤šæ”¯æŒ20ä¸ªType2ç±»å‹æ–‡ä»¶*/
         if(20 < gstIAPContent.ucRecordLen)
         {
             PB_ERROR_LOG("SI_PB_UpdataType2ANR:IAP ucRecordLen too long");
@@ -1201,7 +1201,7 @@ VOS_UINT32 SI_PB_UpdataType2ANR(SI_PB_RECORD_STRU *pstRecord,
         gstPBReqUnit.stSPBReq.aucIAPContent[gstPBCtrlInfo.astANRInfo[0][i].ulANRTagNum-1] =
              *pucFreeANRRecord;
 
-        /*ĞèÒª¼°Ê±¸üĞÂÄÚ´æÖĞIAPÄÚÈİ*/
+        /*éœ€è¦åŠæ—¶æ›´æ–°å†…å­˜ä¸­IAPå†…å®¹*/
         gstIAPContent.pIAPContent[ulType2ANROffset] = *pucFreeANRRecord;
 
         pstSPBReq->ucRecordNum[pstSPBReq->usFileNum] = pstPBFid->ucRecordNum;
@@ -1210,20 +1210,20 @@ VOS_UINT32 SI_PB_UpdataType2ANR(SI_PB_RECORD_STRU *pstRecord,
 
         pstSPBReq->usFileNum++;
     }
-    /*Ã»ÓĞĞèÒª¸üĞÂµÄ¼ÇÂ¼*/
+    /*æ²¡æœ‰éœ€è¦æ›´æ–°çš„è®°å½•*/
     else if((0xFF == gstIAPContent.pIAPContent[ulType2ANROffset])
         &&(0 == pstRecord->AdditionNumber[i].NumberLength))
     {
         PB_INFO_LOG("SI_PB_UpdataType2ANR: The Record is not found");
         return TAF_ERR_PB_NOT_FOUND;
     }
-    /*ANRºÅÂëÌîÎª¿Õ£¬ĞèÒªÉ¾³ıIAPÖĞ¶ÔÓ¦¹ØÏµ*/
+    /*ANRå·ç å¡«ä¸ºç©ºï¼Œéœ€è¦åˆ é™¤IAPä¸­å¯¹åº”å…³ç³»*/
     else if((0xFF != gstIAPContent.pIAPContent[ulType2ANROffset])
         &&(0 == pstRecord->AdditionNumber[i].NumberLength))
     {
         *pucFreeANRRecord = gstIAPContent.pIAPContent[ulType2ANROffset];
 
-        /*×î¶àÖ§³Ö20¸öType2ÀàĞÍÎÄ¼ş*/
+        /*æœ€å¤šæ”¯æŒ20ä¸ªType2ç±»å‹æ–‡ä»¶*/
         if(20 < gstIAPContent.ucRecordLen)
         {
             PB_ERROR_LOG("SI_PB_DeleteHandleEmail:IAP ucRecordLen too long");
@@ -1243,7 +1243,7 @@ VOS_UINT32 SI_PB_UpdataType2ANR(SI_PB_RECORD_STRU *pstRecord,
 
         gstPBReqUnit.stSPBReq.aucIAPContent[gstPBCtrlInfo.astANRInfo[0][i].ulANRTagNum-1] = 0xFF;
 
-        /*ĞèÒª¼°Ê±¸üĞÂÄÚ´æÖĞIAPÄÚÈİ*/
+        /*éœ€è¦åŠæ—¶æ›´æ–°å†…å­˜ä¸­IAPå†…å®¹*/
         gstIAPContent.pIAPContent[ulType2ANROffset] = 0xFF;
 
         pstSPBReq->ucRecordNum[pstSPBReq->usFileNum] = pstPBFid->ucRecordNum;
@@ -1280,16 +1280,16 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
 
     pusFileId = &pstSPBReq->usFileNum;
 
-    /*ANRÎÄ¼ş¸üĞÂµÄÊı¾İ¸ù¾İNVÏî¿ØÖÆ*/
+    /*ANRæ–‡ä»¶æ›´æ–°çš„æ•°æ®æ ¹æ®NVé¡¹æ§åˆ¶*/
     for(i = 0; i < gstPBConfigInfo.ucAnrMaxNum; i++)
     {
-        /*´ËANRÔÚ»º´æÖĞ²»´æÔÚ*/
+        /*æ­¤ANRåœ¨ç¼“å­˜ä¸­ä¸å­˜åœ¨*/
         if(0 == pstPBFid->ausANRFileId[i])
         {
             continue;
         }
 
-        /*Èç¹ûType2ÀàĞÍANR*/
+        /*å¦‚æœType2ç±»å‹ANR*/
         if(PB_FILE_TYPE2 == gstPBCtrlInfo.astANRInfo[0][i].enANRType)
         {
 
@@ -1297,7 +1297,7 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
 
             if(VOS_OK != ulResult)
             {
-                /*¸ÃÌõANR²»ĞèÒª¸üĞÂ*/
+                /*è¯¥æ¡ANRä¸éœ€è¦æ›´æ–°*/
                 if(TAF_ERR_PB_NOT_FOUND == ulResult)
                 {
                     continue;
@@ -1309,30 +1309,30 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
 
             if(VOS_OK != SI_PB_GetADNSfi(&ucADNSfi, pstPBFid->usADNFileId))
             {
-                /*³ö´í´¦Àí*/
+                /*å‡ºé”™å¤„ç†*/
                 PB_WARNING_LOG("SI_PB_UpdataANR: The SI_PB_GetADNSfi is not found SFI");
                 return TAF_ERR_PB_STORAGE_OP_FAIL;
             }
 
-            /*»ñÈ¡µ±Ç°Òª¸üĞÂµÄÊÇµÚ¼¸¸öType2 ANRÎÄ¼ş*/
+            /*è·å–å½“å‰è¦æ›´æ–°çš„æ˜¯ç¬¬å‡ ä¸ªType2 ANRæ–‡ä»¶*/
             ulFileCnt = (pstRecord->Index-1)/gstPBCtrlInfo.astADNInfo[0].ucRecordNum;
 
-            /*»ñÈ¡ĞèÒª¸üĞÂµÄType2 ANR¼ÇÂ¼ÔÚ»º´æÖĞµÄÆ«ÒÆ*/
+            /*è·å–éœ€è¦æ›´æ–°çš„Type2 ANRè®°å½•åœ¨ç¼“å­˜ä¸­çš„åç§»*/
             ulANROffset = (ulFileCnt*(gstPBCtrlInfo.astANRInfo[0][i].ucRecordNum*gstPBCtrlInfo.astANRInfo[0][i].ucRecordLen))
                           + ((ucFreeANRRecord-1)*gstPBCtrlInfo.astANRInfo[0][i].ucRecordLen);
 
-            /*»ñÈ¡ĞèÒª¸üĞÂµÄType2 ANR¼ÇÂ¼ÖĞÀ©Õ¹ºÅÂëµÄĞÅÏ¢ÔÚ»º´æÖĞµÄÆ«ÒÆ*/
+            /*è·å–éœ€è¦æ›´æ–°çš„Type2 ANRè®°å½•ä¸­æ‰©å±•å·ç çš„ä¿¡æ¯åœ¨ç¼“å­˜ä¸­çš„åç§»*/
             ulEXTContentOffset = ulANROffset + (gastANRContent[i].ucRecordLen - 3);
         }
         else
         {
-            /*»ñÈ¡µ±Ç°Òª¸üĞÂµÄÊÇµÚ¼¸¸öType1 ANRÎÄ¼ş*/
+            /*è·å–å½“å‰è¦æ›´æ–°çš„æ˜¯ç¬¬å‡ ä¸ªType1 ANRæ–‡ä»¶*/
             ucFreeANRRecord = pstPBFid->ucRecordNum;
 
-            /*»ñÈ¡ĞèÒª¸üĞÂµÄType1 ANR¼ÇÂ¼ÔÚ»º´æÖĞµÄÆ«ÒÆ*/
+            /*è·å–éœ€è¦æ›´æ–°çš„Type1 ANRè®°å½•åœ¨ç¼“å­˜ä¸­çš„åç§»*/
             ulANROffset = (pstRecord->Index-1)*gastANRContent[i].ucRecordLen;
 
-            /*»ñÈ¡ĞèÒª¸üĞÂµÄType1 ANR¼ÇÂ¼ÖĞÀ©Õ¹ºÅÂëµÄĞÅÏ¢ÔÚ»º´æÖĞµÄÆ«ÒÆ*/
+            /*è·å–éœ€è¦æ›´æ–°çš„Type1 ANRè®°å½•ä¸­æ‰©å±•å·ç çš„ä¿¡æ¯åœ¨ç¼“å­˜ä¸­çš„åç§»*/
             ulEXTContentOffset = ulANROffset + (gastANRContent[i].ucRecordLen - 1);
         }
 
@@ -1340,7 +1340,7 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
                 &gastANRContent[i].pContent[ulANROffset],
                 gastANRContent[i].ucRecordLen);
 
-        /*·ÇÉ¾³ıÇëÇó*/
+        /*éåˆ é™¤è¯·æ±‚*/
         if((0 != pstRecord->AdditionNumber[i].NumberLength)
            &&(PB_FILE_TYPE2 == gstPBCtrlInfo.astANRInfo[0][i].enANRType))
         {
@@ -1348,10 +1348,10 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
             gstPBReqUnit.stSPBReq.aucANRContent[i][gastANRContent[i].ucRecordLen-1] = pstPBFid->ucRecordNum;
         }
 
-        /*½«ANR¼ÇÂ¼µÄ2µ½13¹²12×Ö½Ú¶¼ÉèÖÃÎª0xFF*/
+        /*å°†ANRè®°å½•çš„2åˆ°13å…±12å­—èŠ‚éƒ½è®¾ç½®ä¸º0xFF*/
         VOS_MemSet(gstPBReqUnit.stSPBReq.aucANRContent[i]+1, (VOS_CHAR)0xFF, 12);
 
-        /*´¦ÀíANRºÅÂë*/
+        /*å¤„ç†ANRå·ç */
         if(0xFF == gstPBReqUnit.stSPBReq.aucANRContent[i][0])
         {
             gstPBReqUnit.stSPBReq.aucANRContent[i][0] = 0;
@@ -1366,7 +1366,7 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
 
         gstPBReqUnit.stSPBReq.aucANRContent[i][1] = ucCopyLen + 1;
 
-        /* ¼ì²éµ±Ç°¸üĞÂµÄ¼ÇÂ¼ÊÇ·ñÒÑ¾­Õ¼ÓÃÁËÒ»¸öEXTÎÄ¼ş¼ÇÂ¼£¬²¢ÇÒEXTµÄ¼ÇÂ¼ºÅ²»ÄÜÔ½½ç */
+        /* æ£€æŸ¥å½“å‰æ›´æ–°çš„è®°å½•æ˜¯å¦å·²ç»å ç”¨äº†ä¸€ä¸ªEXTæ–‡ä»¶è®°å½•ï¼Œå¹¶ä¸”EXTçš„è®°å½•å·ä¸èƒ½è¶Šç•Œ */
 
         ucExtRecord  = gastANRContent[i].pContent[ulEXTContentOffset];
         ucExtRecord = ((ucExtRecord <= gastEXTContent[PB_ADN_CONTENT].usExtTotalNum) ? (ucExtRecord) : 0xFF);
@@ -1375,16 +1375,16 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
         {
             if ( VOS_NULL_PTR == gastEXTContent[PB_ADN_CONTENT].pExtContent)
             {
-                /*³ö´í´¦Àí*/
+                /*å‡ºé”™å¤„ç†*/
                 /*Operation not allowed*/
                 PB_WARNING_LOG("SI_PB_UpdataSPBFile:ANR Ext Content NULL");
                 return TAF_ERR_PB_STORAGE_OP_FAIL;
             }
 
-            /* Èç¹ûXDN¼ÇÂ¼¶ÔÓ¦ÒÑ¾­´æÔÚÁËEXT¼ÇÂ¼£¬Ôò²»ĞèÒªÈ¥²éÕÒ¿ÕÏĞµÄEXT¼ÇÂ¼ */
+            /* å¦‚æœXDNè®°å½•å¯¹åº”å·²ç»å­˜åœ¨äº†EXTè®°å½•ï¼Œåˆ™ä¸éœ€è¦å»æŸ¥æ‰¾ç©ºé—²çš„EXTè®°å½• */
             if(0xFF == ucExtRecord)
             {
-                /* ÕÒµÃµ½¿ÕÏĞµÄEXTÎÄ¼ş¼ÇÂ¼Ê±²Å¸üĞÂEXTÎÄ¼ş£¬ÕÒ²»µ½¾Í²»¸üĞÂ£¬³¬³¤ºÅÂëÒ²²»±¨´í */
+                /* æ‰¾å¾—åˆ°ç©ºé—²çš„EXTæ–‡ä»¶è®°å½•æ—¶æ‰æ›´æ–°EXTæ–‡ä»¶ï¼Œæ‰¾ä¸åˆ°å°±ä¸æ›´æ–°ï¼Œè¶…é•¿å·ç ä¹Ÿä¸æŠ¥é”™ */
                 ulResult = SI_PB_FindUnusedExtRecord( &gastEXTContent[PB_ADN_CONTENT], &ucExtRecord, (VOS_UINT8)*pusExtUsedNum);
 
                 (*pusExtUsedNum)++;
@@ -1404,7 +1404,7 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
                 gstPBReqUnit.stSPBReq.aucANRContent[i][gastANRContent[i].ucRecordLen
                 - ((PB_FILE_TYPE2 == gstPBCtrlInfo.astANRInfo[0][i].enANRType)?3:1)] = ucExtRecord;
 
-                /*¼ÇÂ¼´ı¸üĞÂµÄEXT¼ÇÂ¼ĞÅÏ¢*/
+                /*è®°å½•å¾…æ›´æ–°çš„EXTè®°å½•ä¿¡æ¯*/
                 pstSPBReq->usFileID[*pusFileId]  = pstPBFid->usExtFileId;
                 pstSPBReq->usDataLen[*pusFileId] = SI_PB_EXT_LEN;
                 pstSPBReq->ucRecordNum[*pusFileId] = ucExtRecord;
@@ -1419,7 +1419,7 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
         }
         else
         {
-            /*Èç¹û¸üĞÂÎÄ¼şÊ±ºÅÂë³¤¶ÈĞ¡ÓÚ20£¬¿ÉÄÜĞèÒª½«EXTºÅÂëÉ¾³ı*/
+            /*å¦‚æœæ›´æ–°æ–‡ä»¶æ—¶å·ç é•¿åº¦å°äº20ï¼Œå¯èƒ½éœ€è¦å°†EXTå·ç åˆ é™¤*/
             if((0xFF != ucExtRecord)&&(0xFFFF != pstPBFid->usExtFileId))
             {
                 VOS_MemSet(gstPBReqUnit.stSPBReq.aucANRExtContent[i], (VOS_CHAR)0xFF, SI_PB_EXT_LEN);
@@ -1438,7 +1438,7 @@ VOS_UINT32 SI_PB_UpdataANR(SI_PB_RECORD_STRU *pstRecord,
                 - ((PB_FILE_TYPE2 == gstPBCtrlInfo.astANRInfo[0][i].enANRType)?3:1)] = 0xFF;
         }
 
-        /*¼ÇÂ¼´ı¸üĞÂµÄANR¼ÇÂ¼ĞÅÏ¢*/
+        /*è®°å½•å¾…æ›´æ–°çš„ANRè®°å½•ä¿¡æ¯*/
         pstSPBReq->usFileID[*pusFileId]  = pstPBFid->ausANRFileId[i];
         pstSPBReq->ucRecordNum[*pusFileId] = ucFreeANRRecord;
         pstSPBReq->usDataLen[*pusFileId] = gastANRContent[i].ucRecordLen;
@@ -1456,7 +1456,7 @@ VOS_UINT32 SI_PB_UpdataEML(SI_PB_RECORD_STRU *pstRecord,USIMM_SPB_API_STRU *pstS
     VOS_UINT8  ucCopyLen;
     VOS_UINT8  ucFreeEMLRecord;
 
-    /*EmailÎÄ¼ş¸üĞÂ*/
+    /*Emailæ–‡ä»¶æ›´æ–°*/
     if(0 == pstPBFid->usEMLFileId)
     {
         if(0 == pstRecord->Email.EmailLen)
@@ -1492,7 +1492,7 @@ VOS_UINT32 SI_PB_UpdataEML(SI_PB_RECORD_STRU *pstRecord,USIMM_SPB_API_STRU *pstS
         ulType2EMLOffset = ((pstRecord->Index-1)*gstIAPContent.ucRecordLen)
                 + (gstPBCtrlInfo.astEMLInfo[0].ulEMLTagNum - 1);
 
-        /*¹æ±ÜÒòIAPÎÄ¼şÄÚÈİ²»ºÏĞ­Òéµ¼ÖÂµÄÒì³£*/
+        /*è§„é¿å› IAPæ–‡ä»¶å†…å®¹ä¸åˆåè®®å¯¼è‡´çš„å¼‚å¸¸*/
         if(0 == gstIAPContent.pIAPContent[ulType2EMLOffset])
         {
             gstIAPContent.pIAPContent[ulType2EMLOffset] = 0xFF;
@@ -1509,7 +1509,7 @@ VOS_UINT32 SI_PB_UpdataEML(SI_PB_RECORD_STRU *pstRecord,USIMM_SPB_API_STRU *pstS
             }
 
 
-            /*½«»º´æÖĞµÄIAPÎÄ¼ş*/
+            /*å°†ç¼“å­˜ä¸­çš„IAPæ–‡ä»¶*/
             if(20 < gstIAPContent.ucRecordLen)
             {
                 PB_ERROR_LOG("SI_PB_UpdataEML:IAP ucRecordLen too long");
@@ -1523,7 +1523,7 @@ VOS_UINT32 SI_PB_UpdataEML(SI_PB_RECORD_STRU *pstRecord,USIMM_SPB_API_STRU *pstS
             gstPBReqUnit.stSPBReq.aucIAPContent[gstPBCtrlInfo.astEMLInfo[0].ulEMLTagNum-1] =
                  ucFreeEMLRecord;
 
-            /*±ÜÃâºóÃæANRÒ²ÎªType2ÀàĞÍ£¬µ¼ÖÂ¿½±´»º´æÊ±ÄÚÈİ²»ÕıÈ·£¬¼°Ê±¸üĞÂIAP»º´æ£¬*/
+            /*é¿å…åé¢ANRä¹Ÿä¸ºType2ç±»å‹ï¼Œå¯¼è‡´æ‹·è´ç¼“å­˜æ—¶å†…å®¹ä¸æ­£ç¡®ï¼ŒåŠæ—¶æ›´æ–°IAPç¼“å­˜ï¼Œ*/
             gstIAPContent.pIAPContent[ulType2EMLOffset] = ucFreeEMLRecord;
 
             pstSPBReq->ucRecordNum[*pusFileId] = pstPBFid->ucRecordNum;
@@ -1538,13 +1538,13 @@ VOS_UINT32 SI_PB_UpdataEML(SI_PB_RECORD_STRU *pstRecord,USIMM_SPB_API_STRU *pstS
             PB_INFO1_LOG("SI_PB_UpdataEML:The Email is Null or Email Len is %d", (long)pstRecord->Email.EmailLen);
             return VOS_OK;
         }
-        /*EmailÌîÎª¿Õ£¬ĞèÒªÉ¾³ıIAPÖĞ¶ÔÓ¦¹ØÏµ*/
+        /*Emailå¡«ä¸ºç©ºï¼Œéœ€è¦åˆ é™¤IAPä¸­å¯¹åº”å…³ç³»*/
         else if((0xFF != gstIAPContent.pIAPContent[ulType2EMLOffset])
             &&(0 == pstRecord->Email.EmailLen))
         {
             ucFreeEMLRecord = gstIAPContent.pIAPContent[ulType2EMLOffset];
 
-            /*½«»º´æÖĞµÄIAPÎÄ¼ş*/
+            /*å°†ç¼“å­˜ä¸­çš„IAPæ–‡ä»¶*/
             if(20 < gstIAPContent.ucRecordLen)
             {
                 PB_ERROR_LOG("SI_PB_UpdataEML:IAP ucRecordLen too long");
@@ -1558,7 +1558,7 @@ VOS_UINT32 SI_PB_UpdataEML(SI_PB_RECORD_STRU *pstRecord,USIMM_SPB_API_STRU *pstS
 
             gstPBReqUnit.stSPBReq.aucIAPContent[gstPBCtrlInfo.astEMLInfo[0].ulEMLTagNum-1] = 0xFF;
 
-            /*±ÜÃâºóÃæANRÒ²ÎªType2ÀàĞÍ£¬µ¼ÖÂ¿½±´»º´æÊ±ÄÚÈİ²»ÕıÈ·£¬¼°Ê±¸üĞÂIAP»º´æ£¬*/
+            /*é¿å…åé¢ANRä¹Ÿä¸ºType2ç±»å‹ï¼Œå¯¼è‡´æ‹·è´ç¼“å­˜æ—¶å†…å®¹ä¸æ­£ç¡®ï¼ŒåŠæ—¶æ›´æ–°IAPç¼“å­˜ï¼Œ*/
             gstIAPContent.pIAPContent[ulType2EMLOffset] = 0xFF;
 
             pstSPBReq->ucRecordNum[*pusFileId] = pstPBFid->ucRecordNum;
@@ -1576,12 +1576,12 @@ VOS_UINT32 SI_PB_UpdataEML(SI_PB_RECORD_STRU *pstRecord,USIMM_SPB_API_STRU *pstS
 
         if(VOS_OK != SI_PB_GetADNSfi(&ucADNSfi, pstPBFid->usADNFileId))
         {
-            /*³ö´í´¦Àí*/
+            /*å‡ºé”™å¤„ç†*/
             PB_ERROR_LOG("SI_PB_UpdataEML:IAP ucRecordLen too long");
             return TAF_ERR_PB_STORAGE_OP_FAIL;
         }
 
-        /*·ÇÉ¾³ıÇëÇó*/
+        /*éåˆ é™¤è¯·æ±‚*/
         if(0 != pstRecord->Email.EmailLen)
         {
             gstPBReqUnit.stSPBReq.aucEMLContent[gstEMLContent.ucRecordLen-2] = ucADNSfi;/*ADN SFI*/
@@ -1615,11 +1615,11 @@ VOS_UINT32 SI_PB_UpdataSPBFile(SI_PB_SPB_UPDATE_STRU *pstPBFid,
 {
     VOS_UINT32            ulResult = VOS_OK;
     VOS_UINT16            usExtUsedNum = 1;
-    USIMM_SPB_API_STRU    stSPBReq;/*×î¶à¾Å¸öÎÄ¼ş*/
+    USIMM_SPB_API_STRU    stSPBReq;/*æœ€å¤šä¹ä¸ªæ–‡ä»¶*/
 
     VOS_MemSet((VOS_VOID*)(&stSPBReq), 0, sizeof(USIMM_SPB_API_STRU));
 
-    /*¸üĞÂEmailÎÄ¼ş,¸ù¾İNVÏîµÄÖµÎªÅĞ¶ÏÊÇ·ñ¿ÉÒÔ¸üĞÂ*/
+    /*æ›´æ–°Emailæ–‡ä»¶,æ ¹æ®NVé¡¹çš„å€¼ä¸ºåˆ¤æ–­æ˜¯å¦å¯ä»¥æ›´æ–°*/
     if(gstPBConfigInfo.ucEmailFlag)
     {
         ulResult = SI_PB_UpdataEML(pstRecord,&stSPBReq,pstPBFid);
@@ -1631,7 +1631,7 @@ VOS_UINT32 SI_PB_UpdataSPBFile(SI_PB_SPB_UPDATE_STRU *pstPBFid,
         }
     }
 
-    /*¸üĞÂANRÎÄ¼ş*/
+    /*æ›´æ–°ANRæ–‡ä»¶*/
     ulResult = SI_PB_UpdataANR(pstRecord,&stSPBReq,&usExtUsedNum,pstPBFid);
 
     if(VOS_OK != ulResult)
@@ -1640,7 +1640,7 @@ VOS_UINT32 SI_PB_UpdataSPBFile(SI_PB_SPB_UPDATE_STRU *pstPBFid,
         return ulResult;
     }
 
-    /*¸üĞÂADNÎÄ¼ş*/
+    /*æ›´æ–°ADNæ–‡ä»¶*/
     ulResult = SI_PB_UpdataADN(pstRecord,&stSPBReq,&usExtUsedNum,pstPBFid);
 
     if(VOS_OK != ulResult)
@@ -1649,7 +1649,7 @@ VOS_UINT32 SI_PB_UpdataSPBFile(SI_PB_SPB_UPDATE_STRU *pstPBFid,
         return ulResult;
     }
 
-    /*µ÷ÓÃUSIMM½Ó¿Ú¸üĞÂÎÄ¼ş*/
+    /*è°ƒç”¨USIMMæ¥å£æ›´æ–°æ–‡ä»¶*/
     if (VOS_OK != USIMM_SetSPBFileReq(MAPS_PB_PID,&stSPBReq))
     {
         PB_WARNING_LOG("SI_PB_UpdataSPBFile:USIMM_SetSPBFileReq Fail");
@@ -1669,27 +1669,27 @@ VOS_VOID SI_PB_DeleteHandleAnr(VOS_UINT16 usFileId, VOS_UINT16 usIndex,
     VOS_UINT32            ulRecordOffset;
     VOS_UINT32            ulType2ANRFileCnt;
     VOS_UINT32            ulXDNContentOffset;
-    VOS_UINT8             aucContent[20]; /*É¾³ıµÄÄÚÈİÌíÈ«F*/
+    VOS_UINT8             aucContent[20]; /*åˆ é™¤çš„å†…å®¹æ·»å…¨F*/
 
-    SI_PB_MemSet(sizeof(aucContent), 0xFF, aucContent);/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    SI_PB_MemSet(sizeof(aucContent), 0xFF, aucContent);/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
     for(i = 0; i < SI_PB_ANR_MAX; i++)
     {
-        /*¸ù¾İADN FIDºÍANRµç»°±¾±àºÅ»ñÈ¡ĞèÒªÉ¾³ıµÄANRµç»°±¾FID*/
+        /*æ ¹æ®ADN FIDå’ŒANRç”µè¯æœ¬ç¼–å·è·å–éœ€è¦åˆ é™¤çš„ANRç”µè¯æœ¬FID*/
         SI_PB_GetANRFidFromADN((VOS_UINT8)i,usFileId,&usANRFileId);
 
-        if(0 == usANRFileId)/*¸ÃANRµç»°±¾²»´æÔÚ*/
+        if(0 == usANRFileId)/*è¯¥ANRç”µè¯æœ¬ä¸å­˜åœ¨*/
         {
             continue;
         }
 
-        /*Type2 ÀàĞÍ ANR´¦Àí*/
+        /*Type2 ç±»å‹ ANRå¤„ç†*/
         if(PB_FILE_TYPE2 == gstPBCtrlInfo.astANRInfo[0][i].enANRType)
         {
             ucANRRecord = gstIAPContent.pIAPContent[((usIndex-1)*gstIAPContent.ucRecordLen)
                             + (gstPBCtrlInfo.astANRInfo[0][i].ulANRTagNum-1)];
 
-            /*¸ÃÌõANRÎŞĞ§£¬É¾³ıÏÂÒ»Ìõ*/
+            /*è¯¥æ¡ANRæ— æ•ˆï¼Œåˆ é™¤ä¸‹ä¸€æ¡*/
             if(0xFF == ucANRRecord)
             {
                 continue;
@@ -1698,10 +1698,10 @@ VOS_VOID SI_PB_DeleteHandleAnr(VOS_UINT16 usFileId, VOS_UINT16 usIndex,
             VOS_MemCpy(gstPBReqUnit.stSPBReq.aucIAPContent,
             &gstIAPContent.pIAPContent[(usIndex-1)*gstIAPContent.ucRecordLen], gstIAPContent.ucRecordLen);
 
-            /*½«»º´æÖĞµÄIAPÎÄ¼ş*/
+            /*å°†ç¼“å­˜ä¸­çš„IAPæ–‡ä»¶*/
             gstPBReqUnit.stSPBReq.aucIAPContent[gstPBCtrlInfo.astANRInfo[0][i].ulANRTagNum-1] = 0xFF;
 
-            /*¼°Ê±¸üĞÂ»º´æ£¬·ÀÖ¹EmailÒ²ÎªType2ÀàĞÍ£¬´Ó¶øµ¼ÖÂ¿½±´µÄ»º´æÄÚÈİ²»ÕıÈ·*/
+            /*åŠæ—¶æ›´æ–°ç¼“å­˜ï¼Œé˜²æ­¢Emailä¹Ÿä¸ºType2ç±»å‹ï¼Œä»è€Œå¯¼è‡´æ‹·è´çš„ç¼“å­˜å†…å®¹ä¸æ­£ç¡®*/
             gstIAPContent.pIAPContent[((usIndex-1)*gstIAPContent.ucRecordLen)
                                 + (gstPBCtrlInfo.astANRInfo[0][i].ulANRTagNum-1)] = 0xFF;
 
@@ -1713,7 +1713,7 @@ VOS_VOID SI_PB_DeleteHandleAnr(VOS_UINT16 usFileId, VOS_UINT16 usIndex,
 
             pstSPBReq->usFileNum++;
 
-            /*´¦ÀíANRµÄEXTºÅÂë*/
+            /*å¤„ç†ANRçš„EXTå·ç */
             ulType2ANRFileCnt = (usIndex -1)/gstPBCtrlInfo.astADNInfo[0].ucRecordNum;
 
             ulRecordOffset =  (ulType2ANRFileCnt*(gstPBCtrlInfo.astANRInfo[0][i].ucRecordNum*gastANRContent[i].ucRecordLen))
@@ -1725,22 +1725,22 @@ VOS_VOID SI_PB_DeleteHandleAnr(VOS_UINT16 usFileId, VOS_UINT16 usIndex,
         {
             ucANRRecord = ucRecord;
 
-            /*´¦ÀíANRµÄEXTºÅÂë*/
+            /*å¤„ç†ANRçš„EXTå·ç */
             ulRecordOffset = (usIndex -1) * gastANRContent[i].ucRecordLen;
 
             ulXDNContentOffset = gastANRContent[i].ucRecordLen - 1;
         }
 
-        /* ÅĞ¶ÏANRÎÄ¼şÄÚÈİÊÇ·ñÎª¿Õ */
+        /* åˆ¤æ–­ANRæ–‡ä»¶å†…å®¹æ˜¯å¦ä¸ºç©º */
         if (VOS_NULL_PTR == gastANRContent[i].pContent)
         {
             continue;
         }
 
-        /*¼ì²éµ±Ç°¸üĞÂµÄ¼ÇÂ¼ÊÇ·ñÒÑ¾­Õ¼ÓÃÁËÒ»¸öEXTÎÄ¼ş¼ÇÂ¼*/
+        /*æ£€æŸ¥å½“å‰æ›´æ–°çš„è®°å½•æ˜¯å¦å·²ç»å ç”¨äº†ä¸€ä¸ªEXTæ–‡ä»¶è®°å½•*/
         ucExtRecord  = gastANRContent[i].pContent[ulRecordOffset+ulXDNContentOffset];
 
-        /*Èç¹û´ıÉ¾³ıµÄANRºÅÂë´æÔÚÀ©Õ¹ºÅÂë£¬¿ÉÄÜĞèÒª½«EXTºÅÂëÉ¾³ı£¬ÇÒEXTµÄ¼ÇÂ¼ºÅ²»ÄÜÔ½½ç£¬³¬¹ıEXTµÄ×î´óÖµ*/
+        /*å¦‚æœå¾…åˆ é™¤çš„ANRå·ç å­˜åœ¨æ‰©å±•å·ç ï¼Œå¯èƒ½éœ€è¦å°†EXTå·ç åˆ é™¤ï¼Œä¸”EXTçš„è®°å½•å·ä¸èƒ½è¶Šç•Œï¼Œè¶…è¿‡EXTçš„æœ€å¤§å€¼*/
         if ( (ucExtRecord <= gastEXTContent[PB_ADN_CONTENT].usExtTotalNum)
             && (0xFF != ucExtRecord) )
         {
@@ -1758,12 +1758,12 @@ VOS_VOID SI_PB_DeleteHandleAnr(VOS_UINT16 usFileId, VOS_UINT16 usIndex,
             pstSPBReq->usFileNum++;
         }
 
-        /*ANR¼ÇÂ¼ÓĞĞ§£¬Ôò¼ÓÈë´ıÉ¾³ıÁĞ±í*/
+        /*ANRè®°å½•æœ‰æ•ˆï¼Œåˆ™åŠ å…¥å¾…åˆ é™¤åˆ—è¡¨*/
         if(VOS_OK == SI_PB_CheckANRValidity(gastANRContent[i].pContent+ulRecordOffset))
         {
             VOS_MemCpy(gstPBReqUnit.stSPBReq.aucANRContent[i], aucContent, gastANRContent[i].ucRecordLen);
 
-            /*¼ÇÂ¼´ıÉ¾³ıµÄANR¼ÇÂ¼ĞÅÏ¢*/
+            /*è®°å½•å¾…åˆ é™¤çš„ANRè®°å½•ä¿¡æ¯*/
             pstSPBReq->usFileID[pstSPBReq->usFileNum]       = usANRFileId;
             pstSPBReq->ucRecordNum[pstSPBReq->usFileNum]    = ucANRRecord;
             pstSPBReq->usDataLen[pstSPBReq->usFileNum]      = gastANRContent[i].ucRecordLen;
@@ -1781,9 +1781,9 @@ VOS_VOID SI_PB_DeleteHandleEmail(VOS_UINT16 usIndex, USIMM_SPB_API_STRU *pstSPBR
     VOS_UINT32            ulType2EMLIndex;
     VOS_UINT8             ucEMLRecord;
     VOS_UINT8             *pucEMLContent = VOS_NULL_PTR;
-    VOS_UINT8             aucContent[64]; /*É¾³ıµÄÄÚÈİÌíÈ«F*/
+    VOS_UINT8             aucContent[64]; /*åˆ é™¤çš„å†…å®¹æ·»å…¨F*/
 
-    SI_PB_MemSet(sizeof(aucContent), 0xFF, aucContent);/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    SI_PB_MemSet(sizeof(aucContent), 0xFF, aucContent);/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
     SI_PB_GetEMLFIdFromADN(&usEMLFileId, usFileId);
 
@@ -1804,9 +1804,9 @@ VOS_VOID SI_PB_DeleteHandleEmail(VOS_UINT16 usIndex, USIMM_SPB_API_STRU *pstSPBR
             return;
         }
 
-        /*·ÅÔÚRefresh MEMÖĞ×ö */
+        /*æ”¾åœ¨Refresh MEMä¸­åš */
 
-        /*½«»º´æÖĞµÄIAPÎÄ¼ş*/
+        /*å°†ç¼“å­˜ä¸­çš„IAPæ–‡ä»¶*/
         if(20 < gstIAPContent.ucRecordLen)
         {
             PB_ERROR_LOG("SI_PB_DeleteHandleEmail:IAP ucRecordLen too long");
@@ -1819,7 +1819,7 @@ VOS_VOID SI_PB_DeleteHandleEmail(VOS_UINT16 usIndex, USIMM_SPB_API_STRU *pstSPBR
 
         gstPBReqUnit.stSPBReq.aucIAPContent[gstPBCtrlInfo.astEMLInfo[0].ulEMLTagNum-1] = 0xFF;
 
-        /*¼°Ê±¸üĞÂ»º´æ£¬·ÀÖ¹EmailºÍANRÉ¾³ıË³Ğò±ä»¯ºó£¬¿½±´µÄ»º´æÄÚÈİ²»ÕıÈ·*/
+        /*åŠæ—¶æ›´æ–°ç¼“å­˜ï¼Œé˜²æ­¢Emailå’ŒANRåˆ é™¤é¡ºåºå˜åŒ–åï¼Œæ‹·è´çš„ç¼“å­˜å†…å®¹ä¸æ­£ç¡®*/
         gstIAPContent.pIAPContent[ulType2EMLIndex+(gstPBCtrlInfo.astEMLInfo[0].ulEMLTagNum-1)] = 0xFF;
 
         SI_PB_GetIAPFidFromEML(usEMLFileId,&usIAPFileid);
@@ -1842,12 +1842,12 @@ VOS_VOID SI_PB_DeleteHandleEmail(VOS_UINT16 usIndex, USIMM_SPB_API_STRU *pstSPBR
         return;
     }
 
-    if(0xFF != pucEMLContent[0])/*ÓĞĞ§Email*/
+    if(0xFF != pucEMLContent[0])/*æœ‰æ•ˆEmail*/
     {
         /* coverity[uninit_use_in_call] */
         VOS_MemCpy(gstPBReqUnit.stSPBReq.aucEMLContent, aucContent, gstEMLContent.ucRecordLen);
 
-        /*¼ÇÂ¼´ıÉ¾³ıµÄEML¼ÇÂ¼ĞÅÏ¢*/
+        /*è®°å½•å¾…åˆ é™¤çš„EMLè®°å½•ä¿¡æ¯*/
         pstSPBReq->usFileID[pstSPBReq->usFileNum]       = usEMLFileId;
         pstSPBReq->ucRecordNum[pstSPBReq->usFileNum]    = ucEMLRecord;
         pstSPBReq->usDataLen[pstSPBReq->usFileNum]      = gstEMLContent.ucRecordLen;
@@ -1869,25 +1869,25 @@ VOS_UINT32 SI_PB_DeleteHandle(VOS_UINT16 usFileId, VOS_UINT8 ucRecord,
     VOS_UINT8             ucRecordLen;
     VOS_UINT32            ulRecordOffset;
     VOS_UINT32            ulResult = VOS_OK;
-    USIMM_SPB_API_STRU    stSPBReq;/*×î¶à¾Å¸öÎÄ¼ş*/
-    VOS_UINT8             aucContent[242]; /*É¾³ıµÄÄÚÈİÌíÈ«F*/
+    USIMM_SPB_API_STRU    stSPBReq;/*æœ€å¤šä¹ä¸ªæ–‡ä»¶*/
+    VOS_UINT8             aucContent[242]; /*åˆ é™¤çš„å†…å®¹æ·»å…¨F*/
 
-    SI_PB_MemSet(sizeof(aucContent), 0xFF, aucContent);/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    SI_PB_MemSet(sizeof(aucContent), 0xFF, aucContent);/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
     VOS_MemSet((VOS_VOID*)(&stSPBReq), 0, sizeof(USIMM_SPB_API_STRU));
 
-    /*XDN ¼° EXT´¦Àí*/
+    /*XDN åŠ EXTå¤„ç†*/
     ucRecordLen = gastPBContent[ucOffset].ucRecordLen;
     ulRecordOffset = (usIndex -1) * ucRecordLen;
     pucRecord = gastPBContent[ucOffset].pContent + ulRecordOffset;
 
-    /*´æÔÚ¸´ºÏµç»°±¾Çé¿öÏÂ£¬¿ÉÄÜADNÎªÎŞĞ§Öµ*/
+    /*å­˜åœ¨å¤åˆç”µè¯æœ¬æƒ…å†µä¸‹ï¼Œå¯èƒ½ADNä¸ºæ— æ•ˆå€¼*/
     if((1 == gstPBConfigInfo.ucSPBFlag)&&(PB_ADN_CONTENT == ucOffset))
     {
-        /*ANR ¼° EXT´¦Àí*/
+        /*ANR åŠ EXTå¤„ç†*/
         SI_PB_DeleteHandleAnr(usFileId, usIndex, &stSPBReq, ucRecord);
 
-        /*Email ´¦Àí*/
+        /*Email å¤„ç†*/
         SI_PB_DeleteHandleEmail(usIndex, &stSPBReq, ucRecord, usFileId);
 
         ulResult = SI_PB_CheckContentValidity(&gastPBContent[ucOffset], pucRecord);
@@ -1912,7 +1912,7 @@ VOS_UINT32 SI_PB_DeleteHandle(VOS_UINT16 usFileId, VOS_UINT8 ucRecord,
         stSPBReq.usFileNum++;
     }
 
-    /*ÔÚ¼ÇÂ¼ÓĞĞ§Ê±²Å·ÅÈë´ıÉ¾³ıÎÄ¼şÁĞ±í*/
+    /*åœ¨è®°å½•æœ‰æ•ˆæ—¶æ‰æ”¾å…¥å¾…åˆ é™¤æ–‡ä»¶åˆ—è¡¨*/
     if(VOS_OK == ulResult)
     {
         /* coverity[uninit_use_in_call] */
@@ -1925,7 +1925,7 @@ VOS_UINT32 SI_PB_DeleteHandle(VOS_UINT16 usFileId, VOS_UINT8 ucRecord,
         stSPBReq.usFileNum++;
     }
 
-    /*µ÷ÓÃUSIMM½Ó¿Ú¸üĞÂÎÄ¼ş*/
+    /*è°ƒç”¨USIMMæ¥å£æ›´æ–°æ–‡ä»¶*/
     if (VOS_OK != USIMM_SetSPBFileReq(MAPS_PB_PID,&stSPBReq))
     {
         return TAF_ERR_USIM_SIM_CARD_NOTEXIST;/*SIM Fail*/
@@ -1945,11 +1945,11 @@ VOS_UINT32 SI_PB_QueryProc(PBMsgBlock *pMsg)
 
     pstMsg = (SI_PB_QUERY_REQ_STRU*)pMsg;
 
-    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*³õÊ¼»¯µ±Ç°µÄ¾Ö²¿±äÁ¿*/
+    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*åˆå§‹åŒ–å½“å‰çš„å±€éƒ¨å˜é‡*/
 
-    ulResult = SI_PB_FindPBOffset(pstMsg->ulStorage, &ucPBOffset);/*¶¨Î»µ±Ç°µç»°±¾Î»ÖÃ*/
+    ulResult = SI_PB_FindPBOffset(pstMsg->ulStorage, &ucPBOffset);/*å®šä½å½“å‰ç”µè¯æœ¬ä½ç½®*/
 
-    stCnfData.ClientId          = pstMsg->usClient;        /*¸ù¾İÏûÏ¢ÄÚÈİÌî³ä»Ø¸´Êı¾İ*/
+    stCnfData.ClientId          = pstMsg->usClient;        /*æ ¹æ®æ¶ˆæ¯å†…å®¹å¡«å……å›å¤æ•°æ®*/
     stCnfData.OpId              = pstMsg->ucOpID;
     stCnfData.PBEventType       = SI_PB_EVENT_QUERY_CNF;
     stCnfData.Storage           = pstMsg->ulStorage;
@@ -1960,23 +1960,23 @@ VOS_UINT32 SI_PB_QueryProc(PBMsgBlock *pMsg)
 
         stCnfData.PBError = TAF_ERR_PB_NOT_FOUND;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     stCnfData.PBError = SI_PB_ErrorProc();
 
-    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*Èç¹û¶¨Î»Ê§°Ü»òÕß»º³åÄÚÈİ²»´æÔÚ*/
+    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*å¦‚æœå®šä½å¤±è´¥æˆ–è€…ç¼“å†²å†…å®¹ä¸å­˜åœ¨*/
     {
         PB_WARNING_LOG("SI_PB_QUERYProc: Proc Error");
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     if( PB_INIT_FINISHED != gstPBInitState.enPBInitStep )
     {
         stCnfData.PBError = TAF_ERR_SIM_BUSY;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     if(PB_INITIALISED != gastPBContent[ucPBOffset].enInitialState)
@@ -1985,7 +1985,7 @@ VOS_UINT32 SI_PB_QueryProc(PBMsgBlock *pMsg)
 
         stCnfData.PBError = TAF_ERR_SIM_BUSY;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     gstPBReqUnit.enPBLock = PB_LOCKED;
@@ -2006,7 +2006,7 @@ VOS_UINT32 SI_PB_QueryProc(PBMsgBlock *pMsg)
     stCnfData.PBEvent.PBQueryCnf.EMAILTextLen = gstEMLContent.ucDataLen;
     stCnfData.PBEvent.PBQueryCnf.ANRNumberLen = gastANRContent[0].ucNumberLen;
 
-    return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+    return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
 }
 VOS_VOID SI_PB_SendSetCurPB(VOS_VOID)
 {
@@ -2015,14 +2015,14 @@ VOS_VOID SI_PB_SendSetCurPB(VOS_VOID)
     pstMsg = (SI_PB_SETPB_IND_STRU*)VOS_AllocMsg(MAPS_PB_PID,
                                 sizeof(SI_PB_SETPB_IND_STRU)-VOS_MSG_HEAD_LENGTH);
 
-    if(VOS_NULL_PTR == pstMsg)  /*ÉêÇëÄÚ´æÊ§°Ü»áÖØÆô*/
+    if(VOS_NULL_PTR == pstMsg)  /*ç”³è¯·å†…å­˜å¤±è´¥ä¼šé‡å¯*/
     {
         return;
     }
 
     pstMsg->ulReceiverPid = ACPU_PID_PB;
     pstMsg->ulMsgName     = SI_PB_UPDATE_CURPB;
-    pstMsg->enPBCurType   = gstPBCtrlInfo.enPBCurType; /* µ±Ç°È«¾Ö±äÁ¿ÄÚÈİÒÑ¾­¸üĞÂ */
+    pstMsg->enPBCurType   = gstPBCtrlInfo.enPBCurType; /* å½“å‰å…¨å±€å˜é‡å†…å®¹å·²ç»æ›´æ–° */
 
     if(VOS_OK != VOS_SendMsg(MAPS_PB_PID, pstMsg))
     {
@@ -2042,9 +2042,9 @@ VOS_UINT32 SI_PB_SetProc(PBMsgBlock *pMsg)
 
     pstMsg = (SI_PB_SET_REQ_STRU*)pMsg;
 
-    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
-    stCnfData.ClientId          = pstMsg->usClient;        /*¸ù¾İÏûÏ¢ÄÚÈİÌî³ä»Ø¸´Êı¾İ*/
+    stCnfData.ClientId          = pstMsg->usClient;        /*æ ¹æ®æ¶ˆæ¯å†…å®¹å¡«å……å›å¤æ•°æ®*/
     stCnfData.OpId              = pstMsg->ucOpID;
     stCnfData.PBEventType       = SI_PB_EVENT_SET_CNF;
     stCnfData.Storage           = pstMsg->ulStorage;
@@ -2057,23 +2057,23 @@ VOS_UINT32 SI_PB_SetProc(PBMsgBlock *pMsg)
 
         PB_WARNING_LOG("SI_PB_SetProc: Find the PhoneBook Content is Error");
 
-        return SI_PBCallback(&stCnfData);                   /*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);                   /*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     stCnfData.PBError = SI_PB_ErrorProc();
 
-    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*Èç¹û¶¨Î»Ê§°Ü»òÕß»º³åÄÚÈİ²»´æÔÚ*/
+    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*å¦‚æœå®šä½å¤±è´¥æˆ–è€…ç¼“å†²å†…å®¹ä¸å­˜åœ¨*/
     {
         PB_WARNING_LOG("SI_PB_SetProc: Proc Error");
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     if( PB_INIT_FINISHED != gstPBInitState.enPBInitStep )
     {
         stCnfData.PBError = TAF_ERR_SIM_BUSY;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     if(PB_INITIALISED != gastPBContent[ucPBOffset].enInitialState)
@@ -2082,7 +2082,7 @@ VOS_UINT32 SI_PB_SetProc(PBMsgBlock *pMsg)
 
         stCnfData.PBError = TAF_ERR_SIM_BUSY;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     gstPBReqUnit.enPBLock = PB_LOCKED;
@@ -2094,17 +2094,17 @@ VOS_UINT32 SI_PB_SetProc(PBMsgBlock *pMsg)
     stCnfData.PBEvent.PBSetCnf.ANRNumberLen   = gastANRContent[0].ucNumberLen;
     stCnfData.PBEvent.PBQueryCnf.EMAILTextLen = gstEMLContent.ucDataLen;
 
-    gstPBCtrlInfo.enPBCurType = pstMsg->ulStorage;      /*ÉèÖÃµ±Ç°È«¾Ö±äÁ¿ÄÚÈİ*/
+    gstPBCtrlInfo.enPBCurType = pstMsg->ulStorage;      /*è®¾ç½®å½“å‰å…¨å±€å˜é‡å†…å®¹*/
 
     SI_PB_SendSetCurPB();
 
-    return SI_PBCallback(&stCnfData);                   /*µ÷ÓÃ»Øµ÷º¯Êı*/
+    return SI_PBCallback(&stCnfData);                   /*è°ƒç”¨å›è°ƒå‡½æ•°*/
 }
 VOS_UINT32 SI_PB_FindFreeIndex(VOS_UINT8 ucPBOffset, VOS_UINT16 *pusIndex)
 {
     VOS_UINT16 i;
 
-    for(i=1; i<=gastPBContent[ucPBOffset].usTotalNum; i++)/*¸ù¾İµ±Ç°µÄ×ÜË÷Òı²éÑ¯¿Õ¼ÇÂ¼*/
+    for(i=1; i<=gastPBContent[ucPBOffset].usTotalNum; i++)/*æ ¹æ®å½“å‰çš„æ€»ç´¢å¼•æŸ¥è¯¢ç©ºè®°å½•*/
     {
         if(SI_PB_CONTENT_INVALID == SI_PB_GetBitFromBuf(gastPBContent[ucPBOffset].pIndex, i))
         {
@@ -2112,9 +2112,9 @@ VOS_UINT32 SI_PB_FindFreeIndex(VOS_UINT8 ucPBOffset, VOS_UINT16 *pusIndex)
         }
     }
 
-    if(i > gastPBContent[ucPBOffset].usTotalNum) /*ÄÚÈİÈ«Âú*/
+    if(i > gastPBContent[ucPBOffset].usTotalNum) /*å†…å®¹å…¨æ»¡*/
     {
-        return TAF_ERR_PB_STORAGE_FULL;/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return TAF_ERR_PB_STORAGE_FULL;/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     *pusIndex = i;
@@ -2135,9 +2135,9 @@ VOS_UINT32 SI_PB_AddProc(PBMsgBlock *pMsg)
 
     pstMsg = (SI_PB_ADD_REP_STRU *)pMsg;
 
-    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
-    stCnfData.ClientId      = pstMsg->usClient;    /*¸ù¾İÏûÏ¢Ìî³ä»Ø¸´Êı¾İ*/
+    stCnfData.ClientId      = pstMsg->usClient;    /*æ ¹æ®æ¶ˆæ¯å¡«å……å›å¤æ•°æ®*/
     stCnfData.OpId          = pstMsg->ucOpID;
     stCnfData.PBEventType   = SI_PB_EVENT_ADD_CNF;
     stCnfData.Storage       = pstMsg->ulStorage;
@@ -2150,16 +2150,16 @@ VOS_UINT32 SI_PB_AddProc(PBMsgBlock *pMsg)
         stCnfData.PBError = TAF_ERR_SIM_BUSY;
     }
 
-    if(PB_ECC == pstMsg->ulStorage) /*½ô¼±ºô½ĞºÅÂë²»ÄÜ¸üĞÂ*/
+    if(PB_ECC == pstMsg->ulStorage) /*ç´§æ€¥å‘¼å«å·ç ä¸èƒ½æ›´æ–°*/
     {
         stCnfData.PBError = TAF_ERR_PB_STORAGE_OP_FAIL;
     }
 
-    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*Èç¹û¶¨Î»Ê§°Ü»òÕß»º³åÄÚÈİ²»´æÔÚ*/
+    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*å¦‚æœå®šä½å¤±è´¥æˆ–è€…ç¼“å†²å†…å®¹ä¸å­˜åœ¨*/
     {
         PB_WARNING_LOG("SI_PB_ADDProc: Proc Error");
 
-        return SI_PBCallback(&stCnfData);       /*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);       /*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     ulResult = SI_PB_LocateRecord(pstMsg->ulStorage, pstMsg->stRecord.Index, pstMsg->stRecord.Index, &ucPBOffset);
@@ -2169,7 +2169,7 @@ VOS_UINT32 SI_PB_AddProc(PBMsgBlock *pMsg)
         PB_WARNING_LOG("SI_PB_ADDProc: Find the PhoneBook Content is Error");
         stCnfData.PBError = ulResult;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     if(pstMsg->stRecord.NumberLength > gastPBContent[ucPBOffset].ucNumberLen)
@@ -2177,20 +2177,20 @@ VOS_UINT32 SI_PB_AddProc(PBMsgBlock *pMsg)
         PB_WARNING_LOG("SI_PB_ADDProc: Number Too Long");
         stCnfData.PBError = TAF_ERR_PB_DIAL_STRING_TOO_LONG;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
-    if(VOS_NULL_PTR == gastPBContent[ucPBOffset].pContent)/*¶¨Î»»º³åÊ§°Ü*/
+    if(VOS_NULL_PTR == gastPBContent[ucPBOffset].pContent)/*å®šä½ç¼“å†²å¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_ADDProc: Content is NULL");
         stCnfData.PBError = TAF_ERR_UNSPECIFIED_ERROR;
 
-        return SI_PBCallback(&stCnfData);       /*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);       /*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     gstPBReqUnit.enPBLock = PB_LOCKED;
 
-    /*ÕÒµ½¿ÕÏĞ¼ÇÂ¼*/
+    /*æ‰¾åˆ°ç©ºé—²è®°å½•*/
     ulResult = SI_PB_FindFreeIndex(ucPBOffset, &i);
 
     if(VOS_OK != ulResult)
@@ -2200,24 +2200,24 @@ VOS_UINT32 SI_PB_AddProc(PBMsgBlock *pMsg)
         return SI_PBCallback(&stCnfData);
     }
 
-    if(SI_PB_STORAGE_SM == pstMsg->ulStorage)   /*Èç¹ûÊÇADNĞèÒª×ª»»Îª¼ÇÂ¼ºÅ*/
+    if(SI_PB_STORAGE_SM == pstMsg->ulStorage)   /*å¦‚æœæ˜¯ADNéœ€è¦è½¬æ¢ä¸ºè®°å½•å·*/
     {
         ulResult = SI_PB_CountADNRecordNum(i, &usFileId, &ucRecord);
     }
-    else                                                                    /*·ÃÎÊÆäËüµç»°±¾*/
+    else                                                                    /*è®¿é—®å…¶å®ƒç”µè¯æœ¬*/
     {
         ulResult = SI_PB_GetXDNFileID(pstMsg->ulStorage, &usFileId);
 
         ucRecord = (VOS_UINT8)i;
     }
 
-    if(VOS_ERR == ulResult)         /*×ª»»½á¹ûÊ§°Ü*/
+    if(VOS_ERR == ulResult)         /*è½¬æ¢ç»“æœå¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_ADDProc: Get the XDN File ID and Record Number is Error");
 
         stCnfData.PBError = TAF_ERR_PARA_ERROR;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     ulExtInfoNum = gastPBContent[ucPBOffset].ulExtInfoNum;
@@ -2225,7 +2225,7 @@ VOS_UINT32 SI_PB_AddProc(PBMsgBlock *pMsg)
     pstMsg->stRecord.Index  = i;
 
     ulResult = SI_PB_UpdataXDNFile(ucPBOffset, usFileId, usExtFileId,
-                                    ucRecord, &pstMsg->stRecord);/*, (VOS_UINT32)SI_PB_ADD_REQ);µ÷ÓÃ¸üĞÂÎÄ¼şAPI*/
+                                    ucRecord, &pstMsg->stRecord);/*, (VOS_UINT32)SI_PB_ADD_REQ);è°ƒç”¨æ›´æ–°æ–‡ä»¶API*/
 
     if(VOS_OK != ulResult)
     {
@@ -2233,10 +2233,10 @@ VOS_UINT32 SI_PB_AddProc(PBMsgBlock *pMsg)
 
         stCnfData.PBError = TAF_ERR_USIM_SIM_CARD_NOTEXIST;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
-    gstPBReqUnit.enPBEventType     = SI_PB_EVENT_ADD_CNF;    /*Ìî³ä»º³å½á¹¹*/
+    gstPBReqUnit.enPBEventType     = SI_PB_EVENT_ADD_CNF;    /*å¡«å……ç¼“å†²ç»“æ„*/
 
     gstPBReqUnit.enPBStoateType    = pstMsg->ulStorage;
 
@@ -2254,14 +2254,14 @@ VOS_UINT32 SI_PB_GetANRInfo(SI_PB_ADDITION_NUM_STRU *pstANRNum,
 {
     VOS_UINT16 i;
 
-    /*µÚ¶şµç»°±¾²ÎÊı¼ì²é¼°FID»ñÈ¡*/
+    /*ç¬¬äºŒç”µè¯æœ¬å‚æ•°æ£€æŸ¥åŠFIDè·å–*/
     for(i = 0; i < gstPBConfigInfo.ucAnrMaxNum; i++)
     {
         if((0 < pstANRNum[i].NumberLength)&&(i >= gstPBCtrlInfo.ulANRStorageNum))
         {
             PB_WARNING_LOG("SI_PB_GetANRInfo:Not Allowed");
 
-            return TAF_ERR_PB_STORAGE_OP_FAIL;/*µ÷ÓÃ»Øµ÷º¯Êı*/
+            return TAF_ERR_PB_STORAGE_OP_FAIL;/*è°ƒç”¨å›è°ƒå‡½æ•°*/
         }
 
         if(pstANRNum[i].NumberLength > gastANRContent[i].ucNumberLen)
@@ -2273,7 +2273,7 @@ VOS_UINT32 SI_PB_GetANRInfo(SI_PB_ADDITION_NUM_STRU *pstANRNum,
 
         pusANRFileId[i] = 0;
 
-        SI_PB_GetANRFidFromADN((VOS_UINT8)i, usADNFid, &pusANRFileId[i]);/*¸ù¾İADN FID»ñÈ¡ANR FID*/
+        SI_PB_GetANRFidFromADN((VOS_UINT8)i, usADNFid, &pusANRFileId[i]);/*æ ¹æ®ADN FIDè·å–ANR FID*/
 
         if((0 == pusANRFileId[i])&&(0 != pstANRNum[i].NumberLength))
         {
@@ -2299,16 +2299,16 @@ VOS_UINT32 SI_PB_SAddProc(PBMsgBlock *pMsg)
 
     pstMsg = (SI_PB_ADD_REP_STRU *)pMsg;
 
-    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
-    stCnfData.ClientId      = pstMsg->usClient;    /*¸ù¾İÏûÏ¢Ìî³ä»Ø¸´Êı¾İ*/
+    stCnfData.ClientId      = pstMsg->usClient;    /*æ ¹æ®æ¶ˆæ¯å¡«å……å›å¤æ•°æ®*/
     stCnfData.OpId          = pstMsg->ucOpID;
     stCnfData.PBEventType   = SI_PB_EVENT_SADD_CNF;
     stCnfData.Storage       = pstMsg->ulStorage;
 
     if((0 == gstPBConfigInfo.ucSPBFlag)||(SI_PB_STORAGE_SM != pstMsg->ulStorage))
     {
-        /*¸ÄÎªOperation not allowed*/
+        /*æ”¹ä¸ºOperation not allowed*/
         stCnfData.PBError = TAF_ERR_CMD_TYPE_ERROR;
 
         return SI_PBCallback(&stCnfData);
@@ -2322,11 +2322,11 @@ VOS_UINT32 SI_PB_SAddProc(PBMsgBlock *pMsg)
         stCnfData.PBError = TAF_ERR_SIM_BUSY;
     }
 
-    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*Èç¹û¶¨Î»Ê§°Ü»òÕß»º³åÄÚÈİ²»´æÔÚ*/
+    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*å¦‚æœå®šä½å¤±è´¥æˆ–è€…ç¼“å†²å†…å®¹ä¸å­˜åœ¨*/
     {
         PB_WARNING_LOG("SI_PB_SAddProc: Proc Error");
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     ulResult = SI_PB_LocateRecord(pstMsg->ulStorage, pstMsg->stRecord.Index, pstMsg->stRecord.Index, &ucPBOffset);
@@ -2347,7 +2347,7 @@ VOS_UINT32 SI_PB_SAddProc(PBMsgBlock *pMsg)
         return SI_PBCallback(&stCnfData);
     }
 
-    if(VOS_NULL_PTR == gastPBContent[ucPBOffset].pContent)/*¶¨Î»»º³åÊ§°Ü*/
+    if(VOS_NULL_PTR == gastPBContent[ucPBOffset].pContent)/*å®šä½ç¼“å†²å¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_SAddProc: Content is NULL");
         stCnfData.PBError = TAF_ERR_UNSPECIFIED_ERROR;
@@ -2356,7 +2356,7 @@ VOS_UINT32 SI_PB_SAddProc(PBMsgBlock *pMsg)
     }
 
 
-    /*ÕÒµ½¿ÕÏĞ¼ÇÂ¼*/
+    /*æ‰¾åˆ°ç©ºé—²è®°å½•*/
     ulResult = SI_PB_FindFreeIndex(ucPBOffset, &usIndex);
 
     if(VOS_OK != ulResult)
@@ -2366,22 +2366,22 @@ VOS_UINT32 SI_PB_SAddProc(PBMsgBlock *pMsg)
         return SI_PBCallback(&stCnfData);
     }
 
-    /*¼ÇÂ¼ĞèÒª¸üĞÂµÄIndexºÅ*/
+    /*è®°å½•éœ€è¦æ›´æ–°çš„Indexå·*/
     pstMsg->stRecord.Index = usIndex;
 
-    /*ADNµç»°±¾FID¼°¼ÇÂ¼ºÅ»ñÈ¡*/
+    /*ADNç”µè¯æœ¬FIDåŠè®°å½•å·è·å–*/
     ulResult = SI_PB_CountADNRecordNum(usIndex, &stSPBFid.usADNFileId, &ucRecord);
 
-    if(VOS_ERR == ulResult)/*×ª»»Ê§°Ü*/
+    if(VOS_ERR == ulResult)/*è½¬æ¢å¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_SAddProc: Get the XDN File ID and Record Number is Error");
 
         stCnfData.PBError = TAF_ERR_PARA_ERROR;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
-    /*µÚ¶şµç»°±¾²ÎÊı¼ì²é¼°ID»ñÈ¡*/
+    /*ç¬¬äºŒç”µè¯æœ¬å‚æ•°æ£€æŸ¥åŠIDè·å–*/
     ulResult = SI_PB_GetANRInfo(pstMsg->stRecord.AdditionNumber,stSPBFid.usADNFileId,stSPBFid.ausANRFileId);
 
     if(VOS_OK != ulResult)
@@ -2390,10 +2390,10 @@ VOS_UINT32 SI_PB_SAddProc(PBMsgBlock *pMsg)
 
         stCnfData.PBError = ulResult;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
-    /*Email ÎÄ¼şFID»ñÈ¡,¸ù¾İNVÏîµÄÖµÎªÅĞ¶ÏÊÇ·ñ¿ÉÒÔ¸üĞÂ*/
+    /*Email æ–‡ä»¶FIDè·å–,æ ¹æ®NVé¡¹çš„å€¼ä¸ºåˆ¤æ–­æ˜¯å¦å¯ä»¥æ›´æ–°*/
     if(gstPBConfigInfo.ucEmailFlag)
     {
         if(0 < pstMsg->stRecord.Email.EmailLen)
@@ -2411,7 +2411,7 @@ VOS_UINT32 SI_PB_SAddProc(PBMsgBlock *pMsg)
         }
     }
 
-    /*EXT ÎÄ¼şFID»ñÈ¡*/
+    /*EXT æ–‡ä»¶FIDè·å–*/
     ulExtInfoNum          = gastPBContent[ucPBOffset].ulExtInfoNum;
     stSPBFid.usExtFileId  = gastEXTContent[ulExtInfoNum].usExtFileId;
 
@@ -2419,7 +2419,7 @@ VOS_UINT32 SI_PB_SAddProc(PBMsgBlock *pMsg)
 
     stSPBFid.ucRecordNum = ucRecord;
 
-    ulResult = SI_PB_UpdataSPBFile(&stSPBFid,&pstMsg->stRecord);/*µ÷ÓÃ¸üĞÂÎÄ¼şµÄAPI*/
+    ulResult = SI_PB_UpdataSPBFile(&stSPBFid,&pstMsg->stRecord);/*è°ƒç”¨æ›´æ–°æ–‡ä»¶çš„API*/
 
     if(VOS_OK != ulResult)
     {
@@ -2427,10 +2427,10 @@ VOS_UINT32 SI_PB_SAddProc(PBMsgBlock *pMsg)
 
         stCnfData.PBError = ulResult;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
-    gstPBReqUnit.enPBEventType     = SI_PB_EVENT_ADD_CNF;    /*Ìî³ä»º³å½á¹¹*/
+    gstPBReqUnit.enPBEventType     = SI_PB_EVENT_ADD_CNF;    /*å¡«å……ç¼“å†²ç»“æ„*/
 
     gstPBReqUnit.enPBStoateType    = pstMsg->ulStorage;
 
@@ -2457,9 +2457,9 @@ VOS_UINT32 SI_PB_ModifyProc(PBMsgBlock *pMsg)
 
     pstMsg = (SI_PB_ADD_REP_STRU *)pMsg;
 
-    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
-    stCnfData.ClientId     = pstMsg->usClient;    /*¸ù¾İÏûÏ¢Ìî³ä»Ø¸´Êı¾İ*/
+    stCnfData.ClientId     = pstMsg->usClient;    /*æ ¹æ®æ¶ˆæ¯å¡«å……å›å¤æ•°æ®*/
     stCnfData.OpId         = pstMsg->ucOpID;
     stCnfData.PBEventType  = SI_PB_EVENT_MODIFY_CNF;
     stCnfData.Storage      = pstMsg->ulStorage;
@@ -2472,26 +2472,26 @@ VOS_UINT32 SI_PB_ModifyProc(PBMsgBlock *pMsg)
         stCnfData.PBError = TAF_ERR_SIM_BUSY;
     }
 
-    if(PB_ECC == pstMsg->ulStorage) /*½ô¼±ºô½ĞºÅÂë²»ÄÜ¸üĞÂ*/
+    if(PB_ECC == pstMsg->ulStorage) /*ç´§æ€¥å‘¼å«å·ç ä¸èƒ½æ›´æ–°*/
     {
         stCnfData.PBError = TAF_ERR_PB_STORAGE_OP_FAIL;
     }
 
-    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*Èç¹û¶¨Î»Ê§°Ü»òÕß»º³åÄÚÈİ²»´æÔÚ*/
+    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*å¦‚æœå®šä½å¤±è´¥æˆ–è€…ç¼“å†²å†…å®¹ä¸å­˜åœ¨*/
     {
         PB_WARNING_LOG("SI_PB_ModifyProc: Proc Error");
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     ulResult = SI_PB_LocateRecord(pstMsg->ulStorage, pstMsg->stRecord.Index, pstMsg->stRecord.Index, &ucPBOffset);
 
-    if(VOS_OK != ulResult)  /*¶¨Î»µç»°±¾ĞÅÏ¢Ê§°Ü*/
+    if(VOS_OK != ulResult)  /*å®šä½ç”µè¯æœ¬ä¿¡æ¯å¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_ModifyProc: Find the PhoneBook Content is Error");
         stCnfData.PBError = ulResult;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     if(pstMsg->stRecord.NumberLength > gastPBContent[ucPBOffset].ucNumberLen)
@@ -2499,35 +2499,35 @@ VOS_UINT32 SI_PB_ModifyProc(PBMsgBlock *pMsg)
         PB_WARNING_LOG("SI_PB_ModifyProc: Number Too Long");
         stCnfData.PBError = TAF_ERR_PB_DIAL_STRING_TOO_LONG;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     gstPBReqUnit.enPBLock = PB_LOCKED;
 
-    if(SI_PB_STORAGE_SM == pstMsg->ulStorage)/*·ÃÎÊµÄÊÇADNĞèÒª×ª»»¼ÇÂ¼ºÅ*/
+    if(SI_PB_STORAGE_SM == pstMsg->ulStorage)/*è®¿é—®çš„æ˜¯ADNéœ€è¦è½¬æ¢è®°å½•å·*/
     {
         ulResult = SI_PB_CountADNRecordNum(pstMsg->stRecord.Index, &usFileId, &ucRecord);
     }
-    else                                                            /*·ÃÎÊÆäËüµç»°±¾*/
+    else                                                            /*è®¿é—®å…¶å®ƒç”µè¯æœ¬*/
     {
         ulResult = SI_PB_GetXDNFileID(pstMsg->ulStorage, &usFileId);
 
         ucRecord = (VOS_UINT8)pstMsg->stRecord.Index;
     }
 
-    if(VOS_ERR == ulResult)                         /*×ª»»Ê§°Ü*/
+    if(VOS_ERR == ulResult)                         /*è½¬æ¢å¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_ModifyProc: Get the XDN File ID and Record Number is Error");
 
         stCnfData.PBError = TAF_ERR_PARA_ERROR;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     ulExtInfoNum = gastPBContent[ucPBOffset].ulExtInfoNum;
     usExtFileId  = gastEXTContent[ulExtInfoNum].usExtFileId;
 
-    ulResult = SI_PB_UpdataXDNFile(ucPBOffset, usFileId, usExtFileId, ucRecord, &pstMsg->stRecord);/*µ÷ÓÃ¸üĞÂÎÄ¼şµÄAPI*/
+    ulResult = SI_PB_UpdataXDNFile(ucPBOffset, usFileId, usExtFileId, ucRecord, &pstMsg->stRecord);/*è°ƒç”¨æ›´æ–°æ–‡ä»¶çš„API*/
 
     if(VOS_OK != ulResult)
     {
@@ -2535,10 +2535,10 @@ VOS_UINT32 SI_PB_ModifyProc(PBMsgBlock *pMsg)
 
         stCnfData.PBError = TAF_ERR_USIM_SIM_CARD_NOTEXIST;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
-    gstPBReqUnit.enPBEventType          = SI_PB_EVENT_MODIFY_CNF;/*Ïà¹ØÄÚÈİÔÚÈ«¾Ö±äÁ¿ÖĞ±£´æ*/
+    gstPBReqUnit.enPBEventType          = SI_PB_EVENT_MODIFY_CNF;/*ç›¸å…³å†…å®¹åœ¨å…¨å±€å˜é‡ä¸­ä¿å­˜*/
 
     gstPBReqUnit.enPBStoateType         = pstMsg->ulStorage;
 
@@ -2564,16 +2564,16 @@ VOS_UINT32 SI_PB_SModifyProc(PBMsgBlock *pMsg)
 
     pstMsg = (SI_PB_ADD_REP_STRU *)pMsg;
 
-    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
-    stCnfData.ClientId     = pstMsg->usClient;    /*¸ù¾İÏûÏ¢Ìî³ä»Ø¸´Êı¾İ*/
+    stCnfData.ClientId     = pstMsg->usClient;    /*æ ¹æ®æ¶ˆæ¯å¡«å……å›å¤æ•°æ®*/
     stCnfData.OpId         = pstMsg->ucOpID;
     stCnfData.PBEventType  = SI_PB_EVENT_SMODIFY_CNF;
     stCnfData.Storage      = pstMsg->ulStorage;
 
     if((0 == gstPBConfigInfo.ucSPBFlag)||(SI_PB_STORAGE_SM != pstMsg->ulStorage))
     {
-        /*¸ÄÎªOperation not allowed*/
+        /*æ”¹ä¸ºOperation not allowed*/
         stCnfData.PBError = TAF_ERR_CMD_TYPE_ERROR;
 
         return SI_PBCallback(&stCnfData);
@@ -2587,16 +2587,16 @@ VOS_UINT32 SI_PB_SModifyProc(PBMsgBlock *pMsg)
         stCnfData.PBError = TAF_ERR_SIM_BUSY;
     }
 
-    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*Èç¹û¶¨Î»Ê§°Ü»òÕß»º³åÄÚÈİ²»´æÔÚ*/
+    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*å¦‚æœå®šä½å¤±è´¥æˆ–è€…ç¼“å†²å†…å®¹ä¸å­˜åœ¨*/
     {
         PB_WARNING_LOG("SI_PB_SModifyProc: Proc Error");
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     ulResult = SI_PB_LocateRecord(pstMsg->ulStorage, pstMsg->stRecord.Index, pstMsg->stRecord.Index, &ucPBOffset);
 
-    if(VOS_OK != ulResult)  /*¶¨Î»µç»°±¾ĞÅÏ¢Ê§°Ü*/
+    if(VOS_OK != ulResult)  /*å®šä½ç”µè¯æœ¬ä¿¡æ¯å¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_SModifyProc: Find the PhoneBook Content is Error");
         stCnfData.PBError = ulResult;
@@ -2604,7 +2604,7 @@ VOS_UINT32 SI_PB_SModifyProc(PBMsgBlock *pMsg)
         return SI_PBCallback(&stCnfData);
     }
 
-    /*ADNµç»°±¾ºÅÂë³¤¶È¼ì²é*/
+    /*ADNç”µè¯æœ¬å·ç é•¿åº¦æ£€æŸ¥*/
     if(pstMsg->stRecord.NumberLength > gastPBContent[ucPBOffset].ucNumberLen)
     {
         PB_WARNING_LOG("SI_PB_SModifyProc: Number Too Long");
@@ -2613,18 +2613,18 @@ VOS_UINT32 SI_PB_SModifyProc(PBMsgBlock *pMsg)
         return SI_PBCallback(&stCnfData);
     }
 
-    if(VOS_NULL_PTR == gastPBContent[ucPBOffset].pContent)/*¶¨Î»»º³åÊ§°Ü*/
+    if(VOS_NULL_PTR == gastPBContent[ucPBOffset].pContent)/*å®šä½ç¼“å†²å¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_SModifyProc: Content is NULL");
         stCnfData.PBError = TAF_ERR_UNSPECIFIED_ERROR;
 
-        return SI_PBCallback(&stCnfData);       /*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);       /*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
-    /*ADNµç»°±¾FID¼°¼ÇÂ¼ºÅ»ñÈ¡*/
+    /*ADNç”µè¯æœ¬FIDåŠè®°å½•å·è·å–*/
     ulResult = SI_PB_CountADNRecordNum(pstMsg->stRecord.Index, &stSPBFid.usADNFileId, &ucRecord);
 
-    if(VOS_ERR == ulResult)/*×ª»»Ê§°Ü*/
+    if(VOS_ERR == ulResult)/*è½¬æ¢å¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_SModifyProc: Get the XDN File ID and Record Number is Error");
 
@@ -2633,7 +2633,7 @@ VOS_UINT32 SI_PB_SModifyProc(PBMsgBlock *pMsg)
         return SI_PBCallback(&stCnfData);
     }
 
-    /*µÚ¶şµç»°±¾²ÎÊı¼ì²é¼°FID»ñÈ¡*/
+    /*ç¬¬äºŒç”µè¯æœ¬å‚æ•°æ£€æŸ¥åŠFIDè·å–*/
     ulResult = SI_PB_GetANRInfo(pstMsg->stRecord.AdditionNumber,stSPBFid.usADNFileId,stSPBFid.ausANRFileId);
 
     if(VOS_OK != ulResult)
@@ -2645,7 +2645,7 @@ VOS_UINT32 SI_PB_SModifyProc(PBMsgBlock *pMsg)
         return SI_PBCallback(&stCnfData);
     }
 
-    /*Email ÎÄ¼şFID»ñÈ¡,²»¶Ô·µ»ØÖµ£¬ÓÃ»§¸üĞÂµÄEmailÊÇ·ñ´æÔÚ·ÅÔÚSI_PB_UpdataSPBFileÖĞÅĞ¶Ï*/
+    /*Email æ–‡ä»¶FIDè·å–,ä¸å¯¹è¿”å›å€¼ï¼Œç”¨æˆ·æ›´æ–°çš„Emailæ˜¯å¦å­˜åœ¨æ”¾åœ¨SI_PB_UpdataSPBFileä¸­åˆ¤æ–­*/
     if(gstPBConfigInfo.ucEmailFlag)
     {
         SI_PB_GetEMLFIdFromADN(&stSPBFid.usEMLFileId,stSPBFid.usADNFileId);
@@ -2655,7 +2655,7 @@ VOS_UINT32 SI_PB_SModifyProc(PBMsgBlock *pMsg)
         stSPBFid.usEMLFileId = 0;
     }
 
-    /*EXTÎÄ¼şFID»ñÈ¡*/
+    /*EXTæ–‡ä»¶FIDè·å–*/
     ulExtInfoNum          = gastPBContent[ucPBOffset].ulExtInfoNum;
     stSPBFid.usExtFileId  = gastEXTContent[ulExtInfoNum].usExtFileId;
 
@@ -2663,7 +2663,7 @@ VOS_UINT32 SI_PB_SModifyProc(PBMsgBlock *pMsg)
 
     stSPBFid.ucRecordNum = ucRecord;
 
-    ulResult = SI_PB_UpdataSPBFile(&stSPBFid,&pstMsg->stRecord);/*µ÷ÓÃ¸üĞÂÎÄ¼şµÄAPI*/
+    ulResult = SI_PB_UpdataSPBFile(&stSPBFid,&pstMsg->stRecord);/*è°ƒç”¨æ›´æ–°æ–‡ä»¶çš„API*/
 
     if(VOS_OK != ulResult)
     {
@@ -2671,10 +2671,10 @@ VOS_UINT32 SI_PB_SModifyProc(PBMsgBlock *pMsg)
 
         stCnfData.PBError = ulResult;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
-    gstPBReqUnit.enPBEventType          = SI_PB_EVENT_MODIFY_CNF;/*Ïà¹ØÄÚÈİÔÚÈ«¾Ö±äÁ¿ÖĞ±£´æ*/
+    gstPBReqUnit.enPBEventType          = SI_PB_EVENT_MODIFY_CNF;/*ç›¸å…³å†…å®¹åœ¨å…¨å±€å˜é‡ä¸­ä¿å­˜*/
 
     gstPBReqUnit.enPBStoateType         = pstMsg->ulStorage;
 
@@ -2694,15 +2694,15 @@ VOS_UINT32 SI_PB_DeleteProc(PBMsgBlock *pMsg)
     VOS_UINT16            usFileId;
     VOS_UINT8             ucRecord;
     VOS_UINT8             ucPBOffset;
-    VOS_UINT8             aucContent[100]; /*É¾³ıµÄÄÚÈİÌíÈ«F*/
+    VOS_UINT8             aucContent[100]; /*åˆ é™¤çš„å†…å®¹æ·»å…¨F*/
 
     pstMsg = (SI_PB_DELETE_REQ_STRU *)pMsg;
 
-    SI_PB_MemSet(sizeof(aucContent), 0xFF, aucContent);/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    SI_PB_MemSet(sizeof(aucContent), 0xFF, aucContent);/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
-    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*³õÊ¼»¯¾Ö²¿±äÁ¿*/
+    VOS_MemSet(&stCnfData, 0, sizeof(SI_PB_EVENT_INFO_STRU));/*åˆå§‹åŒ–å±€éƒ¨å˜é‡*/
 
-    stCnfData.ClientId      = pstMsg->usClient;        /*¸ù¾İÏûÏ¢ÄÚÈİÌî³ä»Ø¸´Êı¾İ*/
+    stCnfData.ClientId      = pstMsg->usClient;        /*æ ¹æ®æ¶ˆæ¯å†…å®¹å¡«å……å›å¤æ•°æ®*/
     stCnfData.OpId          = pstMsg->ucOpID;
     stCnfData.PBEventType   = SI_PB_EVENT_DELETE_CNF;
     stCnfData.Storage       = pstMsg->ulStorage;
@@ -2715,47 +2715,47 @@ VOS_UINT32 SI_PB_DeleteProc(PBMsgBlock *pMsg)
         stCnfData.PBError = TAF_ERR_SIM_BUSY;
     }
 
-    if(PB_ECC == pstMsg->ulStorage) /*½ô¼±ºô½ĞºÅÂë²»ÄÜÉ¾³ı*/
+    if(PB_ECC == pstMsg->ulStorage) /*ç´§æ€¥å‘¼å«å·ç ä¸èƒ½åˆ é™¤*/
     {
         stCnfData.PBError = TAF_ERR_PB_STORAGE_OP_FAIL;
     }
 
-    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*Èç¹û¶¨Î»Ê§°Ü»òÕß»º³åÄÚÈİ²»´æÔÚ*/
+    if( TAF_ERR_NO_ERROR != stCnfData.PBError )/*å¦‚æœå®šä½å¤±è´¥æˆ–è€…ç¼“å†²å†…å®¹ä¸å­˜åœ¨*/
     {
         PB_WARNING_LOG("SI_PB_DeleteProc: Proc Error");
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     ulResult = SI_PB_LocateRecord(pstMsg->ulStorage, pstMsg->usIndex, pstMsg->usIndex, &ucPBOffset);
 
-    if(VOS_OK != ulResult)     /*¶¨Î»»º³åĞÅÏ¢Ê§°Ü*/
+    if(VOS_OK != ulResult)     /*å®šä½ç¼“å†²ä¿¡æ¯å¤±è´¥*/
     {
         PB_WARNING_LOG("SI_PB_DeleteProc: Find the PhoneBook Content is Error");
 
         stCnfData.PBError = ulResult;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
-    if(SI_PB_STORAGE_SM == pstMsg->ulStorage) /*Èç¹ûµ±Ç°·ÃÎÊµÄÊÇADNĞèÒª×ª»»¼ÇÂ¼ºÅ*/
+    if(SI_PB_STORAGE_SM == pstMsg->ulStorage) /*å¦‚æœå½“å‰è®¿é—®çš„æ˜¯ADNéœ€è¦è½¬æ¢è®°å½•å·*/
     {
         ulResult = SI_PB_CountADNRecordNum(pstMsg->usIndex, &usFileId, &ucRecord);
     }
-    else                                                        /*µ±Ç°·ÃÎÊµÄÊÇÆäËüµç»°±¾*/
+    else                                                        /*å½“å‰è®¿é—®çš„æ˜¯å…¶å®ƒç”µè¯æœ¬*/
     {
         ulResult = SI_PB_GetXDNFileID(pstMsg->ulStorage, &usFileId);
 
         ucRecord = (VOS_UINT8)pstMsg->usIndex;
     }
 
-    if(VOS_ERR == ulResult)         /*×ª»»´íÎó*/
+    if(VOS_ERR == ulResult)         /*è½¬æ¢é”™è¯¯*/
     {
         PB_WARNING_LOG("SI_PB_DeleteProc: Get the XDN File ID and Record Number is Error");
 
         stCnfData.PBError = TAF_ERR_PARA_ERROR;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
 
@@ -2769,7 +2769,7 @@ VOS_UINT32 SI_PB_DeleteProc(PBMsgBlock *pMsg)
 
     gstPBReqUnit.enPBLock = PB_LOCKED;
 
-    /*µ÷ÓÃº¯ÊıÉ¾³ı£¬ÅĞ¶ÏÈç¹ûÎªADN£¬ĞèÒªÉ¾³ı¸´ºÏµç»°±¾*/
+    /*è°ƒç”¨å‡½æ•°åˆ é™¤ï¼Œåˆ¤æ–­å¦‚æœä¸ºADNï¼Œéœ€è¦åˆ é™¤å¤åˆç”µè¯æœ¬*/
     ulResult = SI_PB_DeleteHandle(usFileId,ucRecord,ucPBOffset,pstMsg->usIndex);
 
     if(VOS_OK != ulResult)
@@ -2779,7 +2779,7 @@ VOS_UINT32 SI_PB_DeleteProc(PBMsgBlock *pMsg)
         return SI_PBCallback(&stCnfData);
     }
 
-    gstPBReqUnit.enPBEventType      = SI_PB_EVENT_DELETE_CNF;/*Ïà¹ØÄÚÈİ±£´æ*/
+    gstPBReqUnit.enPBEventType      = SI_PB_EVENT_DELETE_CNF;/*ç›¸å…³å†…å®¹ä¿å­˜*/
 
     gstPBReqUnit.enPBStoateType     = pstMsg->ulStorage;
 
@@ -2805,18 +2805,18 @@ VOS_UINT32 SI_PB_RefreshALLContent(VOS_VOID)
 
     gulPBFileCnt = 0;
 
-    if ( VOS_OK != SI_PB_InitPBStatusJudge())/*¸ù¾İ¿¨ÀàĞÍÉè¶¨³õÊ¼»¯²½Öè*/
+    if ( VOS_OK != SI_PB_InitPBStatusJudge())/*æ ¹æ®å¡ç±»å‹è®¾å®šåˆå§‹åŒ–æ­¥éª¤*/
     {
         PB_ERROR_LOG("SI_PB_RefreshProc:Card Status Error");
 
         return VOS_ERR;
     }
 
-    if ( PB_INIT_EFPBR == gstPBInitState.enPBInitStep )/*USIM¿¨*/
+    if ( PB_INIT_EFPBR == gstPBInitState.enPBInitStep )/*USIMå¡*/
     {
         ulResult = SI_PB_InitEFpbrReq();
     }
-    else                                        /*SIM¿¨*/
+    else                                        /*SIMå¡*/
     {
         ulResult = SI_PB_InitXDNSpaceReq();
     }
@@ -2842,7 +2842,7 @@ VOS_UINT32 SI_PB_FDNCheckProc(PBMsgBlock *pMsg)
         return VOS_ERR;
     }
 
-    /*Èç¹ûFDNÎ´Ê¹ÄÜÖ±½Ó·µ»ØVOS_OK*/
+    /*å¦‚æœFDNæœªä½¿èƒ½ç›´æ¥è¿”å›VOS_OK*/
     USIMM_FdnQuery(&ulFdnStatus);
 
     pstFDNCheckCnf->ulReceiverPid   = pstFDNCheckReq->ulSenderPid;
@@ -2856,10 +2856,10 @@ VOS_UINT32 SI_PB_FDNCheckProc(PBMsgBlock *pMsg)
     }
     else
     {
-        /* ¼ì²âµÚÒ»¸öºÅÂë */
+        /* æ£€æµ‹ç¬¬ä¸€ä¸ªå·ç  */
         ulResult1 = SI_PB_CheckFdn(pstFDNCheckReq->stFDNNum.aucNum1, pstFDNCheckReq->stFDNNum.ulNum1Len);
 
-        /* Èç¹ûµÚ¶ş¸öºÅÂë³¤¶È´óÓÚ0£¬¼ì²âµÚ¶ş¸öºÅÂë */
+        /* å¦‚æœç¬¬äºŒä¸ªå·ç é•¿åº¦å¤§äº0ï¼Œæ£€æµ‹ç¬¬äºŒä¸ªå·ç  */
         if (pstFDNCheckReq->stFDNNum.ulNum2Len > 0)
         {
             ulResult2 = SI_PB_CheckFdn(pstFDNCheckReq->stFDNNum.aucNum2, pstFDNCheckReq->stFDNNum.ulNum2Len);
@@ -2940,8 +2940,8 @@ VOS_VOID SI_PB_JudgeTotalUsedNum(VOS_UINT8 ucPBOffset,SI_PB_EVENT_INFO_STRU *pst
 }
 VOS_VOID SI_PB_RefreshADNUsedNum(VOS_UINT8 *pucDstStorage, VOS_UINT8 *pucSrcReq,VOS_UINT8 ucOffset)
 {
-   /*¸Ãµç»°±¾»º´æ(ĞèÅĞ¶Ï»º´æÊÇ·ñÎª¿Õ)ºÍPBreq±È½Ï*/
-    /*Èç¹ûÔ­À´ÓĞĞ§£¬ÏÖÔÚÎŞĞ§£¬ÔòÓĞĞ§Öµ¼õ¼õ*/
+   /*è¯¥ç”µè¯æœ¬ç¼“å­˜(éœ€åˆ¤æ–­ç¼“å­˜æ˜¯å¦ä¸ºç©º)å’ŒPBreqæ¯”è¾ƒ*/
+    /*å¦‚æœåŸæ¥æœ‰æ•ˆï¼Œç°åœ¨æ— æ•ˆï¼Œåˆ™æœ‰æ•ˆå€¼å‡å‡*/
     if(VOS_OK == SI_PB_CheckContentValidity(&gastPBContent[ucOffset],
                                             pucDstStorage))
     {
@@ -2951,7 +2951,7 @@ VOS_VOID SI_PB_RefreshADNUsedNum(VOS_UINT8 *pucDstStorage, VOS_UINT8 *pucSrcReq,
             gastPBContent[ucOffset].usUsedNum--;
         }
     }
-    /*Èç¹ûÔ­À´ÎŞĞ§£¬ÏÖÔÚÓĞĞ§£¬ÔòÓĞĞ§Öµ¼Ó¼Ó*/
+    /*å¦‚æœåŸæ¥æ— æ•ˆï¼Œç°åœ¨æœ‰æ•ˆï¼Œåˆ™æœ‰æ•ˆå€¼åŠ åŠ */
     else
     {
         if(VOS_OK == SI_PB_CheckContentValidity(&gastPBContent[ucOffset],
@@ -2965,7 +2965,7 @@ VOS_VOID SI_PB_RefreshADNUsedNum(VOS_UINT8 *pucDstStorage, VOS_UINT8 *pucSrcReq,
 }
 VOS_VOID SI_PB_RefreshEXTUsedNum(VOS_UINT8 *pucDstStorage, VOS_UINT8 *pucSrcReq, VOS_UINT8 ucOffset)
 {
-    if((0x0 != pucDstStorage[0])&&(0xFF != pucDstStorage[1]))/*ÓĞĞ§*/
+    if((0x0 != pucDstStorage[0])&&(0xFF != pucDstStorage[1]))/*æœ‰æ•ˆ*/
     {
         if((0x0 == pucSrcReq[0])||(0xFF == pucSrcReq[1]))
         {
@@ -2984,7 +2984,7 @@ VOS_VOID SI_PB_RefreshEXTUsedNum(VOS_UINT8 *pucDstStorage, VOS_UINT8 *pucSrcReq,
 }
 VOS_VOID SI_PB_RefreshANRUsedNum(VOS_UINT8 *pucDstStorage, VOS_UINT8 *pucSrcReq, VOS_UINT8 ucOffset)
 {
-    if(VOS_OK == SI_PB_CheckANRValidity(pucDstStorage))/*ÓĞĞ§*/
+    if(VOS_OK == SI_PB_CheckANRValidity(pucDstStorage))/*æœ‰æ•ˆ*/
     {
         if(VOS_OK != SI_PB_CheckANRValidity(pucSrcReq))
         {
@@ -3003,7 +3003,7 @@ VOS_VOID SI_PB_RefreshANRUsedNum(VOS_UINT8 *pucDstStorage, VOS_UINT8 *pucSrcReq,
 }
 VOS_VOID SI_PB_RefreshEMLUsedNum(VOS_UINT8 *pucDstStorage, VOS_UINT8 *pucSrcReq)
 {
-    if(0xFF != pucDstStorage[0])/*ÓĞĞ§*/
+    if(0xFF != pucDstStorage[0])/*æœ‰æ•ˆ*/
     {
         if(0xFF == pucSrcReq[0])
         {
@@ -3028,7 +3028,7 @@ VOS_UINT32 SI_PB_RefreshMemory(VOS_UINT16 usFileId,VOS_UINT16 usRecordLen,VOS_UI
     VOS_UINT8  ucSuffix;
     VOS_UINT8  ucFileCnt;
 
-    /*½âÎö³ö¸ÃÎÄ¼şÊôÓÚÄÄ¸öµç»°±¾*/
+    /*è§£æå‡ºè¯¥æ–‡ä»¶å±äºå“ªä¸ªç”µè¯æœ¬*/
     if(VOS_OK == SI_PB_JudgeADNFid(usFileId))/*ADN*/
     {
         usMemOffset   = (VOS_UINT16)((gstPBReqUnit.usIndex1-1)*gastPBContent[ucOffset].ucRecordLen);
@@ -3039,7 +3039,7 @@ VOS_UINT32 SI_PB_RefreshMemory(VOS_UINT16 usFileId,VOS_UINT16 usRecordLen,VOS_UI
     }
     else if(VOS_OK == SI_PB_JudgeEXTFid(usFileId, ucOffset))/*EXT*/
     {
-        /*¸ù¾İEXTµÄ»Ø¸´Record£¬È¡³öÔÚÆäÔÚgstPBReqUnitÖĞµÄ¶ÔÓ¦Î»ÖÃ*/
+        /*æ ¹æ®EXTçš„å›å¤Recordï¼Œå–å‡ºåœ¨å…¶åœ¨gstPBReqUnitä¸­çš„å¯¹åº”ä½ç½®*/
         if(VOS_OK != SI_PB_GetEXTContentFromReq(ucRecordNum,&pucSrcReq))
         {
             PB_WARNING_LOG("SI_PB_RefreshMemory:SI_PB_GetEXTContentFromReq ERROR.");
@@ -3205,7 +3205,7 @@ VOS_VOID SI_PB_RefreshCardIndMsgSnd(VOS_VOID)
     pstMsg->ulReceiverPid     = MAPS_PB_PID;
     pstMsg->enCardStatus      = ucCardStatus;
     pstMsg->enCardType        = ucCardType;
-    pstMsg->ulMsgName         = PS_USIM_GET_STATUS_IND;    /* ÉèÖÃÏûÏ¢Ãû³Æ */
+    pstMsg->ulMsgName         = PS_USIM_GET_STATUS_IND;    /* è®¾ç½®æ¶ˆæ¯åç§° */
     pstMsg->ucIMSILen         = VOS_NULL;
 
     (VOS_VOID)VOS_SendMsg(MAPS_PIH_PID, pstMsg);
@@ -3262,7 +3262,7 @@ VOS_VOID SI_PB_UsimSetSPBFileProc(PS_USIM_SPB_CNF_STRU *pstMsg,
 {
     VOS_UINT32 i;
 
-    /*Èç¹ûUSIMM»Ø¸´Ê§°Ü£¬ÔòÖ±½ÓÍË³ö£¬²»¶ÔÄÚ´æ½øĞĞ²Ù×÷*/
+    /*å¦‚æœUSIMMå›å¤å¤±è´¥ï¼Œåˆ™ç›´æ¥é€€å‡ºï¼Œä¸å¯¹å†…å­˜è¿›è¡Œæ“ä½œ*/
     if(VOS_OK != pstMsg->ulResult)
     {
         pstCnfData->PBError = TAF_ERR_PB_STORAGE_OP_FAIL;
@@ -3272,7 +3272,7 @@ VOS_VOID SI_PB_UsimSetSPBFileProc(PS_USIM_SPB_CNF_STRU *pstMsg,
 
     SI_PB_JudgeTotalUsedNum(ucOffset,pstCnfData);
 
-    /*Õë¶Ô¸´ºÏµç»°±¾ÖĞµÄÃ¿¸öµç»°±¾ĞèÒª±È½Ï¸ü¸ÄÇ°ºóµÄÄÚ´æ¾ßÌåÄÚÈİÈ·ÈÏÊ¹ÓÃÇé¿ö£¬²¢¸üĞÂÄÚ´æ*/
+    /*é’ˆå¯¹å¤åˆç”µè¯æœ¬ä¸­çš„æ¯ä¸ªç”µè¯æœ¬éœ€è¦æ¯”è¾ƒæ›´æ”¹å‰åçš„å†…å­˜å…·ä½“å†…å®¹ç¡®è®¤ä½¿ç”¨æƒ…å†µï¼Œå¹¶æ›´æ–°å†…å­˜*/
     for(i = 0; i < pstMsg->ucFileNum; i++)
     {
         if(VOS_OK != SI_PB_RefreshMemory(pstMsg->ausEfId[i], pstMsg->ausEfLen[i],
@@ -3293,17 +3293,17 @@ VOS_VOID SI_PB_UsimSetSPBFileProc(PS_USIM_SPB_CNF_STRU *pstMsg,
 }
 
 /*****************************************************************************
-º¯ Êı Ãû  :
-¹¦ÄÜÃèÊö  :
-ÊäÈë²ÎÊı  :
-Êä³ö²ÎÊı  :
-·µ »Ø Öµ  :
-µ÷ÓÃº¯Êı  :
-±»µ÷º¯Êı  :
-ĞŞ¶©¼ÇÂ¼  :
-1.  ÈÕ    ÆÚ   : 2007Äê10ÔÂ15ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : Creat
+å‡½ æ•° å  :
+åŠŸèƒ½æè¿°  :
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å› å€¼  :
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®è®¢è®°å½•  :
+1.  æ—¥    æœŸ   : 2007å¹´10æœˆ15æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : Creat
 
 *****************************************************************************/
 VOS_VOID SI_PB_UsimGetFileProc(PS_USIM_GET_FILE_CNF_STRU *pstMsg,
@@ -3395,7 +3395,7 @@ VOS_VOID SI_PB_UsimGetIndexFile(VOS_UINT8 ucPBOffset, SI_PB_EVENT_INFO_STRU *pst
     VOS_UINT16                  usFileId;
     USIMM_GET_FILE_INFO_STRU    stGetFileInfo;
 
-    /*ËùÓĞ¼ÇÂ¼ÒÑ¾­¶ÁÍê,»òÕß³ö´íÔòÍË³ö*/
+    /*æ‰€æœ‰è®°å½•å·²ç»è¯»å®Œ,æˆ–è€…å‡ºé”™åˆ™é€€å‡º*/
     if ((VOS_OK != pstCnfData->PBError)||(VOS_TRUE == pstCnfData->PBLastTag))
     {
         return;
@@ -3415,18 +3415,18 @@ VOS_VOID SI_PB_UsimGetIndexFile(VOS_UINT8 ucPBOffset, SI_PB_EVENT_INFO_STRU *pst
 
     if (PB_REQ_SEND == ucSendReqFlag)
     {
-        if(SI_PB_STORAGE_SM == gstPBReqUnit.enPBStoateType)   /*Èç¹ûÊÇADNĞèÒª×ª»»Îª¼ÇÂ¼ºÅ*/
+        if(SI_PB_STORAGE_SM == gstPBReqUnit.enPBStoateType)   /*å¦‚æœæ˜¯ADNéœ€è¦è½¬æ¢ä¸ºè®°å½•å·*/
         {
             ulResult = SI_PB_CountADNRecordNum(gstPBReqUnit.usCurIndex, &usFileId, &ucRecord);
         }
-        else                                                                    /*·ÃÎÊÆäËüµç»°±¾*/
+        else                                                                    /*è®¿é—®å…¶å®ƒç”µè¯æœ¬*/
         {
             ulResult = SI_PB_GetXDNFileID(gstPBReqUnit.enPBStoateType, &usFileId);
 
             ucRecord = (VOS_UINT8)gstPBReqUnit.usCurIndex;
         }
 
-        if(VOS_ERR == ulResult)         /*×ª»»½á¹ûÊ§°Ü*/
+        if(VOS_ERR == ulResult)         /*è½¬æ¢ç»“æœå¤±è´¥*/
         {
             PB_WARNING_LOG("SI_PB_SearchReq: Get the XDN File ID and Record Number is Error");
 
@@ -3461,15 +3461,15 @@ VOS_VOID SI_PB_UsimGetIndexFile(VOS_UINT8 ucPBOffset, SI_PB_EVENT_INFO_STRU *pst
 }
 
 /*****************************************************************************
-º¯ Êı Ãû  : SI_PBSendGlobalToAcpu
-¹¦ÄÜÃèÊö  : ·¢ËÍÈ«¾Ö±äÁ¿ÄÚÈİ¸øAcpu
-ÊäÈë²ÎÊı  : ÎŞ
-Êä³ö²ÎÊı  : ÎŞ
-·µ »Ø Öµ  : ÎŞ
-ĞŞ¶©¼ÇÂ¼  :
-1.  ÈÕ    ÆÚ   : 2011Äê10ÔÂ15ÈÕ
-    ×÷    Õß   : z100318
-    ĞŞ¸ÄÄÚÈİ   : Creat
+å‡½ æ•° å  : SI_PBSendGlobalToAcpu
+åŠŸèƒ½æè¿°  : å‘é€å…¨å±€å˜é‡å†…å®¹ç»™Acpu
+è¾“å…¥å‚æ•°  : æ— 
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å› å€¼  : æ— 
+ä¿®è®¢è®°å½•  :
+1.  æ—¥    æœŸ   : 2011å¹´10æœˆ15æ—¥
+    ä½œ    è€…   : z100318
+    ä¿®æ”¹å†…å®¹   : Creat
 
 *****************************************************************************/
 VOS_VOID SI_PBSendGlobalToAcpu(VOS_VOID)
@@ -3487,7 +3487,7 @@ VOS_VOID SI_PBSendGlobalToAcpu(VOS_VOID)
     pstMsg->ulReceiverPid = ACPU_PID_PB;
     pstMsg->ulMsgName     = SI_PB_UPDATE_AGOBAL;
 
-    /*¿½±´È«¾Ö Acpu ĞèÒªµÄÈ«¾Ö±äÁ¿ÄÚÈİ*/
+    /*æ‹·è´å…¨å±€ Acpu éœ€è¦çš„å…¨å±€å˜é‡å†…å®¹*/
     VOS_MemCpy(&pstMsg->stPBCtrlInfo,   &gstPBCtrlInfo,  sizeof(gstPBCtrlInfo));
     VOS_MemCpy(&pstMsg->stPBConfigInfo, &gstPBConfigInfo,sizeof(gstPBConfigInfo));
     VOS_MemCpy(pstMsg->astPBContent,    gastPBContent,   sizeof(gastPBContent));
@@ -3509,16 +3509,16 @@ VOS_VOID SI_PBSendGlobalToAcpu(VOS_VOID)
 }
 
 /*****************************************************************************
-º¯ Êı Ãû  : SI_PB_ReleaseAll
-¹¦ÄÜÃèÊö  : ÊÍ·Åµç»°±¾¿Õ¼ä¼°È«¾Ö±äÁ¿Çå¿Õ
-ÊäÈë²ÎÊı  :
-Êä³ö²ÎÊı  :
-·µ »Ø Öµ  :
+å‡½ æ•° å  : SI_PB_ReleaseAll
+åŠŸèƒ½æè¿°  : é‡Šæ”¾ç”µè¯æœ¬ç©ºé—´åŠå…¨å±€å˜é‡æ¸…ç©º
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å› å€¼  :
 
-ĞŞ¶©¼ÇÂ¼  :
-1.  ÈÕ    ÆÚ   : 2012Äê06ÔÂ09ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : Creat
+ä¿®è®¢è®°å½•  :
+1.  æ—¥    æœŸ   : 2012å¹´06æœˆ09æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : Creat
 
 *****************************************************************************/
 VOS_VOID SI_PB_ReleaseAll(VOS_VOID)
@@ -3535,17 +3535,17 @@ VOS_VOID SI_PB_ReleaseAll(VOS_VOID)
 }
 
 /*****************************************************************************
-º¯ Êı Ãû  : SI_PBUsimCnfMsgProc
-¹¦ÄÜÃèÊö  : ´¦ÀíUSIMMÄ£¿é»Ø¸´µÄÇëÇó£¬ĞèÒª¸ù¾İ½á¹û»Ø¸´¸øAT
-ÊäÈë²ÎÊı  : ÏûÏ¢ÄÚÈİ
-Êä³ö²ÎÊı  : ÎŞ
-·µ »Ø Öµ  : VOS_OK/VOS_ERR
-µ÷ÓÃº¯Êı  :
-±»µ÷º¯Êı  :
-ĞŞ¶©¼ÇÂ¼  :
-1.  ÈÕ    ÆÚ   : 2007Äê10ÔÂ15ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : Creat
+å‡½ æ•° å  : SI_PBUsimCnfMsgProc
+åŠŸèƒ½æè¿°  : å¤„ç†USIMMæ¨¡å—å›å¤çš„è¯·æ±‚ï¼Œéœ€è¦æ ¹æ®ç»“æœå›å¤ç»™AT
+è¾“å…¥å‚æ•°  : æ¶ˆæ¯å†…å®¹
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å› å€¼  : VOS_OK/VOS_ERR
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®è®¢è®°å½•  :
+1.  æ—¥    æœŸ   : 2007å¹´10æœˆ15æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : Creat
 
 *****************************************************************************/
 VOS_UINT32 SI_PBUsimCnfMsgProc(PBMsgBlock *pMsg)
@@ -3570,7 +3570,7 @@ VOS_UINT32 SI_PBUsimCnfMsgProc(PBMsgBlock *pMsg)
     {
         stCnfData.PBError = TAF_ERR_PB_STORAGE_OP_FAIL;
 
-        return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+        return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
     }
 
     switch (pMsg->ulMsgName)
@@ -3616,21 +3616,21 @@ VOS_UINT32 SI_PBUsimCnfMsgProc(PBMsgBlock *pMsg)
     }
 
     /* coverity[uninit_use_in_call] */
-    return SI_PBCallback(&stCnfData);/*µ÷ÓÃ»Øµ÷º¯Êı*/
+    return SI_PBCallback(&stCnfData);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
 }
 
 /*****************************************************************************
-º¯ Êı Ãû  : SI_PBUsimMsgProc
-¹¦ÄÜÃèÊö  : ´¦Àíµ±Ç°USIMM·µ»ØºÍÉÏ±¨µÄËùÓĞÏûÏ¢
-ÊäÈë²ÎÊı  : ÏûÏ¢ÄÚÈİ
-Êä³ö²ÎÊı  : ÎŞ
-·µ »Ø Öµ  : VOS_OK/VOS_ERR
-µ÷ÓÃº¯Êı  :
-±»µ÷º¯Êı  :
-ĞŞ¶©¼ÇÂ¼  :
-1.  ÈÕ    ÆÚ   : 2007Äê10ÔÂ15ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : Creat
+å‡½ æ•° å  : SI_PBUsimMsgProc
+åŠŸèƒ½æè¿°  : å¤„ç†å½“å‰USIMMè¿”å›å’Œä¸ŠæŠ¥çš„æ‰€æœ‰æ¶ˆæ¯
+è¾“å…¥å‚æ•°  : æ¶ˆæ¯å†…å®¹
+è¾“å‡ºå‚æ•°  : æ— 
+è¿” å› å€¼  : VOS_OK/VOS_ERR
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®è®¢è®°å½•  :
+1.  æ—¥    æœŸ   : 2007å¹´10æœˆ15æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : Creat
 
 *****************************************************************************/
 VOS_UINT32 SI_PBUsimMsgProc(PBMsgBlock *pMsg)
@@ -3638,10 +3638,10 @@ VOS_UINT32 SI_PBUsimMsgProc(PBMsgBlock *pMsg)
     VOS_UINT32                   ulResult;
     PS_USIM_STATUS_IND_STRU      *pStStatusMsg;
 
-    /* ÔÚRefreshÃüÁî¹ı³ÌÖĞ»¹»áÊÕµ½ECCºÅÂëµÄÉÏ±¨£¬ĞèÒª´¦Àí */
+    /* åœ¨Refreshå‘½ä»¤è¿‡ç¨‹ä¸­è¿˜ä¼šæ”¶åˆ°ECCå·ç çš„ä¸ŠæŠ¥ï¼Œéœ€è¦å¤„ç† */
     if (PS_USIM_ECCNUMBER_IND == pMsg->ulMsgName)
     {
-        /* Èç¹ûÖ®Ç°ÓĞÉêÇë¹ıÄÚ´æ£¬ÊÍ·ÅÄÚ´æ·ÀÖ¹ÄÚ´æĞ¹Â© */
+        /* å¦‚æœä¹‹å‰æœ‰ç”³è¯·è¿‡å†…å­˜ï¼Œé‡Šæ”¾å†…å­˜é˜²æ­¢å†…å­˜æ³„æ¼ */
         if(VOS_NULL_PTR != gastPBContent[PB_ECC_CONTENT].pContent)
         {
             PB_FREE(gastPBContent[PB_ECC_CONTENT].pContent);
@@ -3679,17 +3679,17 @@ VOS_UINT32 SI_PBUsimMsgProc(PBMsgBlock *pMsg)
 }
 
 /*****************************************************************************
-º¯ Êı Ãû      :
-¹¦ÄÜÃèÊö  :
-ÊäÈë²ÎÊı  :
-Êä³ö²ÎÊı  :
-·µ »Ø Öµ      :
-µ÷ÓÃº¯Êı  :
-±»µ÷º¯Êı  :
-ĞŞ¶©¼ÇÂ¼  :
-1. ÈÕ    ÆÚ   : 2007Äê10ÔÂ15ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : Creat
+å‡½ æ•° å      :
+åŠŸèƒ½æè¿°  :
+è¾“å…¥å‚æ•°  :
+è¾“å‡ºå‚æ•°  :
+è¿” å› å€¼      :
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®è®¢è®°å½•  :
+1. æ—¥    æœŸ   : 2007å¹´10æœˆ15æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : Creat
 
 *****************************************************************************/
 
@@ -3729,7 +3729,7 @@ VOS_UINT32 SI_PBInitMsgProc (PBMsgBlock *pMsg)
 
     switch (pMsg->ulMsgName)
     {
-        case PS_USIM_GET_STATUS_IND:/*Õâ²¿·Ö´¦ÀíÓĞ´ıÌÖÂÛ£¬ÔİÊ±ÕâÃ´Ğ´*/
+        case PS_USIM_GET_STATUS_IND:/*è¿™éƒ¨åˆ†å¤„ç†æœ‰å¾…è®¨è®ºï¼Œæš‚æ—¶è¿™ä¹ˆå†™*/
         case PS_USIM_EF_MAX_RECORD_NUM_CNF:
         case PS_USIM_GET_FILE_RSP:
         case PS_USIM_SET_FILE_RSP:
@@ -3795,11 +3795,11 @@ VOS_VOID SI_PB_InitGlobeVariable(VOS_VOID)
 
     VOS_MemSet(&gstPBSearchCtrlInfo, (VOS_CHAR)0xFF, sizeof(SI_PB_SEARCH_CTRL_STRU));
 
-    /*¶ÁÈ¡PB¿ØÖÆĞÅÏ¢NVÏî*/
+    /*è¯»å–PBæ§åˆ¶ä¿¡æ¯NVé¡¹*/
     if(NV_OK != NV_Read(en_NV_Item_Usim_PB_Ctrl_Info,
                         (VOS_VOID*)&gstPBConfigInfo, sizeof(SI_PB_CTRL_INFO_ST)))
     {
-        /*²»Ö§³Ö¸´ºÏµç»°±¾*/
+        /*ä¸æ”¯æŒå¤åˆç”µè¯æœ¬*/
         gstPBConfigInfo.ucSPBFlag = 0;
 
         PB_ERROR_LOG("SI_PB_InitGlobeVariable:Read NV Fail!!");
@@ -3823,7 +3823,7 @@ VOS_VOID SI_PB_InitGlobeVariable(VOS_VOID)
 
     gstPBCtrlInfo.enPBCurType = SI_PB_STORAGE_SM;
 
-    /*ÉèÖÃµç»°±¾ÀàĞÍºÍÆäÔÚ»º³åÖĞÆ«ÒÆµÄ¶ÔÓ¦¹ØÏµ*/
+    /*è®¾ç½®ç”µè¯æœ¬ç±»å‹å’Œå…¶åœ¨ç¼“å†²ä¸­åç§»çš„å¯¹åº”å…³ç³»*/
     gastPBContent[PB_ECC_CONTENT].enPBType         = PB_ECC;
 
     gastPBContent[PB_ECC_CONTENT].enActiveStatus   = SI_PB_ACTIVE;
@@ -3873,41 +3873,41 @@ VOS_UINT32 WuepsPBPidInit(enum VOS_INIT_PHASE_DEFINE InitPhrase)
 #if (defined(DMT))
 SI_PB_PROC_LIST_STRU    gastPBReqProc[] =
 {
-    {SI_PB_READ_REQ,        SI_PB_ReadProc},        /*¶ÁÈ¡µç»°±¾*/
-    {SI_PB_SEARCH_REQ,      SI_PB_SearchProc},      /*ËÑË÷µç»°±¾*/
-    {SI_PB_SREAD_REQ,       SI_PB_SReadProc},       /*¶ÁÈ¡À©Õ¹µç»°±¾*/
-    {SI_PB_SET_REQ,         SI_PB_SetProc},         /*ÉèÖÃµ±Ç°µç»°±¾*/
-    {SI_PB_MODIFY_REQ,      SI_PB_ModifyProc},      /*¸ü¸Äµç»°±¾*/
-    {SI_PB_DELETE_REQ,      SI_PB_DeleteProc},      /*É¾³ıµç»°±¾*/
-    {SI_PB_QUERY_REQ,       SI_PB_QueryProc},       /*²éÑ¯µ±Ç°µç»°±¾ĞÅÏ¢*/
-    {SI_PB_ADD_REQ,         SI_PB_AddProc},         /*Ìí¼Óµç»°±¾*/
-    {SI_PB_SMODIFY_REQ,     SI_PB_SModifyProc},     /*¸üĞÂÀ©Õ¹µç»°±¾*/
-    {SI_PB_SADD_REQ,        SI_PB_SAddProc},        /*Ìí¼Óµç»°±¾*/
-    {SI_PB_FDN_CHECK_REQ,   SI_PB_FDNCheckProc},    /*FDNºÅÂë¼ì²é*/
+    {SI_PB_READ_REQ,        SI_PB_ReadProc},        /*è¯»å–ç”µè¯æœ¬*/
+    {SI_PB_SEARCH_REQ,      SI_PB_SearchProc},      /*æœç´¢ç”µè¯æœ¬*/
+    {SI_PB_SREAD_REQ,       SI_PB_SReadProc},       /*è¯»å–æ‰©å±•ç”µè¯æœ¬*/
+    {SI_PB_SET_REQ,         SI_PB_SetProc},         /*è®¾ç½®å½“å‰ç”µè¯æœ¬*/
+    {SI_PB_MODIFY_REQ,      SI_PB_ModifyProc},      /*æ›´æ”¹ç”µè¯æœ¬*/
+    {SI_PB_DELETE_REQ,      SI_PB_DeleteProc},      /*åˆ é™¤ç”µè¯æœ¬*/
+    {SI_PB_QUERY_REQ,       SI_PB_QueryProc},       /*æŸ¥è¯¢å½“å‰ç”µè¯æœ¬ä¿¡æ¯*/
+    {SI_PB_ADD_REQ,         SI_PB_AddProc},         /*æ·»åŠ ç”µè¯æœ¬*/
+    {SI_PB_SMODIFY_REQ,     SI_PB_SModifyProc},     /*æ›´æ–°æ‰©å±•ç”µè¯æœ¬*/
+    {SI_PB_SADD_REQ,        SI_PB_SAddProc},        /*æ·»åŠ ç”µè¯æœ¬*/
+    {SI_PB_FDN_CHECK_REQ,   SI_PB_FDNCheckProc},    /*FDNå·ç æ£€æŸ¥*/
 };
 #else
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
 SI_PB_PROC_LIST_STRU    gastPBReqProc[] =
 {
-    {SI_PB_READ_REQ,        SI_PB_ReadProc},        /*¶ÁÈ¡µç»°±¾*/
-    {SI_PB_SEARCH_REQ,      SI_PB_SearchProc},      /*ËÑË÷µç»°±¾*/
-    {SI_PB_SREAD_REQ,       SI_PB_SReadProc},       /*¶ÁÈ¡À©Õ¹µç»°±¾*/
-    {SI_PB_UPDATE_AGOBAL,   SI_PBUpdateAGlobal},    /*Í¬²½È«¾Ö±äÁ¿*/
-    {SI_PB_UPDATE_CURPB,    SI_PBUpdateACurPB},     /*¸üĞÂµ±Ç°µç»°±¾ÉèÖÃ*/
+    {SI_PB_READ_REQ,        SI_PB_ReadProc},        /*è¯»å–ç”µè¯æœ¬*/
+    {SI_PB_SEARCH_REQ,      SI_PB_SearchProc},      /*æœç´¢ç”µè¯æœ¬*/
+    {SI_PB_SREAD_REQ,       SI_PB_SReadProc},       /*è¯»å–æ‰©å±•ç”µè¯æœ¬*/
+    {SI_PB_UPDATE_AGOBAL,   SI_PBUpdateAGlobal},    /*åŒæ­¥å…¨å±€å˜é‡*/
+    {SI_PB_UPDATE_CURPB,    SI_PBUpdateACurPB},     /*æ›´æ–°å½“å‰ç”µè¯æœ¬è®¾ç½®*/
 };
 #endif    /*(OSA_CPU_ACPU == VOS_OSA_CPU)*/
 
 #if (OSA_CPU_CCPU == VOS_OSA_CPU)
 SI_PB_PROC_LIST_STRU    gastPBReqProc[] =
 {
-    {SI_PB_SET_REQ,         SI_PB_SetProc},         /*ÉèÖÃµ±Ç°µç»°±¾*/
-    {SI_PB_MODIFY_REQ,      SI_PB_ModifyProc},      /*¸ü¸Äµç»°±¾*/
-    {SI_PB_DELETE_REQ,      SI_PB_DeleteProc},      /*É¾³ıµç»°±¾*/
-    {SI_PB_QUERY_REQ,       SI_PB_QueryProc},       /*²éÑ¯µ±Ç°µç»°±¾ĞÅÏ¢*/
-    {SI_PB_ADD_REQ,         SI_PB_AddProc},         /*Ìí¼Óµç»°±¾*/
-    {SI_PB_SMODIFY_REQ,     SI_PB_SModifyProc},     /*¸üĞÂÀ©Õ¹µç»°±¾*/
-    {SI_PB_SADD_REQ,        SI_PB_SAddProc},        /*Ìí¼Óµç»°±¾*/
-    {SI_PB_FDN_CHECK_REQ,   SI_PB_FDNCheckProc},    /*FDNºÅÂë¼ì²é*/
+    {SI_PB_SET_REQ,         SI_PB_SetProc},         /*è®¾ç½®å½“å‰ç”µè¯æœ¬*/
+    {SI_PB_MODIFY_REQ,      SI_PB_ModifyProc},      /*æ›´æ”¹ç”µè¯æœ¬*/
+    {SI_PB_DELETE_REQ,      SI_PB_DeleteProc},      /*åˆ é™¤ç”µè¯æœ¬*/
+    {SI_PB_QUERY_REQ,       SI_PB_QueryProc},       /*æŸ¥è¯¢å½“å‰ç”µè¯æœ¬ä¿¡æ¯*/
+    {SI_PB_ADD_REQ,         SI_PB_AddProc},         /*æ·»åŠ ç”µè¯æœ¬*/
+    {SI_PB_SMODIFY_REQ,     SI_PB_SModifyProc},     /*æ›´æ–°æ‰©å±•ç”µè¯æœ¬*/
+    {SI_PB_SADD_REQ,        SI_PB_SAddProc},        /*æ·»åŠ ç”µè¯æœ¬*/
+    {SI_PB_FDN_CHECK_REQ,   SI_PB_FDNCheckProc},    /*FDNå·ç æ£€æŸ¥*/
 };
 #endif    /*(OSA_CPU_CCPU == VOS_OSA_CPU)*/
 #endif
@@ -3917,13 +3917,13 @@ VOS_VOID SI_PB_PidMsgProc(struct MsgCB *pstPBMsg)
     VOS_UINT32 ulResult = VOS_ERR;
     VOS_UINT32 i;
 
-    /*Ö»ÓĞCcpu²Å´¦Àí´ÓUSIMMÄ£¿éµÄÏûÏ¢*/
+    /*åªæœ‰Ccpuæ‰å¤„ç†ä»USIMMæ¨¡å—çš„æ¶ˆæ¯*/
 #if (OSA_CPU_CCPU == VOS_OSA_CPU)
     if ((WUEPS_PID_USIM == pstPBMsg->ulSenderPid) || (MAPS_PIH_PID == pstPBMsg->ulSenderPid))
     {
         OM_RecordInfoStart(VOS_EXC_DUMP_MEM_NUM_2, pstPBMsg->ulSenderPid, MAPS_PB_PID, ((PBMsgBlock*)pstPBMsg)->ulMsgName);
 
-        if(PB_INIT_FINISHED != gstPBInitState.enPBInitStep) /*³õÊ¼»¯µÄ¶ÁÎÄ¼şÏûÏ¢µÈ*/
+        if(PB_INIT_FINISHED != gstPBInitState.enPBInitStep) /*åˆå§‹åŒ–çš„è¯»æ–‡ä»¶æ¶ˆæ¯ç­‰*/
         {
             ulResult = SI_PBInitMsgProc((PBMsgBlock*)pstPBMsg);
         }
@@ -3944,7 +3944,7 @@ VOS_VOID SI_PB_PidMsgProc(struct MsgCB *pstPBMsg)
         {
             if(gastPBReqProc[i].ulMsgType == ((PBMsgBlock*)pstPBMsg)->ulMsgName)
             {
-                ulResult = gastPBReqProc[i].pProcFun((PBMsgBlock*)pstPBMsg); /*´¦ÀíÍâ²¿ÇëÇó*/
+                ulResult = gastPBReqProc[i].pProcFun((PBMsgBlock*)pstPBMsg); /*å¤„ç†å¤–éƒ¨è¯·æ±‚*/
                 break;
             }
         }
@@ -3964,22 +3964,22 @@ extern TAF_VOID At_PbCallBackFunc(SI_PB_EVENT_INFO_STRU  *pEvent);
 VOS_UINT32 SI_PBCallback(SI_PB_EVENT_INFO_STRU *pstEvent)
 {
 #if (OSA_CPU_CCPU == VOS_OSA_CPU)
-    MN_APP_PB_AT_CNF_STRU   *pstMsg; /*·¢ËÍ¸øATµÄÏûÏ¢*/
+    MN_APP_PB_AT_CNF_STRU   *pstMsg; /*å‘é€ç»™ATçš„æ¶ˆæ¯*/
 #endif
 
     if(pstEvent->PBError != TAF_ERR_NO_ERROR)
     {
-        gstPBReqUnit.enPBLock = PB_UNLOCK;/*½âËø*/
+        gstPBReqUnit.enPBLock = PB_UNLOCK;/*è§£é”*/
     }
     else if((pstEvent->PBEventType != SI_PB_EVENT_READ_CNF)&&
             (pstEvent->PBEventType != SI_PB_EVENT_SREAD_CNF)&&
             (pstEvent->PBEventType != SI_PB_EVENT_SEARCH_CNF))
     {
-        gstPBReqUnit.enPBLock = PB_UNLOCK;/*½âËø*/
+        gstPBReqUnit.enPBLock = PB_UNLOCK;/*è§£é”*/
     }
     else if(pstEvent->PBLastTag == VOS_TRUE)
     {
-        gstPBReqUnit.enPBLock = PB_UNLOCK;/*½âËø*/
+        gstPBReqUnit.enPBLock = PB_UNLOCK;/*è§£é”*/
     }
     else
     {
@@ -3994,7 +3994,7 @@ VOS_UINT32 SI_PBCallback(SI_PB_EVENT_INFO_STRU *pstEvent)
     pstMsg = (MN_APP_PB_AT_CNF_STRU*)VOS_AllocMsg(MAPS_PB_PID,
                                     sizeof(MN_APP_PB_AT_CNF_STRU)-VOS_MSG_HEAD_LENGTH);
 
-    if(VOS_NULL_PTR == pstMsg)  /*Ã¿´ÎÉêÇëÊ§°Ü»á¸´Î»*/
+    if(VOS_NULL_PTR == pstMsg)  /*æ¯æ¬¡ç”³è¯·å¤±è´¥ä¼šå¤ä½*/
     {
         return VOS_ERR;
     }

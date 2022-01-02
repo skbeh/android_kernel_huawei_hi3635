@@ -1,19 +1,19 @@
 /******************************************************************************
 
-                   ��Ȩ���� (C), 2001-2012, ��Ϊ�������޹�˾
+                   版权所有 (C), 2001-2012, 华为技术有限公司
 
   ******************************************************************************
-   �� �� ��   : hdlc_hardware.h
-   �� �� ��   : ����
-   ��    ��   : ������
-   ��������   : 2012��4��10��
-   ����޸�   :
-   ��������   : Ӳ��HDLCģ��ͷ�ļ�
-   �����б�   :
-   �޸���ʷ   :
-   1.��    ��   : 2012��4��10��
-     ��    ��   : ������
-     �޸�����   : �����ļ�
+   文 件 名   : hdlc_hardware.h
+   版 本 号   : 初稿
+   作    者   : 吕存排
+   生成日期   : 2012年4月10日
+   最近修改   :
+   功能描述   : 硬件HDLC模块头文件
+   函数列表   :
+   修改历史   :
+   1.日    期   : 2012年4月10日
+     作    者   : 吕存排
+     修改内容   : 创建文件
 
  ******************************************************************************/
 
@@ -21,7 +21,7 @@
 #define __HDLC_HARDWARE_H__
 
 /*****************************************************************************
-  1 ����ͷ�ļ�����
+  1 其他头文件包含
 *****************************************************************************/
 #include "vos.h"
 #if(FEATURE_ON == FEATURE_PPP)
@@ -43,7 +43,7 @@
 #pragma pack(4)
 
 /*****************************************************************************
-  2 �궨��
+  2 宏定义
 *****************************************************************************/
 /* 1.============================================================================================ */
 
@@ -80,33 +80,33 @@
 /* definition of bit positions and masks in a register */
 /* ========================= 1.hdlc_frm_en (0x10) begin ======================= */
 /*
-   ����Ĵ�����32bit Reg�е�bitλ��:
-        �Ĵ���frm_en��bit0;
+   定义寄存器在32bit Reg中的bit位置:
+        寄存器frm_en在bit0;
 */
 #define     HDLC_FRM_EN_BITPOS                                      (0UL)
 
 /* ========================= 2.hdlc_def_en (0x60) begin ======================= */
 /*
-   ����Ĵ�����32bit Reg�е�bitλ��:
-        �Ĵ���def_en��bit0;
+   定义寄存器在32bit Reg中的bit位置:
+        寄存器def_en在bit0;
 */
 #define     HDLC_DEF_EN_BITPOS                                      (0UL)
 
 /* ========================= 3.hdlc_frm_cfg (0x20) begin ======================= */
 /*
-   ����Ĵ�����32bit Reg�е�bitλ��:
-        �Ĵ���frm_in_lli_1dor2d��bit0;
-        �Ĵ���frm_acfc��bit1;
+   定义寄存器在32bit Reg中的bit位置:
+        寄存器frm_in_lli_1dor2d在bit0;
+        寄存器frm_acfc在bit1;
 */
 #define     HDLC_FRM_IN_LLI_1DOR2D_BITPOS                           (0UL)
 #define     HDLC_FRM_ACFC_BITPOS                                    (1UL)
 #define     HDLC_FRM_PFC_BITPOS                                     (2UL)
 
 /*
-   �Ĵ���frm_pfc(2bits)��ֵ����:
-        00b: Ӳ��ģ������P��, P����ѹ��;
-        01b: Ӳ��ģ������P��, P��ѹ��;
-        11b: Ӳ��ģ�鲻����P��;
+   寄存器frm_pfc(2bits)各值含义:
+        00b: 硬件模块添加P域, P域无压缩;
+        01b: 硬件模块添加P域, P域压缩;
+        11b: 硬件模块不添加P域;
 */
 #define     HDLC_PROTOCOL_ADD_WITHOUT_COMPRESS   (0x00)
 #define     HDLC_PROTOCOL_ADD_WITH_COMPRESS      (0x01)
@@ -114,23 +114,23 @@
 
 /* ========================= 4.hdlc_def_cfg (0x70) begin ======================= */
 /*
-   ����Ĵ�����32bit Reg�е�bitλ��:
-        �Ĵ���def_uncompleted_ago��bit0;
-        �Ĵ���def_acfc��bit1;
+   定义寄存器在32bit Reg中的bit位置:
+        寄存器def_uncompleted_ago在bit0;
+        寄存器def_acfc在bit1;
 */
 #define     HDLC_DEF_IS_UNCOMPLETED_AGO_BITPOS                      (0UL)
 #define     HDLC_DEF_ACFC_BITPOS                                    (1UL)
 #define     HDLC_DEF_PFC_BITPOS                                     (2UL)
 
 
-/* �Ĵ���frm_protocol(16bits)��MASK�� */
+/* 寄存器frm_protocol(16bits)的MASK表 */
 #define     HDLC_FRM_PROTOCOL_MASK                       (0x0000FFFF)
 
 /*
-   �Ĵ���def_pfc(2bits)��ֵ����:
-        00b: P����ѹ��, �����;
-        01b: P��ѹ��, �����;
-        11b: P�򲻰���;
+   寄存器def_pfc(2bits)各值含义:
+        00b: P域无压缩, 需剥离;
+        01b: P域压缩, 需剥离;
+        11b: P域不剥离;
 */
 #define     HDLC_PROTOCOL_REMOVE_WITHOUT_COMPRESS      (0x00)
 #define     HDLC_PROTOCOL_REMOVE_WITH_COMPRESS         (0x01)
@@ -138,40 +138,40 @@
 
 /* ========================= hdlc_prior_ctrl (0x04) begin ======================= */
 /*
-   �Ĵ���hdlc_prior_ctrl(2bits)��ֵ����:
-        00b: ˭�ȱ�ʹ�����Ƚ�˭������;
-        01b: ���з�װ���ȼ���;
-        10b: ���н��װ���ȼ���;
-        11b: ��Ч;
+   寄存器hdlc_prior_ctrl(2bits)各值含义:
+        00b: 谁先被使能则先将谁处理完;
+        01b: 下行封装优先级高;
+        10b: 上行解封装优先级高;
+        11b: 无效;
 */
 #define     HDLC_PRIOR_FCFS               (0x00)
 #define     HDLC_PRIOR_DL_FRM_HIGHER      (0x01)
 #define     HDLC_PRIOR_UL_DEF_HIGHER      (0x02)
 #define     HDLC_PRIOR_INVALID            (0x03)
 
-/* ====================== ��װ״̬�Ĵ�����ַ hdlc_frm_status (0x28) begin ====================== */
-/* ��װģ��״̬�Ĵ�����ַ: ���ƫ�Ƶ�ַ��0x28 */
+/* ====================== 封装状态寄存器地址 hdlc_frm_status (0x28) begin ====================== */
+/* 封装模块状态寄存器地址: 相对偏移地址量0x28 */
 
-/* �Ĵ���frm_out_seg_num(16bits)��MASK�� */
+/* 寄存器frm_out_seg_num(16bits)的MASK表 */
 #define     HDLC_FRM_OUT_SEG_NUM_MASK                       (0x0000FFFF)
 
-/* �Ĵ���frm_valid_num(8bits)��MASK�� */
+/* 寄存器frm_valid_num(8bits)的MASK表 */
 #define     HDLC_FRM_VALID_NUM_MASK                         (0x000000FF)
 
-/* �Ĵ���frm_all_pkt_done(1bit)��MASK�� */
+/* 寄存器frm_all_pkt_done(1bit)的MASK表 */
 #define     HDLC_FRM_ALL_PKT_DONE_MASK                      (0x00000001)
 
-/* ��ѯ��װ״̬��Ϣ������ */
+/* 查询封装状态信息的掩码 */
 #define     HDLC_FRM_STATUS_MASK                            (0x00000003)
 
 /*
-   �Ĵ���frm_block_done([0]λ)��ֵ����:
-        0b: δ���һ���������ݴ���;
-        1b: ���һ���������ݴ���;
+   寄存器frm_block_done([0]位)各值含义:
+        0b: 未完成一套链表数据处理;
+        1b: 完成一套链表数据处理;
 */
 /*
-   �Ĵ���frm_error_index([1]λ)��ֵ����:
-        1b: ��װ��������;
+   寄存器frm_error_index([1]位)各值含义:
+        1b: 封装发生错误;
 */
 #define     HDLC_FRM_ALL_PKT_DOING                     (0x00)
 #define     HDLC_FRM_ALL_PKT_DONE                      (0x01)
@@ -181,22 +181,22 @@
 
 
 
-/* ======================= ���װ״̬�Ĵ�����ַdlc_def_status (0x88) begin ===================== */
-/* �Ĵ���dlc_def_status(5bits)��MASK�� */
+/* ======================= 解封装状态寄存器地址dlc_def_status (0x88) begin ===================== */
+/* 寄存器dlc_def_status(5bits)的MASK表 */
 #define     HDLC_DEFRAMER_BLOCK_STATUS_MASK                     (0x0000001B)
 
-/* ��ѯ���װ״̬��Ϣ������ */
+/* 查询解封装状态信息的掩码 */
 #define     HDLC_DEF_STATUS_MASK                                (0x0000003B)
 
 /*
-   �Ĵ���dlc_def_status(5bits)��ֵ����:
-        000000b: δ���һ�����ݴ���;
-        010000b: δ���һ�����ݴ��������װ�ⲿ��ȷ֡��Ϣ�ϱ��ռ������ͣ;
-        001000b: δ���һ�����ݴ���, ���װ�ⲿ����洢�ռ������ͣ;
-        000001b: δ���һ�����ݴ���, �ѽ��LCP֡, Ӳ��������ͣ״̬;
-        000010b: ���һ�����ݴ���, ����֡�ϱ�;
-        000011b: ���һ�����ݴ���, ����֡�ϱ�;
-        1xx0xxb: ���쳣����;
+   寄存器dlc_def_status(5bits)各值含义:
+        000000b: 未完成一组数据处理;
+        010000b: 未完成一组数据处理，解封装外部正确帧信息上报空间存满暂停;
+        001000b: 未完成一组数据处理, 解封装外部输出存储空间存满暂停;
+        000001b: 未完成一组数据处理, 已解出LCP帧, 硬件处于暂停状态;
+        000010b: 完成一组数据处理, 但无帧上报;
+        000011b: 完成一组数据处理, 且有帧上报;
+        1xx0xxb: 有异常发生;
 */
 #define     HDLC_DEF_STATUS_DOING                               (0x00)
 #define     HDLC_DEF_STATUS_PAUSE_RPT_SPACE_FULL                (0x10)
@@ -214,23 +214,23 @@
 #define     HDLC_IP_MODE                                        (0UL)
 #define     HDLC_PPP_MODE                                       (1UL)
 
-/* ���װ�Ƿ��з�����֡��ʶ */
+/* 解封装是否有非完整帧标识 */
 #define     HDLC_DEF_UNCOMPLETED_NOT_EXIST                      (0x0)
 #define     HDLC_DEF_UNCOMPLETED_EXIST                          (0x1)
 
 #define     HDLC_INPUT_PARA_LINK_MAX_SIZE                       (TTF_MAX(TTF_HDLC_DEF_INPUT_PARA_LINK_MAX_NUM, TTF_HDLC_FRM_INPUT_PARA_LINK_MAX_NUM))
 #define     HDLC_OUTPUT_PARA_LINK_MAX_SIZE                      (TTF_HDLC_FRM_OUTPUT_PARA_LINK_MAX_NUM)
 
-/* ����PPP ID��ȡ��Ӧ�ڴ棬��ʱֻ��һ·����Ϊ��ֵ�����������ж�· */
+/* 根据PPP ID获取对应内存，暂时只有一路，填为定值，后续可能有多路 */
 #define     HDLC_DEF_GET_UNCOMPLETED_INFO(usPppId)              (&g_stUncompletedInfo)
 #define     HDLC_DEF_GET_BUF_INFO(usPppId)                      (g_pstHdlcDefBufInfo)
 #define     HDLC_FRM_GET_BUF_INFO(usPppId)                      (g_pstHdlcFrmBufInfo)
 
-/* ���װ����ռ��ס�β��ַ�������ж��Ƿ��ƻ� */
+/* 解封装输出空间首、尾地址，用于判断是否绕回 */
 #define     HDLC_DEF_OUTPUT_BUF_START_ADDR                      ((VOS_UINT8 *)(&g_pstHdlcDefBufInfo->aucOutputDataBuf[0]))
 #define     HDLC_DEF_OUTPUT_BUF_END_ADDR                        (HDLC_DEF_OUTPUT_BUF_START_ADDR + TTF_HDLC_DEF_OUTPUT_DATA_BUF_LEN)
 
-/* ��ѯ��װ����װ��ɵĴ��� */
+/* 轮询封装或解封装完成的次数 */
 #ifndef  __UT_CENTER__
 #define     HDLC_FRM_MAX_WAIT_RESULT_NUM                        (0xFFFF)
 #define     HDLC_DEF_MAX_WAIT_RESULT_NUM                        (0xFFFF)
@@ -239,35 +239,35 @@
 #define     HDLC_DEF_MAX_WAIT_RESULT_NUM                        (0x01)
 #endif
 
-/* �ȴ���װ����װ��Ӧ�ж�ʱ��,�Ժ���Ϊ��λ */
+/* 等待封装或解封装响应中断时间,以毫秒为单位 */
 #define     HDLC_FRM_MASTER_INT_TIMER_LEN                       (5000)
 #define     HDLC_DEF_MASTER_INT_TIMER_LEN                       (5000)
 
-/* Լ����Ӳ��, ��װһ������ύ1502�ֽڸ�Framer */
+/* 约定软硬件, 封装一组最多提交1502字节给Framer */
 #define     HDLC_FRM_IN_PER_MAX_CNT                             (1502L)
 #define     HDLC_FRM_OUT_PER_MAX_CNT                            (3013UL)
 
-/* ���װ��󵥸����ݳ���,���HDLC BUG,��󳤶���Ҫ+1 */
+/* 解封装最大单个数据长度,规避HDLC BUG,最大长度需要+1 */
 #define     HDLC_DEF_IN_PER_MAX_CNT                             (PPP_ZC_MAX_DATA_LEN + 1)
-/* ���װ�ϱ�ÿ֡�1502�ֽ�, IPv4�1500�ֽ�, PPPģʽ����Э���ֶ�2�ֽ�, ��1502�ֽ� */
+/* 解封装上报每帧最长1502字节, IPv4最长1500字节, PPP模式带上协议字段2字节, 共1502字节 */
 #define     HDLC_DEF_OUT_PER_MAX_CNT                            (1502UL)
 
-/* �����װĿ�Ŀռ�ʧ�ܶ�ʱ��ʱ��,��λ���� */
+/* 申请封装目的空间失败定时器时长,单位毫秒 */
 #define     HDLC_FRM_TIME_INTERVAL                              (100)
 
-/* �����װĿ�Ŀռ�ʧ�ܶ�ʱ������ */
+/* 申请封装目的空间失败定时器参数 */
 #define     HDLC_FRM_OUTPUT_SPACE_ALLOC_FAIL                    (10)
 
-/* ��װ���ڴ����ֵ */
+/* 封装后内存最大值 */
 #define     HDLC_FRM_GET_MAX_FRAMED_LEN(usLen)                  (2*usLen + 13)
 
-/* ������ѯ�����ж�ʹ�ܵ�ˮ�ߣ�Ĭ��ֵ */
+/* 采用轮询还是中断使能的水线，默认值 */
 #define     HDLC_DEF_INTERRUPT_LIMIT_DEFAULT                    (2*1024)
 #define     HDLC_FRM_INTERRUPT_LIMIT_DEFAULT                    (2*1024)
 
-/* ������ѯ�����ж�ʹ�ܵ�ˮ�� */
+/* 采用轮询还是中断使能的水线 */
 #if (VOS_OS_VER == VOS_WIN32)
-/* PC���޷�ģ���жϣ���ʹ�ò�ѯ */
+/* PC上无法模拟中断，都使用查询 */
 #define     HDLC_DEF_INTERRUPT_LIMIT                            (TTF_HDLC_DEF_INPUT_PARA_LINK_MAX_SIZE + 1)
 #define     HDLC_FRM_INTERRUPT_LIMIT                            (TTF_HDLC_FRM_INPUT_PARA_LINK_MAX_SIZE + 1)
 #else
@@ -275,21 +275,21 @@
 #define     HDLC_FRM_INTERRUPT_LIMIT                            (g_stHdlcConfigInfo.ulHdlcFrmIntLimit)
 #endif
 
-/* AXI���߶�д����ʱ���ж�ֵ����ֵ��SoC�ṩ�������������� */
+/* AXI总线读写请求超时的判断值，该值由SoC提供，软件负责配置 */
 #define     HDLC_AXI_REQ_TIMEOUT_VALUE                          (255)
 
-/* ���װ�������͸��� */
+/* 解封装错误类型个数 */
 #define     HDLC_DEF_MAX_TYPE_CNT                               (7UL)
 
-/* ��ά�ɲ�������ڴ���󳤶ȣ���ֹ��Ϊ��ά�ɲ����벻���ڴ浼�µ��帴λ */
+/* 可维可测申请的内存最大长度，防止因为可维可测申请不到内存导致单板复位 */
 #define     HDLC_MNTN_ALLOC_MEM_MAX_SIZE                        (2*1024)
 
 /*
-   �����쳣��Ϣbitλ��:
-        bit0�����Ƿ�����쳣����(1�ǽ����쳣������0��û�н����쳣����);
-        bit1�����Ƿ����жϴ���(1���жϴ�����0����ѯ����);
-        bit2�����Ƿ�ȴ��ź�����ʱ(1�ǣ�0��);
-        bit3�����Ƿ���ѯ��ʱ(1�ǣ�0��);
+   定义异常信息bit位置:
+        bit0代表是否进入异常处理(1是进入异常处理，0是没有进入异常处理);
+        bit1代表是否是中断处理(1是中断处理，0是轮询处理);
+        bit2代表是否等待信号量超时(1是，0否);
+        bit3代表是否轮询超时(1是，0否);
 */
 #define     HDLC_EXCEPTION_IND_BITPOS                           (0UL)
 #define     HDLC_INTERRUPT_IND_BITPOS                           (1UL)
@@ -306,20 +306,20 @@
 #endif
 #endif
 
-/* ======V3R3��ʹ��: HDLCʱ���ڼĴ���SC_PERIPH_CLKEN0 �� C_PERIPH_CLKDIS0 16bit��λ��======== */
+/* ======V3R3中使用: HDLC时钟在寄存器SC_PERIPH_CLKEN0 和 C_PERIPH_CLKDIS0 16bit的位置======== */
 #define     HDLC_PERIPH_CLK_BITPOS                              (16UL)
 
-/* ======V7R2��ʹ��: HDLCʱ���ڼĴ���CRG_CLKEN4 �� CRG_CLKDIS4 10bit��λ��======== */
+/* ======V7R2中使用: HDLC时钟在寄存器CRG_CLKEN4 和 CRG_CLKDIS4 10bit的位置======== */
 #define     HDLC_CRG_CLK_BITPOS                                 (10UL)
 
 #if (SC_CTRL_MOD_6930_SFT == SC_CTRL_MOD)
-/* ======V7R2�е�ʱ��ʹ�ܼĴ���======== */
+/* ======V7R2中的时钟使能寄存器======== */
 #define     HDLC_CRG_CLKEN4_ADDR(base)                          ((base) + (HI_CRG_CLKEN4_OFFSET))
 
-/* ======V7R2�е�ʱ�ӹرռĴ���======== */
+/* ======V7R2中的时钟关闭寄存器======== */
 #define     HDLC_CRG_CLKENDIS4_ADDR(base)                       ((base) + (HI_CRG_CLKDIS4_OFFSET))
 
-/* ======V7R2�е�ʱ��״̬�Ĵ���======== */
+/* ======V7R2中的时钟状态寄存器======== */
 #define     HDLC_CRG_CLKSTA4_ADDR(base)                         ((base) + (HI_CRG_CLKSTAT4_OFFSET))
 
 #endif
@@ -327,13 +327,13 @@
 
 
 /*******************************************************************************
-  3 ö�ٶ���
+  3 枚举定义
 *******************************************************************************/
 enum PPP_HDLC_PARA_CHECK_RESULT_ENUM
 {
-    PPP_HDLC_PARA_CHECK_PASS            = 0,      /* ��������Ҫ�󣬽������ݳ��� */
-    PPP_HDLC_PARA_CHECK_FAIL_DISCARD    = 1,      /* ���ݰ�����������Ҫ����Ҫ���������Ǽ���������һ�����ݰ� */
-    PPP_HDLC_PARA_CHECK_FAIL_KEEP       = 2,      /* ���ݰ�����������Ҫ�󣬵���Ҫ�����������´δ��� */
+    PPP_HDLC_PARA_CHECK_PASS            = 0,      /* 参数符合要求，将该数据出队 */
+    PPP_HDLC_PARA_CHECK_FAIL_DISCARD    = 1,      /* 数据包参数不符合要求，需要丢弃，但是继续处理下一个数据包 */
+    PPP_HDLC_PARA_CHECK_FAIL_KEEP       = 2,      /* 数据包参数不符合要求，但需要保留，用于下次处理 */
 
     PPP_HDLC_PARA_CHECK_BUTT
 };
@@ -360,127 +360,127 @@ enum HDLC_MNTN_EVENT_TYPE_ENUM
 typedef VOS_UINT32 HDLC_MNTN_EVENT_TYPE_ENUM_UINT32;
 
 /*****************************************************************************
-  4 ��Ϣͷ����Ϣ���Ͷ���
+  4 消息头和消息类型定义
 *****************************************************************************/
 
 /*****************************************************************************
-  5 STRUCT����
+  5 STRUCT定义
 *****************************************************************************/
-/* һ�����ݽ���Ĵ���֡��ͳ�� */
+/* 一组数据解出的错误帧数统计 */
 typedef struct
 {
-    VOS_UINT16  usFCSErrCnt;          /* FCS���� */
-    VOS_UINT16  usLenLongCnt;         /* ֡���ȹ���, ����1502�ֽ� */
-    VOS_UINT16  usLenShortCnt;        /* ֡���ȹ���, ����4�ֽ� */
-    VOS_UINT16  usErrProtocolCnt;     /* Э���ֶβ�����xxxxxxx0, xxxxxxx1����ʽ */
-    VOS_UINT16  usErrCtrlCnt;         /* �����ֶβ�Ϊ0xFF */
-    VOS_UINT16  usErrAddrCnt;         /* ��ַ�ֶβ�Ϊ0x03 */
-    VOS_UINT16  usFlagPosErrCnt;      /* 0x7D�������0x7E */
+    VOS_UINT16  usFCSErrCnt;          /* FCS错误 */
+    VOS_UINT16  usLenLongCnt;         /* 帧长度过长, 超过1502字节 */
+    VOS_UINT16  usLenShortCnt;        /* 帧长度过短, 少于4字节 */
+    VOS_UINT16  usErrProtocolCnt;     /* 协议字段不满足xxxxxxx0, xxxxxxx1的形式 */
+    VOS_UINT16  usErrCtrlCnt;         /* 控制字段不为0xFF */
+    VOS_UINT16  usErrAddrCnt;         /* 地址字段不为0x03 */
+    VOS_UINT16  usFlagPosErrCnt;      /* 0x7D后紧接着0x7E */
     VOS_UINT8   aucReserve[2];
 } HDLC_DEF_ERR_FRAMES_CNT_STRU;
 
 /*
-   ���������ڵ�ṹ:
-   ������֤���װ��������������ʼ��ַWord���룻(�μ�HiHDLCV200�߼�������˵����)��
-   ���ϵ��£���ַ���ӣ��ֱ�Ϊ�ڵ��ڴ�ָ�롢�ڵ㳤�ȡ��¸��ڵ��ַ��
-   ����LEN��Ч16bits���ڵ�Half_Word����ַADDR 32bits
+   参数链表节点结构:
+   软件保证解封装输入链表参数起始地址Word对齐；(参见HiHDLCV200逻辑需求规格说明书)，
+   从上到下，地址增加，分别为节点内存指针、节点长度、下个节点地址；
+   长度LEN有效16bits处于低Half_Word；地址ADDR 32bits
 */
 typedef struct _HDLC_PARA_LINK_NODE_STRU
 {
-    VOS_UINT8                          *pucDataAddr;            /* �ò����ڵ�ָ���ڴ��ַ */
-    VOS_UINT16                          usDataLen;              /* �ڴ泤�ȣ���λByte */
+    VOS_UINT8                          *pucDataAddr;            /* 该参数节点指向内存地址 */
+    VOS_UINT16                          usDataLen;              /* 内存长度，单位Byte */
     VOS_UINT8                           aucReserve[2];
-    struct _HDLC_PARA_LINK_NODE_STRU   *pstNextNode;            /* ָ����һ�������ڵ��ָ�� */
+    struct _HDLC_PARA_LINK_NODE_STRU   *pstNextNode;            /* 指向下一个参数节点的指针 */
 } HDLC_PARA_LINK_NODE_STRU;
 
-/* ����������������Ϣ */
+/* 构造参数链表结果信息 */
 typedef struct _HDLC_PARA_LINK_BUILD_PARA_STRU
 {
-    PPP_DATA_TYPE_ENUM_UINT8            ucDataType;             /* �������� */
+    PPP_DATA_TYPE_ENUM_UINT8            ucDataType;             /* 数据类型 */
     VOS_UINT8                           aucReserve1[3];
     VOS_UINT16                          usPppId;                /* PPP ID */
-    VOS_UINT16                          usProtocol;             /* Э�����ͣ���װ��ʱ��ʹ�� */
-    PPP_ZC_QUEUE_STRU                  *pstDataQ;               /* ���ݶ��� */
+    VOS_UINT16                          usProtocol;             /* 协议类型，封装的时候使用 */
+    PPP_ZC_QUEUE_STRU                  *pstDataQ;               /* 数据队列 */
 } HDLC_PARA_LINK_BUILD_PARA_STRU;
 
-/* ����������������Ϣ */
+/* 构造参数链表结果信息 */
 /*lint -e506*/
 typedef struct _HDLC_PARA_LINK_BUILD_INFO_STRU
 {
-    VOS_UINT32                          ulDealCnt;              /* ���ι����������̴����ݶ������ܹ����������ݰ����� */
-    VOS_UINT32                          ulInputLinkNodeCnt;     /* ������������ڵ���� */
-    VOS_UINT32                          ulInputLinkTotalSize;   /* ������������ڵ����ݰ��ܳ��� */
-    PPP_ZC_STRU *                       apstInputLinkNode[HDLC_INPUT_PARA_LINK_MAX_SIZE];   /* ������������ڵ��Ӧ���㿽���ڴ� */
-    VOS_UINT32                          ulOutputLinkNodeCnt;                                /* ������������ڵ������ֻ�ڷ�װ��Ч */
-    VOS_UINT32                          ulOutputLinkTotalSize;                              /* ������������ڵ����ݰ��ܳ��ȣ�ֻ�ڷ�װ��Ч */
-    PPP_ZC_STRU *                       apstOutputLinkNode[HDLC_OUTPUT_PARA_LINK_MAX_SIZE]; /* ������������ڵ��Ӧ���㿽���ڴ棬ֻ�ڷ�װ��Ч */
+    VOS_UINT32                          ulDealCnt;              /* 本次构造链表过程从数据队列中总共处理的数据包个数 */
+    VOS_UINT32                          ulInputLinkNodeCnt;     /* 输入参数链表节点个数 */
+    VOS_UINT32                          ulInputLinkTotalSize;   /* 输入参数链表节点数据包总长度 */
+    PPP_ZC_STRU *                       apstInputLinkNode[HDLC_INPUT_PARA_LINK_MAX_SIZE];   /* 输入参数链表节点对应的零拷贝内存 */
+    VOS_UINT32                          ulOutputLinkNodeCnt;                                /* 输出参数链表节点个数，只在封装有效 */
+    VOS_UINT32                          ulOutputLinkTotalSize;                              /* 输出参数链表节点数据包总长度，只在封装有效 */
+    PPP_ZC_STRU *                       apstOutputLinkNode[HDLC_OUTPUT_PARA_LINK_MAX_SIZE]; /* 输出参数链表节点对应的零拷贝内存，只在封装有效 */
 } HDLC_PARA_LINK_BUILD_INFO_STRU;
 /*lint +e506*/
 
 /*
-��װ�ϱ��ռ���ṹ:
-������֤��װ�ϱ��ռ���ʼ��ַWord���룻(�μ�HiHDLCV200�߼�������˵����)��
-���ϵ��£���ַ���ӣ��ֱ�Ϊ���������ʼ��ַ�����ݳ��ȣ�
-����LEN��Ч16bits���ڵ�Half_Word����ַADDR 32bits
+封装上报空间结点结构:
+软件保证封装上报空间起始地址Word对齐；(参见HiHDLCV200逻辑需求规格说明书)，
+从上到下，地址增加，分别为输出数据起始地址、数据长度；
+长度LEN有效16bits处于低Half_Word；地址ADDR 32bits
 */
 typedef struct
 {
-    VOS_UINT8                          *pucFrmOutOneAddr;       /* ָ���װ������Ч֡������洢��ʼ��ַ */
-    VOS_UINT16                          usFrmOutOneLen;         /* ��Ч֡�ĳ��� */
+    VOS_UINT8                          *pucFrmOutOneAddr;       /* 指向封装出的有效帧的在外存储起始地址 */
+    VOS_UINT16                          usFrmOutOneLen;         /* 有效帧的长度 */
     VOS_UINT8                           aucReserve[2];
 } HDLC_FRM_RPT_NODE_STRU;
 
-/* �����װʹ�õ��ڴ� */
+/* 保存封装使用的内存 */
 typedef struct
 {
-    HDLC_PARA_LINK_NODE_STRU            astInputParaLinkNodeBuf[TTF_HDLC_FRM_INPUT_PARA_LINK_MAX_NUM];  /* ��װ�����������ʹ�õ��ڴ� */
-    HDLC_FRM_RPT_NODE_STRU              astRptNodeBuf[TTF_HDLC_FRM_RPT_MAX_NUM];                        /* ��װ��Ϣ�ϱ��ռ�ʹ�õ��ڴ� */
-    HDLC_PARA_LINK_NODE_STRU            astOutputParaLinkNodeBuf[TTF_HDLC_FRM_OUTPUT_PARA_LINK_MAX_NUM];/* ��װ�����������ʹ�õ��ڴ� */
+    HDLC_PARA_LINK_NODE_STRU            astInputParaLinkNodeBuf[TTF_HDLC_FRM_INPUT_PARA_LINK_MAX_NUM];  /* 封装输入参数链表使用的内存 */
+    HDLC_FRM_RPT_NODE_STRU              astRptNodeBuf[TTF_HDLC_FRM_RPT_MAX_NUM];                        /* 封装信息上报空间使用的内存 */
+    HDLC_PARA_LINK_NODE_STRU            astOutputParaLinkNodeBuf[TTF_HDLC_FRM_OUTPUT_PARA_LINK_MAX_NUM];/* 封装输出参数链表使用的内存 */
 } HDLC_FRM_BUFF_INFO_STRU;
 
 
 /*
-���װ�ϱ��ռ���ṹ:
-������֤���װ�ϱ��ռ���ʼ��ַWord���룻(�μ�HiHDLCV200�߼�������˵����)��
-���ϵ��£���ַ���ӣ��ֱ�Ϊ�������Э�����͡����Ⱥʹ洢��ַ��
-����LEN��Ч16bits���ڵ�Half_Word��Э��PRO��Ч16bits���ڸ�Half-Word����ַADDR 32bits
+解封装上报空间结点结构:
+软件保证解封装上报空间起始地址Word对齐；(参见HiHDLCV200逻辑需求规格说明书)，
+从上到下，地址增加，分别为输出数据协议类型、长度和存储地址；
+长度LEN有效16bits处于低Half_Word；协议PRO有效16bits处于高Half-Word；地址ADDR 32bits
 */
 typedef struct
 {
-    VOS_UINT16                          usDefOutOneLen;         /* ��Ч֡�ĳ��� */
-    VOS_UINT16                          usDefOutOnePro;         /* ��Ч֡��Э�� */
-    VOS_UINT8                          *pucDefOutOneAddr;       /* ָ����װ������Ч֡����洢����ʼ��ַ */
+    VOS_UINT16                          usDefOutOneLen;         /* 有效帧的长度 */
+    VOS_UINT16                          usDefOutOnePro;         /* 有效帧的协议 */
+    VOS_UINT8                          *pucDefOutOneAddr;       /* 指向解封装出的有效帧在外存储的起始地址 */
 } HDLC_DEF_RPT_NODE_STRU;
 
 
-/* ���װ������֡��Ϣ�洢�ṹ */
+/* 解封装非完整帧信息存储结构 */
 typedef struct
 {
-    VOS_UINT8                           ucExistFlag;            /* ������֡�Ƿ���ڱ�ʶ */
+    VOS_UINT8                           ucExistFlag;            /* 非完整帧是否存在标识 */
     VOS_UINT8                           aucReserve1[3];
-    VOS_UINT16                          usDefOutOnePro;         /* ������֡��Э�� */
-    VOS_UINT16                          usDefOutOneLen;         /* ������֡�ĳ��� */
-    VOS_UINT8                          *pucDefOutOneAddr;       /* ָ����װ���ķ�����֡����洢����ʼ��ַ */
-    VOS_UINT32                          ulDefStAgo;             /* ���ڱ���def_uncomplet_st_now�Ĵ���ֵ */
-    VOS_UINT32                          ulDefInfoFrlCntAgo;     /* ���ڱ���def_info_frl_cnt_ago�Ĵ���ֵ */
+    VOS_UINT16                          usDefOutOnePro;         /* 非完整帧的协议 */
+    VOS_UINT16                          usDefOutOneLen;         /* 非完整帧的长度 */
+    VOS_UINT8                          *pucDefOutOneAddr;       /* 指向解封装出的非完整帧在外存储的起始地址 */
+    VOS_UINT32                          ulDefStAgo;             /* 用于保存def_uncomplet_st_now寄存器值 */
+    VOS_UINT32                          ulDefInfoFrlCntAgo;     /* 用于保存def_info_frl_cnt_ago寄存器值 */
 } HDLC_DEF_UNCOMPLETED_INFO_STRU;
 
-/* ������װʹ�õ��ڴ� */
+/* 保存解封装使用的内存 */
 typedef struct
 {
-    HDLC_PARA_LINK_NODE_STRU            astInputParaLinkNodeBuf[TTF_HDLC_DEF_INPUT_PARA_LINK_MAX_NUM];/* ���װ�����������ʹ�õ��ڴ� */
-    HDLC_DEF_RPT_NODE_STRU              astRptNodeBuf[TTF_HDLC_DEF_RPT_MAX_NUM];                      /* ���װ��Ϣ�ϱ��ռ�ʹ�õ��ڴ� */
-    VOS_UINT8                           aucOutputDataBuf[TTF_HDLC_DEF_OUTPUT_DATA_BUF_LEN];           /* ���װĿ�Ŀռ�ʹ�õ��ڴ� */
+    HDLC_PARA_LINK_NODE_STRU            astInputParaLinkNodeBuf[TTF_HDLC_DEF_INPUT_PARA_LINK_MAX_NUM];/* 解封装输入参数链表使用的内存 */
+    HDLC_DEF_RPT_NODE_STRU              astRptNodeBuf[TTF_HDLC_DEF_RPT_MAX_NUM];                      /* 解封装信息上报空间使用的内存 */
+    VOS_UINT8                           aucOutputDataBuf[TTF_HDLC_DEF_OUTPUT_DATA_BUF_LEN];           /* 解封装目的空间使用的内存 */
 } HDLC_DEF_BUFF_INFO_STRU;
 
-/* �������������ά�ɲ�ṹ */
+/* 输入参数链表可维可测结构 */
 typedef struct
 {
-    VOS_MSG_HEADER                                              /* ��Ϣͷ */
+    VOS_MSG_HEADER                                              /* 消息头 */
     HDLC_MNTN_EVENT_TYPE_ENUM_UINT32    ulMsgname;
 }HDLC_MNTN_TRACE_HEAD_STRU;
 
-/* ��װ��ؼĴ�����ά�ɲ�ṹ */
+/* 封装相关寄存器可维可测结构 */
 typedef struct
 {
     HDLC_MNTN_TRACE_HEAD_STRU           stHead;                     /* _H2ASN_Skip */
@@ -507,7 +507,7 @@ typedef struct
     VOS_UINT32                          ulFrmRptDep;
 } HDLC_MNTN_FRM_REG_CONFIG_STRU;
 
-/* ���װ��ؼĴ�����ά�ɲ�ṹ */
+/* 解封装相关寄存器可维可测结构 */
 typedef struct
 {
     HDLC_MNTN_TRACE_HEAD_STRU           stHead;                     /* _H2ASN_Skip */
@@ -543,140 +543,140 @@ typedef struct
     VOS_UINT32                          ulDefInfoFr1CntNow;
 } HDLC_MNTN_DEF_REG_CONFIG_STRU;
 
-/* ���������������ݹ���*/
+/* 输出和输出数据内容勾包*/
 typedef struct
 {
     HDLC_MNTN_TRACE_HEAD_STRU           stHead;                         /* _H2ASN_Skip */
     VOS_UINT16                          usNodeIndex;
     VOS_UINT16                          usLen;
-    /* VOS_UINT8[usLen]�������ݷ�����������ʱ����ͷ�����������ݳ��� */
+    /* VOS_UINT8[usLen]数据内容放在这里，申请的时候由头加上数据内容长度 */
 }HDLC_MNTN_NODE_DATA_STRU;
 
-/* �������������ά�ɲ�ṹ */
+/* 输入参数链表可维可测结构 */
 /*lint -e506*/
 typedef struct
 {
     HDLC_MNTN_TRACE_HEAD_STRU           stHead;                         /* _H2ASN_Skip */
-    VOS_UINT32                          ulInputLinkNodeCnt;     /* ������������ڵ���� */
-    VOS_UINT32                          ulInputLinkTotalSize;   /* ������������ڵ����ݰ��ܳ��� */
+    VOS_UINT32                          ulInputLinkNodeCnt;     /* 输入参数链表节点个数 */
+    VOS_UINT32                          ulInputLinkTotalSize;   /* 输入参数链表节点数据包总长度 */
     HDLC_PARA_LINK_NODE_STRU            astInputParaLinkNodeBuf[HDLC_INPUT_PARA_LINK_MAX_SIZE];
 }HDLC_MNTN_INPUT_PARA_LINK_STRU;
 /*lint +e506*/
 
-/* ��װ��������ά�ɲ�ṹ */
+/* 封装输出结果可维可测结构 */
 typedef struct
 {
     HDLC_MNTN_TRACE_HEAD_STRU           stHead;                         /* _H2ASN_Skip */
     VOS_UINT8                           ucFrmValidNum;
     VOS_UINT8                           ucReserve1[1];
     VOS_UINT16                          usOutputNodeUsedCnt;
-    VOS_UINT32                          ulOutputLinkNodeCnt;    /* ������������ڵ������ֻ�ڷ�װ��Ч */
-    VOS_UINT32                          ulOutputLinkTotalSize;  /* ������������ڵ����ݰ��ܳ��ȣ�ֻ�ڷ�װ��Ч */
-    HDLC_PARA_LINK_NODE_STRU            astOutputParaLinkNodeBuf[TTF_HDLC_FRM_OUTPUT_PARA_LINK_MAX_NUM];/* ��װ�����������ʹ�õ��ڴ� */
-    HDLC_FRM_RPT_NODE_STRU              astRptNodeBuf[TTF_HDLC_FRM_RPT_MAX_NUM];                        /* ��װ��Ϣ�ϱ��ռ�ʹ�õ��ڴ� */
+    VOS_UINT32                          ulOutputLinkNodeCnt;    /* 输出参数链表节点个数，只在封装有效 */
+    VOS_UINT32                          ulOutputLinkTotalSize;  /* 输出参数链表节点数据包总长度，只在封装有效 */
+    HDLC_PARA_LINK_NODE_STRU            astOutputParaLinkNodeBuf[TTF_HDLC_FRM_OUTPUT_PARA_LINK_MAX_NUM];/* 封装输出参数链表使用的内存 */
+    HDLC_FRM_RPT_NODE_STRU              astRptNodeBuf[TTF_HDLC_FRM_RPT_MAX_NUM];                        /* 封装信息上报空间使用的内存 */
 }HDLC_MNTN_FRM_OUTPUT_PARA_STRU;
 
-/* ���װ������֡��ά�ɲ�ṹ */
+/* 解封装非完整帧可维可测结构 */
 typedef struct
 {
     HDLC_MNTN_TRACE_HEAD_STRU           stHead;                         /* _H2ASN_Skip */
     HDLC_DEF_UNCOMPLETED_INFO_STRU      stUncompletedInfo;
 }HDLC_MNTN_DEF_UNCOMPLETED_INFO_STRU;
 
-/* ���װ��������ά�ɲ�ṹ */
+/* 解封装输出结果可维可测结构 */
 typedef struct
 {
     HDLC_MNTN_TRACE_HEAD_STRU           stHead;                         /* _H2ASN_Skip */
     VOS_UINT16                          usDefValidNum;
     VOS_UINT16                          usTraceNum;
-    /* HDLC_DEF_RPT_NODE_STRU[usDefValidNum]�˴�Ϊ��װ��Ϣ�ϱ��ռ�ʹ�õ��ڴ棬
-       �����ڴ�ʱ�ɽṹ���ȼ��ϱ��ռ���Ҫ���ڴ��С */
+    /* HDLC_DEF_RPT_NODE_STRU[usDefValidNum]此处为封装信息上报空间使用的内存，
+       申请内存时由结构长度加上报空间需要的内存大小 */
 }HDLC_MNTN_DEF_OUTPUT_PARA_STRU;
 
-/* HDLC���������Ϣ�ṹ */
+/* HDLC配置相关信息结构 */
 typedef struct
 {
-    VOS_UINT32                          ulHDLCIPBaseAddr;      /* �ӵ�����ȡ��HDLC����ַ */
-    VOS_UINT32                          ulHdlcDefMasterSem;    /* ���װ�ź��� */
-    VOS_UINT32                          ulHdlcFrmMasterSem;    /* ��װ�ź��� */
-    VOS_INT32                           slHdlcISRDef;          /* ���װ�жϺ� */
-    VOS_INT32                           slHdlcISRFrm;          /* ��װ�жϺ� */
-    VOS_UINT32                          ulHdlcDefIntLimit;     /* ���װ�ж�ˮ�� */
-    VOS_UINT32                          ulHdlcFrmIntLimit;     /* ��װ�ж�ˮ�� */
-    HTIMER                              stHdlcFrmTimerHandle;  /* �����װĿ�Ŀռ�ʧ�ܶ�ʱ����� */
-    VOS_UINT32                          ulHdlcMntnTraceCfg;    /* ��ά�ɲ�ȼ����� */
+    VOS_UINT32                          ulHDLCIPBaseAddr;      /* 从底软获取的HDLC基地址 */
+    VOS_UINT32                          ulHdlcDefMasterSem;    /* 解封装信号量 */
+    VOS_UINT32                          ulHdlcFrmMasterSem;    /* 封装信号量 */
+    VOS_INT32                           slHdlcISRDef;          /* 解封装中断号 */
+    VOS_INT32                           slHdlcISRFrm;          /* 封装中断号 */
+    VOS_UINT32                          ulHdlcDefIntLimit;     /* 解封装中断水线 */
+    VOS_UINT32                          ulHdlcFrmIntLimit;     /* 封装中断水线 */
+    HTIMER                              stHdlcFrmTimerHandle;  /* 申请封装目的空间失败定时器句柄 */
+    VOS_UINT32                          ulHdlcMntnTraceCfg;    /* 可维可测等级配置 */
 }HDLC_CONFIG_INFO_STRU;
 
-/* ͳ����Ϣ */
+/* 统计信息 */
 typedef struct
 {
-    VOS_UINT32                  ulDefIpDataProcCnt;             /* ���װIP���ݰ��������� */
-    VOS_UINT32                  ulDefPppDataProcCnt;            /* ���װ��PPP֡�������� */
-    VOS_UINT32                  ulDefUncompleteCnt;             /* ���װ�з�����֡������� */
-    VOS_UINT32                  ulDefWaitIntCnt;                /* ���װ�ȴ��жϴ��� */
-    VOS_UINT32                  ulDefWaitQueryCnt;              /* ���װ�ȴ���ѯ���� */
-    VOS_UINT32                  ulDefLcpPauseCnt;               /* ���װLCP��ͣ���� */
-    VOS_UINT32                  ulDefFullPauseCnt;              /* ���װ����ռ���ϱ��ռ�����ͣ���� */
-    VOS_UINT32                  ulDefInputDiscardCnt;           /* ���װ�������ݰ����� */
+    VOS_UINT32                  ulDefIpDataProcCnt;             /* 解封装IP数据包处理个数 */
+    VOS_UINT32                  ulDefPppDataProcCnt;            /* 解封装简单PPP帧处理个数 */
+    VOS_UINT32                  ulDefUncompleteCnt;             /* 解封装有非完整帧输出次数 */
+    VOS_UINT32                  ulDefWaitIntCnt;                /* 解封装等待中断次数 */
+    VOS_UINT32                  ulDefWaitQueryCnt;              /* 解封装等待轮询次数 */
+    VOS_UINT32                  ulDefLcpPauseCnt;               /* 解封装LCP暂停次数 */
+    VOS_UINT32                  ulDefFullPauseCnt;              /* 解封装输出空间或上报空间满暂停次数 */
+    VOS_UINT32                  ulDefInputDiscardCnt;           /* 解封装丢弃数据包个数 */
 
-    VOS_UINT32                  ulFrmIpDataProcCnt;             /* ��װIP���ݰ��������� */
-    VOS_UINT32                  ulFrmPppDataProcCnt;            /* ��װ��PPP֡�������� */
-    VOS_UINT32                  ulFrmWaitIntCnt;                /* ��װ�ȴ��жϴ��� */
-    VOS_UINT32                  ulFrmWaitQueryCnt;              /* ��װ�ȴ���ѯ���� */
-    VOS_UINT32                  ulFrmAllocOutputMemFailCnt;     /* ��װ����Ŀ���ڴ�ʧ�ܴ��� */
-    VOS_UINT32                  ulFrmAllocFirstMemFailCnt;      /* ��װ�����һ���ڵ�Ŀ���ڴ�ʧ�ܴ��� */
-    VOS_UINT32                  ulFrmOutputLinkFullCnt;         /* ��װ������������� */
-    VOS_UINT32                  ulFrmInputDiscardCnt;           /* ��װ�������ݰ����� */
+    VOS_UINT32                  ulFrmIpDataProcCnt;             /* 封装IP数据包处理个数 */
+    VOS_UINT32                  ulFrmPppDataProcCnt;            /* 封装简单PPP帧处理个数 */
+    VOS_UINT32                  ulFrmWaitIntCnt;                /* 封装等待中断次数 */
+    VOS_UINT32                  ulFrmWaitQueryCnt;              /* 封装等待轮询次数 */
+    VOS_UINT32                  ulFrmAllocOutputMemFailCnt;     /* 封装申请目的内存失败次数 */
+    VOS_UINT32                  ulFrmAllocFirstMemFailCnt;      /* 封装申请第一个节点目的内存失败次数 */
+    VOS_UINT32                  ulFrmOutputLinkFullCnt;         /* 封装输出链表满次数 */
+    VOS_UINT32                  ulFrmInputDiscardCnt;           /* 封装丢弃数据包个数 */
 
-    VOS_UINT32                  ulDefMaxInputCntOnce;           /* ���װһ������������ݸ��� */
-    VOS_UINT32                  ulDefMaxInputSizeOnce;          /* ���װһ��������������ܳ��� */
-    VOS_UINT32                  ulDefMaxValidCntOnce;           /* ���װһ����������Ч֡���� */
-    VOS_UINT32                  ulDefMaxQueryCnt;               /* ���װ��ѯ������ */
+    VOS_UINT32                  ulDefMaxInputCntOnce;           /* 解封装一次最大输入数据个数 */
+    VOS_UINT32                  ulDefMaxInputSizeOnce;          /* 解封装一次最大输入数据总长度 */
+    VOS_UINT32                  ulDefMaxValidCntOnce;           /* 解封装一次最大输出有效帧个数 */
+    VOS_UINT32                  ulDefMaxQueryCnt;               /* 解封装轮询最大次数 */
 
-    VOS_UINT32                  ulFrmMaxInputCntOnce;           /* ��װһ������������ݸ��� */
-    VOS_UINT32                  ulFrmMaxInputSizeOnce;          /* ��װһ��������������ܳ��� */
-    VOS_UINT32                  ulFrmMaxOutputCntOnce;          /* ��װһ��������ʹ�ýڵ������� */
-    VOS_UINT32                  ulFrmMaxOutputSizeOnce;         /* ��װһ��������ʹ�ýڵ��ܳ��� */
-    VOS_UINT32                  ulFrmMaxQueryCnt;               /* ��װ��ѯ������ */
+    VOS_UINT32                  ulFrmMaxInputCntOnce;           /* 封装一次最大输入数据个数 */
+    VOS_UINT32                  ulFrmMaxInputSizeOnce;          /* 封装一次最大输入数据总长度 */
+    VOS_UINT32                  ulFrmMaxOutputCntOnce;          /* 封装一次最大输出使用节点数个数 */
+    VOS_UINT32                  ulFrmMaxOutputSizeOnce;         /* 封装一次最大输出使用节点总长度 */
+    VOS_UINT32                  ulFrmMaxQueryCnt;               /* 封装轮询最大次数 */
 
-    VOS_UINT32                  ulMaxCntOnce;                   /* PPPһ����ദ���Ľ����� */
-    VOS_UINT32                  ulHdlcHardProcCnt;              /* PPPһ����ദ���Ľ����� */
+    VOS_UINT32                  ulMaxCntOnce;                   /* PPP一次最多处理的结点个数 */
+    VOS_UINT32                  ulHdlcHardProcCnt;              /* PPP一次最多处理的结点个数 */
 
-    VOS_UINT32                  ulDefIsrCnt;                    /* ���װ�жϷ��������ô��� */
-    VOS_UINT32                  ulFrmIsrCnt;                    /* ��װ�жϷ��������ô��� */
-    VOS_UINT32                  ulContinueCnt;                  /* �����е�������Ҫ�ֶ�δ����Ĵ��� */
-    VOS_UINT16                  usDefExpInfo;                   /* ���װ�쳣��Ϣ */
-    VOS_UINT16                  usFrmExpInfo;                   /* ��װ�쳣��Ϣ */
-    VOS_UINT32                  ulForbidHdlcBugNoCpy;           /* ���HDLC BUG,���������� */
-    VOS_UINT32                  ulForbidHdlcBugCpy;             /* ���HDLC BUG,��Ҫ�������� */
+    VOS_UINT32                  ulDefIsrCnt;                    /* 解封装中断服务程序调用次数 */
+    VOS_UINT32                  ulFrmIsrCnt;                    /* 封装中断服务程序调用次数 */
+    VOS_UINT32                  ulContinueCnt;                  /* 队列中的数据需要分多次处理的次数 */
+    VOS_UINT16                  usDefExpInfo;                   /* 解封装异常信息 */
+    VOS_UINT16                  usFrmExpInfo;                   /* 封装异常信息 */
+    VOS_UINT32                  ulForbidHdlcBugNoCpy;           /* 规避HDLC BUG,不拷贝数据 */
+    VOS_UINT32                  ulForbidHdlcBugCpy;             /* 规避HDLC BUG,需要拷贝数据 */
 } PPP_HDLC_HARD_DATA_PROC_STAT_ST;
 
-/* HDLC�ؼ��Ĵ�����ά�ɲ���Ϣ����ṹ */
+/* HDLC关键寄存器可维可测信息保存结构 */
 typedef struct
 {
-    VOS_UINT32                          ulHdlcFrmRawInt;        /* ��װԭʼ�жϼĴ���ֵ */
-    VOS_UINT32                          ulHdlcFrmStatus;        /* ��װ״̬�Ĵ���ֵ */
-    VOS_UINT32                          ulHdlcDefRawInt;        /* ���װԭʼ�жϼĴ���ֵ */
-    VOS_UINT32                          ulHdlcDefStatus;        /* ���װ״̬�Ĵ���ֵ */
+    VOS_UINT32                          ulHdlcFrmRawInt;        /* 封装原始中断寄存器值 */
+    VOS_UINT32                          ulHdlcFrmStatus;        /* 封装状态寄存器值 */
+    VOS_UINT32                          ulHdlcDefRawInt;        /* 解封装原始中断寄存器值 */
+    VOS_UINT32                          ulHdlcDefStatus;        /* 解封装状态寄存器值 */
 }HDLC_REG_SAVE_INFO_STRU;
 
 /*****************************************************************************
-  6 ȫ�ֱ�������
+  6 全局变量声明
 *****************************************************************************/
 extern HDLC_CONFIG_INFO_STRU                          g_stHdlcConfigInfo;
 
 /*****************************************************************************
-  8 UNION����
+  8 UNION定义
 *****************************************************************************/
 
 
 /*****************************************************************************
-  9 OTHERS����
+  9 OTHERS定义
 *****************************************************************************/
 
 
 /*****************************************************************************
-  10 ��������
+  10 函数声明
 *****************************************************************************/
 extern VOS_UINT32 PPP_HDLC_HARD_Init(VOS_VOID);
 

@@ -31,7 +31,7 @@
 #include "DrvInterface.h"
 #include "product_config.h"
 
-/* LINUX²»Ö§³Ö */
+/* LINUXä¸æ”¯æŒ */
 #if (VOS_VXWORKS == VOS_OS_VER)
 #include "stdlib.h"
 #endif
@@ -43,7 +43,7 @@ extern "C"{
 #endif /* __cpluscplus */
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_V_RTC_TIMER_C
 
@@ -179,7 +179,7 @@ VOS_UINT32                RTC_Start_Value = ELAPESD_TIME_INVAILD;
 
 VOS_CHAR g_acRtcTimerCtrlBuf[RTC_TIMER_CTRL_BUF_SIZE];
 
-/* Ñ­»·¼ÇÂ¼SOC TimerµÄÆôÍ£¼ÇÂ¼ */
+/* å¾ªç¯è®°å½•SOC Timerçš„å¯åœè®°å½• */
 enum
 {
     RTC_SOC_TIMER_SEND_ERR = 0xfffffffd,
@@ -191,7 +191,7 @@ VOS_UINT32  g_ulRtcSocTimerDebugInfoSuffix = 0;
 
 RTC_SOC_TIMER_DEBUG_INFO_STRU g_astRtcSocTimerDebugInfo[RTC_MAX_TIMER_NUMBER];
 
-/* ¼ÇÂ¼ RTC timer ¿ÉÎ¬¿É²âĞÅÏ¢ */
+/* è®°å½• RTC timer å¯ç»´å¯æµ‹ä¿¡æ¯ */
 VOS_TIMER_SOC_TIMER_INFO_STRU g_stRtcSocTimerInfo;
 
 
@@ -249,11 +249,11 @@ signed int VOS_TimerLpmCb(int x)
 
 /*****************************************************************************
  Function   : RTC_MUL_32_DOT_768
- Description: ³ËÒÔ32.768
+ Description: ä¹˜ä»¥32.768
  Input      : ulValue -- timer's value.uint is 32K cycle.
-              ulFileID -- ÎÄ¼şID
-              usLineNo -- ĞĞºÅ
- Return     : Óë32.768×ö³Ë·¨µÄ½á¹û
+              ulFileID -- æ–‡ä»¶ID
+              usLineNo -- è¡Œå·
+ Return     : ä¸32.768åšä¹˜æ³•çš„ç»“æœ
  Other      :
  *****************************************************************************/
 VOS_UINT32 RTC_MUL_32_DOT_768(VOS_UINT32 ulValue,VOS_UINT32 ulFileID,
@@ -291,11 +291,11 @@ VOS_UINT32 RTC_MUL_32_DOT_768(VOS_UINT32 ulValue,VOS_UINT32 ulFileID,
 
 /*****************************************************************************
  Function   : RTC_DIV_32_DOT_768
- Description: ³ıÒÔ32.768
+ Description: é™¤ä»¥32.768
  Input      : ulValue -- timer's value.uint is 32K cycle.
-              ulFileID -- ÎÄ¼şID
-              usLineNo -- ĞĞºÅ
- Return     : Óë32.768×ö³ı·¨µÄ½á¹û
+              ulFileID -- æ–‡ä»¶ID
+              usLineNo -- è¡Œå·
+ Return     : ä¸32.768åšé™¤æ³•çš„ç»“æœ
  Other      :
  *****************************************************************************/
 VOS_UINT32 RTC_DIV_32_DOT_768(VOS_UINT32 ulValue,VOS_UINT32 ulFileID,
@@ -335,11 +335,11 @@ VOS_UINT32 RTC_DIV_32_DOT_768(VOS_UINT32 ulValue,VOS_UINT32 ulFileID,
 
 /*****************************************************************************
  Function   : RTC_MUL_DOT_32768
- Description: ³ËÒÔ0.32768
+ Description: ä¹˜ä»¥0.32768
  Input      : ulValue -- timer's value.uint is 32K cycle.
-              ulFileID -- ÎÄ¼şID
-              usLineNo -- ĞĞºÅ
- Return     : Óë0.32768×ö³Ë·¨µÄ½á¹û
+              ulFileID -- æ–‡ä»¶ID
+              usLineNo -- è¡Œå·
+ Return     : ä¸0.32768åšä¹˜æ³•çš„ç»“æœ
  Other      :
  *****************************************************************************/
 VOS_UINT32 RTC_MUL_DOT_32768(VOS_UINT32 ulValue,VOS_UINT32 ulFileID,
@@ -469,7 +469,7 @@ VOS_VOID RTC_DualTimerIsrEntry(VOS_VOID)
         else
         {
             /*lint -e613 */
-            RTC_TimerCtrlBlkexpiredTail->next = RTC_TimerCtrlBlkCurrent;/* [false alarm]: ÆÁ±ÎFortify ´íÎó */
+            RTC_TimerCtrlBlkexpiredTail->next = RTC_TimerCtrlBlkCurrent;/* [false alarm]: å±è”½Fortify é”™è¯¯ */
             /*lint +e613 */
             RTC_TimerCtrlBlkexpiredTail = RTC_TimerCtrlBlkCurrent;
         }
@@ -713,7 +713,7 @@ RTC_TIMER_CONTROL_BLOCK *RTC_TimerCtrlBlkGet(VOS_UINT32 ulFileID, VOS_INT32 usLi
 
         VOS_MemSet(pDumpBuffer, 0, VOS_DUMP_MEM_TOTAL_SIZE);
 
-        /* ·ÀÖ¹¿½±´ÄÚ´æÔ½½ç£¬È¡×îĞ¡Öµ */
+        /* é˜²æ­¢æ‹·è´å†…å­˜è¶Šç•Œï¼Œå–æœ€å°å€¼ */
         VOS_MemCpy(pDumpBuffer, (VOS_VOID *)g_acRtcTimerCtrlBuf,
                    ((VOS_DUMP_MEM_TOTAL_SIZE < RTC_TIMER_CTRL_BUF_SIZE) ? VOS_DUMP_MEM_TOTAL_SIZE : RTC_TIMER_CTRL_BUF_SIZE ));
 
@@ -877,7 +877,7 @@ VOS_VOID RTC_TimerTaskFunc( VOS_UINT32 Para0, VOS_UINT32 Para1,
 #endif
             TempValue = (VOS_UINT_PTR)(RTC_TimerCtrlBlkexpired->CallBackFunc);
 
-            /* CallBackFuncĞèÒªÓÃ32Î»´«Èë£¬ËùÒÔºÍname»¥»»Î»ÖÃ±£Ö¤Êı¾İ²»¶ªÊ§ */
+            /* CallBackFuncéœ€è¦ç”¨32ä½ä¼ å…¥ï¼Œæ‰€ä»¥å’Œnameäº’æ¢ä½ç½®ä¿è¯æ•°æ®ä¸ä¸¢å¤± */
             OM_RecordInfoStart(VOS_EXC_DUMP_MEM_NUM_3, (VOS_UINT32)(RTC_TimerCtrlBlkexpired->Pid), RTC_TimerCtrlBlkexpired->Name, (VOS_UINT32)TempValue);
 
             if ( VOS_NULL_PTR == RTC_TimerCtrlBlkexpired->CallBackFunc )

@@ -2,29 +2,29 @@
  */
 /*
  */
-/*                  °æÈ¨ËùÓĞ (C), 1998-2010, »ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾
+/*                  ç‰ˆæƒæ‰€æœ‰ (C), 1998-2010, åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
  */
 /*
  */
 /******************************************************************************
  */
-/*  ÎÄ ¼ş Ãû   : at_cmd_ct.c
+/*  æ–‡ ä»¶ å   : at_cmd_ct.c
  */
-/*  °æ ±¾ ºÅ   : V1.0
+/*  ç‰ˆ æœ¬ å·   : V1.0
  */
-/*  Éú³ÉÈÕÆÚ   : 2010-05-14
+/*  ç”Ÿæˆæ—¥æœŸ   : 2010-05-14
  */
-/*  ¹¦ÄÜÃèÊö   : CT
+/*  åŠŸèƒ½æè¿°   : CT
  */
 /*
  */
-/*  º¯ÊıÁĞ±í   : TODO: ...
+/*  å‡½æ•°åˆ—è¡¨   : TODO: ...
  */
-/*  ĞŞ¸ÄÀúÊ·   :
+/*  ä¿®æ”¹å†å²   :
  */
-/*  1.ÈÕ    ÆÚ : 2010-05-14
+/*  1.æ—¥    æœŸ : 2010-05-14
  */
-/*    ĞŞ¸ÄÄÚÈİ : ´´½¨ÎÄ¼ş
+/*    ä¿®æ”¹å†…å®¹ : åˆ›å»ºæ–‡ä»¶
  */
 /*
  */
@@ -56,17 +56,17 @@
 #include "LPsNvInterface.h"
 #include "LNvCommon.h"
 
-/*lint -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -e767 åŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_AT_LTE_CT_PROC_C
 /*lint +e767 */
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: ÉèÖÃVCTCXOµçÑ¹
+/* åŠŸèƒ½æè¿°: è®¾ç½®VCTCXOç”µå‹
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -74,7 +74,7 @@
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -85,7 +85,7 @@ VOS_UINT32 atSetVCTCXOPara(VOS_UINT8 ucClientId)
     FTM_SET_FVCTCXO_REQ_STRU stVCTCXOSetReq = {0};
     VOS_UINT32 ulRst;
 
-    /* ²ÎÊı¼ì²é
+    /* å‚æ•°æ£€æŸ¥
  */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
@@ -104,11 +104,11 @@ VOS_UINT32 atSetVCTCXOPara(VOS_UINT8 ucClientId)
 
     stVCTCXOSetReq.ulVol = gastAtParaList[0].ulParaValue;
 
-    /* TO DO, ´ıVCTCXOµçÑ¹·¶Î§È·¶¨ºóĞè¶ÔµçÑ¹ÊÇ·ñ¹ı¸ß×ö³öÅĞ¶Ï
+    /* TO DO, å¾…VCTCXOç”µå‹èŒƒå›´ç¡®å®šåéœ€å¯¹ç”µå‹æ˜¯å¦è¿‡é«˜åšå‡ºåˆ¤æ–­
  */
-    /* ÈçÉèÖÃµçÑ¹Öµ¹ı¸ß£¬Ôò·µ»ØÌáÊ¾ÓÃ»§
+    /* å¦‚è®¾ç½®ç”µå‹å€¼è¿‡é«˜ï¼Œåˆ™è¿”å›æç¤ºç”¨æˆ·
  */
-    /* ºÍÉîÛÚÀÏ¸ß³õ²½È·ÈÏ
+    /* å’Œæ·±åœ³è€é«˜åˆæ­¥ç¡®è®¤
  */
 #if 0
     if(((0x8200 - 200) > stVCTCXOSetReq.ulVol) || ((0x8200 + 200) < stVCTCXOSetReq.ulVol))
@@ -121,10 +121,10 @@ VOS_UINT32 atSetVCTCXOPara(VOS_UINT8 ucClientId)
 
     if(AT_SUCCESS == ulRst)
     {
-        /* ÉèÖÃµ±Ç°²Ù×÷ÀàĞÍ
+        /* è®¾ç½®å½“å‰æ“ä½œç±»å‹
  */
         gastAtClientTab[ucClientId].CmdCurrentOpt = AT_CMD_FVCTCXO_SET;
-        return AT_WAIT_ASYNC_RETURN;    /* ·µ»ØÃüÁî´¦Àí¹ÒÆğ×´Ì¬
+        return AT_WAIT_ASYNC_RETURN;    /* è¿”å›å‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€
  */
     }
 
@@ -148,11 +148,11 @@ VOS_UINT32 atSetVCTCXOParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: ²éÑ¯VCTCXOµçÑ¹
+/* åŠŸèƒ½æè¿°: æŸ¥è¯¢VCTCXOç”µå‹
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -160,7 +160,7 @@ VOS_UINT32 atSetVCTCXOParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -216,11 +216,11 @@ VOS_UINT32 atQryVCTCXOParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: ´ò¿ªÉÏĞĞĞÅµÀ
+/* åŠŸèƒ½æè¿°: æ‰“å¼€ä¸Šè¡Œä¿¡é“
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -228,7 +228,7 @@ VOS_UINT32 atQryVCTCXOParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -239,7 +239,7 @@ VOS_UINT32 atSetFTXONPara(VOS_UINT8 ucClientId)
     FTM_SET_TXON_REQ_STRU stFTXONSetReq = {(FTM_TXON_SWT_ENUM)0, };
     VOS_UINT32 ulRst;
 
-    // ²ÎÊı¼ì²é
+    // å‚æ•°æ£€æŸ¥
     
     
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
@@ -263,10 +263,10 @@ VOS_UINT32 atSetFTXONPara(VOS_UINT8 ucClientId)
 
     if(AT_SUCCESS == ulRst)
     {
-        /* ÉèÖÃµ±Ç°²Ù×÷ÀàĞÍ
+        /* è®¾ç½®å½“å‰æ“ä½œç±»å‹
  */
         gastAtClientTab[ucClientId].CmdCurrentOpt = AT_CMD_FTXON_SET;
-        return AT_WAIT_ASYNC_RETURN;    /* ·µ»ØÃüÁî´¦Àí¹ÒÆğ×´Ì¬
+        return AT_WAIT_ASYNC_RETURN;    /* è¿”å›å‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€
  */
     }
 
@@ -290,11 +290,11 @@ VOS_UINT32 atSetFTXONParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: ²éÑ¯ÉÏĞĞĞÅµÀ´ò¿ª×´Ì¬
+/* åŠŸèƒ½æè¿°: æŸ¥è¯¢ä¸Šè¡Œä¿¡é“æ‰“å¼€çŠ¶æ€
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -302,7 +302,7 @@ VOS_UINT32 atSetFTXONParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -400,11 +400,11 @@ VOS_UINT32 atQryFPllStatusParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: ´ò¿ªÏÂĞĞĞÅµÀ
+/* åŠŸèƒ½æè¿°: æ‰“å¼€ä¸‹è¡Œä¿¡é“
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -412,7 +412,7 @@ VOS_UINT32 atQryFPllStatusParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -423,7 +423,7 @@ VOS_UINT32 atSetFRXONPara(VOS_UINT8 ucClientId)
     FTM_SET_RXON_REQ_STRU stFRXONSetReq = {0};
     VOS_UINT32 ulRst;
 
-    /* ²ÎÊı¼ì²é
+    /* å‚æ•°æ£€æŸ¥
  */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
@@ -447,10 +447,10 @@ VOS_UINT32 atSetFRXONPara(VOS_UINT8 ucClientId)
 
     if(AT_SUCCESS == ulRst)
     {
-        /* ÉèÖÃµ±Ç°²Ù×÷ÀàĞÍ
+        /* è®¾ç½®å½“å‰æ“ä½œç±»å‹
  */
         gastAtClientTab[ucClientId].CmdCurrentOpt = AT_CMD_FRXON_SET;
-        return AT_WAIT_ASYNC_RETURN;    /* ·µ»ØÃüÁî´¦Àí¹ÒÆğ×´Ì¬
+        return AT_WAIT_ASYNC_RETURN;    /* è¿”å›å‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€
  */
     }
 
@@ -474,11 +474,11 @@ VOS_UINT32 atSetFRXONParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: ²éÑ¯ÏÂĞĞĞÅµÀ¿ªÆô×´Ì¬
+/* åŠŸèƒ½æè¿°: æŸ¥è¯¢ä¸‹è¡Œä¿¡é“å¼€å¯çŠ¶æ€
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -486,7 +486,7 @@ VOS_UINT32 atSetFRXONParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -541,11 +541,11 @@ VOS_UINT32 atQryFRXONParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: ÉèÖÃ·ÇĞÅÁîµÄĞÅµÀ
+/* åŠŸèƒ½æè¿°: è®¾ç½®éä¿¡ä»¤çš„ä¿¡é“
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -553,7 +553,7 @@ VOS_UINT32 atQryFRXONParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -563,7 +563,7 @@ VOS_UINT32 atSetFCHANPara(VOS_UINT8 ucClientId)
 {
     FTM_SET_FCHAN_REQ_STRU stFCHANSetReq = {(FCHAN_MODE_ENUM)0, };
     VOS_UINT32 ulRst;
-    /* ²ÎÊı¼ì²é
+    /* å‚æ•°æ£€æŸ¥
  */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
@@ -601,10 +601,10 @@ VOS_UINT32 atSetFCHANPara(VOS_UINT8 ucClientId)
 
     if(AT_SUCCESS == ulRst)
     {
-        /* ÉèÖÃµ±Ç°²Ù×÷ÀàĞÍ
+        /* è®¾ç½®å½“å‰æ“ä½œç±»å‹
  */
         gastAtClientTab[ucClientId].CmdCurrentOpt = AT_CMD_FCHAN_SET;
-        return AT_WAIT_ASYNC_RETURN;    /* ·µ»ØÃüÁî´¦Àí¹ÒÆğ×´Ì¬
+        return AT_WAIT_ASYNC_RETURN;    /* è¿”å›å‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€
  */
     }
 
@@ -635,11 +635,11 @@ VOS_UINT32 atSetFCHANParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö:
+/* åŠŸèƒ½æè¿°:
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -647,7 +647,7 @@ VOS_UINT32 atSetFCHANParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -658,7 +658,7 @@ VOS_UINT32 atSetFWAVEPara(VOS_UINT8 ucClientId)
     VOS_UINT32 ulRst;
     FTM_SET_FWAVE_REQ_STRU stFWaveSetReq = { 0 };
 
-    /* ²ÎÊı¼ì²é
+    /* å‚æ•°æ£€æŸ¥
  */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
@@ -689,10 +689,10 @@ VOS_UINT32 atSetFWAVEPara(VOS_UINT8 ucClientId)
 
 	if(AT_SUCCESS == ulRst)
     {
-        /* ÉèÖÃµ±Ç°²Ù×÷ÀàĞÍ
+        /* è®¾ç½®å½“å‰æ“ä½œç±»å‹
  */
         gastAtClientTab[ucClientId].CmdCurrentOpt = AT_CMD_FWAVE_SET;
-        return AT_WAIT_ASYNC_RETURN;    /* ·µ»ØÃüÁî´¦Àí¹ÒÆğ×´Ì¬
+        return AT_WAIT_ASYNC_RETURN;    /* è¿”å›å‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€
  */
     }
 
@@ -714,13 +714,13 @@ VOS_UINT32 atSetFWAVEParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /*******************************************************************************/
 
-/* ¹¦ÄÜÃèÊö: ²éÑ¯·ÇĞÅÁîµÄĞÅµÀ */
+/* åŠŸèƒ½æè¿°: æŸ¥è¯¢éä¿¡ä»¤çš„ä¿¡é“ */
 
-/* ²ÎÊıËµÃ÷:*/
+/* å‚æ•°è¯´æ˜:*/
 
 /*   ulIndex [in] ... */
 
-/* ·µ »Ø Öµ: */
+/* è¿” å› å€¼: */
 
 /*    TODO: ... */
 /*******************************************************************************/
@@ -773,11 +773,11 @@ VOS_UINT32 atQryFCHANParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: AT^TSELRF  Ñ¡ÔñÉäÆµÍ¨Â·Ö¸Áî
+/* åŠŸèƒ½æè¿°: AT^TSELRF  é€‰æ‹©å°„é¢‘é€šè·¯æŒ‡ä»¤
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -785,7 +785,7 @@ VOS_UINT32 atQryFCHANParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -840,7 +840,7 @@ VOS_UINT32 atSetTselrfPara(VOS_UINT8 ucClientId)
 #endif
         if(ulRst == ERR_MSP_SUCCESS)
         {
-            /*WIFIÎ´EnableÖ±½Ó·µ»ØÊ§°Ü*/
+            /*WIFIæœªEnableç›´æ¥è¿”å›å¤±è´¥*/
             if(VOS_FALSE == (VOS_UINT32)WIFI_GET_STATUS())
             {
                 return AT_ERROR;
@@ -899,10 +899,10 @@ VOS_UINT32 atSetTselrfPara(VOS_UINT8 ucClientId)
 
     if(AT_SUCCESS == ulRst)
     {
-        /* ÉèÖÃµ±Ç°²Ù×÷ÀàĞÍ
+        /* è®¾ç½®å½“å‰æ“ä½œç±»å‹
  */
         gastAtClientTab[ucClientId].CmdCurrentOpt = AT_CMD_TSELRF_SET;
-        return AT_WAIT_ASYNC_RETURN;    /* ·µ»ØÃüÁî´¦Àí¹ÒÆğ×´Ì¬
+        return AT_WAIT_ASYNC_RETURN;    /* è¿”å›å‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€
  */
     }
 
@@ -926,11 +926,11 @@ VOS_UINT32 atSetTselrfParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: AT^TSELRF  Ñ¡ÔñÉäÆµÍ¨Â·Ö¸Áî
+/* åŠŸèƒ½æè¿°: AT^TSELRF  é€‰æ‹©å°„é¢‘é€šè·¯æŒ‡ä»¤
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -938,7 +938,7 @@ VOS_UINT32 atSetTselrfParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -948,7 +948,7 @@ VOS_UINT32 atSetTselrfParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 VOS_UINT32 atQryTselrfPara(VOS_UINT8 ucClientId)
 {
 /*
-Æ½Ì¨²»Ìá¹©¸Ã½Ó¿Ú£¬ÓÉ²úÆ·ÏßÊµÏÖ¡£¾ßÌåÊ¹ÓÃÈçÏÂÈı¸öNVÏî»ñÈ¡:
+å¹³å°ä¸æä¾›è¯¥æ¥å£ï¼Œç”±äº§å“çº¿å®ç°ã€‚å…·ä½“ä½¿ç”¨å¦‚ä¸‹ä¸‰ä¸ªNVé¡¹è·å–:
 10000 NV_WG_RF_MAIN_BAND
 0xD22C NV_ID_UE_CAPABILITY
 0xD304 EN_NV_ID_TDS_SUPPORT_FREQ_BAND
@@ -958,11 +958,11 @@ VOS_UINT32 atQryTselrfPara(VOS_UINT8 ucClientId)
 #endif
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: ÉèÖÃ½ÓÊÕ»úLNAµÄµÈ¼¶
+/* åŠŸèƒ½æè¿°: è®¾ç½®æ¥æ”¶æœºLNAçš„ç­‰çº§
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -970,7 +970,7 @@ VOS_UINT32 atQryTselrfPara(VOS_UINT8 ucClientId)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -981,7 +981,7 @@ VOS_UINT32 atSetFLNAPara(VOS_UINT8 ucClientId)
     FTM_SET_AAGC_REQ_STRU stFLNASetReq = {0};
     VOS_UINT32 ulRst;
 
-    /* ²ÎÊı¼ì²é
+    /* å‚æ•°æ£€æŸ¥
  */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
@@ -1004,10 +1004,10 @@ VOS_UINT32 atSetFLNAPara(VOS_UINT8 ucClientId)
 
     if(AT_SUCCESS == ulRst)
     {
-        /* ÉèÖÃµ±Ç°²Ù×÷ÀàĞÍ
+        /* è®¾ç½®å½“å‰æ“ä½œç±»å‹
  */
         gastAtClientTab[ucClientId].CmdCurrentOpt = AT_CMD_FLNA_SET;
-        return AT_WAIT_ASYNC_RETURN;    /* ·µ»ØÃüÁî´¦Àí¹ÒÆğ×´Ì¬
+        return AT_WAIT_ASYNC_RETURN;    /* è¿”å›å‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€
  */
     }
 
@@ -1032,11 +1032,11 @@ VOS_UINT32 atSetFLNAParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* ¹¦ÄÜÃèÊö: ²éÑ¯½ÓÊÕ»úLNAµÄµÈ¼¶
+/* åŠŸèƒ½æè¿°: æŸ¥è¯¢æ¥æ”¶æœºLNAçš„ç­‰çº§
  */
 /*
  */
-/* ²ÎÊıËµÃ÷:
+/* å‚æ•°è¯´æ˜:
  */
 /*   ulIndex [in] ...
  */
@@ -1044,7 +1044,7 @@ VOS_UINT32 atSetFLNAParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* è¿” å› å€¼:
  */
 /*    TODO: ...
  */
@@ -1097,13 +1097,13 @@ VOS_UINT32 atQryFLNAParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 
 /*******************************************************************************/
 
-/* ¹¦ÄÜÃèÊö: ²éÑ¯RSSI*/
+/* åŠŸèƒ½æè¿°: æŸ¥è¯¢RSSI*/
 
-/* ²ÎÊıËµÃ÷: */
+/* å‚æ•°è¯´æ˜: */
 
 /*   ulIndex [in] ... */
 
-/* ·µ »Ø Öµ: */
+/* è¿” å› å€¼: */
 
 /*    TODO: ... */
 
@@ -1198,7 +1198,7 @@ VOS_UINT32 AT_GetLteFeatureInfo(AT_FEATURE_SUPPORT_ST*pstFeATure)
         }
     }
 
-    /*½âÎö»ñÈ¡LTE bandĞÅÏ¢
+    /*è§£æè·å–LTE bandä¿¡æ¯
  */
     if( ucBandFlag > 0 )
     {
@@ -1250,7 +1250,7 @@ VOS_UINT32 atSetTBATPara(VOS_UINT8 ucClientId)
     VOS_UINT16 usValue = 0;
     VOS_UINT32 ulRst=0;
 
-    /* ²ÎÊı¼ì²é
+    /* å‚æ•°æ£€æŸ¥
  */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
@@ -1273,7 +1273,7 @@ VOS_UINT32 atSetTBATPara(VOS_UINT8 ucClientId)
 
     if( ucOpr == 1 )
     {
-        /*ÉèÖÃ
+        /*è®¾ç½®
  */
         if(0 != gastAtParaList[2].usParaLen)/* [false alarm]:fortify */
         {
@@ -1301,7 +1301,7 @@ VOS_UINT32 atSetTBATPara(VOS_UINT8 ucClientId)
     }
     else if( ucOpr == 0 )
     {
-        /*²éÑ¯
+        /*æŸ¥è¯¢
  */
         usValue = (VOS_UINT16)gastAtParaList[2].usParaLen;/* [false alarm]:fortify */
 
@@ -1361,13 +1361,13 @@ VOS_UINT32 atRdTbatCnf(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 }
 
 //*****************************************************************************
-// ¹¦ÄÜÃèÊö: ÉèÖÃ·¢Éä»úµÄ·¢Éä¹¦ÂÊ
+// åŠŸèƒ½æè¿°: è®¾ç½®å‘å°„æœºçš„å‘å°„åŠŸç‡
 //
-// ²ÎÊıËµÃ÷:
+// å‚æ•°è¯´æ˜:
 //   ulIndex [in] ...
 //                ...
 //
-// ·µ »Ø Öµ:
+// è¿” å› å€¼:
 //    TODO: ...
 //*****************************************************************************
 VOS_UINT32 atSetFPOWPara(VOS_UINT8 ucClientId)
@@ -1380,7 +1380,7 @@ VOS_UINT32 atSetFPOWPara(VOS_UINT8 ucClientId)
     HAL_SDMLOG("-----enter:[%s] \n", __FUNCTION__);
     /*lint -e516*/
 
-    // ²ÎÊı¼ì²é
+    // å‚æ•°æ£€æŸ¥
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -1421,11 +1421,11 @@ VOS_UINT32 atSetFPOWPara(VOS_UINT8 ucClientId)
 
     if(AT_SUCCESS == ulRst)
     {
-        // ÉèÖÃµ±Ç°²Ù×÷ÀàĞÍ
+        // è®¾ç½®å½“å‰æ“ä½œç±»å‹
         gastAtClientTab[ucClientId].CmdCurrentOpt = AT_CMD_FPOW_SET;
 
         return AT_WAIT_ASYNC_RETURN;    
-        // ·µ»ØÃüÁî´¦Àí¹ÒÆğ×´Ì¬
+        // è¿”å›å‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€
      }
 
     return AT_ERROR;

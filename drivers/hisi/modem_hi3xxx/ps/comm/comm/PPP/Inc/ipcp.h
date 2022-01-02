@@ -107,7 +107,7 @@ struct ipcp {
 #endif
     } ns;
 
-    /*ÎªÁËÓëÍøÂç²àÖ®¼äµÄ½»»¥£¬ÌØ¶¨Òå¸Ã½á¹¹*/
+    /*ä¸ºäº†ä¸ç½‘ç»œä¾§ä¹‹é—´çš„äº¤äº’ï¼Œç‰¹å®šä¹‰è¯¥ç»“æ„*/
     VOS_UINT32 stage;
 
     VOS_UINT32 IpAddr_neg : 2;
@@ -150,8 +150,8 @@ struct ipcp {
   struct pppThroughput throughput;    /* throughput statistics */
   struct ppp_mqueue Queue[3];        /* Output packet queues */
 
-  HTIMER				hIpcpPendTimer;		/*µÈ´ıPDP¼¤»î½×¶Î,´¦ÀíIPCPÖ¡µÄ¶¨Ê±Æ÷*/
-  struct ppp_mbuf 	     *pstIpcpPendFrame;          /*µÈ´ıPDP¼¤»î½×¶Î,´ı´¦ÀíIPCPÖ¡*/
+  HTIMER				hIpcpPendTimer;		/*ç­‰å¾…PDPæ¿€æ´»é˜¶æ®µ,å¤„ç†IPCPå¸§çš„å®šæ—¶å™¨*/
+  struct ppp_mbuf 	     *pstIpcpPendFrame;          /*ç­‰å¾…PDPæ¿€æ´»é˜¶æ®µ,å¾…å¤„ç†IPCPå¸§*/
 
 };
 

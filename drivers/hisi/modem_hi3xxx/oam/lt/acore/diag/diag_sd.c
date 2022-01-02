@@ -1,17 +1,17 @@
 //*****************************************************************************
 //
-//                  °æÈ¨ËùÓĞ (C), 1998-2010, »ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾
+//                  ç‰ˆæƒæ‰€æœ‰ (C), 1998-2010, åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 //
 //*****************************************************************************
-//  ÎÄ ¼ş Ãû   : diag_sd.c
-//  °æ ±¾ ºÅ   : V1.0
-//  Éú³ÉÈÕÆÚ   : 2012-08-13
-//  ¹¦ÄÜÃèÊö   : TODO: ...
+//  æ–‡ ä»¶ å   : diag_sd.c
+//  ç‰ˆ æœ¬ å·   : V1.0
+//  ç”Ÿæˆæ—¥æœŸ   : 2012-08-13
+//  åŠŸèƒ½æè¿°   : TODO: ...
 //
-//  º¯ÊıÁĞ±í   : TODO: ...
-//  ĞŞ¸ÄÀúÊ·   :
-//  1.ÈÕ    ÆÚ : 2012-08-13
-//    ĞŞ¸ÄÄÚÈİ : ´´½¨ÎÄ¼ş
+//  å‡½æ•°åˆ—è¡¨   : TODO: ...
+//  ä¿®æ”¹å†å²   :
+//  1.æ—¥    æœŸ : 2012-08-13
+//    ä¿®æ”¹å†…å®¹ : åˆ›å»ºæ–‡ä»¶
 //
 //*****************************************************************************
 
@@ -54,22 +54,22 @@ static VOS_UINT32 g_Diag_Log_SdMaxLen    = 0xc0000000;   /*3g*/
 static VOS_UINT32 g_Diag_Log_FlashMaxLen = 0x3c00000;    /*60m*/
 
 #define DIAG_SD_ROOT_PATH         (g_Diag_Log_Path)
-#define DIAG_SD_FILE_MAX_SIZE     (g_Diag_Log_MaxLen)  /*¿ÉÒÔ´æ´¢µÄ×î´ó³¤¶È*/
+#define DIAG_SD_FILE_MAX_SIZE     (g_Diag_Log_MaxLen)  /*å¯ä»¥å­˜å‚¨çš„æœ€å¤§é•¿åº¦*/
 
 VOS_BOOL diag_IsCurrentFileFull(VOS_UINT32 ulBufLen);
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_CloseSdFile
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : fd:
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_CloseSdFile
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : fd:
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
     /*lint -save -e40 -e63*/
 
@@ -96,17 +96,17 @@ VOS_UINT32 diag_CloseSdFile( VOS_INT32 fd)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_CleanDir
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_CleanDir
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_UINT32 diag_CleanDir(VOS_UINT32 ulFileNum)
@@ -131,18 +131,18 @@ VOS_UINT32 diag_CleanDir(VOS_UINT32 ulFileNum)
     {
         return ERR_MSP_FAILURE;
     }
-    strncat(dirName, DIAG_SD_ROOT_PATH, strlen(DIAG_SD_ROOT_PATH));/* [false alarm]:ÆÁ±ÎFortify */
-    strncat(dirName, DIAG_SD_LTE_LOG_PATH, strlen(DIAG_SD_LTE_LOG_PATH));/* [false alarm]:ÆÁ±ÎFortify */
+    strncat(dirName, DIAG_SD_ROOT_PATH, strlen(DIAG_SD_ROOT_PATH));/* [false alarm]:å±è”½Fortify */
+    strncat(dirName, DIAG_SD_LTE_LOG_PATH, strlen(DIAG_SD_LTE_LOG_PATH));/* [false alarm]:å±è”½Fortify */
 
-    strncat(filedirName, dirName, strlen(dirName));/* [false alarm]:ÆÁ±ÎFortify */
-    strncat(filedirName, "/", strlen("/"));/* [false alarm]:ÆÁ±ÎFortify */
-    strncat(filedirName, DIAG_SD_LTE_LOG_FILE_PRE, strlen(DIAG_SD_LTE_LOG_FILE_PRE));/* [false alarm]:ÆÁ±ÎFortify */
+    strncat(filedirName, dirName, strlen(dirName));/* [false alarm]:å±è”½Fortify */
+    strncat(filedirName, "/", strlen("/"));/* [false alarm]:å±è”½Fortify */
+    strncat(filedirName, DIAG_SD_LTE_LOG_FILE_PRE, strlen(DIAG_SD_LTE_LOG_FILE_PRE));/* [false alarm]:å±è”½Fortify */
 
     for( i=0;i<ulFileNum;i++)
     {
         /*lint -save -e18*/
         /* coverity[secure_coding] */
-        sprintf(CurrentFileName, "%s%d.lpd",filedirName,(VOS_UINT8)i);/* [false alarm]:ÆÁ±ÎFortify */
+        sprintf(CurrentFileName, "%s%d.lpd",filedirName,(VOS_UINT8)i);/* [false alarm]:å±è”½Fortify */
         /*lint -restore +e18*/
 
         ret = DIAG_FS_RMFILE(CurrentFileName);
@@ -154,21 +154,21 @@ VOS_UINT32 diag_CleanDir(VOS_UINT32 ulFileNum)
 
     set_fs(sd_fs);
 
-    return  (VOS_UINT32)ret; /* [false alarm]:ÆÁ±ÎFortify */
+    return  (VOS_UINT32)ret; /* [false alarm]:å±è”½Fortify */
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_OpenSdFile
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_OpenSdFile
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_UINT32 diag_OpenSdFile( VOS_VOID)
@@ -186,20 +186,20 @@ VOS_UINT32 diag_OpenSdFile( VOS_VOID)
     stDiagSdLogCtrlInfo.ulCurrenFileSize = 0;
     if(strlen(DIAG_SD_ROOT_PATH) > 128)
     {
-        ret  = ERR_MSP_FAILURE;/* [false alarm]:ÆÁ±ÎFortify */
+        ret  = ERR_MSP_FAILURE;/* [false alarm]:å±è”½Fortify */
     }
-    strncat(filedirName, DIAG_SD_ROOT_PATH, strlen(DIAG_SD_ROOT_PATH));/* [false alarm]:ÆÁ±ÎFortify */
+    strncat(filedirName, DIAG_SD_ROOT_PATH, strlen(DIAG_SD_ROOT_PATH));/* [false alarm]:å±è”½Fortify */
 
-    strncat(filedirName, DIAG_SD_LTE_LOG_PATH, strlen(DIAG_SD_LTE_LOG_PATH));/* [false alarm]:ÆÁ±ÎFortify */
+    strncat(filedirName, DIAG_SD_LTE_LOG_PATH, strlen(DIAG_SD_LTE_LOG_PATH));/* [false alarm]:å±è”½Fortify */
     ulFileNameLen = VOS_StrLen(filedirName);
 
     filedirName[ulFileNameLen] = '/';
 
-    strncat(filedirName, DIAG_SD_LTE_LOG_FILE_PRE, strlen(DIAG_SD_LTE_LOG_FILE_PRE));/* [false alarm]:ÆÁ±ÎFortify */
+    strncat(filedirName, DIAG_SD_LTE_LOG_FILE_PRE, strlen(DIAG_SD_LTE_LOG_FILE_PRE));/* [false alarm]:å±è”½Fortify */
 
-    /*Æ´½ÓÎÄ¼ş±àºÅ*/
+    /*æ‹¼æ¥æ–‡ä»¶ç¼–å·*/
     /* coverity[secure_coding] */
-    sprintf(CurrenfileName, "%s%d.lpd",filedirName,(VOS_UINT8)stDiagSdLogCtrlInfo.ulFileNum);/* [false alarm]:ÆÁ±ÎFortify */
+    sprintf(CurrenfileName, "%s%d.lpd",filedirName,(VOS_UINT8)stDiagSdLogCtrlInfo.ulFileNum);/* [false alarm]:å±è”½Fortify */
 
     stDiagSdLogCtrlInfo.CurrentFileFd = DIAG_FS_OPEN(CurrenfileName, O_RDWR |O_CREAT, 0666);
 
@@ -222,17 +222,17 @@ VOS_UINT32 diag_OpenSdFile( VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_ReCreatLogDir
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_ReCreatLogDir
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_UINT32 diag_ReCreatLogDir(VOS_VOID)
@@ -265,14 +265,14 @@ VOS_UINT32 diag_ReCreatLogDir(VOS_VOID)
 #endif
         return ERR_MSP_FAILURE;
     }
-    strncat(dirName, DIAG_SD_ROOT_PATH, strlen(DIAG_SD_ROOT_PATH));/* [false alarm]:ÆÁ±ÎFortify */
-    strncat(dirName, DIAG_SD_LTE_LOG_PATH, strlen(DIAG_SD_LTE_LOG_PATH));/* [false alarm]:ÆÁ±ÎFortify */
+    strncat(dirName, DIAG_SD_ROOT_PATH, strlen(DIAG_SD_ROOT_PATH));/* [false alarm]:å±è”½Fortify */
+    strncat(dirName, DIAG_SD_LTE_LOG_PATH, strlen(DIAG_SD_LTE_LOG_PATH));/* [false alarm]:å±è”½Fortify */
 
     Fd = DIAG_FS_OPEN(dirName, O_DIRECTORY, 0);
 
     if(Fd <0)
     {
-        /* Ä¿Â¼²»´æÔÚ£¬·µ»ØÉ¾³ı³É¹¦*/
+        /* ç›®å½•ä¸å­˜åœ¨ï¼Œè¿”å›åˆ é™¤æˆåŠŸ*/
 #if (VOS_LINUX== VOS_OS_VER)
         kfree(pBuf);
 #endif
@@ -291,7 +291,7 @@ VOS_UINT32 diag_ReCreatLogDir(VOS_VOID)
             return ERR_MSP_FAILURE;
         }
 
-        /*Ä¿Â¼ÊÇ¿ÕµÄ£¬²»ĞèÒªÉ¾³ı*/
+        /*ç›®å½•æ˜¯ç©ºçš„ï¼Œä¸éœ€è¦åˆ é™¤*/
         if(0 == nRead)
         {
             DIAG_FS_CLOSE(Fd);
@@ -323,17 +323,17 @@ VOS_UINT32 diag_ReCreatLogDir(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_WriteDataToSDFile
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_WriteDataToSDFile
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_UINT32 diag_WriteDataToSDFile(VOS_UINT8* ucBuf , VOS_UINT32 ulBufLen)
@@ -387,17 +387,17 @@ VOS_UINT32 diag_WriteDataToSDFile(VOS_UINT8* ucBuf , VOS_UINT32 ulBufLen)
 /*lint -restore +e30 +e63*/
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_SetLogCtrlInfo
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_SetLogCtrlInfo
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_UINT32 diag_SetLogCtrlInfo(DIAG_CMD_SET_LPD_MODE_REQ_STRU* pstLdpReq)
@@ -427,7 +427,7 @@ VOS_UINT32 diag_SetLogCtrlInfo(DIAG_CMD_SET_LPD_MODE_REQ_STRU* pstLdpReq)
             return MSP_SD_GET_STATE_ERROR;
         }
 
-        /*É¾³ıSD¿¨ÖĞÒÑÓĞµÄlogÎÄ¼ş*/
+        /*åˆ é™¤SDå¡ä¸­å·²æœ‰çš„logæ–‡ä»¶*/
         ret  = diag_ReCreatLogDir();
 
         if(ret == ERR_MSP_SUCCESS)
@@ -443,15 +443,15 @@ VOS_UINT32 diag_SetLogCtrlInfo(DIAG_CMD_SET_LPD_MODE_REQ_STRU* pstLdpReq)
                     return ERR_MSP_INVALID_PARAMETER;
                 }
                 stDiagSdLogCtrlInfo.enSendLogType =(ENUM_DMS_LOG_SEND_TYPE)EN_DIAG_SEND_LOG_TO_SD;
-                stDiagSdLogCtrlInfo.ulPeriod = (pstLdpReq->ulSDFileSaveTime) *60; /*³ÖĞøÊ±¼ä£¬HSOÏÂ·¢µÄµ¥Î»Îª·ÖÖÓ£¬µ¥°å×ª»»³ÉÃë¼ÆÊı */
+                stDiagSdLogCtrlInfo.ulPeriod = (pstLdpReq->ulSDFileSaveTime) *60; /*æŒç»­æ—¶é—´ï¼ŒHSOä¸‹å‘çš„å•ä½ä¸ºåˆ†é’Ÿï¼Œå•æ¿è½¬æ¢æˆç§’è®¡æ•° */
                 stDiagSdLogCtrlInfo.ulStorageLogSize = (ulFileSize > DIAG_SD_FILE_MAX_SIZE)?\
-                    DIAG_SD_FILE_MAX_SIZE:ulFileSize;/*HSOÏÂ·¢µÄÊÇMBÎªµ¥Î»£¬µ¥°å×ª»»³É×Ö½Ú¼ÆÊı*/
+                    DIAG_SD_FILE_MAX_SIZE:ulFileSize;/*HSOä¸‹å‘çš„æ˜¯MBä¸ºå•ä½ï¼Œå•æ¿è½¬æ¢æˆå­—èŠ‚è®¡æ•°*/
                 stDiagSdLogCtrlInfo.StorageTotalSize = 0;
                 stDiagSdLogCtrlInfo.ulCurrenFileSize = 0;
                 stDiagSdLogCtrlInfo.ulStartFlag = 1;
-                stDiagSdLogCtrlInfo.ulMinFileNum = 0;   /*ÉèÖÃÊ±×îĞ¡ÎÄ¼ş±àºÅÎª0*/
+                stDiagSdLogCtrlInfo.ulMinFileNum = 0;   /*è®¾ç½®æ—¶æœ€å°æ–‡ä»¶ç¼–å·ä¸º0*/
 
-                /*ÉèÖÃsocp Îª»½ĞÑÔ´*/
+                /*è®¾ç½®socp ä¸ºå”¤é†’æº*/
                 DRV_PM_SET_WAKE_SRC(DRV_WAKE_SRC_SOCP);
             }
         }
@@ -460,7 +460,7 @@ VOS_UINT32 diag_SetLogCtrlInfo(DIAG_CMD_SET_LPD_MODE_REQ_STRU* pstLdpReq)
     {
          stDiagSdLogCtrlInfo.enSendLogType = (ENUM_DMS_LOG_SEND_TYPE)EN_DIAG_SEND_LOG_TO_USB;
 
-        /*¹Ø±ÕSD¿¨ÖĞÒÑ¾­´ò¿ªµÄlogÎÄ¼ş*/
+        /*å…³é—­SDå¡ä¸­å·²ç»æ‰“å¼€çš„logæ–‡ä»¶*/
         diag_CloseSdFile(stDiagSdLogCtrlInfo.CurrentFileFd);
         stDiagSdLogCtrlInfo.CurrentFileFd = -1;
         stDiagSdLogCtrlInfo.ulStartFlag = 0;
@@ -472,17 +472,17 @@ VOS_UINT32 diag_SetLogCtrlInfo(DIAG_CMD_SET_LPD_MODE_REQ_STRU* pstLdpReq)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_GetLogSendType
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_GetLogSendType
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 ENUM_DMS_LOG_SEND_TYPE diag_GetLogSendType(VOS_VOID)
@@ -498,17 +498,17 @@ ENUM_DMS_LOG_SEND_TYPE diag_GetLogSendType(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_IsLogSendTimeOver
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_IsLogSendTimeOver
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_BOOL diag_IsLogSendTimeOver(VOS_VOID)
@@ -523,10 +523,10 @@ VOS_BOOL diag_IsLogSendTimeOver(VOS_VOID)
     }
 
     (VOS_VOID)BSP_BBPGetCurTime(&NewTime);
-     /*½«ÒÔÃëÎªµ¥Î»µÄÊ±¼ä×ª»»³É32KÆµÂÊµÄ¼ÆÊı*/
+     /*å°†ä»¥ç§’ä¸ºå•ä½çš„æ—¶é—´è½¬æ¢æˆ32Ké¢‘ç‡çš„è®¡æ•°*/
     PeriodTime = ( VOS_UINT32)(stDiagSdLogCtrlInfo.ulPeriod *32*1024 );
 
-    /*²»ĞèÒª ¿¼ÂÇ·­×ª*/
+    /*ä¸éœ€è¦ è€ƒè™‘ç¿»è½¬*/
     TempTime = NewTime - stDiagSdLogCtrlInfo.StartTime ;
 
     if(TempTime > PeriodTime)
@@ -540,17 +540,17 @@ VOS_BOOL diag_IsLogSendTimeOver(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_IsCurrentFileFull
- ¹¦ÄÜÃèÊö  :  ÅĞ¶Ïµ±Ç°ÎÄ¼şÕıÔÚĞ´ÈëµÄÎÄ¼şÊÇ·ñ´ïµ½ÉèÖÃµÄ´óĞ¡
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_IsCurrentFileFull
+ åŠŸèƒ½æè¿°  :  åˆ¤æ–­å½“å‰æ–‡ä»¶æ­£åœ¨å†™å…¥çš„æ–‡ä»¶æ˜¯å¦è¾¾åˆ°è®¾ç½®çš„å¤§å°
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_BOOL diag_IsCurrentFileFull(VOS_UINT32 ulBufLen)
@@ -567,22 +567,22 @@ VOS_BOOL diag_IsCurrentFileFull(VOS_UINT32 ulBufLen)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_IsTotalFileFull
- ¹¦ÄÜÃèÊö  : ÅĞ¶Ïµ±Ç°Ğ´ÈëµÄÎÄ¼şÊÇ·ñÒÑ´ïµ½¿Õ¼ä×î´óÖµ
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_IsTotalFileFull
+ åŠŸèƒ½æè¿°  : åˆ¤æ–­å½“å‰å†™å…¥çš„æ–‡ä»¶æ˜¯å¦å·²è¾¾åˆ°ç©ºé—´æœ€å¤§å€¼
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_BOOL diag_IsTotalFileFull(VOS_UINT32 ulBufLen)
 {
-    /*ÅĞ¶ÏÒÑĞ´ÈëµÄÊı¾İ×Ü³¤¶ÈÊÇ·ñ´ïµ½×î´ó¿Õ¼ä³¤¶È*/
+    /*åˆ¤æ–­å·²å†™å…¥çš„æ•°æ®æ€»é•¿åº¦æ˜¯å¦è¾¾åˆ°æœ€å¤§ç©ºé—´é•¿åº¦*/
     if((stDiagSdLogCtrlInfo.StorageTotalSize +ulBufLen )  < stDiagSdLogCtrlInfo.MaxFileSize)
     {
         return FALSE;
@@ -593,17 +593,17 @@ VOS_BOOL diag_IsTotalFileFull(VOS_UINT32 ulBufLen)
     }
 }
 /*****************************************************************************
- º¯ Êı Ãû  : diag_DeleteOldFile
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_DeleteOldFile
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 diag_DeleteOldFile(VOS_VOID)
 {
@@ -612,7 +612,7 @@ VOS_UINT32 diag_DeleteOldFile(VOS_VOID)
     VOS_UINT32  ulFileNameLen;
     VOS_INT32 fd;
     mm_segment_t sd_fs;
-    VOS_INT32 ulFileLen;    /*¼ÇÂ¼×îĞ¡ĞòÁĞºÅÎÄ¼ş³¤¶È*/
+    VOS_INT32 ulFileLen;    /*è®°å½•æœ€å°åºåˆ—å·æ–‡ä»¶é•¿åº¦*/
     VOS_UINT32 ulRet;
 
     /*lint -save -e63*/
@@ -628,18 +628,18 @@ VOS_UINT32 diag_DeleteOldFile(VOS_VOID)
     {
         return ERR_MSP_FAILURE;
     }
-    strncat(filedirName, DIAG_SD_ROOT_PATH, strlen(DIAG_SD_ROOT_PATH));/* [false alarm]:ÆÁ±ÎFortify */
+    strncat(filedirName, DIAG_SD_ROOT_PATH, strlen(DIAG_SD_ROOT_PATH));/* [false alarm]:å±è”½Fortify */
 
-    strncat(filedirName, DIAG_SD_LTE_LOG_PATH, strlen(DIAG_SD_LTE_LOG_PATH));/* [false alarm]:ÆÁ±ÎFortify */
+    strncat(filedirName, DIAG_SD_LTE_LOG_PATH, strlen(DIAG_SD_LTE_LOG_PATH));/* [false alarm]:å±è”½Fortify */
     ulFileNameLen = VOS_StrLen(filedirName);
 
     filedirName[ulFileNameLen] = '/';
 
-    strncat(filedirName, DIAG_SD_LTE_LOG_FILE_PRE, strlen(DIAG_SD_LTE_LOG_FILE_PRE));/* [false alarm]:ÆÁ±ÎFortify */
+    strncat(filedirName, DIAG_SD_LTE_LOG_FILE_PRE, strlen(DIAG_SD_LTE_LOG_FILE_PRE));/* [false alarm]:å±è”½Fortify */
 
-    /*Æ´½ÓÎÄ¼ş±àºÅ*/
+    /*æ‹¼æ¥æ–‡ä»¶ç¼–å·*/
     /* coverity[secure_coding] */
-    sprintf(CurrenfileName, "%s%d.lpd",filedirName,(VOS_UINT8)stDiagSdLogCtrlInfo.ulMinFileNum);/* [false alarm]:ÆÁ±ÎFortify */
+    sprintf(CurrenfileName, "%s%d.lpd",filedirName,(VOS_UINT8)stDiagSdLogCtrlInfo.ulMinFileNum);/* [false alarm]:å±è”½Fortify */
 
     diag_printf("[%s]:%s\n",__func__,CurrenfileName);
 
@@ -658,7 +658,7 @@ VOS_UINT32 diag_DeleteOldFile(VOS_VOID)
     stDiagSdLogCtrlInfo.StorageTotalSize -= ulFileLen;
 
 
-    /*ÖØĞÂ´ò¿ª*/
+    /*é‡æ–°æ‰“å¼€*/
     ulRet = diag_OpenSdFile();
     if(ulRet)
     {
@@ -675,17 +675,17 @@ VOS_UINT32 diag_DeleteOldFile(VOS_VOID)
 
 }
 /*****************************************************************************
- º¯ Êı Ãû  : diag_StorDataToSD
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊı  : :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê9ÔÂ3ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_StorDataToSD
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´9æœˆ3æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_UINT32 diag_StorDataToSD(VOS_UINT8* ucBuf , VOS_UINT32 ulBufLen)
@@ -713,16 +713,16 @@ VOS_UINT32 diag_StorDataToSD(VOS_UINT8* ucBuf , VOS_UINT32 ulBufLen)
         return MSP_SD_GET_STATE_ERROR;
     }
 
-    //´æÖüÊı¾İµÄ×Ü´óĞ¡ÊÇ·ñ³¬¹ıÉè¶¨Öµ,  ·µ»Ø³É¹¦
+    //å­˜è´®æ•°æ®çš„æ€»å¤§å°æ˜¯å¦è¶…è¿‡è®¾å®šå€¼,  è¿”å›æˆåŠŸ
     if(diag_IsTotalFileFull(ulBufLen))
     {
-        if(diag_DeleteOldFile()) /*ÇåÀí×îÏÈĞ´ÈëµÄÎÄ¼ş*/
+        if(diag_DeleteOldFile()) /*æ¸…ç†æœ€å…ˆå†™å…¥çš„æ–‡ä»¶*/
         {
             return ERR_MSP_FAILURE;
         }
     }
 
-    //´æÖüÊ±¼ä³¬¹ıÉè¶¨£¬·µ»Ø³É¹¦
+    //å­˜è´®æ—¶é—´è¶…è¿‡è®¾å®šï¼Œè¿”å›æˆåŠŸ
     if(diag_IsLogSendTimeOver())
     {
         diag_CloseSdFile(stDiagSdLogCtrlInfo.CurrentFileFd);
@@ -731,19 +731,19 @@ VOS_UINT32 diag_StorDataToSD(VOS_UINT8* ucBuf , VOS_UINT32 ulBufLen)
         return ERR_MSP_SUCCESS;
     }
 
-    /*µ±Ç°ÎÄ¼şÊÇ·ñĞ´Âú*/
+    /*å½“å‰æ–‡ä»¶æ˜¯å¦å†™æ»¡*/
     if( !diag_IsCurrentFileFull(ulBufLen))
     {
         ulRet = diag_WriteDataToSDFile(ucBuf ,ulBufLen);
     }
     else
     {
-        /*ÏÈ¹Ø±ÕÒÑ¾­Ğ´ÂúµÄÎÄ¼ş*/
+        /*å…ˆå…³é—­å·²ç»å†™æ»¡çš„æ–‡ä»¶*/
         diag_CloseSdFile(stDiagSdLogCtrlInfo.CurrentFileFd);
 
         stDiagSdLogCtrlInfo.CurrentFileFd = -1;
 
-        /*ÖØĞÂ´ò¿ªÎÄ¼ş*/
+        /*é‡æ–°æ‰“å¼€æ–‡ä»¶*/
         ulRet = diag_OpenSdFile();
 
         if(ulRet != ERR_MSP_SUCCESS)
@@ -797,21 +797,21 @@ VOS_UINT32 diag_SdInit(VOS_VOID)
  VOS_VOID diag_sdhelp(VOS_VOID)
  {
     /*lint -save -e516*/
-    diag_printf(" µ±Ç°ÎÄ¼şµÄFD = %d\n",stDiagSdLogCtrlInfo.CurrentFileFd);
-    diag_printf(" µ±Ç°ÎÄ¼şµÄSIZE = 0x%x\n",stDiagSdLogCtrlInfo.ulCurrenFileSize);
-    diag_printf(" µ±Ç°ÎÄ¼şÊıÄ¿ = %d\n",stDiagSdLogCtrlInfo.ulFileNum);
-    diag_printf(" µ±Ç°×îĞ¡ÎÄ¼şĞòÁĞºÅ = %d\n",stDiagSdLogCtrlInfo.ulMinFileNum);
-    diag_printf(" ÉèÖÃÊ±¼ä = %d\n",stDiagSdLogCtrlInfo.ulPeriod);
-    diag_printf(" ¿ªÊ¼Ê±¼ä = %d\n",(VOS_UINT32)(stDiagSdLogCtrlInfo.StartTime));
-    diag_printf(" ÉèÖÃ´æ´¢SIZE = 0x%x\n",(VOS_UINT32)(stDiagSdLogCtrlInfo.ulStorageLogSize));
-    diag_printf(" ÒÑ´æ´¢SIZE = 0x%x\n",(VOS_UINT32)(stDiagSdLogCtrlInfo.StorageTotalSize));
-    diag_printf(" FD´íÎóg_SdFileFdErr = %d\n",g_SdFileFdErr);
-    diag_printf(" SEEK´íÎóg_SdFileFdErr = %d\n",g_SdFileSeekErr);
-    diag_printf(" WRITE´íÎóg_SdFileFdErr = %d\n",g_SdFileWriteErr);
-    diag_printf(" WRITE³É¹¦g_SdFileFdOK = %d\n",g_SdFileWriteOK);
-    diag_printf(" SD¿¨´æ´¢¿ªÊ¼±êÖ¾ = %d\n",stDiagSdLogCtrlInfo.ulStartFlag);
-    diag_printf("´æ´¢Â·¾¶:      %s\n",DIAG_SD_ROOT_PATH);
-    diag_printf("´æ´¢¿Õ¼ä´óĞ¡ : 0x%x\n",DIAG_SD_FILE_MAX_SIZE);
+    diag_printf(" å½“å‰æ–‡ä»¶çš„FD = %d\n",stDiagSdLogCtrlInfo.CurrentFileFd);
+    diag_printf(" å½“å‰æ–‡ä»¶çš„SIZE = 0x%x\n",stDiagSdLogCtrlInfo.ulCurrenFileSize);
+    diag_printf(" å½“å‰æ–‡ä»¶æ•°ç›® = %d\n",stDiagSdLogCtrlInfo.ulFileNum);
+    diag_printf(" å½“å‰æœ€å°æ–‡ä»¶åºåˆ—å· = %d\n",stDiagSdLogCtrlInfo.ulMinFileNum);
+    diag_printf(" è®¾ç½®æ—¶é—´ = %d\n",stDiagSdLogCtrlInfo.ulPeriod);
+    diag_printf(" å¼€å§‹æ—¶é—´ = %d\n",(VOS_UINT32)(stDiagSdLogCtrlInfo.StartTime));
+    diag_printf(" è®¾ç½®å­˜å‚¨SIZE = 0x%x\n",(VOS_UINT32)(stDiagSdLogCtrlInfo.ulStorageLogSize));
+    diag_printf(" å·²å­˜å‚¨SIZE = 0x%x\n",(VOS_UINT32)(stDiagSdLogCtrlInfo.StorageTotalSize));
+    diag_printf(" FDé”™è¯¯g_SdFileFdErr = %d\n",g_SdFileFdErr);
+    diag_printf(" SEEKé”™è¯¯g_SdFileFdErr = %d\n",g_SdFileSeekErr);
+    diag_printf(" WRITEé”™è¯¯g_SdFileFdErr = %d\n",g_SdFileWriteErr);
+    diag_printf(" WRITEæˆåŠŸg_SdFileFdOK = %d\n",g_SdFileWriteOK);
+    diag_printf(" SDå¡å­˜å‚¨å¼€å§‹æ ‡å¿— = %d\n",stDiagSdLogCtrlInfo.ulStartFlag);
+    diag_printf("å­˜å‚¨è·¯å¾„:      %s\n",DIAG_SD_ROOT_PATH);
+    diag_printf("å­˜å‚¨ç©ºé—´å¤§å° : 0x%x\n",DIAG_SD_FILE_MAX_SIZE);
     /*lint -restore +e516*/
  }
 

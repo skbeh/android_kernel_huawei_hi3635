@@ -57,7 +57,7 @@ typedef struct
    IOS_REG_DATA*           end;        /*last address of ios data array*/
 }IOS_POOL_CTRL;
 
-/*ÉêÇëSHARE-MEMORYÄÚ´æ,ÓÃÀ´´æ·Åfastboot¹Ü½ÅÅäÖÃµÄ¼Ä´æÆ÷ĞÅÏ¢*/
+/*ç”³è¯·SHARE-MEMORYå†…å­˜,ç”¨æ¥å­˜æ”¾fastbootç®¡è„šé…ç½®çš„å¯„å­˜å™¨ä¿¡æ¯*/
 #define IOS_POOL_ADDR	((SHM_MEM_IOS_ADDR) + sizeof(IOS_POOL_CTRL))
 #define IOS_POOL_SIZE   ((SHM_MEM_IOS_SIZE - sizeof(IOS_POOL_CTRL)) / sizeof(IOS_REG_DATA) * sizeof(IOS_REG_DATA))
 static IOS_POOL_CTRL* const p_ios_ctrl = (IOS_POOL_CTRL *)((SHM_MEM_IOS_ADDR));
@@ -142,7 +142,7 @@ int ios_list_init(void)
                 IOS_ERROR:    phase store failed
                 
  history     :
- date        : 2011Äê02ÔÂ21ÈÕ
+ date        : 2011å¹´02æœˆ21æ—¥
  creator     : 
  modified    : new create
  description.   : 
@@ -194,7 +194,7 @@ int add_ios_list(unsigned int addr)
 }
 #endif
 
-/*´Ó¹²ÏíÄÚ´æÖĞ»Ö¸´IOSÅäÖÃ¼Ä´æÆ÷*/
+/*ä»å…±äº«å†…å­˜ä¸­æ¢å¤IOSé…ç½®å¯„å­˜å™¨*/
 int ios_config_resume(void)
 {
     unsigned int virt_addr = 0;

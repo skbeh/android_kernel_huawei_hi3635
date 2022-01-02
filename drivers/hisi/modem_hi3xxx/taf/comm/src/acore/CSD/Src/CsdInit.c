@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "CsdInit.h"
 
@@ -15,7 +15,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e767 */
 #define    THIS_FILE_ID                 PS_FILE_ID_CSD_INIT_C
@@ -24,11 +24,11 @@ extern "C" {
 #if( FEATURE_ON == FEATURE_CSD )
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 VOS_UINT32 CSD_InitDicc(VOS_VOID)
@@ -37,21 +37,21 @@ VOS_UINT32 CSD_InitDicc(VOS_VOID)
     DICC_INIT_CHN_INFO_STRU             stSendInitInfo;
     DICC_INIT_CHN_INFO_STRU             stRcvInitInfo;
 
-    /* ·¢ËÍ¶Ë²ÎÊýÉèÖÃ */
+    /* å‘é€ç«¯å‚æ•°è®¾ç½® */
     stSendInitInfo.enUserRole      = DICC_CHAN_ROLE_SENDER;
     stSendInitInfo.u.stSndInitInfo.stSndChnInfo.usChnBlkNum
                                    = DICC_PER_QUEUE_MAX_NODE_NUM;
     stSendInitInfo.u.stSndInitInfo.stSndChnInfo.usChnBlkSize
                                    = DICC_INFO_BLOCK_MAX_LEN;
 
-    /* ½ÓÊÕ¶Ë²ÎÊýÉèÖÃ */
+    /* æŽ¥æ”¶ç«¯å‚æ•°è®¾ç½® */
     stRcvInitInfo.enUserRole       = DICC_CHAN_ROLE_RECVER;
 
-    /*ÖÐ¶ÏÏìÓ¦º¯Êý*/
+    /*ä¸­æ–­å“åº”å‡½æ•°*/
     stRcvInitInfo.u.stRcvInitInfo.pfuncRecvIsr
                                    = CSD_DL_ProcIsr;
 
-    /*³õÊ¼»¯DICC·¢ËÍÍ¨µÀ*/
+    /*åˆå§‹åŒ–DICCå‘é€é€šé“*/
     ulDICCRslt                     = DICC_SingleChnInit(ACPU_PID_CSD,
                                                         DICC_SERVICE_TYPE_CSD_DATA,
                                                         &stSendInitInfo,
@@ -63,7 +63,7 @@ VOS_UINT32 CSD_InitDicc(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ³õÊ¼»¯DICC½ÓÊÕÍ¨µÀ*/
+    /* åˆå§‹åŒ–DICCæŽ¥æ”¶é€šé“*/
     ulDICCRslt                     = DICC_SingleChnInit(ACPU_PID_CSD,
                                                         DICC_SERVICE_TYPE_CSD_DATA,
                                                         &stRcvInitInfo,
@@ -76,7 +76,7 @@ VOS_UINT32 CSD_InitDicc(VOS_VOID)
     }
 
 
-    /*´ò¿ªÉÏÐÐDICC·¢ËÍÍ¨µÀ*/
+    /*æ‰“å¼€ä¸Šè¡ŒDICCå‘é€é€šé“*/
     ulDICCRslt                      = DICC_OpenChannel(ACPU_PID_CSD,
                                                        DICC_CHAN_ID_UL_CSD_DATA_CHAN,
                                                        DICC_CHAN_ROLE_SENDER,
@@ -88,7 +88,7 @@ VOS_UINT32 CSD_InitDicc(VOS_VOID)
         return VOS_ERR;
     }
 
-    /*´ò¿ªÏÂÐÐDICC½ÓÊÕÍ¨µÀ*/
+    /*æ‰“å¼€ä¸‹è¡ŒDICCæŽ¥æ”¶é€šé“*/
     ulDICCRslt                      = DICC_OpenChannel(ACPU_PID_CSD,
                                                        DICC_CHAN_ID_DL_CSD_DATA_CHAN,
                                                        DICC_CHAN_ROLE_RECVER,
@@ -112,7 +112,7 @@ VOS_UINT32 CSD_UL_PidInit(enum VOS_INIT_PHASE_DEFINE ip)
     {
         case   VOS_IP_LOAD_CONFIG:
 
-            /*DICCÍ¨µÀ³õÊ¼»¯*/
+            /*DICCé€šé“åˆå§‹åŒ–*/
             ulRslt = CSD_InitDicc();
 
             if (VOS_OK != ulRslt)
@@ -122,7 +122,7 @@ VOS_UINT32 CSD_UL_PidInit(enum VOS_INIT_PHASE_DEFINE ip)
                 return VOS_ERR;
             }
 
-            /*È«¾Ö±äÁ¿³õÊ¼»¯*/
+            /*å…¨å±€å˜é‡åˆå§‹åŒ–*/
             ulRslt = CSD_InitCtx();
 
             break;
@@ -155,7 +155,7 @@ VOS_UINT32 CSD_FidInit (enum VOS_INIT_PHASE_DEFINE  enInitPhase)
     {
         case   VOS_IP_LOAD_CONFIG:
 
-            /*³õÊ¼»¯ÉÏÐÐÏÂÐÐÐÅºÅÁ¿*/
+            /*åˆå§‹åŒ–ä¸Šè¡Œä¸‹è¡Œä¿¡å·é‡*/
            ulReturnCode = CSD_InitSem();
 
             if (VOS_OK != ulReturnCode)
@@ -177,7 +177,7 @@ VOS_UINT32 CSD_FidInit (enum VOS_INIT_PHASE_DEFINE  enInitPhase)
             }
 
 
-            /* ÉÏÐÐ×Ô´¦ÀíÈÎÎñ×¢²á */
+            /* ä¸Šè¡Œè‡ªå¤„ç†ä»»åŠ¡æ³¨å†Œ */
             ulReturnCode  = VOS_RegisterSelfTask(ACPU_FID_CSD,
                                                  (VOS_TASK_ENTRY_TYPE)CSD_UL_ProcDataTask,
                                                  VOS_PRIORITY_P5,
@@ -190,7 +190,7 @@ VOS_UINT32 CSD_FidInit (enum VOS_INIT_PHASE_DEFINE  enInitPhase)
                 return VOS_ERR;
             }
 
-            /* ÏÂÐÐ×Ô´¦ÀíÈÎÎñ×¢²á */
+            /* ä¸‹è¡Œè‡ªå¤„ç†ä»»åŠ¡æ³¨å†Œ */
             ulReturnCode  = VOS_RegisterSelfTask(ACPU_FID_CSD,
                                                  (VOS_TASK_ENTRY_TYPE)CSD_DL_ProcDataTask,
                                                  VOS_PRIORITY_P5,
@@ -204,7 +204,7 @@ VOS_UINT32 CSD_FidInit (enum VOS_INIT_PHASE_DEFINE  enInitPhase)
             }
 
 
-            /* ÈÎÎñÓÅÏÈ¼¶ */
+            /* ä»»åŠ¡ä¼˜å…ˆçº§ */
             ulReturnCode = VOS_RegisterMsgTaskPrio(ACPU_FID_CSD, VOS_PRIORITY_P3);
             if( VOS_OK != ulReturnCode )
             {

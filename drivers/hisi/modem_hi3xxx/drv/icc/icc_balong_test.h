@@ -81,7 +81,7 @@ struct icc_test_channel
 	struct icc_channel_vector *vec_bak;
 #if defined(__KERNEL__) || defined(__VXWORKS__)
 	struct icc_test_sub_channel sub_channels[ICC_TEST_CHANNEL_SIZE];
-#elif defined(__CMSIS_RTOS) /* rtx资源有限 */
+#elif defined(__CMSIS_RTOS) /* rtx璧勬簮鏈夐檺 */
 	struct icc_test_sub_channel sub_channels[ICC_TEST_MCORE_CHN_SIZE];
 #endif
 };

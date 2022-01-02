@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 /*lint --e{7,537,305,322}*/
 #include "AtParse.h"
@@ -13,10 +13,10 @@
 #include "LNvCommon.h"
 #include "at_lte_common.h"
 
-/* ¶¨ÒåÁËLTEÓëTDSË½ÓÐ×°±¸ATÃüÁî */
+/* å®šä¹‰äº†LTEä¸ŽTDSç§æœ‰è£…å¤‡ATå‘½ä»¤ */
 AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTLTbl[] = {
 #if(FEATURE_ON == FEATURE_LTE)
-    /*BEGIN: LTE ¿ìËÙÐ£×¼×°±¸ATÃüÁî */
+    /*BEGIN: LTE å¿«é€Ÿæ ¡å‡†è£…å¤‡ATå‘½ä»¤ */
     {AT_CMD_BANDSW,
     atSetBandSWPara,      AT_SET_PARA_TIME, atQryBandSWPara,     AT_QRY_PARA_TIME, VOS_NULL_PTR, AT_NOT_SET_TIME,
     VOS_NULL_PTR,        AT_NOT_SET_TIME,
@@ -193,9 +193,9 @@ AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTLTbl[] = {
     VOS_NULL_PTR,        AT_NOT_SET_TIME,
     AT_ERROR, CMD_TBL_PIN_IS_LOCKED,
     (VOS_UINT8*)"^NVWREX",(VOS_UINT8*)"(0-65535),(0-2048),(0-2048),(@data),(@data),(@data),(@data),(@data),(@data),(@data),(@data),(@data),(@data),(@data),(@data)"},
-    /*END: LTE ¿ìËÙÐ£×¼×°±¸ATÃüÁî */
+    /*END: LTE å¿«é€Ÿæ ¡å‡†è£…å¤‡ATå‘½ä»¤ */
 
-    /*BEGIN: LTE ·ÇÐÅÁî×Û²â×°±¸ATÃüÁî */
+    /*BEGIN: LTE éžä¿¡ä»¤ç»¼æµ‹è£…å¤‡ATå‘½ä»¤ */
     {AT_CMD_SSYNC,
     atSetSSYNCPara,      AT_SET_PARA_TIME,     atQrySSYNCPara,      AT_QRY_PARA_TIME, VOS_NULL_PTR, AT_NOT_SET_TIME,
     VOS_NULL_PTR,        AT_NOT_SET_TIME,
@@ -284,7 +284,7 @@ AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTLTbl[] = {
     VOS_NULL_PTR,        AT_NOT_SET_TIME,      atQrySRXBLERPara,    AT_QRY_PARA_TIME, VOS_NULL_PTR, AT_NOT_SET_TIME,
     VOS_NULL_PTR,        AT_NOT_SET_TIME,
     AT_ERROR, CMD_TBL_PIN_IS_LOCKED,
-    (VOS_UINT8*)"^SRXMEAS",         NULL},//ÃüÁîÃû³ÆÓÉ SRXBLER ±äÎª SRXMEAS  µ«½á¹¹ÌåÃû³Æ²»±ä
+    (VOS_UINT8*)"^SRXMEAS",         NULL},//å‘½ä»¤åç§°ç”± SRXBLER å˜ä¸º SRXMEAS  ä½†ç»“æž„ä½“åç§°ä¸å˜
 
     {AT_CMD_SSTART,
     atSetSSTARTPara,     AT_SET_PARA_TIME,     atQrySSTARTPara,     AT_QRY_PARA_TIME, VOS_NULL_PTR, AT_NOT_SET_TIME,
@@ -314,11 +314,11 @@ AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTLTbl[] = {
      VOS_NULL_PTR,        AT_NOT_SET_TIME,
      AT_ERROR, CMD_TBL_PIN_IS_LOCKED,
      (VOS_UINT8*)"^STRXMEAS",         NULL},  
-    /*END: LTE ·ÇÐÅÁî×Û²â×°±¸ATÃüÁî */
+    /*END: LTE éžä¿¡ä»¤ç»¼æµ‹è£…å¤‡ATå‘½ä»¤ */
 #endif
 
 #if(FEATURE_ON == FEATURE_UE_MODE_TDS)
-    /*BEGIN: TDS ×°±¸ATÃüÁî */
+    /*BEGIN: TDS è£…å¤‡ATå‘½ä»¤ */
     {AT_CMD_SCELLINFO,
     VOS_NULL_PTR,        AT_NOT_SET_TIME,    At_QryTdsScellinfoPara,    AT_QRY_PARA_TIME,    VOS_NULL_PTR,    AT_NOT_SET_TIME,
     VOS_NULL_PTR,        AT_NOT_SET_TIME,
@@ -336,7 +336,7 @@ AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTLTbl[] = {
     VOS_NULL_PTR,        AT_NOT_SET_TIME,
     AT_CME_INCORRECT_PARAMETERS,    CMD_TBL_PIN_IS_LOCKED,
     (VOS_UINT8*)"^CMTM",  VOS_NULL_PTR},
-    /*END: TDS ×°±¸ATÃüÁî */
+    /*END: TDS è£…å¤‡ATå‘½ä»¤ */
 #endif  
 
     {AT_CMD_LTCOMMCMD,
@@ -348,13 +348,13 @@ AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTLTbl[] = {
 };
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_RegisterDeviceCmdTLTable
- ¹¦ÄÜÃèÊö  : ×¢²á×°±¸ÃüÁî±í
- ÊäÈë²ÎÊý  : VOS_VOID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_RegisterDeviceCmdTLTable
+ åŠŸèƒ½æè¿°  : æ³¨å†Œè£…å¤‡å‘½ä»¤è¡¨
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 VOS_UINT32 At_RegisterDeviceCmdTLTable(VOS_VOID)
 {

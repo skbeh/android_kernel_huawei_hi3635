@@ -35,7 +35,7 @@
 #include "v_iddef.h"
 #include "DrvInterface.h"
 
- /* LINUX ²»Ö§³Ö */
+ /* LINUX ä¸æ”¯æŒ */
 #if (VOS_VXWORKS== VOS_OS_VER)
 #include "stdio.h"
 #endif
@@ -48,7 +48,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_V_MSG_C
 
@@ -115,11 +115,11 @@ enum
 
 UDI_HANDLE      g_OSAIccUDIHandle = (-1);
 
-/* DSPÉÏÒÆºóÌá¹©Ç¿ÖÆ»½ÐÑ¹¦ÄÜ */
+/* DSPä¸Šç§»åŽæä¾›å¼ºåˆ¶å”¤é†’åŠŸèƒ½ */
 Msg_Fun_Type    g_pfnVosAwakeFunHook = VOS_NULL_PTR;
 
 
-/* ²úÆ·ÊÇ·ñÖ§³ÖHIFI£¬0 - ²»Ö§³Ö */
+/* äº§å“æ˜¯å¦æ”¯æŒHIFIï¼Œ0 - ä¸æ”¯æŒ */
 VOS_INT32 g_HifiStatus = 0;
 
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
@@ -150,7 +150,7 @@ VOS_UINT32 VOS_RegisterAwakeFun(Msg_Fun_Type pfnHook)
 #endif
 
     /* coverity[unreachable] */
-    g_pfnVosAwakeFunHook = pfnHook; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    g_pfnVosAwakeFunHook = pfnHook; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     return VOS_OK;
 }
@@ -180,12 +180,12 @@ VOS_VOID VOS_ExecuteAwakeFun(MsgBlock *pstMsgCtrlBlk)
 #endif
 
     /* coverity[unreachable] */
-    if ( VOS_NULL_PTR == g_pfnVosAwakeFunHook ) /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    if ( VOS_NULL_PTR == g_pfnVosAwakeFunHook ) /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     {
         return;
     }
 
-    (g_pfnVosAwakeFunHook)(pstMsgCtrlBlk); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    (g_pfnVosAwakeFunHook)(pstMsgCtrlBlk); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     return;
 }
@@ -382,7 +382,7 @@ VOS_UINT32 VOS_SendMsgByDrvMB(VOS_PID                 Pid,
 
     VOS_FreeMsg(Pid, *ppMsg ); /* need free the Msg memory */
 
-    /* ÓÉÓÚHIFI¸´Î»£¬Ð´ mailboxÍ¨µÀÊ§°Ü»á·µ»ØÒ»¸öÌØÊâÖµ£¬²»ÄÜ¸´Î»µ¥°å */
+    /* ç”±äºŽHIFIå¤ä½ï¼Œå†™ mailboxé€šé“å¤±è´¥ä¼šè¿”å›žä¸€ä¸ªç‰¹æ®Šå€¼ï¼Œä¸èƒ½å¤ä½å•æ¿ */
     if (MAILBOX_TARGET_NOT_READY == ulResult )
     {
         LogPrint3("\n# VOS_SendMsgByDrvMB Error,HIFI Reset, File  %d. line %d. Size %d.\n",
@@ -784,13 +784,13 @@ VOS_UINT32 V_UnreserveMsg( VOS_PID Pid, MsgBlock * pMsg,
 VOS_BOOL VOS_CheckMsgCPUId( VOS_UINT32 ulCPUId )
 {
 #if (OSA_CPU_CCPU == VOS_OSA_CPU)
-    /* CCPUµÄidÎª0£¬Èç¹ûÏûÏ¢½ÓÊÕµÄcpuid²»Îªccpu id£¬ÔòÎª¿çºËÏûÏ¢ */
+    /* CCPUçš„idä¸º0ï¼Œå¦‚æžœæ¶ˆæ¯æŽ¥æ”¶çš„cpuidä¸ä¸ºccpu idï¼Œåˆ™ä¸ºè·¨æ ¸æ¶ˆæ¯ */
     if (OSA_CPU_CCPU != ulCPUId)
     {
         return VOS_TRUE;
     }
 #elif (OSA_CPU_ACPU == VOS_OSA_CPU)
-    /* ACPUµÄidÎª1£¬Èç¹ûÏûÏ¢½ÓÊÕµÄcpuid²»Îªacpu id£¬ÔòÎª¿çºËÏûÏ¢ */
+    /* ACPUçš„idä¸º1ï¼Œå¦‚æžœæ¶ˆæ¯æŽ¥æ”¶çš„cpuidä¸ä¸ºacpu idï¼Œåˆ™ä¸ºè·¨æ ¸æ¶ˆæ¯ */
     if (OSA_CPU_ACPU != ulCPUId)
     {
         return VOS_TRUE;
@@ -805,7 +805,7 @@ VOS_UINT32 VOS_CheckInterrupt( VOS_VOID )
 #if ((VOS_OS_VER == VOS_VXWORKS) || (VOS_OS_VER == VOS_RTOSCK))
     return DRV_INT_GET_CONTEXT();
 #elif (VOS_OS_VER == VOS_LINUX)
-    return (VOS_UINT32)in_interrupt(); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    return (VOS_UINT32)in_interrupt(); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 #endif
     return VOS_FALSE;
 }
@@ -1060,7 +1060,7 @@ VOS_UINT32 V_SendLocalMsg(VOS_PID Pid, VOS_VOID **ppMsg,
                                         VOS_NORMAL_PRIORITY_MSG, ulPid ) )
     {
         LogPrint3("# V_SendMsg Error,queue full,Tx Pid %d Rx Pid %d Name 0x%x.\n",
-            (int)(pMsgCtrlBlk->ulSenderPid), (int)ulPid, /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+            (int)(pMsgCtrlBlk->ulSenderPid), (int)ulPid, /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
             (int)(*(VOS_UINT32 *)(pMsgCtrlBlk->aucValue)) );
 
         pstDumpMsgInfo = (VOS_DUMP_MSG_STRU *)g_aucDumpMsgInfo;
@@ -1068,7 +1068,7 @@ VOS_UINT32 V_SendLocalMsg(VOS_PID Pid, VOS_VOID **ppMsg,
         VOS_TaskLock();
 
         pstDumpMsgInfo->ulQid = ulQid;
-        pstDumpMsgInfo->ulSendPid = pMsgCtrlBlk->ulSenderPid; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+        pstDumpMsgInfo->ulSendPid = pMsgCtrlBlk->ulSenderPid; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
         pstDumpMsgInfo->ulRcvPid = ulPid;
         pstDumpMsgInfo->ulMsgName = *(VOS_UINT32 *)(pMsgCtrlBlk->aucValue);
 
@@ -1167,7 +1167,7 @@ VOS_UINT32 V_SendMsgByICC(VOS_PID Pid, VOS_VOID **ppMsg,
 
     VOS_FreeMsg( Pid, *ppMsg ); /*need free the Msg memory*/
 
-    /* ÓÉÓÚCºË¸´Î»£¬Ð´ICCÍ¨µÀÊ§°Ü»á·µ»ØÒ»¸öÌØÊâÖµ£¬²»ÄÜ¸´Î»µ¥°å */
+    /* ç”±äºŽCæ ¸å¤ä½ï¼Œå†™ICCé€šé“å¤±è´¥ä¼šè¿”å›žä¸€ä¸ªç‰¹æ®Šå€¼ï¼Œä¸èƒ½å¤ä½å•æ¿ */
     if (BSP_ERR_ICC_CCORE_RESETTING == (VOS_INT32)lResult )
     {
         LogPrint3("\n# V_SendMsgByICC Error,Ccore Reset, File  %d. line %d. Size %d .\n",
@@ -1233,7 +1233,7 @@ VOS_UINT32 V_SendMsg(VOS_PID Pid, VOS_VOID **ppMsg,
 
     ulSpanMsg = VOS_CheckMsgCPUId(ulCpuID);
 
-    /* ÖÐ¶ÏÖÐ·¢ËÍ¿çºËÏûÏ¢£¬·µ»Ø´íÎó */
+    /* ä¸­æ–­ä¸­å‘é€è·¨æ ¸æ¶ˆæ¯ï¼Œè¿”å›žé”™è¯¯ */
     if ( (VOS_TRUE == ulSpanMsg)
         && (VOS_FALSE != VOS_CheckInterrupt()) )
     {
@@ -1243,7 +1243,7 @@ VOS_UINT32 V_SendMsg(VOS_PID Pid, VOS_VOID **ppMsg,
     }
 
 #ifndef OM_DEBUG
-    /* ¿çºËÏûÏ¢ ¹´×Óº¯Êý²»Îª¿Õ */
+    /* è·¨æ ¸æ¶ˆæ¯ å‹¾å­å‡½æ•°ä¸ä¸ºç©º */
     if ( (VOS_NULL_PTR != vos_MsgHook)
         && (VOS_TRUE == ulSpanMsg))
     {
@@ -1331,7 +1331,7 @@ VOS_UINT V_ICC_OSAMsg_CB(VOS_UINT ulChannelID,VOS_INT lLen)
     {
         g_msglpm = 0;
         LogPrint3("[C SR] v_msg senderpid %d, receivepid %d, msgid 0x%x.\n",
-            pMsgCtrlBlk->ulSenderPid, pMsgCtrlBlk->ulReceiverPid, *((VOS_UINT32*)(pMsgCtrlBlk->aucValue))); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+            pMsgCtrlBlk->ulSenderPid, pMsgCtrlBlk->ulReceiverPid, *((VOS_UINT32*)(pMsgCtrlBlk->aucValue))); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     }
 #endif
 
@@ -1411,7 +1411,7 @@ VOS_UINT32 V_SendLocalUrgentMsg(VOS_PID Pid, VOS_VOID ** ppMsg,
                                         VOS_EMERGENT_PRIORITY_MSG, ulPid ) )
     {
         LogPrint3("# V_SendLocalUrgentMsg Error,queue full,Tx Pid %d Rx Pid %d Name 0x%x.\n",
-            (int)(pMsgCtrlBlk->ulSenderPid), (int)ulPid, /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+            (int)(pMsgCtrlBlk->ulSenderPid), (int)ulPid, /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
             (int)(*(VOS_UINT32 *)(pMsgCtrlBlk->aucValue)) );
 
         pstDumpMsgInfo = (VOS_DUMP_MSG_STRU *)g_aucDumpMsgInfo;
@@ -1419,7 +1419,7 @@ VOS_UINT32 V_SendLocalUrgentMsg(VOS_PID Pid, VOS_VOID ** ppMsg,
         VOS_TaskLock();
 
         pstDumpMsgInfo->ulQid = ulQid;
-        pstDumpMsgInfo->ulSendPid = pMsgCtrlBlk->ulSenderPid; /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+        pstDumpMsgInfo->ulSendPid = pMsgCtrlBlk->ulSenderPid; /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
         pstDumpMsgInfo->ulRcvPid = ulPid;
         pstDumpMsgInfo->ulMsgName = *(VOS_UINT32 *)(pMsgCtrlBlk->aucValue);
 
@@ -1561,7 +1561,7 @@ VOS_UINT32 V_PostMsg(VOS_PID Pid, VOS_VOID * pMsg,
  *****************************************************************************/
 VOS_UINT32 VOS_GetMsgName(VOS_UINT_PTR ulAddrress)
 {
-    MsgBlock *pstMsgBlock = (MsgBlock*)( ulAddrress + VOS_MSG_BLK_HEAD_LEN ); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    MsgBlock *pstMsgBlock = (MsgBlock*)( ulAddrress + VOS_MSG_BLK_HEAD_LEN ); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     return *((VOS_UINT32 *)(pstMsgBlock->aucValue));
 }

@@ -32,23 +32,23 @@ BSP_VOID DRV_PM_UNSET_WAKE_SRC(DRV_PM_WAKE_SRC_ENUM wake_src)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_PWRCTRL_DEEPSLEEP_FOREVER
- ¹¦ÄÜÃèÊö  : AARM CARM ÏÂµç½Ó¿Ú
- ÊäÈë²ÎÊý  : None
- Êä³ö²ÎÊý  : None
- ·µ »Ø Öµ  : None
+ å‡½ æ•° å  : DRV_PWRCTRL_DEEPSLEEP_FOREVER
+ åŠŸèƒ½æè¿°  : AARM CARM ä¸‹ç”µæŽ¥å£
+ è¾“å…¥å‚æ•°  : None
+ è¾“å‡ºå‚æ•°  : None
+ è¿” å›ž å€¼  : None
 
 *****************************************************************************/
  void DRV_PWRCTRL_DEEPSLEEP_FOREVER(void )
  {}
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_PWRCTRL_SLEEP_CALLBACK_REG
- ¹¦ÄÜÃèÊö  : ×¢²áPWCº¯Êý¸øµ×ÈíÊ¹ÓÃ
- ÊäÈë²ÎÊý  : ´ý×¢²áµÄº¯Êý
- Êä³ö²ÎÊý  : None
- ·µ »Ø Öµ  : 0:  ²Ù×÷³É¹¦£»
-             -1£º²Ù×÷Ê§°Ü¡£
+ å‡½ æ•° å  : DRV_PWRCTRL_SLEEP_CALLBACK_REG
+ åŠŸèƒ½æè¿°  : æ³¨å†ŒPWCå‡½æ•°ç»™åº•è½¯ä½¿ç”¨
+ è¾“å…¥å‚æ•°  : å¾…æ³¨å†Œçš„å‡½æ•°
+ è¾“å‡ºå‚æ•°  : None
+ è¿” å›ž å€¼  : 0:  æ“ä½œæˆåŠŸï¼›
+             -1ï¼šæ“ä½œå¤±è´¥ã€‚
 *****************************************************************************/
  int DRV_PWRCTRL_SLEEP_CALLBACK_REG(PWC_SLEEP_CALLBACK_STRU pCallback)
  {

@@ -301,7 +301,7 @@ u32 nv_write_test01(void)
 
     for(i = 0;i<100;i++)
     {
-         printf("\n****************µÚ%d´Î¶ÁĞ´¿ªÊ¼**************************\n",i);
+         printf("\n****************ç¬¬%dæ¬¡è¯»å†™å¼€å§‹**************************\n",i);
          write_data = i+60;
          ret = bsp_nvm_write(0xd007,(u8*)&write_data,sizeof(u32));
          if(NV_OK != ret)
@@ -332,7 +332,7 @@ u32 nv_write_test02(void)
 
     for(i = 0;i<100;i++)
     {
-         printf("\n****************µÚ%d´Î¶ÁĞ´¿ªÊ¼**************************\n",i);
+         printf("\n****************ç¬¬%dæ¬¡è¯»å†™å¼€å§‹**************************\n",i);
          write_data = i+60;
          ret = bsp_nvm_write(0xd007,(u8*)&write_data,sizeof(u32));
          if(NV_OK != ret)
@@ -592,7 +592,7 @@ u32 nv_imei_check_test(void)
 }
 
 /*CRC test start*/
-/*²âÊÔÉú³ÉµÄCRCĞ£ÑéÂëÊÇ·ñÕıÈ·*/
+/*æµ‹è¯•ç”Ÿæˆçš„CRCæ ¡éªŒç æ˜¯å¦æ­£ç¡®*/
 
 u32 nv_test_check_ddr_crc_once(void)
 {
@@ -611,7 +611,7 @@ u32 nv_test_check_ddr_crc_once(void)
     printf("[%s]: Slice:0x%x\n",__func__,endSlice-startSlice);
     return NV_OK;
 }
-/*·´¸´Éú³É²¢²âÊÔnv µÄCRCĞ£ÑéÂë*/
+/*åå¤ç”Ÿæˆå¹¶æµ‹è¯•nv çš„CRCæ ¡éªŒç */
 
 u32 nv_test_make_check_ddr_crc(void)
 {
@@ -624,7 +624,7 @@ u32 nv_test_make_check_ddr_crc(void)
     startSlice = bsp_get_slice_value();
     for(i = 0; i < 100; i++)
     {
-        printf("\n****************µÚ%d´ÎÉú³ÉCRC¿ªÊ¼**************************\n", i);
+        printf("\n****************ç¬¬%dæ¬¡ç”ŸæˆCRCå¼€å§‹**************************\n", i);
         ret = nv_make_ddr_crc();
         if(ret)
         {
@@ -643,8 +643,8 @@ u32 nv_test_make_check_ddr_crc(void)
     printf("[%s]: Slice:0x%x\n",__func__,endSlice-startSlice);
     return NV_OK;
 }
-/*ÆÆ»µÖ¸¶¨ÎÄ¼şµÄÖ¸¶¨Î»ÖÃµÄÊı¾İ 
-**off:Ïà¶ÔÓÚctrlÎÄ¼şÍ·µÄÆ«ÒÆ
+/*ç ´åæŒ‡å®šæ–‡ä»¶çš„æŒ‡å®šä½ç½®çš„æ•°æ® 
+**off:ç›¸å¯¹äºctrlæ–‡ä»¶å¤´çš„åç§»
 */
 u32 nv_test_destory_img_data(s8* path, s8 * flagPath, u32 off)
 {
@@ -685,7 +685,7 @@ u32 nv_test_destory_img_data(s8* path, s8 * flagPath, u32 off)
     nv_file_close(fp);
     return NV_OK;
 }
-/*ÆÆ»µ±¸·İÇøµÄNVÊı¾İ*/
+/*ç ´åå¤‡ä»½åŒºçš„NVæ•°æ®*/
 u32 nv_test_destory_bak_data(s8* path, s8 * flagPath, u32 off)
 {
     FILE *fp = NULL;
@@ -741,7 +741,7 @@ u32 nv_test_destory_bak_data(s8* path, s8 * flagPath, u32 off)
     return NV_OK;
 }
 
-/*²âÊÔ´Ó¹¤×÷·ÖÇø»Ö¸´NV nv_resume_ddr_from_img*/
+/*æµ‹è¯•ä»å·¥ä½œåˆ†åŒºæ¢å¤NV nv_resume_ddr_from_img*/
 u32 nv_test_resume_ddr_from_img_00(void)
 {
     u32 ret = 0;
@@ -754,7 +754,7 @@ u32 nv_test_resume_ddr_from_img_00(void)
     return NV_OK;
 }
 
-/*´Ó¹¤×÷·ÖÇø¼ÓÔØNV*/
+/*ä»å·¥ä½œåˆ†åŒºåŠ è½½NV*/
 u32 nv_test_resume_ddr_from_img_01(void)
 {
     struct nv_ctrl_file_info_stru* ctrl_info = (struct nv_ctrl_file_info_stru*)NV_GLOBAL_CTRL_INFO_ADDR;
@@ -771,7 +771,7 @@ u32 nv_test_resume_ddr_from_img_01(void)
     data+=2;
     *(u32 *)off = data;
 
-    /*NVÊı¾İ CRCĞ£Ñé*/
+    /*NVæ•°æ® CRCæ ¡éªŒ*/
     ret = nv_check_ddr_crc();
     if(!ret)
     {
@@ -780,7 +780,7 @@ u32 nv_test_resume_ddr_from_img_01(void)
         return ret;
     }
 
-    /*¹¤×÷Çø»Ö¸´NVÊı¾İ*/
+    /*å·¥ä½œåŒºæ¢å¤NVæ•°æ®*/
     ret = nv_resume_ddr_from_img();
     if(ret)
     {
@@ -791,7 +791,7 @@ u32 nv_test_resume_ddr_from_img_01(void)
     {
         printf("*****************CRC mark = 0x%x******************\n",NV_CRC_CHECK_YES);
     }
-    /*»Ö¸´ºóµÄNVÊı¾İCRCĞ£Ñé*/
+    /*æ¢å¤åçš„NVæ•°æ®CRCæ ¡éªŒ*/
     ret = nv_check_ddr_crc();
     if(ret)
     {
@@ -801,7 +801,7 @@ u32 nv_test_resume_ddr_from_img_01(void)
     return NV_OK;
 }
 
-/*´Ó±¸·İ·ÖÇø¼ÓÔØNV*/
+/*ä»å¤‡ä»½åˆ†åŒºåŠ è½½NV*/
 u32 nv_test_resume_ddr_from_bak_00(void)
 {
     struct nv_ctrl_file_info_stru* ctrl_info = (struct nv_ctrl_file_info_stru*)NV_GLOBAL_CTRL_INFO_ADDR;
@@ -815,7 +815,7 @@ u32 nv_test_resume_ddr_from_bak_00(void)
     }
 
     off = NV_GLOBAL_CTRL_INFO_ADDR + ctrl_info->ctrl_size + 0x30;
-    /*ÆÆ»µ¹¤×÷·ÖÇøNVÊı¾İ*/
+    /*ç ´åå·¥ä½œåˆ†åŒºNVæ•°æ®*/
     ret = nv_test_destory_img_data((s8 *)NV_IMG_PATH, (s8 *)(NV_IMG_FLAG_PATH), ctrl_info->ctrl_size);
     if(ret)
     {
@@ -826,7 +826,7 @@ u32 nv_test_resume_ddr_from_bak_00(void)
     bak_data+=2;
     *(u32 *)off = bak_data;
 
-    /*NVÊı¾İ CRCĞ£Ñé*/
+    /*NVæ•°æ® CRCæ ¡éªŒ*/
     ret = nv_check_ddr_crc();
     if(!ret)
     {
@@ -834,7 +834,7 @@ u32 nv_test_resume_ddr_from_bak_00(void)
         printf("[%s]: nv_check_ddr_crc ret = 0x%x\n",__func__,ret);
         return NV_ERROR;
     }
-    /*»Ö¸´NVÊı¾İ*/
+    /*æ¢å¤NVæ•°æ®*/
     ret = nv_resume_ddr_from_img();
     if(ret)
     {
@@ -846,7 +846,7 @@ u32 nv_test_resume_ddr_from_bak_00(void)
     {
         printf("*****************CRC mark = 0x%x******************\n",NV_CRC_CHECK_YES);
     }
-    /*»Ö¸´ºóµÄNVÊı¾İCRCĞ£Ñé*/
+    /*æ¢å¤åçš„NVæ•°æ®CRCæ ¡éªŒ*/
     ret = nv_check_ddr_crc();
     if(ret)
     {
@@ -856,7 +856,7 @@ u32 nv_test_resume_ddr_from_bak_00(void)
     return NV_OK;
 }
 /*
-** ´Ó±¸·İ·ÖÇø¼ÓÔØNV, ÆÆ»µCRCĞ£ÑéÂë
+** ä»å¤‡ä»½åˆ†åŒºåŠ è½½NV, ç ´åCRCæ ¡éªŒç 
 */
 u32 nv_test_resume_ddr_from_bak_01(void)
 {
@@ -869,7 +869,7 @@ u32 nv_test_resume_ddr_from_bak_01(void)
     {
         printf("CRC mark = 0x%x\n",NV_CRC_CHECK_YES);
     }
-    /*ÆÆ»µ¹¤×÷ÇøNVÊı¾İ,ÆÆ»µCRCĞ£ÑéÂë*/
+    /*ç ´åå·¥ä½œåŒºNVæ•°æ®,ç ´åCRCæ ¡éªŒç */
     ret = nv_test_destory_img_data((s8 *)NV_IMG_PATH, (s8 *)(NV_IMG_FLAG_PATH), ddr_info->file_len + 10 *sizeof(u32));
     if(ret)
     {
@@ -881,7 +881,7 @@ u32 nv_test_resume_ddr_from_bak_01(void)
     bak_data+=2;
     *(u32 *)off = bak_data;
 
-    /*NVÊı¾İ CRCĞ£Ñé*/
+    /*NVæ•°æ® CRCæ ¡éªŒ*/
     ret = nv_check_ddr_crc();
     if(!ret)
     {
@@ -889,7 +889,7 @@ u32 nv_test_resume_ddr_from_bak_01(void)
         printf("[%s]: nv_check_ddr_crc ret = 0x%x\n",__func__,ret);
         return NV_ERROR;
     }
-    /*»Ö¸´NVÊı¾İ*/
+    /*æ¢å¤NVæ•°æ®*/
     ret = nv_resume_ddr_from_img();
     if(ret)
     {
@@ -901,7 +901,7 @@ u32 nv_test_resume_ddr_from_bak_01(void)
     {
         printf("*****************CRC mark = 0x%x******************\n",NV_CRC_CHECK_YES);
     }
-    /*»Ö¸´ºóµÄNVÊı¾İCRCĞ£Ñé*/
+    /*æ¢å¤åçš„NVæ•°æ®CRCæ ¡éªŒ*/
     ret = nv_check_ddr_crc();
     if(ret)
     {
@@ -911,8 +911,8 @@ u32 nv_test_resume_ddr_from_bak_01(void)
     return NV_OK;
 }
 /*
-**²âÊÔCRCĞ£ÑéÂëÔÚĞ´ÈëÇ°ºóÊÇ·ñÒ»ÖÂ
-**Í¬Ê±²âÊÔĞ´ÈëµÄÊı¾İÊÇ·ñÕıÈ·µÄĞ´Èë
+**æµ‹è¯•CRCæ ¡éªŒç åœ¨å†™å…¥å‰åæ˜¯å¦ä¸€è‡´
+**åŒæ—¶æµ‹è¯•å†™å…¥çš„æ•°æ®æ˜¯å¦æ­£ç¡®çš„å†™å…¥
 */
 u32 nv_crc_write_test00(void)
 {
@@ -978,9 +978,9 @@ u32 nv_crc_write_test00(void)
     return NV_OK;
 }
 /*
-**ÆÆ»µ0xD007µÄÊı¾İ£¬ºóĞ´ÈëNV 0xD007
-**×¢:´®¿ÚÓĞCRCĞ£Ñé²»¹ıµÄ´òÓ¡
-**   ´®¿ÚÓĞ´Ó¹¤×÷·ÖÇøÖĞ¼ÓÔØÊı¾İµÄlog´òÓ¡ÔòÈÏÎªÍ¨¹ı 
+**ç ´å0xD007çš„æ•°æ®ï¼Œåå†™å…¥NV 0xD007
+**æ³¨:ä¸²å£æœ‰CRCæ ¡éªŒä¸è¿‡çš„æ‰“å°
+**   ä¸²å£æœ‰ä»å·¥ä½œåˆ†åŒºä¸­åŠ è½½æ•°æ®çš„logæ‰“å°åˆ™è®¤ä¸ºé€šè¿‡ 
 */
 u32 nv_crc_write_test01(void)
 {
@@ -1034,9 +1034,9 @@ u32 nv_crc_write_test01(void)
     return NV_OK;
 }
 /*
-**ÆÆ»µDDRÖĞµÄNV 0xD007 Êı¾İ£¬ÆÆ»µ¹¤×÷·ÖÇøÖĞµÄÊı¾İ,ºóĞ´ÈëNV 0xD007
-**×¢:´®¿ÚÓĞCRCĞ£Ñé²»¹ıµÄ´òÓ¡
-**   ´®¿ÚÓĞ´Ó¹¤×÷·ÖÇøÖĞ¼ÓÔØÊı¾İµÄlog´òÓ¡ÔòÈÏÎªÍ¨¹ı 
+**ç ´åDDRä¸­çš„NV 0xD007 æ•°æ®ï¼Œç ´åå·¥ä½œåˆ†åŒºä¸­çš„æ•°æ®,åå†™å…¥NV 0xD007
+**æ³¨:ä¸²å£æœ‰CRCæ ¡éªŒä¸è¿‡çš„æ‰“å°
+**   ä¸²å£æœ‰ä»å·¥ä½œåˆ†åŒºä¸­åŠ è½½æ•°æ®çš„logæ‰“å°åˆ™è®¤ä¸ºé€šè¿‡ 
 */
 u32 nv_crc_write_test02(void)
 {
@@ -1076,7 +1076,7 @@ u32 nv_crc_write_test02(void)
         printf("[%s]: 3333 ret = 0x%x\n",__func__,ret);
         return ret;
     }
-    /*NVÊı¾İ CRCĞ£Ñé*/
+    /*NVæ•°æ® CRCæ ¡éªŒ*/
     ret = nv_check_ddr_crc();
     if(!ret)
     {
@@ -1104,8 +1104,8 @@ u32 nv_crc_write_test02(void)
     return NV_OK;
 }
 /*
-**ÆÆ»µDDRÖĞµÄ³ıNV 0xD007 ÍâÊı¾İ£¬ºóĞ´ÈëNV 0xD007
-**×¢:Ğ´ÈëÕı³£
+**ç ´åDDRä¸­çš„é™¤NV 0xD007 å¤–æ•°æ®ï¼Œåå†™å…¥NV 0xD007
+**æ³¨:å†™å…¥æ­£å¸¸
 ** 
 */
 u32 nv_crc_write_test03(void)
@@ -1134,7 +1134,7 @@ u32 nv_crc_write_test03(void)
     *(u32 *)(NV_GLOBAL_CTRL_INFO_ADDR + ddr_info->file_info[ref_info.file_id - 1].offset + ref_info.nv_off) = bak_data;
     nv_flush_cache((void*)NV_GLOBAL_INFO_ADDR, (u32)NV_GLOBAL_INFO_SIZE);
 
-    /*NVÊı¾İ CRCĞ£Ñé*/
+    /*NVæ•°æ® CRCæ ¡éªŒ*/
     ret = nv_check_ddr_crc();
     if(!ret)
     {
@@ -1171,7 +1171,7 @@ u32 nv_crc_write_test03(void)
 
     return NV_OK;
 }
-/*ÕÒµ½Î»ÓÚNVÎÄ¼ş±ßÔµµÄNV*/
+/*æ‰¾åˆ°ä½äºNVæ–‡ä»¶è¾¹ç¼˜çš„NV*/
 u32 nv_test_find_edge_nv(struct nv_ref_data_info_stru nvArray[10])
 {
     struct nv_ctrl_file_info_stru* ctrl_info = (struct nv_ctrl_file_info_stru*)NV_GLOBAL_CTRL_INFO_ADDR;
@@ -1256,7 +1256,7 @@ void DelayMs(u32 delay_ms, u32 flag)
     }
 }
 u32 g_crc_delay_ctrl = 1;
-/*Ñ­»·Ğ´ÈëÒ»¸öNV£¬²âÊÔË«ºËµÄ»¥³âÊÇ·ñÓĞĞ§*/
+/*å¾ªç¯å†™å…¥ä¸€ä¸ªNVï¼Œæµ‹è¯•åŒæ ¸çš„äº’æ–¥æ˜¯å¦æœ‰æ•ˆ*/
 u32 nv_crc_write_test05(void)
 {
     u32 ret = 0;
@@ -1265,7 +1265,7 @@ u32 nv_crc_write_test05(void)
     u32 i = 0;
     for(i = 0; i < 1000; i++)
     {
-        printf("\n****************µÚ%d´Î²âÊÔ¿ªÊ¼**************************\n", i);
+        printf("\n****************ç¬¬%dæ¬¡æµ‹è¯•å¼€å§‹**************************\n", i);
 
         ret = bsp_nvm_read(nvid, (u8 *)&data, sizeof(u32));
         if(ret)
@@ -1274,7 +1274,7 @@ u32 nv_crc_write_test05(void)
             return ret;
         }
         data++;
-        printf("\n****************µÚ%d´Î²âÊÔ¿ªÊ¼ 11111**************************\n", i);
+        printf("\n****************ç¬¬%dæ¬¡æµ‹è¯•å¼€å§‹ 11111**************************\n", i);
         DelayMs(g_crc_delay_ctrl, 0);
         ret = bsp_nvm_write(nvid, (u8 *)&data, sizeof(u32));   
         if(ret)
@@ -1283,7 +1283,7 @@ u32 nv_crc_write_test05(void)
             return ret;
         }
     }
-    printf("\n****************µÚ%d´Î²âÊÔ¿ªÊ¼ 2222**************************\n", i);
+    printf("\n****************ç¬¬%dæ¬¡æµ‹è¯•å¼€å§‹ 2222**************************\n", i);
     data = 20;
     ret = bsp_nvm_write(nvid, (u8 *)&data, sizeof(u32));   
     if(ret)
@@ -1294,8 +1294,8 @@ u32 nv_crc_write_test05(void)
     return NV_OK;
 }
 /*
-**ÆÆ»µ¹¤×÷·ÖÇøÖĞµÄÊı¾İ£¬È»ºó½øĞĞNV¼ÓÔØ,¼ÓÔØÊ±NVÓ¦¸ÃÊÇ´Ó±¸·İ·ÖÇøÖĞ½øĞĞµÄ, 
-**´Ó´òÓ¡´®¿Ú¿´±¾ÓÃÀıÊÇ·ñ³É¹¦
+**ç ´åå·¥ä½œåˆ†åŒºä¸­çš„æ•°æ®ï¼Œç„¶åè¿›è¡ŒNVåŠ è½½,åŠ è½½æ—¶NVåº”è¯¥æ˜¯ä»å¤‡ä»½åˆ†åŒºä¸­è¿›è¡Œçš„, 
+**ä»æ‰“å°ä¸²å£çœ‹æœ¬ç”¨ä¾‹æ˜¯å¦æˆåŠŸ
 */
 extern u32 bsp_nvm_reload(void);
 
@@ -1320,7 +1320,7 @@ u32 nv_reload_data_from_bak_test(void)
 }
 
 /*
-**²âÊÔ¹Ø»úĞ´¹¦ÄÜ, ĞèÒªÖØĞÂ³ö°æ±¾½«NV 0xD007µÄÓÅÏÈ¼¶ÉèÖÃÎª1~6
+**æµ‹è¯•å…³æœºå†™åŠŸèƒ½, éœ€è¦é‡æ–°å‡ºç‰ˆæœ¬å°†NV 0xD007çš„ä¼˜å…ˆçº§è®¾ç½®ä¸º1~6
 */
 u32 nv_flush_test_00(void)
 {
@@ -1343,7 +1343,7 @@ u32 nv_flush_test_00(void)
         printf("2222 ret = 0x%x\n", ret);
         return ret;
     }
-    /*¹Ø»úĞ´½Ó¿Ú*/
+    /*å…³æœºå†™æ¥å£*/
     ret = bsp_nvm_flush();
     if(ret)
     {

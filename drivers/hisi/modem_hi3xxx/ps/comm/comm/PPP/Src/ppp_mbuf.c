@@ -43,7 +43,7 @@
 #endif
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_PPP_MBUF_C
 #if(FEATURE_ON == FEATURE_PPP)
@@ -55,7 +55,7 @@ static struct memmap {
   VOS_INT32 octets;
 } MemMap[MB_MAX + 1];
 
-#if 0 /* ÒÆÖ²ÓÅ»¯ºó£¬²»ÔÙ×ömbufÄÚ´æÍ³¼Æ£¬ÎŞÓÃ´úÂë£¬ */
+#if 0 /* ç§»æ¤ä¼˜åŒ–åï¼Œä¸å†åšmbufå†…å­˜ç»Ÿè®¡ï¼Œæ— ç”¨ä»£ç ï¼Œ */
 static unsigned long mbuf_Mallocs, mbuf_Frees;
 static const VOS_CHAR *
 mbuftype(VOS_INT32 type)
@@ -97,7 +97,7 @@ ppp_m_get_Debug(VOS_INT32 m_len, VOS_UINT32 ulFileID, VOS_UINT32 ulLineNum)
         return VOS_NULL_PTR;
     }
 
-    /*È¥³ı¶ÔTTFMem.hµÄÒÀÀµ*/
+    /*å»é™¤å¯¹TTFMem.hçš„ä¾èµ–*/
     /*bp  = TTF_MALLOC_WITH_FILE_LINE(PS_PID_APP_PPP, sizeof(struct ppp_mbuf) + m_len, ulFileID, (VOS_INT32)ulLineNum);*/
 
     bp  = VOS_MemAlloc(PS_PID_APP_PPP, DYNAMIC_MEM_PT, sizeof(struct ppp_mbuf) + m_len);
@@ -152,7 +152,7 @@ ppp_m_getm(VOS_INT32 m_len)
             break;
         }
 
-        /* È¡µ±Ç°MemµÄÏÂ¸ö½ÚµãµØÖ·£¬ÎªÏÂÒ»´ÎÉêÇëµÄÄÚ´æ¹Ò½ÓÉÏ */
+        /* å–å½“å‰Memçš„ä¸‹ä¸ªèŠ‚ç‚¹åœ°å€ï¼Œä¸ºä¸‹ä¸€æ¬¡ç”³è¯·çš„å†…å­˜æŒ‚æ¥ä¸Š */
         ppCurrMem   = &((*ppCurrMem)->m_next);
     }
 
@@ -164,8 +164,8 @@ ppp_m_free(struct ppp_mbuf *bp)
 {
     struct ppp_mbuf    *nbp;
 
-    /* ÊÇ·µ»Ø m_next»¹ÊÇ m_nextpkt£¬m_nextpktÊÇ¶ÓÁĞÀïµÄÏÂÒ»¸öÔªËØ£¬
-    m_nextÊÇÕâ¸öÊı¾İµÄÏÂÒ»¶Î £¬ËùÒÔÓ¦¸Ã·µ»Øm_next*/
+    /* æ˜¯è¿”å› m_nextè¿˜æ˜¯ m_nextpktï¼Œm_nextpktæ˜¯é˜Ÿåˆ—é‡Œçš„ä¸‹ä¸€ä¸ªå…ƒç´ ï¼Œ
+    m_nextæ˜¯è¿™ä¸ªæ•°æ®çš„ä¸‹ä¸€æ®µ ï¼Œæ‰€ä»¥åº”è¯¥è¿”å›m_next*/
     nbp = bp->m_next;
 
     VOS_MemFree(PS_PID_APP_PPP, bp);
@@ -265,7 +265,7 @@ ppp_m_prepend(struct ppp_mbuf *bp, const void *ptr, VOS_INT32 len, VOS_INT32 ext
 }
 
 
-/*´ÓÍ·²¿»òÕßÎ²²¿È¥µôn¸ö×Ö½Ú£¬Èç¹ûÎª¸ºÊı£¬¾Í´ÓÎ²²¿È¥µô*/
+/*ä»å¤´éƒ¨æˆ–è€…å°¾éƒ¨å»æ‰nä¸ªå­—èŠ‚ï¼Œå¦‚æœä¸ºè´Ÿæ•°ï¼Œå°±ä»å°¾éƒ¨å»æ‰*/
 
 struct ppp_mbuf *
 ppp_m_adj(struct ppp_mbuf *bp, VOS_INT32 n)
@@ -273,7 +273,7 @@ ppp_m_adj(struct ppp_mbuf *bp, VOS_INT32 n)
   if (n > 0) {
     while (bp) {
       if (n < bp->m_len) {
-        bp->m_len -= n;/*fzb:´íÁË£¬Ó¦¸ÃÊÇbp->m_len -= n;*/
+        bp->m_len -= n;/*fzb:é”™äº†ï¼Œåº”è¯¥æ˜¯bp->m_len -= n;*/
         bp->m_offset += (VOS_INT16)n;
         return bp;
       }
@@ -399,7 +399,7 @@ ppp_m_pullup(struct ppp_mbuf *bp)
 #ifndef __i386__    /* Do any other archs not care about alignment ? */
     else if ((bp->m_offset & (sizeof(long) - 1)) != 0) {
 
-/*º¯ÊıĞŞ¸ÄÁË£¬²ÎÊı»»ÁËÎ»ÖÃ*/
+/*å‡½æ•°ä¿®æ”¹äº†ï¼Œå‚æ•°æ¢äº†ä½ç½®*/
       PS_MEM_CPY(bp + 1, PPP_MBUF_CTOP(bp), bp->m_len);
 
       bp->m_offset = 0;
@@ -431,8 +431,8 @@ ppp_m_append(struct ppp_mbuf *bp, const void *v, VOS_INT32 sz)
   if (m) {
     while (m->m_next)
       m = m->m_next;
-    if (m->m_size - m->m_len > sz) /*»¹Ó¦¸Ã¼ÓÉÏm_offset*/
-      m->m_len += sz;/*»¹Ó¦¸ÃÓĞ¿½±´²Ù×÷£¬ÓÉÓÚÕâ¸öº¯Êı²»µ÷ÓÃ£¬ËùÒÔÃ»¸Ä*/
+    if (m->m_size - m->m_len > sz) /*è¿˜åº”è¯¥åŠ ä¸Šm_offset*/
+      m->m_len += sz;/*è¿˜åº”è¯¥æœ‰æ‹·è´æ“ä½œï¼Œç”±äºè¿™ä¸ªå‡½æ•°ä¸è°ƒç”¨ï¼Œæ‰€ä»¥æ²¡æ”¹*/
     else
       m->m_next = ppp_m_prepend(VOS_NULL_PTR, v, sz, 0);
   } else
@@ -469,7 +469,7 @@ ppp_m_get_from_ttfmem(PPP_ZC_STRU *pstMem)
     pstCurrMem  = pstMem;
     pcMbufData  = PPP_MBUF_CTOP(bp);
 
-    /* Ä¿Ç°µÄÁã¿½±´Ôİ²»Ö§³ÖÁ´Ê½ */
+    /* ç›®å‰çš„é›¶æ‹·è´æš‚ä¸æ”¯æŒé“¾å¼ */
     /*
     while (VOS_NULL_PTR != pstCurrMem)
     {
@@ -511,7 +511,7 @@ PPP_ZC_STRU *ppp_m_alloc_ttfmem_from_mbuf(struct ppp_mbuf *bp)
         return VOS_NULL_PTR;
     }
 
-    /* ÉèÖÃÁã¿½±´Êı¾İÄÚÈİ³¤¶È */
+    /* è®¾ç½®é›¶æ‹·è´æ•°æ®å†…å®¹é•¿åº¦ */
     PPP_ZC_SET_DATA_LEN(pstMem, usLen);
 
     ppp_mbuf_View(bp, PPP_ZC_GET_DATA_PTR(pstMem), usLen);

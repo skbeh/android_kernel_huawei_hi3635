@@ -4,7 +4,7 @@
 
 
 /*****************************************************************************
-  1 ����ͷ�ļ�����
+  1 其他头文件包含
 *****************************************************************************/
 #include    "AtDipcInterface.h"
 #include    "ImmInterface.h"
@@ -19,42 +19,42 @@ extern "C" {
 #pragma pack(4)
 
 /*****************************************************************************
-  2 �궨��
+  2 宏定义
 *****************************************************************************/
-#define DIPC_DEV_NUM                (DIPC_DEV_BUTT)       /* DIPCʹ�õ��豸�˿���Ŀ */
+#define DIPC_DEV_NUM                (DIPC_DEV_BUTT)       /* DIPC使用的设备端口数目 */
 
-/* ���ܳ��ֵ�Rab������Ӧ��Ϊ[5,15],�˴�Ϊ�˼������٣�ֱ�Ӷ�Ϊ[0��15] 16��������[0,4]Ϊ�Ƿ�ֵ  */
+/* 可能出现的Rab个数，应该为[5,15],此处为了检索快速，直接定为[0，15] 16个，其中[0,4]为非法值  */
 #define RAB_MAX_NUM                 (MAX_RAB_ID + 1)   
 
-#define SERVICE_MAX_NUM             (6) /* Ŀǰ���3���豸��ÿ���豸Ŀǰ���2��SERVICE_ID */
+#define SERVICE_MAX_NUM             (6) /* 目前最多3个设备，每个设备目前最多2种SERVICE_ID */
 
 #define DIPC_SERVICE_TYPE_MAX_NUM   (DIPC_SERVICE_TYPE_BUTT)
 
-#define DIPC_DATA_MAX_DATA_LEN      (1536)    /* DIPCͨ���ϵ������ݰ��ĳ������� */
+#define DIPC_DATA_MAX_DATA_LEN      (1536)    /* DIPC通道上单个数据包的长度上限 */
 
 #define DIPC_IP_VER_IPV4            (4)
 #define DIPC_IP_VER_IPV6            (6)
 
-/* ���÷���ṹ�Ƿ�ע�� */
+/* 检测该服务结构是否注册 */
 #define DIPC_GET_SERVICE_STRU_USE(ulServiceMask, ucServiceNo)   (((ulServiceMask) & (1 << (ucServiceNo))) >> (ucServiceNo))
 
-/* ���ö�Ӧ�ķ���ṹ��ʹ�� */
+/* 设置对应的服务结构被使用 */
 #define DIPC_SET_SERVICE_STRU_REG(ulServiceMask, ucServiceNo)   ((ulServiceMask) = ((ulServiceMask) | (1 << (ucServiceNo))))
 
-/* ���ö�Ӧ�ķ���ṹδ��ʹ�� */
+/* 设置对应的服务结构未被使用 */
 #define DIPC_CLR_SERVICE_STRU_REG(ulServiceMask, ucServiceNo)   ((ulServiceMask) = ((ulServiceMask) & (~((VOS_UINT32)(1 << (ucServiceNo))))))
 
 
-/* �������Ƿ�ע�� */
+/* 检测服务是否注册 */
 #define DIPC_GET_SERVICE_REG(ulServerMask, enServiceType)   (((ulServerMask) & (1 << (enServiceType))) >> (enServiceType))
 
-/* ���÷����Ӧ�����뱻ע�� */
+/* 设置服务对应的掩码被注册 */
 #define DIPC_SET_SERVICE_REG(ulServerMask, enServiceType)   ((ulServerMask) = ((ulServerMask) | (1 << (enServiceType))))
 
-/* ���������Ӧ������ */
+/* 消除服务对应的掩码 */
 #define DIPC_CLR_SERVICE_REG(ulServerMask, enServiceType)   ((ulServerMask) = ((ulServerMask) & (~((VOS_UINT32)(1 << (enServiceType))))))
 
-/* ͨ����AT֮��Ľӿ���ʹ�õ�BearerType���ҵ��������� */
+/* 通过和AT之间的接口上使用的BearerType来找到服务类型 */
 #define DIPC_GET_SERVICE_TYPE_BY_BEARER_TYPE(enBearerType)  ((enBearerType) - 1)
 
 #define DIPC_SET_APP(enDir, Para)   (((enDir) << 8) | (VOS_UINT8)Para)
@@ -65,10 +65,10 @@ extern "C" {
 
 
 /*****************************************************************************
-  3 ö�ٶ���
+  3 枚举定义
 *****************************************************************************/
-/*����DrvInterface.h��UDI_DEVICE_ID����UDI_ACM_HSIC_ACM1_ID/UDI_ACM_HSIC_ACM3_ID/UDI_ACM_HSIC_ACM5_ID
-�Ķ��壬�˴�����������Ϊ�˱��ڼ���*/
+/*参照DrvInterface.h中UDI_DEVICE_ID对于UDI_ACM_HSIC_ACM1_ID/UDI_ACM_HSIC_ACM3_ID/UDI_ACM_HSIC_ACM5_ID
+的定义，此处新增定义是为了便于检索*/
 typedef enum
 {
     DIPC_DEV_ID1    = 0,
@@ -78,7 +78,7 @@ typedef enum
 }DIPC_DEV_ID_ENUM;
 typedef VOS_UINT32  DIPC_DEV_ID_ENUM_UINT32;
 
-/* DIPC��֧�ֵķ������� */
+/* DIPC上支持的服务类型 */
 typedef enum
 {
     DIPC_SERVICE_TYPE_IPV4  = 0,
@@ -87,18 +87,18 @@ typedef enum
 }DIPC_SERVICE_TYPE_ENUM;
 typedef VOS_UINT32  DIPC_SERVICE_TYPE_ENUM_UINT32;
 
-/* ��ά�ɲ�ʹ����Ϣ */
+/* 可维可测使用消息 */
 typedef enum
 {
-    ID_DIPC_ADD_NEW_MAPPING_INFO_FAIL       = 0x0001,   /* �����µ�ӳ���ϵʧ����Ϣ */ 
-    ID_DIPC_DEL_MAPPING_INFO_FAIL           = 0x0002,   /* ɾ���µ�ӳ���ϵʧ����Ϣ */
-    ID_DIPC_REG_ADS_DL_DATA_CALLBACK_FAIL   = 0x0003,   /* PDP����ʱע��ADS���лص�����ʧ�� */
-    ID_DIPC_DEREG_ADS_DL_DATA_CALLBACK_FAIL = 0x0004,   /* PDPȥ����ʱȥע��ADS���лص�����ʧ�� */
-    ID_DIPC_PDP_ACT_SUCC                    = 0x0005,   /* PDP����ɹ� */
-    ID_DIPC_PDP_DEACT_SUCC                  = 0x0006,   /* PDPȥ����ɹ� */
-    ID_DIPC_SHOW_MAPPING_INFO               = 0x0007,   /* �ֶ�Ҫ����ʾӳ���ϵ��Ϣ */
-    ID_DIPC_TRACE_UL_DATA                   = 0x1001,   /* �������ݹ��� */
-    ID_DIPC_TRACE_DL_DATA                   = 0x1002,   /* �������ݹ��� */
+    ID_DIPC_ADD_NEW_MAPPING_INFO_FAIL       = 0x0001,   /* 添加新的映射关系失败信息 */ 
+    ID_DIPC_DEL_MAPPING_INFO_FAIL           = 0x0002,   /* 删除新的映射关系失败信息 */
+    ID_DIPC_REG_ADS_DL_DATA_CALLBACK_FAIL   = 0x0003,   /* PDP激活时注册ADS下行回调函数失败 */
+    ID_DIPC_DEREG_ADS_DL_DATA_CALLBACK_FAIL = 0x0004,   /* PDP去激活时去注册ADS下行回调函数失败 */
+    ID_DIPC_PDP_ACT_SUCC                    = 0x0005,   /* PDP激活成功 */
+    ID_DIPC_PDP_DEACT_SUCC                  = 0x0006,   /* PDP去激活成功 */
+    ID_DIPC_SHOW_MAPPING_INFO               = 0x0007,   /* 手动要求显示映射关系信息 */
+    ID_DIPC_TRACE_UL_DATA                   = 0x1001,   /* 上行数据勾包 */
+    ID_DIPC_TRACE_DL_DATA                   = 0x1002,   /* 下行数据勾包 */
     ID_DIPC_TRACE_TYPE_BUTT
 }DIPC_TRACE_MSG_TYPE_ENUM;
 typedef VOS_UINT32 DIPC_TRACE_MSG_TYPE_ENUM_UINT32;
@@ -124,30 +124,30 @@ typedef VOS_UINT32  ID_DIPC_MSG_TYPE_ENUM_UINT32;
 
 
 /*****************************************************************************
-  4 ȫ�ֱ�������
+  4 全局变量声明
 *****************************************************************************/
 
 
 /*****************************************************************************
-  5 ��Ϣͷ����
+  5 消息头定义
 *****************************************************************************/
 typedef struct
 {
-    VOS_MSG_HEADER                              /* ��Ϣͷ */     
-    ID_DIPC_MSG_TYPE_ENUM_UINT32    enMsgType;  /* ��Ϣ���� */   
+    VOS_MSG_HEADER                              /* 消息头 */     
+    ID_DIPC_MSG_TYPE_ENUM_UINT32    enMsgType;  /* 消息类型 */   
 }DIPC_DATA_PROC_NOTIFY_MSG;
 
 /*****************************************************************************
-  6 ��Ϣ����
+  6 消息定义
 *****************************************************************************/
-/*TTF ��������Ϊ32λ����Ϣ�����ù�����Ϣͷ*/
+/*TTF 类型类型为32位的消息解析用共用消息头*/
 typedef struct
 {
-    VOS_MSG_HEADER                      /* ��Ϣͷ */
-    VOS_UINT32 ulMsgType;               /* ��Ϣ���� */
+    VOS_MSG_HEADER                      /* 消息头 */
+    VOS_UINT32 ulMsgType;               /* 消息类型 */
 }TTF_U32MSG_COMM_HEAD_STRU;
 
-/*������Ϣ*/
+/*勾包消息*/
 typedef struct
 {
     VOS_MSG_HEADER
@@ -183,29 +183,29 @@ typedef struct
 
 
 /*****************************************************************************
-  7 STRUCT����
+  7 STRUCT定义
 *****************************************************************************/
-/* ��¼�豸����Ϣ */
+/* 记录设备的信息 */
 typedef struct
 {
-    UDI_DEVICE_ID               enUdiDevId;     /* ����ʵ�ʺ�DIPCһ��ʹ�õ��豸ID */
-    UDI_HANDLE                  slUdiHsicHdl;   /* �豸��Ӧ�ľ�� */
+    UDI_DEVICE_ID               enUdiDevId;     /* 底软实际和DIPC一起使用的设备ID */
+    UDI_HANDLE                  slUdiHsicHdl;   /* 设备对应的句柄 */
 
-    VOS_UINT32  (*pTxFunc)(UDI_HANDLE ulhandle, IMM_ZC_STRU *pstBuf); /* ���ݷ��ͺ���ָ�� */
+    VOS_UINT32  (*pTxFunc)(UDI_HANDLE ulhandle, IMM_ZC_STRU *pstBuf); /* 数据发送函数指针 */
     
     union
     {
-        VOS_UINT32  (*pAcmRxFunc)(VOS_VOID);                                /* ACM�¸þ���ϱ�����ʱ���õĻص�����ָ�� */
-        VOS_UINT32  (*pNcmRxFunc)(UDI_HANDLE ulhandle, VOS_VOID *pPktNode); /* NCM�¸þ���ϱ�����ʱ���õĻص�����ָ�� */
+        VOS_UINT32  (*pAcmRxFunc)(VOS_VOID);                                /* ACM下该句柄上报数据时调用的回调函数指针 */
+        VOS_UINT32  (*pNcmRxFunc)(UDI_HANDLE ulhandle, VOS_VOID *pPktNode); /* NCM下该句柄上报数据时调用的回调函数指针 */
     }pRxFunc;
 }DEV_INFO_STRU;
 
 typedef struct
 {   
-    VOS_UINT8                   ucServiceIndex;     /* �����ڷ�������ṹ�е��±� */
-    VOS_UINT8                   ucRabId;            /* Rab ID������pUlCallFuncʱʹ�� */
+    VOS_UINT8                   ucServiceIndex;     /* 服务在服务数组结构中的下标 */
+    VOS_UINT8                   ucRabId;            /* Rab ID，调用pUlCallFunc时使用 */
     VOS_UINT8                   aucRsv[2];
-    DIPC_DEV_ID_ENUM_UINT32     enDipcDevId;        /* DIPC�ڲ�ʹ��dev ID������pDlCallFuncʱʹ�� */
+    DIPC_DEV_ID_ENUM_UINT32     enDipcDevId;        /* DIPC内部使用dev ID，调用pDlCallFunc时使用 */
     DIPC_SERV_ULDATA_MATCHFUNC  pUlMatchFunc;
     DIPC_SERV_DLDATA_MATCHFUNC  pDlMatchFunc;
     DIPC_SERV_ULDATA_CALLFUNC   pUlCallFunc;
@@ -235,62 +235,62 @@ typedef struct
 
 typedef struct
 {
-    VOS_UINT32                  ulGetDataFailNums;          /* �����ص����ȡ�������ݵĴ��� */
-    VOS_UINT32                  ulSuccGetUlPacketNums;      /* ����Hsicͨ���ɹ���ȡ�����ݰ����� */
-    VOS_UINT32                  ulFailMatchUlPacketNums;    /* ����Hsicͨ���Ҳ���ƥ���������ݰ����� */
-    VOS_UINT32                  ulFailSendUlPacketNums;     /* ���е���ADSͨ������ʧ�ܵ����ݰ����� */
-    VOS_UINT32                  ulDiscardUlPacketNums;      /* �����յ�����ʱ���ڽ���PDPȥ���������Ϊ�˱��ⵥ�帴λ���������ݶ��� */
-    VOS_UINT32                  ulSuccSendUlPacketNums;     /* ���е���ADSͨ���ɹ����͵����ݰ�����*/
-    VOS_UINT32                  ulFailSendDlPacketNums;     /* ���е��õ���ͨ������ʧ�ܵ����ݰ����� */
-    VOS_UINT32                  ulSuccSendDlPacketNums;     /* ���е��õ���ͨ�����ͳɹ������ݰ����� */
+    VOS_UINT32                  ulGetDataFailNums;          /* 底软回调后获取不到数据的次数 */
+    VOS_UINT32                  ulSuccGetUlPacketNums;      /* 上行Hsic通道成功获取的数据包个数 */
+    VOS_UINT32                  ulFailMatchUlPacketNums;    /* 上行Hsic通道找不到匹配服务的数据包个数 */
+    VOS_UINT32                  ulFailSendUlPacketNums;     /* 上行调用ADS通道发送失败的数据包个数 */
+    VOS_UINT32                  ulDiscardUlPacketNums;      /* 上行收到数据时正在进行PDP去激活操作，为了避免单板复位，将该数据丢弃 */
+    VOS_UINT32                  ulSuccSendUlPacketNums;     /* 上行调用ADS通道成功发送的数据包个数*/
+    VOS_UINT32                  ulFailSendDlPacketNums;     /* 下行调用底软通道发送失败的数据包个数 */
+    VOS_UINT32                  ulSuccSendDlPacketNums;     /* 下行调用底软通道发送成功的数据包个数 */
 } DIPC_DEV_STATIC_INFO_STRU;
 
 typedef struct
 {
     DIPC_DEV_STATIC_INFO_STRU   astDipcDevStaticInfo[DIPC_DEV_NUM];
-    VOS_UINT32                  ulNullDlPacketNums;         /* ����ADS�����˻ص���������û�����ݵĴ��� */
-    VOS_UINT32                  ulSuccGetDlPacketNums;      /* ����Hsicͨ���ɹ���ȡ�����ݰ����� */
-    VOS_UINT32                  ulFailMatchDlPacketNums;    /* ����Hsicͨ���Ҳ���ƥ���������ݰ����� */
-    VOS_UINT32                  ulDiscardDlPacketNums;      /* �����յ�����ʱ���ڽ���PDPȥ���������Ϊ�˱��ⵥ�帴λ���������ݶ��� */
+    VOS_UINT32                  ulNullDlPacketNums;         /* 下行ADS调用了回调函数但是没有数据的次数 */
+    VOS_UINT32                  ulSuccGetDlPacketNums;      /* 下行Hsic通道成功获取的数据包个数 */
+    VOS_UINT32                  ulFailMatchDlPacketNums;    /* 下行Hsic通道找不到匹配服务的数据包个数 */
+    VOS_UINT32                  ulDiscardDlPacketNums;      /* 下行收到数据时正在进行PDP去激活操作，为了避免单板复位，将该数据丢弃 */
 } DIPC_STATIC_INFO_STRU;
 
 typedef struct
 {
-    VOS_UINT8                   ucIpHdrLen  :4;     /* IPͷ������ */
-    VOS_UINT8                   ucIpVer     :4;     /* IP�汾��*/
-    VOS_UINT8                   ucServiceType;      /* IP TOS�ֶ�*/
-    VOS_UINT16                  usTotalLen;         /* IP���ݰ��ܳ���*/
-    VOS_UINT16                  usIdentification;   /* IP���ݰ�ID*/
-    VOS_UINT16                  usOffset;           /* IP��Ƭƫ����*/
+    VOS_UINT8                   ucIpHdrLen  :4;     /* IP头部长度 */
+    VOS_UINT8                   ucIpVer     :4;     /* IP版本号*/
+    VOS_UINT8                   ucServiceType;      /* IP TOS字段*/
+    VOS_UINT16                  usTotalLen;         /* IP数据包总长度*/
+    VOS_UINT16                  usIdentification;   /* IP数据包ID*/
+    VOS_UINT16                  usOffset;           /* IP分片偏移量*/
     VOS_UINT8                   ucTTL;              /* IPTTL*/
-    VOS_UINT8                   ucProtocol;         /* IP�����غɲ���Э��*/
-    VOS_UINT16                  usCheckSum;         /* IPͷ��У���*/
-    VOS_UINT32                  ulSrcAddr;          /* ԴIP��ַ*/
-    VOS_UINT32                  ulDstAddr;          /* Ŀ��IP��ַ*/
+    VOS_UINT8                   ucProtocol;         /* IP数据载荷部分协议*/
+    VOS_UINT16                  usCheckSum;         /* IP头部校验和*/
+    VOS_UINT32                  ulSrcAddr;          /* 源IP地址*/
+    VOS_UINT32                  ulDstAddr;          /* 目的IP地址*/
 } DIPC_IPHDR_STRU;
 
 typedef struct
 {
-    IMM_ZC_HEAD_STRU            stDipcDataQ;        /* DIPC���ݶ��У����������ݶ������� */
-    /* DIPC��Ϣ�����д���������Ϣ������Ϊ�˽��DIPC��ʱ��ò�������������Ϣ����������� */
+    IMM_ZC_HEAD_STRU            stDipcDataQ;        /* DIPC数据队列，上下行数据都在其中 */
+    /* DIPC消息队列中待处理的消息个数，为了解决DIPC长时间得不到处理导致消息队列满的情况 */
     VOS_UINT32                  ulNotifyMsgCnt;     
 }DIPC_DATA_Q_CTRL_ST;
 
 
 /*****************************************************************************
-  8 UNION����
+  8 UNION定义
 *****************************************************************************/
 
 
 /*****************************************************************************
-  9 OTHERS����
+  9 OTHERS定义
 *****************************************************************************/
 
 
 /*****************************************************************************
-  10 ��������
+  10 函数声明
 *****************************************************************************/
-/* OAM ACPU�������� */
+/* OAM ACPU勾包函数 */
 extern VOS_UINT32 OM_AcpuTraceMsgHook(VOS_VOID* pMsg);
 extern VOS_VOID DIPC_PrintLog(VOS_UINT32 ulModuleId, VOS_UINT32 ulSubMod,
     VOS_UINT32 ulLevel, VOS_CHAR *pcString);

@@ -5,11 +5,11 @@
 #include "at_lte_common.h"
 #include "ATCmdProc.h"
 
-/*lint -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -e767 åŽŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_AT_COMM_CMD_C
 /*lint +e767 */
 
-/* ÎªÁË¼ò»¯²»¿¼ÂÇ³ö´í */
+/* ä¸ºäº†ç®€åŒ–ä¸è€ƒè™‘å‡ºé”™ */
 VOS_UINT8 Hec2ToVal(VOS_UINT8* str)
 {
     VOS_UINT8 ucMid = 0;
@@ -41,7 +41,7 @@ VOS_UINT8 Hec2ToVal(VOS_UINT8* str)
     return ucVal;
 }
 
-/* ¼ÆËã×Ö·û´®µÄCRC */
+/* è®¡ç®—å­—ç¬¦ä¸²çš„CRC */
 VOS_UINT32 Calc_CRC32(VOS_UINT8 *Packet, VOS_UINT32 dwLength)
 {
     static VOS_UINT32 CRC32_TABLE[256] = {
@@ -96,12 +96,12 @@ VOS_UINT32 Calc_CRC32(VOS_UINT8 *Packet, VOS_UINT32 dwLength)
 }
 
 /***************************************************************************** 
- º¯ Êý Ãû  : atSetLTCommCmdPara
- ¹¦ÄÜÃèÊö  : ·¢ËÍÍ¨ÓÃATÃüÁîµ½TL CºË 
- ÊäÈë²ÎÊý  : ucClientId Client ID
-             ulTmode Ä£Ê½ 
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³É¹¦·µ»ØAT_OK£¬Ê§°Ü·µ»ØAT_ERROR
+ å‡½ æ•° å  : atSetLTCommCmdPara
+ åŠŸèƒ½æè¿°  : å‘é€é€šç”¨ATå‘½ä»¤åˆ°TL Cæ ¸ 
+ è¾“å…¥å‚æ•°  : ucClientId Client ID
+             ulTmode æ¨¡å¼ 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æˆåŠŸè¿”å›žAT_OKï¼Œå¤±è´¥è¿”å›žAT_ERROR
 *****************************************************************************/
 
 VOS_UINT32 atSetLTCommCmdPara(VOS_UINT8 ucClientId)
@@ -117,7 +117,7 @@ VOS_UINT32 atSetLTCommCmdPara(VOS_UINT8 ucClientId)
     VOS_UINT8  *pdata_aucPara = NULL;
 
           
-    /* ²ÎÊý¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {        
         return AT_CME_INCORRECT_PARAMETERS;
@@ -181,7 +181,7 @@ VOS_UINT32 atSetLTCommCmdPara(VOS_UINT8 ucClientId)
         gastAtParaList[6].aucPara,
         gastAtParaList[7].aucPara);  
     
-    /* ¶Ô´«Èë²ÎÊý½øÐÐCRCÐ£Ñé  */
+    /* å¯¹ä¼ å…¥å‚æ•°è¿›è¡ŒCRCæ ¡éªŒ  */
     if(ulCRC_Cal != ulCRC)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -200,21 +200,21 @@ VOS_UINT32 atSetLTCommCmdPara(VOS_UINT8 ucClientId)
 
     if(AT_SUCCESS == ulRst)
     {
-        /* ÉèÖÃµ±Ç°²Ù×÷ÀàÐÍ */
+        /* è®¾ç½®å½“å‰æ“ä½œç±»åž‹ */
         gastAtClientTab[ucClientId].CmdCurrentOpt = (AT_CMD_CURRENT_OPT_ENUM)AT_CMD_LTCOMMCMD_SET;
-        return AT_WAIT_ASYNC_RETURN;    /* ·µ»ØÃüÁî´¦Àí¹ÒÆð×´Ì¬ */
+        return AT_WAIT_ASYNC_RETURN;    /* è¿”å›žå‘½ä»¤å¤„ç†æŒ‚èµ·çŠ¶æ€ */
     }
     
     return AT_ERROR;
 }
 
 /***************************************************************************** 
- º¯ Êý Ãû  : atSetLTCommCmdParaCnfProc
- ¹¦ÄÜÃèÊö  : Í¨ÓÃÃüÁî·µ»Ø´¦Àíº¯Êý 
- ÊäÈë²ÎÊý  : ucClientId Client ID
-             pMsgBlock ÏûÏ¢ÄÚÈÝ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³É¹¦·µ»ØAT_OK£¬Ê§°Ü·µ»ØAT_ERROR
+ å‡½ æ•° å  : atSetLTCommCmdParaCnfProc
+ åŠŸèƒ½æè¿°  : é€šç”¨å‘½ä»¤è¿”å›žå¤„ç†å‡½æ•° 
+ è¾“å…¥å‚æ•°  : ucClientId Client ID
+             pMsgBlock æ¶ˆæ¯å†…å®¹
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æˆåŠŸè¿”å›žAT_OKï¼Œå¤±è´¥è¿”å›žAT_ERROR
 *****************************************************************************/
 
 VOS_UINT32 atSetLTCommCmdParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
@@ -230,7 +230,7 @@ VOS_UINT32 atSetLTCommCmdParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
     pEvent = (OS_MSG_STRU*)(((MsgBlock*)pMsgBlock)->aucValue);
     pstCnf = (FTM_SET_LTCOMMCMD_CNF_STRU *)pEvent->ulParam1;
 
-    /* ¼ÆËãCRC */
+    /* è®¡ç®—CRC */
     ulCRC = Calc_CRC32((VOS_UINT8 *)pstCnf->cData, pstCnf->ulDataLen);
     usCRC_L = (VOS_UINT16)(ulCRC & 0x0000FFFF);
     usCRC_H = (VOS_UINT16)(ulCRC >> 16);
@@ -249,11 +249,11 @@ VOS_UINT32 atSetLTCommCmdParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 }
 
 /***************************************************************************** 
- º¯ Êý Ãû  : atQryLTCommCmdPara
- ¹¦ÄÜÃèÊö  : ·¢ËÍÍ¨ÓÃATÃüÁî²éÑ¯µ½TL CºË 
- ÊäÈë²ÎÊý  : ucClientId Client ID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³É¹¦·µ»ØAT_OK£¬Ê§°Ü·µ»ØAT_ERROR
+ å‡½ æ•° å  : atQryLTCommCmdPara
+ åŠŸèƒ½æè¿°  : å‘é€é€šç”¨ATå‘½ä»¤æŸ¥è¯¢åˆ°TL Cæ ¸ 
+ è¾“å…¥å‚æ•°  : ucClientId Client ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æˆåŠŸè¿”å›žAT_OKï¼Œå¤±è´¥è¿”å›žAT_ERROR
 *****************************************************************************/
 
 VOS_UINT32 atQryLTCommCmdPara(VOS_UINT8 ucClientId)
@@ -274,12 +274,12 @@ VOS_UINT32 atQryLTCommCmdPara(VOS_UINT8 ucClientId)
 }
 
 /***************************************************************************** 
- º¯ Êý Ãû  : atQryLTCommCmdParaCnfProc
- ¹¦ÄÜÃèÊö  : Í¨ÓÃATÃüÁî²éÑ¯·µ»Ø´¦Àíº¯Êý
- ÊäÈë²ÎÊý  : ucClientId Client ID
-             pMsgBlock ÏûÏ¢ÄÚÈÝ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³É¹¦·µ»ØAT_OK£¬Ê§°Ü·µ»ØAT_ERROR
+ å‡½ æ•° å  : atQryLTCommCmdParaCnfProc
+ åŠŸèƒ½æè¿°  : é€šç”¨ATå‘½ä»¤æŸ¥è¯¢è¿”å›žå¤„ç†å‡½æ•°
+ è¾“å…¥å‚æ•°  : ucClientId Client ID
+             pMsgBlock æ¶ˆæ¯å†…å®¹
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æˆåŠŸè¿”å›žAT_OKï¼Œå¤±è´¥è¿”å›žAT_ERROR
 *****************************************************************************/
 
 VOS_UINT32 atQryLTCommCmdParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
@@ -295,7 +295,7 @@ VOS_UINT32 atQryLTCommCmdParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
     pEvent = (OS_MSG_STRU*)(((MsgBlock*)pMsgBlock)->aucValue);
     pstCnf = (FTM_RD_LTCOMMCMD_CNF_STRU *)pEvent->ulParam1;
 
-    /* ¼ÆËãCRC */
+    /* è®¡ç®—CRC */
     ulCRC = Calc_CRC32((VOS_UINT8 *)pstCnf->cData, pstCnf->ulDataLen);
     usCRC_L = (unsigned short)(ulCRC & 0x0000FFFF);
     usCRC_H = (unsigned short)(ulCRC >> 16);

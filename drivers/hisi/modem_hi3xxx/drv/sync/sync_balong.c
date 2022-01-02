@@ -1,15 +1,15 @@
 /*************************************************************************
-*   °æÈ¨ËùÓÐ(C) 1987-2013, ÉîÛÚ»ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾.
+*   ç‰ˆæƒæ‰€æœ‰(C) 1987-2013, æ·±åœ³åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸.
 *
-*   ÎÄ ¼þ Ãû :  BSP_SYNC.c
+*   æ–‡ ä»¶ å :  BSP_SYNC.c
 *
-*   ×÷    Õß     :  lixiaojie
+*   ä½œ    è€…     :  lixiaojie
 *
-*   Ãè    Êö     :  ±¾ÎÄ¼þ»ùÓÚIFCÄ£¿éÊµÏÖ£¬ÓÃÓÚ¹ÜÀíÄ£¿éÖ÷´ÓºËÍ¬²½²Ù×÷£¬
-					 ÎªÉÏ²ãÊÊÅäV7R1°æ±¾½Ó¿Ú¡£
+*   æ    è¿°     :  æœ¬æ–‡ä»¶åŸºäºŽIFCæ¨¡å—å®žçŽ°ï¼Œç”¨äºŽç®¡ç†æ¨¡å—ä¸»ä»Žæ ¸åŒæ­¥æ“ä½œï¼Œ
+					 ä¸ºä¸Šå±‚é€‚é…V7R1ç‰ˆæœ¬æŽ¥å£ã€‚
 *
-*   ÐÞ¸Ä¼ÇÂ¼ :  2010Äê4ÔÂ2ÈÕ  v1.00  wangxuesong  ´´½¨
-				2013Äê5ÔÂ6ÈÕ  v2.00  lixiaojie  ÐÞ¸Ä
+*   ä¿®æ”¹è®°å½• :  2010å¹´4æœˆ2æ—¥  v1.00  wangxuesong  åˆ›å»º
+				2013å¹´5æœˆ6æ—¥  v2.00  lixiaojie  ä¿®æ”¹
 *************************************************************************/
 /*lint --e{537,718,746,958,959}*/
 #ifdef __KERNEL__
@@ -73,19 +73,19 @@ static void BSP_SYNC_Init(void)
     }
 }
 /*****************************************************************************
-* º¯ Êý Ãû : BSP_SYNC_Lock
+* å‡½ æ•° å : BSP_SYNC_Lock
 *
-* ¹¦ÄÜÃèÊö: Ëø¶¨²¢²éÑ¯Ä£¿éµÄ³õÊ¼»¯×´Ì¬
+* åŠŸèƒ½æè¿°: é”å®šå¹¶æŸ¥è¯¢æ¨¡å—çš„åˆå§‹åŒ–çŠ¶æ€
 *
-* ÊäÈë²ÎÊý: u32Module     Ä£¿é
-*                         pState        ×´Ì¬Ö¸Õë
-*                         u32TimeOut    ³¬Ê±Öµ£¬0ÎªÓÀÔ¶µÈ´ý£»
+* è¾“å…¥å‚æ•°: u32Module     æ¨¡å—
+*                         pState        çŠ¶æ€æŒ‡é’ˆ
+*                         u32TimeOut    è¶…æ—¶å€¼ï¼Œ0ä¸ºæ°¸è¿œç­‰å¾…ï¼›
 *
-* Êä³ö²ÎÊý: ÎÞ
+* è¾“å‡ºå‚æ•°: æ— 
 *
-* ·µ »Ø Öµ   : OK&ERROR
+* è¿” å›ž å€¼   : OK&ERROR
 *
-* ÆäËüËµÃ÷: ÎÞ
+* å…¶å®ƒè¯´æ˜Ž: æ— 
 *
 *****************************************************************************/
 int BSP_SYNC_Lock(SYNC_MODULE_E u32Module, unsigned int *pState, unsigned int u32TimeOut)
@@ -101,8 +101,8 @@ int BSP_SYNC_Lock(SYNC_MODULE_E u32Module, unsigned int *pState, unsigned int u3
 	}
 	tick_begin = bsp_get_slice_value();
 	tick_end = tick_begin + HI_TIMER_STAMP_CLK*u32TimeOut/100;
-	/* Ä¿Ç°Ö»ÊÇÔÚusrAppInitÖÐÊ¹ÓÃ£¬µ¥ÈÎÎñÇé¿öÏÂ£¬Ê¹ÓÃÑ­»·²éÑ¯Ð§ÂÊ½Ï¸ß
-       Èç¹ûÐèÒªÖ§³Ö¶àÈÎÎñ£¬ÐèÒªÊÊµ±µÄÈÃ³öCPU */
+	/* ç›®å‰åªæ˜¯åœ¨usrAppInitä¸­ä½¿ç”¨ï¼Œå•ä»»åŠ¡æƒ…å†µä¸‹ï¼Œä½¿ç”¨å¾ªçŽ¯æŸ¥è¯¢æ•ˆçŽ‡è¾ƒé«˜
+       å¦‚æžœéœ€è¦æ”¯æŒå¤šä»»åŠ¡ï¼Œéœ€è¦é€‚å½“çš„è®©å‡ºCPU */
 	for(;;)
 	{
 		if(!sync_ctrl.g_pSyncLock[u32Module])
@@ -138,18 +138,18 @@ int BSP_SYNC_Lock(SYNC_MODULE_E u32Module, unsigned int *pState, unsigned int u3
 
 
 /*****************************************************************************
-* º¯ Êý Ãû      : BSP_SYNC_UnLock
+* å‡½ æ•° å      : BSP_SYNC_UnLock
 *
-* ¹¦ÄÜÃèÊö  : ½âËø²¢¸üÐÂÄ£¿é³õÊ¼»¯×´Ì¬
+* åŠŸèƒ½æè¿°  : è§£é”å¹¶æ›´æ–°æ¨¡å—åˆå§‹åŒ–çŠ¶æ€
 *
-* ÊäÈë²ÎÊý  : u32Module     Ä£¿é
-*                           u32State       ¸üÐÂÄ£¿é×´Ì¬
+* è¾“å…¥å‚æ•°  : u32Module     æ¨¡å—
+*                           u32State       æ›´æ–°æ¨¡å—çŠ¶æ€
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : OK&ERROR
+* è¿” å›ž å€¼      : OK&ERROR
 *
-* ÆäËüËµÃ÷  : ÎÞ
+* å…¶å®ƒè¯´æ˜Ž  : æ— 
 *
 *****************************************************************************/
 int BSP_SYNC_UnLock(SYNC_MODULE_E u32Module, unsigned int u32State)
@@ -165,18 +165,18 @@ int BSP_SYNC_UnLock(SYNC_MODULE_E u32Module, unsigned int u32State)
 	return BSP_OK;
 }
 /*****************************************************************************
-* º¯ Êý Ãû     : BSP_SYNC_Wait
+* å‡½ æ•° å     : BSP_SYNC_Wait
 *
-* ¹¦ÄÜÃèÊö  : ´ÓºËµÈ´ýÖ÷ºË²Ù×÷Íê³Éº¯Êý
+* åŠŸèƒ½æè¿°  : ä»Žæ ¸ç­‰å¾…ä¸»æ ¸æ“ä½œå®Œæˆå‡½æ•°
 *
-* ÊäÈë²ÎÊý  : u32Module     Ä£¿é
-*                           u32TimeOut    ³¬Ê±Öµ£¬0ÎªÓÀÔ¶µÈ´ý£»
+* è¾“å…¥å‚æ•°  : u32Module     æ¨¡å—
+*                           u32TimeOut    è¶…æ—¶å€¼ï¼Œ0ä¸ºæ°¸è¿œç­‰å¾…ï¼›
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : OK&ERROR
+* è¿” å›ž å€¼      : OK&ERROR
 *
-* ÆäËüËµÃ÷  : ÎÞ
+* å…¶å®ƒè¯´æ˜Ž  : æ— 
 *
 *****************************************************************************/
 int BSP_SYNC_Wait(SYNC_MODULE_E u32Module, unsigned int u32TimeOut)
@@ -209,16 +209,16 @@ int BSP_SYNC_Wait(SYNC_MODULE_E u32Module, unsigned int u32TimeOut)
 	}
 }
 /*****************************************************************************
-* º¯ Êý Ãû     : BSP_SYNC_Give
+* å‡½ æ•° å     : BSP_SYNC_Give
 *
-* ¹¦ÄÜÃèÊö  : Ö÷ºËÍ¨Öª´ÓºËÖ÷ºË²Ù×÷ÒÑ¾­Íê³É
+* åŠŸèƒ½æè¿°  : ä¸»æ ¸é€šçŸ¥ä»Žæ ¸ä¸»æ ¸æ“ä½œå·²ç»å®Œæˆ
 *
-* ÊäÈë²ÎÊý  :
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  :
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ     : OK&ERROR
+* è¿” å›ž å€¼     : OK&ERROR
 *
-* ÆäËüËµÃ÷  : ÎÞ
+* å…¶å®ƒè¯´æ˜Ž  : æ— 
 *
 *****************************************************************************/
 int BSP_SYNC_Give(SYNC_MODULE_E u32Module)

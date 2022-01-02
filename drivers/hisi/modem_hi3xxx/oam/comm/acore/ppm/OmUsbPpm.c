@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 **************************************************************************** */
 #include "SCMProc.h"
 #include "ombufmngr.h"
@@ -20,31 +20,31 @@ extern "C" {
 /* lint +e767  */
 
 /* ****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 **************************************************************************** */
 
 /*****************************************************************************
-  3 Íâ²¿ÒýÓÃÉùÃ÷
+  3 å¤–éƒ¨å¼•ç”¨å£°æ˜Ž
 *****************************************************************************/
 
 
 /*****************************************************************************
-  4 º¯ÊýÊµÏÖ
+  4 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  :
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊý  :
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  :
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê5ÔÂ31ÈÕ
-    ×÷    Õß   : XXXXXXXX
-    ÐÞ¸ÄÄÚÈÝ   : V8R1 OM_OptimizeÏîÄ¿ÐÂÔö
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´5æœˆ31æ—¥
+    ä½œ    è€…   : XXXXXXXX
+    ä¿®æ”¹å†…å®¹   : V8R1 OM_Optimizeé¡¹ç›®æ–°å¢ž
 
 *****************************************************************************/
 
@@ -142,7 +142,7 @@ VOS_UINT32 PPM_UsbIndSendData(VOS_UINT8 *pucVirAddr, VOS_UINT8 *pucPhyAddr, VOS_
 
 VOS_UINT32 PPM_UsbCfgPortInit(VOS_VOID)
 {
-    /* USB³ÐÔØµÄOM CFG¶Ë¿Ú£¬µ÷ÓÃµ×ÈíµÄÒì²½½Ó¿Ú·¢ËÍÊý¾Ý£¬ÏÖÔÚÐèÒªÎ±Ôì³ÉÍ¬²½½Ó¿Ú£¬ÉêÇëÐÅºÅÁ¿ */
+    /* USBæ‰¿è½½çš„OM CFGç«¯å£ï¼Œè°ƒç”¨åº•è½¯çš„å¼‚æ­¥æŽ¥å£å‘é€æ•°æ®ï¼ŒçŽ°åœ¨éœ€è¦ä¼ªé€ æˆåŒæ­¥æŽ¥å£ï¼Œç”³è¯·ä¿¡å·é‡ */
     if(VOS_OK != VOS_SmCCreate("UCFG", 0, VOS_SEMA4_FIFO, &g_stUsbCfgPseudoSync.ulPseudoSyncSemId))
     {
         LogPrint("\r\nPPM_UsbCfgPortInit: create g_stUsbCnfPseudoSync.ulPseudoSyncSemId failedd\r\n");
@@ -160,7 +160,7 @@ VOS_UINT32 PPM_UsbCfgPortInit(VOS_VOID)
 }
 VOS_UINT32 PPM_UsbIndPortInit(VOS_VOID)
 {
-    /* USB³ÐÔØµÄOM IND¶Ë¿Ú£¬µ÷ÓÃµ×ÈíµÄÒì²½½Ó¿Ú·¢ËÍÊý¾Ý£¬ÏÖÔÚÐèÒªÎ±Ôì³ÉÍ¬²½½Ó¿Ú£¬ÉêÇëÐÅºÅÁ¿ */
+    /* USBæ‰¿è½½çš„OM INDç«¯å£ï¼Œè°ƒç”¨åº•è½¯çš„å¼‚æ­¥æŽ¥å£å‘é€æ•°æ®ï¼ŒçŽ°åœ¨éœ€è¦ä¼ªé€ æˆåŒæ­¥æŽ¥å£ï¼Œç”³è¯·ä¿¡å·é‡ */
     if(VOS_OK != VOS_SmCCreate("UIND", 0, VOS_SEMA4_FIFO, &g_stUsbIndPseudoSync.ulPseudoSyncSemId))
     {
         LogPrint("\r\nPPM_UsbIndPortInit: create g_stUsbIndPseudoSync.ulPseudoSyncSemId failedd\r\n");
@@ -178,13 +178,13 @@ VOS_UINT32 PPM_UsbIndPortInit(VOS_VOID)
 }
 VOS_UINT32 PPM_UsbPortInit(VOS_VOID)
 {
-    /* USB ³ÐÔØµÄOMÖ÷¶¯ÉÏ±¨¶Ë¿ÚµÄ³õÊ¼»¯ */
+    /* USB æ‰¿è½½çš„OMä¸»åŠ¨ä¸ŠæŠ¥ç«¯å£çš„åˆå§‹åŒ– */
     if (VOS_OK != PPM_UsbIndPortInit())
     {
         return VOS_ERR;
     }
 
-    /* USB ³ÐÔØµÄOMÅäÖÃ¶Ë¿ÚµÄ³õÊ¼»¯ */
+    /* USB æ‰¿è½½çš„OMé…ç½®ç«¯å£çš„åˆå§‹åŒ– */
     if (VOS_OK != PPM_UsbCfgPortInit())
     {
         return VOS_ERR;

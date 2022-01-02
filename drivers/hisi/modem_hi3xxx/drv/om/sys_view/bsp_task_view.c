@@ -1,5 +1,5 @@
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 /*lint -save -e537*/
 #include "bsp_om_api.h"
@@ -30,15 +30,15 @@ osl_sem_id                int_lock_sem;
 int  QueueFrontDel(dump_queue_t *Q, u32 del_num);
 
 /*****************************************************************************
-* º¯ Êý Ãû  : task_swt_read_cb_done
+* å‡½ æ•° å  : task_swt_read_cb_done
 *
-* ¹¦ÄÜÃèÊö  :ÈÎÎñ¡¢ÖÐ¶ÏÇÐ»»ÐÅÏ¢´¥·¢ÉÏ±¨»Øµ÷º¯Êý£¬×¢²á¸ødumpÄ£¿é
+* åŠŸèƒ½æè¿°  :ä»»åŠ¡ã€ä¸­æ–­åˆ‡æ¢ä¿¡æ¯è§¦å‘ä¸ŠæŠ¥å›žè°ƒå‡½æ•°ï¼Œæ³¨å†Œç»™dumpæ¨¡å—
 *
-* ÊäÈë²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 
 void task_swt_read_cb_done(void)
@@ -49,15 +49,15 @@ void task_swt_read_cb_done(void)
 
 
 /*****************************************************************************
-* º¯ Êý Ãû  : int_lock_read_cb_done
+* å‡½ æ•° å  : int_lock_read_cb_done
 *
-* ¹¦ÄÜÃèÊö  :ËøÖÐ¶ÏÐÅÏ¢´¥·¢ÉÏ±¨»Øµ÷º¯Êý£¬×¢²á¸ødumpÄ£¿é
+* åŠŸèƒ½æè¿°  :é”ä¸­æ–­ä¿¡æ¯è§¦å‘ä¸ŠæŠ¥å›žè°ƒå‡½æ•°ï¼Œæ³¨å†Œç»™dumpæ¨¡å—
 *
-* ÊäÈë²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 
  void int_lock_read_cb_done(void)
@@ -68,15 +68,15 @@ void task_swt_read_cb_done(void)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : report_sysview_trace
+* å‡½ æ•° å  : report_sysview_trace
 *
-* ¹¦ÄÜÃèÊö  :ÈÎÎñÇÐ»»¡¢ÖÐ¶ÏÇÐ»»¡¢ËøÖÐ¶ÏÐÅÏ¢ÉÏ±¨·â×°º¯Êý
+* åŠŸèƒ½æè¿°  :ä»»åŠ¡åˆ‡æ¢ã€ä¸­æ–­åˆ‡æ¢ã€é”ä¸­æ–­ä¿¡æ¯ä¸ŠæŠ¥å°è£…å‡½æ•°
 *
-* ÊäÈë²ÎÊý  :data_type :ÉÏ±¨ÀàÐÍ
+* è¾“å…¥å‚æ•°  :data_type :ä¸ŠæŠ¥ç±»åž‹
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 
 void report_sysview_trace(bsp_sysview_type_e data_type)
@@ -101,7 +101,7 @@ void report_sysview_trace(bsp_sysview_type_e data_type)
         threshold_size  = task_info_stru.threshold_size;
         queue_head = (dump_queue_t *)DUMP_TASK_SWITCH_ADDR;
     }
-    /* ÄÚ²¿½Ó¿Ú£¬ÓÉÈë²Î±£Ö¤*/
+    /* å†…éƒ¨æŽ¥å£ï¼Œç”±å…¥å‚ä¿è¯*/
     else
     {
        threshold_size  = int_lock_stru.threshold_size;
@@ -117,7 +117,7 @@ void report_sysview_trace(bsp_sysview_type_e data_type)
         return ;
     }
 
-    /* Ã¿´Î´¥·¢ÉÏ±¨×î¶àÉÏ±¨ÃÅÏÞÖµ´óÐ¡*/
+    /* æ¯æ¬¡è§¦å‘ä¸ŠæŠ¥æœ€å¤šä¸ŠæŠ¥é—¨é™å€¼å¤§å°*/
 
     if((q_num *sizeof(int)) >= threshold_size )
     {
@@ -128,13 +128,13 @@ void report_sysview_trace(bsp_sysview_type_e data_type)
         data_size = (q_num *sizeof(int));
     }
 
-    /*²»´¦Àí»Ø¾íÖ¸Õë*/
+    /*ä¸å¤„ç†å›žå·æŒ‡é’ˆ*/
     if((q_front + data_size/sizeof(u32)) >=q_maxnum)
     {
         data_size = (q_maxnum - q_front )* sizeof(u32);
     }
 
-    /*ÉêÇë±àÂëÍ¨µÀ»º´æbuf*/
+    /*ç”³è¯·ç¼–ç é€šé“ç¼“å­˜buf*/
     send_buf_len = sizeof(BSP_SYS_VIEW_TRACE_STRU)+data_size ;
 
     if(bsp_om_buf_sem_take())
@@ -150,10 +150,10 @@ void report_sysview_trace(bsp_sysview_type_e data_type)
         return ;
     }
 
-    /*´ò°üÊý¾ÝÍ·*/
+    /*æ‰“åŒ…æ•°æ®å¤´*/
     sysview_trace_packet((u8*)p_sysview_trace_stru,send_buf_len,data_type);
 
-    /*´ÓdumpÄ£¿éÖ¸¶¨µØÖ·ÖÐ»ñÈ¡Êý¾Ý¡¢·¢ËÍÊý¾Ýµ½SOCP¡¢¸üÐÂdumpÄ£¿é¶ÓÁÐÖ¸Õë*/
+    /*ä»Ždumpæ¨¡å—æŒ‡å®šåœ°å€ä¸­èŽ·å–æ•°æ®ã€å‘é€æ•°æ®åˆ°SOCPã€æ›´æ–°dumpæ¨¡å—é˜Ÿåˆ—æŒ‡é’ˆ*/
     memcpy((u8*)p_sysview_trace_stru +sizeof(BSP_SYS_VIEW_TRACE_STRU),(u8*)(queue_head->data+q_front),data_size);
 
     if(BSP_OK == bsp_om_into_send_list((void*)p_sysview_trace_stru,send_buf_len))

@@ -1,7 +1,7 @@
 
 
 /******************************************************************************
-1 Í·ÎÄ¼þ°üº¬
+1 å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "v_id.h"
 #include "RnicProcMsg.h"
@@ -17,17 +17,17 @@
 #endif
 
 /*****************************************************************************
-Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 #define    THIS_FILE_ID        PS_FILE_ID_RNIC_INITS_C
 
 /*****************************************************************************
-2 È«¾Ö±äÁ¿¶¨Òå
+2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-3 º¯ÊýÊµÏÖ
+3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 VOS_INT RNIC_CCpuResetCallback(
@@ -37,10 +37,10 @@ VOS_INT RNIC_CCpuResetCallback(
 {
     RNIC_CCPU_RESET_IND_STRU           *pstMsg = VOS_NULL_PTR;
 
-    /* ¸´Î»Ç° */
+    /* å¤ä½å‰ */
     if (DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam)
     {
-        /* ¹¹ÔìÏûÏ¢ */
+        /* æž„é€ æ¶ˆæ¯ */
         pstMsg = (RNIC_CCPU_RESET_IND_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(ACPU_PID_RNIC,
                                                                     sizeof(RNIC_CCPU_RESET_IND_STRU));
         if (VOS_NULL_PTR == pstMsg)
@@ -49,18 +49,18 @@ VOS_INT RNIC_CCpuResetCallback(
             return VOS_ERROR;
         }
 
-        /* ÌîÐ´ÏûÏ¢Í· */
+        /* å¡«å†™æ¶ˆæ¯å¤´ */
         pstMsg->ulReceiverPid               = ACPU_PID_RNIC;
         pstMsg->enMsgId                     = ID_RNIC_CCPU_RESET_START_IND;
 
-        /* ·¢ÏûÏ¢ */
+        /* å‘æ¶ˆæ¯ */
         if (VOS_OK != PS_SEND_MSG(ACPU_PID_RNIC, pstMsg))
         {
             RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_CCpuResetCallback: Send Msg Failed!\r\n");
             return VOS_ERROR;
         }
 
-        /* µÈ´ý»Ø¸´ÐÅºÅÁ¿³õÊ¼ÎªËø×´Ì¬£¬µÈ´ýÏûÏ¢´¦ÀíÍêºóÐÅºÅÁ¿½âËø¡£ */
+        /* ç­‰å¾…å›žå¤ä¿¡å·é‡åˆå§‹ä¸ºé”çŠ¶æ€ï¼Œç­‰å¾…æ¶ˆæ¯å¤„ç†å®ŒåŽä¿¡å·é‡è§£é”ã€‚ */
         if (VOS_OK != VOS_SmP(RNIC_GetResetSem(), RNIC_RESET_TIMEOUT_LEN))
         {
             RNIC_ERROR_LOG(ACPU_PID_RNIC, "RNIC_CCpuResetCallback: Lock Binary SEM Failed!\r\n");
@@ -71,10 +71,10 @@ VOS_INT RNIC_CCpuResetCallback(
 
         return VOS_OK;
     }
-    /* ¸´Î»ºó */
+    /* å¤ä½åŽ */
     else if (DRV_RESET_CALLCBFUN_RESET_AFTER == enParam)
     {
-        /* ¼ÇÂ¼¸´Î»µÄ´ÎÊý */
+        /* è®°å½•å¤ä½çš„æ¬¡æ•° */
         RNIC_DBG_SAVE_CCPU_RESET_SUCCESS_NUM(1);
 
         return VOS_OK;
@@ -86,21 +86,21 @@ VOS_INT RNIC_CCpuResetCallback(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : RNIC_PidInit
- ¹¦ÄÜÃèÊö  : RNICÊý¾Ý½ÓÊÕPID³õÊ¼»¯
- ÊäÈë²ÎÊý  : enPhase:³õÊ¼»¯×´Ì¬
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32:VOS_OK, VOS_ERR
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : RNIC_PidInit
+ åŠŸèƒ½æè¿°  : RNICæ•°æ®æŽ¥æ”¶PIDåˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : enPhase:åˆå§‹åŒ–çŠ¶æ€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32:VOS_OK, VOS_ERR
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ06ÈÕ
-   ×÷    Õß   : ·¶¾§
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
- 2.ÈÕ    ÆÚ   : 2013Äê04ÔÂ10ÈÕ
-   ×÷    Õß   : ·¶¾§
-   ÐÞ¸ÄÄÚÈÝ   : CºËµ¥¶À¸´Î»
+ ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ06æ—¥
+   ä½œ    è€…   : èŒƒæ™¶
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
+ 2.æ—¥    æœŸ   : 2013å¹´04æœˆ10æ—¥
+   ä½œ    è€…   : èŒƒæ™¶
+   ä¿®æ”¹å†…å®¹   : Cæ ¸å•ç‹¬å¤ä½
 
 *****************************************************************************/
 VOS_UINT32 RNIC_PidInit (enum VOS_INIT_PHASE_DEFINE enPhase)
@@ -113,11 +113,11 @@ VOS_UINT32 RNIC_PidInit (enum VOS_INIT_PHASE_DEFINE enPhase)
     {
         case VOS_IP_LOAD_CONFIG:
 
-            /* ³õÊ¼»¯RNICÉÏÏÂÎÄÐÅÏ¢ */
+            /* åˆå§‹åŒ–RNICä¸Šä¸‹æ–‡ä¿¡æ¯ */
             pstRnicCtx = RNIC_GetRnicCtxAddr();
             RNIC_InitCtx(pstRnicCtx);
 
-            /* ¸øµÍÈí×¢²á»Øµ÷º¯Êý£¬ÓÃÓÚCºËµ¥¶À¸´Î»µÄ´¦Àí */
+            /* ç»™ä½Žè½¯æ³¨å†Œå›žè°ƒå‡½æ•°ï¼Œç”¨äºŽCæ ¸å•ç‹¬å¤ä½çš„å¤„ç† */
             DRV_CCORERESET_REGCBFUNC(NAS_RNIC_FUNC_PROC_NAME,
                                      RNIC_CCpuResetCallback,
                                      0,
@@ -147,18 +147,18 @@ VOS_UINT32 RNIC_PidInit (enum VOS_INIT_PHASE_DEFINE enPhase)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : RNIC_FidInit
- ¹¦ÄÜÃèÊö  : RNIC_Fid³õÊ¼»¯
- ÊäÈë²ÎÊý  : enPhase:³õÊ¼»¯×´Ì¬
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32:VOS_OK, VOS_ERR
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : RNIC_FidInit
+ åŠŸèƒ½æè¿°  : RNIC_Fidåˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : enPhase:åˆå§‹åŒ–çŠ¶æ€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32:VOS_OK, VOS_ERR
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ06ÈÕ
-   ×÷    Õß   : ·¶¾§
-   ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   : 2011å¹´12æœˆ06æ—¥
+   ä½œ    è€…   : èŒƒæ™¶
+   ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 RNIC_FidInit (enum VOS_INIT_PHASE_DEFINE enPhase)
@@ -169,7 +169,7 @@ VOS_UINT32 RNIC_FidInit (enum VOS_INIT_PHASE_DEFINE enPhase)
     {
         case VOS_IP_LOAD_CONFIG:
 
-            /* Íø¿¨Ä£¿é×¢²áPID */
+            /* ç½‘å¡æ¨¡å—æ³¨å†ŒPID */
             ulRslt = VOS_RegisterPIDInfo(ACPU_PID_RNIC,
                                 (Init_Fun_Type)RNIC_PidInit,
                                 (Msg_Fun_Type)RNIC_ProcMsg);

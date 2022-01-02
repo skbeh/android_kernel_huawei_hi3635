@@ -87,7 +87,7 @@
 #endif
 #include "pslog.h"
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_CHAP_C
 
@@ -99,27 +99,27 @@ static const VOS_CHAR * const chapcodes[] = {
 #define MAXCHAPCODE ((sizeof chapcodes / sizeof chapcodes[0]) - 1)
 
 /*****************************************************************************
- º¯ Êý Ãû  : ChapOutput
- ¹¦ÄÜÃèÊö  : ¹¹ÔìCHAPÖ¡²¢·¢ËÍ
- ÊäÈë²ÎÊý  : l - PPPÁ´½Ó
-             code - ´ýÌîÐ´µ½Í·²¿µÄCodeÖµ
-             id - ´ýÌîÐ´µ½Í·²¿µÄIdentifierÖµ
-             ptr - ´ýÌîÐ´µÄCHAPÊý¾Ý
-             count - ´ýÌîÐ´µÄCHAPÊý¾ÝµÄ³¤¶È, µ¥Î»: ×Ö½Ú
-             text - ×Ö·û´®, ÓÃÓÚÈÕÖ¾
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NULL
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- Ëµ    Ã÷  : ²»¶ÔptrÓëcode½øÐÐ×éºÏ¼ì²é, ÈçcodeÎªÄ³ÖµÊ±, ptr²»Ó¦Îª¿ÕµÈµÈ,
-             ÒòÎª´Ëº¯ÊýÎªÒ»Í¨ÓÃº¯Êý, Ö§³ÖÉú³ÉËùÓÐµÄCHAPÖ¡, ²¢ÄÜÀ©Õ¹ÎªÖ§³Ö
-             MS-CHAPÖ¡µÈ, ¸÷ÖÖcode, ptr×éºÏÇé¿öÖÚ¶à, Ò»ÇÐÏà¹Ø¼ì²é½»ÓÉÍâ²¿
-             µ÷ÓÃÕßÀ´Íê³É
+ å‡½ æ•° å  : ChapOutput
+ åŠŸèƒ½æè¿°  : æž„é€ CHAPå¸§å¹¶å‘é€
+ è¾“å…¥å‚æ•°  : l - PPPé“¾æŽ¥
+             code - å¾…å¡«å†™åˆ°å¤´éƒ¨çš„Codeå€¼
+             id - å¾…å¡«å†™åˆ°å¤´éƒ¨çš„Identifierå€¼
+             ptr - å¾…å¡«å†™çš„CHAPæ•°æ®
+             count - å¾…å¡«å†™çš„CHAPæ•°æ®çš„é•¿åº¦, å•ä½: å­—èŠ‚
+             text - å­—ç¬¦ä¸², ç”¨äºŽæ—¥å¿—
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NULL
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ è¯´    æ˜Ž  : ä¸å¯¹pträ¸Žcodeè¿›è¡Œç»„åˆæ£€æŸ¥, å¦‚codeä¸ºæŸå€¼æ—¶, pträ¸åº”ä¸ºç©ºç­‰ç­‰,
+             å› ä¸ºæ­¤å‡½æ•°ä¸ºä¸€é€šç”¨å‡½æ•°, æ”¯æŒç”Ÿæˆæ‰€æœ‰çš„CHAPå¸§, å¹¶èƒ½æ‰©å±•ä¸ºæ”¯æŒ
+             MS-CHAPå¸§ç­‰, å„ç§code, ptrç»„åˆæƒ…å†µä¼—å¤š, ä¸€åˆ‡ç›¸å…³æ£€æŸ¥äº¤ç”±å¤–éƒ¨
+             è°ƒç”¨è€…æ¥å®Œæˆ
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê10ÔÂ24ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : porting from BSD
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´10æœˆ24æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : porting from BSD
 
 *****************************************************************************/
 VOS_VOID ChapOutput(struct link *l, VOS_INT32 code, VOS_CHAR id,
@@ -163,18 +163,18 @@ VOS_VOID ChapOutput(struct link *l, VOS_INT32 code, VOS_CHAR id,
 }    /* ChapOutput */
 
 /*****************************************************************************
- º¯ Êý Ãû  : chap_Cleanup
- ¹¦ÄÜÃèÊö  : Çå³ýµôPPPÁ´½ÓÁ½¶ËµÄChallenge
- ÊäÈë²ÎÊý  : chap - Á´Â·ÖÐµÄCHAP¼ÇÂ¼ÐÅÏ¢
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : chap_Cleanup
+ åŠŸèƒ½æè¿°  : æ¸…é™¤æŽ‰PPPé“¾æŽ¥ä¸¤ç«¯çš„Challenge
+ è¾“å…¥å‚æ•°  : chap - é“¾è·¯ä¸­çš„CHAPè®°å½•ä¿¡æ¯
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê10ÔÂ24ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : porting from BSD
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´10æœˆ24æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : porting from BSD
 
 *****************************************************************************/
 static VOS_VOID chap_Cleanup(struct chap *chap)
@@ -186,19 +186,19 @@ static VOS_VOID chap_Cleanup(struct chap *chap)
 }    /* chap_Cleanup */
 
 /*****************************************************************************
- º¯ Êý Ãû  : chap_Respond
- ¹¦ÄÜÃèÊö  : ¹¹ÔìResponseÖ¡²¢·¢ËÍ
- ÊäÈë²ÎÊý  : l - PPPÁ´½Ó
-             name - ´ýÌîÐ´µÄNameÖµ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : chap_Respond
+ åŠŸèƒ½æè¿°  : æž„é€ Responseå¸§å¹¶å‘é€
+ è¾“å…¥å‚æ•°  : l - PPPé“¾æŽ¥
+             name - å¾…å¡«å†™çš„Nameå€¼
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê10ÔÂ24ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : porting from BSD
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´10æœˆ24æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : porting from BSD
 
 *****************************************************************************/
 static VOS_VOID chap_Respond(struct link *l, const VOS_CHAR *name)
@@ -237,22 +237,22 @@ static VOS_VOID chap_Respond(struct link *l, const VOS_CHAR *name)
 */
 
 /*****************************************************************************
- º¯ Êý Ãû  : ChapBufferChallengePacket
- ¹¦ÄÜÃèÊö  : ±¸·ÝCHAP challenge packet
- ÊäÈë²ÎÊý  : chap - Á´Â·ÖÐµÄCHAP¼ÇÂ¼ÐÅÏ¢
-             id - ´ýÌîÐ´µ½Í·²¿µÄIdentifierÖµ
-             ptr - ´ý±¸·ÝµÄCHAP challenge bodyÊý¾Ý
-             count - ´ý±¸·ÝµÄCHAP challenge bodyÊý¾ÝµÄ³¤¶È, µ¥Î»: ×Ö½Ú
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NULL
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- Ëµ    Ã÷  : ±¸·Ýchallenge packet, ÎªÁËÔÚIPCP½×¶ÎÌá¹©¸øNASÔÚPDP¼¤»îÖÐÊ¹ÓÃ
+ å‡½ æ•° å  : ChapBufferChallengePacket
+ åŠŸèƒ½æè¿°  : å¤‡ä»½CHAP challenge packet
+ è¾“å…¥å‚æ•°  : chap - é“¾è·¯ä¸­çš„CHAPè®°å½•ä¿¡æ¯
+             id - å¾…å¡«å†™åˆ°å¤´éƒ¨çš„Identifierå€¼
+             ptr - å¾…å¤‡ä»½çš„CHAP challenge bodyæ•°æ®
+             count - å¾…å¤‡ä»½çš„CHAP challenge bodyæ•°æ®çš„é•¿åº¦, å•ä½: å­—èŠ‚
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NULL
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ è¯´    æ˜Ž  : å¤‡ä»½challenge packet, ä¸ºäº†åœ¨IPCPé˜¶æ®µæä¾›ç»™NASåœ¨PDPæ¿€æ´»ä¸­ä½¿ç”¨
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê11ÔÂ4ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´11æœˆ4æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : created
 
 *****************************************************************************/
 VOS_VOID ChapBufferChallengePacket(struct chap *chap, VOS_CHAR id,
@@ -279,18 +279,18 @@ VOS_VOID ChapBufferChallengePacket(struct chap *chap, VOS_CHAR id,
 }    /* ChapBufferChallengePacket */
 
 /*****************************************************************************
- º¯ Êý Ãû  : chap_Challenge
- ¹¦ÄÜÃèÊö  : ¹¹ÔìChallengeÖ¡²¢·¢ËÍ
- ÊäÈë²ÎÊý  : l - PPPÁ´½Ó
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : chap_Challenge
+ åŠŸèƒ½æè¿°  : æž„é€ Challengeå¸§å¹¶å‘é€
+ è¾“å…¥å‚æ•°  : l - PPPé“¾æŽ¥
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê10ÔÂ25ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : porting from BSD
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´10æœˆ25æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : porting from BSD
 
 *****************************************************************************/
 VOS_VOID chap_Challenge(struct link *l)
@@ -314,16 +314,16 @@ VOS_VOID chap_Challenge(struct link *l)
     VOS_SetSeed(ulTick);    /* use current tick as seed of random algorithm */
 
     cp = chap->challenge.local;
-    /*AT2D19295 ²âÊÔ×é½¨ÒéchallengeÖÐËæ»ú×Ö·û´®³¤¶È¹Ì¶¨Îª16£¬ºÍ±ê¸ËÒ»ÖÂ */
+    /*AT2D19295 æµ‹è¯•ç»„å»ºè®®challengeä¸­éšæœºå­—ç¬¦ä¸²é•¿åº¦å›ºå®šä¸º16ï¼Œå’Œæ ‡æ†ä¸€è‡´ */
     *cp++ = (VOS_UINT8)(MD5DIGESTSIZE);
 
     /*
       *cp++ = (VOS_UINT8)(PS_RAND(CHAPCHALLENGELEN-MD5DIGESTSIZE) + MD5DIGESTSIZE);
-      Ëæ»ú×Ö´®³¤¶È±¾ÎªÈÎÒâ³¤¶È, ´æ·ÅÔÚlocalµÄµÚÒ»¸ö×Ö½Ú,ÎªÁË·ÀÖ¹¶Ô¶ËÖ»Ö§³ÖMD5¶øÒªÇó³¤¶ÈÎª16, ÌØÒâ±£Ö¤³¤¶ÈÖÁÉÙ16×Ö½Ú
+      éšæœºå­—ä¸²é•¿åº¦æœ¬ä¸ºä»»æ„é•¿åº¦, å­˜æ”¾åœ¨localçš„ç¬¬ä¸€ä¸ªå­—èŠ‚,ä¸ºäº†é˜²æ­¢å¯¹ç«¯åªæ”¯æŒMD5è€Œè¦æ±‚é•¿åº¦ä¸º16, ç‰¹æ„ä¿è¯é•¿åº¦è‡³å°‘16å­—èŠ‚
     */
     for (i = 0; i < *(chap->challenge.local); i++)
     {
-      *cp++ = (VOS_UINT8)PS_RAND(PS_NULL_UINT8+1);    /* Ëæ»ú×Ö´® */
+      *cp++ = (VOS_UINT8)PS_RAND(PS_NULL_UINT8+1);    /* éšæœºå­—ä¸² */
     }
 
     /* use memcpy instead of strcpy, as "The Name should not be NUL or CR/LF terminated." in RFC1994 */
@@ -335,24 +335,24 @@ VOS_VOID chap_Challenge(struct link *l)
       1 + *(chap->challenge.local) + len);
 
   ChapOutput(l, CHAP_CHALLENGE, chap->auth.id, chap->challenge.local,
-         1 + *(chap->challenge.local) + len, VOS_NULL_PTR);    /* 1: challenge length, *local: Ëæ»ú×Ö´®³¤¶È, len: Name length */
+         1 + *(chap->challenge.local) + len, VOS_NULL_PTR);    /* 1: challenge length, *local: éšæœºå­—ä¸²é•¿åº¦, len: Name length */
 
   return;
 }    /* chap_Challenge */
 
 /*****************************************************************************
- º¯ Êý Ãû  : chap_Success
- ¹¦ÄÜÃèÊö  : ¹¹ÔìSuccessÖ¡²¢·¢ËÍ
- ÊäÈë²ÎÊý  : l - PPPÁ´½Ó
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : chap_Success
+ åŠŸèƒ½æè¿°  : æž„é€ Successå¸§å¹¶å‘é€
+ è¾“å…¥å‚æ•°  : l - PPPé“¾æŽ¥
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê10ÔÂ25ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : porting from BSD
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´10æœˆ25æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : porting from BSD
 
 *****************************************************************************/
 static VOS_VOID chap_Success(struct link *l)
@@ -393,18 +393,18 @@ static VOS_VOID chap_Success(struct link *l)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : chap_Init
- ¹¦ÄÜÃèÊö  : ³õÊ¼»¯CHAPÄ£¿é
- ÊäÈë²ÎÊý  : chap - CHAPÅäÖÃ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : chap_Init
+ åŠŸèƒ½æè¿°  : åˆå§‹åŒ–CHAPæ¨¡å—
+ è¾“å…¥å‚æ•°  : chap - CHAPé…ç½®
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê10ÔÂ25ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : porting from BSD
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´10æœˆ25æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : porting from BSD
 
 *****************************************************************************/
 VOS_VOID chap_Init(struct chap *chap)
@@ -417,18 +417,18 @@ VOS_VOID chap_Init(struct chap *chap)
 }    /* chap_Init */
 
 /*****************************************************************************
- º¯ Êý Ãû  : chap_ReInit
- ¹¦ÄÜÃèÊö  : ÖØÐÂ³õÊ¼»¯CHAPÄ£¿é
- ÊäÈë²ÎÊý  : chap - CHAPÅäÖÃ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : chap_ReInit
+ åŠŸèƒ½æè¿°  : é‡æ–°åˆå§‹åŒ–CHAPæ¨¡å—
+ è¾“å…¥å‚æ•°  : chap - CHAPé…ç½®
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê10ÔÂ25ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : porting from BSD
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´10æœˆ25æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : porting from BSD
 
 *****************************************************************************/
 VOS_VOID chap_ReInit(struct chap *chap)
@@ -439,22 +439,22 @@ VOS_VOID chap_ReInit(struct chap *chap)
 }    /* chap_ReInit */
 
 /*****************************************************************************
- º¯ Êý Ãû  : ChapBufferResponsePacket
- ¹¦ÄÜÃèÊö  : ±¸·ÝÊÕµ½µÄCHAP response packet
- ÊäÈë²ÎÊý  : chap - Á´Â·ÖÐµÄCHAP¼ÇÂ¼ÐÅÏ¢
-             ucHashSize - responseÖÐhash-size
-             aucHashValue - responseÖÐhash-value
-             lNameLen - responseÖÐname×Ö¶ÎµÄ³¤¶È, µ¥Î»: ×Ö½Ú
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NULL
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- Ëµ    Ã÷  : ±¸·Ýresponse packet, ÎªÁËÔÚIPCP½×¶ÎÌá¹©¸øNASÔÚPDP¼¤»îÖÐÊ¹ÓÃ
+ å‡½ æ•° å  : ChapBufferResponsePacket
+ åŠŸèƒ½æè¿°  : å¤‡ä»½æ”¶åˆ°çš„CHAP response packet
+ è¾“å…¥å‚æ•°  : chap - é“¾è·¯ä¸­çš„CHAPè®°å½•ä¿¡æ¯
+             ucHashSize - responseä¸­hash-size
+             aucHashValue - responseä¸­hash-value
+             lNameLen - responseä¸­nameå­—æ®µçš„é•¿åº¦, å•ä½: å­—èŠ‚
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NULL
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ è¯´    æ˜Ž  : å¤‡ä»½response packet, ä¸ºäº†åœ¨IPCPé˜¶æ®µæä¾›ç»™NASåœ¨PDPæ¿€æ´»ä¸­ä½¿ç”¨
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê11ÔÂ4ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´11æœˆ4æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : created
 
 *****************************************************************************/
 VOS_VOID ChapBufferResponsePacket(struct chap *chap, VOS_UCHAR ucHashSize,
@@ -495,19 +495,19 @@ VOS_VOID ChapBufferResponsePacket(struct chap *chap, VOS_UCHAR ucHashSize,
 }    /* ChapBufferResponsePacket */
 
 /*****************************************************************************
- º¯ Êý Ãû  : chap_Input
- ¹¦ÄÜÃèÊö  : ÊÕµ½CHAPÖ¡µÄ´¦ÀíÈë¿Úº¯Êý
- ÊäÈë²ÎÊý  : l - PPPÁ´½Ó
-             pstMem - ÊÕµ½µÄCHAPÖ¡
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NULL
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : chap_Input
+ åŠŸèƒ½æè¿°  : æ”¶åˆ°CHAPå¸§çš„å¤„ç†å…¥å£å‡½æ•°
+ è¾“å…¥å‚æ•°  : l - PPPé“¾æŽ¥
+             pstMem - æ”¶åˆ°çš„CHAPå¸§
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NULL
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê10ÔÂ24ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : porting from BSD
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´10æœˆ24æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : porting from BSD
 
 *****************************************************************************/
 PPP_ZC_STRU *chap_Input(struct link *l, PPP_ZC_STRU *pstMem)
@@ -648,7 +648,7 @@ PPP_ZC_STRU *chap_Input(struct link *l, PPP_ZC_STRU *pstMem)
                   len, alen);
         }
 
-        if (PHASE_AUTHENTICATE == l->phase)    /* ÐèÒª×¢ÒâÖ»±¸·ÝÔÚÈÏÖ¤½×¶ÎÖÐÓëchallenge idÆ¥ÅäµÄresponse */
+        if (PHASE_AUTHENTICATE == l->phase)    /* éœ€è¦æ³¨æ„åªå¤‡ä»½åœ¨è®¤è¯é˜¶æ®µä¸­ä¸Žchallenge idåŒ¹é…çš„response */
         {
             ChapBufferResponsePacket(chap, MD5DIGESTSIZE, aucHashValue, len);
         }
@@ -726,19 +726,19 @@ PPP_ZC_STRU *chap_Input(struct link *l, PPP_ZC_STRU *pstMem)
 */
 #if 0
 /*****************************************************************************
- º¯ Êý Ãû  : SavePppChallengeFrame
- ¹¦ÄÜÃèÊö  : ÔÚDART¹¤³ÌÖÐ½«ÏûÏ¢ÂëÁ÷ÖÐCHAPÊý¾ÝÐ´»Øµ½CHAPÈ«¾Ö±äÁ¿ÖÐ
- ÊäÈë²ÎÊý  : ucPppId - PPPÁ´½ÓID
-             pucData - ÏûÏ¢ÂëÁ÷, Ê××Ö½ÚÖ¸ÏòPPPÖ¡Êý¾ÝµÄÊ××Ö½Ú
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : SavePppChallengeFrame
+ åŠŸèƒ½æè¿°  : åœ¨DARTå·¥ç¨‹ä¸­å°†æ¶ˆæ¯ç æµä¸­CHAPæ•°æ®å†™å›žåˆ°CHAPå…¨å±€å˜é‡ä¸­
+ è¾“å…¥å‚æ•°  : ucPppId - PPPé“¾æŽ¥ID
+             pucData - æ¶ˆæ¯ç æµ, é¦–å­—èŠ‚æŒ‡å‘PPPå¸§æ•°æ®çš„é¦–å­—èŠ‚
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2009Äê12ÔÂ10ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2009å¹´12æœˆ10æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : Created
 
 *****************************************************************************/
 VOS_VOID SavePppChallengeFrame(VOS_UINT8 ucPppId, VOS_UINT8 *pucData)
@@ -1144,14 +1144,14 @@ chap_Challenge_old(struct authinfo *authp)
         *cp++ = 8;	/* MS does 8 byte callenges :-/ */
       else
 #endif
-        *cp++ = random() % (CHAPCHALLENGELEN-16) + 16;    /* Ëæ»ú×Ö´®³¤¶È±¾ÉíÉèÎªËæ»úÖµ, ·ÅÔÚlocalµÄµÚÒ»¸ö×Ö½Ú */
+        *cp++ = random() % (CHAPCHALLENGELEN-16) + 16;    /* éšæœºå­—ä¸²é•¿åº¦æœ¬èº«è®¾ä¸ºéšæœºå€¼, æ”¾åœ¨localçš„ç¬¬ä¸€ä¸ªå­—èŠ‚ */
       for (i = 0; i < *chap->challenge.local; i++)
-        *cp++ = random() & 0xff;    /* Ëæ»ú×Ö´® */
+        *cp++ = random() & 0xff;    /* éšæœºå­—ä¸² */
     }
     memcpy(cp, authp->physical->dl->bundle->cfg.auth.name, len);
   }
   ChapOutput(authp->physical, CHAP_CHALLENGE, authp->id, chap->challenge.local,
-	     1 + *chap->challenge.local + len, NULL);    /* 1: Value-Size, *local: Ëæ»ú×Ö´®³¤¶È, len: Name length */
+	     1 + *chap->challenge.local + len, NULL);    /* 1: Value-Size, *local: éšæœºå­—ä¸²é•¿åº¦, len: Name length */
 }
 
 static void

@@ -25,7 +25,7 @@ extern "C" {
 #include  "DrvInterface.h"
 /*lint -restore*/
 
-/*lint -save -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -save -e767 åŽŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_DIAG_API_C
 /*lint -restore +e767*/
 /*****************************************************************************
@@ -50,16 +50,16 @@ VOS_VOID diag_SocpPsLogPkt(VOS_UINT8 * pstSocpPackt, VOS_UINT8 ucMsgType, VOS_UI
 {
     VOS_UINT64 ulTime = 0;
 
-    /* ×éSOCP°ü*/
+    /* ç»„SOCPåŒ…*/
     ulTime                           = diag_GetFrameTime();
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSId              = MSP_SOCP_SID_DIAG_SERVER;
-    ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSSId             = MSP_SOCP_HIGH4BIT_SSID;    // ¸ßËÄÎ»
+    ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSSId             = MSP_SOCP_HIGH4BIT_SSID;    // é«˜å››ä½
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ucServiceSessionId = MSP_SOCP_SERVER_SESSION_ID;
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ucMsgType          = MSP_SOCP_MSG_TYPE_IND;
     VOS_MemCpy(((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->aucTimeData, &ulTime, sizeof(VOS_UINT64));
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ulMsgTransId = (g_DiagLogPktNum.ulIndNum)++;
 
-    /* ×é°ü½á¹¹»¯ID(DIAG HEADER)*/
+    /* ç»„åŒ…ç»“æž„åŒ–ID(DIAG HEADER)*/
     ((MSP_DIAG_HEAD_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU)))->ulDataSize = ulCmdParaLen;
     ((MSP_DIAG_HEAD_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU)))->ulID =
         (MSP_STRU_ID_GET_28_31_FIELD(MSP_STRU_ID_28_31_GROUP_PS) | MSP_STRU_ID_GET_16_23_FIELD(ucMsgType));
@@ -72,16 +72,16 @@ VOS_VOID diag_SocpIndCmdPkt(VOS_UINT8 * pstSocpPackt, VOS_UINT8 ucCmdType, VOS_U
 {
     VOS_UINT64 ulTime = 0;
 
-    /* ×éSOCP°ü*/
+    /* ç»„SOCPåŒ…*/
     ulTime                           = diag_GetFrameTime();
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSId              = MSP_SOCP_SID_DIAG_SERVER;
-    ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSSId             = MSP_SOCP_HIGH4BIT_SSID;    // ¸ßËÄÎ»
+    ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSSId             = MSP_SOCP_HIGH4BIT_SSID;    // é«˜å››ä½
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ucServiceSessionId = MSP_SOCP_SERVER_SESSION_ID;
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ucMsgType          = MSP_SOCP_MSG_TYPE_IND;
     VOS_MemCpy(((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->aucTimeData, &ulTime, sizeof(VOS_UINT64));
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ulMsgTransId = (g_DiagLogPktNum.ulIndNum)++;
 
-    /* ×é°ü½á¹¹»¯ID(DIAG HEADER)*/
+    /* ç»„åŒ…ç»“æž„åŒ–ID(DIAG HEADER)*/
     ((MSP_DIAG_HEAD_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU)))->ulDataSize = ulCmdParaLen;
     ((MSP_DIAG_HEAD_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU)))->ulID =
         (MSP_STRU_ID_GET_28_31_FIELD(MSP_STRU_ID_28_31_GROUP_MSP) | MSP_STRU_ID_GET_16_23_FIELD(ucCmdType) \
@@ -94,7 +94,7 @@ VOS_UINT32 diag_CheckMsgPara(DIAG_AIR_MSG_LOG_STRU* pstRptMessage)
 {
     VOS_UINT32 ulRst = ERR_MSP_SUCCESS;
     /*lint -save -e830*/
-    /* ¼ì²é²ÎÊýºÏ·¨ÐÔ*/
+    /* æ£€æŸ¥å‚æ•°åˆæ³•æ€§*/
     if(NULL == pstRptMessage)
     {
         ulRst = ERR_MSP_INVALID_PARAMETER;
@@ -175,7 +175,7 @@ VOS_UINT32 diag_GetLayerCfg(VOS_UINT32 ulSrcModuleId, VOS_UINT32 ulDstModuleId, 
     VOS_UINT32 ret = ERR_MSP_CFG_LOG_NOT_ALLOW;
     VOS_UINT32 ulMsgCfg = ERR_MSP_DIAG_MSG_CFG_NOT_SET;
 
-    /*ÏÈÅÐ¶ÏÏûÏ¢ID¹ýÂË¹¦ÄÜÊÇ·ñ´ò¿ª£¬Èç¹ûÓÐ£¬Ôò¸ù¾ÝÏûÏ¢ID¹ýÂË*/
+    /*å…ˆåˆ¤æ–­æ¶ˆæ¯IDè¿‡æ»¤åŠŸèƒ½æ˜¯å¦æ‰“å¼€ï¼Œå¦‚æžœæœ‰ï¼Œåˆ™æ ¹æ®æ¶ˆæ¯IDè¿‡æ»¤*/
     ulMsgCfg = diag_GetLayerMsgCfg(DIAG_CMD_LOG_CATETORY_LAYER_ID, ulMsgId);
     if(ERR_MSP_DIAG_MSG_CFG_NOT_SET == ulMsgCfg )
     {
@@ -223,7 +223,7 @@ VOS_UINT32 diag_GetPrintCfg(VOS_UINT32 ulModuleId, VOS_UINT32 ulLevel)
 {
     VOS_UINT32 ulLevelFilter = 0;
 
-    /*½«Ð­ÒéÕ»µÄLEVELÖµ×ª»»³ÉMSPÓëHSOÖ®¼äµÄLEVELÖµ*/
+    /*å°†åè®®æ ˆçš„LEVELå€¼è½¬æ¢æˆMSPä¸ŽHSOä¹‹é—´çš„LEVELå€¼*/
     /*0x80000000<->0;0x40000000<->1;0x20000000<->2;0x10<->3;0x08000000<->4*/
 	if((PS_LOG_LEVEL_OFF == ulLevel)||(ulLevel >= PS_LOG_LEVEL_BUTT))
 	{
@@ -232,7 +232,7 @@ VOS_UINT32 diag_GetPrintCfg(VOS_UINT32 ulModuleId, VOS_UINT32 ulLevel)
 
     ulLevelFilter = ((VOS_UINT32)1<<(7-ulLevel));
 
-    /* ´òÓ¡×Ü¿ª¹ØÄ£¿é´ò¿ªÇé¿ö*/
+    /* æ‰“å°æ€»å¼€å…³æ¨¡å—æ‰“å¼€æƒ…å†µ*/
     if(DIAG_CFG_PRINT_TOTAL_MODULE_SWT_NOT_USE != g_PrintTotalCfg)
     {
         if(ulLevelFilter & g_PrintTotalCfg)
@@ -247,7 +247,7 @@ VOS_UINT32 diag_GetPrintCfg(VOS_UINT32 ulModuleId, VOS_UINT32 ulLevel)
     else
     {
         /*lint -save -e40*/
-        /*»ñÈ¡Ä£¿é´òÓ¡¿ª¹Ø×´Ì¬*/
+        /*èŽ·å–æ¨¡å—æ‰“å°å¼€å…³çŠ¶æ€*/
         if(DIAG_CFG_MODULE_IS_INVALID((VOS_INT32)ulModuleId))
         {
             return  ERR_MSP_CFG_LOG_NOT_ALLOW;
@@ -291,20 +291,20 @@ do{ \
 }while(0)
 
 /******************************************************************************
-º¯ÊýÃû³Æ: LTE_DIAG_LOG
-¹¦ÄÜÃèÊö: ´òÓ¡µãÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý
-²ÎÊýËµÃ÷:
-            ulModuleId[in]  : Ä£¿éid£¬¶ÔÓ¦PID
-            ulSubModId[in]  : ×ÓÄ£¿éid
-            ulLevel[in]     : ´òÓ¡¼¶±ð
-            ulLogId[in]     : ÓÉÎÄ¼þºÅºÍÐÐºÅ¸ù¾ÝDIAG_LOG_IDÉú³É
-            amount[in]      : ¿É±ä²ÎÊý¸öÊý£¨²»°üÀ¨ulModuleId/ulLevel/ulLogId/amout£©
-            ...             : ¿É±ä²ÎÊý
-µ÷ÓÃÔ¼Êø:
-            1. ¾ø¶Ô½ûÖ¹¶Ô´Ëº¯Êý½øÐÐ¶þ´Î·â×°£¬Ö»ÄÜ×ª¶¨Òå
-            2. Ö§³Ö¿É±äµÄ²ÎÊý¸öÊý£¬µ«±ØÐëÔÚµ÷ÓÃÊ±ÓÉ²ÎÊýamountÖ¸¶¨²ÎÊý¸öÊý
-            3. ¿É±ä²ÎÊýÖ»Ö§³ÖintÀàÐÍ
-            4. Ä¿Ç°°æ±¾ÖÐÖ§³ÖµÄ×î´ó²ÎÊý¸öÊýÊÇ6¸ö£¬³¬¹ýµÄ²ÎÊýÄ¬ÈÏ¶ªÆú
+å‡½æ•°åç§°: LTE_DIAG_LOG
+åŠŸèƒ½æè¿°: æ‰“å°ç‚¹ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°
+å‚æ•°è¯´æ˜Ž:
+            ulModuleId[in]  : æ¨¡å—idï¼Œå¯¹åº”PID
+            ulSubModId[in]  : å­æ¨¡å—id
+            ulLevel[in]     : æ‰“å°çº§åˆ«
+            ulLogId[in]     : ç”±æ–‡ä»¶å·å’Œè¡Œå·æ ¹æ®DIAG_LOG_IDç”Ÿæˆ
+            amount[in]      : å¯å˜å‚æ•°ä¸ªæ•°ï¼ˆä¸åŒ…æ‹¬ulModuleId/ulLevel/ulLogId/amoutï¼‰
+            ...             : å¯å˜å‚æ•°
+è°ƒç”¨çº¦æŸ:
+            1. ç»å¯¹ç¦æ­¢å¯¹æ­¤å‡½æ•°è¿›è¡ŒäºŒæ¬¡å°è£…ï¼Œåªèƒ½è½¬å®šä¹‰
+            2. æ”¯æŒå¯å˜çš„å‚æ•°ä¸ªæ•°ï¼Œä½†å¿…é¡»åœ¨è°ƒç”¨æ—¶ç”±å‚æ•°amountæŒ‡å®šå‚æ•°ä¸ªæ•°
+            3. å¯å˜å‚æ•°åªæ”¯æŒintç±»åž‹
+            4. ç›®å‰ç‰ˆæœ¬ä¸­æ”¯æŒçš„æœ€å¤§å‚æ•°ä¸ªæ•°æ˜¯6ä¸ªï¼Œè¶…è¿‡çš„å‚æ•°é»˜è®¤ä¸¢å¼ƒ
 ******************************************************************************/
 VOS_INT32 LTE_DIAG_LOG(VOS_UINT32 ulModuleId, VOS_UINT32 ulSubModId,
                         VOS_UINT32 ulLevel, VOS_UINT32 ulLogId,
@@ -321,10 +321,10 @@ VOS_INT32 LTE_DIAG_LOG(VOS_UINT32 ulModuleId, VOS_UINT32 ulSubModId,
     VOS_UINT32 paranum;
     VOS_UINT32 ulSnNum;
 
-    /* Ö»¼ÇÂ¼µ÷ÓÃ´ÎÊý*/
+    /* åªè®°å½•è°ƒç”¨æ¬¡æ•°*/
     DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_DOT, ulLogId, 0, 0);
 
-    /*¼ì²éDIAGÊÇ·ñ³õÊ¼»¯ÇÒHSOÊÇ·ñÁ¬½ÓÉÏ*/
+    /*æ£€æŸ¥DIAGæ˜¯å¦åˆå§‹åŒ–ä¸”HSOæ˜¯å¦è¿žæŽ¥ä¸Š*/
     if(!DIAG_IS_CONN_ON)
     {
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_DOT_ERR, ERR_MSP_NO_INITILIZATION, ulLogId, 1);
@@ -388,7 +388,7 @@ VOS_INT32 LTE_DIAG_LOG(VOS_UINT32 ulModuleId, VOS_UINT32 ulSubModId,
 
     ulDataLength = lOccupyLen;
     ulSnNum = (g_DiagLogPktNum.ulPrintTxtNum)++;
-    /*ÉêÇë±àÂëÔ´BUFFER*/
+    /*ç”³è¯·ç¼–ç æºBUFFER*/
     diag_LockCoderSrcBuf();
     ulParaBufSize = sizeof(DIAG_CMD_LOG_PRINT_RAW_TXT_IND_STRU) + ulDataLength;
     pstSocpPackt = diag_GetCoderSrcBuf(sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
@@ -400,17 +400,17 @@ VOS_INT32 LTE_DIAG_LOG(VOS_UINT32 ulModuleId, VOS_UINT32 ulSubModId,
         return ERR_MSP_NOT_ENOUGH_MEMORY;
     }
 
-    /*×é×°SOCP°ü*/
+    /*ç»„è£…SOCPåŒ…*/
     diag_SocpPsLogPkt(pstSocpPackt, MSP_STRU_ID_16_23_TYPE_DOT, ulParaBufSize);
     pRptInfo = (DIAG_CMD_LOG_PRINT_RAW_TXT_IND_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
 
-    /*×é×°DIAGÃüÁî²ÎÊý*/
+    /*ç»„è£…DIAGå‘½ä»¤å‚æ•°*/
     pRptInfo->ulModule = ulModuleId;
     pRptInfo->ulNo = ulSnNum;
     pRptInfo->ulLevel  = ulLevel;
     VOS_MemCpy(pRptInfo->szText, ucDiagPrintData, ulDataLength);
 
-    /*Ð´ÈëÊý¾Ýµ½±àÂëÔ´BUFFER*/
+    /*å†™å…¥æ•°æ®åˆ°ç¼–ç æºBUFFER*/
     ulRst = diag_SendCoderSrcToSocp(pstSocpPackt,sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
             ulParaBufSize, SOCP_CODER_SRC_LOM_NORMAL_IND);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -427,7 +427,7 @@ VOS_INT32 LTE_DIAG_LOG(VOS_UINT32 ulModuleId, VOS_UINT32 ulSubModId,
 VOS_UINT32 DIAG_PrintfV(VOS_UINT32 id, VOS_CHAR* pszFileName, VOS_UINT32 ulLineNum, VOS_CHAR* pszFmt, ...)
 {
 	VOS_UINT32 ulRst          = ERR_MSP_SUCCESS;
-	VOS_UINT32 ulParaBufSize  = 0;                   // ²ÎÊýBuf Size
+	VOS_UINT32 ulParaBufSize  = 0;                   // å‚æ•°Buf Size
 	VOS_UINT32 ulModuleId     = 0;
     VOS_UINT32 ulLevelFilter  = 0;
 	VOS_UINT32 ulPrintLevel = 0;
@@ -440,20 +440,20 @@ VOS_UINT32 DIAG_PrintfV(VOS_UINT32 id, VOS_CHAR* pszFileName, VOS_UINT32 ulLineN
 	VOS_CHAR ucDiagPrintData[DIAG_PRINTF_MAX_LEN+1]={0};
     VOS_UINT32 ulSnNum;
 
-    /* Ö»¼ÇÂ¼µ÷ÓÃ´ÎÊý*/
+    /* åªè®°å½•è°ƒç”¨æ¬¡æ•°*/
     DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_PRINTFV, id, 0, 0);
 
-    /*¼ì²éDIAGÊÇ·ñ³õÊ¼»¯ÇÒHSOÊÇ·ñÁ¬½ÓÉÏ*/
+    /*æ£€æŸ¥DIAGæ˜¯å¦åˆå§‹åŒ–ä¸”HSOæ˜¯å¦è¿žæŽ¥ä¸Š*/
     if(!DIAG_IS_CONN_ON)
     {
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_PRINTFV_ERR, ERR_MSP_NO_INITILIZATION, id, 1);
         return ERR_MSP_NO_INITILIZATION;
     }
 
-    /*»ñÈ¡Êý×éÏÂ±ê*/
+    /*èŽ·å–æ•°ç»„ä¸‹æ ‡*/
     ulModuleId = DIAG_GET_MODULE_ID(id);
 
-    /*»ñÈ¡Ä£¿é¿ª¹Ø×´Ì¬*/
+    /*èŽ·å–æ¨¡å—å¼€å…³çŠ¶æ€*/
     ulLevelFilter = DIAG_GET_PRINTF_LEVEL(id);
 #if 1
     ulRst = diag_GetPrintCfg(ulModuleId,ulLevelFilter);
@@ -464,7 +464,7 @@ VOS_UINT32 DIAG_PrintfV(VOS_UINT32 id, VOS_CHAR* pszFileName, VOS_UINT32 ulLineN
     }
 #endif
 
-    /*¸øHSOµÄ´òÓ¡×Ö·û´®ÐÎÊ½ÈçÏÂ:pszFileName[ulLineNum]data¡£HSO¸ù¾ÝÖÐÀ¨ºÅ[]È¥½ØÈ¡ÏàÓ¦µÄÐÅÏ¢*/
+    /*ç»™HSOçš„æ‰“å°å­—ç¬¦ä¸²å½¢å¼å¦‚ä¸‹:pszFileName[ulLineNum]dataã€‚HSOæ ¹æ®ä¸­æ‹¬å·[]åŽ»æˆªå–ç›¸åº”çš„ä¿¡æ¯*/
     ulParamLen = VOS_nsprintf(ucDiagPrintData,DIAG_PRINTF_MAX_LEN,"%s[%d]",pszFileName,ulLineNum);
     /* coverity[cond_at_least] */
     if(ulParamLen > DIAG_PRINTF_MAX_LEN)
@@ -472,7 +472,7 @@ VOS_UINT32 DIAG_PrintfV(VOS_UINT32 id, VOS_CHAR* pszFileName, VOS_UINT32 ulLineN
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_PRINTFV_ERR, ERR_MSP_FAILURE, id, 11);
     }
 
-	/*ulParamLen Î´°üº¬\0*/
+	/*ulParamLen æœªåŒ…å«\0*/
     va_start(arg, pszFmt);/*lint !e516*/
     /* coverity[overrun-local] */
     ulParamLen = VOS_nvsprintf(ucDiagPrintData + ulParamLen,\
@@ -488,7 +488,7 @@ VOS_UINT32 DIAG_PrintfV(VOS_UINT32 id, VOS_CHAR* pszFileName, VOS_UINT32 ulLineN
 
     ulSnNum = (g_DiagLogPktNum.ulPrintTxtNum)++;
 
-    /*ÉêÇë±àÂëÔ´BUFFER*/
+    /*ç”³è¯·ç¼–ç æºBUFFER*/
     diag_LockCoderSrcBuf();
     ulParaBufSize = sizeof(DIAG_CMD_LOG_PRINT_RAW_TXT_IND_STRU) + ulDataLength;
     pstSocpPackt = diag_GetCoderSrcBuf(sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
@@ -500,17 +500,17 @@ VOS_UINT32 DIAG_PrintfV(VOS_UINT32 id, VOS_CHAR* pszFileName, VOS_UINT32 ulLineN
         return ERR_MSP_NOT_ENOUGH_MEMORY;
     }
 
-    /*×é×°SOCP°ü*/
+    /*ç»„è£…SOCPåŒ…*/
     diag_SocpPsLogPkt(pstSocpPackt, MSP_STRU_ID_16_23_TYPE_PRINT, ulParaBufSize);
     pRptInfo = (DIAG_CMD_LOG_PRINT_RAW_TXT_IND_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
 
-    /*×é×°DIAGÃüÁî²ÎÊý*/
+    /*ç»„è£…DIAGå‘½ä»¤å‚æ•°*/
     pRptInfo->ulModule = ulModuleId;
     pRptInfo->ulNo = ulSnNum;
     pRptInfo->ulLevel  = ulPrintLevel;
     VOS_MemCpy(pRptInfo->szText, ucDiagPrintData, ulDataLength);
 
-    /*Ð´ÈëÊý¾Ýµ½±àÂëÔ´BUFFER*/
+    /*å†™å…¥æ•°æ®åˆ°ç¼–ç æºBUFFER*/
     ulRst = diag_SendCoderSrcToSocp(pstSocpPackt,sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
             ulParaBufSize, SOCP_CODER_SRC_LOM_NORMAL_IND);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -529,17 +529,17 @@ VOS_UINT32 DIAG_ReportCommand(VOS_UINT16 ulID, VOS_UINT32 ulDataSize, VOS_VOID* 
     VOS_UINT32 ulRst         = ERR_MSP_SUCCESS;
     VOS_UINT8* pstSocpPackt     = NULL;
 
-    /* Ö»¼ÇÂ¼µ÷ÓÃ´ÎÊý*/
+    /* åªè®°å½•è°ƒç”¨æ¬¡æ•°*/
     DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportStatLog, ulID, g_ulDiagCfgInfo, 0);
 
-    /*¼ì²éDIAGÊÇ·ñ³õÊ¼»¯ÇÒHSOÊÇ·ñÁ¬½ÓÉÏ*/
+    /*æ£€æŸ¥DIAGæ˜¯å¦åˆå§‹åŒ–ä¸”HSOæ˜¯å¦è¿žæŽ¥ä¸Š*/
     if(!DIAG_IS_CONN_ON)
     {
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportStatLog_ERR, ulDataSize, ulID, 2);
         return ERR_MSP_NO_INITILIZATION;
     }
 
-    /*¼ì²é²ÎÊýºÏ·¨ÐÔ*/
+    /*æ£€æŸ¥å‚æ•°åˆæ³•æ€§*/
     if((NULL == pData) ||(0 == ulDataSize) || (ulDataSize > DIAG_CMD_DATA_MAX_LEN))
     {
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportStatLog_ERR, ulDataSize, ulID, 1);
@@ -547,7 +547,7 @@ VOS_UINT32 DIAG_ReportCommand(VOS_UINT16 ulID, VOS_UINT32 ulDataSize, VOS_VOID* 
         return ERR_MSP_INVALID_PARAMETER;
     }
 
-    /*ÉêÇë±àÂëÔ´BUFFER*/
+    /*ç”³è¯·ç¼–ç æºBUFFER*/
     diag_LockCoderSrcBuf();
     pstSocpPackt = diag_GetCoderSrcBuf(sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
         ulDataSize, SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
@@ -559,12 +559,12 @@ VOS_UINT32 DIAG_ReportCommand(VOS_UINT16 ulID, VOS_UINT32 ulDataSize, VOS_VOID* 
         return ERR_MSP_NOT_ENOUGH_MEMORY;
     }
 
-    /*×é×°SOCP°ü*/
+    /*ç»„è£…SOCPåŒ…*/
     diag_SocpIndCmdPkt(pstSocpPackt, MSP_STRU_ID_16_23_IND_MSP, ulDataSize, ulID);
 
     VOS_MemCpy(((MSP_DIAG_HEAD_STRU*)(pstSocpPackt+sizeof(MSP_SOCP_HEAD_STRU)))->ucData,pData, ulDataSize);
 
-    /*Ð´ÈëÊý¾Ýµ½±àÂëÔ´BUFFER*/
+    /*å†™å…¥æ•°æ®åˆ°ç¼–ç æºBUFFER*/
     ulRst = diag_SendCoderSrcToSocp(pstSocpPackt,sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +ulDataSize, \
             SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -585,11 +585,11 @@ VOS_UINT32 DIAG_ReportEventLog(VOS_UINT32 id, VOS_UINT32 ulEventID)
     VOS_UINT8* pstSocpPackt           = NULL;
     DIAG_CMD_LOG_EVENT_IND_STRU *pEventIndInfo = NULL;
 
-    /* Ö»¼ÇÂ¼µ÷ÓÃ´ÎÊý*/
+    /* åªè®°å½•è°ƒç”¨æ¬¡æ•°*/
     DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportEventLog, id, ulEventID, 0);
 
 
-    /*¼ì²éÊÇ·ñÔÊÐíÊÂ¼þÉÏ±¨*/
+    /*æ£€æŸ¥æ˜¯å¦å…è®¸äº‹ä»¶ä¸ŠæŠ¥*/
     if(!DIAG_IS_EVENT_ON)
     {
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportEventLog_ERR, ulRst, id, 1);
@@ -597,7 +597,7 @@ VOS_UINT32 DIAG_ReportEventLog(VOS_UINT32 id, VOS_UINT32 ulEventID)
     }
     ulSnNum = (g_DiagLogPktNum.ulEventNum)++;
 
-	/*ÉêÇë±àÂëÔ´BUFFER*/
+	/*ç”³è¯·ç¼–ç æºBUFFER*/
     diag_LockCoderSrcBuf();
     ulParaBufSize = sizeof(DIAG_CMD_LOG_EVENT_IND_STRU);
     pstSocpPackt = diag_GetCoderSrcBuf(sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
@@ -610,15 +610,15 @@ VOS_UINT32 DIAG_ReportEventLog(VOS_UINT32 id, VOS_UINT32 ulEventID)
         return ERR_MSP_NOT_ENOUGH_MEMORY;
 
     }
-    /*×é×°SOCP°ü*/
+    /*ç»„è£…SOCPåŒ…*/
     diag_SocpPsLogPkt(pstSocpPackt, MSP_STRU_ID_16_23_TYPE_EVENT, ulParaBufSize);
 
-    /*×é×°DIAGÃüÁî²ÎÊý*/
+    /*ç»„è£…DIAGå‘½ä»¤å‚æ•°*/
     pEventIndInfo = (DIAG_CMD_LOG_EVENT_IND_STRU *)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
     pEventIndInfo->ulNo = ulSnNum;
     pEventIndInfo->ulId = ulEventID;
 
-    /*Ð´ÈëÊý¾Ýµ½±àÂëÔ´BUFFER*/
+    /*å†™å…¥æ•°æ®åˆ°ç¼–ç æºBUFFER*/
     ulRst = diag_SendCoderSrcToSocp(pstSocpPackt,sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +ulParaBufSize,
             SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -639,10 +639,10 @@ VOS_UINT32 DIAG_ReportAirMessageLog(DIAG_AIR_MSG_LOG_STRU* pRptMessage)
     VOS_UINT8* pstSocpPackt = NULL;
     VOS_UINT32 ulSnNum;
 
-    /* Ö»¼ÇÂ¼µ÷ÓÃ´ÎÊý*/
+    /* åªè®°å½•è°ƒç”¨æ¬¡æ•°*/
     DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportAirMessageLog, g_ulDiagCfgInfo, 0, 0);
 
-    /*¼ì²éÊÇ·ñÔÊÐíLT ¿Õ¿ÚÉÏ±¨*/
+    /*æ£€æŸ¥æ˜¯å¦å…è®¸LT ç©ºå£ä¸ŠæŠ¥*/
     if (!DIAG_IS_LT_AIR_ON)
     {
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportAirMessageLog_ERR, ulRst, pRptMessage->ulId, 2);
@@ -650,7 +650,7 @@ VOS_UINT32 DIAG_ReportAirMessageLog(DIAG_AIR_MSG_LOG_STRU* pRptMessage)
     }
 
 
-    /*¼ì²é²ÎÊýºÏ·¨ÐÔ*/
+    /*æ£€æŸ¥å‚æ•°åˆæ³•æ€§*/
     ulRst = diag_CheckMsgPara(pRptMessage);
 
     if (ERR_MSP_SUCCESS != ulRst)
@@ -659,7 +659,7 @@ VOS_UINT32 DIAG_ReportAirMessageLog(DIAG_AIR_MSG_LOG_STRU* pRptMessage)
         return ulRst;
     }
     ulSnNum = (g_DiagLogPktNum.ulAirNum)++;
-    /*ÉêÇë±àÂëÔ´BUFFER*/
+    /*ç”³è¯·ç¼–ç æºBUFFER*/
     diag_LockCoderSrcBuf();
     ulParaBufSize = sizeof(DIAG_CMD_LOG_AIR_IND_STRU) + pRptMessage->ulDataSize;
     pstSocpPackt = diag_GetCoderSrcBuf(sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
@@ -672,18 +672,18 @@ VOS_UINT32 DIAG_ReportAirMessageLog(DIAG_AIR_MSG_LOG_STRU* pRptMessage)
         return ERR_MSP_NOT_ENOUGH_MEMORY;
     }
 
-    /*×é×°SOCP°ü*/
+    /*ç»„è£…SOCPåŒ…*/
     diag_SocpPsLogPkt(pstSocpPackt, MSP_STRU_ID_16_23_TYPE_AIR, ulParaBufSize);
     pRptInfo = (DIAG_CMD_LOG_AIR_IND_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
 
-    /*×é×°DIAGÃüÁî²ÎÊý*/
+    /*ç»„è£…DIAGå‘½ä»¤å‚æ•°*/
     pRptInfo->ulId     = pRptMessage->ulMessageID;
     pRptInfo->ulSide   = pRptMessage->ulSideId;
     pRptInfo->ulModule = DIAG_GET_MODULE_ID(pRptMessage->ulId);
     pRptInfo->ulNo = ulSnNum;
     VOS_MemCpy(pRptInfo->aucDta, pRptMessage->pData, pRptMessage->ulDataSize);
 
-    /*Ð´ÈëÊý¾Ýµ½±àÂëÔ´BUFFER*/
+    /*å†™å…¥æ•°æ®åˆ°ç¼–ç æºBUFFER*/
     ulRst = diag_SendCoderSrcToSocp(pstSocpPackt,sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
             ulParaBufSize, SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -696,7 +696,7 @@ VOS_UINT32 DIAG_ReportAirMessageLog(DIAG_AIR_MSG_LOG_STRU* pRptMessage)
 
 /*****************************************************************************
  Function Name   : DIAG_ReportVoLTELog
- Description     : VoLTEÏûÏ¢ÉÏ±¨½Ó¿Ú
+ Description     : VoLTEæ¶ˆæ¯ä¸ŠæŠ¥æŽ¥å£
  Input           : DIAG_VoLTE_LOG_STRU* pRptMessage
  Output          : None
  Return          : VOS_UINT32
@@ -713,17 +713,17 @@ VOS_UINT32 DIAG_ReportVoLTELog(DIAG_VoLTE_LOG_STRU* pRptMessage)
     VOS_UINT8* pstSocpPackt = NULL;
     VOS_UINT32 ulSnNum;
 
-    /* Ö»¼ÇÂ¼µ÷ÓÃ´ÎÊý*/
+    /* åªè®°å½•è°ƒç”¨æ¬¡æ•°*/
     DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportVoLTELog_ERR, g_ulDiagCfgInfo, 0, 0);
 
-    /*¼ì²éDIAGÊÇ·ñ³õÊ¼»¯ÇÒHSOÊÇ·ñÁ¬½ÓÉÏ*/
+    /*æ£€æŸ¥DIAGæ˜¯å¦åˆå§‹åŒ–ä¸”HSOæ˜¯å¦è¿žæŽ¥ä¸Š*/
     if(!DIAG_IS_CONN_ON)
     {
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportVoLTELog_ERR, ulRst, pRptMessage->ulId, 2);
         return ERR_MSP_NO_INITILIZATION;
     }
 
-    /*¼ì²é²ÎÊýºÏ·¨ÐÔ*/
+    /*æ£€æŸ¥å‚æ•°åˆæ³•æ€§*/
     ulRst = diag_CheckMsgPara((DIAG_AIR_MSG_LOG_STRU *)pRptMessage);
 
     if (ERR_MSP_SUCCESS != ulRst)
@@ -744,7 +744,7 @@ VOS_UINT32 DIAG_ReportVoLTELog(DIAG_VoLTE_LOG_STRU* pRptMessage)
 
     ulSnNum = (g_DiagLogPktNum.ulVoLTENum)++;
 
-    /*ÉêÇë±àÂëÔ´BUFFER*/
+    /*ç”³è¯·ç¼–ç æºBUFFER*/
     diag_LockCoderSrcBuf();
     ulParaBufSize = sizeof(DIAG_CMD_LOG_VoLTE_IND_STRU) + pRptMessage->ulDataSize;
     pstSocpPackt = diag_GetCoderSrcBuf(sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
@@ -757,18 +757,18 @@ VOS_UINT32 DIAG_ReportVoLTELog(DIAG_VoLTE_LOG_STRU* pRptMessage)
         return ERR_MSP_NOT_ENOUGH_MEMORY;
     }
 
-    /*×é×°SOCP°ü*/
+    /*ç»„è£…SOCPåŒ…*/
     diag_SocpPsLogPkt(pstSocpPackt, MSP_STRU_ID_16_23_VoLTE, ulParaBufSize);
     pRptInfo = (DIAG_CMD_LOG_VoLTE_IND_STRU *)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
 
-    /*×é×°DIAGÃüÁî²ÎÊý*/
+    /*ç»„è£…DIAGå‘½ä»¤å‚æ•°*/
     pRptInfo->ulId     = pRptMessage->ulMessageID;
     pRptInfo->ulSide   = pRptMessage->ulSideId;
     pRptInfo->ulModule = DIAG_GET_MODULE_ID(pRptMessage->ulId);
     pRptInfo->ulNo = ulSnNum;
     VOS_MemCpy(pRptInfo->aucDta, pRptMessage->pData, pRptMessage->ulDataSize);
 
-    /*Ð´ÈëÊý¾Ýµ½±àÂëÔ´BUFFER*/
+    /*å†™å…¥æ•°æ®åˆ°ç¼–ç æºBUFFER*/
     ulRst = diag_SendCoderSrcToSocp(pstSocpPackt,sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
             ulParaBufSize, SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -792,10 +792,10 @@ VOS_UINT32 DIAG_ReportGUAirMessageLog(VOS_VOID* pRptMessage,VOS_UINT16 ulMsgLen)
     VOS_UINT32 ulSnNum;
 /*lint -restore*/
 
-	/* Ö»¼ÇÂ¼µ÷ÓÃ´ÎÊý*/
+	/* åªè®°å½•è°ƒç”¨æ¬¡æ•°*/
 	DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportAirMessageLog, g_ulDiagCfgInfo, 0, 0);
 
-	/*¼ì²éÊÇ·ñÔÊÐíGU ¿Õ¿ÚÉÏ±¨*/
+	/*æ£€æŸ¥æ˜¯å¦å…è®¸GU ç©ºå£ä¸ŠæŠ¥*/
 	if (!DIAG_IS_GU_AIR_ON)
 	{
 	    ulRst = ERR_MSP_NO_INITILIZATION;
@@ -803,14 +803,14 @@ VOS_UINT32 DIAG_ReportGUAirMessageLog(VOS_VOID* pRptMessage,VOS_UINT16 ulMsgLen)
 	    return ERR_MSP_NO_INITILIZATION;
 	}
 
-        /*¼ì²é²ÎÊýºÏ·¨ÐÔ*/
+        /*æ£€æŸ¥å‚æ•°åˆæ³•æ€§*/
 	if(pRptMessage == NULL)
 	{
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportAirMessageLog_ERR, 1, 0, 1);
         return ERR_MSP_INVALID_PARAMETER;
 	}
 
-    /*»ñÈ¡GU¿Õ¿ÚÏûÏ¢½á¹¹Ìå¶à³öµÄ³¤¶È£¬¹ýÂËÅäÖÃÐÅÏ¢Òì³£*/
+    /*èŽ·å–GUç©ºå£æ¶ˆæ¯ç»“æž„ä½“å¤šå‡ºçš„é•¿åº¦ï¼Œè¿‡æ»¤é…ç½®ä¿¡æ¯å¼‚å¸¸*/
     pstGUMsgStru = (DIAG_GU_AIR_MSG_LOG_STRU *)pRptMessage;
     /*lint -save -e40*/
     if(pstGUMsgStru->usPrimId == ID_WAS_OM_OTA_IND)
@@ -838,7 +838,7 @@ VOS_UINT32 DIAG_ReportGUAirMessageLog(VOS_VOID* pRptMessage,VOS_UINT16 ulMsgLen)
     }
     /*lint -restore +e40*/
     ulSnNum = (g_DiagLogPktNum.ulAirNum)++;
-    /*ÉêÇë±àÂëÔ´BUFFER*/
+    /*ç”³è¯·ç¼–ç æºBUFFER*/
     diag_LockCoderSrcBuf();
 	ulParaBufSize = sizeof(DIAG_CMD_LOG_AIR_IND_STRU) + ulMsgLen -ulDataOffset;
 	pstSocpPackt = diag_GetCoderSrcBuf(sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
@@ -850,18 +850,18 @@ VOS_UINT32 DIAG_ReportGUAirMessageLog(VOS_VOID* pRptMessage,VOS_UINT16 ulMsgLen)
 	    return ERR_MSP_NOT_ENOUGH_MEMORY;
 	}
 
-    /*×é×°SOCP°ü*/
+    /*ç»„è£…SOCPåŒ…*/
     diag_SocpPsLogPkt(pstSocpPackt, MSP_STRU_ID_16_23_TYPE_AIR, ulParaBufSize);
     pRptInfo = (DIAG_CMD_LOG_AIR_IND_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
 
-    /*×é×°DIAGÃüÁî²ÎÊý*/
+    /*ç»„è£…DIAGå‘½ä»¤å‚æ•°*/
     pRptInfo->ulId     = pstGUMsgStru->usOtaMsgID;
     pRptInfo->ulSide   = pstGUMsgStru->ucUpDown;   //
     pRptInfo->ulModule = ulSrcMod;
     pRptInfo->ulNo = ulSnNum;
     VOS_MemCpy(pRptInfo->aucDta, (VOS_UINT8 *)pstGUMsgStru+ulDataOffset , (ulParaBufSize -sizeof(DIAG_CMD_LOG_AIR_IND_STRU)));
 
-    /*Ð´ÈëÊý¾Ýµ½±àÂëÔ´BUFFER*/
+    /*å†™å…¥æ•°æ®åˆ°ç¼–ç æºBUFFER*/
     ulRst = diag_SendCoderSrcToSocp(pstSocpPackt,sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
             ulParaBufSize, SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -876,23 +876,23 @@ VOS_UINT32 DIAG_ReportGUAirMessageLog(VOS_VOID* pRptMessage,VOS_UINT16 ulMsgLen)
 VOS_UINT32 DIAG_ReportLayerMessageLog(DIAG_LAYER_MSG_STRU* pRptMessage)
 {
     VOS_UINT32 ulRst         = ERR_MSP_SUCCESS;
-    VOS_UINT32 ulParaBufSize = 0;                   // ²ÎÊýBuf Size
+    VOS_UINT32 ulParaBufSize = 0;                   // å‚æ•°Buf Size
     VOS_UINT32 ulModuleId;
     VOS_UINT8* pstSocpPackt           = NULL;
     DIAG_CMD_LOG_LAYER_IND_STRU *pLayerIndInfo = NULL;
     VOS_UINT32 ulSnNum;
 
-    /* Ö»¼ÇÂ¼µ÷ÓÃ´ÎÊý*/
+    /* åªè®°å½•è°ƒç”¨æ¬¡æ•°*/
     DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportLayerMessageLog, 0, 0, 0);
 
-    /*¼ì²éDIAGÊÇ·ñ³õÊ¼»¯ÇÒHSOÊÇ·ñÁ¬½ÓÉÏ*/
+    /*æ£€æŸ¥DIAGæ˜¯å¦åˆå§‹åŒ–ä¸”HSOæ˜¯å¦è¿žæŽ¥ä¸Š*/
     if(!DIAG_IS_CONN_ON)
     {
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportLayerMessageLog_ERR, ulRst, pRptMessage->ulId, 2);
         return ERR_MSP_NO_INITILIZATION;
     }
 
-    /*¼ì²é²ÎÊýºÏ·¨ÐÔ*/
+    /*æ£€æŸ¥å‚æ•°åˆæ³•æ€§*/
     ulRst = diag_CheckMsgPara((DIAG_AIR_MSG_LOG_STRU*)pRptMessage);
     if(ERR_MSP_SUCCESS != ulRst)
     {
@@ -901,7 +901,7 @@ VOS_UINT32 DIAG_ReportLayerMessageLog(DIAG_LAYER_MSG_STRU* pRptMessage)
     }
 
     ulModuleId  = DIAG_GET_MODULE_ID(pRptMessage->ulId);
-    /*¼ì²éÊÇ·ñÔÊÐí²ã¼äÏûÏ¢ÉÏ±¨*/
+    /*æ£€æŸ¥æ˜¯å¦å…è®¸å±‚é—´æ¶ˆæ¯ä¸ŠæŠ¥*/
     ulRst = diag_GetLayerCfg(ulModuleId, pRptMessage->ulDestMod, pRptMessage->ulMessageID);
 
     if(ERR_MSP_SUCCESS != ulRst)
@@ -911,7 +911,7 @@ VOS_UINT32 DIAG_ReportLayerMessageLog(DIAG_LAYER_MSG_STRU* pRptMessage)
 	  return ulRst;
     }
     ulSnNum = (g_DiagLogPktNum.ulLayerNum++);
-    /*ÉêÇë±àÂëÔ´BUFFER*/
+    /*ç”³è¯·ç¼–ç æºBUFFER*/
     diag_LockCoderSrcBuf();
     ulParaBufSize  = sizeof(DIAG_CMD_LOG_LAYER_IND_STRU) + pRptMessage->ulDataSize;
     pstSocpPackt = diag_GetCoderSrcBuf(sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
@@ -924,18 +924,18 @@ VOS_UINT32 DIAG_ReportLayerMessageLog(DIAG_LAYER_MSG_STRU* pRptMessage)
 	    return ERR_MSP_NOT_ENOUGH_MEMORY;
     }
 
-    /*×é×°SOCP°ü*/
+    /*ç»„è£…SOCPåŒ…*/
     diag_SocpPsLogPkt(pstSocpPackt, MSP_STRU_ID_16_23_TYPE_LAYER, ulParaBufSize);
     pLayerIndInfo = (DIAG_CMD_LOG_LAYER_IND_STRU *)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
 
-    /*×é×°DIAGÃüÁî²ÎÊý*/
+    /*ç»„è£…DIAGå‘½ä»¤å‚æ•°*/
     pLayerIndInfo->ulModule  = ulModuleId;
     pLayerIndInfo->ulDestMod = pRptMessage->ulDestMod;
     pLayerIndInfo->ulNo = ulSnNum;
     pLayerIndInfo->ulId      = pRptMessage->ulMessageID;
     VOS_MemCpy(pLayerIndInfo->aucDta, pRptMessage->pData, pRptMessage->ulDataSize);
 
-    /*Ð´ÈëÊý¾Ýµ½±àÂëÔ´BUFFER*/
+    /*å†™å…¥æ•°æ®åˆ°ç¼–ç æºBUFFER*/
     ulRst = diag_SendCoderSrcToSocp(pstSocpPackt,sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
             ulParaBufSize, SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -950,17 +950,17 @@ VOS_UINT32 DIAG_ReportLayerMessageLog(DIAG_LAYER_MSG_STRU* pRptMessage)
 VOS_UINT32 DIAG_ReportUserPlaneMessageLog(DIAG_USERPLANE_MSG_STRU* pRptMessage)
 {
     VOS_UINT32 ulRst         = ERR_MSP_SUCCESS;
-    VOS_UINT32 ulParaBufSize = 0;                   // ²ÎÊýBuf Size
+    VOS_UINT32 ulParaBufSize = 0;                   // å‚æ•°Buf Size
     VOS_UINT32 ulMessageId;
     VOS_UINT8* pstSocpPackt = NULL;
     DIAG_CMD_LOG_USERPLANE_IND_STRU* pRptInfo = NULL;
     VOS_UINT32 ulSnNum;
 
 
-    /* Ö»¼ÇÂ¼µ÷ÓÃ´ÎÊý*/
+    /* åªè®°å½•è°ƒç”¨æ¬¡æ•°*/
     DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportUserPlaneMessageLog, 0, 0, 0);
 
-    /*¼ì²éDIAGÊÇ·ñ³õÊ¼»¯ÇÒHSOÊÇ·ñÁ¬½ÓÉÏ*/
+    /*æ£€æŸ¥DIAGæ˜¯å¦åˆå§‹åŒ–ä¸”HSOæ˜¯å¦è¿žæŽ¥ä¸Š*/
     if(!DIAG_IS_CONN_ON)
     {
         ulRst = ERR_MSP_NO_INITILIZATION;
@@ -968,7 +968,7 @@ VOS_UINT32 DIAG_ReportUserPlaneMessageLog(DIAG_USERPLANE_MSG_STRU* pRptMessage)
         return ulRst;
     }
 
-    /*¼ì²é²ÎÊýºÏ·¨ÐÔ*/
+    /*æ£€æŸ¥å‚æ•°åˆæ³•æ€§*/
     if((NULL == pRptMessage)||((0 == pRptMessage->ulDataSize) && (NULL == pRptMessage->pData)))
     {
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportUserPlaneMessageLog_ERR,ERR_MSP_INVALID_PARAMETER,
@@ -982,14 +982,14 @@ VOS_UINT32 DIAG_ReportUserPlaneMessageLog(DIAG_USERPLANE_MSG_STRU* pRptMessage)
     ulRst = diag_GetUserPlaneCfg(ulMessageId);
     if(ERR_MSP_SUCCESS != ulRst)
     {
-        /* ¹ýÂËÅäÖÃ²»ÔÊÐíÉÏ±¨*/
+        /* è¿‡æ»¤é…ç½®ä¸å…è®¸ä¸ŠæŠ¥*/
         ulRst = ERR_MSP_CFG_LOG_NOT_ALLOW;
         DIAG_DEBUG_SDM_FUN(EN_SDM_DIAG_ReportUserPlaneMessageLog_ERR, ulRst, pRptMessage->ulMessageID, 4);
 
         return ulRst;
     }
     ulSnNum = (g_DiagLogPktNum.ulUserNum)++;
-    /*ÉêÇë±àÂëÔ´BUFFER*/
+    /*ç”³è¯·ç¼–ç æºBUFFER*/
     diag_LockCoderSrcBuf();
     ulParaBufSize = sizeof(DIAG_CMD_LOG_USERPLANE_IND_STRU) + pRptMessage->ulDataSize;
     pstSocpPackt = diag_GetCoderSrcBuf(sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
@@ -1001,16 +1001,16 @@ VOS_UINT32 DIAG_ReportUserPlaneMessageLog(DIAG_USERPLANE_MSG_STRU* pRptMessage)
         return ERR_MSP_NOT_ENOUGH_MEMORY;
     }
 
-    /*×é×°SOCP°ü*/
+    /*ç»„è£…SOCPåŒ…*/
     diag_SocpPsLogPkt(pstSocpPackt, MSP_STRU_ID_16_23_TYPE_USER, ulParaBufSize);
     pRptInfo = (DIAG_CMD_LOG_USERPLANE_IND_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
 
-    /*×é×°DIAGÃüÁî²ÎÊý*/
+    /*ç»„è£…DIAGå‘½ä»¤å‚æ•°*/
     pRptInfo->ulId = pRptMessage->ulMessageID;
     pRptInfo->ulNo = ulSnNum;
     VOS_MemCpy(pRptInfo->aucDta, pRptMessage->pData, pRptMessage->ulDataSize);
 
-    /*Ð´ÈëÊý¾Ýµ½±àÂëÔ´BUFFER*/
+    /*å†™å…¥æ•°æ®åˆ°ç¼–ç æºBUFFER*/
     ulRst = diag_SendCoderSrcToSocp(pstSocpPackt,sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU) +
         ulParaBufSize, SOCP_CODER_SRC_LOM_NORMAL_IND);
     if(ulRst != ERR_MSP_SUCCESS)

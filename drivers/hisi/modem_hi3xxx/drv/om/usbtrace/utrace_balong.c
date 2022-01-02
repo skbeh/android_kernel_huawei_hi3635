@@ -10,37 +10,37 @@ extern "C"
 #include "bsp_clk.h"
 #include "utrace_balong.h"
 
-/* ³õÊ¼»¯±êÖ¾ */
+/* åˆå§‹åŒ–æ ‡å¿— */
 u32 g_ul_init_flag = false;
-/* ¼à¿ØÆô¶¯±êÖ¾ */
+/* ç›‘æ§å¯åŠ¨æ ‡å¿— */
 u32 g_ul_capt_start_flag = false;
-/* ETBÊı¾İµ¼³öµØÖ· */
+/* ETBæ•°æ®å¯¼å‡ºåœ°å€ */
 u32 g_ul_etb_data_base = 0;
-/* ETBÊı¾İ·ÖÅä¿Õ¼ä³¤¶È */
+/* ETBæ•°æ®åˆ†é…ç©ºé—´é•¿åº¦ */
 u32 g_ul_etb_data_len = 0;
-/* ETBÊı¾İ³¤¶È */
+/* ETBæ•°æ®é•¿åº¦ */
 u32 g_ul_etb_len = 0;
 
 #ifndef BSP_CONFIG_HI3630 /* V7R2 */
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_reg_read
- ¹¦ÄÜÃèÊö  : ¼Ä´æÆ÷¶Á²Ù×÷
- ÊäÈë²ÎÊı  : trace_config_enum_u32 config
+ å‡½ æ•° å  : utrace_reg_read
+ åŠŸèƒ½æè¿°  : å¯„å­˜å™¨è¯»æ“ä½œ
+ è¾“å…¥å‚æ•°  : trace_config_enum_u32 config
              u32 reg
- Êä³ö²ÎÊı  : u32 * value
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ è¾“å‡ºå‚æ•°  : u32 * value
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_reg_read(trace_config_enum_u32 config, u32 reg, u32 * value)
 {
-    /* ¸ù¾İÅäÖÃÄ¿±ê¶ÁÈ¡ÏàÓ¦¼Ä´æÆ÷ */
+    /* æ ¹æ®é…ç½®ç›®æ ‡è¯»å–ç›¸åº”å¯„å­˜å™¨ */
     switch(config)
     {
         case TRACE_STM:
@@ -73,25 +73,25 @@ void utrace_reg_read(trace_config_enum_u32 config, u32 reg, u32 * value)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_reg_write
- ¹¦ÄÜÃèÊö  : ¼Ä´æÆ÷Ğ´²Ù×÷
- ÊäÈë²ÎÊı  : trace_config_enum_u32 config
+ å‡½ æ•° å  : utrace_reg_write
+ åŠŸèƒ½æè¿°  : å¯„å­˜å™¨å†™æ“ä½œ
+ è¾“å…¥å‚æ•°  : trace_config_enum_u32 config
              u32 reg
              u32 value
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_reg_write(trace_config_enum_u32 config, u32 reg, u32 value)
 {
-    /* ¸ù¾İÅäÖÃÄ¿±êĞ´ÈëÏàÓ¦¼Ä´æÆ÷ */
+    /* æ ¹æ®é…ç½®ç›®æ ‡å†™å…¥ç›¸åº”å¯„å­˜å™¨ */
     switch(config)
     {
         case TRACE_STM:
@@ -128,15 +128,15 @@ void __iomem *g_a9ptmBase = NULL;
 void __iomem *g_a9funnelBase = NULL;
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_reg_read
- ¹¦ÄÜÃèÊö  : ¼Ä´æÆ÷¶Á²Ù×÷
- ÊäÈë²ÎÊı  : trace_config_enum_u32 config
+ å‡½ æ•° å  : utrace_reg_read
+ åŠŸèƒ½æè¿°  : å¯„å­˜å™¨è¯»æ“ä½œ
+ è¾“å…¥å‚æ•°  : trace_config_enum_u32 config
              u32 reg
- Êä³ö²ÎÊı  : u32 * value
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ è¾“å‡ºå‚æ•°  : u32 * value
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_reg_read(trace_config_enum_u32 config, u32 reg, u32 * value)
@@ -146,7 +146,7 @@ void utrace_reg_read(trace_config_enum_u32 config, u32 reg, u32 * value)
         return ;
     }
     
-    /* ¸ù¾İÅäÖÃÄ¿±ê¶ÁÈ¡ÏàÓ¦¼Ä´æÆ÷ */
+    /* æ ¹æ®é…ç½®ç›®æ ‡è¯»å–ç›¸åº”å¯„å­˜å™¨ */
     switch(config)
     {
         case TRACE_PTM1:
@@ -163,25 +163,25 @@ void utrace_reg_read(trace_config_enum_u32 config, u32 reg, u32 * value)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_reg_write
- ¹¦ÄÜÃèÊö  : ¼Ä´æÆ÷Ğ´²Ù×÷
- ÊäÈë²ÎÊı  : trace_config_enum_u32 config
+ å‡½ æ•° å  : utrace_reg_write
+ åŠŸèƒ½æè¿°  : å¯„å­˜å™¨å†™æ“ä½œ
+ è¾“å…¥å‚æ•°  : trace_config_enum_u32 config
              u32 reg
              u32 value
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_reg_write(trace_config_enum_u32 config, u32 reg, u32 value)
 {
-    /* ¸ù¾İÅäÖÃÄ¿±êĞ´ÈëÏàÓ¦¼Ä´æÆ÷ */
+    /* æ ¹æ®é…ç½®ç›®æ ‡å†™å…¥ç›¸åº”å¯„å­˜å™¨ */
     switch(config)
     {
 
@@ -201,146 +201,146 @@ void utrace_reg_write(trace_config_enum_u32 config, u32 reg, u32 value)
 #endif
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_reg_getbits
- ¹¦ÄÜÃèÊö  : ¼Ä´æÆ÷¶ÁÎ»²Ù×÷
- ÊäÈë²ÎÊı  : trace_config_enum_u32 config
+ å‡½ æ•° å  : utrace_reg_getbits
+ åŠŸèƒ½æè¿°  : å¯„å­˜å™¨è¯»ä½æ“ä½œ
+ è¾“å…¥å‚æ•°  : trace_config_enum_u32 config
              u32 reg
              u32 pos
              u32 bits
- Êä³ö²ÎÊı  : u32 * value
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : u32 * value
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_reg_getbits(trace_config_enum_u32 config, u32 reg, u32 pos, u32 bits, u32 * value)
 {
     u32 reg_value = 0;
 
-    /* ¸ù¾İÅäÖÃÄ¿±ê¶ÁÈ¡ÏàÓ¦¼Ä´æÆ÷ */
+    /* æ ¹æ®é…ç½®ç›®æ ‡è¯»å–ç›¸åº”å¯„å­˜å™¨ */
     utrace_reg_read(config, reg, &reg_value);
-    /* ¸ù¾İ¼Ä´æÆ÷ÖµÈ¡ÏàÓ¦Î» */
+    /* æ ¹æ®å¯„å­˜å™¨å€¼å–ç›¸åº”ä½ */
     *value = (reg_value >> pos) & (((u32)1 << (bits)) - 1);
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_reg_setbits
- ¹¦ÄÜÃèÊö  : ¼Ä´æÆ÷Ğ´Î»²Ù×÷
- ÊäÈë²ÎÊı  : trace_config_enum_u32 config
+ å‡½ æ•° å  : utrace_reg_setbits
+ åŠŸèƒ½æè¿°  : å¯„å­˜å™¨å†™ä½æ“ä½œ
+ è¾“å…¥å‚æ•°  : trace_config_enum_u32 config
              u32 reg
              u32 pos
              u32 bits
              u32 value
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_reg_setbits(trace_config_enum_u32 config, u32 reg, u32 pos, u32 bits, u32 value)
 {
     u32 reg_value = 0;
 
-    /* ¸ù¾İÅäÖÃÄ¿±ê¶ÁÈ¡ÏàÓ¦¼Ä´æÆ÷ */
+    /* æ ¹æ®é…ç½®ç›®æ ‡è¯»å–ç›¸åº”å¯„å­˜å™¨ */
     utrace_reg_read(config, reg, &reg_value);
-    /* ¼ÆËãĞ´Èë¼Ä´æÆ÷µÄÄ¿±êÖµ */
+    /* è®¡ç®—å†™å…¥å¯„å­˜å™¨çš„ç›®æ ‡å€¼ */
     reg_value = (reg_value & (~((((u32)1 << (bits)) - 1) << (pos)))) | ((u32)((value) & (((u32)1 << (bits)) - 1)) << (pos));
-    /* Ğ´ÈëÄ¿µÄ¼Ä´æÆ÷ */
+    /* å†™å…¥ç›®çš„å¯„å­˜å™¨ */
     utrace_reg_write(config, reg, reg_value);
 }
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_funnel_config
- ¹¦ÄÜÃèÊö  : funnelÅäÖÃ½Ó¿Ú
- ÊäÈë²ÎÊı  : funnel_port_enum_u32 port --- ĞèÒªÊ¹ÄÜµÄ¶Ë¿Ú
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_funnel_config
+ åŠŸèƒ½æè¿°  : funnelé…ç½®æ¥å£
+ è¾“å…¥å‚æ•°  : funnel_port_enum_u32 port --- éœ€è¦ä½¿èƒ½çš„ç«¯å£
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_funnel_config(funnel_port_enum_u32 port)
 {
-    /* Ê¹ÄÜfunnel¶ÔÓ¦¶Ë¿Ú */
+    /* ä½¿èƒ½funnelå¯¹åº”ç«¯å£ */
     utrace_reg_setbits(TRACE_FUNNEL, FUNNEL_CTRL, port, 1, 1);
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_ptm_config
- ¹¦ÄÜÃèÊö  : PTMÅäÖÃ½Ó¿Ú
- ÊäÈë²ÎÊı  : trace_config_enum_u32 index --- APPA9 PTM or MODMEA9 PTM
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_ptm_config
+ åŠŸèƒ½æè¿°  : PTMé…ç½®æ¥å£
+ è¾“å…¥å‚æ•°  : trace_config_enum_u32 index --- APPA9 PTM or MODMEA9 PTM
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_ptm_config(trace_config_enum_u32 index)
 {
-    /* Çå³ıPowerDown */
+    /* æ¸…é™¤PowerDown */
     utrace_reg_setbits(index, PTM_CTRL, 0, 1, 0x0);
-    /* ÉèÖÃProgram Bit, bit10 */
+    /* è®¾ç½®Program Bit, bit10 */
     utrace_reg_setbits(index, PTM_CTRL, 10, 1, 0x1);
-    /* ÅäÖÃTrace ID */
+    /* é…ç½®Trace ID */
     utrace_reg_write(index, PTM_TRACEID, index + 1);
 #if 0
-    /* ÅäÖÃµØÖ·¶Ô */
+    /* é…ç½®åœ°å€å¯¹ */
     utrace_reg_write(index, PTM_ACVR(0), DDR_SOCP_ADDR);
     utrace_reg_write(index, PTM_ACVR(1), DDR_SOCP_ADDR + DDR_SOCP_SIZE);
 #endif
-    /* ÅäÖÃµØÖ··ÃÎÊÀàĞÍ */
+    /* é…ç½®åœ°å€è®¿é—®ç±»å‹ */
     utrace_reg_write(index, PTM_ACTR(0), 0x1);
     utrace_reg_write(index, PTM_ACTR(1), 0x1);
-    /* ÅäÖÃTraceEnable Event(¼à¿ØËùÓĞ) */
+    /* é…ç½®TraceEnable Event(ç›‘æ§æ‰€æœ‰) */
     utrace_reg_write(index, PTM_TEEVR, 0x376f);
-    /* ÅäÖÃTraceEnable¿ØÖÆÏî(¼à¿ØËùÓĞ) */
+    /* é…ç½®TraceEnableæ§åˆ¶é¡¹(ç›‘æ§æ‰€æœ‰) */
     utrace_reg_write(index, PTM_TECR, 0x01000000);
-    /* ÅäÖÃTrigger Event */
+    /* é…ç½®Trigger Event */
     utrace_reg_write(index, PTM_TRIGGER, 0x406F);
-    /* ÅäÖÃTimestamp Event */
+    /* é…ç½®Timestamp Event */
     utrace_reg_write(index, PTM_TSEVR, 0x406F);
-    /* È¥Ê¹ÄÜTimestamp */
+    /* å»ä½¿èƒ½Timestamp */
     utrace_reg_setbits(index, PTM_CTRL, 28, 1, 0x0);
-    /* ÅäÖÃContext ID, Bit14:15 */
+    /* é…ç½®Context ID, Bit14:15 */
     utrace_reg_setbits(index, PTM_CTRL, 14, 2, 0x3);
-    /* ÅäÖÃSync Frequency¼Ä´æÆ÷ */
+    /* é…ç½®Sync Frequencyå¯„å­˜å™¨ */
     utrace_reg_write(index, PTM_SYNCFR, 0x400);
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_ptm_enable
- ¹¦ÄÜÃèÊö  : PTMÊ¹ÄÜ
- ÊäÈë²ÎÊı  : trace_config_enum_u32 index --- APPA9 PTM or MODMEA9 PTM
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : u32
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_ptm_enable
+ åŠŸèƒ½æè¿°  : PTMä½¿èƒ½
+ è¾“å…¥å‚æ•°  : trace_config_enum_u32 index --- APPA9 PTM or MODMEA9 PTM
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : u32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_ptm_enable(trace_config_enum_u32 index)
@@ -349,18 +349,18 @@ void utrace_ptm_enable(trace_config_enum_u32 index)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_ptm_disable
- ¹¦ÄÜÃèÊö  : PTMÈ¥Ê¹ÄÜ
- ÊäÈë²ÎÊı  : trace_config_enum_u32 index --- APPA9 PTM or MODMEA9 PTM
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : u32
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_ptm_disable
+ åŠŸèƒ½æè¿°  : PTMå»ä½¿èƒ½
+ è¾“å…¥å‚æ•°  : trace_config_enum_u32 index --- APPA9 PTM or MODMEA9 PTM
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : u32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_ptm_disable(trace_config_enum_u32 index)
@@ -371,99 +371,99 @@ void utrace_ptm_disable(trace_config_enum_u32 index)
 #ifndef BSP_CONFIG_HI3630 /* V7R2 */
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_reg_unlock
- ¹¦ÄÜÃèÊö  : STM, FUNNEL, ETF, ETRÅäÖÃ¼Ä´æÆ÷Ä¬ÈÏÎªËø¶¨×´Ì¬£¬ĞèÒªÔÚ³õÊ¼»¯Ê±½øĞĞ½âËø
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_reg_unlock
+ åŠŸèƒ½æè¿°  : STM, FUNNEL, ETF, ETRé…ç½®å¯„å­˜å™¨é»˜è®¤ä¸ºé”å®šçŠ¶æ€ï¼Œéœ€è¦åœ¨åˆå§‹åŒ–æ—¶è¿›è¡Œè§£é”
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_reg_unlock(void)
 {
-    /* PTM0½âËø */
+    /* PTM0è§£é” */
     utrace_reg_write(TRACE_PTM0, PTM_LOCK_ACCESS, UTRACE_UNLOCK_CODE);
-    /* FUNNEL½âËø */
+    /* FUNNELè§£é” */
     utrace_reg_write(TRACE_FUNNEL, FUNNEL_LOCK_ACCESS, UTRACE_UNLOCK_CODE);
-    /* ETF½âËø */
+    /* ETFè§£é” */
     utrace_reg_write(TRACE_ETF, ETF_LOCK_ACCESS, UTRACE_UNLOCK_CODE);
-    /* ETR½âËø */
+    /* ETRè§£é” */
     utrace_reg_write(TRACE_ETR, ETR_LOCK_ACCESS, UTRACE_UNLOCK_CODE);
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_reg_lock
- ¹¦ÄÜÃèÊö  : STM, FUNNEL, ETF, ETR²Ù×÷Íê³ÉÖ®ºó£¬Ëø¶¨
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_reg_lock
+ åŠŸèƒ½æè¿°  : STM, FUNNEL, ETF, ETRæ“ä½œå®Œæˆä¹‹åï¼Œé”å®š
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_reg_lock(void)
 {
-    /* PTM0Ëø¶¨ */
+    /* PTM0é”å®š */
     utrace_reg_write(TRACE_PTM0, PTM_LOCK_ACCESS, UTRACE_LOCK_CODE);
-    /* FUNNELËø¶¨ */
+    /* FUNNELé”å®š */
     utrace_reg_write(TRACE_FUNNEL, FUNNEL_LOCK_ACCESS, UTRACE_LOCK_CODE);
-    /* ETFËø¶¨ */
+    /* ETFé”å®š */
     utrace_reg_write(TRACE_ETF, ETF_LOCK_ACCESS, UTRACE_LOCK_CODE);
-    /* ETRËø¶¨ */
+    /* ETRé”å®š */
     utrace_reg_write(TRACE_ETR, ETR_LOCK_ACCESS, UTRACE_LOCK_CODE);
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_stm_config
- ¹¦ÄÜÃèÊö  : STMÅäÖÃ½Ó¿Ú
- ÊäÈë²ÎÊı  : u32 port --- ÅäÖÃ¶Ë¿Ú
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_stm_config
+ åŠŸèƒ½æè¿°  : STMé…ç½®æ¥å£
+ è¾“å…¥å‚æ•°  : u32 port --- é…ç½®ç«¯å£
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_stm_config(u32 port)
 {
-    /* ATB TriggerÊ¹ÄÜ */
+    /* ATB Triggerä½¿èƒ½ */
     utrace_reg_write(TRACE_STM, STM_TRIGGER_CTRL, 0x8);
-    /* stimulus portÊ¹ÄÜ */
+    /* stimulus portä½¿èƒ½ */
     utrace_reg_setbits(TRACE_STM, STM_PORT_ENABLE, port, 1, (u32)1 << port);
-    /* stimulus trigger portÊ¹ÄÜ */
+    /* stimulus trigger portä½¿èƒ½ */
     utrace_reg_setbits(TRACE_STM, STM_PORT_TRIGGER_ENABLE, port, 1, (u32)1 << port);
-    /* Trace IDÅäÖÃ */
+    /* Trace IDé…ç½® */
     utrace_reg_setbits(TRACE_STM, STM_TRACE_CTRL, 16, 7, TRACE_STM + 1);
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_stm_enable
- ¹¦ÄÜÃèÊö  : STMÊ¹ÄÜ
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_stm_enable
+ åŠŸèƒ½æè¿°  : STMä½¿èƒ½
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_stm_enable(void)
@@ -472,18 +472,18 @@ void utrace_stm_enable(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_stm_disable
- ¹¦ÄÜÃèÊö  : STMÈ¥Ê¹ÄÜ
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_stm_disable
+ åŠŸèƒ½æè¿°  : STMå»ä½¿èƒ½
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_stm_disable(void)
@@ -492,74 +492,74 @@ void utrace_stm_disable(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_etb_config
- ¹¦ÄÜÃèÊö  : ETBÅäÖÃ½Ó¿Ú£¬ÅäÖÃETB»ù±¾²ÎÊı
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_etb_config
+ åŠŸèƒ½æè¿°  : ETBé…ç½®æ¥å£ï¼Œé…ç½®ETBåŸºæœ¬å‚æ•°
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_etb_config(void)
 {
-    /* ÅäÖÃÎªETF£¬Ó²FIFOÄ£Ê½ */
+    /* é…ç½®ä¸ºETFï¼Œç¡¬FIFOæ¨¡å¼ */
     //utrace_reg_setbits(TRACE_ETF, ETF_MODE, 0, 2, TMC_MODE_HARDWARE_FIFO);
-    /* ÅäÖÃÎªETB£¬Ñ­»·buffer */
+    /* é…ç½®ä¸ºETBï¼Œå¾ªç¯buffer */
     utrace_reg_setbits(TRACE_ETF, ETF_MODE, 0, 2, TMC_MODE_CIRCULAR_BUFF);
-    /* ÅäÖÃFFCR EnTl(bit1), EnFt(bit0) */
+    /* é…ç½®FFCR EnTl(bit1), EnFt(bit0) */
     utrace_reg_setbits(TRACE_ETF, ETR_FORMAT_FLUSH_CTRL, 0, 2, 0x3);
-    /* ÅäÖÃË®Ïß */
+    /* é…ç½®æ°´çº¿ */
     utrace_reg_write(TRACE_ETF, ETF_BUF_WATER_MARK, 0x3);
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_etr_config
- ¹¦ÄÜÃèÊö  : ETRÅäÖÃ½Ó¿Ú£¬ÅäÖÃETR»ù±¾²ÎÊı
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_etr_config
+ åŠŸèƒ½æè¿°  : ETRé…ç½®æ¥å£ï¼Œé…ç½®ETRåŸºæœ¬å‚æ•°
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_etr_config(etr_config_t * config)
 {
-    /* ÅäÖÃETR DDR»º´æ¿Õ¼ä´óĞ¡ */
+    /* é…ç½®ETR DDRç¼“å­˜ç©ºé—´å¤§å° */
     utrace_reg_write(TRACE_ETR, ETR_RAM_SIZE, (config->buf_size)/4);
-    /* ÅäÖÃETR¹¤×÷Ä£Ê½ */
+    /* é…ç½®ETRå·¥ä½œæ¨¡å¼ */
     utrace_reg_setbits(TRACE_ETR, ETF_MODE, 0, 2, config->mode);
-    /* ÅäÖÃFFCR EnTl(bit1), EnFt(bit0) */
+    /* é…ç½®FFCR EnTl(bit1), EnFt(bit0) */
     utrace_reg_setbits(TRACE_ETR, ETR_FORMAT_FLUSH_CTRL, 0, 2, 0x3);
-    /* ÅäÖÃË®Ïß */
+    /* é…ç½®æ°´çº¿ */
     utrace_reg_write(TRACE_ETR, ETF_BUF_WATER_MARK, UTRACE_WATER_MARK);
-    /* ÅäÖÃDDR»ùÖ· */
+    /* é…ç½®DDRåŸºå€ */
     utrace_reg_write(TRACE_ETR, ETR_DATA_BUF_ADDR, config->buf_addr);
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_etb_enable
- ¹¦ÄÜÃèÊö  : ETBÊ¹ÄÜ
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : u32
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_etb_enable
+ åŠŸèƒ½æè¿°  : ETBä½¿èƒ½
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : u32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_etb_enable(void)
@@ -568,18 +568,18 @@ void utrace_etb_enable(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_etb_stop
- ¹¦ÄÜÃèÊö  : ETBÍ£Ö¹²É¼¯
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : u32
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_etb_stop
+ åŠŸèƒ½æè¿°  : ETBåœæ­¢é‡‡é›†
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : u32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 s32 utrace_etb_stop(void)
@@ -592,18 +592,18 @@ s32 utrace_etb_stop(void)
     /* FFCR FlushMem */
     utrace_reg_setbits(TRACE_ETF, ETF_FORMAT_FLUSH_CTRL, 6, 1, 1);
 
-    /* µÈ´ıTMCReady */
+    /* ç­‰å¾…TMCReady */
     for(i=0; i<MAX_WAIT_CNT; i++)
     {
         utrace_reg_read(TRACE_ETF, ETF_STATUS, &reg_value);
-        /* bit2ÎªTMCReadyÖ¸Ê¾Î» */
+        /* bit2ä¸ºTMCReadyæŒ‡ç¤ºä½ */
         if(0 != (reg_value & 0x4))
         {
             break;
         }
     }
 
-    /* ³¬Ê±ÅĞ¶Ï */
+    /* è¶…æ—¶åˆ¤æ–­ */
     if(i >= MAX_WAIT_CNT)
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_UTRACE, "%s: stop etb timeout\n", __FUNCTION__);
@@ -614,39 +614,39 @@ s32 utrace_etb_stop(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_etb_disable
- ¹¦ÄÜÃèÊö  : ETBÈ¥Ê¹ÄÜ
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : u32
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_etb_disable
+ åŠŸèƒ½æè¿°  : ETBå»ä½¿èƒ½
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : u32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_etb_disable(void)
 {
-    /* È¥Ê¹ÄÜETB */
+    /* å»ä½¿èƒ½ETB */
     utrace_reg_write(TRACE_ETF, ETF_CTRL, 0);
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_etr_enable
- ¹¦ÄÜÃèÊö  : ETRÊ¹ÄÜ
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : u32
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_etr_enable
+ åŠŸèƒ½æè¿°  : ETRä½¿èƒ½
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : u32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_etr_enable(void)
@@ -655,18 +655,18 @@ void utrace_etr_enable(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_etr_disable
- ¹¦ÄÜÃèÊö  : ETRÈ¥Ê¹ÄÜ
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : s32
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_etr_disable
+ åŠŸèƒ½æè¿°  : ETRå»ä½¿èƒ½
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : s32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 s32 utrace_etr_disable(void)
@@ -678,25 +678,25 @@ s32 utrace_etr_disable(void)
     utrace_reg_setbits(TRACE_ETR, ETR_FORMAT_FLUSH_CTRL, 12, 1, 1);
     /* FFCR FlushMem */
     utrace_reg_setbits(TRACE_ETR, ETR_FORMAT_FLUSH_CTRL, 6, 1, 1);
-    /* µÈ´ıTMCReady */
+    /* ç­‰å¾…TMCReady */
     for(i=0; i<MAX_WAIT_CNT; i++)
     {
         utrace_reg_read(TRACE_ETR, ETR_STATUS, &reg_value);
-        /* bit2ÎªTMCReadyÖ¸Ê¾Î» */
+        /* bit2ä¸ºTMCReadyæŒ‡ç¤ºä½ */
         if(0 != (reg_value & 0x4))
         {
             break;
         }
     }
 
-    /* ³¬Ê±ÅĞ¶Ï */
+    /* è¶…æ—¶åˆ¤æ–­ */
     if(i >= MAX_WAIT_CNT)
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_UTRACE, "%s: stop etr timeout\n", __FUNCTION__);
         return BSP_ERROR;
     }
 
-    /* È¥Ê¹ÄÜETR */
+    /* å»ä½¿èƒ½ETR */
     utrace_reg_write(TRACE_ETR, ETR_CTRL, 0);
 
     return BSP_OK;
@@ -704,18 +704,18 @@ s32 utrace_etr_disable(void)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_dump_etb
- ¹¦ÄÜÃèÊö  : ÏµÍ³Òì³££¬Í£Ö¹Trace²É¼¯£¬±£´æĞÅÏ¢
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_dump_etb
+ åŠŸèƒ½æè¿°  : ç³»ç»Ÿå¼‚å¸¸ï¼Œåœæ­¢Traceé‡‡é›†ï¼Œä¿å­˜ä¿¡æ¯
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 s32 utrace_dump_etb(void)
@@ -726,7 +726,7 @@ s32 utrace_dump_etb(void)
 
     utrace_reg_unlock();
     
-    /* Í£Ö¹ETB */
+    /* åœæ­¢ETB */
     if(BSP_OK != utrace_etb_stop())
     {
         utrace_reg_lock();
@@ -734,7 +734,7 @@ s32 utrace_dump_etb(void)
         return BSP_ERROR;
     }
 #if 0
-    /* ½«Êı¾İ¶Á¿Õ£¬±£³ÖETB¶ÁĞ´Ö¸ÕëÏàµÈ */
+    /* å°†æ•°æ®è¯»ç©ºï¼Œä¿æŒETBè¯»å†™æŒ‡é’ˆç›¸ç­‰ */
     for(i=0; i<UTRACE_ONSTART_BUF_SIZE/4; i++)
     {
         utrace_reg_read(TRACE_ETF, ETF_RAM_RD_DATA, &reg_value);
@@ -759,10 +759,10 @@ s32 utrace_dump_etb(void)
         }          
     }
 
-    /* 0-3×Ö½Ú´æ·Å±êÊ¶Âë */
+    /* 0-3å­—èŠ‚å­˜æ”¾æ ‡è¯†ç  */
     *((u32 *)g_ul_etb_data_base) = (u32)UTRACE_MAGIC_NUM;
-    /* 4-7¸ö×Ö½Ú´æ·ÅETBÊı¾İ³¤¶È */
-    *((u32 *)g_ul_etb_data_base + 1) = i*4; /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    /* 4-7ä¸ªå­—èŠ‚å­˜æ”¾ETBæ•°æ®é•¿åº¦ */
+    *((u32 *)g_ul_etb_data_base + 1) = i*4; /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 
     printk("%s: dump etb data ok(dst_buf addr: 0x%x)\n", __FUNCTION__, g_ul_etb_data_base);
     
@@ -772,18 +772,18 @@ s32 utrace_dump_etb(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_capt_config
- ¹¦ÄÜÃèÊö  : Trace²É¼¯£¬ÅäÖÃ½Ó¿Ú
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_capt_config
+ åŠŸèƒ½æè¿°  : Traceé‡‡é›†ï¼Œé…ç½®æ¥å£
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_capt_config(void)
@@ -800,18 +800,18 @@ void utrace_capt_config(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : bsp_utrace_init
- ¹¦ÄÜÃèÊö  : ³õÊ¼»¯
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : s32
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : bsp_utrace_init
+ åŠŸèƒ½æè¿°  : åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : s32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 s32 bsp_utrace_init(void)
@@ -835,7 +835,7 @@ s32 bsp_utrace_init(void)
 	}
     /*lint -restore +e539*/
 
-    /* »ñÈ¡Òì³£±¸·İÇø */
+    /* è·å–å¼‚å¸¸å¤‡ä»½åŒº */
     if(BSP_OK != bsp_dump_get_buffer(DUMP_SAVE_MOD_UTRACE, &dst_buf, &len))
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_UTRACE, "%s:  get dump buffer fail\n", __FUNCTION__);
@@ -849,14 +849,14 @@ s32 bsp_utrace_init(void)
     g_ul_etb_data_base = (u32)dst_buf;
     g_ul_etb_data_len  = len;
 
-    /* Í¨¹ıNV¿ØÖÆ¼à¿ØÊÇ·ñÆôÓÃ */
+    /* é€šè¿‡NVæ§åˆ¶ç›‘æ§æ˜¯å¦å¯ç”¨ */
     if(BSP_OK != bsp_nvm_read(NVID_DUMP, (u8 *)&dump_nv, sizeof(dump_nv_s)))
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_UTRACE, "%s:  read nv %d fail\n", __FUNCTION__, NVID_DUMP);
         return BSP_ERROR;
     }
 
-    /* ¼à¿ØAPP A9 */
+    /* ç›‘æ§APP A9 */
     if((1 == dump_nv.traceOnstartFlag) && (APPA9_ONLY == dump_nv.traceCoreSet))
     {
         g_ul_capt_start_flag = true;
@@ -868,7 +868,7 @@ s32 bsp_utrace_init(void)
         return BSP_OK;
     }
 
-    /* EXC DUMP×¢²á */
+    /* EXC DUMPæ³¨å†Œ */
     if(bsp_dump_register_hook(DUMP_SAVE_MOD_UTRACE, (dump_save_hook)utrace_dump_etb) != BSP_OK)
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_UTRACE, "%s:  dump register fail\n", __FUNCTION__);
@@ -882,18 +882,18 @@ s32 bsp_utrace_init(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : bsp_utrace_stop
- ¹¦ÄÜÃèÊö  : ¶ÔÍâ½Ó¿Ú£¬Í£Ö¹Trace²É¼¯
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : bsp_utrace_stop
+ åŠŸèƒ½æè¿°  : å¯¹å¤–æ¥å£ï¼Œåœæ­¢Traceé‡‡é›†
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void bsp_utrace_stop(void)
@@ -907,18 +907,18 @@ void bsp_utrace_stop(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : utrace_show_etb_base
- ¹¦ÄÜÃèÊö  : debug½Ó¿Ú£¬»ñÈ¡ETBÊı¾İ´æ·Å»ùµØÖ·
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : utrace_show_etb_base
+ åŠŸèƒ½æè¿°  : debugæ¥å£ï¼Œè·å–ETBæ•°æ®å­˜æ”¾åŸºåœ°å€
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void utrace_show_etb_base(void)
@@ -927,18 +927,18 @@ void utrace_show_etb_base(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : bsp_utrace_suspend
- ¹¦ÄÜÃèÊö  : µÍ¹¦ºÄÁ÷³Ì£¬È¥Ê¹ÄÜTrace²É¼¯£¬±£´æETBÊı¾İ
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : bsp_utrace_suspend
+ åŠŸèƒ½æè¿°  : ä½åŠŸè€—æµç¨‹ï¼Œå»ä½¿èƒ½Traceé‡‡é›†ï¼Œä¿å­˜ETBæ•°æ®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void bsp_utrace_suspend(void)
@@ -973,18 +973,18 @@ void bsp_utrace_suspend(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : bsp_utrace_resume
- ¹¦ÄÜÃèÊö  : µÍ¹¦ºÄÁ÷³Ì£¬»Ö¸´Trace²É¼¯
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : bsp_utrace_resume
+ åŠŸèƒ½æè¿°  : ä½åŠŸè€—æµç¨‹ï¼Œæ¢å¤Traceé‡‡é›†
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ26ÈÕ
-    ×÷    Õß   : f
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ26æ—¥
+    ä½œ    è€…   : f
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void bsp_utrace_resume(void)
@@ -1023,18 +1023,18 @@ void bsp_utrace_resume(void)
 
 void utrace_reg_unlock(void)
 {
-    /* PTM1½âËø */
+    /* PTM1è§£é” */
     utrace_reg_write(TRACE_PTM1, PTM_LOCK_ACCESS, UTRACE_UNLOCK_CODE);
-    /* FUNNEL½âËø */
+    /* FUNNELè§£é” */
     utrace_reg_write(TRACE_FUNNEL, FUNNEL_LOCK_ACCESS, UTRACE_UNLOCK_CODE);
 }
 
 
 void utrace_reg_lock(void)
 {
-    /* PTM1Ëø¶¨ */
+    /* PTM1é”å®š */
     utrace_reg_write(TRACE_PTM1, PTM_LOCK_ACCESS, UTRACE_LOCK_CODE);
-    /* FUNNELËø¶¨ */
+    /* FUNNELé”å®š */
     utrace_reg_write(TRACE_FUNNEL, FUNNEL_LOCK_ACCESS, UTRACE_LOCK_CODE);
 }
 
@@ -1077,14 +1077,14 @@ s32 bsp_utrace_init(void)
     g_a9ptmBase = ioremap(HI_CORESIGHT_PTM1_BASE_ADDR, HI_CORESIGHT_PTM1_SIZE);
     g_a9funnelBase = ioremap(HI_CORESIGHT_FUNNEL_BASE_ADDR, HI_CORESIGHT_FUNNEL_SIZE);
     
-    /* Í¨¹ıNV¿ØÖÆ¼à¿ØÊÇ·ñÆôÓÃ */
+    /* é€šè¿‡NVæ§åˆ¶ç›‘æ§æ˜¯å¦å¯ç”¨ */
     if(BSP_OK != bsp_nvm_read(NVID_DUMP, (u8 *)&dump_nv, sizeof(dump_nv_s)))
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_UTRACE, "%s:  read nv %d fail\n", __FUNCTION__, NVID_DUMP);
         return BSP_ERROR;
     }
     
-    /* ¼à¿ØModem A9 */
+    /* ç›‘æ§Modem A9 */
     if((1 == dump_nv.traceOnstartFlag) && (MODEMA9_ONLY == dump_nv.traceCoreSet))
     {
         printk("g_ul_capt_start_flag = true; ok\n");

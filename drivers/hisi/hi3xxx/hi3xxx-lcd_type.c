@@ -30,10 +30,10 @@ static unsigned char tp_color_buf[TP_COLOR_BUF_SIZE];
 #define JDI_NT35695B_LCD        4
 /******************************************************************************
 Function:	    get_lcd_type
-Description:	    读取MMU扣板对应的LCD类型
+Description:	    璇诲彇MMU鎵ｆ澘瀵瑰簲鐨凩CD绫诲瀷
 Input:		    none
 Output:		    none
-Return:		    01: TOSHIBA_MDY90_LCD  02: JDI_OTM1902B_LCD 其他: ERROR
+Return:		    01: TOSHIBA_MDY90_LCD  02: JDI_OTM1902B_LCD 鍏朵粬: ERROR
 ******************************************************************************/
 
 int get_lcd_type(void)

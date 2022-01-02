@@ -39,28 +39,28 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-ºê¶¨Òå
+å®å®šä¹‰
 *****************************************************************************/
 
-/*ÒòÎªb090ÒÔºóÒÑ¾­Ö§³Ö°Ñprintk´òÓ¡ĞÅÏ¢´æ´¢µ½ÎÄ¼ş£¬ËùÒÔ²»ĞèÒª±¾Ä£¿é×Ô¼º´æ´¢
-Èç¹¦ÄÜ¿ªÆô£¬Çë¼ì²éinit.rcÖĞÒÑmkdir log/record */
+/*å› ä¸ºb090ä»¥åå·²ç»æ”¯æŒæŠŠprintkæ‰“å°ä¿¡æ¯å­˜å‚¨åˆ°æ–‡ä»¶ï¼Œæ‰€ä»¥ä¸éœ€è¦æœ¬æ¨¡å—è‡ªå·±å­˜å‚¨
+å¦‚åŠŸèƒ½å¼€å¯ï¼Œè¯·æ£€æŸ¥init.rcä¸­å·²mkdir log/record */
 #define PRINK_TO_FILE
 
 /*****************************************************************************
-È«¾Ö±äÁ¿
+å…¨å±€å˜é‡
 *****************************************************************************/
 /*Link used for hifi reset*/
 sreset_mgr_LLI  *g_pmgr_hifireset_data = NULL;
 #define RESET_CBFUNC_PRIO_LEVEL_LOWT      0
 #define RESET_CBFUN_IGNORE_NAME           "NONAME"
 #define RESET_CBFUNC_PRIO_LEVEL_HIGH      49
-/*ÓÃÓÚĞ­ÖúÍê³É¸´Î»¹ı³Ì*/
+/*ç”¨äºååŠ©å®Œæˆå¤ä½è¿‡ç¨‹*/
 sreset_mgr_assistant_hifi g_reset_assistant_hifi;
 /*ms, time of wating mail msg reply from hifi/mcu*/
 #define RESET_WAIT_TIMEOUT_MAILMSG        5000
 
 /*****************************************************************************
-º¯ÊıÉùÃ÷
+å‡½æ•°å£°æ˜
 *****************************************************************************/
 static void  do_reset_system(int ireset_type);
 static void reset_set_cpu_status(unsigned int iOff, unsigned int iflag);
@@ -72,13 +72,13 @@ extern void BSP_CPU_StateSet(unsigned int iOff,unsigned int offset);
 extern void do_hifi_runstall(void);
 
 /*****************************************************************************
- º¯ Êı Ãû  : mailbox_recfun_mcu_hifireset
- ¹¦ÄÜÃèÊö  : ÓÃÓÚ½ÓÊÕÀ´×ÔÓÚMCUµÄMAILBOXÏûÏ¢
- ÊäÈë²ÎÊı  : void  *UserHandle, ÓÃ»§¾ä±ú
-            void *MailHandle, ÓÊÏä¾ä±ú
-            unsigned long MailLen, Êı¾İ³¤¶È
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
+ å‡½ æ•° å  : mailbox_recfun_mcu_hifireset
+ åŠŸèƒ½æè¿°  : ç”¨äºæ¥æ”¶æ¥è‡ªäºMCUçš„MAILBOXæ¶ˆæ¯
+ è¾“å…¥å‚æ•°  : void  *UserHandle, ç”¨æˆ·å¥æŸ„
+            void *MailHandle, é‚®ç®±å¥æŸ„
+            unsigned long MailLen, æ•°æ®é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
 *****************************************************************************/
 static int mailbox_recfun_mcu_hifireset(union ipc_data *msg)
 {
@@ -92,30 +92,30 @@ static int mailbox_recfun_mcu_hifireset(union ipc_data *msg)
     }
     else
     {
-        /*¸´Î»ÏµÍ³*/
+        /*å¤ä½ç³»ç»Ÿ*/
         printk(KERN_INFO "%s: mcu give wrong msg, msg is %d\n", __FUNCTION__, msg_mcu);
         do_reset_system(RESET_TYPE_MSG_FROM_MCU_WRONG);
     }
     return 0;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : reset_do_regcbfunc
- ¹¦ÄÜÃèÊö  : ÓÃÓÚÆäËü×é¼ş×¢²á»Øµ÷º¯Êı£¬´¦ÀíModem¸´Î»Ç°ºóÏà¹ØÊı¾İ¡£
- ÊäÈë²ÎÊı  :
-         sreset_mgr_LLI *plink,¹ÜÀíÁ´±í£¬×¢Òâ£¬ÔÊĞíÎª¿Õ.
-            const char *pname, ×é¼ş×¢²áµÄÃû×Ö
-         pdrv_reset_cbfun cbfun,    ×é¼ş×¢²áµÄ»Øµ÷º¯Êı
-         int userdata,×é¼şµÄË½ÓĞÊı¾İ
-         Int Priolevel, »Øµ÷º¯Êıµ÷ÓÃÓÅÏÈ¼¶ 0-49£¬ÆäÖĞ0-9 ±£Áô¡£
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : reset_do_regcbfunc
+ åŠŸèƒ½æè¿°  : ç”¨äºå…¶å®ƒç»„ä»¶æ³¨å†Œå›è°ƒå‡½æ•°ï¼Œå¤„ç†Modemå¤ä½å‰åç›¸å…³æ•°æ®ã€‚
+ è¾“å…¥å‚æ•°  :
+         sreset_mgr_LLI *plink,ç®¡ç†é“¾è¡¨ï¼Œæ³¨æ„ï¼Œå…è®¸ä¸ºç©º.
+            const char *pname, ç»„ä»¶æ³¨å†Œçš„åå­—
+         pdrv_reset_cbfun cbfun,    ç»„ä»¶æ³¨å†Œçš„å›è°ƒå‡½æ•°
+         int userdata,ç»„ä»¶çš„ç§æœ‰æ•°æ®
+         Int Priolevel, å›è°ƒå‡½æ•°è°ƒç”¨ä¼˜å…ˆçº§ 0-49ï¼Œå…¶ä¸­0-9 ä¿ç•™ã€‚
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 sreset_mgr_LLI * reset_do_regcbfunc(sreset_mgr_LLI *plink, const char *pname, pdrv_reset_cbfun pcbfun, int userdata, int priolevel)
 {
     sreset_mgr_LLI  *phead = plink;
     sreset_mgr_LLI  *pmgr_unit = NULL;
 
-    /*ÅĞ¶ÏÈë²ÎÊÇ·ñºÏ·¨£¬²»ºÏ·¨·µ»Ø´íÎó*/
+    /*åˆ¤æ–­å…¥å‚æ˜¯å¦åˆæ³•ï¼Œä¸åˆæ³•è¿”å›é”™è¯¯*/
     if (NULL == pname
         || NULL == pcbfun
         || (priolevel < RESET_CBFUNC_PRIO_LEVEL_LOWT || priolevel > RESET_CBFUNC_PRIO_LEVEL_HIGH))
@@ -125,26 +125,26 @@ sreset_mgr_LLI * reset_do_regcbfunc(sreset_mgr_LLI *plink, const char *pname, pd
         return NULL;
     }
 
-    /*·ÖÅä¿Õ¼ä*/
+    /*åˆ†é…ç©ºé—´*/
     pmgr_unit = (sreset_mgr_LLI*)kmalloc(sizeof(sreset_mgr_LLI), GFP_KERNEL);
     if (NULL != pmgr_unit)
     {
         hisi_io_memset((void*)pmgr_unit, 0, (sizeof(sreset_mgr_LLI)));
-        /*¸³Öµ*/
+        /*èµ‹å€¼*/
         strncpy(pmgr_unit->cbfuninfo.name, pname, DRV_RESET_MODULE_NAME_LEN);
         pmgr_unit->cbfuninfo.priolevel = priolevel;
         pmgr_unit->cbfuninfo.userdata = userdata;
         pmgr_unit->cbfuninfo.cbfun = pcbfun;
     }
 
-    /*µÚÒ»´Îµ÷ÓÃ¸Ãº¯Êı£¬Á´±íÎª¿Õ*/
+    /*ç¬¬ä¸€æ¬¡è°ƒç”¨è¯¥å‡½æ•°ï¼Œé“¾è¡¨ä¸ºç©º*/
     if (NULL == phead)
     {
         phead = pmgr_unit;
     }
     else
     {
-    /*¸ù¾İÓÅÏÈ¼¶²åÈëÁ´±í*/
+    /*æ ¹æ®ä¼˜å…ˆçº§æ’å…¥é“¾è¡¨*/
         phead = reset_link_insert(phead, pmgr_unit);
     }
     return phead;
@@ -152,14 +152,14 @@ sreset_mgr_LLI * reset_do_regcbfunc(sreset_mgr_LLI *plink, const char *pname, pd
 
 /*caixi 6*/
 /*****************************************************************************
- º¯ Êı Ãû  : hifireset_regcbfunc
- ¹¦ÄÜÃèÊö  : ÓÃÓÚÆäËü×é¼ş×¢²á»Øµ÷º¯Êı£¬´¦ÀíHIFI¸´Î»Ç°ºóÏà¹ØÊı¾İ¡£
- ÊäÈë²ÎÊı  : const char *pname, ×é¼ş×¢²áµÄÃû×Ö
-         pdrv_reset_cbfun cbfun,    ×é¼ş×¢²áµÄ»Øµ÷º¯Êı
-         int userdata,×é¼şµÄË½ÓĞÊı¾İ
-         Int Priolevel, »Øµ÷º¯Êıµ÷ÓÃÓÅÏÈ¼¶ 0-49£¬ÆäÖĞ0-9 ±£Áô¡£
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : hifireset_regcbfunc
+ åŠŸèƒ½æè¿°  : ç”¨äºå…¶å®ƒç»„ä»¶æ³¨å†Œå›è°ƒå‡½æ•°ï¼Œå¤„ç†HIFIå¤ä½å‰åç›¸å…³æ•°æ®ã€‚
+ è¾“å…¥å‚æ•°  : const char *pname, ç»„ä»¶æ³¨å†Œçš„åå­—
+         pdrv_reset_cbfun cbfun,    ç»„ä»¶æ³¨å†Œçš„å›è°ƒå‡½æ•°
+         int userdata,ç»„ä»¶çš„ç§æœ‰æ•°æ®
+         Int Priolevel, å›è°ƒå‡½æ•°è°ƒç”¨ä¼˜å…ˆçº§ 0-49ï¼Œå…¶ä¸­0-9 ä¿ç•™ã€‚
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 int hifireset_regcbfunc(const char *pname, pdrv_reset_cbfun pcbfun, int userdata, int priolevel)
 {
@@ -168,16 +168,16 @@ int hifireset_regcbfunc(const char *pname, pdrv_reset_cbfun pcbfun, int userdata
     return BSP_RESET_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : get_local_time
- ¹¦ÄÜÃèÊö  : kernel²ã»ñÈ¡ÏµÍ³Ê±¼ä
- ÊäÈë²ÎÊı  : char *pbuf, ±£´æÏµÍ³Ê±¼ä×Ö·û´®Êı×é
-            int buf_len, ×Ö·û´®Êı×é³¤¶È
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
+ å‡½ æ•° å  : get_local_time
+ åŠŸèƒ½æè¿°  : kernelå±‚è·å–ç³»ç»Ÿæ—¶é—´
+ è¾“å…¥å‚æ•°  : char *pbuf, ä¿å­˜ç³»ç»Ÿæ—¶é—´å­—ç¬¦ä¸²æ•°ç»„
+            int buf_len, å­—ç¬¦ä¸²æ•°ç»„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
 *****************************************************************************/
 static void get_local_time(char *pbuf, int buf_len)
 {
-   //¹¹ÔìÊä³öÎÄ¼şÊ±¼ä£¬ĞÎ³ÉÒ»¸ö×Ö·û´®£¬Èç2012-7-13-8-15-38,±íÊ¾:ÏµÍ³Ê±¼äÏÂµÄ ÄêÔÂÈÕÊ±·ÖÃë
+   //æ„é€ è¾“å‡ºæ–‡ä»¶æ—¶é—´ï¼Œå½¢æˆä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œå¦‚2012-7-13-8-15-38,è¡¨ç¤º:ç³»ç»Ÿæ—¶é—´ä¸‹çš„ å¹´æœˆæ—¥æ—¶åˆ†ç§’
    struct timeval tv;
    struct rtc_time tm;
    memset(&tv, 0, sizeof(struct timeval));
@@ -188,11 +188,11 @@ static void get_local_time(char *pbuf, int buf_len)
    snprintf(pbuf,buf_len,"%d-%d-%d-%d-%d-%d",tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 }
 /*****************************************************************************
- º¯ Êı Ãû  : apr_upload_hificrash
- ¹¦ÄÜÃèÊö  : Í¨Öªlogservice´ò°üÏà¹ØÂ·¾¶LOGĞÅÏ¢
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : void
+ å‡½ æ•° å  : apr_upload_hificrash
+ åŠŸèƒ½æè¿°  : é€šçŸ¥logserviceæ‰“åŒ…ç›¸å…³è·¯å¾„LOGä¿¡æ¯
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : void
 *****************************************************************************/
 void apr_upload_hificrash(void)
 {
@@ -405,11 +405,11 @@ int hifisave_task(void *arg)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : hifireset_task
- ¹¦ÄÜÃèÊö  : ÓÃÓÚ´¦ÀíHIFI¸´Î»¡£
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : hifireset_task
+ åŠŸèƒ½æè¿°  : ç”¨äºå¤„ç†HIFIå¤ä½ã€‚
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 int hifireset_task(void *arg)
 {
@@ -428,13 +428,13 @@ int hifireset_task(void *arg)
 
         reset_for_savelog("\n=============hifi reset=============\n");
 
-        /*µ÷ÓÃ»Øµ÷º¯Êı*/
+        /*è°ƒç”¨å›è°ƒå‡½æ•°*/
         iresult = hifireset_runcbfun(MDRV_RESET_CB_BEFORE);
         if (BSP_RESET_OK != iresult)
         {
             printk(KERN_ERR "%s: fail to run cb func before hifi reset\n", __FUNCTION__);
 
-            /*¸´Î»ÏµÍ³*/
+            /*å¤ä½ç³»ç»Ÿ*/
             do_reset_system(RESET_TYPE_HIFIRESET_RUNCB_STEP1_FAIL);
             return BSP_RESET_ERROR;
         }
@@ -443,7 +443,7 @@ int hifireset_task(void *arg)
 #else
         if (0 != down_timeout(&(g_reset_assistant_hifi.sem_wait_mcu_msg_hifireset), msecs_to_jiffies(RESET_WAIT_TIMEOUT_MAILMSG)))
         {
-            /*¸´Î»ÏµÍ³*/
+            /*å¤ä½ç³»ç»Ÿ*/
             printk(KERN_ERR "%s: fail to get mail from mcu,reset system\n", __FUNCTION__);
             /*do_reset_system(RESET_TYPE_FAILGET_MSG_FROM_MCU);*/
             return BSP_RESET_ERROR;
@@ -453,13 +453,13 @@ int hifireset_task(void *arg)
 
         reset_for_savelog("To load hifi bin\n");
 
-       /*ÖØĞÂ¼ÓÔØHIFIÓ³Ïñ*/
+       /*é‡æ–°åŠ è½½HIFIæ˜ åƒ*/
         iresult = hifireset_loadhifibin();
         if (BSP_RESET_OK != iresult)
         {
             reset_for_savelog("fail to load hifi bin\n");
             printk(KERN_ERR "%s: fail to load hifi bin! reset system\n", __FUNCTION__);
-            /*¸´Î»ÏµÍ³*/
+            /*å¤ä½ç³»ç»Ÿ*/
             do_reset_system(RESET_TYPE_HIFIRESET_LOAD_BIN_FAIL);
             return BSP_RESET_ERROR;
         }
@@ -469,16 +469,16 @@ int hifireset_task(void *arg)
 
         reset_for_savelog("To run cb func after hifi reset\n");
 
-        /*HIFI¼ÓÔØÍê±Ïºó£¬µ÷ÓÃ»Øµ÷º¯Êı*/
+        /*HIFIåŠ è½½å®Œæ¯•åï¼Œè°ƒç”¨å›è°ƒå‡½æ•°*/
         iresult = hifireset_runcbfun(MDRV_RESET_CB_AFTER);
 
-        /*»Ö¸´ÖĞ¶ÏÊ¹ÄÜ*/
+        /*æ¢å¤ä¸­æ–­ä½¿èƒ½*/
         finish_reset_sub();
 
         if (BSP_RESET_OK != iresult)
         {
             printk(KERN_ERR "%s: fail to run cb fun after hifi reset! reset system\n", __FUNCTION__);
-            /*¸´Î»ÏµÍ³*/
+            /*å¤ä½ç³»ç»Ÿ*/
             do_reset_system(RESET_TYPE_HIFIRESET_RUNCB_STEP2_FAIL);
             return BSP_RESET_ERROR;
         }
@@ -499,13 +499,13 @@ int hifireset_task(void *arg)
 
 /*caixi 1 2 11*/
 /*****************************************************************************
- º¯ Êı Ãû  :  hifireset_doruncbfun
- ¹¦ÄÜÃèÊö  : HIFI¸´Î»Ç°ºóµ÷ÓÃ»Øµ÷º¯ÊıµÄº¯Êı¡£ÓÉÓÚÈ¦¸´ÔÓ¶È³¬±ê£¬ËùÒÔÕâÀï·â×°º¯Êı
- ÊäÈë²ÎÊı  : DRV_RESET_CB_MOMENT_E eparam, 0 ±íÊ¾HIFI¸´Î»Ç°£»·ÇÁã±íÊ¾¸´Î»ºó¡£
+ å‡½ æ•° å  :  hifireset_doruncbfun
+ åŠŸèƒ½æè¿°  : HIFIå¤ä½å‰åè°ƒç”¨å›è°ƒå‡½æ•°çš„å‡½æ•°ã€‚ç”±äºåœˆå¤æ‚åº¦è¶…æ ‡ï¼Œæ‰€ä»¥è¿™é‡Œå°è£…å‡½æ•°
+ è¾“å…¥å‚æ•°  : DRV_RESET_CB_MOMENT_E eparam, 0 è¡¨ç¤ºHIFIå¤ä½å‰ï¼›éé›¶è¡¨ç¤ºå¤ä½åã€‚
 
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
-        0, ³É¹¦£¬·Ç0£¬Ê§°Ü
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+        0, æˆåŠŸï¼Œé0ï¼Œå¤±è´¥
 *****************************************************************************/
 int hifireset_doruncbfun (const char *pname, DRV_RESET_CB_MOMENT_E eparam)
 {
@@ -515,7 +515,7 @@ int hifireset_doruncbfun (const char *pname, DRV_RESET_CB_MOMENT_E eparam)
 
     if (NULL != pname)
     {
-        /*²»ÅĞ¶ÏÄ£¿éÃû×Ö,°´Ë³ĞòÖ´ĞĞ*/
+        /*ä¸åˆ¤æ–­æ¨¡å—åå­—,æŒ‰é¡ºåºæ‰§è¡Œ*/
         if (strcmp(pname, RESET_CBFUN_IGNORE_NAME) == 0)
         {
             while (NULL != phead)
@@ -525,7 +525,7 @@ int hifireset_doruncbfun (const char *pname, DRV_RESET_CB_MOMENT_E eparam)
                     iresult = phead->cbfuninfo.cbfun(eparam, phead->cbfuninfo.userdata);
                     if (BSP_RESET_OK != iresult)
                     {
-                        /*Èç¹û·µ»ØÊ§°Ü£¬¼ÇÂ¼ÏÂ×é¼şÃû×Ö,·µ»ØÖµ*/
+                        /*å¦‚æœè¿”å›å¤±è´¥ï¼Œè®°å½•ä¸‹ç»„ä»¶åå­—,è¿”å›å€¼*/
                         reset_no_ok_savelog(phead->cbfuninfo.name, iresult, eparam, BSP_RESET_MODULE_CCORE);
                         printk(KERN_ERR "%s: fail to run cbfun of %s, at %d return %d\n", __FUNCTION__, phead->cbfuninfo.name, eparam, iresult);
                         break;
@@ -535,7 +535,7 @@ int hifireset_doruncbfun (const char *pname, DRV_RESET_CB_MOMENT_E eparam)
                 phead = phead->pnext;
             }
         }
-        else/*ĞèÒªÅĞ¶ÏÄ£¿éÃû×Ö£¬Ö´ĞĞÖ¸¶¨µÄ»Øµ÷º¯Êı*/
+        else/*éœ€è¦åˆ¤æ–­æ¨¡å—åå­—ï¼Œæ‰§è¡ŒæŒ‡å®šçš„å›è°ƒå‡½æ•°*/
         {
             while (NULL != phead)
             {
@@ -570,13 +570,13 @@ int hifireset_doruncbfun (const char *pname, DRV_RESET_CB_MOMENT_E eparam)
     return iresult;
 }
 /*****************************************************************************
- º¯ Êı Ãû  :  hifireset _runcbfun
- ¹¦ÄÜÃèÊö  : HIFI¸´Î»Ç°ºóµ÷ÓÃ»Øµ÷º¯ÊıµÄº¯Êı¡£
- ÊäÈë²ÎÊı  : DRV_RESET_CB_MOMENT_E eparam, 0 ±íÊ¾HIFI¸´Î»Ç°£»·ÇÁã±íÊ¾¸´Î»ºó¡£
+ å‡½ æ•° å  :  hifireset _runcbfun
+ åŠŸèƒ½æè¿°  : HIFIå¤ä½å‰åè°ƒç”¨å›è°ƒå‡½æ•°çš„å‡½æ•°ã€‚
+ è¾“å…¥å‚æ•°  : DRV_RESET_CB_MOMENT_E eparam, 0 è¡¨ç¤ºHIFIå¤ä½å‰ï¼›éé›¶è¡¨ç¤ºå¤ä½åã€‚
 
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
-        0, ³É¹¦£¬·Ç0£¬Ê§°Ü
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+        0, æˆåŠŸï¼Œé0ï¼Œå¤±è´¥
 *****************************************************************************/
 int hifireset_runcbfun (DRV_RESET_CB_MOMENT_E eparam)
 {
@@ -584,46 +584,46 @@ int hifireset_runcbfun (DRV_RESET_CB_MOMENT_E eparam)
 
     if (MDRV_RESET_CB_BEFORE == eparam)
     {
-        /*Mailbox ´¦Àí*/
+        /*Mailbox å¤„ç†*/
         reset_set_cpu_status(1, RESET_CPU_HIFI_STATUS_OFF);
-        /*±éÀú»Øµ÷º¯ÊıÁ´±í£¬µ÷ÓÃNASµÄ»Øµ÷*/
+        /*éå†å›è°ƒå‡½æ•°é“¾è¡¨ï¼Œè°ƒç”¨NASçš„å›è°ƒ*/
         iresult = hifireset_doruncbfun("NAS_AT", eparam);
         if (BSP_RESET_OK != iresult)
         {
-        /*Èç¹û·µ»ØÊ§°Ü£¬¼ÇÂ¼ÏÂ×é½¨name, ·µ»ØÖµ£¬±£´æµ½ÎÄ¼ş*/
+        /*å¦‚æœè¿”å›å¤±è´¥ï¼Œè®°å½•ä¸‹ç»„å»ºname, è¿”å›å€¼ï¼Œä¿å­˜åˆ°æ–‡ä»¶*/
             goto return_error;
         }
 
-        /*±éÀú»Øµ÷º¯ÊıÁ´±í£¬µ÷ÓÃÒôÆµµÄ»Øµ÷*/
+        /*éå†å›è°ƒå‡½æ•°é“¾è¡¨ï¼Œè°ƒç”¨éŸ³é¢‘çš„å›è°ƒ*/
         iresult = hifireset_doruncbfun("CODEC", eparam);
         if (BSP_RESET_OK != iresult)
         {
-        /*Èç¹û·µ»ØÊ§°Ü£¬¼ÇÂ¼ÏÂ×é½¨name, ·µ»ØÖµ£¬±£´æµ½ÎÄ¼ş*/
+        /*å¦‚æœè¿”å›å¤±è´¥ï¼Œè®°å½•ä¸‹ç»„å»ºname, è¿”å›å€¼ï¼Œä¿å­˜åˆ°æ–‡ä»¶*/
             goto return_error;
         }
 
-        /*Í¨ÖªMCU*/
+        /*é€šçŸ¥MCU*/
         g_reset_assistant_hifi.smailboxmsg_mcu.iproctec = BSP_RESET_MAILBOX_MSG_PROTECT;
         g_reset_assistant_hifi.smailboxmsg_mcu.idata = BSP_RESET_MCU_MSG_HIFI_RESET_BEFORE;
         hifireset_tonotify(eparam, BSP_RESET_MODULE_MCU);
-        /*±éÀú»Øµ÷º¯ÊıÁ´±í£¬µ÷ÓÃOMµÄ»Øµ÷*/
+        /*éå†å›è°ƒå‡½æ•°é“¾è¡¨ï¼Œè°ƒç”¨OMçš„å›è°ƒ*/
         iresult = hifireset_doruncbfun("OAM", eparam);
         if (BSP_RESET_OK != iresult)
         {
-        /*Èç¹û·µ»ØÊ§°Ü£¬¼ÇÂ¼ÏÂ×é½¨name, ·µ»ØÖµ£¬±£´æµ½ÎÄ¼ş*/
+        /*å¦‚æœè¿”å›å¤±è´¥ï¼Œè®°å½•ä¸‹ç»„å»ºname, è¿”å›å€¼ï¼Œä¿å­˜åˆ°æ–‡ä»¶*/
             goto return_error;
         }
     }
     else
     {
-        /*Í¨ÖªMCU*/
+        /*é€šçŸ¥MCU*/
         g_reset_assistant_hifi.smailboxmsg_mcu.idata = BSP_RESET_MCU_MSG_HIFI_RESET_AFTER;
         hifireset_tonotify(eparam, BSP_RESET_MODULE_MCU);
 
-        /*MAILBOX´¦Àí*/
+        /*MAILBOXå¤„ç†*/
         reset_set_cpu_status(0, RESET_CPU_HIFI_STATUS_OFF);
 
-        /*±éÀú»Øµ÷º¯ÊıÁ´±í£¬µ÷ÓÃ»Øµ÷º¯Êı*/
+        /*éå†å›è°ƒå‡½æ•°é“¾è¡¨ï¼Œè°ƒç”¨å›è°ƒå‡½æ•°*/
         iresult = hifireset_doruncbfun(RESET_CBFUN_IGNORE_NAME, eparam);
         if (BSP_RESET_OK != iresult)
         {
@@ -636,12 +636,12 @@ return_error:
     return BSP_RESET_ERROR;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : reset_link_insert
- ¹¦ÄÜÃèÊö  : ½«Êı¾İ²åÈëÁ´±í
- ÊäÈë²ÎÊı  : sreset_mgr_LLI *plink, Á´±íÖ¸Õë
-             sreset_mgr_LLI *punit£¬´ı²åÈëµÄ½ÚµãÖ¸Õë
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : reset_link_insert
+ åŠŸèƒ½æè¿°  : å°†æ•°æ®æ’å…¥é“¾è¡¨
+ è¾“å…¥å‚æ•°  : sreset_mgr_LLI *plink, é“¾è¡¨æŒ‡é’ˆ
+             sreset_mgr_LLI *punitï¼Œå¾…æ’å…¥çš„èŠ‚ç‚¹æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 sreset_mgr_LLI * reset_link_insert(sreset_mgr_LLI *plink, sreset_mgr_LLI *punit)
 {
@@ -655,7 +655,7 @@ sreset_mgr_LLI * reset_link_insert(sreset_mgr_LLI *plink, sreset_mgr_LLI *punit)
     }
     while (NULL != ppose)
     {
-        /*¸ù¾İÓÅÏÈ¼¶²åÈëµ½Á´±íÖĞ*/
+        /*æ ¹æ®ä¼˜å…ˆçº§æ’å…¥åˆ°é“¾è¡¨ä¸­*/
         if (ppose->cbfuninfo.priolevel > punit->cbfuninfo.priolevel)
         {
             if (phead == ppose)
@@ -682,12 +682,12 @@ sreset_mgr_LLI * reset_link_insert(sreset_mgr_LLI *plink, sreset_mgr_LLI *punit)
 
 /*caixi 3*/
 /*****************************************************************************
- º¯ Êı Ãû  : ccorereset_tonotify
- ¹¦ÄÜÃèÊö  : HIFI¸´Î»Ê±£¬Í¨ÖªMCU
- ÊäÈë²ÎÊı  : DRV_RESET_CB_MOMENT_E eparam,¸´Î»Ç°»¹ÊÇ¸´Î»ºó
-            int imodule, ÒªÍ¨ÖªµÄÄ£¿é£¬0£¬MCU;1,HIFI
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : ccorereset_tonotify
+ åŠŸèƒ½æè¿°  : HIFIå¤ä½æ—¶ï¼Œé€šçŸ¥MCU
+ è¾“å…¥å‚æ•°  : DRV_RESET_CB_MOMENT_E eparam,å¤ä½å‰è¿˜æ˜¯å¤ä½å
+            int imodule, è¦é€šçŸ¥çš„æ¨¡å—ï¼Œ0ï¼ŒMCU;1,HIFI
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 int hifireset_tonotify(DRV_RESET_CB_MOMENT_E eparam, ereset_module emodule)
 {
@@ -743,11 +743,11 @@ int hifireset_tonotify(DRV_RESET_CB_MOMENT_E eparam, ereset_module emodule)
 
 /*caixi 14*/
 /*****************************************************************************
- º¯ Êı Ãû  : ccorereset_enable_wdt_irq
- ¹¦ÄÜÃèÊö  : Í¨¹ıĞ´¼Ä´æÆ÷ÊµÏÖÆäËûºËÖĞ¶Ïµ½aºË
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : ccorereset_enable_wdt_irq
+ åŠŸèƒ½æè¿°  : é€šè¿‡å†™å¯„å­˜å™¨å®ç°å…¶ä»–æ ¸ä¸­æ–­åˆ°aæ ¸
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 static int ccorereset_enable_wdt_irq(void)
 {
@@ -758,7 +758,7 @@ static int ccorereset_enable_wdt_irq(void)
     unsigned long uvalue = 0;
 
 
-    /*WatchDog1 HIFI WatchDog³¬Ê±¸´Î»ÇëÇó*/
+    /*WatchDog1 HIFI WatchDogè¶…æ—¶å¤ä½è¯·æ±‚*/
     uvalue = readl((void __iomem *)SOC_AO_SCTRL_SC_MCU_WKUP_INT_EN1_ADDR(sctrl_on));
     printk(KERN_INFO "%s: org val = 0x%lx\n", __FUNCTION__, uvalue);
 
@@ -767,11 +767,11 @@ static int ccorereset_enable_wdt_irq(void)
     printk(KERN_INFO "%s: new val = 0x%lx\n", __FUNCTION__, uvalue);
 
 #if 0
-        unsigned int  sc_int_en0_0awd           : 1;  /* bit[0] : [0]£º ACPU Watchdog¸´Î»ÇëÇóÖĞ¶Ï£¬ËÍ¸øMCU¡£ */
-        unsigned int  sc_int_en0_1cm3wdg0       : 1;  /* bit[1] : [1]£º CM3 Watchdog0¸´Î»ÇëÇóÖĞ¶Ï£¬ËÍ¸øACPU¡£ */
-        unsigned int  sc_int_en0_2hifiwd        : 1;  /* bit[2] : [2]£º HIFI Watchdog¸´Î»ÇëÇóÖĞ¶Ï£¬ËÍ¸øMCUºÍACPU¡£ */
-        unsigned int  sc_int_en0_3bakwd         : 1;  /* bit[3] : [3]£º ±¸·İWatchdog¸´Î»ÇëÇóÖĞ¶Ï£¬ËÍ¸øMCUºÍACPU¡£ */
-        unsigned int  sc_int_en0_4acpu_sft_fiq  : 1;  /* bit[4] : [4]£º acpu fiq int£¬ËÍ¸øacpu£¬ÓÃÓÚµ÷ÊÔ£¬ÓÉacpu_sft_fiq_reqÅäÖÃ²úÉú¡£ */
+        unsigned int  sc_int_en0_0awd           : 1;  /* bit[0] : [0]ï¼š ACPU Watchdogå¤ä½è¯·æ±‚ä¸­æ–­ï¼Œé€ç»™MCUã€‚ */
+        unsigned int  sc_int_en0_1cm3wdg0       : 1;  /* bit[1] : [1]ï¼š CM3 Watchdog0å¤ä½è¯·æ±‚ä¸­æ–­ï¼Œé€ç»™ACPUã€‚ */
+        unsigned int  sc_int_en0_2hifiwd        : 1;  /* bit[2] : [2]ï¼š HIFI Watchdogå¤ä½è¯·æ±‚ä¸­æ–­ï¼Œé€ç»™MCUå’ŒACPUã€‚ */
+        unsigned int  sc_int_en0_3bakwd         : 1;  /* bit[3] : [3]ï¼š å¤‡ä»½Watchdogå¤ä½è¯·æ±‚ä¸­æ–­ï¼Œé€ç»™MCUå’ŒACPUã€‚ */
+        unsigned int  sc_int_en0_4acpu_sft_fiq  : 1;  /* bit[4] : [4]ï¼š acpu fiq intï¼Œé€ç»™acpuï¼Œç”¨äºè°ƒè¯•ï¼Œç”±acpu_sft_fiq_reqé…ç½®äº§ç”Ÿã€‚ */
 #endif
     writel(0x1f, (void __iomem *)SOC_AO_SCTRL_SC_INT_EN_SET_ADDR(sctrl_on));
     uvalue = readl((void __iomem *)SOC_AO_SCTRL_SC_INT_EN_SET_ADDR(sctrl_on));
@@ -783,11 +783,11 @@ static int ccorereset_enable_wdt_irq(void)
 
 /*caixi e*/
 /*****************************************************************************
- º¯ Êı Ãû  : do_reset_system
- ¹¦ÄÜÃèÊö  : ÓÃÓÚ¸´Î»ÏµÍ³
- ÊäÈë²ÎÊı  : int ireset_type,¸´Î»ÀàĞÍ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : do_reset_system
+ åŠŸèƒ½æè¿°  : ç”¨äºå¤ä½ç³»ç»Ÿ
+ è¾“å…¥å‚æ•°  : int ireset_type,å¤ä½ç±»å‹
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 static void  do_reset_system(int ireset_type)
 {
@@ -802,12 +802,12 @@ static void  do_reset_system(int ireset_type)
 
 /*caixi d*/
 /*****************************************************************************
- º¯ Êı Ãû  : reset_set_cpu_status
- ¹¦ÄÜÃèÊö  : µ±hifi»òÕßccpu¸´Î»Ê±£¬¼ÇÏÂ×´Ì¬£¬ÓÃÓÚmailboxÀ¹»÷·¢Ïòhifi  µÄmail.
- ÊäÈë²ÎÊı  : unsigned int iOff  1-²»Ê¹ÄÜ;0-¹Ø±Õ
-             unsigned int iflag ±êÊ¶cpu×´Ì¬¶ÔÓ¦µÄÆ«ÒÆ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : reset_set_cpu_status
+ åŠŸèƒ½æè¿°  : å½“hifiæˆ–è€…ccpuå¤ä½æ—¶ï¼Œè®°ä¸‹çŠ¶æ€ï¼Œç”¨äºmailboxæ‹¦å‡»å‘å‘hifi  çš„mail.
+ è¾“å…¥å‚æ•°  : unsigned int iOff  1-ä¸ä½¿èƒ½;0-å…³é—­
+             unsigned int iflag æ ‡è¯†cpuçŠ¶æ€å¯¹åº”çš„åç§»
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 static void reset_set_cpu_status(unsigned int iOff, unsigned int iflag)
 {
@@ -818,11 +818,11 @@ static void reset_set_cpu_status(unsigned int iOff, unsigned int iflag)
 
 /*caixi 9*/
 /*****************************************************************************
- º¯ Êı Ãû  : reset_hifi_up_semaphone
- ¹¦ÄÜÃèÊö  : ÊÍ·Åhifi resetĞÅºÅÁ¿
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : reset_hifi_up_semaphone
+ åŠŸèƒ½æè¿°  : é‡Šæ”¾hifi resetä¿¡å·é‡
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 void reset_hifi_up_semaphone(void)
 {
@@ -836,14 +836,14 @@ void reset_hifi_up_semaphone(void)
 
 /*caixi 8*/
 /*****************************************************************************
- º¯ Êı Ãû  : drv_hifireset_cbfun
- ¹¦ÄÜÃèÊö  : µ×ÈíÔÚhifiµ¥¶À¸´Î»Ê±ÓÃÓÚ´¦ÀímailboxÏà¹ØÊı¾İ¡£
- ÊäÈë²ÎÊı  : DRV_RESET_CB_MOMENT_E eparam, ±íÊ¾¸´Î»Ç°»¹ÊÇ¸´Î»ºóµ÷ÓÃ
-            ¡¡int userdata,ÓÃ»§Êı¾İ£®
+ å‡½ æ•° å  : drv_hifireset_cbfun
+ åŠŸèƒ½æè¿°  : åº•è½¯åœ¨hifiå•ç‹¬å¤ä½æ—¶ç”¨äºå¤„ç†mailboxç›¸å…³æ•°æ®ã€‚
+ è¾“å…¥å‚æ•°  : DRV_RESET_CB_MOMENT_E eparam, è¡¨ç¤ºå¤ä½å‰è¿˜æ˜¯å¤ä½åè°ƒç”¨
+            ã€€int userdata,ç”¨æˆ·æ•°æ®ï¼
 
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
-        0, ³É¹¦£¬·Ç0£¬Ê§°Ü
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+        0, æˆåŠŸï¼Œé0ï¼Œå¤±è´¥
 *****************************************************************************/
 static int drv_hifireset_cbfun(DRV_RESET_CB_MOMENT_E eparam, int userdata)
 {
@@ -897,18 +897,18 @@ static int drv_hifireset_cbfun(DRV_RESET_CB_MOMENT_E eparam, int userdata)
 
 /*caixi c 10*/
 /*****************************************************************************
- º¯ Êı Ãû  : reset_no_ok_savelog
- ¹¦ÄÜÃèÊö  : ÔÚµ÷ÓÃ»Øµ÷º¯ÊıÊ±Èç¹û»Øµ÷º¯Êı·µ»ØÊ§°Ü£¬Ôò¼ÇÂ¼ÏÂÄ£¿éÃû×Ö£¬·µ»ØÖµ
- ÊäÈë²ÎÊı  : char *pname,×é¼ş×¢²á»Øµ÷º¯ÊıÊ±×¢²áµÄÃû×Ö£»
-             int iresult,»Øµ÷º¯ÊıµÄ·µ»ØÖµ¡£
-             ereset_module emodule, ¸´Î»µÄÄ£¿é,ccore or hifi
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
-        0, ³É¹¦£¬·Ç0£¬Ê§°Ü
+ å‡½ æ•° å  : reset_no_ok_savelog
+ åŠŸèƒ½æè¿°  : åœ¨è°ƒç”¨å›è°ƒå‡½æ•°æ—¶å¦‚æœå›è°ƒå‡½æ•°è¿”å›å¤±è´¥ï¼Œåˆ™è®°å½•ä¸‹æ¨¡å—åå­—ï¼Œè¿”å›å€¼
+ è¾“å…¥å‚æ•°  : char *pname,ç»„ä»¶æ³¨å†Œå›è°ƒå‡½æ•°æ—¶æ³¨å†Œçš„åå­—ï¼›
+             int iresult,å›è°ƒå‡½æ•°çš„è¿”å›å€¼ã€‚
+             ereset_module emodule, å¤ä½çš„æ¨¡å—,ccore or hifi
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+        0, æˆåŠŸï¼Œé0ï¼Œå¤±è´¥
 *****************************************************************************/
 int reset_no_ok_savelog(char *pname, int iresult, DRV_RESET_CB_MOMENT_E eparam, ereset_module emodule)
 {
-#ifdef PRINK_TO_FILE    /*Èç¹ûÊµÏÖÁËprintk´òÓ¡ĞÅÏ¢Éú³ÉÎÄ¼ş¹¦ÄÜ£¬Ôò²»ĞèÒª¸Ãº¯Êı¹¦ÄÜ*/
+#ifdef PRINK_TO_FILE    /*å¦‚æœå®ç°äº†printkæ‰“å°ä¿¡æ¯ç”Ÿæˆæ–‡ä»¶åŠŸèƒ½ï¼Œåˆ™ä¸éœ€è¦è¯¥å‡½æ•°åŠŸèƒ½*/
     return BSP_RESET_OK;
 #else
 
@@ -951,16 +951,16 @@ int reset_no_ok_savelog(char *pname, int iresult, DRV_RESET_CB_MOMENT_E eparam, 
 #endif /* PRINK_TO_FILE */
 }
 /*****************************************************************************
- º¯ Êı Ãû  : reset_for_savelog
- ¹¦ÄÜÃèÊö  : ±£´ælog
- ÊäÈë²ÎÊı  : char *pstr,logÄÚÈİ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
-        0, ³É¹¦£¬·Ç0£¬Ê§°Ü
+ å‡½ æ•° å  : reset_for_savelog
+ åŠŸèƒ½æè¿°  : ä¿å­˜log
+ è¾“å…¥å‚æ•°  : char *pstr,logå†…å®¹
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+        0, æˆåŠŸï¼Œé0ï¼Œå¤±è´¥
 *****************************************************************************/
 int reset_for_savelog(char *pstr)
 {
-#ifdef PRINK_TO_FILE    /*Èç¹ûÊµÏÖÁËprintk´òÓ¡ĞÅÏ¢Éú³ÉÎÄ¼ş¹¦ÄÜ£¬Ôò²»ĞèÒª¸Ãº¯Êı¹¦ÄÜ*/
+#ifdef PRINK_TO_FILE    /*å¦‚æœå®ç°äº†printkæ‰“å°ä¿¡æ¯ç”Ÿæˆæ–‡ä»¶åŠŸèƒ½ï¼Œåˆ™ä¸éœ€è¦è¯¥å‡½æ•°åŠŸèƒ½*/
     return BSP_RESET_OK;
 #else
 
@@ -1006,11 +1006,11 @@ int reset_for_savelog(char *pstr)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : reset_info_show
- ¹¦ÄÜÃèÊö  : ÏÔÊ¾¿ÉÎ¬¿É²âĞÅÏ¢
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : reset_info_show
+ åŠŸèƒ½æè¿°  : æ˜¾ç¤ºå¯ç»´å¯æµ‹ä¿¡æ¯
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 void reset_info_show_hifi(void)
 {
@@ -1051,10 +1051,10 @@ static int __init reset_sub_mgr_init_hifi(void)
 	struct task_struct *pHifiSaveTask = NULL;
 	int iret = BSP_RESET_OK;
 
-	/*Ä¬ÈÏHIFIÊ¹ÄÜ*/
+	/*é»˜è®¤HIFIä½¿èƒ½*/
 	reset_set_cpu_status(0, RESET_CPU_HIFI_STATUS_OFF);
 
-	/*´´½¨ĞèÒªµÄĞÅºÅÁ¿*/
+	/*åˆ›å»ºéœ€è¦çš„ä¿¡å·é‡*/
 	printk(KERN_INFO "%s: enter\n", __FUNCTION__);
 	hisi_io_memset(&g_reset_assistant_hifi, 0, sizeof(g_reset_assistant_hifi));
 	sema_init(&(g_reset_assistant_hifi.sem_wait_hifireset), SEM_EMPTY);
@@ -1062,7 +1062,7 @@ static int __init reset_sub_mgr_init_hifi(void)
 	sema_init(&(g_reset_assistant_hifi.sem_wait_hifisave), SEM_EMPTY);
 
 
-	/*´´½¨hifi¸´Î»´¦ÀíÏß³Ì*/
+	/*åˆ›å»ºhifiå¤ä½å¤„ç†çº¿ç¨‹*/
 	pHifiTask = kthread_run(hifireset_task,  NULL, "hifireset_task");
 	printk(KERN_INFO "%s: create hifireset_task, return %p\n", __FUNCTION__, pHifiTask);
 
@@ -1073,7 +1073,7 @@ static int __init reset_sub_mgr_init_hifi(void)
 	ccorereset_enable_wdt_irq();
 
 
-	/*×¢²áHIFI¸´Î»»Øµ÷º¯Êı*//*hifi¸´Î»£¬µ×Èí²»×¢²á*/
+	/*æ³¨å†ŒHIFIå¤ä½å›è°ƒå‡½æ•°*//*hifiå¤ä½ï¼Œåº•è½¯ä¸æ³¨å†Œ*/
 	hifireset_regcbfunc("CODEC", drv_hifireset_cbfun, 0, BSP_DRV_CBFUN_PRIOLEVEL);
 
 	iret = ipc_msg_req_callback(OBJ_HIFI, CMD_NOTIFY, mailbox_recfun_mcu_hifireset);
@@ -1085,18 +1085,18 @@ static int __init reset_sub_mgr_init_hifi(void)
 extern void hifi_freeze_give_semaphone(void);
 extern int simulate_irq_mcuwdt_reset(void);
 /*****************************************************************************
- º¯ Êı Ãû  : reset_only_for_test
- ¹¦ÄÜÃèÊö  : ¸Ãº¯ÊıÖ»ÓÃÓÚ²âÊÔ!!
- ÊäÈë²ÎÊı  : int iparam, ²âÊÔcase:
-             0,²âÊÔmodem ¹·¸´Î»
-             1,²âÊÔmodem Èí¼şÒì³£¸´Î»
-             2,²âÊÔmodem Õı³£¸´Î»
-             3,²âÊÔhifi¸´Î»
-             4,²âÊÔmcu¹·¸´Î»
-             5,²âÊÔµ×ÈíÔÚccore¸´Î»Ê±Ëù×öµÄ´¦Àí£¬Èçipf,icc,fileagent,cshellÏàÓ¦¹¦ÄÜÊÇ·ñÕıÈ·
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
-        0, ³É¹¦£¬·Ç0£¬Ê§°Ü
+ å‡½ æ•° å  : reset_only_for_test
+ åŠŸèƒ½æè¿°  : è¯¥å‡½æ•°åªç”¨äºæµ‹è¯•!!
+ è¾“å…¥å‚æ•°  : int iparam, æµ‹è¯•case:
+             0,æµ‹è¯•modem ç‹—å¤ä½
+             1,æµ‹è¯•modem è½¯ä»¶å¼‚å¸¸å¤ä½
+             2,æµ‹è¯•modem æ­£å¸¸å¤ä½
+             3,æµ‹è¯•hifiå¤ä½
+             4,æµ‹è¯•mcuç‹—å¤ä½
+             5,æµ‹è¯•åº•è½¯åœ¨ccoreå¤ä½æ—¶æ‰€åšçš„å¤„ç†ï¼Œå¦‚ipf,icc,fileagent,cshellç›¸åº”åŠŸèƒ½æ˜¯å¦æ­£ç¡®
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+        0, æˆåŠŸï¼Œé0ï¼Œå¤±è´¥
 *****************************************************************************/
 void reset_only_for_test_hifi(int iparam)
 {

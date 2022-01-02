@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼ş°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #if (VOS_OS_VER == VOS_WIN32) || defined (__PC_LINT__)
 #include "linuxstub.h"
@@ -29,16 +29,16 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 /*================================================*/
-/* ÊıÖµºê¶¨Òå */
+/* æ•°å€¼å®å®šä¹‰ */
 /*================================================*/
-#define NW_INQUIRE_IFCONFIG_ON_MASK      (1)        /*²éÑ¯IfconfigÑÚÂë*/
-#define NW_INQUIRE_ARP_ON_MASK           (1 << 1)   /*²éÑ¯ArpÑÚÂë*/
-#define NW_INQUIRE_ROUTE_ON_MASK         (1 << 2)   /*²éÑ¯RouteÑÚÂë*/
-#define NW_INQUIRE_NETSTATE_ON_MASK      (1 << 3)   /*²éÑ¯NetstateÑÚÂë*/
-#define NW_INQUIRE_NAT_ON_MASK           (1 << 4)   /*²éÑ¯NatÑÚÂë*/
+#define NW_INQUIRE_IFCONFIG_ON_MASK      (1)        /*æŸ¥è¯¢Ifconfigæ©ç */
+#define NW_INQUIRE_ARP_ON_MASK           (1 << 1)   /*æŸ¥è¯¢Arpæ©ç */
+#define NW_INQUIRE_ROUTE_ON_MASK         (1 << 2)   /*æŸ¥è¯¢Routeæ©ç */
+#define NW_INQUIRE_NETSTATE_ON_MASK      (1 << 3)   /*æŸ¥è¯¢Netstateæ©ç */
+#define NW_INQUIRE_NAT_ON_MASK           (1 << 4)   /*æŸ¥è¯¢Natæ©ç */
 
 #define NW_INQUIRE_CFG_ALL_MASK          ( NW_INQUIRE_IFCONFIG_ON_MASK \
                                             | NW_INQUIRE_ARP_ON_MASK \
@@ -46,30 +46,30 @@ extern "C" {
                                             | NW_INQUIRE_NETSTATE_ON_MASK \
                                             | NW_INQUIRE_NAT_ON_MASK)
 
-#define DEVICE_NAME                      "NetfilterExtDev"     /*×Ö·ûÉè±¸Ãû*/
+#define DEVICE_NAME                      "NetfilterExtDev"     /*å­—ç¬¦è®¾å¤‡å*/
 #define CLASS_NAME                       "NetfilterExtClass"
 #define DEV_BUFF_LEN                     (sizeof(NETWORK_INQUIRE_CONFIG_STRU))
-#define DEVICE_PATH_LEN                  (100)                 /*Éè±¸ËùÔÚÂ·¾¶µÄ³¤¶È*/
-#define DEVICE_NUM                       (1)                   /*×¢²á×Ö·ûÉè±¸µÄÊıÄ¿*/
-#define MINOR_NO_START                   (500)                 /*´ÎÉè±¸µÄÆğÊ¼ºÅ*/
+#define DEVICE_PATH_LEN                  (100)                 /*è®¾å¤‡æ‰€åœ¨è·¯å¾„çš„é•¿åº¦*/
+#define DEVICE_NUM                       (1)                   /*æ³¨å†Œå­—ç¬¦è®¾å¤‡çš„æ•°ç›®*/
+#define MINOR_NO_START                   (500)                 /*æ¬¡è®¾å¤‡çš„èµ·å§‹å·*/
 
 
 /*******************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æšä¸¾å®šä¹‰
 *******************************************************************************/
 
 /*****************************************************************************
-  4 ½á¹¹¶¨Òå
+  4 ç»“æ„å®šä¹‰
 *****************************************************************************/
 /*********************************************
- ½á¹¹ÌåÃû   :NETWORK_INQUIRE_CONFIG_STRU
- Ğ­Òé±í¸ñ :
- ½á¹¹ÌåËµÃ÷ :network inquireÅäÖÃĞÅÏ¢
+ ç»“æ„ä½“å   :NETWORK_INQUIRE_CONFIG_STRU
+ åè®®è¡¨æ ¼ :
+ ç»“æ„ä½“è¯´æ˜ :network inquireé…ç½®ä¿¡æ¯
 *********************************************/
 typedef struct
 {
-    unsigned int ulOnOffMask;                  /* ¹¦ÄÜ¿ª¹ØÑÚÂë */
-    unsigned int ulTimerLen;                   /* ÉÏ±¨ÖÜÆÚ¶¨Ê±Æ÷³¤¶È */
+    unsigned int ulOnOffMask;                  /* åŠŸèƒ½å¼€å…³æ©ç  */
+    unsigned int ulTimerLen;                   /* ä¸ŠæŠ¥å‘¨æœŸå®šæ—¶å™¨é•¿åº¦ */
 }NETWORK_INQUIRE_CONFIG_STRU;
 
 

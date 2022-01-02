@@ -3,7 +3,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "IMMmemRB.h"
 #include "product_config.h"
@@ -34,7 +34,7 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 /*lint -e767*/
@@ -42,37 +42,37 @@ extern "C" {
 /*lint +e767*/
 
 #if (FEATURE_ON == FEATURE_SKB_EXP)
-/* À¬»ø»ØÊÕÈÎÎñÓÅÏÈ¼¶ */
+/* åƒåœ¾å›æ”¶ä»»åŠ¡ä¼˜å…ˆçº§ */
 const VOS_UINT8 IMM_RB_FREE_TASK_PRI_LINUX                  = 85;
 
-/* À¬»ø»ØÊÕÈÎÎñ¶¨Ê±Æ÷Ê±³¤ */
+/* åƒåœ¾å›æ”¶ä»»åŠ¡å®šæ—¶å™¨æ—¶é•¿ */
 const VOS_UINT16 IMM_RB_TX_MEM_FREE_INTERVAL_LINUX          = 1000;
 
-/* À¬»øÊÍ·ÅÈÎÎñÕ»Éî¶È */
+/* åƒåœ¾é‡Šæ”¾ä»»åŠ¡æ ˆæ·±åº¦ */
 const VOS_UINT16 IMM_RB_RX_MEM_FREE_TASK_STACK_SIZE_LINUX   = 4096;
 
-/* AºËTTFÄÚ´æ»ØÊÕ¶ÓÁĞ */
+/* Aæ ¸TTFå†…å­˜å›æ”¶é˜Ÿåˆ— */
 LUP_QUEUE_STRU  *g_pstAcpuTTFMemFreeQue                     = VOS_NULL_PTR;
 
-/* AºËIMMÄÚ´æÊÍ·Å¶ÓÁĞ */
+/* Aæ ¸IMMå†…å­˜é‡Šæ”¾é˜Ÿåˆ— */
 LUP_QUEUE_STRU  *g_pstAcpuIMMMemFreeQue                     = VOS_NULL_PTR;
 
-/* ÄÚ´æ»ØÊÕÃÅÏŞ */
+/* å†…å­˜å›æ”¶é—¨é™ */
 VOS_UINT8        g_ulFreeIMMMemBlkNoticNum                  = 0x1f;
 
-/* A CPU ÄÚ´æ»ØÊÕ¶¨Ê±Æ÷Æô¶¯±êÖ¾ */
+/* A CPU å†…å­˜å›æ”¶å®šæ—¶å™¨å¯åŠ¨æ ‡å¿— */
 VOS_UINT32       g_ulACPUTimerStartFlag                     = PS_FALSE;
 
-/* IMM MEM RB ÊÍ·ÅÈÎÎñĞÅºÅÁ¿ */
+/* IMM MEM RB é‡Šæ”¾ä»»åŠ¡ä¿¡å·é‡ */
 VOS_SEM         g_ulImmMemRbFreeSem                         = 0;
 
-/* IMM MEM RB ¿ÉÎ¬¿É²âÊµÌå */
+/* IMM MEM RB å¯ç»´å¯æµ‹å®ä½“ */
 IMM_MEM_RB_MNTN_INFO_STRU               g_stImmMemRbMntnEntity;
 
-/* IMM MEM RB ×ÔĞıËø */
+/* IMM MEM RB è‡ªæ—‹é” */
 VOS_SPINLOCK                            g_stImmRbSpinLock;
 
-/*ÆäËü°æ±¾Ö§³ÖIPC£¬ÖĞ¶ÏºÅÏàÍ¬*/
+/*å…¶å®ƒç‰ˆæœ¬æ”¯æŒIPCï¼Œä¸­æ–­å·ç›¸åŒ*/
 #define IMM_IPC_MEM_FREE_INT                        (IPC_INT_DICC_RELDATA)
 #define IMM_IPC_MEM_RECYCLE_INT                     (IPC_INT_DICC_RELDATA)
 
@@ -84,7 +84,7 @@ VOS_SPINLOCK                            g_stImmRbSpinLock;
 
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 VOS_VOID IMM_DebugLOG
@@ -155,7 +155,7 @@ VOS_VOID IMM_RbMemRelDataIsr(VOS_VOID)
         return ;
     }
 
-    /* give semphore µ÷ÓÃOMÌá¹©µÄ·â×°º¯Êı£¬ÊÍ·ÅĞÅºÅÁ¿ulMemFreeSem */
+    /* give semphore è°ƒç”¨OMæä¾›çš„å°è£…å‡½æ•°ï¼Œé‡Šæ”¾ä¿¡å·é‡ulMemFreeSem */
     VOS_SmV(g_ulImmMemRbFreeSem);
     g_stImmMemRbMntnEntity.ulImmMemRbReceiveIntCnt++;
 
@@ -180,7 +180,7 @@ VOS_UINT32 IMM_RbIsrInit(VOS_UINT32 ulPid, VOS_UINT32 ulIntLevel,
     VOS_INT32  lIntRet;
 
 
-    /* ¹Ò½ÓÖĞ¶Ï */
+    /* æŒ‚æ¥ä¸­æ–­ */
 #ifndef WTTF_PS_FUSION_PC_ST
     lIntRet = IMM_MEM_CONNECT_IPC_MEMFREE_INT(((IPC_INT_LEV_E)ulIntLevel), ((VOIDFUNCPTR)pfuncRecvIsr), VOS_NULL);
 #else
@@ -193,7 +193,7 @@ VOS_UINT32 IMM_RbIsrInit(VOS_UINT32 ulPid, VOS_UINT32 ulIntLevel,
         return IMM_FAIL;
     }
 
-    /* Ê¹ÄÜÍ¨ÖªÖĞ¶Ï */
+    /* ä½¿èƒ½é€šçŸ¥ä¸­æ–­ */
 #ifndef WTTF_PS_FUSION_PC_ST
     IMM_MEM_ENABLE_IPC_INT((IPC_INT_LEV_E)ulIntLevel);
 #else
@@ -205,10 +205,10 @@ VOS_UINT32 IMM_RbIsrInit(VOS_UINT32 ulPid, VOS_UINT32 ulIntLevel,
 
 VOS_VOID IMM_RbRxFreeMemTaskInit( VOS_VOID )
 {
-    /* ³õÊ¼»¯ IMM MEM RB ¿ÉÎ¬¿É²âÊµÌå */
+    /* åˆå§‹åŒ– IMM MEM RB å¯ç»´å¯æµ‹å®ä½“ */
     PS_MEM_SET(&g_stImmMemRbMntnEntity, 0x0, sizeof(IMM_MEM_RB_MNTN_INFO_STRU));
 
-    /* ³õÊ¼»¯ĞÅºÅÁ¿ */
+    /* åˆå§‹åŒ–ä¿¡å·é‡ */
     if ( VOS_OK != VOS_SmBCreate("g_ulImmMemRbFreeSem", 0, VOS_SEMA4_FIFO, (VOS_SEM *)&g_ulImmMemRbFreeSem ) )
     {
         IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_ERROR, "IMM_RB, IMM_RbRxFreeMemTaskInit, ERROR, Create g_ulImmMemRbFreeSem fail!\n");
@@ -305,7 +305,7 @@ VOS_VOID IMM_RbMemFreeFromQue(VOS_VOID)
 VOS_VOID IMM_RbRxFreeMemTask(VOS_VOID)
 {
 
-    /* ½â¾öUTËÀÑ­»·ÎÊÌâ */
+    /* è§£å†³UTæ­»å¾ªç¯é—®é¢˜ */
 #ifdef __UT_CENTER__
     VOS_UINT32                          ulLoop;
 #endif
@@ -325,7 +325,7 @@ VOS_VOID IMM_RbRxFreeMemTask(VOS_VOID)
             continue;
         }
 
-        /* ÊÍ·Å */
+        /* é‡Šæ”¾ */
         IMM_RbMemFreeFromQue();
 
 #if ( FEATURE_ON == FEATURE_IMM_MEM_DEBUG )
@@ -341,7 +341,7 @@ VOS_VOID IMM_RbRemoteFreeMem(VOS_VOID *pucAddr)
 {
     VOS_UINT32                          ulResult;
     VOS_UINT32                          ulNum;
-    VOS_INT32                           lIsrRet;    /* ÖĞ¶Ï²Ù×÷·µ»ØÖµ */
+    VOS_INT32                           lIsrRet;    /* ä¸­æ–­æ“ä½œè¿”å›å€¼ */
     VOS_ULONG                           ulFlags = 0UL;
 
     if ( VOS_NULL_PTR == pucAddr )
@@ -355,7 +355,7 @@ VOS_VOID IMM_RbRemoteFreeMem(VOS_VOID *pucAddr)
 
     VOS_SpinLockIntLock (&g_stImmRbSpinLock, ulFlags);
 
-    /* ½«TTF_MEMµØÖ··ÅÈëÊÍ·Å¶ÓÁĞ */
+    /* å°†TTF_MEMåœ°å€æ”¾å…¥é‡Šæ”¾é˜Ÿåˆ— */
     ulResult    = LUP_EnSharedQueAcpu(g_pstAcpuTTFMemFreeQue, pucAddr);
     g_stImmMemRbMntnEntity.ulImmMemRbEnQTotalCnt++;
     ulNum       = LUP_QueCnt(g_pstAcpuTTFMemFreeQue);
@@ -372,7 +372,7 @@ VOS_VOID IMM_RbRemoteFreeMem(VOS_VOID *pucAddr)
 #ifndef WTTF_PS_FUSION_PC_ST
     if ( 0 == (ulNum & g_ulFreeIMMMemBlkNoticNum))
     {
-        /* ´¥·¢IPCÖĞ¶Ï */
+        /* è§¦å‘IPCä¸­æ–­ */
         lIsrRet = IMM_MEM_TRIG_IPC_MEMRB_INT(IPC_CORE_COMARM, IMM_IPC_MEM_RECYCLE_INT);
         VOS_SpinLockIntLock (&g_stImmRbSpinLock, ulFlags);
         g_stImmMemRbMntnEntity.ulImmMemRbSendIntCnt++;
@@ -410,7 +410,7 @@ VOS_UINT32 IMM_RbMemFreeFidInit ( enum VOS_INIT_PHASE_DEFINE ip )
     {
         case   VOS_IP_LOAD_CONFIG:
 
-            /* IMM_RB Ä£¿é×¢²áPID */
+            /* IMM_RB æ¨¡å—æ³¨å†ŒPID */
             ulRslt = VOS_RegisterPIDInfo(UEPS_PID_IMM_RB_FREE,
                                 (Init_Fun_Type)IMM_RbMemFreePidInit,
                                 (Msg_Fun_Type)IMM_RbMemRelMsgProc);
@@ -428,7 +428,7 @@ VOS_UINT32 IMM_RbMemFreeFidInit ( enum VOS_INIT_PHASE_DEFINE ip )
                 return (VOS_UINT32)VOS_ERROR;
             }
 
-            /* IMM_RbRxFreeMemTask×Ô´¦ÀíÈÎÎñ×¢²á */
+            /* IMM_RbRxFreeMemTaskè‡ªå¤„ç†ä»»åŠ¡æ³¨å†Œ */
             ulReturnCode = VOS_RegisterSelfTask(UEPS_FID_IMM_RB_FREE,
             (VOS_TASK_ENTRY_TYPE)IMM_RbRxFreeMemTask, VOS_PRIORITY_P5, (VOS_UINT32)IMM_RB_RX_MEM_FREE_TASK_STACK_SIZE_LINUX);
 
@@ -475,22 +475,22 @@ VOS_VOID IMM_RbMemClrIsr( VOS_VOID )
 
 VOS_VOID IMM_RbMemPrintIsrCnt( VOS_VOID )
 {
-    IMM_LOG1(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IPFÖĞ¶Ï´ÎÊı: %d \n" , (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbReceiveIntCnt);
+    IMM_LOG1(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IPFä¸­æ–­æ¬¡æ•°: %d \n" , (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbReceiveIntCnt);
     return;
 }/* IMM_RbMemPrintIsrCnt */
 
 VOS_VOID IMM_MemRbShowMntnInfo( VOS_VOID )
 {
     IMM_LOG(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "==========================================\n" );
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "IMM MEM RB ¿ÉÎ¬¿É²âĞÅÏ¢ :\n" );
-    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "C2A ºË¼äÊÍ·Å¶ÓÁĞÖĞ½Úµã¸öÊı  : %d \n", (VOS_INT32)LUP_QueCnt(g_pstAcpuIMMMemFreeQue));
-    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "A2C ºË¼äÊÍ·Å¶ÓÁĞÖĞ½Úµã¸öÊı  : %d \n", (VOS_INT32)LUP_QueCnt(g_pstAcpuTTFMemFreeQue));
-    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb ³ö¶ÓÊ§°Ü´ÎÊı       : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbDeQFailCnt);
-    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb ³ö¶Ó×Ü´ÎÊı         : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbDeQTotalCnt);
-    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb Èë¶ÓÊ§°Ü´ÎÊı       : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbEnQFailCnt);
-    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb Èë¶Ó×Ü´ÎÊı         : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbEnQTotalCnt);
-    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb ÊÕµ½IPFÖĞ¶Ï´ÎÊı    : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbReceiveIntCnt);
-    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb ÏòIPF·¢ËÍÖĞ¶Ï´ÎÊı  : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbSendIntCnt);
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "IMM MEM RB å¯ç»´å¯æµ‹ä¿¡æ¯ :\n" );
+    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "C2A æ ¸é—´é‡Šæ”¾é˜Ÿåˆ—ä¸­èŠ‚ç‚¹ä¸ªæ•°  : %d \n", (VOS_INT32)LUP_QueCnt(g_pstAcpuIMMMemFreeQue));
+    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "A2C æ ¸é—´é‡Šæ”¾é˜Ÿåˆ—ä¸­èŠ‚ç‚¹ä¸ªæ•°  : %d \n", (VOS_INT32)LUP_QueCnt(g_pstAcpuTTFMemFreeQue));
+    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb å‡ºé˜Ÿå¤±è´¥æ¬¡æ•°       : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbDeQFailCnt);
+    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb å‡ºé˜Ÿæ€»æ¬¡æ•°         : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbDeQTotalCnt);
+    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb å…¥é˜Ÿå¤±è´¥æ¬¡æ•°       : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbEnQFailCnt);
+    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb å…¥é˜Ÿæ€»æ¬¡æ•°         : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbEnQTotalCnt);
+    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb æ”¶åˆ°IPFä¸­æ–­æ¬¡æ•°    : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbReceiveIntCnt);
+    IMM_LOG1(UEPS_PID_IMM_RB_FREE, PS_PRINT_NORMAL, "ImmMemRb å‘IPFå‘é€ä¸­æ–­æ¬¡æ•°  : %d \n", (VOS_INT32)g_stImmMemRbMntnEntity.ulImmMemRbSendIntCnt);
 
 
     return;

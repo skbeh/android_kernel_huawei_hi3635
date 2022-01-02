@@ -83,7 +83,7 @@ s32 bsp_tem_data_receive(void)
 
     tem_print_info("temperature region = %d, status = %d.\n", region, status);
     
-    /*POWER_SUPPLYÊı¾İÉÏ±¨*/
+    /*POWER_SUPPLYæ•°æ®ä¸ŠæŠ¥*/
     if(HKADC_BATTERY == region && (HIGH_TEMPERATURE == status) && (NULL != p_tem_fun))
     {
         (*p_tem_fun)(DEVICE_ID_TEMP, POWER_SUPPLY_HEALTH_DEAD);
@@ -164,17 +164,17 @@ nv_hkadc_error:
 
 
 /*****************************************************************************
- * º¯ Êı Ãû  :bsp_temperature_init
+ * å‡½ æ•° å  :bsp_temperature_init
  *
- * ¹¦ÄÜÃèÊö  : ÎÂ¶È±£»¤ºË¼äÍ¨ĞÅ£¬AºË³õÊ¼»¯º¯Êı
+ * åŠŸèƒ½æè¿°  : æ¸©åº¦ä¿æŠ¤æ ¸é—´é€šä¿¡ï¼ŒAæ ¸åˆå§‹åŒ–å‡½æ•°
  *
- * ÊäÈë²ÎÊı  : ÎŞ
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : æ— 
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : TEMPERATURE_OK:    ²Ù×÷³É¹¦
- *             TEMPERATURE_ERROR: ²Ù×÷Ê§°Ü
+ * è¿” å› å€¼  : TEMPERATURE_OK:    æ“ä½œæˆåŠŸ
+ *             TEMPERATURE_ERROR: æ“ä½œå¤±è´¥
  *
- * ÆäËüËµÃ÷  : ÎŞ
+ * å…¶å®ƒè¯´æ˜  : æ— 
  *
  *****************************************************************************/
 static int __init bsp_temperature_init(void)
@@ -184,7 +184,7 @@ static int __init bsp_temperature_init(void)
 
     //printk("acore tem time %d.\n", bsp_get_elapse_ms());
     
-    /*´ÓNVÀïÃæ»ñÈ¡ÎÂ±£»ù±¾ĞÅÏ¢±£´æµ½¹²ÏíÄÚ´æ*/
+    /*ä»NVé‡Œé¢è·å–æ¸©ä¿åŸºæœ¬ä¿¡æ¯ä¿å­˜åˆ°å…±äº«å†…å­˜*/
     if(0 != tem_protect_nv_config())
     {
         tem_print_error(" tem_protect_nv_config is fail.\n");

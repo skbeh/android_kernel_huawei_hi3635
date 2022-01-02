@@ -88,7 +88,7 @@ VOS_VOID drx_msp_fid_vote_lock(drx_msp_fid_vote_e e_drx_vote)
 
 	if(e_drx_vote >=DRX_MSP_VOTE_BUTT)
 	{
-		vos_printf("%s: e_drx_vote si too larger!\n",__FUNCTION__);/* [false alarm]:∆¡±ŒFortify */
+		vos_printf("%s: e_drx_vote si too larger!\n",__FUNCTION__);/* [false alarm]:Â±èËîΩFortify */
 		return ;
 	}
     /*lint -save -e830 -e525 -e539*/
@@ -137,7 +137,7 @@ VOS_VOID drx_msp_fid_vote_unlock(drx_msp_fid_vote_e e_drx_vote)
 
 	if(e_drx_vote >=DRX_MSP_VOTE_BUTT)
 	{
-		vos_printf("%s: e_drx_vote si too larger!\n",__FUNCTION__);/* [false alarm]:∆¡±ŒFortify */
+		vos_printf("%s: e_drx_vote si too larger!\n",__FUNCTION__);/* [false alarm]:Â±èËîΩFortify */
 		return ;
 	}
     /*lint -save -e830 -e525*/

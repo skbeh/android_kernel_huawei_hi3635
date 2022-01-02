@@ -29,12 +29,12 @@
  */
 
  /*
-  1.��    ��   : 2006��4��4��
-    ��    ��   : liuyang id:48197
-    �޸�����   : ���ⵥ��:A32D01738
-  2.��    ��   : 2006��8��10��
-    ��    ��   : fanzhibin id:49086
-    �޸�����   : ���ⵥ��:A32D05312
+  1.日    期   : 2006年4月4日
+    作    者   : liuyang id:48197
+    修改内容   : 问题单号:A32D01738
+  2.日    期   : 2006年8月10日
+    作    者   : fanzhibin id:49086
+    修改内容   : 问题单号:A32D05312
 
 
  */
@@ -58,7 +58,7 @@
 #undef REJECTED
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_IPCP_C
 
@@ -769,7 +769,7 @@ IpcpInitRestartCounter(struct fsm *fp, VOS_INT32 what)
 void
 IpcpSendConfigReq(struct fsm *fp)
 {
-/*��Ϊ��3G�ĵ������Ҫ��Է�����config֡*/
+/*因为在3G文档里，不需要向对方发送config帧*/
 #if 0
   /* Send config REQ please */
   struct physical *p = link2physical(fp->link);
@@ -1075,11 +1075,11 @@ ipcp_ValidateReq(struct ipcp *ipcp, struct ppp_in_addr ip, struct fsm_decode *de
 
 /*****************************************************************************
  Prototype      : StringCompare
- Description    : ���������ַ����Ƚ����Ǵ�ͷ���һ�Ρ�
+ Description    : 对于两个字符串比较他们从头起的一段。
 
- Input          : ---�����ַ������׵�ַ��Ƚϵĳ���
+ Input          : ---两个字符串的首地址与比较的长度
  Output         : ---
- Return Value   : ---��ȷ���VOS_OK�����򷵻�VOS_ERR
+ Return Value   : ---相等返回VOS_OK，否则返回VOS_ERR
  Calls          : ---
  Called By      : ---
 
@@ -1103,13 +1103,13 @@ VOS_UINT32 StringCompare(VOS_CHAR* pString1,VOS_VOID* pString2,VOS_UINT16 len)
 
 /*****************************************************************************
  Prototype      : DecodeAtIndication
- Description    : ������AT���յ���ACK��NAK���ġ�
+ Description    : 解析从AT接收到的ACK与NAK报文。
 
- Input          : ---pIpcp:ָ��ñ������ڵ�ipcp�ṹ
-                  ---pEchoBuffer:ָ����յ�������AT��ACK��NAK���ĵ��׵�ַ
-                  ---BufferLen:ָ����յ�������AT��ACK��NAK���ĵĳ���
+ Input          : ---pIpcp:指向该报文所在的ipcp结构
+                  ---pEchoBuffer:指向接收到的来自AT的ACK或NAK报文的首地址
+                  ---BufferLen:指向接收到的来自AT的ACK或NAK报文的长度
  Output         : ---
- Return Value   : ---�ɹ�����VOS_OK�����򷵻�VOS_ERR
+ Return Value   : ---成功返回VOS_OK，否则返回VOS_ERR
  Calls          : ---
  Called By      : ---
 
@@ -1739,10 +1739,10 @@ VOS_VOID Ppp_ProcConfigInfoInd(VOS_UINT16 usPppId)
 {
     PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL,"Ppp_ProcConfigInfoInd begain\r\n");
 
-    /* ��ά�ɲ���Ϣ�ϱ�*/
+    /* 可维可测信息上报*/
     Ppp_EventMntnInfo(usPppId, PPP_CONFIG_INFO_PROC_NOTIFY);
 
-    /* PPP ID�Ƿ�*/
+    /* PPP ID非法*/
     if((usPppId < 1)
            ||(usPppId > PPP_MAX_ID_NUM))
     {
@@ -1750,7 +1750,7 @@ VOS_VOID Ppp_ProcConfigInfoInd(VOS_UINT16 usPppId)
     	return ;
     }
 
-	/*��ʱ���ر�*/
+	/*定时器关闭*/
 	if (VOS_NULL_PTR != (PPP_LINK(usPppId)->ipcp.hIpcpPendTimer))
 	{
 		PS_STOP_REL_TIMER(&(PPP_LINK(usPppId)->ipcp.hIpcpPendTimer));
@@ -1758,21 +1758,21 @@ VOS_VOID Ppp_ProcConfigInfoInd(VOS_UINT16 usPppId)
 	}
 
 
-	/*����������IPCP֡*/
+	/*处理待处理IPCP帧*/
 	if (VOS_NULL_PTR != (PPP_LINK(usPppId)->ipcp.pstIpcpPendFrame))
 	{
 		if (PHASE_NETWORK != PPP_LINK(usPppId)->phase )
 		{
-			/* �����ǰ����IPCP�׶���ֱ�Ӷ���������֡����*/
+			/* 如果当前不是IPCP阶段则直接丢弃待处理帧返回*/
 			ppp_m_freem(PPP_LINK(usPppId)->ipcp.pstIpcpPendFrame);
 		}
 		else
 		{
-			/* �����IPCP�׶�,��ֱ�Ӵ���*/
+			/* 如果是IPCP阶段,则直接处理*/
 			fsm_Input(&(PPP_LINK(usPppId)->ipcp.fsm), PPP_LINK(usPppId)->ipcp.pstIpcpPendFrame);
 		}
 
-		/*������IPCP֡�ÿ�*/
+		/*待处理IPCP帧置空*/
 		PPP_LINK(usPppId)->ipcp.pstIpcpPendFrame = VOS_NULL_PTR;
 	}
 
@@ -1796,7 +1796,7 @@ ipcp_Input(/*struct bundle *bundle, */struct link *l, PPP_ZC_STRU *pstMem)
 		return VOS_NULL_PTR;
 	}
 
-	/* �����ǰ������IPCP�׶���ֱ�Ӷ�������*/
+	/* 如果当前还不是IPCP阶段则直接丢弃返回*/
 	if (PHASE_NETWORK != l->phase )
 	{
 		if (l->phase < PHASE_NETWORK)
@@ -1808,20 +1808,20 @@ ipcp_Input(/*struct bundle *bundle, */struct link *l, PPP_ZC_STRU *pstMem)
 		ppp_m_freem(bp);
 		return VOS_NULL_PTR;
 	}
-	/*else if ( l->phase == PHASE_NETWORK) �����ǵ�ǰΪIPCP�׶εĴ���*/
+	/*else if ( l->phase == PHASE_NETWORK) 后续是当前为IPCP阶段的处理*/
 
 
-	/*�������IPCP Config Request��Ӧ����������*/
+	/*如果不是IPCP Config Request则应该立即处理*/
   	ppp_mbuf_View(bp, &ucCode, sizeof (ucCode));
 	if (ucCode != CODE_CONFIGREQ)
 	{
 		fsm_Input(&(l->ipcp.fsm), bp);
 		return VOS_NULL_PTR;
 	}
-	/*else if (ucCode == CODE_CONFIGREQ) ������IPCP Config Request�Ĵ���*/
+	/*else if (ucCode == CODE_CONFIGREQ) 后续是IPCP Config Request的处理*/
 
 
-	/*�ͷŴ�����֡,�յ��µ�IPCP Config Request֡,��˵���ϵ�֡�Ѿ�ʧЧ*/
+	/*释放待处理帧,收到新的IPCP Config Request帧,则说明老的帧已经失效*/
 	if (VOS_NULL_PTR  != l->ipcp.pstIpcpPendFrame)
 	{
 		ppp_m_freem(l->ipcp.pstIpcpPendFrame);
@@ -1829,26 +1829,26 @@ ipcp_Input(/*struct bundle *bundle, */struct link *l, PPP_ZC_STRU *pstMem)
 	}
 
 
-	/*�����Ѿ������δ��ʼ����,��ֱ�Ӵ���������*/
+	/*网侧已经激活或还未开始激活,则直接处理并返回*/
 	if ( IPCP_SUCCESS_FROM_GGSN == l->ipcp.stage
 		|| IPCP_NOT_RECEIVE_REQ  == l->ipcp.stage)
 	{
 		fsm_Input(&(l->ipcp.fsm), bp);
 		return VOS_NULL_PTR;
 	}
-	/*else if (l->ipcp.stage != IPCP_SUCCESS_FROM_GGSN) �����ǵ�ǰΪPDPδ����׶εĴ���*/
+	/*else if (l->ipcp.stage != IPCP_SUCCESS_FROM_GGSN) 后续是当前为PDP未激活阶段的处理*/
 
 
-	/*�����ڵȴ�����,����ʱ��,�������������*/
+	/*网侧在等待激活,则起定时器,并保存待处理包*/
 	if (VOS_NULL_PTR == l->ipcp.hIpcpPendTimer)
 	{
-		/*====================*/ /* ������ʱ�� */
+		/*====================*/ /* 启动定时器 */
         ulRtn = VOS_StartRelTimer(&(l->ipcp.hIpcpPendTimer),  PS_PID_APP_PPP,
 			PPP_IPCP_PENDING_TIMER_LEN,  PPP_LINK_TO_ID(l),  PHASE_PDP_ACT_PENDING,  VOS_RELTIMER_NOLOOP,VOS_TIMER_PRECISION_0);
 	}
 
 
-	/*��ʱ��ʧ��,����������*/
+	/*起定时器失败,则立即处理*/
 	if (VOS_OK != ulRtn)
 	{
 		fsm_Input(&(l->ipcp.fsm), bp);

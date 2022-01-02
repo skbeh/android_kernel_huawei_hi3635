@@ -53,15 +53,15 @@
 struct v7r2_gpio
 {/*lint --e{959, 958}*/
     struct gpio_chip gc[GPIO_MAX_BANK_NUM];
-    int irq[GPIO_MAX_BANK_NUM];/*Ã¿×éGPIO¶ÔÓ¦ÖĞ¶ÏºÅ*/
-    unsigned bank_reg_addr[GPIO_MAX_BANK_NUM];/*Ã¿×éGPIO»ùÖ·*/
+    int irq[GPIO_MAX_BANK_NUM];/*æ¯ç»„GPIOå¯¹åº”ä¸­æ–­å·*/
+    unsigned bank_reg_addr[GPIO_MAX_BANK_NUM];/*æ¯ç»„GPIOåŸºå€*/
 
     struct clk *gpio_clk[GPIO_MAX_BANK_NUM];
 
     unsigned int dir_reg;
     unsigned int out_value_reg;
     unsigned int in_value_reg;
-    unsigned int gpio_sys_lock;/*ºË¼äËø±£»¤¶ÁĞ´·½Ïò¡¢ÊıÖµ*/
+    unsigned int gpio_sys_lock;/*æ ¸é—´é”ä¿æŠ¤è¯»å†™æ–¹å‘ã€æ•°å€¼*/
 
     unsigned int inten_reg;
     unsigned int intmask_reg;
@@ -70,34 +70,34 @@ struct v7r2_gpio
     unsigned int intstate_reg;
     unsigned int intrawstate_reg;
     unsigned int intclear_reg;
-    spinlock_t gpio_lock;/*ºËÄÚËø±£»¤¶ÁĞ´·½Ïò¡¢ÊıÖµ*/
+    spinlock_t gpio_lock;/*æ ¸å†…é”ä¿æŠ¤è¯»å†™æ–¹å‘ã€æ•°å€¼*/
 
     #ifdef CONFIG_PM
     unsigned int suspended;
-    unsigned int reg_value[GPIO_DPM_BANK_NUM][GPIO_DPM_REG_NUM];/*µÍ¹¦ºÄÊ±£¬±£´æGPIOËùÓĞ¼Ä´æÆ÷ÊıÖµ*/
+    unsigned int reg_value[GPIO_DPM_BANK_NUM][GPIO_DPM_REG_NUM];/*ä½åŠŸè€—æ—¶ï¼Œä¿å­˜GPIOæ‰€æœ‰å¯„å­˜å™¨æ•°å€¼*/
     #endif
 };
 
 struct hi_platform_gpio{
-    int irq_start;/*GPIOµÚÒ»¸öÖĞ¶ÏºÅ*/
-    int irq_num;/*GPIOÖĞ¶ÏºÅÊıÄ¿*/
+    int irq_start;/*GPIOç¬¬ä¸€ä¸ªä¸­æ–­å·*/
+    int irq_num;/*GPIOä¸­æ–­å·æ•°ç›®*/
 
-    unsigned bank_reg_addr[GPIO_MAX_BANK_NUM];/*Ã¿×éGPIO»ùÖ·*/
-    unsigned int bank_addr_length;/*Ã¿×éGPIOµØÖ·¿Õ¼ä³¤¶È*/
+    unsigned bank_reg_addr[GPIO_MAX_BANK_NUM];/*æ¯ç»„GPIOåŸºå€*/
+    unsigned int bank_addr_length;/*æ¯ç»„GPIOåœ°å€ç©ºé—´é•¿åº¦*/
 
-    unsigned int gpio_sys_lock;/*ºË¼äËø±£»¤¶ÁĞ´·½Ïò¡¢ÊıÖµ*/
+    unsigned int gpio_sys_lock;/*æ ¸é—´é”ä¿æŠ¤è¯»å†™æ–¹å‘ã€æ•°å€¼*/
 
-    unsigned int dir_reg;/*·½Ïò¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    unsigned int out_value_reg;/*Êä³öÊı¾İ¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    unsigned int in_value_reg;/*ÊäÈëÊı¾İ¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
+    unsigned int dir_reg;/*æ–¹å‘å¯„å­˜å™¨åç§»åœ°å€*/
+    unsigned int out_value_reg;/*è¾“å‡ºæ•°æ®å¯„å­˜å™¨åç§»åœ°å€*/
+    unsigned int in_value_reg;/*è¾“å…¥æ•°æ®å¯„å­˜å™¨åç§»åœ°å€*/
 
-    unsigned int inten_reg;/*ÖĞ¶ÏÄ£Ê½¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    unsigned int intmask_reg;/*ÖĞ¶ÏÆÁ±Î¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    unsigned int inttype_reg;/*ÖĞ¶ÏÀàĞÍ¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    unsigned int intploarity_reg;/*ÖĞ¶Ï¼«ĞÔ¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    unsigned int intstate_reg;/*ÖĞ¶Ï×´Ì¬¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    unsigned int intrawstate_reg;/*Ô­Ê¼ÖĞ¶Ï×´Ì¬¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    unsigned int intclear_reg;/*ÇåÖĞ¶Ï¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
+    unsigned int inten_reg;/*ä¸­æ–­æ¨¡å¼å¯„å­˜å™¨åç§»åœ°å€*/
+    unsigned int intmask_reg;/*ä¸­æ–­å±è”½å¯„å­˜å™¨åç§»åœ°å€*/
+    unsigned int inttype_reg;/*ä¸­æ–­ç±»å‹å¯„å­˜å™¨åç§»åœ°å€*/
+    unsigned int intploarity_reg;/*ä¸­æ–­ææ€§å¯„å­˜å™¨åç§»åœ°å€*/
+    unsigned int intstate_reg;/*ä¸­æ–­çŠ¶æ€å¯„å­˜å™¨åç§»åœ°å€*/
+    unsigned int intrawstate_reg;/*åŸå§‹ä¸­æ–­çŠ¶æ€å¯„å­˜å™¨åç§»åœ°å€*/
+    unsigned int intclear_reg;/*æ¸…ä¸­æ–­å¯„å­˜å™¨åç§»åœ°å€*/
 };
 
 int gpio_reg_value_get(struct v7r2_gpio *gpio,unsigned int bank_num, unsigned int bank_pin)
@@ -148,7 +148,7 @@ void gpio_reg_value_set(struct v7r2_gpio *gpio,unsigned int bank_num, unsigned i
     spin_lock_irqsave(&gpio->gpio_lock, flags);
     bsp_ipc_spin_lock(gpio->gpio_sys_lock);
 
-    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->out_value_reg);/* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->out_value_reg);/* [false alarm]:å±è”½Fortifyé”™è¯¯ */
     if(!!value)
     {
         writel(gpio_value | ((unsigned int)0x1 << bank_pin), gpio->bank_reg_addr[bank_num] + gpio->out_value_reg);
@@ -196,7 +196,7 @@ void gpio_reg_direction_set(struct v7r2_gpio *gpio,unsigned int bank_num, unsign
 
     bsp_ipc_spin_lock(gpio->gpio_sys_lock);
 
-    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->dir_reg);/* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->dir_reg);/* [false alarm]:å±è”½Fortifyé”™è¯¯ */
     if(!!value)
     {
         writel(gpio_value | ((unsigned int)0x1 << bank_pin), gpio->bank_reg_addr[bank_num] + gpio->dir_reg);
@@ -312,7 +312,7 @@ void gpio_reg_int_mark_or_unmask(struct v7r2_gpio *gpio,unsigned int bank_num, u
     unsigned long flags = 0;
 
     spin_lock_irqsave(&gpio->gpio_lock, flags);
-    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->intmask_reg);/* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->intmask_reg);/* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 
     if(!!value)
     {
@@ -381,7 +381,7 @@ void gpio_reg_fun_set(struct v7r2_gpio *gpio,unsigned int bank_num, unsigned int
 
     spin_lock_irqsave(&gpio->gpio_lock, flags);
 
-    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->inten_reg);/* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->inten_reg);/* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 
     if(!!value)
     {
@@ -465,7 +465,7 @@ void gpio_reg_intclear_set(struct v7r2_gpio *gpio,unsigned int bank_num, unsigne
     unsigned long flags = 0;
     spin_lock_irqsave(&gpio->gpio_lock, flags);
 
-    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->intclear_reg);/* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->intclear_reg);/* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 
     writel(gpio_value | ((unsigned int)0x1 << bank_pin), gpio->bank_reg_addr[bank_num] + gpio->intclear_reg);
 
@@ -543,7 +543,7 @@ void gpio_reg_int_type_set(struct v7r2_gpio *gpio,unsigned int bank_num, unsigne
 
     spin_lock_irqsave(&gpio->gpio_lock, flags);
 
-    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->inttype_reg);/* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->inttype_reg);/* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 
     if(!!value)
     {
@@ -564,7 +564,7 @@ void gpio_reg_int_trigger_set(struct v7r2_gpio *gpio,unsigned int bank_num, unsi
     unsigned long flags = 0;
     spin_lock_irqsave(&gpio->gpio_lock, flags);
 
-    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->intploarity_reg);/* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    gpio_value = readl(gpio->bank_reg_addr[bank_num] + gpio->intploarity_reg);/* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 
     if(!!value)
     {
@@ -638,7 +638,7 @@ void gpio_int_trigger_set(unsigned gpio, int trigger_type)
 EXPORT_SYMBOL_GPL(gpio_int_trigger_set);
 
 
-/*GPIOÇı¶¯Ì½²âº¯Êı*/
+/*GPIOé©±åŠ¨æ¢æµ‹å‡½æ•°*/
 static int __devinit hi_gpio_probe(struct platform_device *pdev)
 {
     int i = 0;
@@ -655,48 +655,48 @@ static int __devinit hi_gpio_probe(struct platform_device *pdev)
 
     gpio_print_info( " gpio init in acore.\n");
 
-    pdata = pdev->dev.platform_data; /*»ñÈ¡gpioÆ½Ì¨Êı¾İ*/
+    pdata = pdev->dev.platform_data; /*è·å–gpioå¹³å°æ•°æ®*/
     if(NULL == pdata){
         dev_err(&pdev->dev,"no platform data.\n");
         return -EINVAL;
     }
 
-    gpio = kzalloc(sizeof(*gpio),GFP_KERNEL);/*Îªv7r2_gpioÉêÇëÄÚºËÄÚ´æ*/
+    gpio = kzalloc(sizeof(*gpio),GFP_KERNEL);/*ä¸ºv7r2_gpioç”³è¯·å†…æ ¸å†…å­˜*/
     if(!gpio) {
         dev_err(&pdev->dev,"no memory for state.\n");
         return -ENOMEM;
     }
 
-    gpio->gpio_sys_lock = pdata->gpio_sys_lock;/*»ñÈ¡ºË¼äËø*/
+    gpio->gpio_sys_lock = pdata->gpio_sys_lock;/*è·å–æ ¸é—´é”*/
 
-    gpio->dir_reg = pdata->dir_reg;/*»ñÈ¡·½Ïò¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    gpio->out_value_reg = pdata->out_value_reg;/*»ñÈ¡Êä³öÊı¾İ¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    gpio->in_value_reg = pdata->in_value_reg;/*»ñÈ¡ÊäÈëÊı¾İ¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
+    gpio->dir_reg = pdata->dir_reg;/*è·å–æ–¹å‘å¯„å­˜å™¨åç§»åœ°å€*/
+    gpio->out_value_reg = pdata->out_value_reg;/*è·å–è¾“å‡ºæ•°æ®å¯„å­˜å™¨åç§»åœ°å€*/
+    gpio->in_value_reg = pdata->in_value_reg;/*è·å–è¾“å…¥æ•°æ®å¯„å­˜å™¨åç§»åœ°å€*/
 
-    gpio->inten_reg = pdata->inten_reg;/*»ñÈ¡ÖĞ¶ÏÄ£Ê½¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    gpio->intmask_reg = pdata->intmask_reg;/*»ñÈ¡ÖĞ¶ÏÆÁ±Î¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    gpio->inttype_reg = pdata->inttype_reg;/*»ñÈ¡ÖĞ¶ÏÀàĞÍ¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    gpio->intploarity_reg = pdata->intploarity_reg;/*»ñÈ¡ÖĞ¶Ï¼«ĞÔ¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    gpio->intstate_reg = pdata->intstate_reg;/*»ñÈ¡ÖĞ¶Ï×´Ì¬¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    gpio->intrawstate_reg = pdata->intrawstate_reg;/*»ñÈ¡Ô­Ê¼ÖĞ¶Ï×´Ì¬¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
-    gpio->intclear_reg = pdata->intclear_reg;/*»ñÈ¡ÇåÖĞ¶Ï¼Ä´æÆ÷Æ«ÒÆµØÖ·*/
+    gpio->inten_reg = pdata->inten_reg;/*è·å–ä¸­æ–­æ¨¡å¼å¯„å­˜å™¨åç§»åœ°å€*/
+    gpio->intmask_reg = pdata->intmask_reg;/*è·å–ä¸­æ–­å±è”½å¯„å­˜å™¨åç§»åœ°å€*/
+    gpio->inttype_reg = pdata->inttype_reg;/*è·å–ä¸­æ–­ç±»å‹å¯„å­˜å™¨åç§»åœ°å€*/
+    gpio->intploarity_reg = pdata->intploarity_reg;/*è·å–ä¸­æ–­ææ€§å¯„å­˜å™¨åç§»åœ°å€*/
+    gpio->intstate_reg = pdata->intstate_reg;/*è·å–ä¸­æ–­çŠ¶æ€å¯„å­˜å™¨åç§»åœ°å€*/
+    gpio->intrawstate_reg = pdata->intrawstate_reg;/*è·å–åŸå§‹ä¸­æ–­çŠ¶æ€å¯„å­˜å™¨åç§»åœ°å€*/
+    gpio->intclear_reg = pdata->intclear_reg;/*è·å–æ¸…ä¸­æ–­å¯„å­˜å™¨åç§»åœ°å€*/
 
     spin_lock_init(&gpio->gpio_lock);
 
-    /*»ñÈ¡ÖĞ¶ÏºÅ*/
+    /*è·å–ä¸­æ–­å·*/
     for(i_irq = 0;i_irq < pdata->irq_num;i_irq++)
     {
         gpio->irq[i_irq] = pdata->irq_start+ i_irq;
     }
 
-    /*»ñÈ¡IO×ÊÔ´¶ÔÓ¦µÄĞéÄâµØÖ·*/
+    /*è·å–IOèµ„æºå¯¹åº”çš„è™šæ‹Ÿåœ°å€*/
     for(i_mem = 0;i_mem < GPIO_MAX_BANK_NUM;i_mem++)
     {
         bank_addr = pdata->bank_reg_addr[i_mem];
         gpio->bank_reg_addr[i_mem] = IO_ADDRESS(bank_addr);
     }
 
-    /*ÎªÃ¿×égpio chip¸³Öµ£¬²¢Ìí¼Óµ½ÄÚºËgpio_desc½á¹¹Ìå*/
+    /*ä¸ºæ¯ç»„gpio chipèµ‹å€¼ï¼Œå¹¶æ·»åŠ åˆ°å†…æ ¸gpio_descç»“æ„ä½“*/
     for(i_chip = 0; i_chip < GPIO_MAX_BANK_NUM; i_chip++)
     {
         gpio->gc[i_chip].dev = &pdev->dev;
@@ -723,7 +723,7 @@ static int __devinit hi_gpio_probe(struct platform_device *pdev)
         gpio_print_info( "gpiochip_add over.\n");
     }
 
-    /*´ò¿ªgpio1~3Ê±ÖÓ*/
+    /*æ‰“å¼€gpio1~3æ—¶é’Ÿ*/
     for(i = 1;i < GPIO_MAX_BANK_NUM;i++)
     {
         snprintf(clk_name, 20, "gpio%d_clk", i);
@@ -743,10 +743,10 @@ static int __devinit hi_gpio_probe(struct platform_device *pdev)
     }
 
 
-    /*½«v7r2_gpioÊı¾İ´æÈëÉè±¸drvdataÖĞ*/
+    /*å°†v7r2_gpioæ•°æ®å­˜å…¥è®¾å¤‡drvdataä¸­*/
     platform_set_drvdata(pdev, gpio);
 
-    /*Çå³ıÖĞ¶Ï£¬²¢ÆÁ±ÎÖĞ¶Ï*/
+    /*æ¸…é™¤ä¸­æ–­ï¼Œå¹¶å±è”½ä¸­æ–­*/
    for(i = 0; i < GPIO_MAX_BANK_NUM * GPIO_MAX_PINS; i++)
    {
         gpio_int_state_clear((unsigned int)i);
@@ -780,7 +780,7 @@ err_addchip:
 }
 
 
-/*ÒÆ³ıGPIOÉè±¸º¯Êı*/
+/*ç§»é™¤GPIOè®¾å¤‡å‡½æ•°*/
 static int __devexit hi_gpio_remove(struct platform_device *pdev)
 {
     struct  v7r2_gpio *gpio = platform_get_drvdata(pdev);
@@ -830,7 +830,7 @@ static const struct dev_pm_ops balong_gpio_dev_pm_ops ={
 
 #endif
 
-/*GPIOÇı¶¯Ä£ĞÍ*/
+/*GPIOé©±åŠ¨æ¨¡å‹*/
 static struct platform_driver hi_gpio_driver = {
     .probe           = hi_gpio_probe,
     .remove          = __devexit_p(hi_gpio_remove),
@@ -844,7 +844,7 @@ static struct platform_driver hi_gpio_driver = {
 };
 
 
-/*GPIOÉè±¸ÓµÓĞÆ½Ì¨Êı¾İ*/
+/*GPIOè®¾å¤‡æ‹¥æœ‰å¹³å°æ•°æ®*/
 static struct hi_platform_gpio gpio_config = {
     .irq_start = INT_LVL_APP_GPIO0,
     .irq_num = GPIO_IRQ_NUM,
@@ -871,7 +871,7 @@ static struct hi_platform_gpio gpio_config = {
     .intclear_reg = HI_GPIO_PORT_EOI_OFFSET,
 };
 
-/*GPIOÉè±¸Ä£ĞÍ*/
+/*GPIOè®¾å¤‡æ¨¡å‹*/
 static struct platform_device hi_gpio_device = {
     .name           = DRIVER_NAME,
     .id             = 1,

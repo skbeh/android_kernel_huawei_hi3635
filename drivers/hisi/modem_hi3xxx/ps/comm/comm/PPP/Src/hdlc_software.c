@@ -4,7 +4,7 @@
   Author       :
   Version      : V900R100
   Date         : 2012-4-16
-  Description  : Èí¼þ·½Ê½HDLCÊµÏÖ
+  Description  : è½¯ä»¶æ–¹å¼HDLCå®žçŽ°
   Function List:
         ---
         ---
@@ -16,7 +16,7 @@
 
 ******************************************************************************/
 /******************************************************************************
-   Í·ÎÄ¼þ°üº¬
+   å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "hdlc_software.h"
 
@@ -28,14 +28,14 @@
 
 
 /*****************************************************************************
-   1 Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+   1 åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e767 */
 #define    THIS_FILE_ID        PS_FILE_ID_HDLC_SOFTWARE_C
 /*lint +e767 */
 
 /******************************************************************************
-   2 Íâ²¿º¯Êý±äÁ¿ÉùÃ÷
+   2 å¤–éƒ¨å‡½æ•°å˜é‡å£°æ˜Ž
 ******************************************************************************/
 #if(FEATURE_ON == FEATURE_PPP)
 extern struct ppp_mbuf *
@@ -70,38 +70,38 @@ extern VOS_UINT32 PPP_SendPushedData(VOS_UINT16 usPppId, VOS_UINT8 *pucDataBuf, 
 
 
 /*****************************************************************************
-   3 Ë½ÓÐ¶¨Òå
+   3 ç§æœ‰å®šä¹‰
 *****************************************************************************/
 typedef struct
 {
-    VOS_UINT32                  ulUplinkIpDataProcCnt;             /* ÉÏÐÐIPÊý¾Ý°ü´¦Àí¸öÊý */
-    VOS_UINT32                  ulUplinkPppDataProcCnt;            /* ÉÏÐÐ¼òµ¥PPPÖ¡´¦Àí¸öÊý */
+    VOS_UINT32                  ulUplinkIpDataProcCnt;             /* ä¸Šè¡ŒIPæ•°æ®åŒ…å¤„ç†ä¸ªæ•° */
+    VOS_UINT32                  ulUplinkPppDataProcCnt;            /* ä¸Šè¡Œç®€å•PPPå¸§å¤„ç†ä¸ªæ•° */
 
-    VOS_UINT32                  ulDownlinkIpDataProcCnt;           /* ÏÂÐÐIPÊý¾Ý°ü´¦Àí¸öÊý */
-    VOS_UINT32                  ulDownlinkPppDataProcCnt;          /* ÏÂÐÐ¼òµ¥PPPÖ¡´¦Àí¸öÊý */
+    VOS_UINT32                  ulDownlinkIpDataProcCnt;           /* ä¸‹è¡ŒIPæ•°æ®åŒ…å¤„ç†ä¸ªæ•° */
+    VOS_UINT32                  ulDownlinkPppDataProcCnt;          /* ä¸‹è¡Œç®€å•PPPå¸§å¤„ç†ä¸ªæ•° */
 
-    VOS_UINT32                  ulMaxCntOnce;                      /* PPPÒ»´Î×î¶à´¦ÀíµÄ½áµã¸öÊý */
+    VOS_UINT32                  ulMaxCntOnce;                      /* PPPä¸€æ¬¡æœ€å¤šå¤„ç†çš„ç»“ç‚¹ä¸ªæ•° */
 } PPP_HDLC_SOFT_DATA_PROC_STAT_ST;
 
 
 /*****************************************************************************
-   4 È«¾Ö±äÁ¿¶¨Òå
+   4 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 PPP_HDLC_SOFT_DATA_PROC_STAT_ST g_PppHdlcSoftStat = {0};
 
 
 /******************************************************************************
-   5 º¯ÊýÊµÏÖ
+   5 å‡½æ•°å®žçŽ°
 ******************************************************************************/
 VOS_VOID PPP_HDLC_SOFT_MntnShowStatInfo(VOS_VOID)
 {
     vos_printf("\n================HDLC Software STAT INFO Begin==========================\n");
 
-    vos_printf("´¦ÀíÉÏÐÐIPÀàÐÍÊý¾Ý¸öÊý    = %d\n", g_PppHdlcSoftStat.ulUplinkIpDataProcCnt);
-    vos_printf("´¦ÀíÉÏÐÐPPPÀàÐÍÊý¾Ý¸öÊý   = %d\n", g_PppHdlcSoftStat.ulUplinkPppDataProcCnt);
-    vos_printf("´¦ÀíÏÂÐÐIPÀàÐÍÊý¾Ý¸öÊý    = %d\n", g_PppHdlcSoftStat.ulDownlinkIpDataProcCnt);
-    vos_printf("´¦ÀíÏÂÐÐPPPÀàÐÍÊý¾Ý¸öÊý   = %d\n", g_PppHdlcSoftStat.ulDownlinkPppDataProcCnt);
-    vos_printf("µ¥´Î´¦ÀíÊý¾Ý×î´ó¸öÊý   = %d\n", g_PppHdlcSoftStat.ulMaxCntOnce);
+    vos_printf("å¤„ç†ä¸Šè¡ŒIPç±»åž‹æ•°æ®ä¸ªæ•°    = %d\n", g_PppHdlcSoftStat.ulUplinkIpDataProcCnt);
+    vos_printf("å¤„ç†ä¸Šè¡ŒPPPç±»åž‹æ•°æ®ä¸ªæ•°   = %d\n", g_PppHdlcSoftStat.ulUplinkPppDataProcCnt);
+    vos_printf("å¤„ç†ä¸‹è¡ŒIPç±»åž‹æ•°æ®ä¸ªæ•°    = %d\n", g_PppHdlcSoftStat.ulDownlinkIpDataProcCnt);
+    vos_printf("å¤„ç†ä¸‹è¡ŒPPPç±»åž‹æ•°æ®ä¸ªæ•°   = %d\n", g_PppHdlcSoftStat.ulDownlinkPppDataProcCnt);
+    vos_printf("å•æ¬¡å¤„ç†æ•°æ®æœ€å¤§ä¸ªæ•°   = %d\n", g_PppHdlcSoftStat.ulMaxCntOnce);
 
     vos_printf("================HDLC Software STAT INFO End==========================\n");
 }
@@ -139,8 +139,8 @@ void link_PushTtfMemPacket(struct link *l, PPP_ZC_STRU *bp, VOS_INT32 pri, VOS_U
         aucPppDataHdr[usHdrLen++] = HDLC_UI;
     }
 
-    /* Èç¹ûÍ·²¿Ð­ÒéÑ¹ËõÖ§³ÖÑ¹Ëõ */
-    /*Èç¹û¿ÉÒÔÑ¹ËõÐ­Òé×Ö¶Î£¬Ö»ÐèÒ»¸ö×Ö½Ú*/
+    /* å¦‚æžœå¤´éƒ¨åè®®åŽ‹ç¼©æ”¯æŒåŽ‹ç¼© */
+    /*å¦‚æžœå¯ä»¥åŽ‹ç¼©åè®®å­—æ®µï¼Œåªéœ€ä¸€ä¸ªå­—èŠ‚*/
     if ( (l->lcp.his_protocomp) && (((VOS_UINT8)(proto >> 8)) == 0))
     {
         aucPppDataHdr[usHdrLen++]   = proto & 0xff;
@@ -177,7 +177,7 @@ void link_PullMemPacket(struct link *l, PPP_ZC_STRU *pstMem)
             pucData     = PPP_ZC_GET_DATA_PTR(pstMem);
             pLastMem    = async_Decode(&l->async, (VOS_CHAR)(pucData[ulCnt]));
 
-            /* ÕÒµ½Ò»¸öÍêÕûµÄPPPÖ¡£¬½øÐÐHDLC->ACF->Protocol¸÷²ã´¦Àí£¬È»ºó·Ö·¢ */
+            /* æ‰¾åˆ°ä¸€ä¸ªå®Œæ•´çš„PPPå¸§ï¼Œè¿›è¡ŒHDLC->ACF->Protocolå„å±‚å¤„ç†ï¼Œç„¶åŽåˆ†å‘ */
             if (VOS_NULL_PTR != pLastMem)
             {
                 pLastMem    = hdlc_LayerPull(l, pLastMem, &usProto);
@@ -194,8 +194,8 @@ void link_PullMemPacket(struct link *l, PPP_ZC_STRU *pstMem)
 
                 if (VOS_NULL_PTR != pLastMem)
                 {
-                    /* Áã¿½±´½á¹¹Êý¾ÝÖ¸Õë×ö¹ýÆ«ÒÆ£¬ÏòÉÏÐÐ·½ÏòÐèÒª·¢ËÍÊ±ÐèÒªÖØÐÂÉêÇë£¬
-                       ²¢ÇÒÔ¤ÁôMACÍ·£¬±£³ÖÓëNDISÒ»ÖÂ */
+                    /* é›¶æ‹·è´ç»“æž„æ•°æ®æŒ‡é’ˆåšè¿‡åç§»ï¼Œå‘ä¸Šè¡Œæ–¹å‘éœ€è¦å‘é€æ—¶éœ€è¦é‡æ–°ç”³è¯·ï¼Œ
+                       å¹¶ä¸”é¢„ç•™MACå¤´ï¼Œä¿æŒä¸ŽNDISä¸€è‡´ */
 
                     pTmpMem = pLastMem;
 
@@ -222,11 +222,11 @@ void link_PullMemPacket(struct link *l, PPP_ZC_STRU *pstMem)
 #if (PPP_FEATURE == PPP_FEATURE_PPP)
 /*****************************************************************************
  Prototype      : Ppp_FrameEncap
- Description    : ¶ÔÓÚPPPÀàÐÍµÄ¼¤»î£¬¶ÔÓÚ´ÓÍø²à·¢ËÍÀ´µÄ¼òµ¥µÄPPP±¨ÎÄ£¬¶ÔÆä
-                  ½øÐÐ·â×°È»ºó·¢ËÍµ½TE²à¡£
+ Description    : å¯¹äºŽPPPç±»åž‹çš„æ¿€æ´»ï¼Œå¯¹äºŽä»Žç½‘ä¾§å‘é€æ¥çš„ç®€å•çš„PPPæŠ¥æ–‡ï¼Œå¯¹å…¶
+                  è¿›è¡Œå°è£…ç„¶åŽå‘é€åˆ°TEä¾§ã€‚
 
  Input          : ---
- Output         : ---·µ»Ø¿Õ
+ Output         : ---è¿”å›žç©º
  Return Value   : ---
  Calls          : ---
  Called By      : ---
@@ -243,7 +243,7 @@ VOS_UINT32 Ppp_FrameEncap(PPP_ID PppId, PPP_ZC_STRU *pstData)
     VOS_UINT32          ulRtn;
 
 
-    /* ÏÈ»ñÈ¡Ð­Òé×Ö¶Î£¬1¸ö»ò2¸ö×Ö½Ú */
+    /* å…ˆèŽ·å–åè®®å­—æ®µï¼Œ1ä¸ªæˆ–2ä¸ªå­—èŠ‚ */
     ulRtn   = PPP_MemCutHeadData(&pstData, &aucProto[0], 1);
 
     if (PS_FAIL == ulRtn)
@@ -252,7 +252,7 @@ VOS_UINT32 Ppp_FrameEncap(PPP_ID PppId, PPP_ZC_STRU *pstData)
         return VOS_ERR;
     }
 
-    if ( 0x01 == (aucProto[0] & 0x01) )     /* µÚÒ»¸ö×Ö½ÚLSBÎª1£¬ËµÃ÷Ð­Òé×Ö¶Î¾­¹ýÁËÑ¹Ëõ£¬Ö»ÓÐÒ»¸ö×Ö½Ú */
+    if ( 0x01 == (aucProto[0] & 0x01) )     /* ç¬¬ä¸€ä¸ªå­—èŠ‚LSBä¸º1ï¼Œè¯´æ˜Žåè®®å­—æ®µç»è¿‡äº†åŽ‹ç¼©ï¼Œåªæœ‰ä¸€ä¸ªå­—èŠ‚ */
     {
         proto = ((VOS_UINT16)(aucProto[0]));
         PPP_LINK(PppId)->lcp.his_protocomp  = 1;
@@ -277,7 +277,7 @@ VOS_UINT32 Ppp_FrameEncap(PPP_ID PppId, PPP_ZC_STRU *pstData)
     }
 
 
-    /* ÌÞ³ýÐ­Òé×Ö¶Îºó£¬±¨ÎÄ¾ÍºÍÆÕÍ¨µÄIP±¨ÎÄÀàËÆÁË£¬¿ÉÒÔÍ³Ò»´¦Àí */
+    /* å‰”é™¤åè®®å­—æ®µåŽï¼ŒæŠ¥æ–‡å°±å’Œæ™®é€šçš„IPæŠ¥æ–‡ç±»ä¼¼äº†ï¼Œå¯ä»¥ç»Ÿä¸€å¤„ç† */
     link_PushTtfMemPacket(PPP_LINK(PppId), pstData, 0, proto);
 
     return VOS_OK;
@@ -287,13 +287,13 @@ VOS_UINT32 Ppp_FrameEncap(PPP_ID PppId, PPP_ZC_STRU *pstData)
 
 /*****************************************************************************
  Prototype      : Ppp_FrameDecap
- Description    : ¶ÔÓÚPPPÀàÐÍµÄ¼¤»î£¬¶ÔÓÚ´ÓTE·¢ËÍÀ´µÄ¸´ÔÓµÄPPP±¨ÎÄ£¬¶Ô
-                  Æä½øÐÐ½â·â×°È»ºó·¢ËÍµ½Íø²à¡£
+ Description    : å¯¹äºŽPPPç±»åž‹çš„æ¿€æ´»ï¼Œå¯¹äºŽä»ŽTEå‘é€æ¥çš„å¤æ‚çš„PPPæŠ¥æ–‡ï¼Œå¯¹
+                  å…¶è¿›è¡Œè§£å°è£…ç„¶åŽå‘é€åˆ°ç½‘ä¾§ã€‚
 
  Input          : ---
  Output         :
- Return Value   : VOS_NULL                       //Ê§°Ü
-                  ppp_mbuf *bp                   //³É¹¦£¬·µ»ØÊý¾ÝÖ¸Õë
+ Return Value   : VOS_NULL                       //å¤±è´¥
+                  ppp_mbuf *bp                   //æˆåŠŸï¼Œè¿”å›žæ•°æ®æŒ‡é’ˆ
  Calls          : ---
  Called By      : ---
 
@@ -324,8 +324,8 @@ VOS_UINT32 Ppp_FrameDecap(PPP_ID PppId, PPP_ZC_STRU *pstMem)
 
             if (pLastMem != VOS_NULL_PTR)
             {
-                /* ÕÒµ½Ò»¸öÍêÕûµÄPPPÖ¡£¬½øÐÐHDLC->ACF¸÷²ã´¦Àí£¬
-                ÒòÎªPPPÀàÐÍPDP¼¤»î²»ÄÜÈ¥³ýÐ­ÒéÍ·£¬ËùÒÔ²»ÄÜ½øÐÐProtocolÐ­Òé²ã´¦Àí */
+                /* æ‰¾åˆ°ä¸€ä¸ªå®Œæ•´çš„PPPå¸§ï¼Œè¿›è¡ŒHDLC->ACFå„å±‚å¤„ç†ï¼Œ
+                å› ä¸ºPPPç±»åž‹PDPæ¿€æ´»ä¸èƒ½åŽ»é™¤åè®®å¤´ï¼Œæ‰€ä»¥ä¸èƒ½è¿›è¡ŒProtocolåè®®å±‚å¤„ç† */
                 pLastMem    = hdlc_LayerPull(l, pLastMem, &usProto);
 
                 if (VOS_NULL_PTR != pLastMem)
@@ -413,8 +413,8 @@ link_PullPacket(struct link *l, VOS_CHAR *buf, VOS_UINT32 len)
 
 /*****************************************************************************
  Prototype      : PPP_RcvPPPoEDataIndIPType
- Description    : ¶ÔÓÚIPÀàÐÍµÄ¼¤»î£¬¶ÔÓÚ´ÓGGSN·¢ËÍÀ´µÄIP±¨ÎÄ£¬¶Ô
-                  Æä½øÐÐ·â×°ºó·¢ËÍµ½PPPoE¼ÌÐø·â×°¡£
+ Description    : å¯¹äºŽIPç±»åž‹çš„æ¿€æ´»ï¼Œå¯¹äºŽä»ŽGGSNå‘é€æ¥çš„IPæŠ¥æ–‡ï¼Œå¯¹
+                  å…¶è¿›è¡Œå°è£…åŽå‘é€åˆ°PPPoEç»§ç»­å°è£…ã€‚
 
  Input          : ---
  Output         : ---
@@ -438,13 +438,13 @@ VOS_UINT32 PPP_RcvPPPoEDataIndIPType(PPP_ID PppId, VOS_UINT8 * pucData, VOS_UINT
         PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_WARNING, "no mbuf\r\n");
         return VOS_ERR;
     }
-    /*Ô¤ÁôÍ·²¿*/
+    /*é¢„ç•™å¤´éƒ¨*/
     bp->m_offset = PPP_RECIEVE_RESERVE_FOR_HEAD;
 
-    /*Í·²¿ÓëÎ²²¿¶¼Áô³öÀ´ÁË*/
+    /*å¤´éƒ¨ä¸Žå°¾éƒ¨éƒ½ç•™å‡ºæ¥äº†*/
     bp->m_len = usLen;
 
-    /*¿½±´Êý¾Ý*/
+    /*æ‹·è´æ•°æ®*/
     PS_MEM_CPY(PPP_MBUF_CTOP(bp), pucData, usLen);
     link_PushPacket(PPP_LINK(PppId),bp,0,PROTO_IP);
     return VOS_OK;
@@ -454,8 +454,8 @@ VOS_UINT32 PPP_RcvPPPoEDataIndIPType(PPP_ID PppId, VOS_UINT8 * pucData, VOS_UINT
 
 /*****************************************************************************
  Prototype      : PPP_RcvPPPoEDataReqIPType
- Description    : ¶ÔÓÚIPÀàÐÍµÄ¼¤»î£¬¶ÔÓÚ´ÓPPPoE·¢À´µÄ´ÓTEÀ´µÄ¼òµ¥µÄPPPÖ¡£¬½øÐÐ
-                  ´¦Àí ¡£
+ Description    : å¯¹äºŽIPç±»åž‹çš„æ¿€æ´»ï¼Œå¯¹äºŽä»ŽPPPoEå‘æ¥çš„ä»ŽTEæ¥çš„ç®€å•çš„PPPå¸§ï¼Œè¿›è¡Œ
+                  å¤„ç† ã€‚
 
  Input          : ---
  Output         : ---
@@ -491,13 +491,13 @@ PPP_HDLC_RESULT_TYPE_ENUM_UINT32 PPP_HDLC_SOFT_ProcData
     {
         pstMem  = (PPP_ZC_STRU *)PPP_ZC_DEQUEUE_HEAD(pstDataQ);
 
-        /* ¶ÓÁÐÎª¿ÕµÄÊ±ºò·µ»Ø¿ÕÖ¸Õë */
+        /* é˜Ÿåˆ—ä¸ºç©ºçš„æ—¶å€™è¿”å›žç©ºæŒ‡é’ˆ */
         if ( VOS_NULL_PTR == pstMem )
         {
             return PPP_HDLC_RESULT_COMM_FINISH;
         }
 
-        /*´¦Àí¸Ã½áµã(½áµãµÄÊÍ·Å¶¯×÷ÒÑ¾­ÔÚ¸÷´¦Àíº¯ÊýÄÚ²¿Íê³É£¬ÎÞÐèÔÙÊÍ·Å½áµã)*/
+        /*å¤„ç†è¯¥ç»“ç‚¹(ç»“ç‚¹çš„é‡Šæ”¾åŠ¨ä½œå·²ç»åœ¨å„å¤„ç†å‡½æ•°å†…éƒ¨å®Œæˆï¼Œæ— éœ€å†é‡Šæ”¾ç»“ç‚¹)*/
         ucDataType = (PPP_ZC_GET_DATA_APP(pstMem) & 0x00FF);
 
         switch ( ucDataType )
@@ -529,7 +529,7 @@ PPP_HDLC_RESULT_TYPE_ENUM_UINT32 PPP_HDLC_SOFT_ProcData
                 break;
         }
 
-        /*Í³¼Æ*/
+        /*ç»Ÿè®¡*/
         ulDealCnt++;
 
         if ( ulDealCnt > g_PppHdlcSoftStat.ulMaxCntOnce )
@@ -537,8 +537,8 @@ PPP_HDLC_RESULT_TYPE_ENUM_UINT32 PPP_HDLC_SOFT_ProcData
             g_PppHdlcSoftStat.ulMaxCntOnce = ulDealCnt;
         }
 
-        /*Èç¹ûÑ­»·´¦ÀíµÄ½áµã¸öÊý³¬³öÁË¶ÓÁÐÒ»´ÎÔÊÐí´¦Àí×î´ó½áµãÊý£¬
-          ÔòÍË³öÑ­»·²¢·¢ËÍPPP_DATA_PROC_NOTIFYÏûÏ¢*/
+        /*å¦‚æžœå¾ªçŽ¯å¤„ç†çš„ç»“ç‚¹ä¸ªæ•°è¶…å‡ºäº†é˜Ÿåˆ—ä¸€æ¬¡å…è®¸å¤„ç†æœ€å¤§ç»“ç‚¹æ•°ï¼Œ
+          åˆ™é€€å‡ºå¾ªçŽ¯å¹¶å‘é€PPP_DATA_PROC_NOTIFYæ¶ˆæ¯*/
         if ( ulDealCnt >= PPP_ONCE_DEAL_MAX_CNT )
         {
             return PPP_HDLC_RESULT_COMM_CONTINUE;

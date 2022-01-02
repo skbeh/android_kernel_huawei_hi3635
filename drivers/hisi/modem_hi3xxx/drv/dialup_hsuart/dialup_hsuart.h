@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 /**************************************************************************
-  Í·ÎÄ¼ş°üº¬                            
+  å¤´æ–‡ä»¶åŒ…å«                            
 **************************************************************************/
 #include <linux/semaphore.h>
 #include <mach/gpio.h>
@@ -38,7 +38,7 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 #define SWITCH_TIMER_LENGTH 	1000
 #define ADAPT_TIMER_LENGTH 		15000
@@ -67,18 +67,18 @@ extern "C" {
 #define UART_LCR_DLAB			0x80
 #define UART_TX_FIFO_RESET		0x04
 #define UART_RX_FIFO_RESET		0x02
-/* ÉèÖÃ½ÓÊÕFIFOË®Ïß */
-#define UART_DEF_RT_1CHAR     0x00 /* FIFO ÖĞÓĞ1 ¸ö×Ö·û*/
-#define UART_DEF_RT_2CHAR     0xc0 /* FIFO ²î2 ¸ö×Ö·û¾ÍÂú*/
-#define UART_DEF_RT_ONEFOUR   0x40 /* FIFO ËÄ·ÖÖ®Ò»Âú*/
-#define UART_DEF_RT_ONETWO    0x80 /* FIFO ¶ş·ÖÖ®Ò»Âú*/
+/* è®¾ç½®æ¥æ”¶FIFOæ°´çº¿ */
+#define UART_DEF_RT_1CHAR     0x00 /* FIFO ä¸­æœ‰1 ä¸ªå­—ç¬¦*/
+#define UART_DEF_RT_2CHAR     0xc0 /* FIFO å·®2 ä¸ªå­—ç¬¦å°±æ»¡*/
+#define UART_DEF_RT_ONEFOUR   0x40 /* FIFO å››åˆ†ä¹‹ä¸€æ»¡*/
+#define UART_DEF_RT_ONETWO    0x80 /* FIFO äºŒåˆ†ä¹‹ä¸€æ»¡*/
 
 typedef u32    	HSUART_TASK_ID;
 typedef int* 	HTIMER;
 /*****************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æšä¸¾å®šä¹‰
 *****************************************************************************/
-/* +++¼ì²â½×¶Î*/
+/* +++æ£€æµ‹é˜¶æ®µ*/
 typedef enum
 {
     NO_DETECT_STAGE,
@@ -89,7 +89,7 @@ typedef enum
 }detect_stage;
 
 
-/* UART TIMER ½á¹¹ */
+/* UART TIMER ç»“æ„ */
 typedef struct tagUART_TIMER
 {
     HTIMER id;
@@ -111,7 +111,7 @@ typedef enum tagUART_MEM_STATE
 }uart_mem_state;
 
 /*****************************************************************************
-  3 ½á¹¹Ìå¶¨Òå
+  3 ç»“æ„ä½“å®šä¹‰
 *****************************************************************************/
 typedef uint32_t  phys_addr;
 
@@ -182,7 +182,7 @@ typedef struct tagUART_FEATURE
     volatile BSP_BOOL ctsen;
 }hsuart_feature;
 
-/* UART ÄÚ´æĞÅÏ¢ */
+/* UART å†…å­˜ä¿¡æ¯ */
 typedef struct tagUART_MEM_NODE
 {
     struct list_head list_node;
@@ -193,24 +193,24 @@ typedef struct tagUART_MEM_NODE
     struct sk_buff *pSkb;
 }uart_mem_node;
 
-/* UARTÊı¾İ¶ÓÁĞ½á¹¹Ìå*/
+/* UARTæ•°æ®é˜Ÿåˆ—ç»“æ„ä½“*/
 typedef struct tagUART_TRANS_INFO_S
 {
     struct spinlock list_lock;
     struct list_head free_list;
     struct list_head done_list;
-    uart_mem_node *pmem_start;                   /* MemNodeÊı×éÊ×µØÖ· */
+    uart_mem_node *pmem_start;                   /* MemNodeæ•°ç»„é¦–åœ°å€ */
     uart_mem_node *pmem_end;
-    uart_mem_node *pcur_pos;                   /* µ±Ç°Ê¹ÓÃ½Úµã*/
+    uart_mem_node *pcur_pos;                   /* å½“å‰ä½¿ç”¨èŠ‚ç‚¹*/
     BSP_U32  node_size;
     BSP_U32  node_num;
     volatile BSP_U32  done_cnt;
 
     /* statistics section */
-    BSP_U32 total_bytes;                      /* ×Ü¼ÆÊı */
+    BSP_U32 total_bytes;                      /* æ€»è®¡æ•° */
 }hsuart_trans_info;
 
-/* dma ĞÅÏ¢½á¹¹Ìå*/
+/* dma ä¿¡æ¯ç»“æ„ä½“*/
 typedef struct tagUART_DMA_INFO_S
 {
     volatile BSP_BOOL rx_dma_done;
@@ -240,8 +240,8 @@ typedef struct tagHSUART_CTX_S
     volatile BSP_BOOL tx_running;
     volatile BSP_BOOL sleep_out;
     uart_transfer_mode transfer_mode;
-    hsuart_trans_info read_info;                     /* ¶ÁĞÅÏ¢*/
-    hsuart_trans_info write_info;                    /* Ğ´ĞÅÏ¢*/
+    hsuart_trans_info read_info;                     /* è¯»ä¿¡æ¯*/
+    hsuart_trans_info write_info;                    /* å†™ä¿¡æ¯*/
     hsuart_feature feature;
     hsuart_dma_info dma_info;
     hsuart_udi_cbs cbs;

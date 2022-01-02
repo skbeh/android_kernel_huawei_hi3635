@@ -49,12 +49,12 @@
 #include "bsp_pmu.h"
 /*lint -restore */
 
-/*gpio1´¦ÓÚµôµçÓò£¬²»´ø°´¼ü»½ĞÑ*/
+/*gpio1å¤„äºæ‰ç”µåŸŸï¼Œä¸å¸¦æŒ‰é”®å”¤é†’*/
 #define WIFI_KEY_GPIO     (GPIO_1_0)
 #define MENU_KEY_GPIO     (GPIO_0_16)
 #define RESET_KEY_GPIO    (GPIO_0_18)
 
-/*ÑÓÊ±ËøÎª100ms*/
+/*å»¶æ—¶é”ä¸º100ms*/
 #define WAKE_LOCK_TIME    (100)
 
 #define  key_print_error(fmt, ...)    (bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_KEY, "[key]: <%s> <%d> "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__))
@@ -94,7 +94,7 @@ struct v7r2_gpio_key {
 
 /******************************************************************************
 *  Function:  key_int_disable
-*  Description: ¼Ù¿ª»ú»ò¼Ù¹Ø»úÊ±È¥Ê¹ÄÜmenu¼üºÍReset¼üµÄgpioÖĞ¶Ï
+*  Description: å‡å¼€æœºæˆ–å‡å…³æœºæ—¶å»ä½¿èƒ½menué”®å’ŒReseté”®çš„gpioä¸­æ–­
 *  Called by:   
 *  Input: item  :
 *  Output:None
@@ -123,7 +123,7 @@ void key_int_disable(KEY_ENUM key)
 
 /******************************************************************************
 *  Function:  key_int_enable
-*  Description: ¼Ù¿ª»ú»ò¼Ù¹Ø»úÊ±Ê¹ÄÜmenu¼üºÍReset¼üµÄgpioÖĞ¶Ï
+*  Description: å‡å¼€æœºæˆ–å‡å…³æœºæ—¶ä½¿èƒ½menué”®å’ŒReseté”®çš„gpioä¸­æ–­
 *  Called by:   
 *  Input: item  :
 *  Output:None
@@ -249,7 +249,7 @@ static irqreturn_t gpio_keys_gpio_isr(int irq, void *dev_id)
 
 	if (bdata->timer_debounce && bdata->key_pressed)
     {
-		mod_timer(&bdata->timer, jiffies + msecs_to_jiffies(bdata->timer_debounce));/*¿¼ÂÇfiffiesÊÇ·ñ»áÒç³ö*/
+		mod_timer(&bdata->timer, jiffies + msecs_to_jiffies(bdata->timer_debounce));/*è€ƒè™‘fiffiesæ˜¯å¦ä¼šæº¢å‡º*/
     }
 
 	return IRQ_HANDLED;
@@ -292,16 +292,16 @@ static int __devinit gpio_keys_setup_key(struct platform_device *pdev,
     
     gpio_int_mask_set((unsigned)(button->gpio));
     
-	/*¸ù¾İgpioµçÆ½¸ßµÍÉèÖÃ´¥·¢·½Ê½£¬¸ßµçÆ½ÎªÌ§Æğ£¬µÍµçÆ½Îª°´ÏÂ*/
+	/*æ ¹æ®gpioç”µå¹³é«˜ä½è®¾ç½®è§¦å‘æ–¹å¼ï¼Œé«˜ç”µå¹³ä¸ºæŠ¬èµ·ï¼Œä½ç”µå¹³ä¸ºæŒ‰ä¸‹*/
 	if(gpio_get_value((unsigned)(button->gpio)))
     {
         bdata->key_pressed = 0;
-    	gpio_int_trigger_set((unsigned)(button->gpio), IRQ_TYPE_LEVEL_LOW); /* ÅĞ¶ÏÉèÖÃµÍµçÆ½´¥·¢*/
+    	gpio_int_trigger_set((unsigned)(button->gpio), IRQ_TYPE_LEVEL_LOW); /* åˆ¤æ–­è®¾ç½®ä½ç”µå¹³è§¦å‘*/
     }
     else
     {
         bdata->key_pressed = 1;
-     	gpio_int_trigger_set((unsigned)(button->gpio), IRQ_TYPE_LEVEL_HIGH); /* ÅĞ¶ÏÉèÖÃ¸ßµçÆ½´¥·¢*/
+     	gpio_int_trigger_set((unsigned)(button->gpio), IRQ_TYPE_LEVEL_HIGH); /* åˆ¤æ–­è®¾ç½®é«˜ç”µå¹³è§¦å‘*/
     }
 	
 	gpio_set_function((unsigned)(button->gpio), GPIO_INTERRUPT);
@@ -344,7 +344,7 @@ static int __devinit v7r2_gpio_key_probe(struct platform_device* pdev)
 		return err;
 	}
 
-    pdata = pdev->dev.platform_data; /*»ñÈ¡keyÆ½Ì¨Êı¾İ*/
+    pdata = pdev->dev.platform_data; /*è·å–keyå¹³å°æ•°æ®*/
 	if(NULL == pdata){
 		dev_err(&pdev->dev,"Failed to get no platform data!\n");
 		return -EINVAL;
@@ -352,7 +352,7 @@ static int __devinit v7r2_gpio_key_probe(struct platform_device* pdev)
 
 	gpio_key = kzalloc(sizeof(struct v7r2_gpio_key) +
 			(unsigned int)(pdata->nbuttons) * sizeof(struct gpio_button_data), GFP_KERNEL);
-	if (!gpio_key) {/*ÄÚ´æÉêÇëµÄ´óĞ¡´òÓ¡*/
+	if (!gpio_key) {/*å†…å­˜ç”³è¯·çš„å¤§å°æ‰“å°*/
 		dev_err(&pdev->dev, "Failed to allocate struct v7r2_gpio_key!\n");
 		err = -ENOMEM;
 		return err;
@@ -409,7 +409,7 @@ static int __devinit v7r2_gpio_key_probe(struct platform_device* pdev)
 			gpio_keys_gpio_report_event(bdata);
 	}
 
-    /*¹ÒÔØPMUÖĞ¶Ï´¦Àíº¯Êı*/
+    /*æŒ‚è½½PMUä¸­æ–­å¤„ç†å‡½æ•°*/
     if(0 != bsp_pmu_irq_callback_register(PMU_INT_POWER_KEY_20MS_PRESS, report_power_key_down, gpio_key))
     {
 		dev_err(&pdev->dev, "Failed to register pmu down irq!\n");
@@ -422,7 +422,7 @@ static int __devinit v7r2_gpio_key_probe(struct platform_device* pdev)
 		goto err_register_device;
     }
     
-    /*power¼ü³õÊ¼×´Ì¬ÉÏ±¨InputÊÂ¼ş*/
+    /*poweré”®åˆå§‹çŠ¶æ€ä¸ŠæŠ¥Inputäº‹ä»¶*/
     if(bsp_pmu_key_state_get())
     {
         report_power_key_down(gpio_key);
@@ -584,7 +584,7 @@ static struct gpio_keys_button gpio_keys_buttons[] = {
 	 		.debounce_interval	= 20,
 		},
 
-/*udpµ¥°åwifi°´¼ü*/
+/*udpå•æ¿wifiæŒ‰é”®*/
 #if 0
 		{
 			.code			= KEY_WLAN,

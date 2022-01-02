@@ -10,7 +10,7 @@
  */
 
 /*******************************************************************/
-/*                                              Í·ÎÄ¼ş                                              */
+/*                                              å¤´æ–‡ä»¶                                              */
 /*******************************************************************/
 #include <linux/module.h>
 #include <linux/poll.h>
@@ -43,13 +43,13 @@ extern "C" {
 int send_cmd_ccore(char* func_name, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
 int cshell_get_bit(int num_from_zero);
 /*******************************************************************************/
-/*                                                       ±äÁ¿¶¨Òå              */
+/*                                                       å˜é‡å®šä¹‰              */
 /*******************************************************************************/
 cshell_ctx_t             g_cshell_ctx        = {0};
 struct cshell_debug_log  cshell_log          = {0};
 
 /*******************************************************************************/
-/*                                                       º¯Êı¶¨Òå              */
+/*                                                       å‡½æ•°å®šä¹‰              */
 /*******************************************************************************/
 /*lint --e{119, 527, 629, 716} */
 
@@ -221,15 +221,15 @@ int cshell_mode_reset_cb(DRV_RESET_CALLCBFUN_MOMENT eparam, int usrdata)
 	return ret;
 }
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_icc_uninit
+* å‡½ æ•° å      : cshell_icc_uninit
 *
-* ¹¦ÄÜÃèÊö  : cshell iccÍ¨µÀÈ¥³õÊ¼»¯½Ó¿Ú
+* åŠŸèƒ½æè¿°  : cshell iccé€šé“å»åˆå§‹åŒ–æ¥å£
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : ÎŞ
+* è¿” å› å€¼      : æ— 
 *
 *******************************************************************************/
 static void cshell_icc_uninit(void)
@@ -276,15 +276,15 @@ static void cshell_icc_uninit(void)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_icc_init
+* å‡½ æ•° å      : cshell_icc_init
 *
-* ¹¦ÄÜÃèÊö  : cshell iccÍ¨µÀ³õÊ¼»¯½Ó¿Ú
+* åŠŸèƒ½æè¿°  : cshell iccé€šé“åˆå§‹åŒ–æ¥å£
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : CSHELL_ERROR-³õÊ¼»¯Ê§°Ü£¬BSP_OK-³õÊ¼»¯³É¹¦
+* è¿” å› å€¼      : CSHELL_ERROR-åˆå§‹åŒ–å¤±è´¥ï¼ŒBSP_OK-åˆå§‹åŒ–æˆåŠŸ
 *
 *******************************************************************************/
 static int cshell_icc_init(void)
@@ -297,7 +297,7 @@ static int cshell_icc_init(void)
 
     for (i = 0; i < CSHELL_SEND_BUFFER_NUM; i++)
     {
-        /* ³õÊ¼»¯Send Buffer */
+        /* åˆå§‹åŒ–Send Buffer */
         cshell_ctx->send_mem[i].buf_size  = 0;
         cshell_ctx->send_mem[i].buf_valid = 1;
         cshell_ctx->send_mem[i].index     = (u32)i;
@@ -323,7 +323,7 @@ static int cshell_icc_init(void)
 
     cshell_ctx->cshell_send_index = 0;
 
-    /* ³õÊ¼»¯Recv Buffer */
+    /* åˆå§‹åŒ–Recv Buffer */
     cshell_ctx->recv_mem.buf_size  = 0;
     cshell_ctx->recv_mem.buf_valid = 1;
     cshell_ctx->recv_mem.index     = 0;
@@ -360,15 +360,15 @@ error:
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_uninit
+* å‡½ æ•° å      : cshell_uninit
 *
-* ¹¦ÄÜÃèÊö  : cshellÈ¥³õÊ¼»¯½Ó¿Ú
+* åŠŸèƒ½æè¿°  : cshellå»åˆå§‹åŒ–æ¥å£
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : ÎŞ
+* è¿” å› å€¼      : æ— 
 *
 *******************************************************************************/
 static void cshell_uninit(void)
@@ -403,15 +403,15 @@ static void cshell_uninit(void)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_recv_thread
+* å‡½ æ•° å      : cshell_recv_thread
 *
-* ¹¦ÄÜÃèÊö  : ½ÓÊÕ´ÓUSB·¢¶¯¹ıÀ´µÄÊı¾İ£¬²¢´Ó AºËÖÁCºË·¢ËÍÏß³Ì
+* åŠŸèƒ½æè¿°  : æ¥æ”¶ä»USBå‘åŠ¨è¿‡æ¥çš„æ•°æ®ï¼Œå¹¶ä» Aæ ¸è‡³Cæ ¸å‘é€çº¿ç¨‹
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : ÎŞ
+* è¿” å› å€¼      : æ— 
 *
 *******************************************************************************/
 /*lint --e{713}*/
@@ -439,11 +439,11 @@ static int cshell_recv_thread(void *arg)
 
         if(0 == bsp_acm_ioctl(cshell_ctx->cshell_acm_fd, (u32)ACM_IOCTL_GET_RD_BUFF, &acm_wt_info))
         {
-            /* »ñÈ¡Ê£Óàbuffer³¤¶È */
+            /* è·å–å‰©ä½™bufferé•¿åº¦ */
             free_buf_size = CSHELL_BUFFER_SIZE - cshell_ctx->recv_mem.buf_size;
-            /* »ñÈ¡¿ÉĞ´ÈëbufferµÄÊı¾İ³¤¶È£¬¶àÓà²¿·Ö¶ªÆú */
+            /* è·å–å¯å†™å…¥bufferçš„æ•°æ®é•¿åº¦ï¼Œå¤šä½™éƒ¨åˆ†ä¸¢å¼ƒ */
             write_size = (free_buf_size < (u32)acm_wt_info.u32Size) ? free_buf_size : acm_wt_info.u32Size;
-            /* ½«Êı¾İ¿½±´ÖÁ»º³åbuffer²¢¸üĞÂbuffer³¤¶È */
+            /* å°†æ•°æ®æ‹·è´è‡³ç¼“å†²bufferå¹¶æ›´æ–°bufferé•¿åº¦ */
             #ifdef FEATURE_USB_ZERO_COPY
             memcpy(cshell_ctx->recv_mem.buf + cshell_ctx->recv_mem.buf_size, acm_wt_info.pVirAddr, write_size);
             #else
@@ -570,15 +570,15 @@ void print_to_auart(cshell_mem_handle_t* cshell_send_mem)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_send_thread
+* å‡½ æ•° å      : cshell_send_thread
 *
-* ¹¦ÄÜÃèÊö  : cshell AºËÖÁPCºË·¢ËÍÏß³Ì
+* åŠŸèƒ½æè¿°  : cshell Aæ ¸è‡³PCæ ¸å‘é€çº¿ç¨‹
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
 *******************************************************************************/
 int cshell_send_thread(void *arg)
@@ -594,12 +594,12 @@ int cshell_send_thread(void *arg)
     while (1)
     {
         osl_sem_down(&(cshell_ctx->cshell_send_sem));
-        /* ¶ÁbufferÖĞÓĞÊı¾İ»òÕß·¢ËÍbufferÖĞÓĞÊ£ÓàÊı¾İ */
+        /* è¯»bufferä¸­æœ‰æ•°æ®æˆ–è€…å‘é€bufferä¸­æœ‰å‰©ä½™æ•°æ® */
         while ((cshell_send_mem->buf_valid) && (cshell_send_mem->buf_size))
         {
             cshell_send_mem->buf_valid = 0;
 
-            /* Êı¾İ¸´ÖÆµ½USB´òÓ¡bufferÖĞ */
+            /* æ•°æ®å¤åˆ¶åˆ°USBæ‰“å°bufferä¸­ */
             if(cshell_get_bit(USB_CSHELL) && (cshell_ctx->cshell_acm_fd != 0))
             {
                 write_data_usb_buf(cshell_send_mem);
@@ -613,10 +613,10 @@ int cshell_send_thread(void *arg)
             ret = (int)cshell_send_mem->buf_size;
             if(ret >= 0)
             {
-                /* µ±Ç°´¦ÀíµÄbufferÎªÕıÔÚĞ´µÄbuffer£¬Ôò¿ªÊ¼Ê¹ÓÃÏÂÒ»¸öbuffer */
+                /* å½“å‰å¤„ç†çš„bufferä¸ºæ­£åœ¨å†™çš„bufferï¼Œåˆ™å¼€å§‹ä½¿ç”¨ä¸‹ä¸€ä¸ªbuffer */
                 if (cshell_ctx->cshell_send_index == cshell_send_mem->index)
                 {
-                    /* ¿¼ÂÇÔÚ´Ë¼ÓËø±£»¤ */
+                    /* è€ƒè™‘åœ¨æ­¤åŠ é”ä¿æŠ¤ */
                     cshell_ctx->cshell_send_index = cshell_send_mem->next->index;
                 }
                 cshell_send_mem->buf_size = 0;
@@ -632,15 +632,15 @@ int cshell_send_thread(void *arg)
     }
 }
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_shell_recv_cb
+* å‡½ æ•° å      : cshell_shell_recv_cb
 *
-* ¹¦ÄÜÃèÊö  : ĞéÄâshell¿Ú½ÓÊÕ»Øµ÷½Ó¿Ú£¬Í¨Öª·¢ËÍÏß³ÌÍùCºËĞ´Êı¾İ
+* åŠŸèƒ½æè¿°  : è™šæ‹Ÿshellå£æ¥æ”¶å›è°ƒæ¥å£ï¼Œé€šçŸ¥å‘é€çº¿ç¨‹å¾€Cæ ¸å†™æ•°æ®
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
 *******************************************************************************/
 void cshell_shell_recv_cb(void)
@@ -655,16 +655,16 @@ void cshell_shell_recv_cb(void)
 
 
 /*******************************************************************************
-* º¯ Êı Ãû  : cshell_buf_valid_check
+* å‡½ æ•° å  : cshell_buf_valid_check
 *
-* ¹¦ÄÜÃèÊö  : ¼ì²éÄÚ´æ¿éÊÇ·ñÕıÔÚÊ¹ÓÃÖĞ
+* åŠŸèƒ½æè¿°  : æ£€æŸ¥å†…å­˜å—æ˜¯å¦æ­£åœ¨ä½¿ç”¨ä¸­
 *
-* ÊäÈë²ÎÊı  : cshell_mem: ´ı¼ì²éµÄÄÚ´æ
-*             len:Êı¾İ´óĞ¡
+* è¾“å…¥å‚æ•°  : cshell_mem: å¾…æ£€æŸ¥çš„å†…å­˜
+*             len:æ•°æ®å¤§å°
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : 1-Î´Ê¹ÓÃ£¬0-ÒÑÊ¹ÓÃ
+* è¿” å› å€¼  : 1-æœªä½¿ç”¨ï¼Œ0-å·²ä½¿ç”¨
 *
 *******************************************************************************/
 u32 cshell_buf_valid_check(cshell_mem_handle_t *cshell_mem, u32 len)
@@ -687,17 +687,17 @@ u32 cshell_buf_valid_check(cshell_mem_handle_t *cshell_mem, u32 len)
 
 
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_event_cb
+* å‡½ æ•° å      : cshell_event_cb
 *
-* ¹¦ÄÜÃèÊö  : cshellÊÂ¼ş»Øµ÷£¬Ôİ²»´¦Àí
+* åŠŸèƒ½æè¿°  : cshelläº‹ä»¶å›è°ƒï¼Œæš‚ä¸å¤„ç†
 *
-* ÊäÈë²ÎÊı  : id        : iccÍ¨µÀ
-*                           event   :ÊÂ¼şÀàĞÍ
-*                           Param   :´«µİµÄ²ÎÊı
+* è¾“å…¥å‚æ•°  : id        : iccé€šé“
+*                           event   :äº‹ä»¶ç±»å‹
+*                           Param   :ä¼ é€’çš„å‚æ•°
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : 0
+* è¿” å› å€¼      : 0
 *
 *******************************************************************************/
 u32 cshell_event_cb(u32 id, u32 event, void *Param)
@@ -707,15 +707,15 @@ u32 cshell_event_cb(u32 id, u32 event, void *Param)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_write_cb
+* å‡½ æ•° å      : cshell_write_cb
 *
-* ¹¦ÄÜÃèÊö  : cshellĞ´»Øµ÷£¬ÓÃÓÚÍ¨ÖªĞ´Ïß³Ì¿ªÊ¼ÏòCºËĞ´Êı¾İ
+* åŠŸèƒ½æè¿°  : cshellå†™å›è°ƒï¼Œç”¨äºé€šçŸ¥å†™çº¿ç¨‹å¼€å§‹å‘Cæ ¸å†™æ•°æ®
 *
-* ÊäÈë²ÎÊı  : id: iccÍ¨µÀ
+* è¾“å…¥å‚æ•°  : id: iccé€šé“
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : 0
+* è¿” å› å€¼      : 0
 *
 *******************************************************************************/
 u32 cshell_write_cb(u32 id)
@@ -733,16 +733,16 @@ u32 cshell_write_cb(u32 id)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû      :   cshell_read_cb
+* å‡½ æ•° å      :   cshell_read_cb
 *
-* ¹¦ÄÜÃèÊö  :   cshell¶Á»Øµ÷£¬ÓÃÓÚ´ÓCºË¶ÁÈ¡Êı¾İ
+* åŠŸèƒ½æè¿°  :   cshellè¯»å›è°ƒï¼Œç”¨äºä»Cæ ¸è¯»å–æ•°æ®
 *
-* ÊäÈë²ÎÊı  :   id: iccÍ¨µÀ
-*                           len:Êı¾İ´óĞ¡
+* è¾“å…¥å‚æ•°  :   id: iccé€šé“
+*                           len:æ•°æ®å¤§å°
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : 1-¶ÁÊ§°Ü£¬0-¶Á³É¹¦
+* è¿” å› å€¼      : 1-è¯»å¤±è´¥ï¼Œ0-è¯»æˆåŠŸ
 *
 *******************************************************************************/
 static int cshell_read_cb(u32 channel_id , u32 len, void* context)
@@ -793,15 +793,15 @@ static int cshell_read_cb(u32 channel_id , u32 len, void* context)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_udi_open_cb
+* å‡½ æ•° å      : cshell_udi_open_cb
 *
-* ¹¦ÄÜÃèÊö  : USB²åÈëÍ¨Öª»Øµ÷
+* åŠŸèƒ½æè¿°  : USBæ’å…¥é€šçŸ¥å›è°ƒ
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : ÎŞ
+* è¿” å› å€¼      : æ— 
 *
 *******************************************************************************/
 void cshell_udi_open_cb(void)
@@ -813,7 +813,7 @@ void cshell_udi_open_cb(void)
 
     printk("A:cshell_udi_open_cb acm plugin: [0x%p]\n", cshell_ctx->cshell_acm_fd);
 
-    /* ×¢Òâ, cshell_acm_fd ÊÇÖ¸Õë, ²»ÊÇÕûĞÎ */
+    /* æ³¨æ„, cshell_acm_fd æ˜¯æŒ‡é’ˆ, ä¸æ˜¯æ•´å½¢ */
     if (cshell_ctx->cshell_acm_fd)
     {
         printk("A:cshell_udi_open_cb acm is already opened:[0x%p]\n", cshell_ctx->cshell_acm_fd);
@@ -851,15 +851,15 @@ void cshell_udi_open_cb(void)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû  : cshell_udi_close_cb
+* å‡½ æ•° å  : cshell_udi_close_cb
 *
-* ¹¦ÄÜÃèÊö  : USB°Î³öÍ¨Öª»Øµ÷
+* åŠŸèƒ½æè¿°  : USBæ‹”å‡ºé€šçŸ¥å›è°ƒ
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
 *******************************************************************************/
 void cshell_udi_close_cb(void)
@@ -870,7 +870,7 @@ void cshell_udi_close_cb(void)
 
     printk("A:cshell_udi_close_cb acm unplug: [0x%p]\n", cshell_ctx->cshell_acm_fd);
 
-    /* ×¢Òâ, cshell_acm_fd ÊÇÖ¸Õë, ²»ÊÇÕûĞÎ */
+    /* æ³¨æ„, cshell_acm_fd æ˜¯æŒ‡é’ˆ, ä¸æ˜¯æ•´å½¢ */
     if (cshell_ctx->cshell_acm_fd)
     {
         bsp_acm_ioctl(cshell_ctx->cshell_acm_fd, ACM_IOCTL_SET_READ_CB, NULL);
@@ -899,15 +899,15 @@ void cshell_udi_close_cb(void)
 
 
 /*******************************************************************************
-* º¯ Êı Ãû      : cshell_init
+* å‡½ æ•° å      : cshell_init
 *
-* ¹¦ÄÜÃèÊö  : cshell³õÊ¼»¯½Ó¿Ú
+* åŠŸèƒ½æè¿°  : cshellåˆå§‹åŒ–æ¥å£
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ      : CSHELL_ERROR-³õÊ¼»¯Ê§°Ü£¬CSHELL_OK-³õÊ¼»¯³É¹¦
+* è¿” å› å€¼      : CSHELL_ERROR-åˆå§‹åŒ–å¤±è´¥ï¼ŒCSHELL_OK-åˆå§‹åŒ–æˆåŠŸ
 *
 *******************************************************************************/
 int cshell_init(void)
@@ -976,7 +976,7 @@ int cshell_init(void)
 
     printk("A:cshell_init udi cb register\n");
 
-    /* ×¢²áUSB²åÈë»Øµ÷º¯Êı*/
+    /* æ³¨å†ŒUSBæ’å…¥å›è°ƒå‡½æ•°*/
     bsp_usb_register_enablecb(cshell_udi_open_cb);
     bsp_usb_register_disablecb(cshell_udi_close_cb);
 

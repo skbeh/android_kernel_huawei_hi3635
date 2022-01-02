@@ -207,7 +207,7 @@ ssize_t ddrc_init_write(struct file *filp, const char __user *ubuf, size_t cnt, 
     if (ddrc_freq == 0) {
         ddrc_freq = 50000;
     };
-    freq_interval = ddrc_freq/16;	//Êµ¼ÊÍ³¼ÆÖÜÆÚÎªperf_prd*16*tclk£¨TclkÎªDDRC×ÜÏßÊ±ÖÓÖÜÆÚ£©
+    freq_interval = ddrc_freq/16;	//å®é™…ç»Ÿè®¡å‘¨æœŸä¸ºperf_prd*16*tclkï¼ˆTclkä¸ºDDRCæ€»çº¿æ—¶é’Ÿå‘¨æœŸï¼‰
     freq_interval *= interval; 		//sft ddr 50M
     pr_info("%s:freq_interval:%d, interval: %dms, sta_id:%d sta_id_mask:%d\n", __func__,ddrc_freq, interval, sta_id, sta_id_mask);
     count = 0;

@@ -130,7 +130,7 @@ enum
     NV_ICC_REQ_SYS  = 64,
     NV_ICC_REQ_FLUSH= 65,
     NV_ICC_CNF      = 127,
-    NV_ICC_RESUME   = 0xFF  /*����ָ�DDR�е�nv����*/
+    NV_ICC_RESUME   = 0xFF  /*请求恢复DDR中的nv数据*/
 
 };
 
@@ -141,14 +141,14 @@ enum
 };
 
 
-/*˯�߻���״̬*/
+/*睡眠唤醒状态*/
 enum
 {
     NV_WAKEUP_STATE         =0,
     NV_SLEEP_STATE          =1
 };
 
-/*�������������״̬*/
+/*操作进行与空闲状态*/
 enum
 {
     NV_IDLE_STATE           =0,

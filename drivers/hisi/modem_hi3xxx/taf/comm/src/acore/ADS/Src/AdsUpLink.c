@@ -1,6 +1,6 @@
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "AdsUpLink.h"
 #include "AdsDebug.h"
@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e767*/
 #define    THIS_FILE_ID                 PS_FILE_ID_ADS_UPLINK_C
@@ -28,12 +28,12 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 
@@ -42,7 +42,7 @@ VOS_VOID ADS_UL_StartDsFlowStats(
     VOS_UINT8                           ucRabId
 )
 {
-    /* Èç¹ûÉÏÐÐ¶ÓÁÐ´æÔÚ, ÔòÆô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷ */
+    /* å¦‚æžœä¸Šè¡Œé˜Ÿåˆ—å­˜åœ¨, åˆ™å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨ */
     if (VOS_OK == ADS_UL_IsQueueExistent(ucInstance, ucRabId))
     {
         ADS_StartTimer(ACPU_PID_ADS_UL,
@@ -57,7 +57,7 @@ VOS_VOID ADS_UL_StopDsFlowStats(
     VOS_UINT8                           ucRabId
 )
 {
-    /* Èç¹ûËùÓÐÉÏÐÐ¶ÓÁÐÒÑ²»´æÔÚ£¬ÔòÍ£Ö¹Á÷Á¿Í³¼Æ¶¨Ê±Æ÷²¢Çå¿ÕÁ÷Á¿Í³¼ÆÐÅÏ¢ */
+    /* å¦‚æžœæ‰€æœ‰ä¸Šè¡Œé˜Ÿåˆ—å·²ä¸å­˜åœ¨ï¼Œåˆ™åœæ­¢æµé‡ç»Ÿè®¡å®šæ—¶å™¨å¹¶æ¸…ç©ºæµé‡ç»Ÿè®¡ä¿¡æ¯ */
     if (VOS_FALSE == ADS_UL_IsAnyQueueExist(ucInstance))
     {
         ADS_StopTimer(ACPU_PID_ADS_UL, ADS_GET_DSFLOW_TMR_ID(ucInstance), ADS_TIMER_STOP_CAUSE_USER);
@@ -71,7 +71,7 @@ VOS_VOID ADS_UL_StartRptStatsInfoTimer(
     VOS_UINT8                           ucRabId
 )
 {
-    /* Èç¹ûÉÏÐÐ¶ÓÁÐ´æÔÚ, ÔòÆô¶¯ÉÏ±¨Í³¼ÆÐÅÏ¢¶¨Ê±Æ÷ */
+    /* å¦‚æžœä¸Šè¡Œé˜Ÿåˆ—å­˜åœ¨, åˆ™å¯åŠ¨ä¸ŠæŠ¥ç»Ÿè®¡ä¿¡æ¯å®šæ—¶å™¨ */
     if (VOS_OK == ADS_UL_IsQueueExistent(ucInstance, ucRabId))
     {
         ADS_StartTimer(ACPU_PID_ADS_UL,
@@ -109,7 +109,7 @@ VOS_UINT32 ADS_UL_SendPacket(
     VOS_UINT8                           ucInstanceIndex;
     VOS_UINT8                           ucRealRabId;
 
-    /* ÅÐ¶ÏÊÇ·ñÎª¿ÕÊý¾Ý°ü */
+    /* åˆ¤æ–­æ˜¯å¦ä¸ºç©ºæ•°æ®åŒ… */
     if (VOS_NULL_PTR == pstData)
     {
         ADS_WARNING_LOG(ACPU_PID_ADS_UL, "ADS_UL_SendPacket: pstData is null!");
@@ -119,19 +119,19 @@ VOS_UINT32 ADS_UL_SendPacket(
     ucInstanceIndex = ADS_GET_MODEM_ID_FROM_EX_RAB_ID(ucRabId);
     ucRealRabId     = ADS_GET_RAB_ID_FROM_EX_RAB_ID(ucRabId);
 
-    /* Ôö¼ÓÉÏÐÐ½ÓÊÕÊý¾ÝÍ³¼Æ¸öÊý */
+    /* å¢žåŠ ä¸Šè¡ŒæŽ¥æ”¶æ•°æ®ç»Ÿè®¡ä¸ªæ•° */
     ADS_DBG_RECV_UL_PKT_NUM(ucInstanceIndex, 1);
 
-    /* Á÷Á¿Í³¼Æ */
+    /* æµé‡ç»Ÿè®¡ */
     ADS_ULFlowAdd(ucInstanceIndex, pstData->len);
 
-    /* ×·×ÙÉÏÐÐ½ÓÊÕÊý¾Ý */
+    /* è¿½è¸ªä¸Šè¡ŒæŽ¥æ”¶æ•°æ® */
     ADS_MNTN_TraceRcvUlData();
 
-    /* Í³¼ÆÉÏÐÐÖÜÆÚÐÔÊÕµ½µÄÊý¾Ý×Ö½ÚÊý£¬ÓÃÓÚÁ÷Á¿²éÑ¯ */
+    /* ç»Ÿè®¡ä¸Šè¡Œå‘¨æœŸæ€§æ”¶åˆ°çš„æ•°æ®å­—èŠ‚æ•°ï¼Œç”¨äºŽæµé‡æŸ¥è¯¢ */
     ADS_RECV_UL_PERIOD_PKT_NUM(ucInstanceIndex, pstData->len);
 
-    /* ½«pstData²åÈëµ½ucRabId¶ÔÓ¦µÄ»º´æ¶ÓÁÐÖÐ */
+    /* å°†pstDataæ’å…¥åˆ°ucRabIdå¯¹åº”çš„ç¼“å­˜é˜Ÿåˆ—ä¸­ */
     if (VOS_OK != ADS_UL_InsertQueue(ucInstanceIndex, pstData, ucRealRabId))
     {
         ADS_DBG_UL_ENQUE_FAIL_NUM(ucInstanceIndex, 1);
@@ -154,7 +154,7 @@ VOS_UINT32 ADS_UL_SendPacketEx(
     VOS_UINT8                           ucInstanceIndex;
     VOS_UINT8                           ucRealRabId;
 
-    /* ÅÐ¶ÏÊÇ·ñÎª¿ÕÊý¾Ý°ü */
+    /* åˆ¤æ–­æ˜¯å¦ä¸ºç©ºæ•°æ®åŒ… */
     if (VOS_NULL_PTR == pstData)
     {
         ADS_WARNING_LOG(ACPU_PID_ADS_UL, "ADS_UL_SendPacketEx: pstData is null!");
@@ -164,27 +164,27 @@ VOS_UINT32 ADS_UL_SendPacketEx(
     ucInstanceIndex = ADS_GET_MODEM_ID_FROM_EX_RAB_ID(ucRabId);
     ucRealRabId     = ADS_GET_RAB_ID_FROM_EX_RAB_ID(ucRabId);
 
-    /* ÅÐ¶ÏÊÇ·ñÒÑ¾­×¢²á¹ýÏÂÐÐ¹ýÂË»Øµ÷º¯Êý£¬Èô×¢²á¹ý£¬ÔòÐèÒª½øÐÐ¹ýÂËÐÅÏ¢µÄÌáÈ¡£¬·ñÔòÖ±½Ó·¢ËÍ±¨ÎÄ */
+    /* åˆ¤æ–­æ˜¯å¦å·²ç»æ³¨å†Œè¿‡ä¸‹è¡Œè¿‡æ»¤å›žè°ƒå‡½æ•°ï¼Œè‹¥æ³¨å†Œè¿‡ï¼Œåˆ™éœ€è¦è¿›è¡Œè¿‡æ»¤ä¿¡æ¯çš„æå–ï¼Œå¦åˆ™ç›´æŽ¥å‘é€æŠ¥æ–‡ */
     pstDlRabInfo = ADS_DL_GET_RAB_INFO_PTR(ucInstanceIndex, ucRealRabId);
     if (VOS_NULL_PTR != pstDlRabInfo->pRcvDlFilterDataFunc)
     {
-        /* µ÷ÓÃ¹ýÂËÉÏÐÐÊý¾Ý°ü´¦Àíº¯Êý */
+        /* è°ƒç”¨è¿‡æ»¤ä¸Šè¡Œæ•°æ®åŒ…å¤„ç†å‡½æ•° */
         ADS_FILTER_ProcUlPacket(pstData, enIpType);
     }
 
-    /* Ôö¼ÓÉÏÐÐ½ÓÊÕÊý¾ÝÍ³¼Æ¸öÊý */
+    /* å¢žåŠ ä¸Šè¡ŒæŽ¥æ”¶æ•°æ®ç»Ÿè®¡ä¸ªæ•° */
     ADS_DBG_RECV_UL_PKT_NUM(ucInstanceIndex, 1);
 
-    /* Á÷Á¿Í³¼Æ */
+    /* æµé‡ç»Ÿè®¡ */
     ADS_ULFlowAdd(ucInstanceIndex, pstData->len);
 
-    /* ×·×ÙÉÏÐÐ½ÓÊÕÊý¾Ý */
+    /* è¿½è¸ªä¸Šè¡ŒæŽ¥æ”¶æ•°æ® */
     ADS_MNTN_TraceRcvUlData();
 
-    /* Í³¼ÆÉÏÐÐÖÜÆÚÐÔÊÕµ½µÄÊý¾Ý×Ö½ÚÊý£¬ÓÃÓÚÁ÷Á¿²éÑ¯ */
+    /* ç»Ÿè®¡ä¸Šè¡Œå‘¨æœŸæ€§æ”¶åˆ°çš„æ•°æ®å­—èŠ‚æ•°ï¼Œç”¨äºŽæµé‡æŸ¥è¯¢ */
     ADS_RECV_UL_PERIOD_PKT_NUM(ucInstanceIndex, pstData->len);
 
-    /* ½«pstData²åÈëµ½ucRabId¶ÔÓ¦µÄ»º´æ¶ÓÁÐÖÐ */
+    /* å°†pstDataæ’å…¥åˆ°ucRabIdå¯¹åº”çš„ç¼“å­˜é˜Ÿåˆ—ä¸­ */
     if (VOS_OK != ADS_UL_InsertQueue(ucInstanceIndex, pstData, ucRealRabId))
     {
         ADS_DBG_UL_ENQUE_FAIL_NUM(ucInstanceIndex, 1);
@@ -213,11 +213,11 @@ IMM_ZC_STRU* ADS_UL_GetInstanceNextQueueNode(
 
     pstNode     = VOS_NULL_PTR;
 
-    /* ÓÅÏÈ¼¶·½Ê½ */
+    /* ä¼˜å…ˆçº§æ–¹å¼ */
     for (i = 0; i < ADS_RAB_NUM_MAX; i++)
     {
-        /* ÒòÎª¶ÓÁÐÒÑ¾­ÓÐÐò£¬µ±Ç°¶ÓÁÐÎÞÐ§Ôò´ú±íºóÃæËùÓÐ¶ÓÁÐ¶¼ÎÞÐ§
-           ÐèÌø¹ýºóÃæËùÓÐÎÞÐ§¶ÓÁÐ£¬¼ÌÐø´ÓÍ·²éÕÒ */
+        /* å› ä¸ºé˜Ÿåˆ—å·²ç»æœ‰åºï¼Œå½“å‰é˜Ÿåˆ—æ— æ•ˆåˆ™ä»£è¡¨åŽé¢æ‰€æœ‰é˜Ÿåˆ—éƒ½æ— æ•ˆ
+           éœ€è·³è¿‡åŽé¢æ‰€æœ‰æ— æ•ˆé˜Ÿåˆ—ï¼Œç»§ç»­ä»Žå¤´æŸ¥æ‰¾ */
         if (VOS_NULL_PTR == ADS_UL_GET_QUEUE_LINK_INFO(ucInstanceIndex, *pucCurIndex))
         {
             i += ADS_RAB_NUM_MAX - (*pucCurIndex + 1U);
@@ -227,10 +227,10 @@ IMM_ZC_STRU* ADS_UL_GetInstanceNextQueueNode(
             continue;
         }
 
-        /* ¶ÓÁÐÎªÓÐÐ§¶ÓÁÐµ«ÎÞÊý¾ÝÊ±£¬¼ÌÐøÏòºó²éÕÒ */
+        /* é˜Ÿåˆ—ä¸ºæœ‰æ•ˆé˜Ÿåˆ—ä½†æ— æ•°æ®æ—¶ï¼Œç»§ç»­å‘åŽæŸ¥æ‰¾ */
         if (0 == ADS_UL_GET_QUEUE_LINK_INFO(ucInstanceIndex, *pucCurIndex)->qlen)
         {
-            /* ·¢ËÍÏÂÒ»¸ö¶ÓÁÐµÄÊý¾ÝÊ±£¬½«±¾¶ÓÁÐ¼ÇÂ¼ÊýÇå¿Õ */
+            /* å‘é€ä¸‹ä¸€ä¸ªé˜Ÿåˆ—çš„æ•°æ®æ—¶ï¼Œå°†æœ¬é˜Ÿåˆ—è®°å½•æ•°æ¸…ç©º */
             ADS_UL_CLR_RECORD_NUM_IN_WEIGHTED(ucInstanceIndex, *pucCurIndex);
 
             *pucCurIndex = (*pucCurIndex + 1) % ADS_RAB_NUM_MAX;
@@ -238,7 +238,7 @@ IMM_ZC_STRU* ADS_UL_GetInstanceNextQueueNode(
             continue;
         }
 
-        /* µ±Ç°¶ÓÁÐ²»ÔÊÐí·¢ËÍ£¬ ¼ÌÐøÏòºó²éÕÒ */
+        /* å½“å‰é˜Ÿåˆ—ä¸å…è®¸å‘é€ï¼Œ ç»§ç»­å‘åŽæŸ¥æ‰¾ */
         if (VOS_FALSE == ADS_UL_GET_RAB_SND_PERMIT_FLAG(ucInstanceIndex, ADS_UL_GET_PRIO_QUEUE_INDEX(ucInstanceIndex, *pucCurIndex)))
         {
             *pucCurIndex = (*pucCurIndex + 1) % ADS_RAB_NUM_MAX;
@@ -246,23 +246,23 @@ IMM_ZC_STRU* ADS_UL_GetInstanceNextQueueNode(
             continue;
         }
 
-        /* ¸ù¾ÝÓÅÏÈ¼¶µÈ¼¶¶ÔÓ¦µÄ¼ÓÈ¨Êý·¢ËÍÊý¾Ý */
-        /* ÓÅÏÈ¼¶¸ßµÄÏÈ·¢ËÍ */
+        /* æ ¹æ®ä¼˜å…ˆçº§ç­‰çº§å¯¹åº”çš„åŠ æƒæ•°å‘é€æ•°æ® */
+        /* ä¼˜å…ˆçº§é«˜çš„å…ˆå‘é€ */
         if (ADS_UL_GET_RECORD_NUM_IN_WEIGHTED(ucInstanceIndex, *pucCurIndex) < ADS_UL_GET_QUEUE_PRI_WEIGHTED_NUM(ucInstanceIndex, *pucCurIndex))
         {
-            /* »ñÈ¡¶ÓÁÐÍ·½áµã */
+            /* èŽ·å–é˜Ÿåˆ—å¤´ç»“ç‚¹ */
             pstNode = IMM_ZcDequeueHead(ADS_UL_GET_QUEUE_LINK_INFO(ucInstanceIndex, *pucCurIndex));
 
-            /* »ñÈ¡¸Ã½áµãµÄRabId */
+            /* èŽ·å–è¯¥ç»“ç‚¹çš„RabId */
             *pucRabId = ADS_UL_GET_PRIO_QUEUE_INDEX(ucInstanceIndex, *pucCurIndex);
 
-            /* ±¾¶ÓÁÐ¼ÇÂ¼ÊýÔö¼Ó 1*/
+            /* æœ¬é˜Ÿåˆ—è®°å½•æ•°å¢žåŠ  1*/
             ADS_UL_SET_RECORD_NUM_IN_WEIGHTED(ucInstanceIndex, *pucCurIndex, 1);
 
-            /* Èç¹ûÒÑ¾­·¢ËÍÍê±¾¶ÓÁÐµÄÓÅÏÈ¼¶¼ÓÈ¨Êý¸öÊýµÄÊý¾Ý£¬ÔòÌøµ½ÏÂ¸ö¶ÓÁÐ·¢ËÍÊý¾Ý */
+            /* å¦‚æžœå·²ç»å‘é€å®Œæœ¬é˜Ÿåˆ—çš„ä¼˜å…ˆçº§åŠ æƒæ•°ä¸ªæ•°çš„æ•°æ®ï¼Œåˆ™è·³åˆ°ä¸‹ä¸ªé˜Ÿåˆ—å‘é€æ•°æ® */
             if (ADS_UL_GET_RECORD_NUM_IN_WEIGHTED(ucInstanceIndex, *pucCurIndex) == ADS_UL_GET_QUEUE_PRI_WEIGHTED_NUM(ucInstanceIndex, *pucCurIndex))
             {
-                /* ·¢ËÍÏÂÒ»¸ö¶ÓÁÐµÄÊý¾ÝÊ±£¬½«±¾¶ÓÁÐ¼ÇÂ¼ÊýÇå¿Õ */
+                /* å‘é€ä¸‹ä¸€ä¸ªé˜Ÿåˆ—çš„æ•°æ®æ—¶ï¼Œå°†æœ¬é˜Ÿåˆ—è®°å½•æ•°æ¸…ç©º */
                 ADS_UL_CLR_RECORD_NUM_IN_WEIGHTED(ucInstanceIndex, *pucCurIndex);
 
                 *pucCurIndex = (*pucCurIndex + 1) % ADS_RAB_NUM_MAX;
@@ -303,10 +303,10 @@ IMM_ZC_STRU* ADS_UL_GetNextQueueNode(
         }
     }
 
-    /* ·µ»ØÊµÀýºÅÓÃÓÚÅäÖÃBDÊ±Ìîmodem id */
+    /* è¿”å›žå®žä¾‹å·ç”¨äºŽé…ç½®BDæ—¶å¡«modem id */
     *pucInstanceIndex = ucCurInstanceIndex;
 
-    /* ¼ÇÂ¼ÏÂ´Î´ÓÄÄ¸öÊµÀýÖÐÈ¥Êý¾Ý */
+    /* è®°å½•ä¸‹æ¬¡ä»Žå“ªä¸ªå®žä¾‹ä¸­åŽ»æ•°æ® */
     pstAdsCtx->ucAdsCurInstanceIndex = (ucCurInstanceIndex + 1U) % ADS_INSTANCE_MAX_NUM;
 
     return pstNode;
@@ -319,11 +319,11 @@ VOS_VOID ADS_UL_SaveIpfUlSrcMem(IMM_ZC_STRU *pstImmZcNode)
 {
     IMM_ZC_HEAD_STRU                   *pstUlFreeQue = VOS_NULL_PTR;
 
-    /* ½ÏÉÙ¶ÔÐÔÄÜµÄÓ°Ïì£¬µ÷ÓÃº¯ÊýÄÜ±£Ö¤pstIpfUlBdBuffºÍulSaveNumµÄÓÐÐ§ÐÔ£¬ËùÓÐ²»½øÐÐ²ÎÊý¼ì²é */
+    /* è¾ƒå°‘å¯¹æ€§èƒ½çš„å½±å“ï¼Œè°ƒç”¨å‡½æ•°èƒ½ä¿è¯pstIpfUlBdBuffå’ŒulSaveNumçš„æœ‰æ•ˆæ€§ï¼Œæ‰€æœ‰ä¸è¿›è¡Œå‚æ•°æ£€æŸ¥ */
 
     pstUlFreeQue = ADS_UL_IPF_SRCMEM_FREE_QUE();
 
-    /* ²åÈë¶ÓÁÐ */
+    /* æ’å…¥é˜Ÿåˆ— */
     IMM_ZcQueueTail(pstUlFreeQue, pstImmZcNode);
 
     ADS_DBG_UL_IPF_SAVE_SRCMEM_SUCC_NUM(1);
@@ -433,7 +433,7 @@ VOS_VOID ADS_UL_ClearIpfUlSrcMem(VOS_VOID)
         return;
     }
 
-    /* ËùÓÐµÄPDP¶¼È¥¼¤»îºó£¬²¢ÇÒBDÒÑ¾­È«²¿¿ÕÏÐ£¬¼´ÉÏÐÐÊý¾ÝÈ«²¿°áÍê£¬²ÅÇå¿ÕÉÏÐÐÔ´ÄÚ´æ¶ÓÁÐ */
+    /* æ‰€æœ‰çš„PDPéƒ½åŽ»æ¿€æ´»åŽï¼Œå¹¶ä¸”BDå·²ç»å…¨éƒ¨ç©ºé—²ï¼Œå³ä¸Šè¡Œæ•°æ®å…¨éƒ¨æ¬å®Œï¼Œæ‰æ¸…ç©ºä¸Šè¡Œæºå†…å­˜é˜Ÿåˆ— */
     for (i = 0; i < ADS_INSTANCE_MAX_NUM; i++)
     {
         if (VOS_FALSE == ADS_UL_CheckAllQueueEmpty(i))
@@ -448,7 +448,7 @@ VOS_VOID ADS_UL_ClearIpfUlSrcMem(VOS_VOID)
     ulIpfUlBdNum = BSP_IPF_GetUlBDNum();
 #endif
 
-    /* ¿ÕÏÐBD×î¶à63¸ö */
+    /* ç©ºé—²BDæœ€å¤š63ä¸ª */
     if (IPF_ULBD_DESC_SIZE != ulIpfUlBdNum)
     {
         return;
@@ -504,7 +504,7 @@ VOS_VOID ADS_UL_ConfigBD(VOS_UINT32 ulBdNum)
 
         IPS_MNTN_TraceIpInfo(pstImmZcNode,ID_IPS_TRACE_IP_ADS_UL);
 
-        /* »ñÈ¡ÅäÖÃIPFµÄBDÐÅÏ¢ */
+        /* èŽ·å–é…ç½®IPFçš„BDä¿¡æ¯ */
         pstIpfConfigUlParam = ADS_UL_GET_BD_CFG_PARA_PTR(ulCnt);
 
         pstIpfConfigUlParam->u32Data      = (VOS_UINT32)virt_to_phys((VOS_VOID *)pstImmZcNode->data);
@@ -513,7 +513,7 @@ VOS_VOID ADS_UL_ConfigBD(VOS_UINT32 ulBdNum)
         pstIpfConfigUlParam->u16UsrField1 = (VOS_UINT16)ADS_UL_BUILD_BD_USER_FIELD_1(ucInstanceIndex, ucRabId);
         pstIpfConfigUlParam->u32UsrField3 = (VOS_UINT)pstImmZcNode->tstamp.tv64;
 
-        /* ADS ÉÏÐÐÊý¾Ý´òÓ¡¿ª¹Ø */
+        /* ADS ä¸Šè¡Œæ•°æ®æ‰“å°å¼€å…³ */
         if (VOS_TRUE == g_ulAdsPrintUlDataFlg)
         {
             vos_printf("ADS_UL_ConfigBD: ucInstanceIndex is %d, ucRabId is %d, attribute is %d\r\n", ucInstanceIndex, ucRabId, pstIpfConfigUlParam->u16UsrField1);
@@ -537,38 +537,38 @@ VOS_VOID ADS_UL_ConfigBD(VOS_UINT32 ulBdNum)
             vos_printf("\r\n");
         }
 
-        /* Attribute: ÖÐ¶ÏÊ¹ÄÜ£¬¹ýÂË¼Ó°áÒÆ£¬¹ýÂËÆ÷×éºÅmodem0ÓÃ0£¬modem1ÓÃ1 */
+        /* Attribute: ä¸­æ–­ä½¿èƒ½ï¼Œè¿‡æ»¤åŠ æ¬ç§»ï¼Œè¿‡æ»¤å™¨ç»„å·modem0ç”¨0ï¼Œmodem1ç”¨1 */
         pstIpfConfigUlParam->u16Attribute = (VOS_UINT16)ADS_UL_BUILD_BD_ATTRIBUTE(VOS_FALSE, IPF_MODE_FILTERANDTRANS, ADS_UL_GET_BD_FC_HEAD(ucInstanceIndex));
 
-        /* ÐèÒª½«Êý¾ÝÐ´»ØDDR£¬IPF´ÓDDRÖÐ¶ÁÊý¾Ý */
+        /* éœ€è¦å°†æ•°æ®å†™å›žDDRï¼ŒIPFä»ŽDDRä¸­è¯»æ•°æ® */
 #ifdef CONFIG_ARM64
         ADS_CACHE_FLUSH_WITH_DEV(&dev, pstImmZcNode->data, pstIpfConfigUlParam->u16Len);
 #else
         ADS_CACHE_FLUSH(pstImmZcNode->data, pstIpfConfigUlParam->u16Len);
 #endif
 
-        /* ½«ÒÑÅäÖÃµÄBDÔ´ÄÚ´æ±£´æµ½Ô´ÄÚ´æ¶ÓÁÐ */
+        /* å°†å·²é…ç½®çš„BDæºå†…å­˜ä¿å­˜åˆ°æºå†…å­˜é˜Ÿåˆ— */
         ADS_UL_SaveIpfUlSrcMem(pstImmZcNode);
     }
 
-    /* Êµ¼Ê´Ó¶ÓÁÐÖÐÈ¡µÄÊý¾Ý¸öÊýÈç¹ûÎª0£¬Òì³£ */
+    /* å®žé™…ä»Žé˜Ÿåˆ—ä¸­å–çš„æ•°æ®ä¸ªæ•°å¦‚æžœä¸º0ï¼Œå¼‚å¸¸ */
     if (0 == ulCnt)
     {
         return;
     }
 
-    /* ×îºóÒ»¸öBDÅäÖÃÖÐ¶ÏÊ¹ÄÜ */
+    /* æœ€åŽä¸€ä¸ªBDé…ç½®ä¸­æ–­ä½¿èƒ½ */
     pstIpfConfigUlParam = ADS_UL_GET_BD_CFG_PARA_PTR(0);
     ADS_UL_SET_BD_ATTR_INT_FLAG(pstIpfConfigUlParam[ulCnt -1].u16Attribute);
 
-    /* ÅäÖÃBD¡¢Ð´ÈëIPF */
+    /* é…ç½®BDã€å†™å…¥IPF */
     lRslt = BSP_IPF_ConfigUpFilter(ulCnt, ADS_UL_GET_BD_CFG_PARA_PTR(0));
     if (IPF_SUCCESS != lRslt)
     {
-        /* Ð´IPFÊ§°ÜµÄ´¦Àí */
+        /* å†™IPFå¤±è´¥çš„å¤„ç† */
         ADS_ERROR_LOG(ACPU_PID_ADS_UL, "ADS_UL_ConfigBD: IPF CONFIG FAIL!");
 
-        /* IPFÅäÖÃÊ§°Ü£¬ÐèÒªÊÍ·ÅÔ´ÄÚ´æ */
+        /* IPFé…ç½®å¤±è´¥ï¼Œéœ€è¦é‡Šæ”¾æºå†…å­˜ */
         ADS_UL_FreeIpfUlConfigFailSrcMem(ulCnt);
 
         ADS_DBG_UL_SEND_PKT_FAIL_NUM(ulCnt);
@@ -578,7 +578,7 @@ VOS_VOID ADS_UL_ConfigBD(VOS_UINT32 ulBdNum)
 
     ADS_DBG_UL_SEND_BUFF_PKT_NUM(ulCnt);
 
-    /* ×·×ÙÉÏÐÐ·¢ËÍÊý¾Ý */
+    /* è¿½è¸ªä¸Šè¡Œå‘é€æ•°æ® */
     ADS_MNTN_TraceSndUlData();
 
     ADS_UL_EnableTxWakeLockTimeout(ADS_UL_TX_WAKE_LOCK_TMR_LEN);
@@ -598,7 +598,7 @@ VOS_VOID ADS_UL_ProcIpfFailConfig(
     {
         pstImmMem = (IMM_MEM_STRU *)pstIpfConfigUlPara[i].u32UsrField2;
 
-        /* ÊÍ·Å×ª»»ºóµÄIMMÊý¾Ý */
+        /* é‡Šæ”¾è½¬æ¢åŽçš„IMMæ•°æ® */
         IMM_MemFree(pstImmMem);
     }
 
@@ -625,7 +625,7 @@ VOS_VOID ADS_UL_ConfigBD(VOS_UINT32 ulBdNum)
 
         IPS_MNTN_TraceIpInfo(pstImmZcNode,ID_IPS_TRACE_IP_ADS_UL);
 
-        /* °ÑIMM_ZcÁã¿½±´¿ØÖÆ½Úµã×ª»»³ÉIMM_Mem¿ØÖÆ½Úµã */
+        /* æŠŠIMM_Zcé›¶æ‹·è´æŽ§åˆ¶èŠ‚ç‚¹è½¬æ¢æˆIMM_MemæŽ§åˆ¶èŠ‚ç‚¹ */
         pstImmMemNode = IMM_ZcMapToImmMem(pstImmZcNode);
 
         if (VOS_NULL_PTR == pstImmMemNode)
@@ -635,11 +635,11 @@ VOS_VOID ADS_UL_ConfigBD(VOS_UINT32 ulBdNum)
             break;
         }
 
-        /* »ñÈ¡ÅäÖÃIPFµÄBDÐÅÏ¢ */
+        /* èŽ·å–é…ç½®IPFçš„BDä¿¡æ¯ */
         pstIpfConfigUlParam = ADS_UL_GET_BD_CFG_PARA_PTR(ulCnt);
 
         pstIpfConfigUlParam->u32Data      = (VOS_UINT32)TTF_VIRT_TO_PHY((VOS_VOID *)pstImmZcNode->data);
-        /* ÉÏÐÐÖ»¹ýÂË²»°áÒÆ£¬Ô´µØÖ·ºÍÄ¿µÄµØÖ·ÏàÍ¬ */
+        /* ä¸Šè¡Œåªè¿‡æ»¤ä¸æ¬ç§»ï¼Œæºåœ°å€å’Œç›®çš„åœ°å€ç›¸åŒ */
         pstIpfConfigUlParam->u32DesAddr   = pstIpfConfigUlParam->u32Data;
         pstIpfConfigUlParam->u16Len       = (VOS_UINT16)pstImmZcNode->len;
         pstIpfConfigUlParam->u16UsrField1 = (VOS_UINT16)ADS_UL_BUILD_BD_USER_FIELD_1(ucInstanceIndex, ucRabId);
@@ -648,23 +648,23 @@ VOS_VOID ADS_UL_ConfigBD(VOS_UINT32 ulBdNum)
 #if (FEATURE_ON == FEATURE_TTFMEM_CACHE)
         ADS_CACHE_FLUSH(pstImmZcNode->data, pstIpfConfigUlParam->u16Len);
 #endif
-        /* ÊÍ·ÅSK_BUFF Í· */
+        /* é‡Šæ”¾SK_BUFF å¤´ */
         IMM_ZcHeadFree(pstImmZcNode);
     }
 
-    /* Êµ¼Ê´Ó¶ÓÁÐÖÐÈ¡µÄÊý¾Ý¸öÊýÈç¹ûÎª0£¬Òì³£ */
+    /* å®žé™…ä»Žé˜Ÿåˆ—ä¸­å–çš„æ•°æ®ä¸ªæ•°å¦‚æžœä¸º0ï¼Œå¼‚å¸¸ */
     if (0 == ulCnt)
     {
         return;
     }
 
-    /* ÅäÖÃBD¡¢Ð´ÈëIPF */
+    /* é…ç½®BDã€å†™å…¥IPF */
     lRslt = BSP_IPF_ConfigUpFilter(ulCnt,
                                    ADS_UL_GET_BD_CFG_PARA_PTR(0),
                                    BSP_TRUE);
     if (IPF_SUCCESS != lRslt)
     {
-        /* Ð´IPFÊ§°ÜµÄ´¦Àí */
+        /* å†™IPFå¤±è´¥çš„å¤„ç† */
         ADS_ERROR_LOG(ACPU_PID_ADS_UL, "ADS_UL_ConfigBD: IPF CONFIG FAIL!");
 
         ADS_UL_ProcIpfFailConfig(ulCnt, ADS_UL_GET_BD_CFG_PARA_PTR(0));
@@ -676,7 +676,7 @@ VOS_VOID ADS_UL_ConfigBD(VOS_UINT32 ulBdNum)
 
     ADS_DBG_UL_SEND_BUFF_PKT_NUM(ulCnt);
 
-    /* ×·×ÙÉÏÐÐ·¢ËÍÊý¾Ý */
+    /* è¿½è¸ªä¸Šè¡Œå‘é€æ•°æ® */
     ADS_MNTN_TraceSndUlData();
 
     return;
@@ -690,7 +690,7 @@ VOS_VOID ADS_UL_ProcLinkData(VOS_VOID)
     VOS_UINT32                          ulIpfUlBdNum;
     VOS_UINT32                          ulSndBdNum;
 
-    /* ÅÐ¶Ïµ±Ç°ÊÇ·ñÔÊÐí·¢ËÍ£¬Èç¹û²»ÔÊÐí·¢ËÍ£¬Ö±½ÓÍË³ö */
+    /* åˆ¤æ–­å½“å‰æ˜¯å¦å…è®¸å‘é€ï¼Œå¦‚æžœä¸å…è®¸å‘é€ï¼Œç›´æŽ¥é€€å‡º */
     if ((VOS_FALSE == ADS_UL_GET_MODEM_SND_PERMIT_FLAG(ADS_INSTANCE_INDEX_0))
      && (VOS_FALSE == ADS_UL_GET_MODEM_SND_PERMIT_FLAG((ADS_INSTANCE_INDEX_0 + 1) % ADS_INSTANCE_MAX_NUM)))
     {
@@ -698,11 +698,11 @@ VOS_VOID ADS_UL_ProcLinkData(VOS_VOID)
         return;
     }
 
-    /* ´¦Àí¶ÓÁÐÊ±ÖÐµÄÊý¾Ý */
+    /* å¤„ç†é˜Ÿåˆ—æ—¶ä¸­çš„æ•°æ® */
     for (;;)
     {
 
-        /* »ñÈ¡ÉÏÐÐ¿ÉÒÔ·¢ËÍµÄBDÊý¡£ */
+        /* èŽ·å–ä¸Šè¡Œå¯ä»¥å‘é€çš„BDæ•°ã€‚ */
 #if(FEATURE_OFF == FEATURE_SKB_EXP)
         ulIpfUlBdNum = BSP_IPF_GetUlDescNum();
 #else
@@ -712,48 +712,48 @@ VOS_VOID ADS_UL_ProcLinkData(VOS_VOID)
         {
             ADS_DBG_UL_CFG_IPF_HAVE_NO_BDCD(1);
 
-            /* ÉèÖÃ·¢ËÍ½áÊø±êÖ¾ */
+            /* è®¾ç½®å‘é€ç»“æŸæ ‡å¿— */
             ADS_UL_SET_SENDING_FLAG(VOS_FALSE);
 
-            /* Æô¶¯¶¨Ê±Æ÷ÍË³ö */
+            /* å¯åŠ¨å®šæ—¶å™¨é€€å‡º */
             ADS_StartTimer(ACPU_PID_ADS_UL, TI_ADS_UL_SEND, ADS_UL_GET_PROTECT_TIMER_LEN());
             break;
         }
 
 
-        /* ÉèÖÃÕýÔÚ·¢ËÍ±êÖ¾ */
+        /* è®¾ç½®æ­£åœ¨å‘é€æ ‡å¿— */
         ADS_UL_SET_SENDING_FLAG(VOS_TRUE);
 
-        /* »ñÈ¡µ±Ç°ËùÓÐ¶ÓÁÐÖÐµÄÊý¾Ý°ü¸öÊý */
+        /* èŽ·å–å½“å‰æ‰€æœ‰é˜Ÿåˆ—ä¸­çš„æ•°æ®åŒ…ä¸ªæ•° */
         ulAllUlQueueDataNum = ADS_UL_GetAllQueueDataNum();
 
-        /* ¼ÆËãµ±Ç°¿É·¢ËÍµÄBDÊýÄ¿ */
+        /* è®¡ç®—å½“å‰å¯å‘é€çš„BDæ•°ç›® */
         ulSndBdNum = PS_MIN(ulIpfUlBdNum, ulAllUlQueueDataNum);
 
 #if(FEATURE_OFF == FEATURE_SKB_EXP)
         ADS_UL_FreeIpfUlConfigSuccSrcMem();
 #endif
 
-        /* ÅäÖÃBD£¬Ð´ÈëIPF */
+        /* é…ç½®BDï¼Œå†™å…¥IPF */
         ADS_UL_ConfigBD(ulSndBdNum);
 
-        /* »ñÈ¡µ±Ç°ËùÓÐ¶ÓÁÐÖÐµÄÊý¾Ý°ü¸öÊý */
+        /* èŽ·å–å½“å‰æ‰€æœ‰é˜Ÿåˆ—ä¸­çš„æ•°æ®åŒ…ä¸ªæ•° */
         ulAllUlQueueDataNum = ADS_UL_GetAllQueueDataNum();
 
-        /* µ±Ç°¶ÓÁÐÖÐÃ»ÓÐÊý¾Ý£¬ÍË³ö£¬µÈ´ýÏÂ´Î¶ÓÁÐÓÉ¿Õ±äÎª·Ç¿Õ´¦Àí */
+        /* å½“å‰é˜Ÿåˆ—ä¸­æ²¡æœ‰æ•°æ®ï¼Œé€€å‡ºï¼Œç­‰å¾…ä¸‹æ¬¡é˜Ÿåˆ—ç”±ç©ºå˜ä¸ºéžç©ºå¤„ç† */
         if (0 == ulAllUlQueueDataNum)
         {
-            /* ÉèÖÃ·¢ËÍ½áÊø±êÖ¾ */
+            /* è®¾ç½®å‘é€ç»“æŸæ ‡å¿— */
             ADS_UL_SET_SENDING_FLAG(VOS_FALSE);
 
             break;
         }
-        /* µ±Ç°¶ÓÁÐÖÐÓÐÊý¾Ý£¬µ«ÊÇÐèÒª¼ÌÐøÔÜ°ü */
+        /* å½“å‰é˜Ÿåˆ—ä¸­æœ‰æ•°æ®ï¼Œä½†æ˜¯éœ€è¦ç»§ç»­æ”’åŒ… */
         else if (ulAllUlQueueDataNum <= ADS_UL_SEND_DATA_NUM_THREDHOLD)
         {
             ADS_StartTimer(ACPU_PID_ADS_UL, TI_ADS_UL_SEND, ADS_UL_GET_PROTECT_TIMER_LEN());
 
-            /* ÉèÖÃ·¢ËÍ½áÊø±êÖ¾ */
+            /* è®¾ç½®å‘é€ç»“æŸæ ‡å¿— */
             ADS_UL_SET_SENDING_FLAG(VOS_FALSE);
 
             break;
@@ -774,12 +774,12 @@ VOS_VOID ADS_UL_SendCdsStopSendDataRsp(
     VOS_UINT32                          ulResult;
     CDS_ADS_STOP_SENDDATA_RSP_STRU     *pstStopSendDataRsp;
 
-    /* ÉêÇëÏûÏ¢ */
+    /* ç”³è¯·æ¶ˆæ¯ */
     pstStopSendDataRsp = (CDS_ADS_STOP_SENDDATA_RSP_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                              ACPU_PID_ADS_UL,
                                              sizeof(CDS_ADS_STOP_SENDDATA_RSP_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å›ž */
     if( VOS_NULL_PTR == pstStopSendDataRsp )
     {
         ADS_ERROR_LOG(ACPU_PID_ADS_UL, "ADS_UL_SendCdsStopSendDataRsp: pstStopSendDataRsp is null!");
@@ -790,13 +790,13 @@ VOS_VOID ADS_UL_SendCdsStopSendDataRsp(
                0x00,
                (VOS_SIZE_T)(sizeof(CDS_ADS_STOP_SENDDATA_RSP_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /*ÌîÐ´ÏûÏ¢ÄÚÈÝ*/
+    /*å¡«å†™æ¶ˆæ¯å†…å®¹*/
     pstStopSendDataRsp->ulReceiverPid = UEPS_PID_CDS;
     pstStopSendDataRsp->enMsgId       = ID_CDS_ADS_STOP_SENDDATA_RSP;
     pstStopSendDataRsp->enModemId     = enModemId;
     pstStopSendDataRsp->ucRabId       = ucRabId;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     ulResult = PS_SEND_MSG(ACPU_PID_ADS_UL, pstStopSendDataRsp);
 
     if(VOS_OK != ulResult)
@@ -816,12 +816,12 @@ VOS_VOID ADS_UL_SendCdsStartSendDataRsp(
     VOS_UINT32                          ulResult;
     CDS_ADS_START_SENDDATA_RSP_STRU    *pstStartSendDataRsp;
 
-    /*ÉêÇëÏûÏ¢  */
+    /*ç”³è¯·æ¶ˆæ¯  */
     pstStartSendDataRsp = (CDS_ADS_START_SENDDATA_RSP_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                              ACPU_PID_ADS_UL,
                                              sizeof(CDS_ADS_START_SENDDATA_RSP_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å›ž */
     if( VOS_NULL_PTR == pstStartSendDataRsp )
     {
         return;
@@ -831,13 +831,13 @@ VOS_VOID ADS_UL_SendCdsStartSendDataRsp(
                0x00,
                (VOS_SIZE_T)(sizeof(CDS_ADS_START_SENDDATA_RSP_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /*ÌîÐ´ÏûÏ¢ÄÚÈÝ*/
+    /*å¡«å†™æ¶ˆæ¯å†…å®¹*/
     pstStartSendDataRsp->ulReceiverPid = UEPS_PID_CDS;
     pstStartSendDataRsp->enMsgId       = ID_CDS_ADS_START_SENDDATA_RSP;
     pstStartSendDataRsp->enModemId     = enModemId;
     pstStartSendDataRsp->ucRabId       = ucRabId;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     ulResult = PS_SEND_MSG(ACPU_PID_ADS_UL, pstStartSendDataRsp);
 
     if(VOS_OK != ulResult)
@@ -857,12 +857,12 @@ VOS_VOID ADS_UL_SendCdsClearDataRsp(
     VOS_UINT32                          ulResult;
     CDS_ADS_CLEAR_DATA_RSP_STRU        *pstClearDataRsp;
 
-    /*ÉêÇëÏûÏ¢  */
+    /*ç”³è¯·æ¶ˆæ¯  */
     pstClearDataRsp = (CDS_ADS_CLEAR_DATA_RSP_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                              ACPU_PID_ADS_UL,
                                              sizeof(CDS_ADS_CLEAR_DATA_RSP_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å›ž */
     if( VOS_NULL_PTR == pstClearDataRsp )
     {
         return;
@@ -872,13 +872,13 @@ VOS_VOID ADS_UL_SendCdsClearDataRsp(
                0x00,
                (VOS_SIZE_T)(sizeof(CDS_ADS_CLEAR_DATA_RSP_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîÐ´ÏûÏ¢ÄÚÈÝ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     pstClearDataRsp->ulReceiverPid = UEPS_PID_CDS;
     pstClearDataRsp->enMsgId       = ID_CDS_ADS_CLEAR_DATA_RSP;
     pstClearDataRsp->enModemId     = enModemId;
     pstClearDataRsp->ucRabId       = ucRabId;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     ulResult = PS_SEND_MSG(ACPU_PID_ADS_UL, pstClearDataRsp);
 
     if(VOS_OK != ulResult)
@@ -908,14 +908,14 @@ VOS_UINT32 ADS_UL_ProcPdpStatusInd(
 
     enPrio                              = enQciType;
 
-    /* RabIdºÏ·¨ÐÔ¼ì²é */
+    /* RabIdåˆæ³•æ€§æ£€æŸ¥ */
     if (VOS_OK != ADS_IsValidRabId(ucRabId))
     {
         ADS_WARNING_LOG1(ACPU_PID_ADS_UL, "ADS_UL_ProcPdpStatusInd: ucRabId is ", ucRabId);
         return VOS_ERR;
     }
 
-    /* Èç¹û²»²ÉÓÃÓÅÏÈ¼¶£¬ÔòÐÞ¸ÄËùÓÐPDPµÄQCIÎªÏàÍ¬ÓÅÏÈ¼¶£¬¸ù¾ÝÅÅÐòËã·¨ÕâÑù¿ÉÒÔÊ¹ÏÈ¼¤»îµÄPDPÓÅÏÈ´¦Àí */
+    /* å¦‚æžœä¸é‡‡ç”¨ä¼˜å…ˆçº§ï¼Œåˆ™ä¿®æ”¹æ‰€æœ‰PDPçš„QCIä¸ºç›¸åŒä¼˜å…ˆçº§ï¼Œæ ¹æ®æŽ’åºç®—æ³•è¿™æ ·å¯ä»¥ä½¿å…ˆæ¿€æ´»çš„PDPä¼˜å…ˆå¤„ç† */
     if (VOS_FALSE == g_stAdsCtx.astAdsSpecCtx[ucInstanceIndex].stAdsUlCtx.stQueuePriNv.ulStatus)
     {
         enPrio = ADS_QCI_TYPE_QCI9_NONGBR;
@@ -926,46 +926,46 @@ VOS_UINT32 ADS_UL_ProcPdpStatusInd(
         enPktType = ADS_CDS_IPF_PKT_TYPE_PPP;
     }
 
-    /* ¸ù¾ÝPDP×´Ì¬·Ö±ð½øÐÐ´¦Àí */
+    /* æ ¹æ®PDPçŠ¶æ€åˆ†åˆ«è¿›è¡Œå¤„ç† */
     switch(enPdpStatus)
     {
-        /* PDP¼¤»î */
+        /* PDPæ¿€æ´» */
         case ADS_PDP_STATUS_ACT:
 
-            /* ´´½¨»º´æ¶ÓÁÐ */
+            /* åˆ›å»ºç¼“å­˜é˜Ÿåˆ— */
             ADS_UL_CreateQueue(ucInstanceIndex, ucRabId, enPrio, enPktType);
 
-            /* Æô¶¯Á÷Á¿Í³¼Æ */
+            /* å¯åŠ¨æµé‡ç»Ÿè®¡ */
             ADS_UL_StartDsFlowStats(ucInstanceIndex, ucRabId);
 
-            /* Æô¶¯ÉÏ±¨Í³¼ÆÐÅÏ¢¶¨Ê±Æ÷ */
+            /* å¯åŠ¨ä¸ŠæŠ¥ç»Ÿè®¡ä¿¡æ¯å®šæ—¶å™¨ */
             ADS_UL_StartRptStatsInfoTimer(ucInstanceIndex, ucRabId);
 
             break;
 
-        /* PDPÐÞ¸Ä */
+        /* PDPä¿®æ”¹ */
         case ADS_PDP_STATUS_MODIFY:
 
-            /* ½«ÐÞ¸ÄµÄ¶ÓÁÐÐÅÏ¢¸üÐÂµ½ÉÏÐÐ¶ÓÁÐ¹ÜÀíÖÐ */
+            /* å°†ä¿®æ”¹çš„é˜Ÿåˆ—ä¿¡æ¯æ›´æ–°åˆ°ä¸Šè¡Œé˜Ÿåˆ—ç®¡ç†ä¸­ */
             ADS_UL_UpdateQueueInPdpModified(ucInstanceIndex, enPrio, ucRabId);
 
             break;
 
-        /* PDPÈ¥¼¤»î */
+        /* PDPåŽ»æ¿€æ´» */
         case ADS_PDP_STATUS_DEACT:
 
-            /* Ïú»Ù»º´æ¶ÓÁÐ */
+            /* é”€æ¯ç¼“å­˜é˜Ÿåˆ— */
             ADS_UL_DestroyQueue(ucInstanceIndex, ucRabId);
 
 #if(FEATURE_OFF == FEATURE_SKB_EXP)
-            /* µ±ËùÓÐµÄPDP¶¼È¥¼¤»îºó£¬Çå¿ÕÔ´ÄÚ´æ¶ÓÁÐ */
+            /* å½“æ‰€æœ‰çš„PDPéƒ½åŽ»æ¿€æ´»åŽï¼Œæ¸…ç©ºæºå†…å­˜é˜Ÿåˆ— */
             ADS_UL_ClearIpfUlSrcMem();
 #endif
 
-            /* Í£Ö¹Á÷Á¿Í³¼Æ */
+            /* åœæ­¢æµé‡ç»Ÿè®¡ */
             ADS_UL_StopDsFlowStats(ucInstanceIndex, ucRabId);
 
-            /* ¹Ø±ÕÉÏ±¨Í³¼ÆÐÅÏ¢¶¨Ê±Æ÷ */
+            /* å…³é—­ä¸ŠæŠ¥ç»Ÿè®¡ä¿¡æ¯å®šæ—¶å™¨ */
             ADS_UL_StopRptStatsInfoTimer();
 
             break;
@@ -1006,22 +1006,22 @@ VOS_UINT32 ADS_UL_RcvCdsStopSendDataInd(MsgBlock *pMsg)
     ucInstanceIndex = (VOS_UINT8)pstStopSendDataIndMsg->enModemId;
     ucRabId = pstStopSendDataIndMsg->ucRabId;
 
-    /* ½«¶ÔÓ¦ÊÇ·ñÔÊÐí·¢ËÍµÄ±êÖ¾ÖÃÎªVOS_FALSE */
+    /* å°†å¯¹åº”æ˜¯å¦å…è®¸å‘é€çš„æ ‡å¿—ç½®ä¸ºVOS_FALSE */
     ADS_UL_SET_RAB_SND_PERMIT_FLAG(ucInstanceIndex, ucRabId, VOS_FALSE);
 
-    /* ÅÐ¶Ï¸ÃmodemµÄËùÓÐRAB¶¼²»ÔÊÐí·¢ËÍ */
+    /* åˆ¤æ–­è¯¥modemçš„æ‰€æœ‰RABéƒ½ä¸å…è®¸å‘é€ */
     if (VOS_FALSE == ADS_UL_GetSpecInstanceSndPermitFlg(ucInstanceIndex))
     {
         ADS_UL_SET_MODEM_SND_PERMIT_FLAG(ucInstanceIndex, VOS_FALSE);
     }
 
-    /* ËùÓÐ³ÐÔØ¶¼²»ÔÊÐí·¢ËÍ£¬Í£Ö¹ADS_UL_SEND_TIMER¶¨Ê±Æ÷ */
+    /* æ‰€æœ‰æ‰¿è½½éƒ½ä¸å…è®¸å‘é€ï¼Œåœæ­¢ADS_UL_SEND_TIMERå®šæ—¶å™¨ */
     if (VOS_TRUE == ADS_UL_IsAllRabNotSndPermitFlg())
     {
         ADS_StopTimer(ACPU_PID_ADS_UL, TI_ADS_UL_SEND, ADS_TIMER_STOP_CAUSE_USER);
     }
 
-    /* »Ø¸´ID_CDS_ADS_STOP_SENDDATA_RSPÏûÏ¢ */
+    /* å›žå¤ID_CDS_ADS_STOP_SENDDATA_RSPæ¶ˆæ¯ */
     ADS_UL_SendCdsStopSendDataRsp(pstStopSendDataIndMsg->enModemId, pstStopSendDataIndMsg->ucRabId);
 
     return VOS_OK;
@@ -1039,15 +1039,15 @@ VOS_UINT32 ADS_UL_RcvCdsStartSendDataInd(MsgBlock *pMsg)
     ucInstanceIndex = (VOS_UINT8)pstStartSendDataIndMsg->enModemId;
     ucRabId = (VOS_UINT8)pstStartSendDataIndMsg->ucRabId;
 
-    /* ½«¶ÔÓ¦ÊÇ·ñÔÊÐí·¢ËÍµÄ±êÖ¾ÖÃÎªVOS_TRUE */
+    /* å°†å¯¹åº”æ˜¯å¦å…è®¸å‘é€çš„æ ‡å¿—ç½®ä¸ºVOS_TRUE */
     ADS_UL_SET_RAB_SND_PERMIT_FLAG(ucInstanceIndex, ucRabId, VOS_TRUE);
 
     ADS_UL_SET_MODEM_SND_PERMIT_FLAG(ucInstanceIndex, VOS_TRUE);
 
-    /* »Ø¸´ID_CDS_ADS_START_SENDDATA_RSPÏûÏ¢ */
+    /* å›žå¤ID_CDS_ADS_START_SENDDATA_RSPæ¶ˆæ¯ */
     ADS_UL_SendCdsStartSendDataRsp(pstStartSendDataIndMsg->enModemId, pstStartSendDataIndMsg->ucRabId);
 
-    /* ´¥·¢ÉÏÐÐ»º´æ´¦ÀíÊÂ¼þ */
+    /* è§¦å‘ä¸Šè¡Œç¼“å­˜å¤„ç†äº‹ä»¶ */
     ADS_UL_SndEvent(ADS_UL_EVENT_DATA_PROC);
 
     return VOS_OK;
@@ -1061,7 +1061,7 @@ VOS_UINT32 ADS_UL_RcvCdsClearDataInd(MsgBlock *pMsg)
 
     pstClearData = (CDS_ADS_CLEAR_DATA_IND_STRU *)pMsg;
 
-    /* AT½Ó¿ÚÐÞ¸Äºó£¬»ñÈ¡´ËÖµ */
+    /* ATæŽ¥å£ä¿®æ”¹åŽï¼ŒèŽ·å–æ­¤å€¼ */
     ucInstanceIndex = (VOS_UINT8)pstClearData->enModemId;
 
     pstAdsUlCtx = ADS_GetUlCtx(ucInstanceIndex);
@@ -1074,7 +1074,7 @@ VOS_UINT32 ADS_UL_RcvCdsClearDataInd(MsgBlock *pMsg)
         {
             if (VOS_OK == ADS_UL_IsQueueExistent(ucInstanceIndex, ucRabId))
             {
-                /* Ïú»Ù¶ÓÁÐÖÐµÄÊý¾Ý */
+                /* é”€æ¯é˜Ÿåˆ—ä¸­çš„æ•°æ® */
                 ADS_UL_ClearQueue(ucRabId,
                                   pstAdsUlCtx->astAdsUlQueue[ucRabId].pstAdsUlLink);
             }
@@ -1082,13 +1082,13 @@ VOS_UINT32 ADS_UL_RcvCdsClearDataInd(MsgBlock *pMsg)
     }
     else
     {
-        /* ÅÐ¶ÏRabIdÊÇ·ñÎªÓÐÐ§Öµ */
+        /* åˆ¤æ–­RabIdæ˜¯å¦ä¸ºæœ‰æ•ˆå€¼ */
         if (VOS_OK == ADS_IsValidRabId(pstClearData->ucRabId))
         {
-            /* ½áµã´æÔÚ£¬µ«¶ÓÁÐ²»´æÔÚ */
+            /* ç»“ç‚¹å­˜åœ¨ï¼Œä½†é˜Ÿåˆ—ä¸å­˜åœ¨ */
             if (VOS_OK == ADS_UL_IsQueueExistent(ucInstanceIndex, pstClearData->ucRabId))
             {
-                /* Ïú»Ù¶ÓÁÐÖÐµÄÊý¾Ý */
+                /* é”€æ¯é˜Ÿåˆ—ä¸­çš„æ•°æ® */
                 ADS_UL_ClearQueue(ucRabId,
                                   pstAdsUlCtx->astAdsUlQueue[ucRabId].pstAdsUlLink);
             }
@@ -1103,7 +1103,7 @@ VOS_UINT32 ADS_UL_RcvCdsClearDataInd(MsgBlock *pMsg)
         }
     }
 
-    /* »Ø¸´ID_CDS_ADS_CLEAR_DATA_RSPÏûÏ¢ */
+    /* å›žå¤ID_CDS_ADS_CLEAR_DATA_RSPæ¶ˆæ¯ */
     ADS_UL_SendCdsClearDataRsp(pstClearData->enModemId, pstClearData->ucRabId);
 
     return VOS_OK;
@@ -1118,7 +1118,7 @@ VOS_UINT32 ADS_UL_RcvCdsIpPacketMsg(MsgBlock *pMsg)
 
     pstDataInd = (CDS_ADS_DATA_IND_STRU *)pMsg;
 
-    /* ÉêÇëÏûÏ¢  */
+    /* ç”³è¯·æ¶ˆæ¯  */
     pstAdsNdisDataInd = (ADS_NDIS_DATA_IND_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                              ACPU_PID_ADS_UL,
                                              sizeof(ADS_NDIS_DATA_IND_STRU));
@@ -1132,7 +1132,7 @@ VOS_UINT32 ADS_UL_RcvCdsIpPacketMsg(MsgBlock *pMsg)
                0x00,
                (VOS_SIZE_T)(sizeof(ADS_NDIS_DATA_IND_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîÐ´ÏûÏ¢ÄÚÈÝ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     pstAdsNdisDataInd->ulReceiverPid  = PS_PID_APP_NDIS;
     pstAdsNdisDataInd->enMsgId        = ID_ADS_NDIS_DATA_IND;
     pstAdsNdisDataInd->enModemId      = pstDataInd->enModemId;
@@ -1149,14 +1149,14 @@ VOS_UINT32 ADS_UL_RcvCdsIpPacketMsg(MsgBlock *pMsg)
     }
 
 
-    /*´Ë²½Öè²»ÄÜÉÙ£¬ÓÃÀ´Æ«ÒÆÊý¾ÝÎ²Ö¸Õë*/
+    /*æ­¤æ­¥éª¤ä¸èƒ½å°‘ï¼Œç”¨æ¥åç§»æ•°æ®å°¾æŒ‡é’ˆ*/
     pstZcPutData = (VOS_CHAR *)IMM_ZcPut(pstZcData, pstDataInd->usLen);
 
     PS_MEM_CPY(pstZcPutData, pstDataInd->aucData, pstDataInd->usLen);
 
     pstAdsNdisDataInd->pstSkBuff = pstZcData;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     ulResult = PS_SEND_MSG(ACPU_PID_ADS_UL, pstAdsNdisDataInd);
 
     if(VOS_OK != ulResult)
@@ -1183,7 +1183,7 @@ VOS_UINT32 ADS_UL_RcvCcpuResetStartInd(
 
     pstAdsCtx = ADS_GetAllCtx();
 
-    /* Çå¿ÕËùÓÐÉÏÐÐ»º´æ¶ÓÁÐ */
+    /* æ¸…ç©ºæ‰€æœ‰ä¸Šè¡Œç¼“å­˜é˜Ÿåˆ— */
     for (ucInsIndex = 0; ucInsIndex < ADS_INSTANCE_MAX_NUM; ucInsIndex++)
     {
         for (ucRabIndex = 0; ucRabIndex < ADS_RAB_ID_MAX + 1; ucRabIndex++)
@@ -1193,31 +1193,31 @@ VOS_UINT32 ADS_UL_RcvCcpuResetStartInd(
     }
 
 #if (FEATURE_OFF == FEATURE_SKB_EXP)
-    /* Çå¿ÕÔ´ÄÚ´æ¶ÓÁÐ */
+    /* æ¸…ç©ºæºå†…å­˜é˜Ÿåˆ— */
     ADS_UL_ClearIpfUlSrcMem();
 #endif
 
-    /* Í£Ö¹ËùÓÐÆô¶¯µÄ¶¨Ê±Æ÷ */
+    /* åœæ­¢æ‰€æœ‰å¯åŠ¨çš„å®šæ—¶å™¨ */
     for (ucTiIndex = 0; ucTiIndex < ADS_MAX_TIMER_NUM; ucTiIndex++)
     {
         ADS_StopTimer(ACPU_PID_ADS_UL, ucTiIndex, ADS_TIMER_STOP_CAUSE_USER);
     }
 
-    /* ³õÊ¼»¯Ã¿¸öÊµÀýµÄÉÏÏÂÎÄ */
+    /* åˆå§‹åŒ–æ¯ä¸ªå®žä¾‹çš„ä¸Šä¸‹æ–‡ */
     ADS_ResetSpecCtx();
 
-    /* ÖØÖÃIPFÏà¹ØµÄÉÏÏÂÎÄ */
+    /* é‡ç½®IPFç›¸å…³çš„ä¸Šä¸‹æ–‡ */
     ADS_ResetIpfCtx();
 
-    /* ÖØÖÃµ±Ç°ÊµÀýË÷ÒýÖµ */
+    /* é‡ç½®å½“å‰å®žä¾‹ç´¢å¼•å€¼ */
     pstAdsCtx->ucAdsCurInstanceIndex = ADS_INSTANCE_INDEX_0;
 
-    /* ÖØÖÃADS Filter¹ýÂËÉÏÏÂÎÄ */
+    /* é‡ç½®ADS Filterè¿‡æ»¤ä¸Šä¸‹æ–‡ */
     ADS_FILTER_Reset();
 
     ADS_ResetDebugInfo();
 
-    /* ÊÍ·ÅÐÅºÅÁ¿£¬Ê¹µÃµ÷ÓÃAPIÈÎÎñ¼ÌÐøÔËÐÐ */
+    /* é‡Šæ”¾ä¿¡å·é‡ï¼Œä½¿å¾—è°ƒç”¨APIä»»åŠ¡ç»§ç»­è¿è¡Œ */
     VOS_SmV(ADS_GetULResetSem());
 
     return VOS_OK;
@@ -1234,38 +1234,38 @@ VOS_VOID ADS_UL_RcvTiDsFlowStatsExpired(
 
     ucInstance = ADS_INSTANCE_INDEX_0;
 
-    /* ¸ù¾ÝulTimerName»ñÈ¡ÊµÀýindex */
+    /* æ ¹æ®ulTimerNameèŽ·å–å®žä¾‹index */
     if (TI_ADS_DSFLOW_STATS_0 != ulTimerName)
     {
         ucInstance = (ucInstance + 1) % ADS_INSTANCE_MAX_NUM;
     }
 
-    /* Èç¹ûÃ»ÓÐÉÏÐÐ¶ÓÁÐ´æÔÚ, ÎÞÐèÍ³¼ÆÁ÷Á¿ */
+    /* å¦‚æžœæ²¡æœ‰ä¸Šè¡Œé˜Ÿåˆ—å­˜åœ¨, æ— éœ€ç»Ÿè®¡æµé‡ */
     if (VOS_FALSE == ADS_UL_IsAnyQueueExist(ucInstance))
     {
         ADS_NORMAL_LOG(ACPU_PID_ADS_DL, "ADS_UL_RcvTiDsFlowStatsExpired: no queue is exist!");
         return;
     }
 
-    /* »ñÈ¡2ÃëµÄÏÂÐÐÊý¾Ý¸öÊý */
+    /* èŽ·å–2ç§’çš„ä¸‹è¡Œæ•°æ®ä¸ªæ•° */
     ulTaBytes = ADS_GET_DL_PERIOD_PKT_NUM(ucInstance);
 
-    /* Ã¿2ÃëÖÓ¼ÆËãÒ»´Î,µ¥Î»Îª:byte/s */
+    /* æ¯2ç§’é’Ÿè®¡ç®—ä¸€æ¬¡,å•ä½ä¸º:byte/s */
     ulRate = ulTaBytes>>1;
     ADS_SET_CURRENT_DL_RATE(ucInstance, ulRate);
 
-    /* »ñÈ¡2ÃëµÄÉÏÐÐÁ÷Á¿ */
+    /* èŽ·å–2ç§’çš„ä¸Šè¡Œæµé‡ */
     ulTaBytes = ADS_GET_UL_PERIOD_PKT_NUM(ucInstance);
 
-    /* Ã¿2ÃëÖÓ¼ÆËãÒ»´Î,µ¥Î»Îª:byte/s */
+    /* æ¯2ç§’é’Ÿè®¡ç®—ä¸€æ¬¡,å•ä½ä¸º:byte/s */
     ulRate = ulTaBytes>>1;
     ADS_SET_CURRENT_UL_RATE(ucInstance, ulRate);
 
-    /* Ã¿¸öÁ÷Á¿Í³¼ÆÖÜÆÚ½áÊøºó£¬ÐèÒª½«ÖÜÆÚÍ³¼ÆByteÊýÇå³ý */
+    /* æ¯ä¸ªæµé‡ç»Ÿè®¡å‘¨æœŸç»“æŸåŽï¼Œéœ€è¦å°†å‘¨æœŸç»Ÿè®¡Byteæ•°æ¸…é™¤ */
     ADS_CLEAR_UL_PERIOD_PKT_NUM(ucInstance);
     ADS_CLEAR_DL_PERIOD_PKT_NUM(ucInstance);
 
-    /* Æô¶¯Á÷Á¿Í³¼Æ¶¨Ê±Æ÷*/
+    /* å¯åŠ¨æµé‡ç»Ÿè®¡å®šæ—¶å™¨*/
     ADS_StartTimer(ACPU_PID_ADS_UL,
                    ulTimerName,
                    TI_ADS_DSFLOW_STATS_LEN);
@@ -1281,7 +1281,7 @@ VOS_VOID ADS_UL_RcvTiRptStatsInfoExpired(
 {
     ADS_LOG_RPT_STATS_INFO_STRU        *pstMsg = VOS_NULL_PTR;
 
-    /* ½«¼ÇÂ¼µÄÍ³¼ÆÐÅÏ¢Í¨¹ýSDTÏûÏ¢¹´³öÀ´ */
+    /* å°†è®°å½•çš„ç»Ÿè®¡ä¿¡æ¯é€šè¿‡SDTæ¶ˆæ¯å‹¾å‡ºæ¥ */
     pstMsg = (ADS_LOG_RPT_STATS_INFO_STRU*)PS_MEM_ALLOC(ACPU_PID_ADS_UL, sizeof(ADS_LOG_RPT_STATS_INFO_STRU));
     if (VOS_NULL_PTR == pstMsg)
     {
@@ -1304,7 +1304,7 @@ VOS_VOID ADS_UL_RcvTiRptStatsInfoExpired(
 
     PS_MEM_FREE(ACPU_PID_ADS_UL, pstMsg);
 
-    /* ÖØÐÂÆô¶¯ÉÏ±¨Í³¼ÆÐÅÏ¢¶¨Ê±Æ÷ */
+    /* é‡æ–°å¯åŠ¨ä¸ŠæŠ¥ç»Ÿè®¡ä¿¡æ¯å®šæ—¶å™¨ */
     ADS_StartTimer(ACPU_PID_ADS_UL, ulTimerName, TI_ADS_RPT_STATS_LEN);
 
     return ;
@@ -1321,7 +1321,7 @@ VOS_VOID ADS_UL_RcvTiDataStatExpired(
 
     ulStatPktNum = ADS_UL_GET_STAT_PKT_NUM();
 
-    /* ¸ù¾ÝÊý¾Ý°ü¸öÊýµ÷ÕûÔÞ°üÃÅÏÞ */
+    /* æ ¹æ®æ•°æ®åŒ…ä¸ªæ•°è°ƒæ•´èµžåŒ…é—¨é™ */
     if (ulStatPktNum < ADS_UL_GET_WATER_LEVEL_ONE())
     {
         ADS_UL_SET_SEND_DATA_NUM_THREDHOLD(ADS_UL_DATA_THRESHOLD_ONE);
@@ -1343,14 +1343,14 @@ VOS_VOID ADS_UL_RcvTiDataStatExpired(
         ADS_DBG_UL_LEVEL_FOUR_CNT(1);
     }
 
-    /* 100msÄÚÃ»ÓÐÊý¾Ý°üÔò¸Ã¶¨Ê±Æ÷²»ÔÙÆô¶¯ */
+    /* 100mså†…æ²¡æœ‰æ•°æ®åŒ…åˆ™è¯¥å®šæ—¶å™¨ä¸å†å¯åŠ¨ */
     if (0 != ulStatPktNum)
     {
-        /* ÖØÐÂÆô¶¯ÉÏÐÐÍ³¼Æ¶¨Ê±Æ÷ */
+        /* é‡æ–°å¯åŠ¨ä¸Šè¡Œç»Ÿè®¡å®šæ—¶å™¨ */
         ADS_StartTimer(ACPU_PID_ADS_UL, TI_ADS_UL_DATA_STAT, ADS_UL_GET_STAT_TIMER_LEN());
     }
 
-    /* Çå¿ÕÍ³¼Æ°üµÄ¸öÊý */
+    /* æ¸…ç©ºç»Ÿè®¡åŒ…çš„ä¸ªæ•° */
     ADS_UL_CLR_STAT_PKT_NUM();
 
     return;
@@ -1416,7 +1416,7 @@ VOS_UINT32 ADS_UL_RcvTimerMsg(MsgBlock *pMsg)
 
     pstTimerMsg = (REL_TIMER_MSG *)pMsg;
 
-    /* Í£Ö¹¸Ã¶¨Ê±Æ÷ */
+    /* åœæ­¢è¯¥å®šæ—¶å™¨ */
     ADS_StopTimer(ACPU_PID_ADS_UL, pstTimerMsg->ulName, ADS_TIMER_STOP_CAUSE_TIMEOUT);
 
     switch (pstTimerMsg->ulName)
@@ -1478,27 +1478,27 @@ VOS_VOID ADS_UL_ProcMsg(MsgBlock* pMsg)
         return;
     }
 
-    /* ÏûÏ¢µÄ·Ö·¢´¦Àí */
+    /* æ¶ˆæ¯çš„åˆ†å‘å¤„ç† */
     switch ( pMsg->ulSenderPid )
     {
-        /* À´×ÔTimerµÄÏûÏ¢ */
+        /* æ¥è‡ªTimerçš„æ¶ˆæ¯ */
         case VOS_PID_TIMER:
             ADS_UL_RcvTimerMsg(pMsg);
             return;
 
-        /* À´×ÔTAFµÄÏûÏ¢ */
+        /* æ¥è‡ªTAFçš„æ¶ˆæ¯ */
         case I0_WUEPS_PID_TAF:
         case I1_WUEPS_PID_TAF:
             ADS_UL_RcvTafMsg(pMsg);
             return;
 
 
-        /* À´×ÔCDSµÄÏûÏ¢ */
+        /* æ¥è‡ªCDSçš„æ¶ˆæ¯ */
         case UEPS_PID_CDS:
             ADS_UL_RcvCdsMsg(pMsg);
             return;
 
-        /* À´×ÔADS ULµÄÏûÏ¢ */
+        /* æ¥è‡ªADS ULçš„æ¶ˆæ¯ */
         case ACPU_PID_ADS_UL:
             ADS_UL_RcvAdsUlMsg(pMsg);
             return;

@@ -45,7 +45,7 @@ extern "C"{
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_V_TASK_C
 
@@ -81,7 +81,7 @@ VOS_UINT32 g_acVosTaskCtrlBuf[VOS_TASK_CTRL_BUF_SIZE/4];
 
 typedef VOS_INT (*LINUX_START_ROUTINE)( VOS_VOID * );
 
-/* ×ÔÐýËø£¬ÓÃÀ´×÷taskµÄÁÙ½ç×ÊÔ´±£»¤ */
+/* è‡ªæ—‹é”ï¼Œç”¨æ¥ä½œtaskçš„ä¸´ç•Œèµ„æºä¿æŠ¤ */
 VOS_SPINLOCK             g_stVosTaskSpinLock;
 
 
@@ -251,7 +251,7 @@ VOS_VOID VOS_LinuxTaskEntry( VOS_VOID * pulArg )
     ulPara3 = pstTemp->Args[2];
     ulPara4 = pstTemp->Args[3];
 
-    /* ulPara4ÎªÈ«F´ú±íÎªFIDÈÎÎñ»òFID×Ô´¦ÀíÈÎÎñµÈ´ýOSAÆô¶¯Íê±ÏºóÔÙÕý³£ÔËÐÐ */
+    /* ulPara4ä¸ºå…¨Fä»£è¡¨ä¸ºFIDä»»åŠ¡æˆ–FIDè‡ªå¤„ç†ä»»åŠ¡ç­‰å¾…OSAå¯åŠ¨å®Œæ¯•åŽå†æ­£å¸¸è¿è¡Œ */
     if (VOS_NULL_DWORD == ulPara4)
     {
     	while(down_interruptible(&g_stVosTaskRunSem)!=0);

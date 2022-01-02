@@ -1,6 +1,6 @@
 
 /******************************************************************************
-   ͷ�ļ�����
+   头文件包含
 ******************************************************************************/
 #include "hdlc_hardware.h"
 #include "TTFComm.h"
@@ -17,14 +17,14 @@
 
 #if(FEATURE_ON == FEATURE_PPP)
 /*****************************************************************************
-   1 Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+   1 协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 /*lint -e767 */
 #define    THIS_FILE_ID        PS_FILE_ID_HDLC_HARDWARE_C
 /*lint +e767 */
 
 /******************************************************************************
-   2 �ⲿ������������
+   2 外部函数变量声明
 ******************************************************************************/
 #if (VOS_OS_VER == VOS_WIN32)
 extern VOS_UINT32  VHW_HDLC_Task( VOS_VOID );
@@ -33,7 +33,7 @@ extern VOS_UINT8   g_ucScCtrlRegAddr[0xFFC];
 
 extern PPP_DATA_Q_CTRL_ST     g_PppDataQCtrl;
 /*****************************************************************************
-   3 ˽�ж���
+   3 私有定义
 *****************************************************************************/
 VOS_UINT32 PPP_HDLC_HARD_DefIsr(int ulPara);
 
@@ -45,18 +45,18 @@ VOS_UINT32 PPP_HDLC_HARD_FrmIsr(int ulPara);
 #define  PPP_HDLC_MNTN_TRACE_DATA       (4)
 
 /*****************************************************************************
-   4 ȫ�ֱ�������
+   4 全局变量定义
 *****************************************************************************/
-/* ���װ����ķ�����֡��Ϣ */
+/* 解封装输出的非完整帧信息 */
 HDLC_DEF_UNCOMPLETED_INFO_STRU  g_stUncompletedInfo = {0};
 
-/* ������װʹ�õ��ڴ� */
+/* 保存解封装使用的内存 */
 HDLC_DEF_BUFF_INFO_STRU        *g_pstHdlcDefBufInfo = VOS_NULL_PTR;
 
-/* �����װʹ�õ��ڴ� */
+/* 保存封装使用的内存 */
 HDLC_FRM_BUFF_INFO_STRU        *g_pstHdlcFrmBufInfo = VOS_NULL_PTR;
 
-/* HDLC���������Ϣ */
+/* HDLC配置相关信息 */
 HDLC_CONFIG_INFO_STRU           g_stHdlcConfigInfo  =
 {
     0,
@@ -70,22 +70,22 @@ HDLC_CONFIG_INFO_STRU           g_stHdlcConfigInfo  =
     0
 };
 
-/* ͳ����Ϣ */
+/* 统计信息 */
 PPP_HDLC_HARD_DATA_PROC_STAT_ST g_PppHdlcHardStat   = {0};
 
-/* ������ԭʼ�ж�ʱ��RAW_INT��STATUSֵ */
+/* 保留清原始中断时的RAW_INT和STATUS值 */
 HDLC_REG_SAVE_INFO_STRU         g_stHdlcRegSaveInfo;
 
 #define    HDLC_IP_BASE_ADDR    (g_stHdlcConfigInfo.ulHDLCIPBaseAddr)
 
-/* ϵͳ����������ַ */
+/* 系统控制器基地址 */
 VOS_UINT32  g_ulHdlcScCtrlBaseAddr  = 0;
 
 VOS_UINT32  g_ulPppVirtAddr;
 VOS_UINT32  g_ulPppPhyAddr;
 
 /******************************************************************************
-   5 ����ʵ��
+   5 函数实现
 ******************************************************************************/
 
 
@@ -163,7 +163,7 @@ VOS_UINT32 PPP_HDLC_HARD_MntnSetFrmIntLimit(VOS_UINT32 ulIntLimit)
 
 VOS_VOID PPP_HDLC_HARD_MntnShowConfigInfo(VOS_VOID)
 {
-    /* ���IP�����Ϣ */
+    /* 输出IP相关信息 */
     PPP_MNTN_LOG3(PS_PID_APP_PPP, 0, PS_PRINT_WARNING,
                   "HDLC Hardware Info: g_ulHDLCIPBaseAddr 0x%x g_slHdlcISRDef %d g_slHdlcISRFrm %d\r\n",
                   HDLC_IP_BASE_ADDR, g_stHdlcConfigInfo.slHdlcISRDef, g_stHdlcConfigInfo.slHdlcISRFrm);
@@ -171,7 +171,7 @@ VOS_VOID PPP_HDLC_HARD_MntnShowConfigInfo(VOS_VOID)
                   "HDLC Hardware Info: g_ulHdlcDefMasterSem 0x%x g_ulHdlcFrmMasterSem 0x%x\r\n",
                   g_stHdlcConfigInfo.ulHdlcDefMasterSem, g_stHdlcConfigInfo.ulHdlcFrmMasterSem);
 
-    /* ����ڴ������Ϣ */
+    /* 输出内存相关信息 */
     PPP_MNTN_LOG2(PS_PID_APP_PPP, 0, PS_PRINT_WARNING,
                   "HDLC Memory Info: g_pstHdlcDefBufInfo 0x%x TTF_HDLC_MASTER_DEF_BUF_LEN %d\r\n",
                   g_pstHdlcDefBufInfo, TTF_HDLC_MASTER_DEF_BUF_LEN);
@@ -187,45 +187,45 @@ VOS_VOID PPP_HDLC_HARD_MntnShowStatInfo(VOS_VOID)
 {
     vos_printf("\n================HDLC Hardware STAT INFO Begin==========================\n");
 
-    vos_printf("���װ����IP���Ͱ�����            = %d\n", g_PppHdlcHardStat.ulDefIpDataProcCnt);
-    vos_printf("���װ����PPP���Ͱ�����           = %d\n", g_PppHdlcHardStat.ulDefPppDataProcCnt);
-    vos_printf("���װ���������֡����            = %d\n", g_PppHdlcHardStat.ulDefUncompleteCnt);
-    vos_printf("���װ�ȴ��жϴ���                = %d\n", g_PppHdlcHardStat.ulDefWaitIntCnt);
-    vos_printf("���װ��ѯ����                    = %d\n", g_PppHdlcHardStat.ulDefWaitQueryCnt);
-    vos_printf("���װ�жϴ���                    = %d\n", g_PppHdlcHardStat.ulDefIsrCnt);
-    vos_printf("���װLCP֡��ͣ����               = %d\n", g_PppHdlcHardStat.ulDefLcpPauseCnt);
-    vos_printf("���װ�ռ�����ͣ����              = %d\n", g_PppHdlcHardStat.ulDefFullPauseCnt);
-    vos_printf("���װ�����������ݰ�����          = %d\n", g_PppHdlcHardStat.ulDefInputDiscardCnt);
+    vos_printf("解封装处理IP类型包个数            = %d\n", g_PppHdlcHardStat.ulDefIpDataProcCnt);
+    vos_printf("解封装处理PPP类型包个数           = %d\n", g_PppHdlcHardStat.ulDefPppDataProcCnt);
+    vos_printf("解封装输出非完整帧个数            = %d\n", g_PppHdlcHardStat.ulDefUncompleteCnt);
+    vos_printf("解封装等待中断次数                = %d\n", g_PppHdlcHardStat.ulDefWaitIntCnt);
+    vos_printf("解封装轮询次数                    = %d\n", g_PppHdlcHardStat.ulDefWaitQueryCnt);
+    vos_printf("解封装中断次数                    = %d\n", g_PppHdlcHardStat.ulDefIsrCnt);
+    vos_printf("解封装LCP帧暂停次数               = %d\n", g_PppHdlcHardStat.ulDefLcpPauseCnt);
+    vos_printf("解封装空间满暂停次数              = %d\n", g_PppHdlcHardStat.ulDefFullPauseCnt);
+    vos_printf("解封装丢弃错误数据包个数          = %d\n", g_PppHdlcHardStat.ulDefInputDiscardCnt);
 
-    vos_printf("��װ����IP���Ͱ�����              = %d\n", g_PppHdlcHardStat.ulFrmIpDataProcCnt);
-    vos_printf("��װ����PPP���Ͱ�����             = %d\n", g_PppHdlcHardStat.ulFrmPppDataProcCnt);
-    vos_printf("��װ�ȴ��жϴ���                  = %d\n", g_PppHdlcHardStat.ulFrmWaitIntCnt);
-    vos_printf("��װ��ѯ����                      = %d\n", g_PppHdlcHardStat.ulFrmWaitQueryCnt);
-    vos_printf("��װ�жϴ���                      = %d\n", g_PppHdlcHardStat.ulFrmIsrCnt);
-    vos_printf("��װ����Ŀ�Ŀռ��ڴ�ʧ�ܴ���      = %d\n", g_PppHdlcHardStat.ulFrmAllocOutputMemFailCnt);
-    vos_printf("��װ�����һ��Ŀ�Ŀռ��ڴ�ʧ�ܴ���= %d\n", g_PppHdlcHardStat.ulFrmAllocFirstMemFailCnt);
-    vos_printf("��װ�����������������            = %d\n", g_PppHdlcHardStat.ulFrmOutputLinkFullCnt);
-    vos_printf("��װ�����������ݰ�����            = %d\n", g_PppHdlcHardStat.ulFrmInputDiscardCnt);
+    vos_printf("封装处理IP类型包个数              = %d\n", g_PppHdlcHardStat.ulFrmIpDataProcCnt);
+    vos_printf("封装处理PPP类型包个数             = %d\n", g_PppHdlcHardStat.ulFrmPppDataProcCnt);
+    vos_printf("封装等待中断次数                  = %d\n", g_PppHdlcHardStat.ulFrmWaitIntCnt);
+    vos_printf("封装轮询次数                      = %d\n", g_PppHdlcHardStat.ulFrmWaitQueryCnt);
+    vos_printf("封装中断次数                      = %d\n", g_PppHdlcHardStat.ulFrmIsrCnt);
+    vos_printf("封装申请目的空间内存失败次数      = %d\n", g_PppHdlcHardStat.ulFrmAllocOutputMemFailCnt);
+    vos_printf("封装申请第一个目的空间内存失败次数= %d\n", g_PppHdlcHardStat.ulFrmAllocFirstMemFailCnt);
+    vos_printf("封装输出参数链表满次数            = %d\n", g_PppHdlcHardStat.ulFrmOutputLinkFullCnt);
+    vos_printf("封装丢弃错误数据包个数            = %d\n", g_PppHdlcHardStat.ulFrmInputDiscardCnt);
 
-    vos_printf("���װ�����������ڵ���          = %d\n", g_PppHdlcHardStat.ulDefMaxInputCntOnce);
-    vos_printf("���װ������������ܳ���          = %d\n", g_PppHdlcHardStat.ulDefMaxInputSizeOnce);
-    vos_printf("���װ�����Ч֡������          = %d\n", g_PppHdlcHardStat.ulDefMaxValidCntOnce);
-    vos_printf("���װ��ѯ������                = %d\n", g_PppHdlcHardStat.ulDefMaxQueryCnt);
+    vos_printf("解封装输入链表最大节点数          = %d\n", g_PppHdlcHardStat.ulDefMaxInputCntOnce);
+    vos_printf("解封装输入链表最大总长度          = %d\n", g_PppHdlcHardStat.ulDefMaxInputSizeOnce);
+    vos_printf("解封装输出有效帧最大个数          = %d\n", g_PppHdlcHardStat.ulDefMaxValidCntOnce);
+    vos_printf("解封装轮询最大次数                = %d\n", g_PppHdlcHardStat.ulDefMaxQueryCnt);
 
-    vos_printf("��װ�����������ڵ���            = %d\n", g_PppHdlcHardStat.ulFrmMaxInputCntOnce);
-    vos_printf("��װ������������ܳ���            = %d\n", g_PppHdlcHardStat.ulFrmMaxInputSizeOnce);
-    vos_printf("��װ���ʹ�����ڵ����          = %d\n", g_PppHdlcHardStat.ulFrmMaxOutputCntOnce);
-    vos_printf("��װ���ʹ�����ڵ��ܳ���        = %d\n", g_PppHdlcHardStat.ulFrmMaxOutputCntOnce);
-    vos_printf("��װ��ѯ������                  = %d\n", g_PppHdlcHardStat.ulFrmMaxQueryCnt);
+    vos_printf("封装输入链表最大节点数            = %d\n", g_PppHdlcHardStat.ulFrmMaxInputCntOnce);
+    vos_printf("封装输入链表最大总长度            = %d\n", g_PppHdlcHardStat.ulFrmMaxInputSizeOnce);
+    vos_printf("封装输出使用最大节点个数          = %d\n", g_PppHdlcHardStat.ulFrmMaxOutputCntOnce);
+    vos_printf("封装输出使用最大节点总长度        = %d\n", g_PppHdlcHardStat.ulFrmMaxOutputCntOnce);
+    vos_printf("封装轮询最大次数                  = %d\n", g_PppHdlcHardStat.ulFrmMaxQueryCnt);
 
-    vos_printf("���δ������ڵ���                = %d\n", g_PppHdlcHardStat.ulMaxCntOnce);
-    vos_printf("�����ܽڵ���                      = %d\n", g_PppHdlcHardStat.ulHdlcHardProcCnt);
-    vos_printf("continue����                      = %d\n", g_PppHdlcHardStat.ulContinueCnt);
-    vos_printf("usDefExpInfo��ʶ                  = %d\n", g_PppHdlcHardStat.usDefExpInfo);
-    vos_printf("usFrmExpInfo��ʶ                  = %d\n", g_PppHdlcHardStat.usFrmExpInfo);
+    vos_printf("单次处理最大节点数                = %d\n", g_PppHdlcHardStat.ulMaxCntOnce);
+    vos_printf("处理总节点数                      = %d\n", g_PppHdlcHardStat.ulHdlcHardProcCnt);
+    vos_printf("continue次数                      = %d\n", g_PppHdlcHardStat.ulContinueCnt);
+    vos_printf("usDefExpInfo标识                  = %d\n", g_PppHdlcHardStat.usDefExpInfo);
+    vos_printf("usFrmExpInfo标识                  = %d\n", g_PppHdlcHardStat.usFrmExpInfo);
 
-    vos_printf("���HDLC BUG���������ݴ���        = %d\n", g_PppHdlcHardStat.ulForbidHdlcBugNoCpy);
-    vos_printf("���HDLC BUG�������ݴ���          = %d\n", g_PppHdlcHardStat.ulForbidHdlcBugCpy);
+    vos_printf("规避HDLC BUG不拷贝数据次数        = %d\n", g_PppHdlcHardStat.ulForbidHdlcBugNoCpy);
+    vos_printf("规避HDLC BUG拷贝数据次数          = %d\n", g_PppHdlcHardStat.ulForbidHdlcBugCpy);
 
 
     vos_printf("================HDLC Hardware STAT INFO End==========================\n");
@@ -270,7 +270,7 @@ VOS_VOID PPP_HDLC_HARD_MntnTraceSingleData
 
     ulAllocDataLen = TTF_MIN(usDataLen, HDLC_MNTN_ALLOC_MEM_MAX_SIZE);
 
-    /* ��Ϣ���ȵ�����Ϣ�ṹ��С���������ݳ��� */
+    /* 消息长度等于消息结构大小加数据内容长度 */
     ulDataLen   = ulAllocDataLen + sizeof(HDLC_MNTN_NODE_DATA_STRU);
 
     pstNodeData = (HDLC_MNTN_NODE_DATA_STRU *)PS_MEM_ALLOC(PS_PID_APP_PPP, ulDataLen);
@@ -283,7 +283,7 @@ VOS_VOID PPP_HDLC_HARD_MntnTraceSingleData
         return;
     }
 
-    /* ���ڱ�ʶ����һ�����������еĵڼ���IP�� */
+    /* 用于标识这是一组输入链表中的第几个IP包 */
     pstNodeData->usNodeIndex = (VOS_UINT16)ulNodeIndex;
     pstNodeData->usLen       = usDataLen;
 
@@ -313,11 +313,11 @@ VOS_VOID PPP_HDLC_HARD_MntnTraceInputParaLink
 
     ulDataLen = sizeof(HDLC_MNTN_INPUT_PARA_LINK_STRU);
 
-    /* ��¼���ϱ������������нڵ����Ϣ*/
+    /* 记录并上报参数链表所有节点的信息*/
     pstInputPara->ulInputLinkNodeCnt   = ulLinkNodeCnt;
     pstInputPara->ulInputLinkTotalSize = ulLinkTotalSize;
 
-    /* ��������ÿ���ڵ������ */
+    /* 参数链表每个节点的内容 */
     VOS_MemCpy((VOS_UINT8 *)(&pstInputPara->astInputParaLinkNodeBuf[0]),
                (VOS_UINT8 *)(pastLinkNodeBuf),
                ulLinkNodeCnt * sizeof(HDLC_PARA_LINK_NODE_STRU));
@@ -349,7 +349,7 @@ VOS_VOID PPP_HDLC_HARD_MntnDefTraceInput
 
     if ((g_stHdlcConfigInfo.ulHdlcMntnTraceCfg & PPP_HDLC_MNTN_TRACE_DATA) != 0)
     {
-        /* ��¼���ϱ������������нڵ���������ݣ�ÿ���ڵ���һ��IP�� */
+        /* 记录并上报参数链表所有节点的数据内容，每个节点是一个IP包 */
         for ( ulNodeLoop = 0; ulNodeLoop < pstBuildInfo->ulInputLinkNodeCnt; ulNodeLoop++ )
         {
             pstParaNode = &(pstDefBuffInfo->astInputParaLinkNodeBuf[ulNodeLoop]);
@@ -358,7 +358,7 @@ VOS_VOID PPP_HDLC_HARD_MntnDefTraceInput
                                               ID_HDLC_MNTN_DEF_INPUT_DATA, ulNodeLoop);
 
 #if ((FEATURE_OFF == FEATURE_SKB_EXP) || (FEATURE_ON == FEATURE_TTFMEM_CACHE))
-            /* ��Ҫ������д��DDR��HDLC��DDR�ж����� */
+            /* 需要将数据写回DDR，HDLC从DDR中读数据 */
             PPP_HDLC_CACHE_FLUSH((VOS_UINT8*)PPP_PHY_TO_VIRT((VOS_UINT32)(pstParaNode->pucDataAddr)), pstParaNode->usDataLen);
 #endif
         }
@@ -383,7 +383,7 @@ VOS_VOID PPP_HDLC_HARD_MntnDefTraceRegConfig
     {
         ulDataLen    = sizeof(HDLC_MNTN_DEF_REG_CONFIG_STRU);
 
-        /* ����ȫ���Ĵ������� */
+        /* 拷贝全部寄存器内容 */
         pstRegConfig->ulStateSwRst             = TTF_READ_32REG(SOC_ARM_HDLC_STATE_SW_RST_ADDR(HDLC_IP_BASE_ADDR));
         pstRegConfig->ulPriorTimeoutCtrl       = TTF_READ_32REG(SOC_ARM_HDLC_PRIROR_TIMEOUT_CTRL_ADDR(HDLC_IP_BASE_ADDR));
         pstRegConfig->ulRdErrCurrAddr          = TTF_READ_32REG(SOC_ARM_HDLC_RD_ERR_CURR_ADDR(HDLC_IP_BASE_ADDR));
@@ -415,7 +415,7 @@ VOS_VOID PPP_HDLC_HARD_MntnDefTraceRegConfig
         pstRegConfig->ulDefInfoFr1CntAgo       = TTF_READ_32REG(SOC_ARM_HDLC_DEF_INFO_FRL_CNT_AGO_ADDR(HDLC_IP_BASE_ADDR));
         pstRegConfig->ulDefInfoFr1CntNow       = TTF_READ_32REG(SOC_ARM_HDLC_DEF_INFO_FRL_CNT_NOW_ADDR(HDLC_IP_BASE_ADDR));
 
-        /* ʹ��ǰ������ʹ�ܼĴ�����û�����ã���Ϊ����֮��HDLC�Ὺʼ��������ı������Ĵ�����ֵ */
+        /* 使能前勾包，使能寄存器还没有配置，因为配置之后HDLC会开始工作，会改变其他寄存器的值 */
         if( VOS_FALSE == ulEnable)
         {
             pstRegConfig->ulHdlcDefEn   = ulValue;
@@ -424,7 +424,7 @@ VOS_VOID PPP_HDLC_HARD_MntnDefTraceRegConfig
         }
         else
         {
-            /* ʹ�ܺ󹴰�ʱ����������жϷ�ʽ����RawInt��Statusȡg_stHdlcRegSaveInfo�����ֵ */
+            /* 使能后勾包时，如果采用中断方式，则RawInt和Status取g_stHdlcRegSaveInfo保存的值 */
             if( VOS_TRUE == ulEnableInterrupt )
             {
                 pstRegConfig->ulHdlcDefRawInt   = g_stHdlcRegSaveInfo.ulHdlcDefRawInt;
@@ -443,7 +443,7 @@ VOS_VOID PPP_HDLC_HARD_MntnShowDefReg(VOS_VOID)
     HDLC_MNTN_DEF_REG_CONFIG_STRU          *pstRegConfig = &stRegConfig;
 
 
-    /* ����ȫ���Ĵ������� */
+    /* 拷贝全部寄存器内容 */
     pstRegConfig->ulStateSwRst             = TTF_READ_32REG(SOC_ARM_HDLC_STATE_SW_RST_ADDR(HDLC_IP_BASE_ADDR));
     pstRegConfig->ulPriorTimeoutCtrl       = TTF_READ_32REG(SOC_ARM_HDLC_PRIROR_TIMEOUT_CTRL_ADDR(HDLC_IP_BASE_ADDR));
     pstRegConfig->ulRdErrCurrAddr          = TTF_READ_32REG(SOC_ARM_HDLC_RD_ERR_CURR_ADDR(HDLC_IP_BASE_ADDR));
@@ -542,7 +542,7 @@ VOS_VOID PPP_HDLC_HARD_MntnDefTraceOutput
     VOS_UINT16                          usMaxFrameNum;
 
 
-    /* ���װ�ϱ��ռ��ά�ɲ� */
+    /* 解封装上报空间可维可测 */
     if ((g_stHdlcConfigInfo.ulHdlcMntnTraceCfg & PPP_HDLC_MNTN_TRACE_PARA) != 0)
     {
         usMaxFrameNum = (HDLC_MNTN_ALLOC_MEM_MAX_SIZE - sizeof(HDLC_MNTN_DEF_OUTPUT_PARA_STRU)) /
@@ -573,7 +573,7 @@ VOS_VOID PPP_HDLC_HARD_MntnDefTraceOutput
         PS_MEM_FREE(PS_PID_APP_PPP, pstOutputPara);
     }
 
-    /* ���װĿ�Ŀռ���ÿ����Ч֡��ά�ɲ� */
+    /* 解封装目的空间中每个有效帧可维可测 */
     if ((g_stHdlcConfigInfo.ulHdlcMntnTraceCfg & PPP_HDLC_MNTN_TRACE_DATA) != 0)
     {
         for ( ulNodeLoop = 0; ulNodeLoop < usValidFrameNum; ulNodeLoop++ )
@@ -609,7 +609,7 @@ VOS_VOID PPP_HDLC_HARD_MntnFrmTraceInput
 
     if ((g_stHdlcConfigInfo.ulHdlcMntnTraceCfg & PPP_HDLC_MNTN_TRACE_DATA) != 0)
     {
-        /* ��¼���ϱ������������нڵ���������ݣ�ÿ���ڵ���һ��IP�� */
+        /* 记录并上报参数链表所有节点的数据内容，每个节点是一个IP包 */
         for ( ulNodeLoop = 0; ulNodeLoop < pstBuildInfo->ulInputLinkNodeCnt; ulNodeLoop++ )
         {
             pstParaNode = &(pstFrmBuffInfo->astInputParaLinkNodeBuf[ulNodeLoop]);
@@ -618,7 +618,7 @@ VOS_VOID PPP_HDLC_HARD_MntnFrmTraceInput
                                               ID_HDLC_MNTN_FRM_INPUT_DATA, ulNodeLoop);
 
 #if ((FEATURE_OFF == FEATURE_SKB_EXP) || (FEATURE_ON == FEATURE_TTFMEM_CACHE))
-            /* ��Ҫ������д��DDR��HDLC��DDR�ж����� */
+            /* 需要将数据写回DDR，HDLC从DDR中读数据 */
             PPP_HDLC_CACHE_FLUSH((VOS_UINT8*)PPP_PHY_TO_VIRT((VOS_UINT32)(pstParaNode->pucDataAddr)), pstParaNode->usDataLen);
 #endif
         }
@@ -643,7 +643,7 @@ VOS_VOID PPP_HDLC_HARD_MntnFrmTraceRegConfig
     {
         ulDataLen    = sizeof(HDLC_MNTN_FRM_REG_CONFIG_STRU);
 
-        /* ����ȫ���Ĵ������� */
+        /* 拷贝全部寄存器内容 */
         pstRegConfig->ulStateSwRst          = TTF_READ_32REG(SOC_ARM_HDLC_STATE_SW_RST_ADDR(HDLC_IP_BASE_ADDR));
         pstRegConfig->ulPriorTimeoutCtrl    = TTF_READ_32REG(SOC_ARM_HDLC_PRIROR_TIMEOUT_CTRL_ADDR(HDLC_IP_BASE_ADDR));
         pstRegConfig->ulRdErrCurrAddr       = TTF_READ_32REG(SOC_ARM_HDLC_RD_ERR_CURR_ADDR(HDLC_IP_BASE_ADDR));
@@ -666,7 +666,7 @@ VOS_VOID PPP_HDLC_HARD_MntnFrmTraceRegConfig
         pstRegConfig->ulFrmRptAddr          = TTF_READ_32REG(SOC_ARM_HDLC_FRM_RPT_ADDR(HDLC_IP_BASE_ADDR));
         pstRegConfig->ulFrmRptDep           = TTF_READ_32REG(SOC_ARM_HDLC_FRM_RPT_DEP_ADDR(HDLC_IP_BASE_ADDR));
 
-        /* ʹ��ǰ������ʹ�ܼĴ�����û�����ã���Ϊ����֮��HDLC�Ὺʼ��������ı������Ĵ�����ֵ */
+        /* 使能前勾包，使能寄存器还没有配置，因为配置之后HDLC会开始工作，会改变其他寄存器的值 */
         if( VOS_FALSE == ulEnable )
         {
             pstRegConfig->ulHdlcFrmEn    = ulValue;
@@ -675,7 +675,7 @@ VOS_VOID PPP_HDLC_HARD_MntnFrmTraceRegConfig
         }
         else
         {
-            /* ʹ�ܺ󹴰�ʱ����������жϷ�ʽ����RawInt��Statusȡg_stHdlcRegSaveInfo�����ֵ */
+            /* 使能后勾包时，如果采用中断方式，则RawInt和Status取g_stHdlcRegSaveInfo保存的值 */
             if( VOS_TRUE == ulEnableInterrupt )
             {
                 pstRegConfig->ulHdlcFrmRawInt   = g_stHdlcRegSaveInfo.ulHdlcFrmRawInt;
@@ -694,7 +694,7 @@ VOS_VOID PPP_HDLC_HARD_MntnShowFrmReg(VOS_VOID)
     HDLC_MNTN_FRM_REG_CONFIG_STRU          *pstRegConfig = &stRegConfig;
 
 
-    /* ����ȫ���Ĵ������� */
+    /* 拷贝全部寄存器内容 */
     pstRegConfig->ulStateSwRst          = TTF_READ_32REG(SOC_ARM_HDLC_STATE_SW_RST_ADDR(HDLC_IP_BASE_ADDR));
     pstRegConfig->ulPriorTimeoutCtrl    = TTF_READ_32REG(SOC_ARM_HDLC_PRIROR_TIMEOUT_CTRL_ADDR(HDLC_IP_BASE_ADDR));
     pstRegConfig->ulRdErrCurrAddr       = TTF_READ_32REG(SOC_ARM_HDLC_RD_ERR_CURR_ADDR(HDLC_IP_BASE_ADDR));
@@ -806,21 +806,21 @@ VOS_UINT32 PPP_HDLC_HARD_InitBuf(VOS_VOID)
     stQuery.enSectType = BSP_DDR_SECT_TYPE_TTF;
     DRV_GET_FIX_DDR_ADDR(&stQuery, &stInfo);
 
-    /* A��ʹ�������ַ */
+    /* A核使用虚拟地址 */
     ulBaseAddr = stInfo.ulSectVirtAddr;
 
     g_ulPppVirtAddr = stInfo.ulSectVirtAddr;
     g_ulPppPhyAddr  = stInfo.ulSectPhysAddr;
 
-    /* HDLC�ڴ滹û�ж������֣�Ŀǰ��CIPHER�ڴ���� */
+    /* HDLC内存还没有独立划分，目前在CIPHER内存后面 */
     ulHdlcMemBaseAddr = TTF_HDLC_MASTER_START_ADDR(ulBaseAddr);
 
-    /* ����TtfMemoryMap.h��ʼ��HDLC�����ڴ� */
+    /* 根据TtfMemoryMap.h初始化HDLC所需内存 */
     g_pstHdlcDefBufInfo = (HDLC_DEF_BUFF_INFO_STRU *)ulHdlcMemBaseAddr;
     g_pstHdlcFrmBufInfo = (HDLC_FRM_BUFF_INFO_STRU *)(ulHdlcMemBaseAddr + sizeof(HDLC_DEF_BUFF_INFO_STRU));
 
     /*lint -e506 -e774*/
-    /* TTF_HDLC_MASTER_DEF_BUF_LEN������ṹHDLC_DEF_BUFF_INFO_STRU�Ĵ�Сһ�� */
+    /* TTF_HDLC_MASTER_DEF_BUF_LEN必须与结构HDLC_DEF_BUFF_INFO_STRU的大小一致 */
     if (TTF_HDLC_MASTER_DEF_BUF_LEN != sizeof(HDLC_DEF_BUFF_INFO_STRU))
     {
         PPP_MNTN_LOG2(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
@@ -829,7 +829,7 @@ VOS_UINT32 PPP_HDLC_HARD_InitBuf(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* TTF_HDLC_MASTER_FRM_BUF_LEN�ձ�����ṹHDLC_FRM_BUFF_INFO_STRU�Ĵ�Сһ�� */
+    /* TTF_HDLC_MASTER_FRM_BUF_LEN收必须与结构HDLC_FRM_BUFF_INFO_STRU的大小一致 */
     if (TTF_HDLC_MASTER_FRM_BUF_LEN != sizeof(HDLC_FRM_BUFF_INFO_STRU))
     {
         PPP_MNTN_LOG2(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
@@ -846,7 +846,7 @@ VOS_UINT32 PPP_HDLC_HARD_Init(VOS_VOID)
     VOS_UINT32                          ulBaseAddr;
 
 
-    /* ��ȡHDLC����ַ */
+    /* 获取HDLC基地址 */
     ulBaseAddr      = DRV_GET_IP_BASE_ADDR(BSP_IP_TYPE_HDLC);
 
     HDLC_IP_BASE_ADDR = IO_ADDRESS(ulBaseAddr);
@@ -858,16 +858,16 @@ VOS_UINT32 PPP_HDLC_HARD_Init(VOS_VOID)
     g_ulHdlcScCtrlBaseAddr  = IO_ADDRESS(ulBaseAddr);
 #endif
 
-    /* �ر�HDLCʱ�� */
+    /* 关闭HDLC时钟 */
     PPP_HDLC_HARD_PeriphClkClose();
 
-    /*��ȡHDLC���װ�жϺ�*/
+    /*获取HDLC解封装中断号*/
     g_stHdlcConfigInfo.slHdlcISRDef   = DRV_GET_INT_NO(BSP_INT_TYPE_HDLC_DEF);
 
-    /*��ȡHDLC��װ�жϺ�*/
+    /*获取HDLC封装中断号*/
     g_stHdlcConfigInfo.slHdlcISRFrm   = DRV_GET_INT_NO(BSP_INT_TYPE_HDLC_FRM);
 
-    /* ��ʼ���ڴ� */
+    /* 初始化内存 */
     if (VOS_OK != PPP_HDLC_HARD_InitBuf())
     {
         return VOS_ERR;
@@ -887,7 +887,7 @@ VOS_UINT32 PPP_HDLC_HARD_Init(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* �жϹҽ� */
+    /* 中断挂接 */
     if (VOS_OK != DRV_VICINT_CONNECT(g_stHdlcConfigInfo.slHdlcISRDef, (FUNCPTR_1)PPP_HDLC_HARD_DefIsr, 0))
     {
         PPP_MNTN_LOG1(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
@@ -896,7 +896,7 @@ VOS_UINT32 PPP_HDLC_HARD_Init(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* �ж�ʹ�� */
+    /* 中断使能 */
     if (VOS_OK != DRV_VICINT_ENABLE(g_stHdlcConfigInfo.slHdlcISRDef))
     {
         PPP_MNTN_LOG1(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
@@ -905,7 +905,7 @@ VOS_UINT32 PPP_HDLC_HARD_Init(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* �жϹҽ� */
+    /* 中断挂接 */
     if (VOS_OK != DRV_VICINT_CONNECT(g_stHdlcConfigInfo.slHdlcISRFrm, (FUNCPTR_1)PPP_HDLC_HARD_FrmIsr, 0))
     {
         PPP_MNTN_LOG1(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
@@ -940,8 +940,8 @@ VOS_VOID PPP_HDLC_HARD_SetUp(PPP_ID usPppId)
 
 VOS_VOID PPP_HDLC_HARD_Disable(VOS_VOID)
 {
-    /* ���޲�������ΪHDLC�Ż���һ��������װ����װ���ʱ����Ӳ���Զ���frm_en��def_en���㣻
-       ��װ����װ���̳���ʱ��Ӳ��Ҳ���Զ����㣬ʹ�ڲ�״̬������IDLE״̬��*/
+    /* 暂无操作，因为HDLC优化后，一套链表封装或解封装完成时，由硬件自动对frm_en或def_en清零；
+       封装或解封装过程出错时，硬件也会自动清零，使内部状态机返回IDLE状态；*/
 }
 
 
@@ -953,30 +953,30 @@ VOS_VOID PPP_HDLC_HARD_CommCfgReg(VOS_VOID)
     |--------|----------------------|-------|-------------------|-------|---------------|
     |   Rsv  | axireq_timeout_value |  Rsv  | axireq_timeout_en |  Rsv  |hdlc_prior_ctrl|
 
-    Reserved             [31:24] 8'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    axireq_timeout_value [23:16] 8'b0   h/s R/W  ��������AXI���߶�д����ʱ���ж�ֵ
-    Reserved             [15:9]  2'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    axireq_timeout_en    [8]     1'b0   h/s R/W  �Ƿ�����Ӳ���ж�AXI���߶�д����ʱ�����������ã�
-                                                   0������
-                                                   1����
-    Reserved             [7:2]   1'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    hdlc_prior_ctrl      [1:0]   1'b0   h/s R/W  HDLC��װ�����װ���ȼ����üĴ�����
-                                                    00��һ���ڹ����У���һ��Ҳ��ʹ������£��Ƚ��Ѵ��ڹ����е��Ǹ������꣬
-                                                        ��˭�ȱ�ʹ�����Ƚ�˭�����ꣻ
-                                                    01�����з�װ���ȼ��ߣ�
-                                                    10�����н��װ���ȼ��ߣ�
-                                                    11����Ч��
-                                                    (HDLC�ڲ����Ʊ���ͣ�ߵļ�����ʼ�����������װ����ͣ����װ�����������������
-                                                    ���װ�Ϳ�ʼ��������������װ����ͣ�����װ�������ݰ���������󣬷�װ�Ϳ�ʼ����������)
+    Reserved             [31:24] 8'b0   h/s R/W  保留位。读时返回0。写时无影响。
+    axireq_timeout_value [23:16] 8'b0   h/s R/W  软件配置AXI总线读写请求超时的判断值
+    Reserved             [15:9]  2'b0   h/s R/W  保留位。读时返回0。写时无影响。
+    axireq_timeout_en    [8]     1'b0   h/s R/W  是否允许硬件判断AXI总线读写请求超时，由软件配置：
+                                                   0不允许
+                                                   1允许
+    Reserved             [7:2]   1'b0   h/s R/W  保留位。读时返回0。写时无影响。
+    hdlc_prior_ctrl      [1:0]   1'b0   h/s R/W  HDLC封装、解封装优先级配置寄存器：
+                                                    00：一个在工作中，另一个也被使能情况下，先将已处于工作中的那个处理完，
+                                                        即谁先被使能则先将谁处理完；
+                                                    01：下行封装优先级高；
+                                                    10：上行解封装优先级高；
+                                                    11：无效。
+                                                    (HDLC内部控制被暂停者的继续开始工作：当解封装被暂停，封装整套链表被处理完后，
+                                                    解封装就开始继续工作；当封装被暂停，解封装整个数据包被处理完后，封装就开始继续工作。)
     */
 
     VOS_UINT32                          ulValue = 0x0;
 
 
-    /* ʹ��AXI����ʱ�жϣ�debugʱʹ�ã�����HDLC���ó�ʱʱ����̣�����������ģʽ�²����� */
+    /* 使能AXI请求超时判断，debug时使用，由于HDLC设置超时时间过短，故正常功能模式下不开启 */
 /*    SET_BIT_TO_DWORD(ulValue, 8); */
 
-    /* ����AXI����ʱʱ������ֵ��SoC�ṩ�����ұ�֤��ƽ̨���� */
+    /* 设置AXI请求超时时长，该值由SoC提供，并且保证无平台差异 */
     ulValue |= (HDLC_AXI_REQ_TIMEOUT_VALUE << 16);
 
     TTF_WRITE_32REG(SOC_ARM_HDLC_PRIROR_TIMEOUT_CTRL_ADDR(HDLC_IP_BASE_ADDR), ulValue);
@@ -1011,7 +1011,7 @@ VOS_UINT32 PPP_HDLC_HARD_CommWaitSem
 {
     VOS_UINT32                          ulResult;
 
-    /* �ȴ���װ����װ��� */
+    /* 等待封装或解封装完成 */
     ulResult = VOS_SmP(ulHdlcMasterSem, ulSemTimeoutLen);
 
     if (VOS_OK != ulResult)
@@ -1033,7 +1033,7 @@ VOS_UINT32 PPP_HDLC_HARD_DefIsEnabled(VOS_VOID)
     VOS_UINT32                          ulValue;
 
 
-    /* SoC���ڴ�����һ������������ʱ���Զ���ʹ��λ���� */
+    /* SoC会在处理完一套输入链表的时候自动将使能位清零 */
     ulValue = TTF_READ_32REG(SOC_ARM_HDLC_DEF_EN_ADDR(HDLC_IP_BASE_ADDR));
 
     if (0x01 == (ulValue & 0x01))
@@ -1050,10 +1050,10 @@ VOS_UINT32 PPP_HDLC_HARD_DefIsr(int ulPara)
     g_stHdlcRegSaveInfo.ulHdlcDefRawInt = TTF_READ_32REG(SOC_ARM_HDLC_DEF_RAW_INT_ADDR(HDLC_IP_BASE_ADDR));
     g_stHdlcRegSaveInfo.ulHdlcDefStatus = TTF_READ_32REG(SOC_ARM_HDLC_DEF_STATUS_ADDR(HDLC_IP_BASE_ADDR));
 
-    /* �յ�һ���жϺ����ԭʼ�ж� */
+    /* 收到一次中断后清除原始中断 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_INT_CLR_ADDR(HDLC_IP_BASE_ADDR), 0xFFFFFFFF);
 
-    /* �ͷŷ�װ����ź��� */
+    /* 释放封装完成信号量 */
     VOS_SmV(g_stHdlcConfigInfo.ulHdlcDefMasterSem);
 
     g_PppHdlcHardStat.ulDefIsrCnt++;
@@ -1069,34 +1069,34 @@ VOS_UINT32 PPP_HDLC_HARD_DefWaitStatusChange()
       31 30   24 23   8 7 6  5   4   3   2  1  0
     |---|-------|------|---|---|---|---|---|----|
     |Rsv|  Type |  Num |Rsv|Idx|Ful|Ful|Now|Stat|
-    Reserved             [31]    1'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    def_err_type         [30:24] 7'b0    h/s RO   ��֡�ϱ�ʱ������֡���ͣ���Ӧ��bitλΪ1���������������ʹ���
-                                                  bit 30����������6��ת���ַ�0x7D�����һ��Flag��
-                                                  bit 29����������5����AC����ѹ��ʱ��Address��ֵ��0xFF��
-                                                  bit 28����������4����AC����ѹ��ʱ��Control��ֵ��0x03��
-                                                  bit 27����������3����P�������ʱ���յ��Ƿ���Protocol��ֵ��
-                                                  bit 26����������2�����װ��֡�ֽ���С��4bites��
-                                                  bit 25����������1�����װ��֡�ֽ�������1502bytes��PPP֡��Information�򲻳���1500Bytes������Э���򲻳���1502Bytes����
-                                                  bit 24����������0�� CRCУ�����
-    def_valid_num        [23:8]  16'b0   h/s RO   ��֡�ϱ�ʱ����Ч֡��Ŀ�������������һ�����ܵķ�����֡��
-    Reserved             [7:6]   2'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    def_error_index      [5]     1'b0    h/s RO   ���װ��������ָʾ
-    def_rpt_ful          [4]     1'b0    h/s RO   ���װ�ⲿ��ȷ֡��Ϣ�ϱ��ռ������ָͣʾ
-    def_out_spc_ful      [3]     1'b0    h/s RO   ���װ�ⲿ����洢�ռ������ָͣʾ
-    def_uncompleted_now  [2]     1'b0    h/s RO   ����ָʾ��ǰ�����Ƿ��н��������֡��Ϊ��֧�ֶ��PPP/IP���Ŷ����ӵ����ã�0��û�У�1����
-    def_all_pkt_pro_stat [1:0]   2'b0    h/s RO   һ��������������״̬��00��δ���һ����������������01��δ���һ�����������������ѽ��LCP֡��Ӳ��������ͣ״̬��
-                                                  10�����һ��������������������֡�ϱ���11: ���һ��������������������֡�ϱ���
+    Reserved             [31]    1'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    def_err_type         [30:24] 7'b0    h/s RO   有帧上报时，错误帧类型，对应的bit位为1即表明发生该类型错误：
+                                                  bit 30：错误类型6，转义字符0x7D后紧接一个Flag域；
+                                                  bit 29：错误类型5，当AC域无压缩时，Address域值非0xFF；
+                                                  bit 28：错误类型4，当AC域无压缩时，Control域值非0x03；
+                                                  bit 27：错误类型3，当P域需剥离时，收到非法的Protocol域值；
+                                                  bit 26：错误类型2，解封装后帧字节数小于4bites；
+                                                  bit 25：错误类型1，解封装后帧字节数大于1502bytes（PPP帧的Information域不超过1500Bytes，加上协议域不超过1502Bytes）；
+                                                  bit 24：错误类型0， CRC校验错误。
+    def_valid_num        [23:8]  16'b0   h/s RO   有帧上报时，有效帧数目；（不包括最后一个可能的非完整帧）
+    Reserved             [7:6]   2'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    def_error_index      [5]     1'b0    h/s RO   解封装发生错误指示
+    def_rpt_ful          [4]     1'b0    h/s RO   解封装外部正确帧信息上报空间存满暂停指示
+    def_out_spc_ful      [3]     1'b0    h/s RO   解封装外部输出存储空间存满暂停指示
+    def_uncompleted_now  [2]     1'b0    h/s RO   用于指示当前链表是否有解出非完整帧，为了支持多个PPP/IP拨号而增加的配置：0，没有；1，有
+    def_all_pkt_pro_stat [1:0]   2'b0    h/s RO   一套输入链表处理状态：00：未完成一套输入链表处理；01：未完成一套输入链表处理，已解出LCP帧，硬件处于暂停状态；
+                                                  10：完成一套输入链表处理，但无帧上报；11: 完成一套输入链表处理，且有帧上报；
     */
-    VOS_UINT32              ulRsltWaitNum;           /* ��ֹӲ���쳣�ı������� */
-    volatile VOS_UINT32     ulStatus;                /* ���װ״̬ */
+    VOS_UINT32              ulRsltWaitNum;           /* 防止硬件异常的保护变量 */
+    volatile VOS_UINT32     ulStatus;                /* 解封装状态 */
 
-   /* ��ѯhdlc_frm_status (0x28)�ĵ�[0]λ�͵�[1]λ���κ�һ��Ϊ1���߳�ʱ�򷵻� */
+   /* 查询hdlc_frm_status (0x28)的第[0]位和第[1]位，任何一个为1或者超时则返回 */
 
     ulRsltWaitNum = 0UL;
 
     while (ulRsltWaitNum < HDLC_DEF_MAX_WAIT_RESULT_NUM)
     {
-        /* ��ѯ״̬�Ĵ���hdlc_def_status (0x88)��0-1��3-5λ���κ�һλ��Ϊ1��ʾ���װģ����ͣ��ֹͣ */
+        /* 查询状态寄存器hdlc_def_status (0x88)的0-1和3-5位，任何一位变为1表示解封装模块暂停或停止 */
         ulStatus  =   TTF_READ_32REG(SOC_ARM_HDLC_DEF_STATUS_ADDR(HDLC_IP_BASE_ADDR));
 
         if (HDLC_DEF_STATUS_DOING != (ulStatus & HDLC_DEF_STATUS_MASK))
@@ -1129,33 +1129,33 @@ VOS_UINT32 PPP_HDLC_HARD_DefWaitResult
     VOS_UINT32          ulEnableInterrupt
 )
 {
-    VOS_UINT32                          ulStatus;                /* ���װ״̬ */
+    VOS_UINT32                          ulStatus;                /* 解封装状态 */
     VOS_UINT32                          ulResult;
 
 
     if (VOS_TRUE == ulEnableInterrupt)
     {
-        /* �ȴ��жϵõ���ͣ�����״̬ */
+        /* 等待中断得到暂停或完成状态 */
         ulResult = PPP_HDLC_HARD_CommWaitSem(g_stHdlcConfigInfo.ulHdlcDefMasterSem, HDLC_DEF_MASTER_INT_TIMER_LEN);
 
-        /* �������жϷ�������н��������жϲ�������Statusָʾ�Ƿ������bit��ԭʼ
-           �жϼĴ����������ʴ˴�ȡ������g_stHdlcRegSaveInfo�е�״ֵ̬ */
+        /* 由于在中断服务程序中进行了清中断操作，而Status指示是否出错的bit由原始
+           中断寄存器决定，故此处取保存在g_stHdlcRegSaveInfo中的状态值 */
         ulStatus = g_stHdlcRegSaveInfo.ulHdlcDefStatus;
 
     }
     else
     {
-        /* ��ѯ�õ���ͣ����� */
+        /* 轮询得到暂停或完成 */
         ulResult = PPP_HDLC_HARD_DefWaitStatusChange();
 
-        /* ��ѯhdlc_def_status (0x88)��ȡ���װ״̬�����䷵�� */
+        /* 查询hdlc_def_status (0x88)获取解封装状态并将其返回 */
         ulStatus  =  TTF_READ_32REG(SOC_ARM_HDLC_DEF_STATUS_ADDR(HDLC_IP_BASE_ADDR));
     }
 
-    /* �ϱ��Ĵ�����ά�ɲ� */
+    /* 上报寄存器可维可测 */
     PPP_HDLC_HARD_MntnDefTraceRegConfig(VOS_TRUE, 0, ulEnableInterrupt);
 
-    /* �Ȳ���˵��HDLC���ڹ��� */
+    /* 等不到说明HDLC还在工作 */
     if (VOS_OK != ulResult)
     {
         return HDLC_DEF_STATUS_DOING;
@@ -1194,7 +1194,7 @@ PPP_ZC_STRU * PPP_HDLC_HARD_DefProcRptNode
     }
 
     pucDefOutOneAddr    = (VOS_UINT8*)PPP_PHY_TO_VIRT((VOS_UINT32)pstRptNode->pucDefOutOneAddr);
-    /* �жϸ�֡��ʼ�ӳ����Ƿ񳬹�����ռ�β�����������ƻش��� */
+    /* 判断该帧起始加长度是否超过输出空间尾部，超出后按绕回处理 */
     if ((pucDefOutOneAddr + pstRptNode->usDefOutOneLen) >
         HDLC_DEF_OUTPUT_BUF_END_ADDR)
     {
@@ -1202,11 +1202,11 @@ PPP_ZC_STRU * PPP_HDLC_HARD_DefProcRptNode
         {
             usFistSegLen = (VOS_UINT32)(HDLC_DEF_OUTPUT_BUF_END_ADDR - pucDefOutOneAddr);
 
-            /* ��������ʼ��ַ������ռ�β�������� */
+            /* 拷贝从起始地址至输出空间尾部的数据 */
             PPP_MemSingleCopy(PPP_ZC_GET_DATA_PTR(pstMem), pucDefOutOneAddr,
                               usFistSegLen);
 
-            /* ����������ռ��ײ���ʣ������ */
+            /* 拷贝在输出空间首部的剩余数据 */
             PPP_MemSingleCopy(PPP_ZC_GET_DATA_PTR(pstMem) + usFistSegLen, HDLC_DEF_OUTPUT_BUF_START_ADDR,
                               pstRptNode->usDefOutOneLen - usFistSegLen);
         }
@@ -1228,7 +1228,7 @@ PPP_ZC_STRU * PPP_HDLC_HARD_DefProcRptNode
                           pstRptNode->usDefOutOneLen);
     }
 
-    /* �����㿽�����ݳ��� */
+    /* 设置零拷贝数据长度 */
     PPP_ZC_SET_DATA_LEN(pstMem, pstRptNode->usDefOutOneLen);
 
     return pstMem;
@@ -1252,10 +1252,10 @@ VOS_VOID PPP_HDLC_HARD_DefProcValidFrames
     pstDefBuffInfo  = HDLC_DEF_GET_BUF_INFO(usPppId);
     usValidFrameNum = (VOS_UINT16)TTF_Read32RegByBit(SOC_ARM_HDLC_DEF_STATUS_ADDR(HDLC_IP_BASE_ADDR), 8, 23);
 
-    /* �ϱ����װ�����ݿ�ά�ɲ�:�ϱ��ռ���Ϣ��������� */
+    /* 上报解封装后数据可维可测:上报空间信息、输出内容 */
     PPP_HDLC_HARD_MntnDefTraceOutput(usValidFrameNum, pstDefBuffInfo);
 
-    /* ��Ч֡�����ֵ��� */
+    /* 有效帧数最大值检查 */
     if (TTF_HDLC_DEF_RPT_MAX_NUM < usValidFrameNum)
     {
         PPP_MNTN_LOG2(PS_PID_APP_PPP, 0, PS_PRINT_WARNING,
@@ -1266,14 +1266,14 @@ VOS_VOID PPP_HDLC_HARD_DefProcValidFrames
 
     g_PppHdlcHardStat.ulDefMaxValidCntOnce = TTF_MAX(g_PppHdlcHardStat.ulDefMaxValidCntOnce, usValidFrameNum);
 
-    /* ��Ŀ�Ŀռ����Ч֡���ݿ������㿽���ڴ棬���ݲ������͵������з����ӿ� */
+    /* 将目的空间的有效帧数据拷贝至零拷贝内存，根据拨号类型调用上行发数接口 */
     for ( ulFrameLoop = 0 ; ulFrameLoop < usValidFrameNum; ulFrameLoop++ )
     {
         pstRptNode = &(pstDefBuffInfo->astRptNodeBuf[ulFrameLoop]);
 
         pstMem = PPP_HDLC_HARD_DefProcRptNode(pstRptNode);
 
-        /* ���벻�����ݻ��ϱ���Ϣ���󣬶�������Ч֡ */
+        /* 申请不到内容或上报信息错误，丢弃该有效帧 */
         if (VOS_NULL_PTR == pstMem)
         {
             continue;
@@ -1305,8 +1305,8 @@ VOS_VOID PPP_HDLC_HARD_DefProcErrorFrames
     HDLC_DEF_ERR_FRAMES_CNT_STRU        stErrCnt;
 
 
-    /* ��ѯ״̬�Ĵ���hdlc_def_status (0x88)�ĵ�24:30��Ӧ����λΪ1��ʾ��ĳ�ִ���֡�����
-       Ϊ0��ʾ��֡��� */
+    /* 查询状态寄存器hdlc_def_status (0x88)的第24:30对应比特位为1表示有某种错误帧输出，
+       为0表示无帧输出 */
     ucErrType = (VOS_UINT8)TTF_Read32RegByBit(SOC_ARM_HDLC_DEF_STATUS_ADDR(HDLC_IP_BASE_ADDR) , 24, 30);
 
     if (0 == ucErrType)
@@ -1338,45 +1338,45 @@ VOS_VOID PPP_HDLC_HARD_DefProcErrorFrames
     /*lint +e734*/
     for (ulErrTypeLoop = 0UL; ulErrTypeLoop < HDLC_DEF_MAX_TYPE_CNT; ulErrTypeLoop++)
     {
-        ucMask   = SET_BITS_VALUE_TO_BYTE(0x01, ulErrTypeLoop);    /* �������� */
+        ucMask   = SET_BITS_VALUE_TO_BYTE(0x01, ulErrTypeLoop);    /* 构造掩码 */
         ucResult = (VOS_UINT8)GET_BITS_FROM_BYTE(ucErrType, ucMask);
 
-        if (0 != ucResult)      /* ���ڴ������ */
+        if (0 != ucResult)      /* 存在此类错误 */
         {
-            if (0UL == ulErrTypeLoop)   /* ��������0: CRCУ����� */
+            if (0UL == ulErrTypeLoop)   /* 错误类型0: CRC校验错误 */
             {
                 pstLink->hdlc.stats.badfcs       += stErrCnt.usFCSErrCnt;
                 pstLink->hdlc.lqm.SaveInErrors   += stErrCnt.usFCSErrCnt;
                 PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_WARNING, "bad hdlc fcs\r\n");
             }
-            else if (1UL == ulErrTypeLoop)    /* ��������1: ���װ��֡�ֽ�������1502bytes */
+            else if (1UL == ulErrTypeLoop)    /* 错误类型1: 解封装后帧字节数大于1502bytes */
             {
                 pstLink->hdlc.lqm.SaveInErrors += stErrCnt.usLenLongCnt;
                 PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_WARNING, "bad hdlc frame length too long\r\n");
             }
-            else if (2UL == ulErrTypeLoop)    /* ��������2: ���װ��֡�ֽ���С��4bytes */
+            else if (2UL == ulErrTypeLoop)    /* 错误类型2: 解封装后帧字节数小于4bytes */
             {
                 pstLink->hdlc.lqm.SaveInErrors += stErrCnt.usLenShortCnt;
                 PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_WARNING, "bad hdlc frame length too short\r\n");
             }
-            else if (3UL == ulErrTypeLoop)    /* ��������3: ��P�������ʱ, �յ��Ƿ���Protocol��ֵ(��*******0 *******1��ʽ) */
+            else if (3UL == ulErrTypeLoop)    /* 错误类型3: 当P域需剥离时, 收到非法的Protocol域值(非*******0 *******1形式) */
             {
                 pstLink->hdlc.lqm.SaveInErrors += stErrCnt.usErrProtocolCnt;
                 PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_WARNING, "bad hdlc frame protocol\r\n");
             }
-            else if (4UL == ulErrTypeLoop)    /* ��������4: ��AC����ѹ��ʱ, Control��ֵ��0x03 */
+            else if (4UL == ulErrTypeLoop)    /* 错误类型4: 当AC域无压缩时, Control域值非0x03 */
             {
                 pstLink->hdlc.lqm.SaveInErrors += stErrCnt.usErrCtrlCnt;
                 pstLink->hdlc.stats.badcommand += stErrCnt.usErrCtrlCnt;
                 PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL, "bad hdlc frame control\r\n");
             }
-            else if (5UL == ulErrTypeLoop)    /* ��������5: ��AC����ѹ��ʱ, Address��ֵ��0xFF */
+            else if (5UL == ulErrTypeLoop)    /* 错误类型5: 当AC域无压缩时, Address域值非0xFF */
             {
                 pstLink->hdlc.lqm.SaveInErrors += stErrCnt.usErrAddrCnt;
                 pstLink->hdlc.stats.badaddr    += stErrCnt.usErrAddrCnt;
                 PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL, "bad hdlc frame address\r\n");
             }
-            else if (6UL == ulErrTypeLoop)    /* ��������6: ת���ַ�0x7D�����һ��Flag�� */
+            else if (6UL == ulErrTypeLoop)    /* 错误类型6: 转义字符0x7D后紧接一个Flag域 */
             {
                 pstLink->hdlc.lqm.SaveInErrors += stErrCnt.usFlagPosErrCnt;
                 PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL, "bad hdlc frame flag position\r\n");
@@ -1403,15 +1403,15 @@ VOS_VOID PPP_HDLC_HARD_DefCfgGoOnReg
      31                  17  16  15    9   8  7   1  0
     |----------------------|----|-------|----|-----|----|
     |         Rsv          |Goon|  Rsv  |Goon| Rsv |Goon|
-    Reserved             [31:17] 15'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    def_rpt_ful_goon     [16]    1'b0    h/s WO   �ⲿ���װ��Ч֡��Ϣ�ϱ��ռ������ͣ���
-    Reserved             [15:9]  7'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    def_outspc_ful_goon  [8]     1'b0    h/s WO   �ⲿ���װ������ݴ洢�ռ������ͣ״̬���
-    Reserved             [7:1]   7'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    def_lcp_goon         [0]     1'b0    h/s WO   ���һ���Ϸ�LCP֡���µ�Ӳ����ͣ״̬����������װģ��δ������һ������װ�����ݣ�<=2KB(def_in_pkt_len_max)�������һ���Ϸ�LCP֡�������ͣ��֡���ȴ���������˼Ĵ���д"1"���ټ�������ʣ������ݡ�
+    Reserved             [31:17] 15'b0   h/s R/W  保留位。读时返回0。写时无影响。
+    def_rpt_ful_goon     [16]    1'b0    h/s WO   外部解封装有效帧信息上报空间存满暂停解除
+    Reserved             [15:9]  7'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    def_outspc_ful_goon  [8]     1'b0    h/s WO   外部解封装输出数据存储空间存满暂停状态清除
+    Reserved             [7:1]   7'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    def_lcp_goon         [0]     1'b0    h/s WO   解出一个合法LCP帧导致的硬件暂停状态清除。当解封装模块未处理完一组待解封装的数据（<=2KB(def_in_pkt_len_max)），解出一个合法LCP帧，则会暂停解帧，等待此软件向此寄存器写"1"，再继续处理剩余的数据。
     */
 
-    /* GO_ONǰ����ϴν��װ��ԭʼ�ж� */
+    /* GO_ON前清除上次解封装的原始中断 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_INT_CLR_ADDR(HDLC_IP_BASE_ADDR), 0xFFFFFFFF);
 
     if (HDLC_DEF_STATUS_PAUSE_RPT_SPACE_FULL == ulDefStatus )
@@ -1436,7 +1436,7 @@ VOS_VOID PPP_HDLC_HARD_DefCfgGoOnReg
                       ulDefStatus);
     }
 
-    /* PC��ʹ��HDLCģ���� */
+    /* PC上使用HDLC模拟器 */
     #if (VOS_OS_VER == VOS_WIN32)
     VHW_HDLC_Task();
     #endif
@@ -1457,11 +1457,11 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgReg
          31                           4 3     2   1     0
         |-------------------------------|-------|-----|-----|
         |              Rsv              |  Pfc  | Acfc| ago |
-        Reserved             [31:4]  28'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-        def_pfc              [3:2]   2'b0    h/s R/W  P��ѹ��ָʾ��00��P����ѹ��������룻01��P��ѹ��������룻11��P�򲻰��룻��������Ч��
-        def_acfc             [1]     1'b0    h/s R/W  AC��ѹ��ָʾ��0��AC����ѹ����1����ʾAC��ѹ����
-        def_uncompleted_ago  [0]     1'b0    h/s R/W  ����ָʾ��Ӧ��ǰ���װ����������ͬһPPP/IP���ŵ���ǰ������װ���������Ƿ��н��������֡��
-                                                      Ϊ��֧�ֶ��PPP/IP���Ŷ����ӵ����ã�0��û�У�1����
+        Reserved             [31:4]  28'b0   h/s R/W  保留位。读时返回0。写时无影响。
+        def_pfc              [3:2]   2'b0    h/s R/W  P域压缩指示：00：P域无压缩，需剥离；01：P域压缩，需剥离；11：P域不剥离；其他：无效；
+        def_acfc             [1]     1'b0    h/s R/W  AC域压缩指示：0：AC域无压缩；1：表示AC域压缩；
+        def_uncompleted_ago  [0]     1'b0    h/s R/W  用于指示对应当前解封装输入链表，同一PPP/IP拨号的以前最近解封装输入链表是否有解出非完整帧，
+                                                      为了支持多个PPP/IP拨号而增加的配置：0，没有；1，有
         */
 
     VOS_UINT32       ulDeframerCfg;
@@ -1470,35 +1470,35 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgReg
     VOS_UINT8        ucLowByte;
     VOS_UINT16       usLowWord;
 
-    /* 1.����ulMode��P���AC���Ƿ�ѹ������hdlc_def_cfg (0x70) */
+    /* 1.根据ulMode、P域和AC域是否压缩配置hdlc_def_cfg (0x70) */
 
-    /* ��ȡAC��ѹ��ָʾ, P��ѹ��ָʾ */
+    /* 获取AC域压缩指示, P域压缩指示 */
     ucACComp = (1 == pstLink->lcp.want_acfcomp) ? 1 : 0;
 
-    if (HDLC_IP_MODE == ulMode) /* IPģʽ: P�򲻺��� */
+    if (HDLC_IP_MODE == ulMode) /* IP模式: P域不合入 */
     {
         ucPComp = (1 == pstLink->lcp.want_protocomp)
                    ? HDLC_PROTOCOL_REMOVE_WITH_COMPRESS
                    : HDLC_PROTOCOL_REMOVE_WITHOUT_COMPRESS;
     }
-    else                        /* PPPģʽ: P����� */
+    else                        /* PPP模式: P域合入 */
     {
         ucPComp = HDLC_PROTOCOL_NO_REMOVE;
     }
 
-    /* ��ucPComp���õ�һ���ֽڵĵ�2, 3λ�� */
+    /* 将ucPComp设置到一个字节的第2, 3位上 */
     ucLowByte = SET_BITS_VALUE_TO_BYTE(ucPComp, HDLC_DEF_PFC_BITPOS);
 
-    if (1 == ucACComp)  /* AC��ѹ�� */
+    if (1 == ucACComp)  /* AC域压缩 */
     {
         SET_BIT_TO_BYTE(ucLowByte, HDLC_DEF_ACFC_BITPOS);
     }
 
-    /* 2.���÷�����֡�����Ϣ */
+    /* 2.设置非完整帧相关信息 */
     if ( (VOS_NULL_PTR != pstDefUncompletedInfo) &&
         (HDLC_DEF_UNCOMPLETED_EXIST == pstDefUncompletedInfo->ucExistFlag) )
     {
-        /* def_uncompleted_ago��1��ʾ���ϴ�����ķ�����֡���뱾�ν��װ */
+        /* def_uncompleted_ago置1表示有上次输出的非完整帧参与本次解封装 */
         SET_BIT_TO_BYTE(ucLowByte, HDLC_DEF_IS_UNCOMPLETED_AGO_BITPOS);
 
         /*
@@ -1506,8 +1506,8 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgReg
          31                 16  15                  0
         |---------------------|----------------------|
         |         Rsv         |         Len          |
-        Reserved             [31:16] 16'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-        def_uncompleted_len  [15:0]  16'b0   h/s R/W  ��Ӧ��ǰ���װ����������ͬһPPP/IP���ŵ���ǰ������װ�����������������֡�ĳ��ȣ�Ϊ��֧�ֶ��PPP/IP���Ŷ����ӵ�����
+        Reserved             [31:16] 16'b0   h/s R/W  保留位。读时返回0。写时无影响。
+        def_uncompleted_len  [15:0]  16'b0   h/s R/W  对应当前解封装输入链表，同一PPP/IP拨号的以前最近解封装输入链表解出非完整帧的长度，为了支持多个PPP/IP拨号而增加的配置
         */
         TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_UNCOMPLETED_LEN_ADDR(HDLC_IP_BASE_ADDR),
                         (VOS_UINT32)pstDefUncompletedInfo->usDefOutOneLen & 0xFFFF);
@@ -1517,9 +1517,9 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgReg
          31                 16  15                  0
         |---------------------|----------------------|
         |         Rsv         |         Pro          |
-        Reserved             [31:16] 16'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-        def_uncompleted_pro  [15:0]  16'b0   h/s R/W  ��Ӧ��ǰ���װ����������ͬһPPP/IP���ŵ���ǰ������װ�����������������֡��
-                                                      Э�飬Ϊ��֧�ֶ��PPP/IP���Ŷ����ӵ����ã��������е�0Byte��1Byte��2Byte��Ч��
+        Reserved             [31:16] 16'b0   h/s R/W  保留位。读时返回0。写时无影响。
+        def_uncompleted_pro  [15:0]  16'b0   h/s R/W  对应当前解封装输入链表，同一PPP/IP拨号的以前最近解封装输入链表解出非完整帧的
+                                                      协议，为了支持多个PPP/IP拨号而增加的配置（可能其中的0Byte、1Byte或2Byte有效）
         */
         TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_UNCOMPLETED_PRO_ADDR(HDLC_IP_BASE_ADDR),
                         (VOS_UINT32)pstDefUncompletedInfo->usDefOutOnePro & 0xFFFF);
@@ -1529,8 +1529,8 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgReg
          31                  0
         |----------------------|
         |         Addr         |
-        def_uncompleted_addr [31:0]  32'b0   h/s R/W  ��Ӧ��ǰ���װ����������ͬһPPP/IP���ŵ���ǰ������װ�����������������֡��
-                                                      �ⲿ�洢��ʼ��ַ��Ϊ��֧�ֶ��PPP/IP���Ŷ����ӵ����ã��õ�ַ��������ԭ���ϱ���ͬ���µ�ַ��
+        def_uncompleted_addr [31:0]  32'b0   h/s R/W  对应当前解封装输入链表，同一PPP/IP拨号的以前最近解封装输入链表解出非完整帧的
+                                                      外部存储起始地址，为了支持多个PPP/IP拨号而增加的配置（该地址可能是与原来上报不同的新地址）
         */
         TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_UNCOMPLETED_ADDR(HDLC_IP_BASE_ADDR),
                         (VOS_UINT32)pstDefUncompletedInfo->pucDefOutOneAddr);
@@ -1540,9 +1540,9 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgReg
          31                  16 15             5 4     0
         |----------------------|----------------|-------|
         |         Ago          |       Rsv      |  Ago  |
-        crc16_result_ago     [31:16] 16'b0   h/s R/W  �뵱ǰ���װ��������ͬһPPP/IP���ŵ���ǰ������׽��װ����������������������֡ʱ��CRCУ��ֵ
-        Reserved             [15:5]  11'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-        def_data_st_curr_ago [4:0]   5'b0    h/s R/W  �뵱ǰ���װ��������ͬһPPP/IP���ŵ���ǰ������׽��װ����������������������֡ʱ������״̬����ǰ״̬
+        crc16_result_ago     [31:16] 16'b0   h/s R/W  与当前解封装输入链表同一PPP/IP拨号的以前最近那套解封装输入链表处理完解出非完整帧时的CRC校验值
+        Reserved             [15:5]  11'b0   h/s R/W  保留位。读时返回0。写时无影响。
+        def_data_st_curr_ago [4:0]   5'b0    h/s R/W  与当前解封装输入链表同一PPP/IP拨号的以前最近那套解封装输入链表处理完解出非完整帧时的数据状态机当前状态
         */
         TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_UNCOMPLETED_ST_AGO_ADDR(HDLC_IP_BASE_ADDR),
                         (VOS_UINT32)pstDefUncompletedInfo->ulDefStAgo);
@@ -1552,10 +1552,10 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgReg
          31        27 26                 16 15   11 10              0
         |------------|---------------------|-------|-----------------|
         |    Rsv     |         Ago         |  Rsv  |       Ago       |
-        Reserved             [31:27] 5'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-        def_framel_cnt_ago   [26:16] 11'b0   h/s R/W  �뵱ǰ���װ��������ͬһPPP/IP���ŵ���ǰ������׽��װ����������������������֡ʱ��֡����
-        Reserved             [15:11] 5'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-        def_info_cnt_ago     [10:0]  11'b0   h/s R/W  �뵱ǰ���װ��������ͬһPPP/IP���ŵ���ǰ������׽��װ����������������������֡ʱ����Ϣ����
+        Reserved             [31:27] 5'b0    h/s R/W  保留位。读时返回0。写时无影响。
+        def_framel_cnt_ago   [26:16] 11'b0   h/s R/W  与当前解封装输入链表同一PPP/IP拨号的以前最近那套解封装输入链表处理完解出非完整帧时的帧长度
+        Reserved             [15:11] 5'b0    h/s R/W  保留位。读时返回0。写时无影响。
+        def_info_cnt_ago     [10:0]  11'b0   h/s R/W  与当前解封装输入链表同一PPP/IP拨号的以前最近那套解封装输入链表处理完解出非完整帧时的信息长度
         */
         TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_INFO_FRL_CNT_AGO_ADDR(HDLC_IP_BASE_ADDR),
                         (VOS_UINT32)pstDefUncompletedInfo->ulDefInfoFrlCntAgo);
@@ -1564,10 +1564,10 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgReg
     usLowWord     = HDLC_MAKE_WORD(0x00, ucLowByte);
     ulDeframerCfg = HDLC_MAKE_DWORD(0x00, usLowWord);
 
-    /* �����ý��д��Ĵ��� */
+    /* 将配置结果写入寄存器 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_CFG_ADDR(HDLC_IP_BASE_ADDR),ulDeframerCfg);
 
-    /* ��������������󵥰�����,���HDLC BUG,��󳤶�+1 */
+    /* 设置输入数据最大单包长度,规避HDLC BUG,最大长度+1 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_IN_PKT_LEN_MAX_ADDR(HDLC_IP_BASE_ADDR),
                     (VOS_UINT32)HDLC_DEF_IN_PER_MAX_CNT);
 
@@ -1581,7 +1581,7 @@ VOS_VOID PPP_HDLC_HARD_DefSaveUncompletedInfo
 )
 {
     HDLC_DEF_UNCOMPLETED_INFO_STRU     *pstUncompletedInfo;
-    VOS_UINT32                          ulStatus;                /* ���װ״̬ */
+    VOS_UINT32                          ulStatus;                /* 解封装状态 */
     HDLC_DEF_BUFF_INFO_STRU            *pstDefBuffInfo;
     VOS_UINT32                          ulValidNum;
     VOS_UINT8                          *pucDefOutOneAddr;
@@ -1593,9 +1593,9 @@ VOS_VOID PPP_HDLC_HARD_DefSaveUncompletedInfo
 
     ulStatus  =   TTF_READ_32REG(SOC_ARM_HDLC_DEF_STATUS_ADDR(HDLC_IP_BASE_ADDR));
 
-    /* ��ѯ״̬�Ĵ���hdlc_def_status (0x88)�ĵ�2λ
-       Ϊ1��ʾ���ν��װ�з�����֡�����
-       Ϊ0��ʾ�޷�����֡��� */
+    /* 查询状态寄存器hdlc_def_status (0x88)的第2位
+       为1表示本次解封装有非完整帧输出，
+       为0表示无非完整帧输出 */
     if (0 == (ulStatus & 0x4))
     {
         pstUncompletedInfo->ucExistFlag = HDLC_DEF_UNCOMPLETED_NOT_EXIST;
@@ -1605,10 +1605,10 @@ VOS_VOID PPP_HDLC_HARD_DefSaveUncompletedInfo
 
     g_PppHdlcHardStat.ulDefUncompleteCnt++;
 
-    /* def_valid_num        [23:8]  16'b0   h/s RO   ��֡�ϱ�ʱ����Ч֡��Ŀ�������������һ�����ܵķ�����֡�� */
+    /* def_valid_num        [23:8]  16'b0   h/s RO   有帧上报时，有效帧数目；（不包括最后一个可能的非完整帧） */
     ulValidNum = (ulStatus & 0xFFFF00) >> 8;
 
-    /* ������֡���ϱ���Ϣ����Ч֡���棬���ǲ�������Ч֡��Ŀ�� */
+    /* 非完整帧的上报信息在有效帧后面，但是不算在有效帧数目内 */
     if (TTF_HDLC_DEF_RPT_MAX_NUM <= ulValidNum)
     {
         PPP_MNTN_LOG2(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
@@ -1620,8 +1620,8 @@ VOS_VOID PPP_HDLC_HARD_DefSaveUncompletedInfo
         return;
     }
 
-    /* �з�����֡ʱ��Ҫ��ȡ������def_uncomplet_st_now(0x8C)��def_info_frl_cnt_now(0xC4)
-       ��ȡ�������ϱ��ռ���Ч֮֡��ķ�����֡���ȡ�Э������ݵ�ַ */
+    /* 有非完整帧时需要读取并保存def_uncomplet_st_now(0x8C)、def_info_frl_cnt_now(0xC4)
+       读取并保存上报空间有效帧之后的非完整帧长度、协议和数据地址 */
     pstUncompletedInfo->ucExistFlag = HDLC_DEF_UNCOMPLETED_EXIST;
 
     pstRptNode = &(pstDefBuffInfo->astRptNodeBuf[ulValidNum]);
@@ -1645,12 +1645,12 @@ VOS_VOID PPP_HDLC_HARD_DefSaveUncompletedInfo
     }
 
 
-    /* ������֡��Э�顢���Ⱥ��ڴ洢�ռ�ĵ�ַ������ֻ���ݴ���Щ��Ϣ�����½��װ��ʱ����ԭ�����HDLC */
+    /* 非完整帧的协议、长度和在存储空间的地址，软件只是暂存这些信息，等下解封装的时候再原样配给HDLC */
     pstUncompletedInfo->usDefOutOnePro   = pstRptNode->usDefOutOnePro;
     pstUncompletedInfo->usDefOutOneLen   = pstRptNode->usDefOutOneLen;
     pstUncompletedInfo->pucDefOutOneAddr = pstRptNode->pucDefOutOneAddr;
 
-    /* ����ֻ���ݴ���Щ��Ϣ�����½��װ��ʱ����ԭ�����HDLC */
+    /* 软件只是暂存这些信息，等下解封装的时候再原样配给HDLC */
     pstUncompletedInfo->ulDefStAgo         = TTF_READ_32REG(SOC_ARM_HDLC_DEF_UNCOMPLETED_ST_NOW_ADDR(HDLC_IP_BASE_ADDR));
     pstUncompletedInfo->ulDefInfoFrlCntAgo = TTF_READ_32REG(SOC_ARM_HDLC_DEF_INFO_FRL_CNT_NOW_ADDR(HDLC_IP_BASE_ADDR));
 
@@ -1671,7 +1671,7 @@ VOS_VOID PPP_HDLC_HARD_DefProcException
 
     if( VOS_TRUE == ulEnableInterrupt )
     {
-        /* �������жϷ�������н��������жϲ������ʴ˴�ȡ������g_stHdlcRegSaveInfo�е�ԭʼ�жϼĴ���ֵ */
+        /* 由于在中断服务程序中进行了清中断操作，故此处取保存在g_stHdlcRegSaveInfo中的原始中断寄存器值 */
         ulRawInt                        =   g_stHdlcRegSaveInfo.ulHdlcDefRawInt;
         g_PppHdlcHardStat.usDefExpInfo |=   (1 << HDLC_INTERRUPT_IND_BITPOS);
     }
@@ -1688,7 +1688,7 @@ VOS_VOID PPP_HDLC_HARD_DefProcException
 
     g_PppHdlcHardStat.usDefExpInfo |=   (1 << HDLC_EXCEPTION_IND_BITPOS);
 
-    /* ���HDLC�����쳣���򵥰��쳣���� */
+    /* 如果HDLC出现异常，则单板异常重启 */
     DRV_SYSTEM_ERROR(HDLC_DEF_SYSTEM_ERROR_ID, __LINE__, (VOS_INT)g_PppHdlcHardStat.usDefExpInfo,
                          (VOS_CHAR *)&g_stHdlcRegSaveInfo,
                          sizeof(HDLC_REG_SAVE_INFO_STRU));
@@ -1710,14 +1710,14 @@ VOS_VOID PPP_HDLC_HARD_DefWaitAndProc
 
     for (; ;)
     {
-        /* ʹ���жϣ���ȴ��жϸ������ͷ��ź�����������ѯ���װ״̬�Ĵ��� */
+        /* 使能中断，则等待中断辅程序释放信号量；否则轮询解封装状态寄存器 */
         ulDefStatus = PPP_HDLC_HARD_DefWaitResult(ulEnableInterrupt);
 
         switch ( ulDefStatus )
         {
             case HDLC_DEF_STATUS_PAUSE_RPT_SPACE_FULL :
             case HDLC_DEF_STATUS_PAUSE_OUTPUT_SPACE_FULL :
-                /* ������Ч֡������GO_ON�Ĵ��� */
+                /* 处理有效帧，配置GO_ON寄存器 */
                 PPP_HDLC_HARD_DefProcValidFrames(ulMode, usPppId, pstLink);
                 PPP_HDLC_HARD_DefCfgGoOnReg(ulDefStatus);
 
@@ -1725,7 +1725,7 @@ VOS_VOID PPP_HDLC_HARD_DefWaitAndProc
                 g_PppHdlcHardStat.ulDefFullPauseCnt++;
                 break;
             case HDLC_DEF_STATUS_PAUSE_LCP :
-                /* ������Ч֡��LCP֡���������üĴ���������GO_ON�Ĵ��� */
+                /* 处理有效帧和LCP帧，更新配置寄存器，配置GO_ON寄存器 */
                 PPP_HDLC_HARD_DefProcValidFrames(ulMode, usPppId, pstLink);
                 PPP_HDLC_HARD_DefCfgReg(ulMode, pstLink, VOS_NULL_PTR);
                 PPP_HDLC_HARD_DefCfgGoOnReg(ulDefStatus);
@@ -1734,13 +1734,13 @@ VOS_VOID PPP_HDLC_HARD_DefWaitAndProc
                 g_PppHdlcHardStat.ulDefLcpPauseCnt++;
                 break;
             case HDLC_DEF_STATUS_DONE_WITHOUT_FRAMES :
-                /* ���ݷ�����ָ֡ʾ�����������֡��Ϣ */
+                /* 根据非完整帧指示，保存非完整帧信息 */
                 PPP_HDLC_HARD_DefSaveUncompletedInfo(usPppId);
 
                 ulContinue = VOS_FALSE;
                 break;
             case HDLC_DEF_STATUS_DONE_WITH_FRAMES :
-                /* ������Ч֡������֡��LCP֡(���������һ֡)�����ݷ�����ָ֡ʾ�����������֡��Ϣ */
+                /* 处理有效帧、错误帧和LCP帧(可能是最后一帧)，根据非完整帧指示，保存非完整帧信息 */
                 PPP_HDLC_HARD_DefProcValidFrames(ulMode, usPppId, pstLink);
                 PPP_HDLC_HARD_DefProcErrorFrames(pstLink);
                 PPP_HDLC_HARD_DefSaveUncompletedInfo(usPppId);
@@ -1748,14 +1748,14 @@ VOS_VOID PPP_HDLC_HARD_DefWaitAndProc
                 break;
             case HDLC_DEF_STATUS_DOING :
             default:
-                /* ��ӡ�쳣��־������PPP���� */
+                /* 打印异常日志，挂起PPP任务 */
                 PPP_HDLC_HARD_DefProcException(ulDefStatus, ulEnableInterrupt);
 
                 ulContinue = VOS_FALSE;
                 break;
         }
 
-        /* ��ͣ״̬��Ҫ��������������״̬���װ����˳� */
+        /* 暂停状态需要继续处理，其他状态解封装完成退出 */
         if (VOS_TRUE != ulContinue)
         {
             break;
@@ -1777,7 +1777,7 @@ PPP_HDLC_PARA_CHECK_RESULT_ENUM_UINT32 PPP_HDLC_HARD_DefCheckPara
     PPP_DATA_TYPE_ENUM_UINT8     ucCurrDataType;
 
 
-    /* ��ȡ����װ���ݰ����� */
+    /* 获取待封装数据包类型 */
     ucCurrDataType = (PPP_ZC_GET_DATA_APP(pstMem) & 0x00FF);
 
     if ( ucDataType != ucCurrDataType )
@@ -1785,8 +1785,8 @@ PPP_HDLC_PARA_CHECK_RESULT_ENUM_UINT32 PPP_HDLC_HARD_DefCheckPara
         return PPP_HDLC_PARA_CHECK_FAIL_KEEP;
     }
 
-    /* ���װ������볤�����ڴ�ģ����������󳤶ȣ�Ŀǰ��1536B */
-    /* ���HDLC Bug�ڴ��������1 */
+    /* 解封装最大输入长度是内存模块允许的最大长度，目前是1536B */
+    /* 规避HDLC Bug内存可能扩大1 */
     if ( (0 == ulDataLen) || (HDLC_DEF_IN_PER_MAX_CNT < ulDataLen) )
     {
         PPP_MNTN_LOG1(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL,
@@ -1822,21 +1822,21 @@ VOS_VOID PPP_HDLC_HARD_ForbiddenHdlcBug(PPP_ZC_STRU **ppstMem)
 
     if (ucEndByte != pstData[usLen - 2])
     {
-        /* �����ڶ����ֽڲ�Ϊ7e���ô��� */
+        /* 倒数第二个字节不为7e不用处理 */
         return;
     }
     else if ((usLen >= 3) && (ucEndByte == pstData[usLen - 3]))
     {
-        /* �����������ֽ�Ϊ7e���ô��� */
+        /* 倒数第三个字节为7e不用处理 */
         return;
     }
     else
     {
         /*
-            �����ڶ����ֽ�Ϊ7e,�����������ֽڲ�Ϊ7e�ĳ���
-            �����һ���ֽں�����һ���ֽ�,ͬʱ�ڴ�ĳ���+1
+            倒数第二个字节为7e,倒数第三个字节不为7e的场景
+            将最后一个字节后向移一个字节,同时内存的长度+1
 
-            skb������ڴ�ṹ����
+            skb申请的内存结构如下
            |--------data(uslen)--------|----32bytes align(0~31)-----|--skb_share_info(256)----|
         */
         if (PPP_ZC_GET_RESERVE_ROOM(pstMem) > 0)
@@ -1846,7 +1846,7 @@ VOS_VOID PPP_HDLC_HARD_ForbiddenHdlcBug(PPP_ZC_STRU **ppstMem)
         }
         else
         {
-            /* ����һ������1�ֽڵ��ڴ� */
+            /* 申请一个保留1字节的内存 */
 
             pstTmpMem = PPP_MemAlloc(usLen + 1, 0);
             if (VOS_NULL_PTR != pstTmpMem)
@@ -1859,10 +1859,10 @@ VOS_VOID PPP_HDLC_HARD_ForbiddenHdlcBug(PPP_ZC_STRU **ppstMem)
                 g_PppHdlcHardStat.ulForbidHdlcBugCpy++;
             }
 
-            /* ������������ڴ��Ƿ�Ϊ�ն�����ȥ,�����洦�� */
+            /* 不管新申请的内存是否为空都传出去,在外面处理 */
             *ppstMem = pstTmpMem;
 
-            /* ��ԭ�ڴ��ͷ� */
+            /* 将原内存释放 */
             PPP_MemFree(pstMem);
         }
     }
@@ -1885,7 +1885,7 @@ VOS_UINT32 PPP_HDLC_HARD_DefBuildInputParaLink
     VOS_UINT32                              ulMaxDataLen1Time = TTF_HDLC_DEF_INPUT_PARA_LINK_MAX_SIZE;
 
 
-    /* ��������Ϣ */
+    /* 清空输出信息 */
     VOS_MemSet(pstBuildInfo, 0, sizeof(HDLC_PARA_LINK_BUILD_INFO_STRU));
 
     pstUncompletedInfo = HDLC_DEF_GET_UNCOMPLETED_INFO(pstBuildPara->usPppId);
@@ -1896,7 +1896,7 @@ VOS_UINT32 PPP_HDLC_HARD_DefBuildInputParaLink
     }
 
 
-    /* ����usPppId�ҵ���Ӧ���ڴ�  */
+    /* 根据usPppId找到对应的内存  */
     pstDefBuffInfo = HDLC_DEF_GET_BUF_INFO(pstBuildPara->usPppId);
     ucDataType     = pstBuildPara->ucDataType;
 
@@ -1904,7 +1904,7 @@ VOS_UINT32 PPP_HDLC_HARD_DefBuildInputParaLink
     {
         pstMem     = (PPP_ZC_STRU *)PPP_ZC_PEEK_QUEUE_HEAD(pstBuildPara->pstDataQ);
 
-        /* ��û�е����ڵ��������Ƕ������Ѿ�û������ */
+        /* 还没有到最大节点数，但是队列中已经没有数据 */
         if( VOS_NULL_PTR == pstMem )
         {
             break;
@@ -1929,46 +1929,46 @@ VOS_UINT32 PPP_HDLC_HARD_DefBuildInputParaLink
         }
 
 
-        /* ��PPP����ȡ��ͷ��㣬������������� pstBuildInfo->apstInputLinkNode */
+        /* 从PPP队列取出头结点，并插入输入队列 pstBuildInfo->apstInputLinkNode */
         pstMem  = PPP_ZC_DEQUEUE_HEAD(pstBuildPara->pstDataQ);
 
-        /* ���HDLC BUG,�ڷ���HDLC BUG�����¶�ԭ�����ݽ����滻,
-           �����pstMemΪ�滻����ڴ�ָ��,ԭʼ�ڴ�ָ������Ѿ����ͷ�
+        /* 规避HDLC BUG,在发现HDLC BUG场景下对原有数据进行替换,
+           后面的pstMem为替换后的内存指针,原始内存指针可能已经被释放
          */
         PPP_HDLC_HARD_ForbiddenHdlcBug(&pstMem);
 
-        /* �滻�ڴ��ʱ�������ڴ�ʧ��,ֱ�Ӵ�����һ������  */
+        /* 替换内存的时候申请内存失败,直接处理下一块数据  */
         if (VOS_NULL_PTR == pstMem)
         {
             continue;
         }
 
-        /* �ڴ���ܷ����滻,����ȡ���� */
+        /* 内存可能发生替换,重新取长度 */
         usDataLen = PPP_ZC_GET_DATA_LEN(pstMem);
 
-        /* һ�������������д���װ���ݰ��ܳ����ܳ���15KB */
-        /* ���HDLC BUG,�������ݱ��޸Ĺ�,����������1�ֽ�,��Ҫ�ŵ������ж� */
+        /* 一次配链表过程中待封装数据包总长不能超过15KB */
+        /* 规避HDLC BUG,后面数据被修改过,可能扩大了1字节,需要放到后面判断 */
         if( pstBuildInfo->ulInputLinkTotalSize + usDataLen  > ulMaxDataLen1Time )
         {
-            /* �ڴ�Żض���,�´��ٴ��� */
+            /* 内存放回队列,下次再处理 */
             PPP_ZC_ENQUEUE_HEAD(pstBuildPara->pstDataQ, pstMem);
 
             break;
         }
 
-        /* ��ȡ��ǰҪ���ӽڵ���±� */
+        /* 获取当前要添加节点的下标 */
         ulNodeIndex = pstBuildInfo->ulInputLinkNodeCnt;
 
-        /* ����Ҫ����Ĳ����ڵ� */
+        /* 本次要构造的参数节点 */
         pstParaNode = &(pstDefBuffInfo->astInputParaLinkNodeBuf[ulNodeIndex]);
 
-        /* �ѽڵ�������� */
+        /* 把节点组成链表 */
         if( 0 != ulNodeIndex )
         {
             pstDefBuffInfo->astInputParaLinkNodeBuf[ulNodeIndex - 1].pstNextNode = (HDLC_PARA_LINK_NODE_STRU*)PPP_VIRT_TO_PHY((VOS_UINT32)pstParaNode);
         }
 
-        /* ��д������������������� */
+        /* 填写输入参数链表结点相关域 */
         pstParaNode->pucDataAddr = (VOS_UINT8*)PPP_VIRT_TO_PHY((VOS_UINT32)PPP_ZC_GET_DATA_PTR(pstMem));
         pstParaNode->usDataLen   = usDataLen;
         pstParaNode->pstNextNode = VOS_NULL_PTR;
@@ -1979,7 +1979,7 @@ VOS_UINT32 PPP_HDLC_HARD_DefBuildInputParaLink
         pstBuildInfo->ulDealCnt++;
 
 #if ((FEATURE_OFF == FEATURE_SKB_EXP) || (FEATURE_ON == FEATURE_TTFMEM_CACHE))
-        /* ��Ҫ������д��DDR��HDLC��DDR�ж����� */
+        /* 需要将数据写回DDR，HDLC从DDR中读数据 */
         PPP_HDLC_CACHE_FLUSH(PPP_ZC_GET_DATA_PTR(pstMem), PPP_ZC_GET_DATA_LEN(pstMem));
 #endif
     }
@@ -1989,7 +1989,7 @@ VOS_UINT32 PPP_HDLC_HARD_DefBuildInputParaLink
         return VOS_ERR;
     }
 
-    /* �ϱ���������������ݿ�ά�ɲ� */
+    /* 上报输入参数链表内容可维可测 */
     PPP_HDLC_HARD_MntnDefTraceInput(pstDefBuffInfo, pstBuildInfo);
 
     return VOS_OK;
@@ -1997,23 +1997,23 @@ VOS_UINT32 PPP_HDLC_HARD_DefBuildInputParaLink
 VOS_VOID PPP_HDLC_HARD_DefCfgBufReg(HDLC_DEF_BUFF_INFO_STRU *pstDefBuffInfo)
 {
 
-    /* ����װ���������������ʼ��ַ���ø��Ĵ���def_in_lli_addr(0x90) */
+    /* 将封装输入参数链表的起始地址配置给寄存器def_in_lli_addr(0x90) */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_IN_LLI_ADDR(HDLC_IP_BASE_ADDR),
                     PPP_VIRT_TO_PHY((VOS_UINT32)&(pstDefBuffInfo->astInputParaLinkNodeBuf[0])));
 
-    /* ����װ���������������ʼ��ַ���ø��Ĵ���def_out_spc_addr(0xA0) */
+    /* 将封装输出参数链表的起始地址配置给寄存器def_out_spc_addr(0xA0) */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_OUT_SPC_ADDR(HDLC_IP_BASE_ADDR),
                     PPP_VIRT_TO_PHY((VOS_UINT32)&(pstDefBuffInfo->aucOutputDataBuf[0])));
 
-    /* ����װ���������������ʼ��ַ���ø��Ĵ���def_out_space_dep(0xA4)��16λ */
+    /* 将封装输出参数链表的起始地址配置给寄存器def_out_space_dep(0xA4)低16位 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_OUT_SPACE_DEP_ADDR(HDLC_IP_BASE_ADDR),
                     (VOS_UINT32)TTF_HDLC_DEF_OUTPUT_DATA_BUF_LEN & 0xFFFF);
 
-    /* ����װ��Ч֡�����Ϣ�ϱ��ռ���ʼ��ַ���ø��Ĵ���def_rpt_addr(0xA8) */
+    /* 将封装有效帧结果信息上报空间起始地址配置给寄存器def_rpt_addr(0xA8) */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_RPT_ADDR(HDLC_IP_BASE_ADDR),
                     PPP_VIRT_TO_PHY((VOS_UINT32)&(pstDefBuffInfo->astRptNodeBuf[0])));
 
-    /* ����װ��Ч֡�����Ϣ�ϱ��ռ�������ø��Ĵ���def_rpt_dep (0xAC)��16λ */
+    /* 将封装有效帧结果信息上报空间深度配置给寄存器def_rpt_dep (0xAC)低16位 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_RPT_DEP_ADDR(HDLC_IP_BASE_ADDR),
                     (VOS_UINT32)TTF_HDLC_DEF_RPT_BUF_LEN & 0xFFFF);
 
@@ -2030,35 +2030,35 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgEnReg
     |--------|---|-----|---|---|---|---|---|---|---|---|---|---|---|------|---|
     |   Rsv  |en | Rsv |en |en |en |en |en |en |en |en |en |en |en |  Rsv |en |
 
-    Reserved            [31:25] 7'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    def_over_int_en     [24]    1'b0    h/s R/W  һ���������װ�����ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��;
-    Reserved            [23:19] 5'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    def_rpt_ful_en      [18]    1'b0    h/s R/W  ���װ�ⲿ��ȷ֡��Ϣ�ϱ��ռ������ͣ�ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��;
-    def_out_spc_ful_en  [17]    1'b0    h/s R/W  ���װ�ⲿ����洢�ռ������ͣ�ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    def_lcp_int_en      [16]    1'b0    h/s R/W  ���װ�����ЧLCP֡��ͣ�ж��ϱ�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    def_rpt_prm_err_en  [15]    1'b0    h/s R/W  ���װ�ϱ��ռ���ز��������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    def_out_prm_err_en  [14]    1'b0    h/s R/W  ���װ����ռ���ز��������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    def_in_prm_err_en   [13]    1'b0    h/s R/W  ���װ����������ز��������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    def_cfg_err_en      [12]    1'b0    h/s R/W  ���װЭ��ѹ��ָʾ���ô����ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    def_wr_timeout_en   [11]    1'b0    h/s R/W  ���װʱAXI����д����timeout�ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    def_rd_timeout _en  [10]    1'b0    h/s R/W  ���װʱAXI���߶�����timeout�ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    def_wr_err_en       [9]     1'b0    h/s R/W  ���װʱAXI����д���������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    def_rd_err_en       [8]     1'b0    h/s R/W  ���װʱAXI���߶����������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    Reserved            [7:1]   7'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    def_en              [0]     1'b0    h/s R/W  һ�������������װʹ�ܣ�������def_enд��1'b1�������װ������һ�������������װ��ɺ���Ӳ���Զ���def_en���㣻
-                                                 ���װ���̳���ʱ��Ӳ��Ҳ���def_en�Զ����㣬ʹ�ڲ�״̬������IDLE״̬�����üĴ������ؽ��װ����״̬��
-                                                 дʱ����һ�������������װʹ�ܣ�0����ʹ�ܽ��װ������1��ʹ�ܽ��װ������
-                                                 ��ʱ����һ�������������װ����״̬��0��û�ڽ��н��װ������1�����ڽ��н��װ������
+    Reserved            [31:25] 7'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    def_over_int_en     [24]    1'b0    h/s R/W  一套链表解封装结束中断使能;0：中断禁止;1：中断使能;
+    Reserved            [23:19] 5'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    def_rpt_ful_en      [18]    1'b0    h/s R/W  解封装外部正确帧信息上报空间存满暂停中断使能;0：中断禁止;1：中断使能;
+    def_out_spc_ful_en  [17]    1'b0    h/s R/W  解封装外部输出存储空间存满暂停中断使能;0：中断禁止;1：中断使能
+    def_lcp_int_en      [16]    1'b0    h/s R/W  解封装解出有效LCP帧暂停中断上报使能;0：中断禁止;1：中断使能
+    def_rpt_prm_err_en  [15]    1'b0    h/s R/W  解封装上报空间相关参数错误中断使能;0：中断禁止;1：中断使能
+    def_out_prm_err_en  [14]    1'b0    h/s R/W  解封装输出空间相关参数错误中断使能;0：中断禁止;1：中断使能
+    def_in_prm_err_en   [13]    1'b0    h/s R/W  解封装输入链表相关参数错误中断使能;0：中断禁止;1：中断使能
+    def_cfg_err_en      [12]    1'b0    h/s R/W  解封装协议压缩指示配置错误中断使能;0：中断禁止;1：中断使能
+    def_wr_timeout_en   [11]    1'b0    h/s R/W  解封装时AXI总线写请求timeout中断使能;0：中断禁止;1：中断使能
+    def_rd_timeout _en  [10]    1'b0    h/s R/W  解封装时AXI总线读请求timeout中断使能;0：中断禁止;1：中断使能
+    def_wr_err_en       [9]     1'b0    h/s R/W  解封装时AXI总线写操作错误中断使能;0：中断禁止;1：中断使能
+    def_rd_err_en       [8]     1'b0    h/s R/W  解封装时AXI总线读操作错误中断使能;0：中断禁止;1：中断使能
+    Reserved            [7:1]   7'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    def_en              [0]     1'b0    h/s R/W  一套输入链表解封装使能，软件向def_en写入1'b1启动解封装工作；一套输入链表解封装完成后，由硬件自动对def_en清零；
+                                                 解封装过程出错时，硬件也会对def_en自动清零，使内部状态机返回IDLE状态；读该寄存器返回解封装处理状态。
+                                                 写时设置一套输入链表解封装使能：0：不使能解封装处理；1：使能解封装处理；
+                                                 读时返回一套输入链表解封装处理状态：0：没在进行解封装处理；1：正在进行解封装处理。
     */
     VOS_UINT32          ulEnableInterrupt;
     VOS_UINT32          ulValue;
-    const VOS_UINT32    ulInterruptValue    = 0x0107FF01;   /* ʹ���жϷ�ʽʱ����ʹ�ܼĴ�����ֵ */
-    const VOS_UINT32    ulPollValue         = 0x01;         /* ʹ����ѯ��ʽʱ����ʹ�ܼĴ�����ֵ */
+    const VOS_UINT32    ulInterruptValue    = 0x0107FF01;   /* 使用中断方式时配置使能寄存器的值 */
+    const VOS_UINT32    ulPollValue         = 0x01;         /* 使用轮询方式时配置使能寄存器的值 */
 
 
     if( ulTotalLen > HDLC_DEF_INTERRUPT_LIMIT )
     {
-        /* ���÷�װ���ʹ�ܼĴ���hdlc_def_en��[31:0]λΪ0x0107FF01 */
+        /* 配置封装相关使能寄存器hdlc_def_en的[31:0]位为0x0107FF01 */
         ulValue             = ulInterruptValue;
         ulEnableInterrupt   = VOS_TRUE;
 
@@ -2066,26 +2066,26 @@ VOS_UINT32 PPP_HDLC_HARD_DefCfgEnReg
     }
     else
     {
-        /* ���÷�װ���ʹ�ܼĴ���hdlc_frm_en��[31:0]λΪ0x01 */
+        /* 配置封装相关使能寄存器hdlc_frm_en的[31:0]位为0x01 */
         ulValue             = ulPollValue;
         ulEnableInterrupt   = VOS_FALSE;
 
         g_PppHdlcHardStat.ulDefWaitQueryCnt++;
     }
 
-    /* ʹ��ǰ����ϴη�װ�����װ��ԭʼ�ж� */
+    /* 使能前清除上次封装、解封装的原始中断 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_INT_CLR_ADDR(HDLC_IP_BASE_ADDR), 0xFFFFFFFF);
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_INT_CLR_ADDR(HDLC_IP_BASE_ADDR), 0xFFFFFFFF);
 
-    /* �ϱ��Ĵ�����ά�ɲ� */
+    /* 上报寄存器可维可测 */
     PPP_HDLC_HARD_MntnDefTraceRegConfig(VOS_FALSE, ulValue, ulEnableInterrupt);
 
-    /* ʹ��Ӳ��֮ǰ��ǿ��ARM˳��ִ�н���ǰ���ָ�� */
+    /* 使能硬件之前先强制ARM顺序执行结束前面的指针 */
     TTF_FORCE_ARM_INSTUCTION();
 
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_EN_ADDR(HDLC_IP_BASE_ADDR), ulValue);
 
-    /* PC��ʹ��HDLCģ���� */
+    /* PC上使用HDLC模拟器 */
     #if (VOS_OS_VER == VOS_WIN32)
     VHW_HDLC_Task();
     #endif
@@ -2115,7 +2115,7 @@ VOS_UINT32 PPP_HDLC_HARD_DefPacket
     stBuildPara.usProtocol = PROTO_IP;
     stBuildPara.pstDataQ   = pstDataQ;
 
-    /* ��������������������ϱ������ڴ��ά�ɲ� */
+    /* 构造输入参数链表，并上报链表内存可维可测 */
     ulBuildResult = PPP_HDLC_HARD_DefBuildInputParaLink(&stBuildPara, &stBuildInfo);
 
     *pulDealCnt = stBuildInfo.ulDealCnt;
@@ -2128,13 +2128,13 @@ VOS_UINT32 PPP_HDLC_HARD_DefPacket
     g_PppHdlcHardStat.ulDefMaxInputCntOnce  = TTF_MAX(g_PppHdlcHardStat.ulDefMaxInputCntOnce, stBuildInfo.ulInputLinkNodeCnt);
     g_PppHdlcHardStat.ulDefMaxInputSizeOnce = TTF_MAX(g_PppHdlcHardStat.ulDefMaxInputSizeOnce, stBuildInfo.ulInputLinkTotalSize);
 
-    /* ���÷�װ�����װͨ�üĴ��� */
+    /* 配置封装、解封装通用寄存器 */
     PPP_HDLC_HARD_CommCfgReg();
 
-    /* �����ڴ���ؼĴ��� */
+    /* 配置内存相关寄存器 */
     PPP_HDLC_HARD_DefCfgBufReg(pstDefBuffInfo);
 
-    /* ����ѹ��ָʾ��������֡�����Ϣ�Ĵ��� */
+    /* 配置压缩指示、非完整帧相关信息寄存器 */
     PPP_HDLC_HARD_DefCfgReg(HDLC_IP_MODE, pstLink, HDLC_DEF_GET_UNCOMPLETED_INFO(usPppId));
 
 #if (FEATURE_ON == FEATURE_TTFMEM_CACHE)
@@ -2142,13 +2142,13 @@ VOS_UINT32 PPP_HDLC_HARD_DefPacket
     PPP_HDLC_CACHE_INVALID((VOS_UINT8 *)pstDefBuffInfo, sizeof(HDLC_DEF_BUFF_INFO_STRU));
 #endif
 
-    /* ����ʹ�ܼĴ��������ϱ�ʹ��ǰ�Ĵ�����ά�ɲ� */
+    /* 配置使能寄存器，并上报使能前寄存器可维可测 */
     ulEnableInterrupt = PPP_HDLC_HARD_DefCfgEnReg(stBuildInfo.ulInputLinkTotalSize);
 
-    /* �ȴ����װ��ͣ����ɣ�Ȼ����������ݣ����ܻ��ж��ͣ�ȵĹ��� */
+    /* 等待解封装暂停或完成，然后处理输出数据，可能会有多次停等的过程 */
     PPP_HDLC_HARD_DefWaitAndProc(HDLC_IP_MODE, ulEnableInterrupt, usPppId, pstLink);
 
-    /* �ͷ��ѽ��װ��ɵ����� */
+    /* 释放已解封装完成的数据 */
     PPP_HDLC_HARD_CommReleaseLink(stBuildInfo.apstInputLinkNode, stBuildInfo.ulInputLinkNodeCnt);
 
     return VOS_OK;
@@ -2176,7 +2176,7 @@ VOS_UINT32 PPP_HDLC_HARD_DefRawData
     stBuildPara.usProtocol = PROTO_IP;
     stBuildPara.pstDataQ   = pstDataQ;
 
-    /* ��������������������ϱ������ڴ��ά�ɲ� */
+    /* 构造输入参数链表，并上报链表内存可维可测 */
     ulBuildResult = PPP_HDLC_HARD_DefBuildInputParaLink(&stBuildPara, &stBuildInfo);
 
     *pulDealCnt = stBuildInfo.ulDealCnt;
@@ -2189,13 +2189,13 @@ VOS_UINT32 PPP_HDLC_HARD_DefRawData
     g_PppHdlcHardStat.ulDefMaxInputCntOnce  = TTF_MAX(g_PppHdlcHardStat.ulDefMaxInputCntOnce, stBuildInfo.ulInputLinkNodeCnt);
     g_PppHdlcHardStat.ulDefMaxInputSizeOnce = TTF_MAX(g_PppHdlcHardStat.ulDefMaxInputSizeOnce, stBuildInfo.ulInputLinkTotalSize);
 
-    /* ���÷�װ�����װͨ�üĴ��� */
+    /* 配置封装、解封装通用寄存器 */
     PPP_HDLC_HARD_CommCfgReg();
 
-    /* �����ڴ���ؼĴ��� */
+    /* 配置内存相关寄存器 */
     PPP_HDLC_HARD_DefCfgBufReg(pstDefBuffInfo);
 
-    /* ����ѹ��ָʾ��������֡�����Ϣ�Ĵ��� */
+    /* 配置压缩指示、非完整帧相关信息寄存器 */
     PPP_HDLC_HARD_DefCfgReg(HDLC_PPP_MODE, pstLink, HDLC_DEF_GET_UNCOMPLETED_INFO(usPppId));
 
 #if (FEATURE_ON == FEATURE_TTFMEM_CACHE)
@@ -2203,13 +2203,13 @@ VOS_UINT32 PPP_HDLC_HARD_DefRawData
     PPP_HDLC_CACHE_INVALID((VOS_UINT8 *)pstDefBuffInfo, sizeof(HDLC_DEF_BUFF_INFO_STRU));
 #endif
 
-    /* ����ʹ�ܼĴ��������ϱ�ʹ��ǰ�Ĵ�����ά�ɲ� */
+    /* 配置使能寄存器，并上报使能前寄存器可维可测 */
     ulEnableInterrupt = PPP_HDLC_HARD_DefCfgEnReg(stBuildInfo.ulInputLinkTotalSize);
 
-    /* �ȴ����װ��ͣ����ɣ�Ȼ����������ݣ����ܻ��ж��ͣ�ȵĹ��� */
+    /* 等待解封装暂停或完成，然后处理输出数据，可能会有多次停等的过程 */
     PPP_HDLC_HARD_DefWaitAndProc(HDLC_PPP_MODE, ulEnableInterrupt, usPppId, pstLink);
 
-    /* �ͷ��ѽ��װ��ɵ����� */
+    /* 释放已解封装完成的数据 */
     PPP_HDLC_HARD_CommReleaseLink(stBuildInfo.apstInputLinkNode, stBuildInfo.ulInputLinkNodeCnt);
 
     return VOS_OK;
@@ -2219,7 +2219,7 @@ VOS_UINT32 PPP_HDLC_HARD_FrmIsEnabled(VOS_VOID)
     VOS_UINT32                          ulValue;
 
 
-    /* SoC���ڴ�����һ������������ʱ���Զ���ʹ��λ���� */
+    /* SoC会在处理完一套输入链表的时候自动将使能位清零 */
     ulValue = TTF_READ_32REG(SOC_ARM_HDLC_FRM_EN_ADDR(HDLC_IP_BASE_ADDR));
 
     if (0x01 == (ulValue & 0x01))
@@ -2236,10 +2236,10 @@ VOS_UINT32 PPP_HDLC_HARD_FrmIsr(int ulPara)
     g_stHdlcRegSaveInfo.ulHdlcFrmRawInt = TTF_READ_32REG(SOC_ARM_HDLC_FRM_RAW_INT_ADDR(HDLC_IP_BASE_ADDR));
     g_stHdlcRegSaveInfo.ulHdlcFrmStatus = TTF_READ_32REG(SOC_ARM_HDLC_FRM_STATUS_ADDR(HDLC_IP_BASE_ADDR));
 
-    /* �յ�һ���жϺ����ԭʼ�ж� */
+    /* 收到一次中断后清除原始中断 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_INT_CLR_ADDR(HDLC_IP_BASE_ADDR), 0xFFFFFFFF);
 
-    /* �ͷŷ�װ����ź��� */
+    /* 释放封装完成信号量 */
     VOS_SmV(g_stHdlcConfigInfo.ulHdlcFrmMasterSem);
 
     g_PppHdlcHardStat.ulFrmIsrCnt++;
@@ -2263,7 +2263,7 @@ VOS_UINT32 PPP_HDLC_HARD_FrmUpdateLink
     HDLC_FRM_BUFF_INFO_STRU            *pstFrmBuffInfo;
 
 
-    /* ����usPppId�ҵ���Ӧ���ڴ�  */
+    /* 根据usPppId找到对应的内存  */
     pstFrmBuffInfo          = HDLC_FRM_GET_BUF_INFO(pstBuildPara->usPppId);
 
     if( (pstBuildInfo->ulOutputLinkNodeCnt + ulAllocMemCnt) > TTF_HDLC_FRM_OUTPUT_PARA_LINK_MAX_NUM )
@@ -2275,19 +2275,19 @@ VOS_UINT32 PPP_HDLC_HARD_FrmUpdateLink
         return VOS_ERR;
     }
 
-    /* ����Ŀ�Ŀռ����� apstOutputLinkNode�������ͷ�Ŀ�Ŀռ� */
+    /* 更新目的空间数组 apstOutputLinkNode，用于释放目的空间 */
     VOS_MemCpy(&(pstBuildInfo->apstOutputLinkNode[pstBuildInfo->ulOutputLinkNodeCnt]),
                &(ppstAllocedMem[0]),
                ulAllocMemCnt * sizeof(PPP_ZC_STRU *));
 
-    /* ����װ��������������ĸ�����Ա��ֵ */
+    /* 给封装输出参数链表结点的各个成员赋值 */
     for ( ulMemLoop = 0; ulMemLoop < ulAllocMemCnt; ulMemLoop++ )
     {
         ulNodeIndex = pstBuildInfo->ulOutputLinkNodeCnt;
 
         pstOutputParaNode = &(pstFrmBuffInfo->astOutputParaLinkNodeBuf[ulNodeIndex]);
 
-        /* �����ϸ����������������pstNextNode�� */
+        /* 更新上个输入参数链表结点的pstNextNode域 */
         if (0 != ulNodeIndex)
         {
             pstFrmBuffInfo->astOutputParaLinkNodeBuf[ulNodeIndex - 1].pstNextNode = (HDLC_PARA_LINK_NODE_STRU*)PPP_VIRT_TO_PHY((VOS_UINT32)pstOutputParaNode);
@@ -2316,17 +2316,17 @@ VOS_UINT32 PPP_HDLC_HARD_FrmOutputMemAlloc
     HDLC_PARA_LINK_BUILD_INFO_STRU      *pstBuildInfo
 )
 {
-    VOS_UINT16                  usFrmedMaxLen;                                  /* ��װ��Ŀ��ܵ���󳤶� */
+    VOS_UINT16                  usFrmedMaxLen;                                  /* 封装后的可能的最大长度 */
     VOS_UINT16                  usAllocLen;
     VOS_UINT32                  ulAllocLoop;
     VOS_UINT32                  ulLoopCnt;
-    VOS_UINT32                  ulAllocMemCnt;                                  /* ����������ڴ���� */
-    VOS_UINT32                  aulAllocLen[HDLC_OUTPUT_PARA_LINK_MAX_SIZE];    /* ��¼��������ĸ����ڴ�鳤�� */
-    PPP_ZC_STRU *               apstAllocedMem[HDLC_OUTPUT_PARA_LINK_MAX_SIZE]; /* ��¼��������ĸ����ڴ��ָ�� */
+    VOS_UINT32                  ulAllocMemCnt;                                  /* 本次申请的内存块数 */
+    VOS_UINT32                  aulAllocLen[HDLC_OUTPUT_PARA_LINK_MAX_SIZE];    /* 记录本次申请的各个内存块长度 */
+    PPP_ZC_STRU *               apstAllocedMem[HDLC_OUTPUT_PARA_LINK_MAX_SIZE]; /* 记录本次申请的各个内存块指针 */
     PPP_ZC_STRU                *pstMem;
 
 
-    /* ��װ����ܵ�������ݳ���(2*ԭʼ���ݳ���+13B) */
+    /* 封装后可能的最大数据长度(2*原始数据长度+13B) */
     usFrmedMaxLen = (VOS_UINT16)HDLC_FRM_GET_MAX_FRAMED_LEN(usLen);
     ulAllocMemCnt = 0;
     ulLoopCnt     = TTF_CEIL(usFrmedMaxLen, PPP_ZC_MAX_DATA_LEN);
@@ -2354,7 +2354,7 @@ VOS_UINT32 PPP_HDLC_HARD_FrmOutputMemAlloc
         apstAllocedMem[ulAllocLoop] = pstMem;
     }
 
-    /* ����������ڴ�ʧ�ܵ���������ͷű����Ѿ�������ڴ� */
+    /* 如果有申请内存失败的情况，则释放本次已经申请的内存 */
     if (ulLoopCnt > ulAllocMemCnt)
     {
         PPP_HDLC_HARD_CommReleaseLink(&(apstAllocedMem[0]), ulAllocMemCnt);
@@ -2420,7 +2420,7 @@ PPP_HDLC_PARA_CHECK_RESULT_ENUM_UINT32 PPP_HDLC_HARD_FrmCheckPara
     VOS_UINT16                   usCurrProtocol;
 
 
-    /* ��ȡ����װ���ݰ����� */
+    /* 获取待封装数据包类型 */
     ucCurrDataType = (PPP_ZC_GET_DATA_APP(pstMem) & 0x00FF);
 
     if ( ucDataType != ucCurrDataType )
@@ -2428,7 +2428,7 @@ PPP_HDLC_PARA_CHECK_RESULT_ENUM_UINT32 PPP_HDLC_HARD_FrmCheckPara
         return PPP_HDLC_PARA_CHECK_FAIL_KEEP;
     }
 
-    /* ����װ���ݰ������쳣 */
+    /* 待封装数据包长度异常 */
     if ( (0 == ulDataLen) || (HDLC_FRM_IN_PER_MAX_CNT < ulDataLen) )
     {
         PPP_MNTN_LOG1(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL,
@@ -2437,7 +2437,7 @@ PPP_HDLC_PARA_CHECK_RESULT_ENUM_UINT32 PPP_HDLC_HARD_FrmCheckPara
         return PPP_HDLC_PARA_CHECK_FAIL_DISCARD;
     }
 
-    /* �������PPPģʽ */
+    /* 如果不是PPP模式 */
     if( PPP_PUSH_RAW_DATA_TYPE != ucCurrDataType )
     {
         return PPP_HDLC_PARA_CHECK_PASS;
@@ -2452,7 +2452,7 @@ PPP_HDLC_PARA_CHECK_RESULT_ENUM_UINT32 PPP_HDLC_HARD_FrmCheckPara
         return PPP_HDLC_PARA_CHECK_FAIL_DISCARD;
     }
 
-    /* ��֤һ���������ù����з�װЭ��ֵһ�� */
+    /* 保证一次链表配置过程中封装协议值一致 */
     if( usProtocol != usCurrProtocol )
     {
         return PPP_HDLC_PARA_CHECK_FAIL_KEEP;
@@ -2505,7 +2505,7 @@ VOS_UINT32 PPP_HDLC_HARD_FrmBuildParaLink
 
     VOS_MemSet(pstBuildInfo, 0, sizeof(HDLC_PARA_LINK_BUILD_INFO_STRU));
 
-    /* ����usPppId�ҵ���Ӧ���ڴ�  */
+    /* 根据usPppId找到对应的内存  */
     pstFrmBuffInfo = HDLC_FRM_GET_BUF_INFO(pstBuildPara->usPppId);
     ulAllocMemFail = VOS_FALSE;
 
@@ -2538,13 +2538,13 @@ VOS_UINT32 PPP_HDLC_HARD_FrmBuildParaLink
             break;
         }
 
-        /* һ�������������д���װ���ݰ��ܳ����ܳ���15KB */
+        /* 一次配链表过程中待封装数据包总长不能超过15KB */
         if( pstBuildInfo->ulInputLinkTotalSize + usUnFrmLen > TTF_HDLC_FRM_INPUT_PARA_LINK_MAX_SIZE )
         {
             break;
         }
 
-        /* �����װĿ�Ŀռ� */
+        /* 申请封装目的空间 */
         ulAllocResult = PPP_HDLC_HARD_FrmOutputMemAlloc(usUnFrmLen, pstBuildPara, pstBuildInfo);
 
         if( VOS_OK != ulAllocResult )
@@ -2555,16 +2555,16 @@ VOS_UINT32 PPP_HDLC_HARD_FrmBuildParaLink
             break;
         }
 
-        /* ��PPP����ȡ��ͷ��㣬������������� pstBuildInfo->apstInputLinkNode */
+        /* 从PPP队列取出头结点，并插入输入队列 pstBuildInfo->apstInputLinkNode */
         pstMem = PPP_ZC_DEQUEUE_HEAD(pstBuildPara->pstDataQ);
 
-        /* ��ȡ��ǰҪ���ӽڵ���±� */
+        /* 获取当前要添加节点的下标 */
         ulNodeIndex = pstBuildInfo->ulInputLinkNodeCnt;
 
-        /* ����Ҫ����Ĳ����ڵ� */
+        /* 本次要构造的参数节点 */
         pstParaNode = &(pstFrmBuffInfo->astInputParaLinkNodeBuf[ulNodeIndex]);
 
-        /* ��д������������������� */
+        /* 填写输入参数链表结点相关域 */
         if( 0 != ulNodeIndex )
         {
             pstFrmBuffInfo->astInputParaLinkNodeBuf[ulNodeIndex - 1].pstNextNode = (HDLC_PARA_LINK_NODE_STRU*)PPP_VIRT_TO_PHY((VOS_UINT32)pstParaNode);
@@ -2580,7 +2580,7 @@ VOS_UINT32 PPP_HDLC_HARD_FrmBuildParaLink
         pstBuildInfo->ulDealCnt++;
 
 #if ((FEATURE_OFF == FEATURE_SKB_EXP) || (FEATURE_ON == FEATURE_TTFMEM_CACHE))
-        /* ��Ҫ������д��DDR��HDLC��DDR�ж����� */
+        /* 需要将数据写回DDR，HDLC从DDR中读数据 */
         PPP_HDLC_CACHE_FLUSH(PPP_ZC_GET_DATA_PTR(pstMem), PPP_ZC_GET_DATA_LEN(pstMem));
 #endif
     }
@@ -2589,7 +2589,7 @@ VOS_UINT32 PPP_HDLC_HARD_FrmBuildParaLink
     {
         if (VOS_TRUE == ulAllocMemFail)
         {
-            /* �ȴ�һ��ʱ������³��������ڴ��ٷ�װ */
+            /* 等待一段时间后，重新尝试申请内存再封装 */
             PPP_HDLC_HARD_FrmStartTimer(pstBuildPara);
 
             g_PppHdlcHardStat.ulFrmAllocFirstMemFailCnt++;
@@ -2598,7 +2598,7 @@ VOS_UINT32 PPP_HDLC_HARD_FrmBuildParaLink
         return VOS_ERR;
     }
 
-    /* ��������������������ݿ�ά�ɲ� */
+    /* 报输入输出参数链表内容可维可测 */
     PPP_HDLC_HARD_MntnFrmTraceInput(pstFrmBuffInfo, pstBuildInfo);
 
     return VOS_OK;
@@ -2608,19 +2608,19 @@ VOS_UINT32 PPP_HDLC_HARD_FrmBuildParaLink
 VOS_VOID PPP_HDLC_HARD_FrmCfgBufReg(HDLC_FRM_BUFF_INFO_STRU *pstFrmBuffInfo)
 {
 
-    /* ����װ���������������ʼ��ַ���ø��Ĵ���frm_in_lli_addr */
+    /* 将封装输入参数链表的起始地址配置给寄存器frm_in_lli_addr */
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_IN_LLI_ADDR(HDLC_IP_BASE_ADDR),
                     PPP_VIRT_TO_PHY((VOS_UINT32)&(pstFrmBuffInfo->astInputParaLinkNodeBuf[0])));
 
-    /* ����װ���������������ʼ��ַ���ø��Ĵ���frm_out_lli_addr */
+    /* 将封装输出参数链表的起始地址配置给寄存器frm_out_lli_addr */
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_OUT_LLI_ADDR(HDLC_IP_BASE_ADDR),
                     PPP_VIRT_TO_PHY((VOS_UINT32)&(pstFrmBuffInfo->astOutputParaLinkNodeBuf[0])));
 
-    /* ����װ��Ч֡�����Ϣ�ϱ��ռ���ʼ��ַ���ø��Ĵ���frm_rpt_addr */
+    /* 将封装有效帧结果信息上报空间起始地址配置给寄存器frm_rpt_addr */
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_RPT_ADDR(HDLC_IP_BASE_ADDR),
                     PPP_VIRT_TO_PHY((VOS_UINT32)&(pstFrmBuffInfo->astRptNodeBuf[0])));
 
-    /* ����װ��Ч֡�����Ϣ�ϱ��ռ�������ø��Ĵ���frm_rpt_dep��[15:0]λ */
+    /* 将封装有效帧结果信息上报空间深度配置给寄存器frm_rpt_dep的[15:0]位 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_RPT_DEP_ADDR(HDLC_IP_BASE_ADDR),
                     (VOS_UINT32)TTF_HDLC_FRM_RPT_BUF_LEN & 0xFFFF);
 
@@ -2640,27 +2640,27 @@ VOS_VOID PPP_HDLC_HARD_FrmCfgReg
     |-------------------|--------------|--------|------|------|
     |      protocol     |      Rsv     |   Pfc  | Acfc |1dor2d|
 
-    frm_protocol         [31:16] 16'b0   h/s R/W  ��װЭ��ֵ����ЧЭ��ֵ�涨�μ�����б���
-    Reserved             [15:4]  12'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    frm_pfc              [3:2]   2'b0    h/s R/W  P��ѹ��ָʾ��00��Ӳ��ģ������P��P����ѹ��;
-                                                               01��Ӳ��ģ������P��P��ѹ��;
-                                                               11��Ӳ��ģ�鲻����P��;
-                                                               ��������Ч;
-    frm_acfc             [1]     1'b0    h/s R/W  AC��ѹ��ָʾ��0��AC����ѹ��;1����ʾAC��ѹ��;
-    frm_in_lli_1dor2d    [0]     1'b0    h/s R/W  ��װ����һά���ά����ѡ��ָʾ�Ĵ�����
-                                                                0Ϊһά;1Ϊ��ά;
+    frm_protocol         [31:16] 16'b0   h/s R/W  封装协议值。有效协议值规定参见规格列表。
+    Reserved             [15:4]  12'b0   h/s R/W  保留位。读时返回0。写时无影响。
+    frm_pfc              [3:2]   2'b0    h/s R/W  P域压缩指示：00：硬件模块添加P域，P域无压缩;
+                                                               01：硬件模块添加P域，P域压缩;
+                                                               11：硬件模块不添加P域;
+                                                               其他：无效;
+    frm_acfc             [1]     1'b0    h/s R/W  AC域压缩指示：0：AC域无压缩;1：表示AC域压缩;
+    frm_in_lli_1dor2d    [0]     1'b0    h/s R/W  封装输入一维或二维链表选择指示寄存器：
+                                                                0为一维;1为二维;
 
-    IPģʽһ������P��,PPPģʽһ��������P��
-      LCP֡: AC��ѹ����P��ѹ��
+    IP模式一定添加P域,PPP模式一定不添加P域
+      LCP帧: AC域不压缩，P域不压缩
     */
 
     VOS_UINT32              ulFrmCfg;
 
 
-    /* ���Ĵ���hdlc_frm_cfg��[0]λfrm_in_lli_1dor2d����Ϊ0 */
+    /* 将寄存器hdlc_frm_cfg的[0]位frm_in_lli_1dor2d配置为0 */
     ulFrmCfg = 0x0;
 
-    /* ����hdlc_frm_cfg�� P��� AC�� */
+    /* 配置hdlc_frm_cfg的 P域和 AC域 */
     if (PROTO_LCP != usProtocol)
     {
         if ( 1 == pstLink->lcp.his_acfcomp )
@@ -2673,7 +2673,7 @@ VOS_VOID PPP_HDLC_HARD_FrmCfgReg
             ulFrmCfg |= (1 << HDLC_FRM_PFC_BITPOS);
         }
 
-        /* ����hdlc_frm_accm */
+        /* 配置hdlc_frm_accm */
         TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_ACCM_ADDR(HDLC_IP_BASE_ADDR),
                             pstLink->lcp.his_accmap);
     }
@@ -2682,7 +2682,7 @@ VOS_VOID PPP_HDLC_HARD_FrmCfgReg
         TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_ACCM_ADDR(HDLC_IP_BASE_ADDR), 0xFFFFFFFF);
     }
 
-    /* ���üĴ���hdlc_frm_cfg��[31:16]λfrm_protocolΪusProtocol */
+    /* 配置寄存器hdlc_frm_cfg的[31:16]位frm_protocol为usProtocol */
     ulFrmCfg |= ( ((VOS_UINT32)usProtocol) << 16 );
 
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_CFG_ADDR(HDLC_IP_BASE_ADDR), ulFrmCfg);
@@ -2703,23 +2703,23 @@ VOS_VOID PPP_HDLC_HARD_FrmRawCfgReg
     |-------------------|--------------|--------|------|------|
     |      protocol     |      Rsv     |   Pfc  | Acfc |1dor2d|
 
-    frm_protocol         [31:16] 16'b0   h/s R/W  ��װЭ��ֵ����ЧЭ��ֵ�涨�μ�����б���
-    Reserved             [15:4]  12'b0   h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    frm_pfc              [3:2]   2'b0    h/s R/W  P��ѹ��ָʾ��00��Ӳ��ģ������P��P����ѹ��;
-                                                               01��Ӳ��ģ������P��P��ѹ��;
-                                                               11��Ӳ��ģ�鲻����P��;
-                                                               ��������Ч;
-    frm_acfc             [1]     1'b0    h/s R/W  AC��ѹ��ָʾ��0��AC����ѹ��;1����ʾAC��ѹ��;
-    frm_in_lli_1dor2d    [0]     1'b0    h/s R/W  ��װ����һά���ά����ѡ��ָʾ�Ĵ�����
-                                                                0Ϊһά;1Ϊ��ά;
+    frm_protocol         [31:16] 16'b0   h/s R/W  封装协议值。有效协议值规定参见规格列表。
+    Reserved             [15:4]  12'b0   h/s R/W  保留位。读时返回0。写时无影响。
+    frm_pfc              [3:2]   2'b0    h/s R/W  P域压缩指示：00：硬件模块添加P域，P域无压缩;
+                                                               01：硬件模块添加P域，P域压缩;
+                                                               11：硬件模块不添加P域;
+                                                               其他：无效;
+    frm_acfc             [1]     1'b0    h/s R/W  AC域压缩指示：0：AC域无压缩;1：表示AC域压缩;
+    frm_in_lli_1dor2d    [0]     1'b0    h/s R/W  封装输入一维或二维链表选择指示寄存器：
+                                                                0为一维;1为二维;
 
-    IPģʽһ������P��,PPPģʽһ��������P��
-      LCP֡: AC��ѹ����P��ѹ��
+    IP模式一定添加P域,PPP模式一定不添加P域
+      LCP帧: AC域不压缩，P域不压缩
     */
 
     VOS_UINT32              ulFrmCfg;
-    /*PS_BOOL_ENUM_UINT8      enPComp;       �Ƿ�ѹ��Э���ֶ�, �� - PS_TRUE */
-    PS_BOOL_ENUM_UINT8      enACComp;     /* �Ƿ�ѹ����ַ�Ϳ����ֶ�, �� - PS_TRUE */
+    /*PS_BOOL_ENUM_UINT8      enPComp;       是否压缩协议字段, 是 - PS_TRUE */
+    PS_BOOL_ENUM_UINT8      enACComp;     /* 是否压缩地址和控制字段, 是 - PS_TRUE */
     VOS_UINT32              ulACCM;
     VOS_UINT8               ucACComp;
     VOS_UINT8               ucPComp;
@@ -2727,36 +2727,36 @@ VOS_VOID PPP_HDLC_HARD_FrmRawCfgReg
     VOS_UINT16              usLowWord;
 
 
-    /* ���Ĵ���hdlc_frm_cfg��[0]λfrm_in_lli_1dor2d����Ϊ0 */
+    /* 将寄存器hdlc_frm_cfg的[0]位frm_in_lli_1dor2d配置为0 */
     ulFrmCfg    = 0x0;
 
     if (PROTO_LCP == usProtocol)
     {
-        /* LCP֡P��ѹ��, AC��ѹ��, ACCMΪȫת�� */
+        /* LCP帧P不压缩, AC不压缩, ACCM为全转义 */
         /*enPComp     = PS_FALSE; */
         enACComp    = PS_FALSE;
         ulACCM      = 0xFFFFFFFF;
     }
     else
     {
-        /* ʹ��Ĭ��ֵ */
+        /* 使用默认值 */
         /*enPComp     = (1 == pstLink->lcp.his_protocomp) ? PS_TRUE : PS_FALSE; */
         enACComp    = (1 == pstLink->lcp.his_acfcomp) ? PS_TRUE : PS_FALSE;
-        /* ����PPP���Ų�֪��ACCM, ������ΪЭ��Ĭ��ֵ */
+        /* 由于PPP拨号不知道ACCM, 故设置为协议默认值 */
         ulACCM      = 0xFFFFFFFF;
     }
 
-    /* ��ȡAC��ѹ��ָʾ, P��ѹ��ָʾ, Э��ֵ, ACCM */
+    /* 获取AC域压缩指示, P域压缩指示, 协议值, ACCM */
     ucACComp = (PS_TRUE == enACComp) ? 1 : 0;
     ucPComp = HDLC_PROTOCOL_NO_ADD;
 
-    /* ����accm */
+    /* 设置accm */
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_ACCM_ADDR(HDLC_IP_BASE_ADDR),ulACCM);
 
-    /* ��ucPComp���õ�һ���ֽڵĵ�2, 3λ�� */
+    /* 将ucPComp设置到一个字节的第2, 3位上 */
     ucLowByte = SET_BITS_VALUE_TO_BYTE(ucPComp, HDLC_FRM_PFC_BITPOS);
 
-    if (1 == ucACComp)  /* AC��ѹ�� */
+    if (1 == ucACComp)  /* AC域压缩 */
     {
         SET_BIT_TO_BYTE(ucLowByte, HDLC_FRM_ACFC_BITPOS);
     }
@@ -2768,7 +2768,7 @@ VOS_VOID PPP_HDLC_HARD_FrmRawCfgReg
     usLowWord   = HDLC_MAKE_WORD(0x00, ucLowByte);
     ulFrmCfg    = HDLC_MAKE_DWORD(usProtocol, usLowWord);
 
-    /* ����AC��ѹ��ָʾ, P��ѹ��ָʾ, Э��ֵ��ʹ�ܷ�װ���, accm */
+    /* 设置AC域压缩指示, P域压缩指示, 协议值和使能封装标记, accm */
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_CFG_ADDR(HDLC_IP_BASE_ADDR),ulFrmCfg);
 
     return;
@@ -2781,36 +2781,36 @@ VOS_UINT32 PPP_HDLC_HARD_FrmCfgEnReg(VOS_UINT32   ulTotalLen)
     |--------|---|-----|---|---|---|---|---|---|---|---|---|---|------|---|
     |   Rsv  |en | Rsv |en |en |en |en |en |en |en |en |en |en |  Rsv |en |
 
-    Reserved            [31:25] 7'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    frm_over_int_en     [24]    1'b0    h/s R/W  һ��������װ�����ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��;
-    Reserved            [23:18] 6'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    frm_rpt_dep_err_en  [17]    1'b0    h/s R/W  ��װ�ⲿ��ȷ֡�����ϱ��ռ䲻���ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��;
-    frm_out_spc_err_en  [16]    1'b0    h/s R/W  ��װ�ⲿ����洢�ռ䲻���ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    frm_rpt_prm_err_en  [15]    1'b0    h/s R/W  ��װ�ϱ��ռ���ز��������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    frm_out_prm_err_en  [14]    1'b0    h/s R/W  ��װ���������ز��������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    frm_in_prm_err_en   [13]    1'b0    h/s R/W  ��װ����������ز��������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    frm_cfg_err_en      [12]    1'b0    h/s R/W  ��װЭ�鼰��ѹ��ָʾ���ô����ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    frm_wr_timeout_en   [11]    1'b0    h/s R/W  ��װʱAXI����д����timeout�ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    frm_rd_timeout_en   [10]    1'b0    h/s R/W  ��װʱAXI���߶�����timeout�ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    frm_wr_err_en       [9]     1'b0    h/s R/W  ��װʱAXI����д���������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    frm_rd_err_en       [8]     1'b0    h/s R/W  ��װʱAXI���߶����������ж�ʹ��;0���жϽ�ֹ;1���ж�ʹ��
-    Reserved            [7:1]   7'b0    h/s R/W  ����λ����ʱ����0��дʱ��Ӱ�졣
-    frm_en              [0]     1'b0    h/s R/W  һ��������װʹ�ܣ�������frm_enд��1'b1������װ����;һ��������װ��ɺ���Ӳ���Զ���frm_en���㣻
-                                                 ��װ���̳���ʱ��Ӳ��Ҳ���frm_en�Զ����㣬ʹ�ڲ�״̬������IDLE״̬��
-                                                 дʱ����һ��������װʹ��;0����ʹ�ܷ�װ����;1��ʹ�ܷ�װ����;
-                                                 ��ʱ����һ��������װ����״̬;0��û�ڽ��з�װ����;1�����ڽ��з�װ������
+    Reserved            [31:25] 7'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    frm_over_int_en     [24]    1'b0    h/s R/W  一套链表封装结束中断使能;0：中断禁止;1：中断使能;
+    Reserved            [23:18] 6'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    frm_rpt_dep_err_en  [17]    1'b0    h/s R/W  封装外部正确帧长度上报空间不足中断使能;0：中断禁止;1：中断使能;
+    frm_out_spc_err_en  [16]    1'b0    h/s R/W  封装外部输出存储空间不足中断使能;0：中断禁止;1：中断使能
+    frm_rpt_prm_err_en  [15]    1'b0    h/s R/W  封装上报空间相关参数错误中断使能;0：中断禁止;1：中断使能
+    frm_out_prm_err_en  [14]    1'b0    h/s R/W  封装输出链表相关参数错误中断使能;0：中断禁止;1：中断使能
+    frm_in_prm_err_en   [13]    1'b0    h/s R/W  封装输入链表相关参数错误中断使能;0：中断禁止;1：中断使能
+    frm_cfg_err_en      [12]    1'b0    h/s R/W  封装协议及其压缩指示配置错误中断使能;0：中断禁止;1：中断使能
+    frm_wr_timeout_en   [11]    1'b0    h/s R/W  封装时AXI总线写请求timeout中断使能;0：中断禁止;1：中断使能
+    frm_rd_timeout_en   [10]    1'b0    h/s R/W  封装时AXI总线读请求timeout中断使能;0：中断禁止;1：中断使能
+    frm_wr_err_en       [9]     1'b0    h/s R/W  封装时AXI总线写操作错误中断使能;0：中断禁止;1：中断使能
+    frm_rd_err_en       [8]     1'b0    h/s R/W  封装时AXI总线读操作错误中断使能;0：中断禁止;1：中断使能
+    Reserved            [7:1]   7'b0    h/s R/W  保留位。读时返回0。写时无影响。
+    frm_en              [0]     1'b0    h/s R/W  一套链表封装使能，软件向frm_en写入1'b1启动封装工作;一套链表封装完成后，由硬件自动对frm_en清零；
+                                                 封装过程出错时，硬件也会对frm_en自动清零，使内部状态机返回IDLE状态；
+                                                 写时设置一套链表封装使能;0：不使能封装处理;1：使能封装处理;
+                                                 读时返回一套链表封装处理状态;0：没在进行封装处理;1：正在进行封装处理。
     */
 
     VOS_UINT32          ulEnableInterrupt;
     VOS_UINT32          ulValue;
-    const VOS_UINT32    ulInterruptValue    = 0x0103FF01;   /* ʹ���жϷ�ʽʱ����ʹ�ܼĴ�����ֵ */
-    const VOS_UINT32    ulPollValue         = 0x01;         /* ʹ����ѯ��ʽʱ����ʹ�ܼĴ�����ֵ */
+    const VOS_UINT32    ulInterruptValue    = 0x0103FF01;   /* 使用中断方式时配置使能寄存器的值 */
+    const VOS_UINT32    ulPollValue         = 0x01;         /* 使用轮询方式时配置使能寄存器的值 */
 
 
-    /* �жϴ���װ���ݵ��ܳ��ȣ�������������ʹ���жϷ�ʽ������ʹ����ѯ��ʽ */
+    /* 判断待封装数据的总长度，若大于门限则使用中断方式，否则使用轮询方式 */
     if( ulTotalLen > HDLC_FRM_INTERRUPT_LIMIT )
     {
-        /* ���÷�װ���ʹ�ܼĴ���hdlc_frm_en��[31:0]λΪ0x0103FF01 */
+        /* 配置封装相关使能寄存器hdlc_frm_en的[31:0]位为0x0103FF01 */
         ulValue             = ulInterruptValue;
         ulEnableInterrupt   = VOS_TRUE;
 
@@ -2818,26 +2818,26 @@ VOS_UINT32 PPP_HDLC_HARD_FrmCfgEnReg(VOS_UINT32   ulTotalLen)
     }
     else
     {
-        /* ���÷�װ���ʹ�ܼĴ���hdlc_frm_en��[31:0]λΪ0x01 */
+        /* 配置封装相关使能寄存器hdlc_frm_en的[31:0]位为0x01 */
         ulValue             = ulPollValue;
         ulEnableInterrupt   = VOS_FALSE;
 
         g_PppHdlcHardStat.ulFrmWaitQueryCnt++;
     }
 
-    /* ʹ��ǰ����ϴη�װ�����װ��ԭʼ�ж� */
+    /* 使能前清除上次封装、解封装的原始中断 */
     TTF_WRITE_32REG(SOC_ARM_HDLC_DEF_INT_CLR_ADDR(HDLC_IP_BASE_ADDR), 0xFFFFFFFF);
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_INT_CLR_ADDR(HDLC_IP_BASE_ADDR), 0xFFFFFFFF);
 
-    /* �ϱ��Ĵ�����ά�ɲ� */
+    /* 上报寄存器可维可测 */
     PPP_HDLC_HARD_MntnFrmTraceRegConfig(VOS_FALSE, ulValue, ulEnableInterrupt);
 
-    /* ʹ��Ӳ��֮ǰ��ǿ��ARM˳��ִ�н���ǰ���ָ�� */
+    /* 使能硬件之前先强制ARM顺序执行结束前面的指针 */
     TTF_FORCE_ARM_INSTUCTION();
 
     TTF_WRITE_32REG(SOC_ARM_HDLC_FRM_EN_ADDR(HDLC_IP_BASE_ADDR), ulValue);
 
-    /* PC��ʹ��HDLCģ���� */
+    /* PC上使用HDLC模拟器 */
     #if (VOS_OS_VER == VOS_WIN32)
     VHW_HDLC_Task();
     #endif
@@ -2846,16 +2846,16 @@ VOS_UINT32 PPP_HDLC_HARD_FrmCfgEnReg(VOS_UINT32   ulTotalLen)
 }
 VOS_UINT32 PPP_HDLC_HARD_FrmWaitStatusChange(VOS_VOID)
 {
-    VOS_UINT32              ulFrmRsltWaitNum;           /* ��ֹӲ���쳣�ı������� */
-    volatile VOS_UINT32     ulFrmStatus;                /* ��װ״̬ */
+    VOS_UINT32              ulFrmRsltWaitNum;           /* 防止硬件异常的保护变量 */
+    volatile VOS_UINT32     ulFrmStatus;                /* 封装状态 */
 
 
-   /* ��ѯhdlc_frm_status (0x28)�ĵ�[0]λ�͵�[1]λ���κ�һ��Ϊ1���߳�ʱ�򷵻� */
+   /* 查询hdlc_frm_status (0x28)的第[0]位和第[1]位，任何一个为1或者超时则返回 */
     ulFrmRsltWaitNum = 0UL;
 
     while (ulFrmRsltWaitNum < HDLC_FRM_MAX_WAIT_RESULT_NUM)
     {
-        /* ��ȡ hdlc_frm_status��[0][1]λ */
+        /* 读取 hdlc_frm_status的[0][1]位 */
         ulFrmStatus  =   TTF_READ_32REG(SOC_ARM_HDLC_FRM_STATUS_ADDR(HDLC_IP_BASE_ADDR));
 
         if (HDLC_FRM_ALL_PKT_DOING != (ulFrmStatus & HDLC_FRM_STATUS_MASK))
@@ -2888,32 +2888,32 @@ VOS_UINT32 PPP_HDLC_HARD_FrmWaitResult
     VOS_UINT32          ulEnableInterrupt
 )
 {
-    VOS_UINT32              ulFrmStatus;        /* ��װ״̬ */
+    VOS_UINT32              ulFrmStatus;        /* 封装状态 */
     VOS_UINT32              ulResult;
 
 
     if (VOS_TRUE == ulEnableInterrupt)
     {
-        /* �ȴ��жϵõ����������״̬ */
+        /* 等待中断得到出错或完成状态 */
         ulResult = PPP_HDLC_HARD_CommWaitSem(g_stHdlcConfigInfo.ulHdlcFrmMasterSem, HDLC_FRM_MASTER_INT_TIMER_LEN);
 
-        /* �������жϷ�������н��������жϲ�������Statusָʾ�Ƿ������bit��ԭʼ�жϼĴ���
-           �������ʴ˴�ȡ������g_stHdlcRegSaveInfo�е�״ֵ̬ */
+        /* 由于在中断服务程序中进行了清中断操作，而Status指示是否出错的bit由原始中断寄存器
+           决定，故此处取保存在g_stHdlcRegSaveInfo中的状态值 */
         ulFrmStatus = g_stHdlcRegSaveInfo.ulHdlcFrmStatus;
     }
     else
     {
-        /* ��ѯ�õ���������� */
+        /* 轮询得到出错或完成 */
         ulResult = PPP_HDLC_HARD_FrmWaitStatusChange();
 
-        /* ��ѯhdlc_frm_status (0x28)��ȡ��װ״̬�����䷵�� */
+        /* 查询hdlc_frm_status (0x28)获取封装状态并将其返回 */
         ulFrmStatus  =  TTF_READ_32REG(SOC_ARM_HDLC_FRM_STATUS_ADDR(HDLC_IP_BASE_ADDR));
     }
 
-    /* �ϱ��Ĵ�����ά�ɲ� */
+    /* 上报寄存器可维可测 */
     PPP_HDLC_HARD_MntnFrmTraceRegConfig(VOS_TRUE, 0, ulEnableInterrupt);
 
-    /* �Ȳ���˵��HDLC���ڹ��� */
+    /* 等不到说明HDLC还在工作 */
     if (VOS_OK != ulResult)
     {
         return HDLC_FRM_ALL_PKT_DOING;
@@ -2946,22 +2946,22 @@ VOS_VOID PPP_HDLC_HARD_FrmProcValidFrames
     VOS_UINT16                          usDataLen;
 
 
-    pstFrmBuffInfo     = HDLC_FRM_GET_BUF_INFO(usPppId);                   /* ����usPppId�ҵ���Ӧ���ڴ�  */
-    pstFrmRptNodeStru  = &(pstFrmBuffInfo->astRptNodeBuf[0]);              /* ��װ�ϱ��ռ��׵�ַ */
-    pstOutputParaLink  = &(pstFrmBuffInfo->astOutputParaLinkNodeBuf[0]);   /* ��װ��������׵�ַ */
-    ppstOutputLinkNode = &(pstBuildInfo->apstOutputLinkNode[0]);           /* ��װ��������ڵ��Ӧ�㿽���ڴ������׵�ַ */
-    ulFrmOutSpaceCnt   = pstBuildInfo->ulOutputLinkNodeCnt;                /* ��װ��������ڵ�ĸ��� */
+    pstFrmBuffInfo     = HDLC_FRM_GET_BUF_INFO(usPppId);                   /* 根据usPppId找到对应的内存  */
+    pstFrmRptNodeStru  = &(pstFrmBuffInfo->astRptNodeBuf[0]);              /* 封装上报空间首地址 */
+    pstOutputParaLink  = &(pstFrmBuffInfo->astOutputParaLinkNodeBuf[0]);   /* 封装输出链表首地址 */
+    ppstOutputLinkNode = &(pstBuildInfo->apstOutputLinkNode[0]);           /* 封装输出链表节点对应零拷贝内存链表首地址 */
+    ulFrmOutSpaceCnt   = pstBuildInfo->ulOutputLinkNodeCnt;                /* 封装输出链表节点的个数 */
 
-    /* ��Ч֡���ռ��Ƭ�θ���usFrmOutSegNum= hdlc_frm_status�Ĵ���[31:16]λ��ֵ */
+    /* 有效帧存放占用片段个数usFrmOutSegNum= hdlc_frm_status寄存器[31:16]位的值 */
     usFrmOutSegNum = (VOS_UINT16)TTF_Read32RegByBit(SOC_ARM_HDLC_FRM_STATUS_ADDR(HDLC_IP_BASE_ADDR), 16, 31);
 
-    /* ��Ч֡����usFrmValidNum= hdlc_frm_status�Ĵ���[15:8]λ��ֵ */
+    /* 有效帧个数usFrmValidNum= hdlc_frm_status寄存器[15:8]位的值 */
     ucFrmValidNum  = (VOS_UINT8)TTF_Read32RegByBit(SOC_ARM_HDLC_FRM_STATUS_ADDR(HDLC_IP_BASE_ADDR), 8, 15);
 
-    /* �ϱ���װ�����ݿ�ά�ɲ�:�ϱ��ռ���Ϣ������������� */
+    /* 上报封装后数据可维可测:上报空间信息、输出链表内容 */
     PPP_HDLC_HARD_MntnFrmTraceOutput(ucFrmValidNum, usFrmOutSegNum, pstFrmBuffInfo, pstBuildInfo);
 
-    /* ucFrmValidNum�϶�ҪС�ڵ���ʹ�õ��ڴ����usFrmOutSegNum */
+    /* ucFrmValidNum肯定要小于等于使用的内存块数usFrmOutSegNum */
     if( ucFrmValidNum > usFrmOutSegNum )
     {
         PPP_MNTN_LOG2(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
@@ -2971,7 +2971,7 @@ VOS_VOID PPP_HDLC_HARD_FrmProcValidFrames
         return;
     }
 
-    /* ucFrmValidNumӦ��������������ͬulInputLinkNodeCnt��������װ�������ܻ�Ⱥ���С */
+    /* ucFrmValidNum应该与输入数据相同ulInputLinkNodeCnt，如果解封装出错可能会比后者小 */
     if( ucFrmValidNum > pstBuildInfo->ulInputLinkNodeCnt )
     {
         PPP_MNTN_LOG2(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
@@ -2981,7 +2981,7 @@ VOS_VOID PPP_HDLC_HARD_FrmProcValidFrames
         return;
     }
 
-    /* usFrmOutSegNumʹ�õ��ڴ�����϶�С�ڵ���ulOutputLinkNodeCnt */
+    /* usFrmOutSegNum使用的内存块数肯定小于等于ulOutputLinkNodeCnt */
     if( usFrmOutSegNum  > ulFrmOutSpaceCnt )
     {
         PPP_MNTN_LOG2(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
@@ -3005,7 +3005,7 @@ VOS_VOID PPP_HDLC_HARD_FrmProcValidFrames
                           "PPP_HDLC_HARD_FrmProcValidFrames, ERROR, invalid usFrmOutOneLen %d\r\n",
                           usFrmOutLen);
 
-            /* �ͷ������Ŀ�Ŀռ� */
+            /* 释放申请的目的空间 */
             PPP_HDLC_HARD_CommReleaseLink(ppstOutputLinkNode + ulOutputLinkIndex,
                                           ulFrmOutSpaceCnt - ulOutputLinkIndex);
             return;
@@ -3018,7 +3018,7 @@ VOS_VOID PPP_HDLC_HARD_FrmProcValidFrames
             PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
                               "PPP_HDLC_HARD_FrmProcValidFram, ERROR, SOC copy error!");
 
-            /* �ͷ������Ŀ�Ŀռ� */
+            /* 释放申请的目的空间 */
             PPP_HDLC_HARD_CommReleaseLink(ppstOutputLinkNode + ulOutputLinkIndex,
                                           ulFrmOutSpaceCnt - ulOutputLinkIndex);
             return;
@@ -3026,10 +3026,10 @@ VOS_VOID PPP_HDLC_HARD_FrmProcValidFrames
 
         while( usFrmOutLen > 0 )
         {
-            /* ��pstBuildInfo->apstOutputLinkNodeȡ��ͷ��� pstMem */
+            /* 从pstBuildInfo->apstOutputLinkNode取出头结点 pstMem */
             pstMem    = ppstOutputLinkNode[ulOutputLinkIndex];
 
-            /* ����������������ָĿ�Ŀռ�Ĵ�С */
+            /* 单个输出链表结点所指目的空间的大小 */
             usDataLen = pstOutputParaLink[ulOutputLinkIndex].usDataLen;
 
             if( usFrmOutLen > usDataLen )
@@ -3047,7 +3047,7 @@ VOS_VOID PPP_HDLC_HARD_FrmProcValidFrames
 
             g_PppDataQCtrl.stStat.ulDownlinkSndDataCnt++;
 
-            /* ������������ݰ���apstOutputLinkNode����� */
+            /* 将发送完的数据包从apstOutputLinkNode中清空 */
             ppstOutputLinkNode[ulOutputLinkIndex] = VOS_NULL_PTR;
 
             ulOutputLinkIndex++;
@@ -3056,7 +3056,7 @@ VOS_VOID PPP_HDLC_HARD_FrmProcValidFrames
         ucRptSpaceIndex++;
     }
 
-    /* �ͷ�ʣ��δ���õ�Ŀ�Ŀռ� */
+    /* 释放剩余未利用的目的空间 */
     PPP_HDLC_HARD_CommReleaseLink(ppstOutputLinkNode + ulOutputLinkIndex,
                                   ulFrmOutSpaceCnt - ulOutputLinkIndex);
 
@@ -3073,7 +3073,7 @@ VOS_VOID PPP_HDLC_HARD_FrmProcException
 
     if( VOS_TRUE == ulEnableInterrupt )
     {
-        /* �������жϷ�������н��������жϲ������ʴ˴�ȡ������g_stHdlcRegSaveInfo�е�ԭʼ�жϼĴ���ֵ */
+        /* 由于在中断服务程序中进行了清中断操作，故此处取保存在g_stHdlcRegSaveInfo中的原始中断寄存器值 */
         ulRawInt                        =   g_stHdlcRegSaveInfo.ulHdlcFrmRawInt;
         g_PppHdlcHardStat.usFrmExpInfo |=   (1 << HDLC_INTERRUPT_IND_BITPOS);
     }
@@ -3090,10 +3090,10 @@ VOS_VOID PPP_HDLC_HARD_FrmProcException
 
     g_PppHdlcHardStat.usFrmExpInfo |=   (1 << HDLC_EXCEPTION_IND_BITPOS);
 
-    /* ��λǰ��Delay 1s��֤��ά�ɲ�������� */
+    /* 复位前先Delay 1s保证可维可测正常输出 */
     VOS_TaskDelay(1000);
 
-    /* ���HDLC�����쳣���򵥰��쳣���� */
+    /* 如果HDLC出现异常，则单板异常重启 */
     DRV_SYSTEM_ERROR(HDLC_FRM_SYSTEM_ERROR_ID, __LINE__, (VOS_INT)g_PppHdlcHardStat.usFrmExpInfo,
                          (VOS_CHAR *)&g_stHdlcRegSaveInfo,
                          sizeof(HDLC_REG_SAVE_INFO_STRU));
@@ -3111,20 +3111,20 @@ VOS_VOID PPP_HDLC_HARD_FrmWaitAndProc
     VOS_UINT32                          ulFrmStatus;
 
 
-    /* ʹ���жϣ���ȴ��жϸ������ͷ��ź�����������ѯ���װ״̬�Ĵ��� */
+    /* 使能中断，则等待中断辅程序释放信号量；否则轮询解封装状态寄存器 */
     ulFrmStatus = PPP_HDLC_HARD_FrmWaitResult(ulEnableInterrupt);
 
     if ( HDLC_FRM_ALL_PKT_DONE == ulFrmStatus )
     {
-        /* ������Ч֡�����ͷ�ʣ���ڴ� */
+        /* 处理有效帧，并释放剩余内存 */
         PPP_HDLC_HARD_FrmProcValidFrames(usPppId, pstBuildInfo);
     }
     else
     {
-        /* �ͷ������Ŀ�Ŀռ� */
+        /* 释放申请的目的空间 */
         PPP_HDLC_HARD_CommReleaseLink(pstBuildInfo->apstOutputLinkNode, pstBuildInfo->ulOutputLinkNodeCnt);
 
-        /* ��ӡ�쳣��־������PPP���� */
+        /* 打印异常日志，挂起PPP任务 */
         PPP_HDLC_HARD_FrmProcException(ulFrmStatus, ulEnableInterrupt);
     }
 
@@ -3156,10 +3156,10 @@ VOS_UINT32 PPP_HDLC_HARD_FrmPacket
     stBuildPara.usPppId    = usPppId;
     stBuildPara.pstDataQ   = pstDataQ;
 
-    /* ����usPppId�ҵ���Ӧ���ڴ� */
+    /* 根据usPppId找到对应的内存 */
     pstFrmBuffInfo = HDLC_FRM_GET_BUF_INFO(usPppId);
 
-    /* ������������������������ϱ������ڴ��ά�ɲ� */
+    /* 构造输入输出参数链表，并上报链表内存可维可测 */
     ulBuildResult  = PPP_HDLC_HARD_FrmBuildParaLink(&stBuildPara, &stBuildInfo);
 
     *pulDealCurCnt = stBuildInfo.ulDealCnt;
@@ -3176,13 +3176,13 @@ VOS_UINT32 PPP_HDLC_HARD_FrmPacket
     g_PppHdlcHardStat.ulFrmMaxOutputCntOnce  = TTF_MAX(g_PppHdlcHardStat.ulFrmMaxOutputCntOnce, stBuildInfo.ulOutputLinkNodeCnt);
     g_PppHdlcHardStat.ulFrmMaxOutputSizeOnce = TTF_MAX(g_PppHdlcHardStat.ulFrmMaxOutputSizeOnce, stBuildInfo.ulOutputLinkTotalSize);
 
-    /* ���÷�װ�����װͨ�üĴ��� */
+    /* 配置封装、解封装通用寄存器 */
     PPP_HDLC_HARD_CommCfgReg();
 
-    /* �����ڴ���ؼĴ��� */
+    /* 配置内存相关寄存器 */
     PPP_HDLC_HARD_FrmCfgBufReg(pstFrmBuffInfo);
 
-    /* ���÷�װ��ؼĴ��� */
+    /* 配置封装相关寄存器 */
     PPP_HDLC_HARD_FrmCfgReg(pstLink, usProtocol);
 
 #if (FEATURE_ON == FEATURE_TTFMEM_CACHE)
@@ -3190,13 +3190,13 @@ VOS_UINT32 PPP_HDLC_HARD_FrmPacket
     PPP_HDLC_CACHE_INVALID((VOS_UINT8 *)pstFrmBuffInfo, sizeof(HDLC_FRM_BUFF_INFO_STRU));
 #endif
 
-    /* ����ʹ�ܼĴ��������ϱ�ʹ��ǰ�Ĵ�����ά�ɲ� */
+    /* 配置使能寄存器，并上报使能前寄存器可维可测 */
     ulEnableInterrupt = PPP_HDLC_HARD_FrmCfgEnReg(stBuildInfo.ulInputLinkTotalSize);
 
-    /* �ȴ���װ��ɣ�Ȼ�����������,�ͷŶ����Ŀ�Ŀռ��ڴ� */
+    /* 等待封装完成，然后处理输出数据,释放多余的目的空间内存 */
     PPP_HDLC_HARD_FrmWaitAndProc(ulEnableInterrupt, usPppId, pstLink, &stBuildInfo);
 
-    /* �ͷ�pstBuildInfo->apstInputLinkNode�еĽ���ڴ� */
+    /* 释放pstBuildInfo->apstInputLinkNode中的结点内存 */
     PPP_HDLC_HARD_CommReleaseLink(stBuildInfo.apstInputLinkNode, stBuildInfo.ulInputLinkNodeCnt);
 
     return VOS_OK;
@@ -3224,10 +3224,10 @@ VOS_UINT32 PPP_HDLC_HARD_FrmRawData
     stBuildPara.usPppId    = usPppId;
     stBuildPara.pstDataQ   = pstDataQ;
 
-    /* ����usPppId�ҵ���Ӧ���ڴ�  */
+    /* 根据usPppId找到对应的内存  */
     pstFrmBuffInfo         = HDLC_FRM_GET_BUF_INFO(usPppId);
 
-    /* ������������������������ϱ������ڴ��ά�ɲ� */
+    /* 构造输入输出参数链表，并上报链表内存可维可测 */
     ulBuildResult  = PPP_HDLC_HARD_FrmBuildParaLink(&stBuildPara, &stBuildInfo);
 
     *pulDealCurCnt = stBuildInfo.ulDealCnt;
@@ -3243,13 +3243,13 @@ VOS_UINT32 PPP_HDLC_HARD_FrmRawData
     g_PppHdlcHardStat.ulFrmMaxOutputCntOnce  = TTF_MAX(g_PppHdlcHardStat.ulFrmMaxOutputCntOnce, stBuildInfo.ulOutputLinkNodeCnt);
     g_PppHdlcHardStat.ulFrmMaxOutputSizeOnce = TTF_MAX(g_PppHdlcHardStat.ulFrmMaxOutputSizeOnce, stBuildInfo.ulOutputLinkTotalSize);
 
-    /* ���÷�װ�����װͨ�üĴ��� */
+    /* 配置封装、解封装通用寄存器 */
     PPP_HDLC_HARD_CommCfgReg();
 
-    /* �����ڴ���ؼĴ��� */
+    /* 配置内存相关寄存器 */
     PPP_HDLC_HARD_FrmCfgBufReg(pstFrmBuffInfo);
 
-    /* ���÷�װ��ؼĴ��� */
+    /* 配置封装相关寄存器 */
     PPP_HDLC_HARD_FrmRawCfgReg(pstLink, usProtocol);
 
 #if (FEATURE_ON == FEATURE_TTFMEM_CACHE)
@@ -3257,13 +3257,13 @@ VOS_UINT32 PPP_HDLC_HARD_FrmRawData
     PPP_HDLC_CACHE_INVALID((VOS_UINT8 *)pstFrmBuffInfo, sizeof(HDLC_FRM_BUFF_INFO_STRU));
 #endif
 
-    /* ����ʹ�ܼĴ��������ϱ�ʹ��ǰ�Ĵ�����ά�ɲ� */
+    /* 配置使能寄存器，并上报使能前寄存器可维可测 */
     ulEnableInterrupt = PPP_HDLC_HARD_FrmCfgEnReg(stBuildInfo.ulInputLinkTotalSize);
 
-    /* �ȴ���װ��ɣ�Ȼ�����������,�ͷŶ����Ŀ�Ŀռ��ڴ� */
+    /* 等待封装完成，然后处理输出数据,释放多余的目的空间内存 */
     PPP_HDLC_HARD_FrmWaitAndProc(ulEnableInterrupt, usPppId, pstLink, &stBuildInfo);
 
-    /* �ͷ�pstBuildInfo->apstInputLinkNode�еĽ���ڴ� */
+    /* 释放pstBuildInfo->apstInputLinkNode中的结点内存 */
     PPP_HDLC_HARD_CommReleaseLink(stBuildInfo.apstInputLinkNode, stBuildInfo.ulInputLinkNodeCnt);
 
     return VOS_OK;
@@ -3294,13 +3294,13 @@ PPP_HDLC_RESULT_TYPE_ENUM_UINT32 PPP_HDLC_HARD_ProcData
     {
         pstMem  = (PPP_ZC_STRU *)PPP_ZC_PEEK_QUEUE_HEAD(pstDataQ);
 
-        /* ����Ϊ�յ�ʱ�򷵻ؿ�ָ�� */
+        /* 队列为空的时候返回空指针 */
         if ( VOS_NULL_PTR == pstMem )
         {
             return PPP_HDLC_RESULT_COMM_FINISH;
         }
 
-        /*�����ý��(�����ͷŶ����Ѿ��ڸ����������ڲ���ɣ��������ͷŽ��)*/
+        /*处理该结点(结点的释放动作已经在各处理函数内部完成，无需再释放结点)*/
         ucDataType   = (PPP_ZC_GET_DATA_APP(pstMem) & 0x00FF);
         ulDealResult = VOS_OK;
         ulDealCurCnt = 0;
@@ -3327,7 +3327,7 @@ PPP_HDLC_RESULT_TYPE_ENUM_UINT32 PPP_HDLC_HARD_ProcData
                 break;
             case PPP_PUSH_RAW_DATA_TYPE:
 
-                /* ��ȡ����װ���ݰ���Э��ֵusProtocol */
+                /* 获取待封装数据包的协议值usProtocol */
                 if (VOS_OK == PPP_HDLC_HARD_FrmGetProtocol(pstMem, &usProtocol))
                 {
                     ulDealResult = PPP_HDLC_HARD_FrmRawData(usPppId, usProtocol, pstLink, pstDataQ, &ulDealCurCnt);
@@ -3348,7 +3348,7 @@ PPP_HDLC_RESULT_TYPE_ENUM_UINT32 PPP_HDLC_HARD_ProcData
                 break;
         }
 
-        /*ͳ��*/
+        /*统计*/
         ulDealTotalCnt += ulDealCurCnt;
 
         if ( ulDealTotalCnt > g_PppHdlcHardStat.ulMaxCntOnce )
@@ -3363,8 +3363,8 @@ PPP_HDLC_RESULT_TYPE_ENUM_UINT32 PPP_HDLC_HARD_ProcData
             break;
         }
 
-        /*���ѭ�������Ľ����������˶���һ�������������������
-          ���˳�ѭ��������PPP_DATA_PROC_NOTIFY��Ϣ*/
+        /*如果循环处理的结点个数超出了队列一次允许处理最大结点数，
+          则退出循环并发送PPP_DATA_PROC_NOTIFY消息*/
         if ( (ulDealTotalCnt >= PPP_ONCE_DEAL_MAX_CNT) )
         {
             g_PppHdlcHardStat.ulContinueCnt++;
@@ -3390,13 +3390,13 @@ VOS_UINT32 PPP_HDLC_HARD_SendAsFrmPacketMsg
 
     if (VOS_NULL_PTR == pstMsg)
     {
-        /*��ӡ������Ϣ---������Ϣ��ʧ��:*/
+        /*打印出错信息---申请消息包失败:*/
         PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
                         "PPP_HDLC_HARD_SendMsg, ERROR: PS_ALLOC_MSG Failed!\r\n");
         return VOS_ERR;
     }
 
-    /*��д��Ϣͷ:*/
+    /*填写消息头:*/
     pstMsg->MsgHeader.ulSenderCpuId   = VOS_LOCAL_CPUID;
     pstMsg->MsgHeader.ulSenderPid     = PS_PID_APP_PPP;
     pstMsg->MsgHeader.ulReceiverCpuId = VOS_LOCAL_CPUID;
@@ -3404,15 +3404,15 @@ VOS_UINT32 PPP_HDLC_HARD_SendAsFrmPacketMsg
     pstMsg->MsgHeader.ulLength        = ulLength;
 
     pstMsg->MsgHeader.ulMsgName       = PPP_HDLC_PROC_AS_FRM_PACKET_IND;
-    /*��д��Ϣ��:*/
+    /*填写消息体:*/
     pstMsg->usPppId                   = usPppId;
     pstMsg->usProtocol                = usProtocol;
     pstMsg->pstMem                    = pstMem;
 
-    /*���͸���Ϣ*/
+    /*发送该消息*/
     if (VOS_OK != PS_SEND_MSG(PS_PID_APP_PPP, pstMsg))
     {
-        /*��ӡ������Ϣ---������Ϣʧ��:*/
+        /*打印警告信息---发送消息失败:*/
         PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_ERROR,
                         "PPP_HDLC_HARD_SendAsFrmPacketMsg, ERROR : PS_SEND_MSG Failed!");
         PPP_MemFree(pstMem);
@@ -3437,14 +3437,14 @@ VOS_VOID PPP_HDLC_HARD_ProcAsFrmPacket
 
     ulDealCurCnt = 0;
 
-    /* ��װ������IP�������ݰ� */
+    /* 封装成下行IP类型数据包 */
     PPP_ZC_SET_DATA_APP(pstMem, (VOS_UINT16)(usPppId << 8) | (VOS_UINT16)PPP_PUSH_PACKET_TYPE);
 
-    /* ��ʼ������stDataQ, ���� pstMem ��� */
+    /* 初始化队列stDataQ, 并将 pstMem 入队 */
     PPP_ZC_QUEUE_INIT(&stDataQ);
     PPP_ZC_ENQUEUE_TAIL(&stDataQ, pstMem);
 
-    /* ֱ�ӽ������ݰ���װ���͸�PC */
+    /* 直接将该数据包封装后发送给PC */
     ulDealResult = PPP_HDLC_HARD_FrmPacket(usPppId, usProtocol, pstLink, &stDataQ, &ulDealCurCnt);
 
     if ((VOS_OK != ulDealResult) || (1 != ulDealCurCnt))
@@ -3453,7 +3453,7 @@ VOS_VOID PPP_HDLC_HARD_ProcAsFrmPacket
                       "PPP_HDLC_HARD_MakeFrmPacket, ERROR, ulDealResult %d ulDealCurCnt %d!\r\n",
                       ulDealResult, ulDealCurCnt);
 
-        /* ˵����ĳ�ִ���������û�дӶ������Ƴ�����Ҫ�ͷ� */
+        /* 说明因某种错误导致数据没有从队列中移出，需要释放 */
         if (0 < PPP_ZC_GET_QUEUE_LEN(&stDataQ))
         {
             PPP_MemFree(pstMem);
@@ -3496,11 +3496,11 @@ VOS_VOID PPP_HDLC_HARD_ProcProtocolPacket
         return;
     }
 
-    /* PPPЭ��ջ�ظ���Э�̰���Ҫ��װ�󷢸�PC��ȷ�ϴ�ʱ�Ƿ��װ����װ���Ѿ���� */
+    /* PPP协议栈回复的协商包需要封装后发给PC，确认此时是否封装与解封装都已经完成 */
     ulFrmResult     = PPP_HDLC_HARD_FrmIsEnabled();
     ulDefResult     = PPP_HDLC_HARD_DefIsEnabled();
 
-    /* �˺��������н��Э�̰�ʱ��PPPЭ��ջ����Ӧ�����ʱ���װ��Ӧ��ʹ�� */
+    /* 此函数在上行解出协商包时，PPP协议栈产生应答，这个时候封装不应该使能 */
     if( (VOS_TRUE == ulFrmResult) || (VOS_TRUE == ulDefResult) )
     {
         PPP_MNTN_LOG2(PS_PID_APP_PPP, 0, PS_PRINT_WARNING,
@@ -3511,7 +3511,7 @@ VOS_VOID PPP_HDLC_HARD_ProcProtocolPacket
         return;
     }
 
-    /* �´�PPP������ȵ�ʱ���ٷ�װ��Э�̣���ʱ��װ����װ��δʹ�� */
+    /* 下次PPP任务调度的时候再封装此协商，那时封装与解封装都未使能 */
     PPP_HDLC_HARD_ProcAsFrmPacket(usPppId, usProtocol, pstMem);
 
     return;
@@ -3519,16 +3519,16 @@ VOS_VOID PPP_HDLC_HARD_ProcProtocolPacket
 
 VOID PPP_Help(VOID)
 {
-    vos_printf("********************PPP������Ϣ************************\n");
-    vos_printf("PPP_HDLC_HARD_MntnShowStatInfo           ��ӡͳ����Ϣ\n");
-    vos_printf("PPP_INPUT_ShowStatInfo                   ��ӡ g_PppDataQCtrl��Ϣ\n");
-    vos_printf("PPP_HDLC_HARD_MntnSetConfig              ���ÿ�ά�ɲ�ȼ�:\n");
-    vos_printf("                                         1--������2--�Ĵ�����4--����\n");
-    vos_printf("PPP_HDLC_HARD_MntnShowDefReg             ��ӡ���װ�Ĵ�����Ϣ\n");
-    vos_printf("PPP_HDLC_HARD_MntnShowFrmReg             ��ӡ��װ�Ĵ�����Ϣ\n");
-    vos_printf("PPP_HDLC_HARD_MntnSetDefIntLimit         ���ý��װ�ж�ˮ��\n");
-    vos_printf("PPP_HDLC_HARD_MntnSetFrmIntLimit         ���÷�װ�ж�ˮ��\n");
-    vos_printf("PPP_HDLC_HARD_MntnShowConfigInfo         ��ӡ������Ϣ\n");
+    vos_printf("********************PPP软调信息************************\n");
+    vos_printf("PPP_HDLC_HARD_MntnShowStatInfo           打印统计信息\n");
+    vos_printf("PPP_INPUT_ShowStatInfo                   打印 g_PppDataQCtrl信息\n");
+    vos_printf("PPP_HDLC_HARD_MntnSetConfig              设置可维可测等级:\n");
+    vos_printf("                                         1--参数；2--寄存器；4--数据\n");
+    vos_printf("PPP_HDLC_HARD_MntnShowDefReg             打印解封装寄存器信息\n");
+    vos_printf("PPP_HDLC_HARD_MntnShowFrmReg             打印封装寄存器信息\n");
+    vos_printf("PPP_HDLC_HARD_MntnSetDefIntLimit         设置解封装中断水线\n");
+    vos_printf("PPP_HDLC_HARD_MntnSetFrmIntLimit         设置封装中断水线\n");
+    vos_printf("PPP_HDLC_HARD_MntnShowConfigInfo         打印配置信息\n");
 
     return;
 }

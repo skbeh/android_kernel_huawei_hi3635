@@ -1,22 +1,22 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : NetfilterExCtrl.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : caikai
-  Éú³ÉÈÕÆÚ   : 2011Äê11ÔÂ22ÈÕ
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   :
-  º¯ÊýÁÐ±í   :
+  æ–‡ ä»¶ å   : NetfilterExCtrl.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : caikai
+  ç”Ÿæˆæ—¥æœŸ   : 2011å¹´11æœˆ22æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   :
+  å‡½æ•°åˆ—è¡¨   :
 
-  ÐÞ¸ÄÀúÊ·   :
+  ä¿®æ”¹åŽ†å²   :
 
 ******************************************************************************/
 
 /******************************************************************************
-   1 Í·ÎÄ¼þ°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "v_typdef.h"
 #include "PsTypeDef.h"
@@ -29,18 +29,18 @@
 #include "NetfilterEx.h"
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 #define THIS_FILE_ID PS_FILE_ID_ACPU_NFEX_CTRL_C
 
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  3 È«¾Ö±äÁ¿ÉùÃ÷
+  3 å…¨å±€å˜é‡å£°æ˜Ž
 *****************************************************************************/
 NF_EXT_ENTITY_STRU                  g_stExEntity;
 NF_EXT_FLOW_CTRL_ENTITY             g_stExFlowCtrlEntity;
@@ -54,9 +54,9 @@ NF_EXT_NV_STRU                      g_stNfExtNv;
 NF_EXT_HOOK_MASK_NV_STRU            g_stExHookMask;
 
 /*****************************************************************************
-  4 ½á¹¹¶¨Òå
+  4 ç»“æž„å®šä¹‰
 *****************************************************************************/
-/* À©Õ¹netfilter¿ª¹ØÓ³Éä±í */
+/* æ‰©å±•netfilterå¼€å…³æ˜ å°„è¡¨ */
 #if (VOS_OS_VER == VOS_WIN32) || defined (__PC_LINT__)
 struct module stModuleTmp;
 struct module *THIS_MODULE  = &stModuleTmp;
@@ -292,7 +292,7 @@ NF_EXT_MASK_OPS_STRU g_stNfExtMaskOps[]    =
             .owner      = THIS_MODULE,
             .pf         = NFPROTO_BRIDGE,
             .hooknum    = NF_BR_PRE_ROUTING,
-            .priority   = NF_BR_PRI_FILTER_OTHER,       /* ÍøÇÅhookµãµÄ×îµÍÓÅÏÈ¼¶ */
+            .priority   = NF_BR_PRI_FILTER_OTHER,       /* ç½‘æ¡¥hookç‚¹çš„æœ€ä½Žä¼˜å…ˆçº§ */
         }
     },
     {
@@ -347,7 +347,7 @@ NF_EXT_MASK_OPS_STRU g_stNfExtMaskOps[]    =
             .owner      = THIS_MODULE,
             .pf         = NFPROTO_ARP,
             .hooknum    = NF_ARP_IN,
-            .priority   = NF_IP_PRI_CONNTRACK,      /* ARP hookµãµÄÓÅÏÈ¼¶ */
+            .priority   = NF_IP_PRI_CONNTRACK,      /* ARP hookç‚¹çš„ä¼˜å…ˆçº§ */
         }
     },
     {
@@ -369,7 +369,7 @@ NF_EXT_MASK_OPS_STRU g_stNfExtMaskOps[]    =
             .owner      = THIS_MODULE,
             .pf         = NFPROTO_IPV4,
             .hooknum    = NF_INET_PRE_ROUTING,
-            .priority   = NF_IP_PRI_MANGLE,         /* ¸ßÓÚDNAT hookµãµÄÓÅÏÈ¼¶ */
+            .priority   = NF_IP_PRI_MANGLE,         /* é«˜äºŽDNAT hookç‚¹çš„ä¼˜å…ˆçº§ */
         }
     },
     {
@@ -380,7 +380,7 @@ NF_EXT_MASK_OPS_STRU g_stNfExtMaskOps[]    =
             .owner      = THIS_MODULE,
             .pf         = NFPROTO_IPV4,
             .hooknum    = NF_INET_POST_ROUTING,
-            .priority   = NF_IP_PRI_SELINUX_LAST,   /* µÍÓÚSNAT hookµãµÄÓÅÏÈ¼¶ */
+            .priority   = NF_IP_PRI_SELINUX_LAST,   /* ä½ŽäºŽSNAT hookç‚¹çš„ä¼˜å…ˆçº§ */
         }
     },
     {
@@ -479,7 +479,7 @@ NF_EXT_MASK_OPS_STRU g_stNfExtMaskOps[]    =
             .owner      = THIS_MODULE,
             .pf         = NFPROTO_BRIDGE,
             .hooknum    = NF_BR_FORWARD,
-            .priority   = NF_BR_PRI_FILTER_BRIDGED,             /* Óë°ü¹ýÂËÓÅÏÈ¼¶ÏàÍ¬,ÓÅÏÈ¼¶ÔÚÕâÀï²»ÄÜÎª0 */
+            .priority   = NF_BR_PRI_FILTER_BRIDGED,             /* ä¸ŽåŒ…è¿‡æ»¤ä¼˜å…ˆçº§ç›¸åŒ,ä¼˜å…ˆçº§åœ¨è¿™é‡Œä¸èƒ½ä¸º0 */
         }
     }
 };
@@ -487,21 +487,21 @@ NF_EXT_MASK_OPS_STRU g_stNfExtMaskOps[]    =
 
 
 /******************************************************************************
-   5 º¯ÊýÊµÏÖ
+   5 å‡½æ•°å®žçŽ°
 ******************************************************************************/
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_UnregHooks
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÐèÒªÍ£Ö¹×¥°üÄ£¿éµÄÑÚÂë£¬½«×¥°üµÄ¹³×Óº¯Êý½â³ýÄÚºË×¢²á
- ÊäÈë²ÎÊý  : VOS_UINT32 ulMask    ¹³×Óº¯ÊýÑÚÂë
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_UnregHooks
+ åŠŸèƒ½æè¿°  : æ ¹æ®éœ€è¦åœæ­¢æŠ“åŒ…æ¨¡å—çš„æŽ©ç ï¼Œå°†æŠ“åŒ…çš„é’©å­å‡½æ•°è§£é™¤å†…æ ¸æ³¨å†Œ
+ è¾“å…¥å‚æ•°  : VOS_UINT32 ulMask    é’©å­å‡½æ•°æŽ©ç 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_VOID  NFExt_UnregHooks(VOS_UINT32 ulMask)
 {
@@ -511,10 +511,10 @@ VOS_VOID  NFExt_UnregHooks(VOS_UINT32 ulMask)
     {
         if ( g_stNfExtMaskOps[i].ulHookMask == (ulMask & g_stNfExtMaskOps[i].ulHookMask) )
         {
-            /*Ð¶ÔØ¹³×Óº¯Êý*/
+            /*å¸è½½é’©å­å‡½æ•°*/
             nf_unregister_hook(&(g_stNfExtMaskOps[i].stNfExtOps));
 
-            /* ÖØÖÃÏàÓ¦µÄÑÚÂëÎ» */
+            /* é‡ç½®ç›¸åº”çš„æŽ©ç ä½ */
             g_stExEntity.ulCurHookOnMask &= ~g_stNfExtMaskOps[i].ulHookMask;
         }
     }
@@ -522,18 +522,18 @@ VOS_VOID  NFExt_UnregHooks(VOS_UINT32 ulMask)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_RegHooks
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÐèÒª¿ªÆô×¥°üÄ£¿éµÄÑÚÂë£¬½«×¥°üµÄ¹³×Óº¯Êý×¢²áµ½ÄÚºË
- ÊäÈë²ÎÊý  : VOS_UINT32 ulMask        ¹³×Óº¯ÊýÑÚÂë
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_INT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_RegHooks
+ åŠŸèƒ½æè¿°  : æ ¹æ®éœ€è¦å¼€å¯æŠ“åŒ…æ¨¡å—çš„æŽ©ç ï¼Œå°†æŠ“åŒ…çš„é’©å­å‡½æ•°æ³¨å†Œåˆ°å†…æ ¸
+ è¾“å…¥å‚æ•°  : VOS_UINT32 ulMask        é’©å­å‡½æ•°æŽ©ç 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_INT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_INT  NFExt_RegHooks(VOS_UINT32 ulMask)
 {
@@ -548,13 +548,13 @@ VOS_INT  NFExt_RegHooks(VOS_UINT32 ulMask)
             continue;
         }
 
-        /*×¢²áÏàÓ¦µÄ¹³×Óº¯Êý*/
+        /*æ³¨å†Œç›¸åº”çš„é’©å­å‡½æ•°*/
         iRet = nf_register_hook(&(g_stNfExtMaskOps[i].stNfExtOps));
         if ( 0 != iRet )
         {
             vos_printf("register_hook error!!\n");
 
-            /*ÈôÓÐÒ»¸ö×¢²áÊ§°ÜÔòÐ¶ÔØµ±Ç°ËùÓÐÒÑ¾­×¢²áÉÏµÄ¹³×Óº¯Êý*/
+            /*è‹¥æœ‰ä¸€ä¸ªæ³¨å†Œå¤±è´¥åˆ™å¸è½½å½“å‰æ‰€æœ‰å·²ç»æ³¨å†Œä¸Šçš„é’©å­å‡½æ•°*/
             NFExt_UnregHooks(g_stExEntity.ulCurHookOnMask);
             return iRet;
         }
@@ -566,24 +566,24 @@ VOS_INT  NFExt_RegHooks(VOS_UINT32 ulMask)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_ReRegHooks
- ¹¦ÄÜÃèÊö  : ÖØÐÂ×¢²á¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : VOS_UINT32 ulMask    ¹³×Óº¯ÊýÑÚÂë
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_INT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_ReRegHooks
+ åŠŸèƒ½æè¿°  : é‡æ–°æ³¨å†Œé’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : VOS_UINT32 ulMask    é’©å­å‡½æ•°æŽ©ç 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_INT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_INT  NFExt_ReRegHooks(VOS_UINT32 ulMask)
 {
     VOS_INT iRet;
 
-    /*ÖØÐÂ×¢²áÇ°ÏÈÐ¶ÔØµ±Ç°ËùÓÐµÄ¹³×Óº¯Êý*/
+    /*é‡æ–°æ³¨å†Œå‰å…ˆå¸è½½å½“å‰æ‰€æœ‰çš„é’©å­å‡½æ•°*/
     if ( 0 != g_stExEntity.ulCurHookOnMask )
     {
         NFExt_UnregHooks(g_stExEntity.ulCurHookOnMask);
@@ -595,25 +595,25 @@ VOS_INT  NFExt_ReRegHooks(VOS_UINT32 ulMask)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_ConfigEffective
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÅäÖÃ×¢²á¶ÔÓ¦µÄ¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : NF_EXT_TRACE_CONFIG_REQ_STRU *pRcvMsg
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : PS_BOOL_ENUM_UINT8
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_ConfigEffective
+ åŠŸèƒ½æè¿°  : æ ¹æ®é…ç½®æ³¨å†Œå¯¹åº”çš„é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : NF_EXT_TRACE_CONFIG_REQ_STRU *pRcvMsg
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : PS_BOOL_ENUM_UINT8
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 PS_BOOL_ENUM_UINT8 NFExt_ConfigEffective(IPS_MNTN_TRACE_CONFIG_REQ_STRU *pRcvMsg)
 {
     VOS_INT             iRet;
     VOS_UINT32          ulMask = 0;
 
-    /* Á÷¿Øhook£¬Ä¬ÈÏ¹ÒÉÏ */
+    /* æµæŽ§hookï¼Œé»˜è®¤æŒ‚ä¸Š */
     ulMask |= NF_EXT_DEF_FLOW_CTRL_HOOK_ON_MASK;
 
     if ( (pRcvMsg->stBridgeArpTraceCfg.ulChoice > IPS_MNTN_TRACE_NULL_CHOSEN)
@@ -648,7 +648,7 @@ VOS_UINT32  NFExt_Get1stInetIpv4Addr(struct net_device *pstDev)
 {
     struct in_device   *pinDev;
 
-    /* Ê¹ÓÃLinuxÄÚºË½á¹¹£¬Ê¹ÓÃLinux·ç¸ñ */
+    /* ä½¿ç”¨Linuxå†…æ ¸ç»“æž„ï¼Œä½¿ç”¨Linuxé£Žæ ¼ */
     if (NULL == pstDev)
     {
         return 0;
@@ -670,18 +670,18 @@ VOS_UINT32  NFExt_Get1stInetIpv4Addr(struct net_device *pstDev)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_RcvNfExtInfoCfgReq
- ¹¦ÄÜÃèÊö  : ½ÓÊÕµ½OMÅäÖÃ¿ÉÎ¬¿É²âÐÅÏ¢²¶»ñÅäÖÃÇëÇó
- ÊäÈë²ÎÊý  : VOS_VOID *pMsg
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_RcvNfExtInfoCfgReq
+ åŠŸèƒ½æè¿°  : æŽ¥æ”¶åˆ°OMé…ç½®å¯ç»´å¯æµ‹ä¿¡æ¯æ•èŽ·é…ç½®è¯·æ±‚
+ è¾“å…¥å‚æ•°  : VOS_VOID *pMsg
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_VOID NFExt_RcvNfExtInfoCfgReq(VOS_VOID *pMsg)
 {
@@ -696,14 +696,14 @@ VOS_VOID NFExt_RcvNfExtInfoCfgReq(VOS_VOID *pMsg)
     enResult            = IPS_MNTN_RESULT_OK;
 
     /*================================*/
-    /*¹¹½¨»Ø¸´ÏûÏ¢*/
+    /*æž„å»ºå›žå¤æ¶ˆæ¯*/
     /*================================*/
 
-    /* Ìî³ä»Ø¸´OMÉêÇëµÄÈ·ÈÏÐÅÏ¢ */
+    /* å¡«å……å›žå¤OMç”³è¯·çš„ç¡®è®¤ä¿¡æ¯ */
     stNfExtCfgCnf.enCommand       = pstNfExtCfgReq->enCommand;
     stNfExtCfgCnf.enRslt          = enResult;
 
-    /* ·¢ËÍOMÍ¸Ã÷ÏûÏ¢ */
+    /* å‘é€OMé€æ˜Žæ¶ˆæ¯ */
     IPS_MNTN_SndCfgCnf2Om( ID_IPS_OM_MNTN_INFO_CONFIG_CNF,
         sizeof(IPS_MNTN_INFO_CFG_CNF_STRU), &stNfExtCfgCnf );
 }
@@ -718,7 +718,7 @@ VOS_VOID NFExt_SelfTaskInit(VOS_VOID)
         return;
     }
 
-    /* ³õÊ¼»¯×Ô´¦ÀíÈÎÎñµÄµÈ´ý¶ÓÁÐÍ· */
+    /* åˆå§‹åŒ–è‡ªå¤„ç†ä»»åŠ¡çš„ç­‰å¾…é˜Ÿåˆ—å¤´ */
     init_waitqueue_head(&g_stExEntity.stWaitHeadTxTask);
     spin_lock_init(&g_stExEntity.stLockTxTask);
 }
@@ -824,12 +824,12 @@ VOS_VOID NFExt_CtrlTxMsgTask(VOS_VOID)
     NF_EXT_DATA_RING_BUF_STRU   stData;
     VOS_UINT32                  ulRst;
 
-/* ½â¾öUTËÀÑ­»·ÎÊÌâ */
+/* è§£å†³UTæ­»å¾ªçŽ¯é—®é¢˜ */
 #ifdef __UT_CENTER__
     VOS_UINT32              i;
 #endif
 
-/* ½â¾öUTËÀÑ­»·ÎÊÌâ */
+/* è§£å†³UTæ­»å¾ªçŽ¯é—®é¢˜ */
 #ifndef __UT_CENTER__
     for ( ; ; )
 #else
@@ -873,7 +873,7 @@ VOS_UINT32 NFExt_ReadNvCfg(VOS_VOID)
 {
     VOS_UINT32                     ulRet;
 
-    /* ¶ÁÈ¡¹³×Óº¯Êý×¢²áµãÑÚÂë */
+    /* è¯»å–é’©å­å‡½æ•°æ³¨å†Œç‚¹æŽ©ç  */
     ulRet = NV_Read (en_NV_Item_NETFILTER_HOOK_MASK, &g_stNfExtNv , sizeof(NF_EXT_NV_STRU));
     if (NV_OK != ulRet)
     {
@@ -881,7 +881,7 @@ VOS_UINT32 NFExt_ReadNvCfg(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ½«NV½á¹¹ÖÐ¶Á³öµÄÑÚÂë¸³¸øg_stExHookMask*/
+    /* å°†NVç»“æž„ä¸­è¯»å‡ºçš„æŽ©ç èµ‹ç»™g_stExHookMask*/
     g_stExHookMask.ulBrArpHookValue         = g_stNfExtNv.ulNetfilterPara1;
     g_stExHookMask.ulInHookValue            = g_stNfExtNv.ulNetfilterPara2;
     g_stExHookMask.ulOutHookValue           = g_stNfExtNv.ulNetfilterPara3;
@@ -906,18 +906,18 @@ VOS_VOID NFExt_SetDefaultNvCfg(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_EntityInit
- ¹¦ÄÜÃèÊö  : NFExtÄ£¿éÊµÌåÈ«¾Ö±äÁ¿³õÊ¼»¯
- ÊäÈë²ÎÊý  : void
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : void
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_EntityInit
+ åŠŸèƒ½æè¿°  : NFExtæ¨¡å—å®žä½“å…¨å±€å˜é‡åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : void
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : void
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_VOID NFExt_EntityInit(VOS_VOID)
 {
@@ -928,18 +928,18 @@ VOS_VOID NFExt_EntityInit(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Init
- ¹¦ÄÜÃèÊö  : Ä£¿é³õÊ¼»¯º¯Êý
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Init
+ åŠŸèƒ½æè¿°  : æ¨¡å—åˆå§‹åŒ–å‡½æ•°
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_INT NFExt_Init(VOS_VOID)
 {
@@ -951,40 +951,40 @@ VOS_INT NFExt_Init(VOS_VOID)
         NFExt_SetDefaultNvCfg();
     }
 
-    /* NFExtÄ£¿éÊµÌåÈ«¾Ö±äÁ¿³õÊ¼»¯ */
+    /* NFExtæ¨¡å—å®žä½“å…¨å±€å˜é‡åˆå§‹åŒ– */
     NFExt_EntityInit();
 
-    /*×Ô´¦ÀíÈÎÎñ³õÊ¼»¯*/
+    /*è‡ªå¤„ç†ä»»åŠ¡åˆå§‹åŒ–*/
     NFExt_SelfTaskInit();
 
-    /* Á÷¿ØÐÅÏ¢³õÊ¼»¯ */
+    /* æµæŽ§ä¿¡æ¯åˆå§‹åŒ– */
     NFExt_FlowCtrlInit();
 
     return 0;
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Uninit
- ¹¦ÄÜÃèÊö  : Ä£¿éÐ¶ÔØº¯Êý
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Uninit
+ åŠŸèƒ½æè¿°  : æ¨¡å—å¸è½½å‡½æ•°
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 void NFExt_Uninit(VOS_VOID)
 {
-    /*È¥×¢²á¹³×Óº¯Êý*/
+    /*åŽ»æ³¨å†Œé’©å­å‡½æ•°*/
     NFExt_UnregHooks(g_stExEntity.ulCurHookOnMask);
 }
 
 /*****************************************************************************
-                        Á÷¿Ø¹¦ÄÜ
+                        æµæŽ§åŠŸèƒ½
 *****************************************************************************/
 
 VOS_VOID NFExt_FlowCtrlInit(VOS_VOID)
@@ -1037,7 +1037,7 @@ VOS_UINT32 NFExt_GetBrBytesCnt(VOS_VOID)
     struct net_device_stats *dev_stats = NULL;
 
 
-    /* ÔÚµÚÒ»´Îµ÷ÓÃ±¾APIµÄÊ±ºò²Å»áÈ¥»ñÈ¡ÍøÇÅÉè±¸£¬ÒòÎªÐ­ÒéÕ»»á±ÈÍøÇÅÉè±¸ÏÈÆôÆðÀ´ */
+    /* åœ¨ç¬¬ä¸€æ¬¡è°ƒç”¨æœ¬APIçš„æ—¶å€™æ‰ä¼šåŽ»èŽ·å–ç½‘æ¡¥è®¾å¤‡ï¼Œå› ä¸ºåè®®æ ˆä¼šæ¯”ç½‘æ¡¥è®¾å¤‡å…ˆå¯èµ·æ¥ */
     if (NULL == g_stExFlowCtrlEntity.pstBrDev)
     {
         if (VOS_ERR == NFExt_SaveBrDev())
@@ -1070,7 +1070,7 @@ VOS_UINT32 NFExt_SaveBrDev(VOS_VOID)
 
     g_stExFlowCtrlEntity.pstBrDev   = dev;
 
-    /* Ö»»ñÈ¡µÚÒ»¸öIPv4µØÖ· */
+    /* åªèŽ·å–ç¬¬ä¸€ä¸ªIPv4åœ°å€ */
     g_stExEntity.ulOmIp             = NFExt_Get1stInetIpv4Addr(dev);
 
     return VOS_OK;
@@ -1079,18 +1079,18 @@ VOS_UINT32 NFExt_SaveBrDev(VOS_VOID)
 #if(NF_EXT_DBG == DBG_ON)
 VOS_VOID NFExt_StatsShow(VOS_VOID)
 {
-    vos_printf("ÍøÇÅforwardÁ÷¿Ø¶ªµôµÄÊý¾ÝÁ¿ %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_BR_FC_DROP]);
-    vos_printf("½øÈëÍøÇÅforward hookµÄÊý¾ÝÁ¿ %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_BR_FC_ENTER]);
-    vos_printf("»·ÐÎbufÂúÖ®ºóµ¼ÖÂ¶ª°üÊýÁ¿ %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_BUF_FULL_DROP]);
-    vos_printf("Èë»·ÐÎbufÊ§°Ü´ÎÊý %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_PUT_BUF_FAIL]);
-    vos_printf("³ö»·ÐÎbufÊ§°Ü´ÎÊý %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_GET_BUF_FAIL]);
-    vos_printf("ÉêÇëÄÚ´æÊ§°Ü´ÎÊý %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_ALLOC_MEM_FAIL]);
+    vos_printf("ç½‘æ¡¥forwardæµæŽ§ä¸¢æŽ‰çš„æ•°æ®é‡ %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_BR_FC_DROP]);
+    vos_printf("è¿›å…¥ç½‘æ¡¥forward hookçš„æ•°æ®é‡ %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_BR_FC_ENTER]);
+    vos_printf("çŽ¯å½¢bufæ»¡ä¹‹åŽå¯¼è‡´ä¸¢åŒ…æ•°é‡ %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_BUF_FULL_DROP]);
+    vos_printf("å…¥çŽ¯å½¢bufå¤±è´¥æ¬¡æ•° %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_PUT_BUF_FAIL]);
+    vos_printf("å‡ºçŽ¯å½¢bufå¤±è´¥æ¬¡æ•° %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_GET_BUF_FAIL]);
+    vos_printf("ç”³è¯·å†…å­˜å¤±è´¥æ¬¡æ•° %ld \n", g_stNfExtStats.aulStats[NF_EXT_STATS_ALLOC_MEM_FAIL]);
 
-    vos_printf("µ±Ç°»·ÐÎ»º´æÖÐÎ´´¦ÀíµÄÊý¾ÝÁ¿ %ld \n", ((VOS_UINT32)OM_RingBufferNBytes(g_stExEntity.pRingBufferId) / sizeof(NF_EXT_DATA_RING_BUF_STRU)));
-    vos_printf("µ±Ç°µÄHook Mask %ld \n", g_stExEntity.ulCurHookOnMask);
-    vos_printf("µ±Ç°µÄÁ÷¿Ø×´Ì¬Mask %ld \n", g_stExFlowCtrlEntity.ulFlowCtrlMsk);
-    vos_printf("µ±Ç°OM WIFIËùÊ¹ÓÃµÄIPµØÖ· %x \n", g_stExEntity.ulOmIp);
-    vos_printf("µ±Ç°ÍøÇÅ×ª·¢×Ö½ÚÊý %x \n", g_stExFlowCtrlEntity.aulTxBytesCnt[NF_EXT_TX_BYTES_CNT_BR]);
+    vos_printf("å½“å‰çŽ¯å½¢ç¼“å­˜ä¸­æœªå¤„ç†çš„æ•°æ®é‡ %ld \n", ((VOS_UINT32)OM_RingBufferNBytes(g_stExEntity.pRingBufferId) / sizeof(NF_EXT_DATA_RING_BUF_STRU)));
+    vos_printf("å½“å‰çš„Hook Mask %ld \n", g_stExEntity.ulCurHookOnMask);
+    vos_printf("å½“å‰çš„æµæŽ§çŠ¶æ€Mask %ld \n", g_stExFlowCtrlEntity.ulFlowCtrlMsk);
+    vos_printf("å½“å‰OM WIFIæ‰€ä½¿ç”¨çš„IPåœ°å€ %x \n", g_stExEntity.ulOmIp);
+    vos_printf("å½“å‰ç½‘æ¡¥è½¬å‘å­—èŠ‚æ•° %x \n", g_stExFlowCtrlEntity.aulTxBytesCnt[NF_EXT_TX_BYTES_CNT_BR]);
 }
 
 
@@ -1115,18 +1115,18 @@ VOS_VOID NFExt_ResetPri(VOS_UINT32 ulHookNode, VOS_INT32 iPri)
 #endif      /* #if (FEATURE_ON == FEATURE_NFEXT) */
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_RcvOmMsg
- ¹¦ÄÜÃèÊö  : NFExt½ÓÊÕµ½À´×ÔOMÄ£¿éµÄÏûÏ¢´¦Àí
- ÊäÈë²ÎÊý  : VOS_VOID *pMsg
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_RcvOmMsg
+ åŠŸèƒ½æè¿°  : NFExtæŽ¥æ”¶åˆ°æ¥è‡ªOMæ¨¡å—çš„æ¶ˆæ¯å¤„ç†
+ è¾“å…¥å‚æ•°  : VOS_VOID *pMsg
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_VOID NFExt_RcvOmMsg(VOS_VOID *pMsg)
 {
@@ -1158,18 +1158,18 @@ VOS_VOID NFExt_RcvOmMsg(VOS_VOID *pMsg)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_MsgProc
- ¹¦ÄÜÃèÊö  : NFExt¿ÉÎ¬¿É²â¿ØÖÆÏûÏ¢´¦Àíº¯Êý
- ÊäÈë²ÎÊý  : struct MsgCB * pMsg
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_MsgProc
+ åŠŸèƒ½æè¿°  : NFExtå¯ç»´å¯æµ‹æŽ§åˆ¶æ¶ˆæ¯å¤„ç†å‡½æ•°
+ è¾“å…¥å‚æ•°  : struct MsgCB * pMsg
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_VOID NFExt_MsgProc( struct MsgCB * pMsg )
 {
@@ -1181,7 +1181,7 @@ VOS_VOID NFExt_MsgProc( struct MsgCB * pMsg )
 
     switch ( pMsg->ulSenderPid )
     {
-        case WUEPS_PID_OM:      /* À´×ÔOMµÄÏûÏ¢´¦Àí */
+        case WUEPS_PID_OM:      /* æ¥è‡ªOMçš„æ¶ˆæ¯å¤„ç† */
             NFExt_RcvOmMsg( (void *)pMsg );
             break;
 
@@ -1193,18 +1193,18 @@ VOS_VOID NFExt_MsgProc( struct MsgCB * pMsg )
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_PidInit
- ¹¦ÄÜÃèÊö  : NFExt_Pid³õÊ¼»¯
- ÊäÈë²ÎÊý  : ip - ³õÊ¼»¯×´Ì¬
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³É¹¦VOS_OK, Ê§°ÜVOS_ERR
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_PidInit
+ åŠŸèƒ½æè¿°  : NFExt_Pidåˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : ip - åˆå§‹åŒ–çŠ¶æ€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æˆåŠŸVOS_OK, å¤±è´¥VOS_ERR
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_UINT32 NFExt_PidInit( enum VOS_INIT_PHASE_DEFINE ip )
 {
@@ -1234,18 +1234,18 @@ VOS_UINT32 NFExt_PidInit( enum VOS_INIT_PHASE_DEFINE ip )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_FidInit
- ¹¦ÄÜÃèÊö  : NFExt_Fid³õÊ¼»¯
- ÊäÈë²ÎÊý  : ip - ³õÊ¼»¯×´Ì¬
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³É¹¦VOS_OK, Ê§°ÜVOS_ERR
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_FidInit
+ åŠŸèƒ½æè¿°  : NFExt_Fidåˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : ip - åˆå§‹åŒ–çŠ¶æ€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æˆåŠŸVOS_OK, å¤±è´¥VOS_ERR
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_UINT32 NFExt_FidInit ( enum VOS_INIT_PHASE_DEFINE ip )
 {
@@ -1259,7 +1259,7 @@ VOS_UINT32 NFExt_FidInit ( enum VOS_INIT_PHASE_DEFINE ip )
         case   VOS_IP_LOAD_CONFIG:
 
             #if (FEATURE_ON == FEATURE_NFEXT)
-            /* ÏÈÍê³ÉÄ£¿é³õÊ¼»¯ */
+            /* å…ˆå®Œæˆæ¨¡å—åˆå§‹åŒ– */
             iRet    = NFExt_Init();
 
             if ( 0 != iRet )
@@ -1269,7 +1269,7 @@ VOS_UINT32 NFExt_FidInit ( enum VOS_INIT_PHASE_DEFINE ip )
             }
             #endif
 
-            /* ¿ÉÎ¬¿É²âÄ£¿é×¢²áPID */
+            /* å¯ç»´å¯æµ‹æ¨¡å—æ³¨å†ŒPID */
             ulRslt = VOS_RegisterPIDInfo(ACPU_PID_NFEXT,
                                 (Init_Fun_Type)NFExt_PidInit,
                                 (Msg_Fun_Type)NFExt_MsgProc);

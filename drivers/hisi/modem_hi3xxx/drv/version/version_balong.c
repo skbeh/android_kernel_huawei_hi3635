@@ -1,14 +1,14 @@
 
 /*************************************************************************
-*   °æÈ¨ËùÓĞ(C) 1987-2020, ÉîÛÚ»ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾.
+*   ç‰ˆæƒæ‰€æœ‰(C) 1987-2020, æ·±åœ³åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸.
 *
-*   ÎÄ ¼ş Ãû :  product_version_info.c
+*   æ–‡ ä»¶ å :  product_version_info.c
 *
-*   ×÷    Õß :  zuofenghua
+*   ä½œ    è€… :  zuofenghua
 *
-*   Ãè    Êö :  ÓÃÓÚÎ¬»¤Ó²¼ş°æ±¾ºÅÏà¹ØĞÅÏ¢
+*   æ    è¿° :  ç”¨äºç»´æŠ¤ç¡¬ä»¶ç‰ˆæœ¬å·ç›¸å…³ä¿¡æ¯
 *
-*   ĞŞ¸Ä¼ÇÂ¼ :  2013Äê2ÔÂ23ÈÕ  v1.00  zuofenghua  ´´½¨
+*   ä¿®æ”¹è®°å½• :  2013å¹´2æœˆ23æ—¥  v1.00  zuofenghua  åˆ›å»º
 *
 *************************************************************************/
 /*lint --e{537}*/
@@ -35,11 +35,11 @@
 
 /*
 *--------------------------------------------------------------*
-* ºê¶¨Òå                                                       *
+* å®å®šä¹‰                                                       *
 *--------------------------------------------------------------*
 */
 
-/*È«¾Ö±äÁ¿£¬±£´æ²úÆ·ĞÅÏ¢,version ³õÊ¼»¯ÅäÖÃnvÖµ*/
+/*å…¨å±€å˜é‡ï¼Œä¿å­˜äº§å“ä¿¡æ¯,version åˆå§‹åŒ–é…ç½®nvå€¼*/
 PRODUCT_INFO_NV_STRU huawei_product_info =
 {
 	0
@@ -48,7 +48,7 @@ PRODUCT_INFO_NV_STRU huawei_product_info =
 static __inline__ int bsp_version_default_set(void)
 {
     u32 iret;
-	u32 hw_ver;/*Ó²¼ş°æ±¾ºÅ*/
+	u32 hw_ver;/*ç¡¬ä»¶ç‰ˆæœ¬å·*/
 
 	hw_ver=*(u32 *)HW_VERSION_ADDR;/*get hardware version*/
 
@@ -63,7 +63,7 @@ static __inline__ int bsp_version_default_set(void)
         return VER_ERROR;
     }
 
-	/*Î´²éÕÒµ½hwVer*/
+	/*æœªæŸ¥æ‰¾åˆ°hwVer*/
 	if(hw_ver!=huawei_product_info.index){
 		ver_print_error("product info is not defined, pls check product_info_tbl!HKADC read:0x%x,nv read:0x%x\n",hw_ver,huawei_product_info.index);
 		huawei_product_info.index = hw_ver;
@@ -77,9 +77,9 @@ int bsp_productinfo_init(void)
 {
 	int iret=0;
 
-	/*TODO:ºóĞøÈç¹ûÓĞ×Ó°æ±¾ºÅ£¬ĞèÒªÊÊÅä*/
+	/*TODO:åç»­å¦‚æœæœ‰å­ç‰ˆæœ¬å·ï¼Œéœ€è¦é€‚é…*/
 
-    /*Çå³ı¾Ö²¿½á¹¹±äÁ¿µÄÄÚ´æ£¬¼´³õÊ¼»¯ÎªÈ«0*/
+    /*æ¸…é™¤å±€éƒ¨ç»“æ„å˜é‡çš„å†…å­˜ï¼Œå³åˆå§‹åŒ–ä¸ºå…¨0*/
     memset((void *)(&huawei_product_info), 0, sizeof(PRODUCT_INFO_NV_STRU));
 	iret = bsp_version_default_set();
 	if(VER_ERROR==iret){
@@ -98,7 +98,7 @@ char * bsp_version_get_hardware(void)
 	static char hardware_version[VERSION_MAX_LEN];
 	char hardware_sub_ver = 0;
 
-	/*µ¥°åÎªÓ²ºË£¬ÈíºË£¬»òÕßUDP*/
+	/*å•æ¿ä¸ºç¡¬æ ¸ï¼Œè½¯æ ¸ï¼Œæˆ–è€…UDP*/
 	if((HW_VER_INVALID == huawei_product_info.index))
 	{
 		ver_print_error("init error\n");
@@ -120,7 +120,7 @@ char * bsp_version_get_hardware(void)
 
 		b_geted=true;
 	}
-	/*×Ó°æ±¾ºÅ´ıÈ·ÈÏ*/
+	/*å­ç‰ˆæœ¬å·å¾…ç¡®è®¤*/
 
 	return (char *)hardware_version;
 
@@ -202,14 +202,14 @@ char * bsp_version_get_firmware(void)
 	u32 iret = VER_OK;
 	static NV_SW_VER_STRU nv_sw_ver={0};
 
-	/*¶ÁÈ¡NVÏîÖĞµÄÈí¼ş°æ±¾ºÅ*/
+	/*è¯»å–NVé¡¹ä¸­çš„è½¯ä»¶ç‰ˆæœ¬å·*/
     /*lint -save -e26 -e119*/
 	iret=bsp_nvm_read(NV_ID_DRV_NV_DRV_VERSION_REPLACE_I, \
 				(u8 *)&nv_sw_ver,
 				sizeof(NV_SW_VER_STRU));
     /*lint -restore*/
 
-    if(NV_OK != iret){/*Èç¹û»ñÈ¡Ê§°Ü£¬Ôò·µ»ØÄ¬ÈÏ°æ±¾ºÅ*/
+    if(NV_OK != iret){/*å¦‚æœè·å–å¤±è´¥ï¼Œåˆ™è¿”å›é»˜è®¤ç‰ˆæœ¬å·*/
 		ver_print_info("get NV_SW_VERSION_REPLACE failed!\n");
 		return (char*)PRODUCT_DLOAD_SOFTWARE_VER;
 	}
@@ -232,14 +232,14 @@ char * bsp_version_get_hash(void)
 
 char * bsp_version_get_iso(void)
 {
-	/**TODO:  ÔİÊ±ÏÈ·µ»ØÕâ¸öÊıÖµ,ºóĞø¿´isoverÈçºÎ´æ´¢*/
+	/**TODO:  æš‚æ—¶å…ˆè¿”å›è¿™ä¸ªæ•°å€¼,åç»­çœ‹isoverå¦‚ä½•å­˜å‚¨*/
 
 	#define ISO_VER "00.000.00.000.00"
 	return (char *)ISO_VER;
 }
 char * bsp_version_get_webui(void)
 {
-	/**TODO:  Í¬isover*/
+	/**TODO:  åŒisover*/
 	return NULL;
 }
 char * bsp_version_get_release(void)
@@ -255,11 +255,11 @@ int bsp_version_get_hwversion_index(void)
 	return hw_ver;
 }
 /*****************************************************************************
-* º¯Êı	: bsp_get_board_chip_type
-* ¹¦ÄÜ	: get board type and chip type
-* ÊäÈë	: void
-* Êä³ö	: void
-* ·µ»Ø	: BOARD_TYPE_E
+* å‡½æ•°	: bsp_get_board_chip_type
+* åŠŸèƒ½	: get board type and chip type
+* è¾“å…¥	: void
+* è¾“å‡º	: void
+* è¿”å›	: BOARD_TYPE_E
 *****************************************************************************/
 u32 bsp_version_get_board_chip_type(void)
 {
@@ -271,25 +271,25 @@ u32 bsp_version_get_board_chip_type(void)
 		return type;
 	}
 
-	/*ÈôÎªudp£¬Ö»·µ»ØUDPÓ²¼ş°æ±¾ºÅ£¬ÆÁ±ÎÉäÆµ¿Û°åĞÅÏ¢*/
+	/*è‹¥ä¸ºudpï¼Œåªè¿”å›UDPç¡¬ä»¶ç‰ˆæœ¬å·ï¼Œå±è”½å°„é¢‘æ‰£æ¿ä¿¡æ¯*/
 	if(HW_VER_UDP_MASK==(type & HW_VER_UDP_MASK)){
 		return HW_VER_PRODUCT_UDP;
 	}
 
-	/*ÈôÎªk3v3UDP,Ö»·µ»ØUDPÓ²¼ş°æ±¾ºÅ*/
+	/*è‹¥ä¸ºk3v3UDP,åªè¿”å›UDPç¡¬ä»¶ç‰ˆæœ¬å·*/
 	if(HW_VER_K3V3_UDP_MASK == (type & HW_VER_K3V3_UDP_MASK)){
 		return HW_VER_K3V3_UDP;
 	}
 
-	/*ÈôÎªk3v3FPGA,Ö»·µ»ØFPGAÓ²¼ş°æ±¾ºÅ*/
+	/*è‹¥ä¸ºk3v3FPGA,åªè¿”å›FPGAç¡¬ä»¶ç‰ˆæœ¬å·*/
 	if(HW_VER_K3V3_FPGA_MASK == (type & HW_VER_K3V3_FPGA_MASK)){
 		return HW_VER_K3V3_FPGA;
 	}
 
 	
-	/*ÈôÎªk3v3 plus,Ö»·µ»ØUDPÓ²¼ş°æ±¾ºÅ*/
+	/*è‹¥ä¸ºk3v3 plus,åªè¿”å›UDPç¡¬ä»¶ç‰ˆæœ¬å·*/
 	if(HW_VER_K3V3_PLUS_UDP_MASK == (type & HW_VER_K3V3_PLUS_UDP_MASK)){
-		return HW_VER_K3V3_UDP;/*ÔİÊ±ÊÊÅä£¬ºóĞøÉ¾³ı*/
+		return HW_VER_K3V3_UDP;/*æš‚æ—¶é€‚é…ï¼Œåç»­åˆ é™¤*/
 	}
 
 	if(HW_VER_V711_UDP_MASK == (type & HW_VER_V711_UDP_MASK)){
@@ -316,7 +316,7 @@ int bsp_dload_get_dload_info(struct dload_info_type* dload_info)
 	char *product_name = NULL;
 	char *firmware = NULL;
 
-	/*»ñÈ¡iso version*/
+	/*è·å–iso version*/
 	dload_iso = bsp_version_get_iso();
 	if(NULL == dload_iso){
 		ver_print_error("get iso ver is null!\n");
@@ -325,7 +325,7 @@ int bsp_dload_get_dload_info(struct dload_info_type* dload_info)
 	/* coverity[secure_coding] */
 	strncat(dload_info->iso_ver,dload_iso,strlen(dload_iso));
 
-	/*»ñÈ¡dload id(Éı¼¶ÖĞÊ¹ÓÃµÄ²úÆ·Ãû)*/
+	/*è·å–dload id(å‡çº§ä¸­ä½¿ç”¨çš„äº§å“å)*/
 	product_name = bsp_version_get_dloadid();
 	if(NULL == product_name){
 		ver_print_error("get product name is null\n");
@@ -334,7 +334,7 @@ int bsp_dload_get_dload_info(struct dload_info_type* dload_info)
 	/* coverity[secure_coding] */
 	strncat(dload_info->product_name,product_name,strlen(product_name));
 
-	/*»ñÈ¡software_version*/
+	/*è·å–software_version*/
 	firmware = bsp_version_get_firmware();
 	if(NULL == firmware){
 		ver_print_error("get firmware version is null\n");
@@ -346,18 +346,18 @@ int bsp_dload_get_dload_info(struct dload_info_type* dload_info)
 	return VER_OK;
 
 }
-/*ĞèÒª±£Ö¤ÔÚnvÄ£¿é³õÊ¼»¯Ö®ºó*/
+/*éœ€è¦ä¿è¯åœ¨nvæ¨¡å—åˆå§‹åŒ–ä¹‹å*/
 module_init(bsp_productinfo_init);
 
 #endif
 /*****************************************************************************
-* º¯Êı	: bsp_get_board_actual_type
-* ¹¦ÄÜ	: get board actual type 
-* ÊäÈë	: void
-* Êä³ö	: void
-* ·µ»Ø	: BOARD_ACTUAL_TYPE_E       BBIT/SFT/ASIC
+* å‡½æ•°	: bsp_get_board_actual_type
+* åŠŸèƒ½	: get board actual type 
+* è¾“å…¥	: void
+* è¾“å‡º	: void
+* è¿”å›	: BOARD_ACTUAL_TYPE_E       BBIT/SFT/ASIC
 *
-* ÆäËü       : ÎŞ
+* å…¶å®ƒ       : æ— 
 *
 *****************************************************************************/
 BOARD_ACTUAL_TYPE_E bsp_get_board_actual_type(void)
@@ -395,7 +395,7 @@ int bsp_version_debug(void)
 	struct dload_info_type info={"\0","\0","\0"};
 #endif
 
-	/*ÅĞ¶Ïversion³õÊ¼»¯ÊÇ·ñ³É¹¦*/
+	/*åˆ¤æ–­versionåˆå§‹åŒ–æ˜¯å¦æˆåŠŸ*/
     if(huawei_product_info.index == HW_VER_INVALID){
 		ver_print_error("huawei_product_info init failed!HW_VERSION_ADDR:0x%x\n",*(u32 *)HW_VERSION_ADDR);
 		return VER_ERROR;

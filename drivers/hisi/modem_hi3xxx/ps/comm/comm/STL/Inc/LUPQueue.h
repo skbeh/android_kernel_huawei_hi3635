@@ -4,7 +4,7 @@
 
  ******************************************************************************
   File Name       : LUPQueue.h
-  Description     : TTFQueue.c header fileё╛лА╧╘╩╥пн╤сап╡ывВ
+  Description     : TTFQueue.c header fileО╪▄Ф▐░Д╬⌡Г▌╞Е╫╒И≤÷Е┬≈Ф⌠█Д╫°
   History         :
      1.hujianbo 42180      2009-03-10  Draft Enact
      2.
@@ -56,7 +56,7 @@ typedef struct LUP_QUEUE
     VOS_UINT32          ulHead;
     VOS_UINT32          ulTail;
     VOS_UINT32          ulMaxNum;
-    VOS_UINT32          ulResv;/*н╙аксК64н╩OS╪Фхщ*/
+    VOS_UINT32          ulResv;/*Д╦╨Д╨├Д╦▌64Д╫█OSЕ┘╪Е╝╧*/
     VOS_VOID          **pBuff;
 }LUP_QUEUE_STRU;
 
@@ -73,10 +73,10 @@ typedef struct LUP_QUEUE
 
 /*****************************************************************************
   8 Fuction Extern
-  к╣цВ:
-  1║╒╤сапсцсз╢Ф╥еж╦уК
-  2║╒ЁЖсзм╗сцпт©╪бгё╛ртоб╨╞йЩдз╢Фц╩сп╩╔ЁБ╡ывВё╛
-     хГ╧Ш╤сапсцсзхннЯ╪Д╡ывВё╛тРси╣ВсцуъмЙЁи╩╔ЁБ╡ывВ
+  Х╞╢Ф≤▌:
+  1Ц─│И≤÷Е┬≈Г■╗Д╨▌Е╜≤Ф■╬Ф▄┤И▓┬
+  2Ц─│Е┤╨Д╨▌И─ Г■╗Ф─╖Х─┐Х≥▒О╪▄Д╩╔Д╦▀Е┤╫Ф∙╟Е├┘Е╜≤Ф╡║Ф°┴Д╨▓Ф√╔Ф⌠█Д╫°О╪▄
+     Е╕┌Ф·°И≤÷Е┬≈Г■╗Д╨▌Д╩╩Е┼║И≈╢Ф⌠█Д╫°О╪▄Е┬≥Г■╠Х╟┐Г■╗Х─┘Е╝▄Ф┬░Д╨▓Ф√╔Ф⌠█Д╫°
 *****************************************************************************/
 extern VOS_UINT32 LUP_IsQueEmpty(const LUP_QUEUE_STRU *pstQue);
 extern VOS_UINT32 LUP_IsQueFull(const LUP_QUEUE_STRU *pstQue);

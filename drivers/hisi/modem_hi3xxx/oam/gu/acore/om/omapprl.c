@@ -1,24 +1,24 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓĞ (C), 2001-2011, »ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼ş Ãû   : Omapprl.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : ÀîÏö 46160
-  Éú³ÉÈÕÆÚ   : 2008Äê6ÔÂ11ÈÕ
-  ×î½üĞŞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : R½Ó¿ÚÊı¾İ×ª·¢Ä£¿é
-  º¯ÊıÁĞ±í   :
-  ĞŞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2008Äê6ÔÂ11ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ĞŞ¸ÄÄÚÈİ   : ´´½¨ÎÄ¼ş
+  æ–‡ ä»¶ å   : Omapprl.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : æéœ„ 46160
+  ç”Ÿæˆæ—¥æœŸ   : 2008å¹´6æœˆ11æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : Ræ¥å£æ•°æ®è½¬å‘æ¨¡å—
+  å‡½æ•°åˆ—è¡¨   :
+  ä¿®æ”¹å†å²   :
+  1.æ—¥    æœŸ   : 2008å¹´6æœˆ11æ—¥
+    ä½œ    è€…   : æéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "omrl.h"
 #include "omringbuffer.h"
@@ -49,45 +49,45 @@ extern "C" {
 
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 OMRL_MSG_COMBINE_INFO_STRU              g_stMsgCombineInfo;
 
-/*¿ØÖÆ»º³åÇø·ÃÎÊµÄ»¥³âĞÅºÅÁ¿*/
+/*æ§åˆ¶ç¼“å†²åŒºè®¿é—®çš„äº’æ–¥ä¿¡å·é‡*/
 VOS_SEM                                 g_AcpuOmTxBuffSem;
 
-/* ¼ÇÂ¼´Ópc²àµ½ue²àÊ±Õı³£½ÓÊÕÊı¾İĞÅÏ¢ */
+/* è®°å½•ä»pcä¾§åˆ°ueä¾§æ—¶æ­£å¸¸æ¥æ”¶æ•°æ®ä¿¡æ¯ */
 OM_ACPU_PC_UE_SUC_STRU                  g_stAcpuPcToUeSucRecord;
 
-/* ¼ÇÂ¼Êı¾İ´Ópc²àµ½ue²àÊ±·¢ÉúµÄ¸÷Àà´íÎó */
+/* è®°å½•æ•°æ®ä»pcä¾§åˆ°ueä¾§æ—¶å‘ç”Ÿçš„å„ç±»é”™è¯¯ */
 OM_ACPU_PC_UE_FAIL_STRU                 g_stAcpuPcToUeErrRecord;
 
-/*¼ÇÂ¼ÍùPC²à·¢ËÍÊı¾İµÄÕı³£ĞÅÏ¢ */
+/*è®°å½•å¾€PCä¾§å‘é€æ•°æ®çš„æ­£å¸¸ä¿¡æ¯ */
 OM_UE_PC_SUC_STRU                       g_stAcpuUeToPcSucRecord;
 
-/*¼ÇÂ¼ÍùPC²à·¢ËÍÊı¾İÊ±·¢ÉúµÄ¸÷Àà´íÎó*/
+/*è®°å½•å¾€PCä¾§å‘é€æ•°æ®æ—¶å‘ç”Ÿçš„å„ç±»é”™è¯¯*/
 OM_UE_PC_FAIL_STRU                      g_stAcpuUeToPcErrRecord;
 
 #if (FEATURE_ON == FEATURE_CBT_LOG)
 OMRL_MSG_COMBINE_INFO_STRU              g_stCBTMsgCombineInfo;
 
-/* ¼ÇÂ¼´Ópc²àµ½ue²àÊ±Õı³£½ÓÊÕÊı¾İĞÅÏ¢ */
+/* è®°å½•ä»pcä¾§åˆ°ueä¾§æ—¶æ­£å¸¸æ¥æ”¶æ•°æ®ä¿¡æ¯ */
 OM_ACPU_PC_UE_SUC_STRU                  g_stCBTAcpuPcToUeSucRecord;
 
-/* ¼ÇÂ¼Êı¾İ´Ópc²àµ½ue²àÊ±·¢ÉúµÄ¸÷Àà´íÎó */
+/* è®°å½•æ•°æ®ä»pcä¾§åˆ°ueä¾§æ—¶å‘ç”Ÿçš„å„ç±»é”™è¯¯ */
 OM_ACPU_PC_UE_FAIL_STRU                 g_stCBTAcpuPcToUeErrRecord;
 #endif
 
-/*¼ÇÂ¼¿ªÊ¼Ê±¼ä*/
+/*è®°å½•å¼€å§‹æ—¶é—´*/
 VOS_UINT32                              g_ulAcpuLastTick = 0;
 
-/*¼ÇÂ¼×Ö½Ú³¤¶È*/
+/*è®°å½•å­—èŠ‚é•¿åº¦*/
 VOS_UINT32                              g_ulAcpuLastByteCnt = 0;
 
-/*Ö¸ÏòOM·Ö°üÍ·ÄÚÈİµÄÖ¸Õë*/
+/*æŒ‡å‘OMåˆ†åŒ…å¤´å†…å®¹çš„æŒ‡é’ˆ*/
 OM_APP_MSG_SEG_EX_STRU                 *g_pstAcpuSegMsgEx = VOS_NULL_PTR;
 
-/* HDLC¿ØÖÆ½á¹¹ */
+/* HDLCæ§åˆ¶ç»“æ„ */
 OM_HDLC_STRU                            g_stOmHdlcEntity;
 
 OM_HDLC_STRU                            g_stNVHdlcEntity;
@@ -96,14 +96,14 @@ OM_HDLC_STRU                            g_stNVHdlcEntity;
 OM_HDLC_STRU                            g_stCBTHdlcEntity;
 #endif
 
-/* ÓÃÀ´¿ØÖÆOMµÄ´òÓ¡Êä³ö */
+/* ç”¨æ¥æ§åˆ¶OMçš„æ‰“å°è¾“å‡º */
 #ifdef OAM_UT_DEBUG
 VOS_UINT32                              g_ulOmAcpuDbgFlag = VOS_NULL_DWORD;
 #else
 VOS_UINT32                              g_ulOmAcpuDbgFlag = VOS_FALSE;
 #endif
 
-/* OM»º³åÇø¿ØÖÆ¿é */
+/* OMç¼“å†²åŒºæ§åˆ¶å— */
 OM_BUF_CTRL_STRU                        g_stAcpuOmBufCtrl;
 
 OM_NV_MNTN_RECORD_STRU                 *g_pstRecordOmToApp = VOS_NULL_PTR;
@@ -129,7 +129,7 @@ struct semaphore                        g_stOmRxCBTBuffSem;
 
 VOS_UINT32                              g_ulCBTLogEnable = 0;
 
-/* ±£´æSD¿¨µÄDebug ĞÅÏ¢ */
+/* ä¿å­˜SDå¡çš„Debug ä¿¡æ¯ */
 extern OM_SD_DEBUG_INFO                 g_stOmSDDebugInfo;
 extern OM_VCOM_DEBUG_INFO               g_stVComDebugInfo;
 
@@ -140,7 +140,7 @@ extern OM_VCOM_CBT_LOG_DEBUG_INFO     g_stVComCBTDebugInfo;
 extern OM_RECORD_BUF_STRU               g_astAcpuRecordInfo[VOS_EXC_DUMP_MEM_NUM_BUTT];
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -163,7 +163,7 @@ VOS_UINT32 OMRL_AcpuCpuIdToPid(VOS_UINT8 ucCpuId, VOS_UINT32 *pulPid)
             *pulPid = ACPU_PID_MCU_OM;/* MCU om pid */
             break;
         default:
-            /* ´òÓ¡´íÎó */
+            /* æ‰“å°é”™è¯¯ */
             return VOS_ERR;
       }
 
@@ -180,13 +180,13 @@ VOS_VOID OMRL_AcpuRecordNvInfo(VOS_VOID)
         stCustomVersion.ulNvSwVerFlag = VOS_TRUE;
     }
 
-    /* Èç¹ûulCustomVersion == VOS_TRUE±íÊ¾²»ÊÇÉÕÆ¬°æ±¾£¬ÔòÖ±½Ó·µ»Ø */
+    /* å¦‚æœulCustomVersion == VOS_TRUEè¡¨ç¤ºä¸æ˜¯çƒ§ç‰‡ç‰ˆæœ¬ï¼Œåˆ™ç›´æ¥è¿”å› */
     if ( (VOS_TRUE == stCustomVersion.ulNvSwVerFlag))
     {
         return;
     }
 
-    /* ÉÕÆ¬°æ±¾ÇÒFTMÄ£Ê½²Å¼ÇÂ¼ */
+    /* çƒ§ç‰‡ç‰ˆæœ¬ä¸”FTMæ¨¡å¼æ‰è®°å½• */
     if(VOS_TRUE != g_ulAcpuFTMFlag)
     {
         return;
@@ -194,7 +194,7 @@ VOS_VOID OMRL_AcpuRecordNvInfo(VOS_VOID)
 
     pstAppToOmMsg = (APP_OM_MSG_EX_STRU*)g_stMsgCombineInfo.pstWholeMsg->aucValue;
 
-    /* ÅĞ¶ÏÂëÁ÷ */
+    /* åˆ¤æ–­ç æµ */
     if ( (OM_WRF_FUNC == ((pstAppToOmMsg->ucFuncType) & OM_FUNCID_VALUE_BITS))
          ||(OM_GRF_FUNC == ((pstAppToOmMsg->ucFuncType) & OM_FUNCID_VALUE_BITS))
          ||(OM_QUERY_FUNC == ((pstAppToOmMsg->ucFuncType) & OM_FUNCID_VALUE_BITS))
@@ -203,7 +203,7 @@ VOS_VOID OMRL_AcpuRecordNvInfo(VOS_VOID)
         g_pstRecordAppToOm[g_ulNvAppToOmCount].ulSlice = VOS_GetSlice();
         g_pstRecordAppToOm[g_ulNvAppToOmCount].ulFlag  = 0x55555555;
 
-        /* ÏûÏ¢³¤¶È¼ÓÁ½×Ö½ÚµÄfunctypeºÍcpuid */
+        /* æ¶ˆæ¯é•¿åº¦åŠ ä¸¤å­—èŠ‚çš„functypeå’Œcpuid */
         ulLen = pstAppToOmMsg->usLength + 2U;
 
         if (ulLen > NV_MNTN_SAVE_MAX_MSG_LEN)
@@ -235,7 +235,7 @@ VOS_UINT32 OMRL_AcpuMsgDispatch(VOS_VOID)
     OM_ACPU_DEBUG_TRACE(g_stMsgCombineInfo.pstWholeMsg->aucValue, g_stMsgCombineInfo.pstWholeMsg->ulLength, OM_ACPU_DISPATCH_MSG);
     /*lint +e40*/
 
-    /* CCPUµÄÏûÏ¢Í¨¹ıICCÍ¨µÀ·¢ËÍ */
+    /* CCPUçš„æ¶ˆæ¯é€šè¿‡ICCé€šé“å‘é€ */
     if (WUEPS_PID_OM == g_stMsgCombineInfo.pstWholeMsg->ulReceiverPid)
     {
         ulRslt = GU_OamSndPcMsgToCcpu(g_stMsgCombineInfo.pstWholeMsg->aucValue, g_stMsgCombineInfo.pstWholeMsg->ulLength);
@@ -245,12 +245,12 @@ VOS_UINT32 OMRL_AcpuMsgDispatch(VOS_VOID)
 
         OMRL_AcpuRecordNvInfo();
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, g_stMsgCombineInfo.pstWholeMsg);
     }
     else if (ACPU_PID_OM == g_stMsgCombineInfo.pstWholeMsg->ulReceiverPid)
     {
-        /* ÆäËûcpuµÄÏûÏ¢Í¨¹ıVOS_SendMsg·¢ËÍ */
+        /* å…¶ä»–cpuçš„æ¶ˆæ¯é€šè¿‡VOS_SendMsgå‘é€ */
         g_stAcpuPcToUeSucRecord.stAcpuData.ulDataLen += g_stMsgCombineInfo.pstWholeMsg->ulLength;
         g_stAcpuPcToUeSucRecord.stAcpuData.ulNum++;
 
@@ -258,7 +258,7 @@ VOS_UINT32 OMRL_AcpuMsgDispatch(VOS_VOID)
     }
     else if (DSP_PID_HIFI_OM == g_stMsgCombineInfo.pstWholeMsg->ulReceiverPid)
     {
-        /* ÆäËûcpuµÄÏûÏ¢Í¨¹ıVOS_SendMsg·¢ËÍ */
+        /* å…¶ä»–cpuçš„æ¶ˆæ¯é€šè¿‡VOS_SendMsgå‘é€ */
         g_stAcpuPcToUeSucRecord.stHifiData.ulDataLen += g_stMsgCombineInfo.pstWholeMsg->ulLength;
         g_stAcpuPcToUeSucRecord.stHifiData.ulNum++;
 
@@ -266,7 +266,7 @@ VOS_UINT32 OMRL_AcpuMsgDispatch(VOS_VOID)
     }
     else
     {
-        /* ÆäËûcpuµÄÏûÏ¢Í¨¹ıVOS_SendMsg·¢ËÍ */
+        /* å…¶ä»–cpuçš„æ¶ˆæ¯é€šè¿‡VOS_SendMsgå‘é€ */
         g_stAcpuPcToUeSucRecord.stMcuData.ulDataLen += g_stMsgCombineInfo.pstWholeMsg->ulLength;
         g_stAcpuPcToUeSucRecord.stMcuData.ulNum++;
 
@@ -345,7 +345,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
 
         g_stMsgCombineInfo.ulTotalMsgLen = pstAppOmMsg->usLength + APP_OM_HEADER_LENGTH;
 
-        /* ×é°üÍê³ÉºóÅĞ¶ÏÊÇ·ñ´óÓÚãĞÖµ */
+        /* ç»„åŒ…å®Œæˆååˆ¤æ–­æ˜¯å¦å¤§äºé˜ˆå€¼ */
         if (OM_RL_TOTAL_MSG_MAX_LEN < g_stMsgCombineInfo.ulTotalMsgLen)
         {
             g_stAcpuPcToUeErrRecord.usMsgTooLongErr++;
@@ -353,7 +353,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
             LogPrint1("OMRL_AcpuMsgCombine: receive first msg pack is too long %d;\r\n",
                         (VOS_INT32)g_stMsgCombineInfo.ulTotalMsgLen);
 
-            /* µ×Èí×î´óÖ§³Ö±£´æ1024×Ö½ÚµÄÄÚÈİ£¬µ×ÈíÃ»ÓĞÌá¹©ºê£¬ÕâÀïÖ±½ÓÊ¹ÓÃÊı×Ö */
+            /* åº•è½¯æœ€å¤§æ”¯æŒä¿å­˜1024å­—èŠ‚çš„å†…å®¹ï¼Œåº•è½¯æ²¡æœ‰æä¾›å®ï¼Œè¿™é‡Œç›´æ¥ä½¿ç”¨æ•°å­— */
             DRV_SYSTEM_ERROR(OAM_PC_LENGTH_TOO_BIG, (VOS_INT)g_stMsgCombineInfo.ulTotalMsgLen, 0, (VOS_CHAR *)pucData, 1024);
 
             return VOS_ERR;
@@ -370,18 +370,18 @@ VOS_UINT32 OMRL_AcpuMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
             return VOS_ERR;
         }
 
-        /* ¸ù¾İCPU ID²éÕÒµ½ÏàÓ¦µÄPID£¬¶ÔÓÚ¹¤¾ßÏÂ·¢Êı¾İÖ¡£¬ÓÃVOS_OM_HEADER½á¹¹ÖĞ±£Áô×Ö¶Î±íÊ¾CPUID */
+        /* æ ¹æ®CPU IDæŸ¥æ‰¾åˆ°ç›¸åº”çš„PIDï¼Œå¯¹äºå·¥å…·ä¸‹å‘æ•°æ®å¸§ï¼Œç”¨VOS_OM_HEADERç»“æ„ä¸­ä¿ç•™å­—æ®µè¡¨ç¤ºCPUID */
         ulRslt = OMRL_AcpuCpuIdToPid(pstAppOmMsg->ucCpuId, &g_stMsgCombineInfo.pstWholeMsg->ulReceiverPid);
         if (VOS_OK != ulRslt)
         {
-            /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+            /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
             VOS_FreeMsg(ACPU_PID_OM, g_stMsgCombineInfo.pstWholeMsg);
 
             g_stMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
 
             g_stAcpuPcToUeErrRecord.usCpuIdErr++;
 
-            /* ´Ë´¦´íÎóÖ±½Ó·µ»Ø£¬²»ÓÃ¼ÇÂ¼£¬º¯ÊıÀïÃæÒÑ¾­¼ÇÂ¼ÁËCPU ID´íÎóµÄÇé¿ö */
+            /* æ­¤å¤„é”™è¯¯ç›´æ¥è¿”å›ï¼Œä¸ç”¨è®°å½•ï¼Œå‡½æ•°é‡Œé¢å·²ç»è®°å½•äº†CPU IDé”™è¯¯çš„æƒ…å†µ */
             return VOS_ERR;
         }
 
@@ -392,7 +392,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
     {
         LogPrint("OMRL_AcpuMsgCombine: The length of the packet is biger than the size of allocated memory.");
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, g_stMsgCombineInfo.pstWholeMsg);
 
         g_stMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
@@ -408,7 +408,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
         /*Print the error info.*/
         LogPrint2("OMRL_AcpuMsgCombine: expected SN is %d, current SN is %d.", g_stMsgCombineInfo.ucExpectedSegSn, ucCurrentSegSn);
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, g_stMsgCombineInfo.pstWholeMsg);
 
         g_stMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
@@ -423,7 +423,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
     {
         LogPrint("OMRL_AcpuMsgCombine: The length of the packet is biger than the size of allocated memory.\n");
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, g_stMsgCombineInfo.pstWholeMsg);
 
         g_stMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
@@ -441,12 +441,12 @@ VOS_UINT32 OMRL_AcpuMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
     /*If the current MSG packet is an complete packet.*/
     if (g_stMsgCombineInfo.ucTotalSegNum == ucCurrentSegSn)
     {
-        /* ×é°üÍê³ÉºóÅĞ¶ÏÊÇ·ñ´óÓÚãĞÖµ */
+        /* ç»„åŒ…å®Œæˆååˆ¤æ–­æ˜¯å¦å¤§äºé˜ˆå€¼ */
         if (OM_RL_TOTAL_MSG_MAX_LEN < g_stMsgCombineInfo.ulTotalMsgLen)
         {
             g_stAcpuPcToUeErrRecord.usMsgTooLongErr++;
 
-            /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+            /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
             VOS_FreeMsg(ACPU_PID_OM, g_stMsgCombineInfo.pstWholeMsg);
 
             g_stMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
@@ -477,7 +477,7 @@ VOS_UINT32 OMRL_AcpuSendMsg(VOS_UINT8 *pucData, VOS_UINT32 ulDataLen, VOS_UINT32
 
     pstAppOmMsg->ulReceiverPid = ulReceiverPid;
 
-    /* copy ÏûÏ¢ÄÚÈİ */
+    /* copy æ¶ˆæ¯å†…å®¹ */
     VOS_MemCpy((VOS_UINT8 *)pstAppOmMsg->aucValue, pucData, ulDataLen);
 
     return VOS_SendMsg(ulSenderPid, pstAppOmMsg);
@@ -491,7 +491,7 @@ VOS_UINT32 OMRL_AcpuHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
 
     if ((OM_RL_DATATYPE_LEN + OM_USB_FRAME_LEN) >= ulSize)
     {
-        /* ´òÓ¡´íÎó */
+        /* æ‰“å°é”™è¯¯ */
         LogPrint("OMRL_AcpuHeadProc: The data length is error.");
         g_stAcpuPcToUeErrRecord.usPacketLenErr++;
         return VOS_ERR;
@@ -499,14 +499,14 @@ VOS_UINT32 OMRL_AcpuHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
 
     VOS_MemCpy(&ulValue, (pucData+OM_RL_DATATYPE_LEN), sizeof(VOS_UINT32));
 
-    /* Çø·ÖÆÕÍ¨ÏûÏ¢ºÍÁ´Â·ÏûÏ¢ */
-    /* Êı¾İ°üÌø¹ıÒ»¸ö×Ö½ÚÅĞ¶ÏÊÇ²»ÊÇ0xaaaa5555 */
+    /* åŒºåˆ†æ™®é€šæ¶ˆæ¯å’Œé“¾è·¯æ¶ˆæ¯ */
+    /* æ•°æ®åŒ…è·³è¿‡ä¸€ä¸ªå­—èŠ‚åˆ¤æ–­æ˜¯ä¸æ˜¯0xaaaa5555 */
     if (OM_USB_FRAME_HEAD != ulValue)
     {
-        /* ´Ë·ÖÖ§ÖĞÎªÁ´Â·ÏûÏ¢ */
+        /* æ­¤åˆ†æ”¯ä¸­ä¸ºé“¾è·¯æ¶ˆæ¯ */
         ulTmpLen =  ulSize - (VOS_UINT32)sizeof(OM_APP_MSG_SEGMENT_STRU);
 
-        /* Á´Â·ÏûÏ¢³¤¶ÈÅĞ¶Ï */
+        /* é“¾è·¯æ¶ˆæ¯é•¿åº¦åˆ¤æ–­ */
         if (sizeof(APP_OM_MSG_EX_STRU) != ulTmpLen)
         {
             g_stAcpuPcToUeErrRecord.usLinkDataLenErr++;
@@ -514,7 +514,7 @@ VOS_UINT32 OMRL_AcpuHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
             return VOS_ERR;
         }
 
-        /* Ìø¹ıËÄ×Ö½Úsn header */
+        /* è·³è¿‡å››å­—èŠ‚sn header */
         ulRslt = OMRL_AcpuSendMsg(pucData + sizeof(OM_APP_MSG_SEGMENT_STRU),
                        ulTmpLen, ACPU_PID_OM, ACPU_PID_OM);
 
@@ -524,7 +524,7 @@ VOS_UINT32 OMRL_AcpuHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
         return ulRslt;
     }
 
-    /* ÊÕµ½ÆÕÍ¨ÏûÏ¢Ê±ÏÈÅĞ¶Ïµ±Ç°Á´Â·×´Ì¬ */
+    /* æ”¶åˆ°æ™®é€šæ¶ˆæ¯æ—¶å…ˆåˆ¤æ–­å½“å‰é“¾è·¯çŠ¶æ€ */
     if (OM_STATE_IDLE == g_ulAcpuOMSwitchOnOff)
     {
          g_stAcpuPcToUeErrRecord.usLinkStatusErr++;
@@ -532,7 +532,7 @@ VOS_UINT32 OMRL_AcpuHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
     }
 
 
-    /* ÆÕÍ¨ÏûÏ¢£¬ÅĞ¶Ïdatatype×Ö¶ÎÊÇ²»ÊÇGUÊı¾İ */
+    /* æ™®é€šæ¶ˆæ¯ï¼Œåˆ¤æ–­datatypeå­—æ®µæ˜¯ä¸æ˜¯GUæ•°æ® */
     if (OM_RL_DATATYPE_GU != *pucData)
     {
          g_stAcpuPcToUeErrRecord.usDatatypeErr++;
@@ -541,19 +541,19 @@ VOS_UINT32 OMRL_AcpuHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
 
     VOS_MemCpy(&ulValue, (pucData + ulSize - OM_USB_TAIL_LEN), sizeof(VOS_UINT32));
 
-    /* ÅĞ¶ÏÊı¾İ°üÎ²ÊÇ²»ÊÇ0x5555aaaa */
+    /* åˆ¤æ–­æ•°æ®åŒ…å°¾æ˜¯ä¸æ˜¯0x5555aaaa */
     if (OM_USB_FRAME_TAIL != ulValue)
     {
-        /* ¼ÇÂ¼´íÎó */
+        /* è®°å½•é”™è¯¯ */
         g_stAcpuPcToUeErrRecord.usDataHeadErr++;
         return VOS_ERR;
     }
 
-    /* Êı¾İÖ¸ÕëºÍ³¤¶È¸üĞÂ*/
+    /* æ•°æ®æŒ‡é’ˆå’Œé•¿åº¦æ›´æ–°*/
     pucData += (OM_RL_DATATYPE_LEN + OM_USB_HEAD_LEN);
     ulSize  -= (OM_RL_DATATYPE_LEN + OM_USB_FRAME_LEN);
 
-    /* ×é°ü */
+    /* ç»„åŒ… */
     return OMRL_AcpuMsgCombine(pucData, (VOS_UINT16)ulSize);
 }
 
@@ -573,7 +573,7 @@ VOS_UINT32 OMRL_AcpuRcvData(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
     OM_ACPU_DEBUG_TRACE(pucData, ulLen, OM_ACPU_RECV_USB);
     /*lint +e40*/
 
-    /* µ±·¢ÉúÊÍ·ÅÏûÏ¢³ö´íÊ±Í£Ö¹½ÓÊÕÊı¾İ */
+    /* å½“å‘ç”Ÿé‡Šæ”¾æ¶ˆæ¯å‡ºé”™æ—¶åœæ­¢æ¥æ”¶æ•°æ® */
     if (0 < g_stAcpuUeToPcErrRecord.usRlsMemErr)
     {
         return VOS_OK;
@@ -603,7 +603,7 @@ VOS_UINT32 OMRL_AcpuRcvData(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
         }
         else if (HDLC_NOT_HDLC_FRAME == ulResult)
         {
-            /*²»ÊÇÍêÕû·ÖÖ¡,¼ÌĞøHDLC½â·â×°*/
+            /*ä¸æ˜¯å®Œæ•´åˆ†å¸§,ç»§ç»­HDLCè§£å°è£…*/
         }
         else
         {
@@ -625,7 +625,7 @@ VOS_UINT32 OMRL_AcpuCBTMsgDispatch(VOS_VOID)
     OM_ACPU_DEBUG_TRACE(g_stCBTMsgCombineInfo.pstWholeMsg->aucValue, g_stCBTMsgCombineInfo.pstWholeMsg->ulLength, OM_ACPU_DISPATCH_MSG);
     /*lint +e40*/
 
-    /* CCPUµÄÏûÏ¢Í¨¹ıICCÍ¨µÀ·¢ËÍ */
+    /* CCPUçš„æ¶ˆæ¯é€šè¿‡ICCé€šé“å‘é€ */
     if (WUEPS_PID_OM == g_stCBTMsgCombineInfo.pstWholeMsg->ulReceiverPid)
     {
         ulRslt = GU_OamSndPcMsgToCcpu(g_stCBTMsgCombineInfo.pstWholeMsg->aucValue, g_stCBTMsgCombineInfo.pstWholeMsg->ulLength);
@@ -633,12 +633,12 @@ VOS_UINT32 OMRL_AcpuCBTMsgDispatch(VOS_VOID)
         g_stCBTAcpuPcToUeSucRecord.stCcpuData.ulDataLen += g_stCBTMsgCombineInfo.pstWholeMsg->ulLength;
         g_stCBTAcpuPcToUeSucRecord.stCcpuData.ulNum++;
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, g_stCBTMsgCombineInfo.pstWholeMsg);
     }
     else if (ACPU_PID_OM == g_stCBTMsgCombineInfo.pstWholeMsg->ulReceiverPid)
     {
-        /* ÆäËûcpuµÄÏûÏ¢Í¨¹ıVOS_SendMsg·¢ËÍ */
+        /* å…¶ä»–cpuçš„æ¶ˆæ¯é€šè¿‡VOS_SendMsgå‘é€ */
         g_stCBTAcpuPcToUeSucRecord.stAcpuData.ulDataLen += g_stCBTMsgCombineInfo.pstWholeMsg->ulLength;
         g_stCBTAcpuPcToUeSucRecord.stAcpuData.ulNum++;
 
@@ -646,7 +646,7 @@ VOS_UINT32 OMRL_AcpuCBTMsgDispatch(VOS_VOID)
     }
     else if (DSP_PID_HIFI_OM == g_stCBTMsgCombineInfo.pstWholeMsg->ulReceiverPid)
     {
-        /* ÆäËûcpuµÄÏûÏ¢Í¨¹ıVOS_SendMsg·¢ËÍ */
+        /* å…¶ä»–cpuçš„æ¶ˆæ¯é€šè¿‡VOS_SendMsgå‘é€ */
         g_stCBTAcpuPcToUeSucRecord.stHifiData.ulDataLen += g_stCBTMsgCombineInfo.pstWholeMsg->ulLength;
         g_stCBTAcpuPcToUeSucRecord.stHifiData.ulNum++;
 
@@ -654,7 +654,7 @@ VOS_UINT32 OMRL_AcpuCBTMsgDispatch(VOS_VOID)
     }
     else
     {
-        /* ÆäËûcpuµÄÏûÏ¢Í¨¹ıVOS_SendMsg·¢ËÍ */
+        /* å…¶ä»–cpuçš„æ¶ˆæ¯é€šè¿‡VOS_SendMsgå‘é€ */
         g_stCBTAcpuPcToUeSucRecord.stMcuData.ulDataLen += g_stCBTMsgCombineInfo.pstWholeMsg->ulLength;
         g_stCBTAcpuPcToUeSucRecord.stMcuData.ulNum++;
 
@@ -733,7 +733,7 @@ VOS_UINT32 OMRL_AcpuCBTMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
 
         g_stCBTMsgCombineInfo.ulTotalMsgLen = pstAppOmMsg->usLength + APP_OM_HEADER_LENGTH;
 
-        /* ×é°üÍê³ÉºóÅĞ¶ÏÊÇ·ñ´óÓÚãĞÖµ */
+        /* ç»„åŒ…å®Œæˆååˆ¤æ–­æ˜¯å¦å¤§äºé˜ˆå€¼ */
         if (OM_RL_TOTAL_MSG_MAX_LEN < g_stCBTMsgCombineInfo.ulTotalMsgLen)
         {
             g_stCBTAcpuPcToUeErrRecord.usMsgTooLongErr++;
@@ -741,7 +741,7 @@ VOS_UINT32 OMRL_AcpuCBTMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
             LogPrint1("OMRL_AcpuCBTMsgCombine: receive first msg pack is too long %d;\r\n",
                         (VOS_INT32)g_stCBTMsgCombineInfo.ulTotalMsgLen);
 
-            /* µ×Èí×î´óÖ§³Ö±£´æ1024×Ö½ÚµÄÄÚÈİ£¬µ×ÈíÃ»ÓĞÌá¹©ºê£¬ÕâÀïÖ±½ÓÊ¹ÓÃÊı×Ö */
+            /* åº•è½¯æœ€å¤§æ”¯æŒä¿å­˜1024å­—èŠ‚çš„å†…å®¹ï¼Œåº•è½¯æ²¡æœ‰æä¾›å®ï¼Œè¿™é‡Œç›´æ¥ä½¿ç”¨æ•°å­— */
             DRV_SYSTEM_ERROR(OAM_PC_LENGTH_TOO_BIG, (VOS_INT)g_stCBTMsgCombineInfo.ulTotalMsgLen, 0, (VOS_CHAR *)pucData, 1024);
 
             return VOS_ERR;
@@ -758,18 +758,18 @@ VOS_UINT32 OMRL_AcpuCBTMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
             return VOS_ERR;
         }
 
-        /* ¸ù¾İCPU ID²éÕÒµ½ÏàÓ¦µÄPID£¬¶ÔÓÚ¹¤¾ßÏÂ·¢Êı¾İÖ¡£¬ÓÃVOS_OM_HEADER½á¹¹ÖĞ±£Áô×Ö¶Î±íÊ¾CPUID */
+        /* æ ¹æ®CPU IDæŸ¥æ‰¾åˆ°ç›¸åº”çš„PIDï¼Œå¯¹äºå·¥å…·ä¸‹å‘æ•°æ®å¸§ï¼Œç”¨VOS_OM_HEADERç»“æ„ä¸­ä¿ç•™å­—æ®µè¡¨ç¤ºCPUID */
         ulRslt = OMRL_AcpuCpuIdToPid(pstAppOmMsg->ucCpuId, &g_stCBTMsgCombineInfo.pstWholeMsg->ulReceiverPid);
         if (VOS_OK != ulRslt)
         {
-            /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+            /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
             VOS_FreeMsg(ACPU_PID_OM, g_stCBTMsgCombineInfo.pstWholeMsg);
 
             g_stCBTMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
 
             g_stCBTAcpuPcToUeErrRecord.usCpuIdErr++;
 
-            /* ´Ë´¦´íÎóÖ±½Ó·µ»Ø£¬²»ÓÃ¼ÇÂ¼£¬º¯ÊıÀïÃæÒÑ¾­¼ÇÂ¼ÁËCPU ID´íÎóµÄÇé¿ö */
+            /* æ­¤å¤„é”™è¯¯ç›´æ¥è¿”å›ï¼Œä¸ç”¨è®°å½•ï¼Œå‡½æ•°é‡Œé¢å·²ç»è®°å½•äº†CPU IDé”™è¯¯çš„æƒ…å†µ */
             return VOS_ERR;
         }
 
@@ -780,7 +780,7 @@ VOS_UINT32 OMRL_AcpuCBTMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
     {
         LogPrint("OMRL_AcpuCBTMsgCombine: The length of the packet is biger than the size of allocated memory.");
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, g_stCBTMsgCombineInfo.pstWholeMsg);
 
         g_stCBTMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
@@ -796,7 +796,7 @@ VOS_UINT32 OMRL_AcpuCBTMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
         /*Print the error info.*/
         LogPrint2("OMRL_AcpuCBTMsgCombine: expected SN is %d, current SN is %d.", g_stCBTMsgCombineInfo.ucExpectedSegSn, ucCurrentSegSn);
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, g_stCBTMsgCombineInfo.pstWholeMsg);
 
         g_stCBTMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
@@ -811,7 +811,7 @@ VOS_UINT32 OMRL_AcpuCBTMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
     {
         LogPrint("OMRL_AcpuCBTMsgCombine: The length of the packet is biger than the size of allocated memory.\n");
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, g_stCBTMsgCombineInfo.pstWholeMsg);
 
         g_stCBTMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
@@ -829,12 +829,12 @@ VOS_UINT32 OMRL_AcpuCBTMsgCombine(VOS_UINT8 *pucData, VOS_UINT16 usLen)
     /*If the current MSG packet is an complete packet.*/
     if (g_stCBTMsgCombineInfo.ucTotalSegNum == ucCurrentSegSn)
     {
-        /* ×é°üÍê³ÉºóÅĞ¶ÏÊÇ·ñ´óÓÚãĞÖµ */
+        /* ç»„åŒ…å®Œæˆååˆ¤æ–­æ˜¯å¦å¤§äºé˜ˆå€¼ */
         if (OM_RL_TOTAL_MSG_MAX_LEN < g_stCBTMsgCombineInfo.ulTotalMsgLen)
         {
             g_stCBTAcpuPcToUeErrRecord.usMsgTooLongErr++;
 
-            /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+            /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
             VOS_FreeMsg(ACPU_PID_OM, g_stCBTMsgCombineInfo.pstWholeMsg);
 
             g_stCBTMsgCombineInfo.pstWholeMsg = VOS_NULL_PTR;
@@ -861,7 +861,7 @@ VOS_UINT32 OMRL_AcpuCBTHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
 
     if ((OM_RL_DATATYPE_LEN + OM_USB_FRAME_LEN) >= ulSize)
     {
-        /* ´òÓ¡´íÎó */
+        /* æ‰“å°é”™è¯¯ */
         LogPrint("OMRL_AcpuCBTHeadProc: The data length is error.");
         g_stCBTAcpuPcToUeErrRecord.usPacketLenErr++;
         return VOS_ERR;
@@ -869,14 +869,14 @@ VOS_UINT32 OMRL_AcpuCBTHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
 
     VOS_MemCpy(&ulValue, (pucData+OM_RL_DATATYPE_LEN), sizeof(VOS_UINT32));
 
-    /* Çø·ÖÆÕÍ¨ÏûÏ¢ºÍÁ´Â·ÏûÏ¢ */
-    /* Êı¾İ°üÌø¹ıÒ»¸ö×Ö½ÚÅĞ¶ÏÊÇ²»ÊÇ0xaaaa5555 */
+    /* åŒºåˆ†æ™®é€šæ¶ˆæ¯å’Œé“¾è·¯æ¶ˆæ¯ */
+    /* æ•°æ®åŒ…è·³è¿‡ä¸€ä¸ªå­—èŠ‚åˆ¤æ–­æ˜¯ä¸æ˜¯0xaaaa5555 */
     if (OM_USB_FRAME_HEAD != ulValue)
     {
-        /* ´Ë·ÖÖ§ÖĞÎªÁ´Â·ÏûÏ¢ */
+        /* æ­¤åˆ†æ”¯ä¸­ä¸ºé“¾è·¯æ¶ˆæ¯ */
         ulTmpLen =  ulSize - sizeof(OM_APP_MSG_SEGMENT_STRU);
 
-        /* Á´Â·ÏûÏ¢³¤¶ÈÅĞ¶Ï */
+        /* é“¾è·¯æ¶ˆæ¯é•¿åº¦åˆ¤æ–­ */
         if (sizeof(APP_OM_MSG_EX_STRU) != ulTmpLen)
         {
             g_stCBTAcpuPcToUeErrRecord.usLinkDataLenErr++;
@@ -899,7 +899,7 @@ VOS_UINT32 OMRL_AcpuCBTHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
             /* blank */
         }
         
-        /* Ìø¹ıËÄ×Ö½Úsn header */
+        /* è·³è¿‡å››å­—èŠ‚sn header */
         ulRslt = OMRL_AcpuSendMsg(pucData + sizeof(OM_APP_MSG_SEGMENT_STRU),
                        ulTmpLen, ACPU_PID_OM, ACPU_PID_OM);
 
@@ -909,7 +909,7 @@ VOS_UINT32 OMRL_AcpuCBTHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
         return ulRslt;
     }
 
-    /* ÊÕµ½ÆÕÍ¨ÏûÏ¢Ê±ÏÈÅĞ¶Ïµ±Ç°Á´Â·×´Ì¬ */
+    /* æ”¶åˆ°æ™®é€šæ¶ˆæ¯æ—¶å…ˆåˆ¤æ–­å½“å‰é“¾è·¯çŠ¶æ€ */
     if (OM_STATE_IDLE == g_ulAcpuOMSwitchOnOff)
     {
          g_stCBTAcpuPcToUeErrRecord.usLinkStatusErr++;
@@ -917,7 +917,7 @@ VOS_UINT32 OMRL_AcpuCBTHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
     }
 
 
-    /* ÆÕÍ¨ÏûÏ¢£¬ÅĞ¶Ïdatatype×Ö¶ÎÊÇ²»ÊÇGUÊı¾İ */
+    /* æ™®é€šæ¶ˆæ¯ï¼Œåˆ¤æ–­datatypeå­—æ®µæ˜¯ä¸æ˜¯GUæ•°æ® */
     if (OM_RL_DATATYPE_GU != *pucData)
     {
          g_stCBTAcpuPcToUeErrRecord.usDatatypeErr++;
@@ -926,19 +926,19 @@ VOS_UINT32 OMRL_AcpuCBTHeadProc(VOS_UINT8 *pucData, VOS_UINT32 ulSize)
 
     VOS_MemCpy(&ulValue, (pucData + ulSize - OM_USB_TAIL_LEN), sizeof(VOS_UINT32));
 
-    /* ÅĞ¶ÏÊı¾İ°üÎ²ÊÇ²»ÊÇ0x5555aaaa */
+    /* åˆ¤æ–­æ•°æ®åŒ…å°¾æ˜¯ä¸æ˜¯0x5555aaaa */
     if (OM_USB_FRAME_TAIL != ulValue)
     {
-        /* ¼ÇÂ¼´íÎó */
+        /* è®°å½•é”™è¯¯ */
         g_stCBTAcpuPcToUeErrRecord.usDataHeadErr++;
         return VOS_ERR;
     }
 
-    /* Êı¾İÖ¸ÕëºÍ³¤¶È¸üĞÂ*/
+    /* æ•°æ®æŒ‡é’ˆå’Œé•¿åº¦æ›´æ–°*/
     pucData += (OM_RL_DATATYPE_LEN + OM_USB_HEAD_LEN);
     ulSize  -= (OM_RL_DATATYPE_LEN + OM_USB_FRAME_LEN);
 
-    /* ×é°ü */
+    /* ç»„åŒ… */
     return OMRL_AcpuCBTMsgCombine(pucData, (VOS_UINT16)ulSize);
 }
 VOS_INT OMRL_AcpuRcvCBTData(VOS_UINT8 ucDevIndex, VOS_UINT8 *pucData, VOS_UINT32 ulLen)
@@ -978,7 +978,7 @@ VOS_INT OMRL_AcpuRcvCBTData(VOS_UINT8 ucDevIndex, VOS_UINT8 *pucData, VOS_UINT32
     OM_ACPU_DEBUG_TRACE(pucData, ulLen, OM_ACPU_RECV_CBT);
     /*lint +e40*/
 
-    /* µ±·¢ÉúÊÍ·ÅÏûÏ¢³ö´íÊ±Í£Ö¹½ÓÊÕÊı¾İ ÕâÀïÊÇÒì³£±£»¤²»ĞèÒª¸ü»»È«¾Ö±äÁ¿ÓÃÖ÷Í¨µÀµÄ±äÁ¿ */
+    /* å½“å‘ç”Ÿé‡Šæ”¾æ¶ˆæ¯å‡ºé”™æ—¶åœæ­¢æ¥æ”¶æ•°æ® è¿™é‡Œæ˜¯å¼‚å¸¸ä¿æŠ¤ä¸éœ€è¦æ›´æ¢å…¨å±€å˜é‡ç”¨ä¸»é€šé“çš„å˜é‡ */
     if (0 < g_stAcpuUeToPcErrRecord.usRlsMemErr)
     {
 #if (VOS_LINUX == VOS_OS_VER)
@@ -1011,7 +1011,7 @@ VOS_INT OMRL_AcpuRcvCBTData(VOS_UINT8 ucDevIndex, VOS_UINT8 *pucData, VOS_UINT32
         }
         else if (HDLC_NOT_HDLC_FRAME == ulResult)
         {
-            /*²»ÊÇÍêÕû·ÖÖ¡,¼ÌĞøHDLC½â·â×°*/
+            /*ä¸æ˜¯å®Œæ•´åˆ†å¸§,ç»§ç»­HDLCè§£å°è£…*/
         }
         else
         {
@@ -1129,13 +1129,13 @@ VOS_VOID OMRL_AcpuHdlcData(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
 
         if ( HDLC_SUCC == ulResult )
         {
-            /* ÅĞ¶ÏÂëÁ÷ */
+            /* åˆ¤æ–­ç æµ */
             pucTem = (VOS_UINT8*)g_stNVHdlcEntity.pucDecapBuff;
             ucSegSn = *(pucTem + OM_RL_DATATYPE_LEN + offsetof(OM_APP_MSG_SEG_EX_STRU, stMsgSeg.ucSegSn));
             pstOmToAppMsg = (OM_APP_MSG_EX_STRU*)(pucTem + OM_RL_DATATYPE_LEN + sizeof(OM_APP_MSG_SEG_EX_STRU));
 
 #if (FEATURE_ON == FEATURE_CBT_LOG)
-            /* FuncTypeÖ»´æÔÚÓÚµÚÒ»Ö¡Êı¾İÖĞ */
+            /* FuncTypeåªå­˜åœ¨äºç¬¬ä¸€å¸§æ•°æ®ä¸­ */
             if (1 != ucSegSn )
             {
                 if  ( OM_CBT_MSG == g_ulCBTStatus )
@@ -1167,7 +1167,7 @@ VOS_VOID OMRL_AcpuHdlcData(VOS_UINT8 *pucData, VOS_UINT32 ulLen)
         }
         else if (HDLC_NOT_HDLC_FRAME == ulResult)
         {
-            /*²»ÊÇÍêÕû·ÖÖ¡,¼ÌĞøHDLC½â·â×°*/
+            /*ä¸æ˜¯å®Œæ•´åˆ†å¸§,ç»§ç»­HDLCè§£å°è£…*/
         }
         else
         {
@@ -1212,7 +1212,7 @@ VOS_UINT32 OMRL_AcpuNVHdlcInit(VOS_VOID)
         stCustomVersion.ulNvSwVerFlag = VOS_TRUE;
     }
 
-    /* Èç¹ûulCustomVersion == VOS_TRUE±íÊ¾²»ÊÇÉÕÆ¬°æ±¾£¬ÔòÖ±½Ó·µ»Ø£¬²»ÓÃ·ÖÅä¼ÇÂ¼NV¿ÉÎ¬¿É²âµÄ×ÊÔ´ */
+    /* å¦‚æœulCustomVersion == VOS_TRUEè¡¨ç¤ºä¸æ˜¯çƒ§ç‰‡ç‰ˆæœ¬ï¼Œåˆ™ç›´æ¥è¿”å›ï¼Œä¸ç”¨åˆ†é…è®°å½•NVå¯ç»´å¯æµ‹çš„èµ„æº */
     if ( VOS_TRUE == stCustomVersion.ulNvSwVerFlag)
     {
         return VOS_OK;
@@ -1239,7 +1239,7 @@ VOS_UINT32 OMRL_AcpuNVHdlcInit(VOS_VOID)
     }
 
 #if (FEATURE_ON == FEATURE_CBT_LOG)
-    /* ¶ÁÈ¡OMµÄÎïÀíÊä³öÍ¨µÀ */
+    /* è¯»å–OMçš„ç‰©ç†è¾“å‡ºé€šé“ */
     if (NV_OK != NV_Read(en_NV_Item_Om_Port_Type, &stPortCfg, sizeof(OM_CHANNLE_PORT_CFG_STRU)))
     {
         return VOS_OK;
@@ -1251,7 +1251,7 @@ VOS_UINT32 OMRL_AcpuNVHdlcInit(VOS_VOID)
         return VOS_OK;
     }
 
-    /* ¶ÁÈ¡ĞÂÔöµÄNV £¬ĞèÒªĞÂÔöµÄÊ¹ÄÜ Nv Ò²ÊÇ´ò¿ªµÄ ·ñÔòÖ±½ÓÍË³ö */
+    /* è¯»å–æ–°å¢çš„NV ï¼Œéœ€è¦æ–°å¢çš„ä½¿èƒ½ Nv ä¹Ÿæ˜¯æ‰“å¼€çš„ å¦åˆ™ç›´æ¥é€€å‡º */
     if (NV_OK != NV_Read(en_NV_Item_CBT_LOG_ENABLE, &stNVCBTLogEnable, sizeof(NV_OM_CBT_LOG_ENABLE_STRU)))
     {
         return VOS_OK;
@@ -1316,7 +1316,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     VOS_UINT_PTR             ulAddr;
     VOS_UINT16               usDebugEventID;
 
-    /* ´æ·ÅAºËµ÷²âĞÅÏ¢µÄ ´óĞ¡ºÍµØÖ·,·Ö°üÉÏ±¨ÏûÏ¢ */
+    /* å­˜æ”¾Aæ ¸è°ƒæµ‹ä¿¡æ¯çš„ å¤§å°å’Œåœ°å€,åˆ†åŒ…ä¸ŠæŠ¥æ¶ˆæ¯ */
     OM_SEND_DEBUG_INFO_STRU  astAcpuDbuginfoTab1[] = {
         {sizeof(g_stAcpuPcToUeSucRecord),                 (VOS_UINT8*)&g_stAcpuPcToUeSucRecord},
         {sizeof(g_stAcpuPcToUeErrRecord),                 (VOS_UINT8*)&g_stAcpuPcToUeErrRecord},
@@ -1338,7 +1338,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     astAcpuDebuginfoTab2[2].pucAddr = (VOS_UINT8*)SOCP_GetDebugLogInfo(OM_GET_SOCP_DEBUG_INFO);
     astAcpuDebuginfoTab2[2].ulLenth = SOCP_GetDebugLogInfoLen(OM_GET_SOCP_DEBUG_INFO);
 
-    /* ---------------µÚÒ»°üÊı¾İ astAcpuDbuginfoTab1[]  begin----------- */
+    /* ---------------ç¬¬ä¸€åŒ…æ•°æ® astAcpuDbuginfoTab1[]  begin----------- */
 
     ulEventLenth = (sizeof(PS_OM_EVENT_IND_STRU)-(4 * sizeof(VOS_UINT8)));
     for (ulIndex=0; ulIndex<(sizeof(astAcpuDbuginfoTab1)/sizeof(astAcpuDbuginfoTab1[0])); ulIndex ++)
@@ -1346,7 +1346,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
         ulEventLenth += astAcpuDbuginfoTab1[ulIndex].ulLenth;
     }
 
-    /* ¼ÓÉÏ·Ö¸ô·ûºÅ³¤¶È */
+    /* åŠ ä¸Šåˆ†éš”ç¬¦å·é•¿åº¦ */
     ulEventLenth += (ulIndex - 1) * (VOS_UINT32)sizeof(VOS_UINT32);
     pstEventInd = (PS_OM_EVENT_IND_STRU *)VOS_MemAlloc(ACPU_PID_OM, DYNAMIC_MEM_PT, ulEventLenth);
     if (VOS_NULL_PTR == pstEventInd)
@@ -1360,7 +1360,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     pstEventInd->ulModuleId = ACPU_PID_OM;
 
     /*lint -e419 -e416 */
-    /* pc²àµ½ue²àÊ±Õı³£½ÓÊÕÊı¾İĞÅÏ¢ */
+    /* pcä¾§åˆ°ueä¾§æ—¶æ­£å¸¸æ¥æ”¶æ•°æ®ä¿¡æ¯ */
     VOS_MemCpy((VOS_UINT8 *)pstEventInd->aucData,
         (VOS_UINT8*)&g_stAcpuPcToUeSucRecord,
         sizeof(OM_ACPU_PC_UE_SUC_STRU));
@@ -1370,7 +1370,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     for (ulIndex=1;ulIndex<(sizeof(astAcpuDbuginfoTab1)/sizeof(astAcpuDbuginfoTab1[0])); ulIndex ++)
     {
         /*lint -e419 -e416 */
-        /* ¼ÓÉÏ·Ö¸ô·ûºÅ */
+        /* åŠ ä¸Šåˆ†éš”ç¬¦å· */
         ulEventLenth += astAcpuDbuginfoTab1[ulIndex-1].ulLenth;
         VOS_MemCpy((VOS_UINT8 *)pstEventInd->aucData + ulEventLenth,
                    (VOS_UINT8 *)&ulTemp, sizeof(VOS_UINT32));
@@ -1386,15 +1386,15 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     {
         PS_LOG(ACPU_PID_OM, VOS_NULL, PS_PRINT_WARNING, "OMRL_AcpuReportEvent: send event fail.");
     }
-    /* ÊÍ·ÅÏûÏ¢ÄÚÈİ¿Õ¼ä */
+    /* é‡Šæ”¾æ¶ˆæ¯å†…å®¹ç©ºé—´ */
     VOS_MemFree(ACPU_PID_OM, pstEventInd);
 
-    /* ---------------µÚÒ»°üÊı¾İ astAcpuDbuginfoTab1[]  end----------- */
+    /* ---------------ç¬¬ä¸€åŒ…æ•°æ® astAcpuDbuginfoTab1[]  end----------- */
 
-    /* ---------------astAcpuDbuginfoTab2[] Ã¿ÏîÊı¾İ½Ï´ó²ğ°ü·¢ËÍ£¬Ã¿°ü×î´ó·¢ËÍ2k----------- */
+    /* ---------------astAcpuDbuginfoTab2[] æ¯é¡¹æ•°æ®è¾ƒå¤§æ‹†åŒ…å‘é€ï¼Œæ¯åŒ…æœ€å¤§å‘é€2k----------- */
     /* Event Id */
     usDebugEventID  = OAM_DEGUG_EVENT_ID2;
-    /* Ò»´ÎĞÔÉêÇë 2k ¿Õ¼ä£¬×îºóÊÍ·Å */
+    /* ä¸€æ¬¡æ€§ç”³è¯· 2k ç©ºé—´ï¼Œæœ€åé‡Šæ”¾ */
     pstEventInd = (PS_OM_EVENT_IND_STRU *)VOS_MemAlloc(ACPU_PID_OM, DYNAMIC_MEM_PT,
                                           OM_SEND_DEBUG_INFO_MAX_LEN + sizeof(PS_OM_EVENT_IND_STRU)-(4 * sizeof(VOS_UINT8)));
     if (VOS_NULL_PTR == pstEventInd)
@@ -1403,10 +1403,10 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* Êı¾İ²ğ·Ö·¢ËÍ */
+    /* æ•°æ®æ‹†åˆ†å‘é€ */
     for(ulIndex =0; ulIndex<(sizeof(astAcpuDebuginfoTab2)/sizeof(astAcpuDebuginfoTab2[0])); ulIndex++)
     {
-        /* ·ÖÅäÄÚÈİ¿Õ¼ä ×î´óÎª 2k*/
+        /* åˆ†é…å†…å®¹ç©ºé—´ æœ€å¤§ä¸º 2k*/
         ulSendLen = 0;
 
         while(ulSendLen < astAcpuDebuginfoTab2[ulIndex].ulLenth)
@@ -1438,7 +1438,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
         }
     }
 
-    /* ÊÍ·ÅÏûÏ¢ÄÚÈİ¿Õ¼ä */
+    /* é‡Šæ”¾æ¶ˆæ¯å†…å®¹ç©ºé—´ */
     VOS_MemFree(ACPU_PID_OM, pstEventInd);
 
     return VOS_OK;
@@ -1455,10 +1455,10 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(VOS_VOID)
 
     VOS_BOOL            bLoopFlag = VOS_TRUE;
 
-    /* ÎªÁË²âÊÔ³ä·Ö£¬ÕâÀïÏÈ°´Ò»¸öÒ»¸öRDÊÍ·Å */
+    /* ä¸ºäº†æµ‹è¯•å……åˆ†ï¼Œè¿™é‡Œå…ˆæŒ‰ä¸€ä¸ªä¸€ä¸ªRDé‡Šæ”¾ */
     do
     {
-        /* ´ÓSCM»ñµÃÒÑ·¢ËÍÏûÏ¢×Ü³¤¶È */
+        /* ä»SCMè·å¾—å·²å‘é€æ¶ˆæ¯æ€»é•¿åº¦ */
         if (VOS_OK != SCM_RlsSrcRDFirst(SOCP_CODER_SRC_GU_OM1, &ulDataAddr, &ulDataLen))
         {
             g_stAcpuUeToPcErrRecord.usRlsRdErr++;
@@ -1466,7 +1466,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(VOS_VOID)
             return VOS_ERR;
         }
 
-        /* ÒÑ¾­Ã»ÓĞRD */
+        /* å·²ç»æ²¡æœ‰RD */
         if ((0 == ulDataAddr) || (0 == ulDataLen))
         {
             break;
@@ -1484,7 +1484,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(VOS_VOID)
             return VOS_ERR;
         }
 
-        /* ÊÍ·ÅOM»º³åÇøÄÚ´æ */
+        /* é‡Šæ”¾OMç¼“å†²åŒºå†…å­˜ */
         if (VOS_OK != OM_ReleaseTraceMem(&g_stAcpuOmBufCtrl, pucRealAddr, (VOS_INT32)ulDataLen))
         {
             g_stAcpuUeToPcErrRecord.usRlsMemErr++;
@@ -1495,7 +1495,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(VOS_VOID)
     }while(bLoopFlag);
 
 #else
-    /* Çå¿ÕËùÓĞÒÑ·¢ËÍRD */
+    /* æ¸…ç©ºæ‰€æœ‰å·²å‘é€RD */
     if (VOS_OK != SCM_RlsSrcRDAll(SOCP_CODER_SRC_GU_OM1, &DataAddr, &ulDataLen))
     {
         g_stAcpuUeToPcErrRecord.usRlsRdErr++;
@@ -1503,7 +1503,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ÒÑ¾­Ã»ÓĞRD */
+    /* å·²ç»æ²¡æœ‰RD */
     if ((0 == DataAddr) || (0 == ulDataLen))
     {
         return VOS_OK;
@@ -1521,7 +1521,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ¸ù¾İÒÑ·¢ËÍRD×Ü³¤¶ÈÊÍ·ÅÄÚ´æ */
+    /* æ ¹æ®å·²å‘é€RDæ€»é•¿åº¦é‡Šæ”¾å†…å­˜ */
     if (VOS_OK != OM_ReleaseTraceMem(&g_stAcpuOmBufCtrl, pucRealAddr, (VOS_INT32)ulDataLen))
     {
         g_stAcpuUeToPcErrRecord.usRlsMemErr++;
@@ -1555,13 +1555,13 @@ VOS_UINT32 OMRL_AcpuSendSocpData(VOS_UINT8 *pucHead, VOS_UINT32 ulHeadLen,
         return VOS_ERR;
     }
 
-    /* ¿½±´Êı¾İÍ· */
+    /* æ‹·è´æ•°æ®å¤´ */
     VOS_MemCpy(pucMemAddr, pucHead, ulHeadLen);
 
-    /* ¿½±´Êı¾İÄÚÈİ */
+    /* æ‹·è´æ•°æ®å†…å®¹ */
     VOS_MemCpy(pucMemAddr + ulHeadLen, pucData, ulDataLen);
 
-    /* ÌîĞ´èåÎ² */
+    /* å¡«å†™æ¡¢å°¾ */
     *(VOS_UINT32*)(pucMemAddr + ulHeadLen + ulDataLen) = OM_USB_FRAME_TAIL;
 
     VOS_FlushCpuWriteBuf();
@@ -1575,7 +1575,7 @@ VOS_UINT32 OMRL_AcpuSendSocpData(VOS_UINT8 *pucHead, VOS_UINT32 ulHeadLen,
         return VOS_ERR;
     }
 
-    /* µ÷ÓÃSCMÌá¹©µÄ½Ó¿Ú½«Êı¾İ·¢ËÍ¸øSOCP */
+    /* è°ƒç”¨SCMæä¾›çš„æ¥å£å°†æ•°æ®å‘é€ç»™SOCP */
     if (VOS_OK != SCM_SendCoderSrc(SOCP_CODER_SRC_GU_OM1, pucRealMemAddr, ulHeadLen + ulDataLen + (VOS_UINT32)sizeof(VOS_UINT32)))
     {
         g_stAcpuUeToPcErrRecord.usSendSocpDataErr++;
@@ -1601,7 +1601,7 @@ VOS_UINT32 OMRL_AcpuIsBDEnough(VOS_UINT8 ucMsgCnt)
 {
     VOS_UINT32                          ulFreeBdNum = 0;
 
-    /* »ñÈ¡OMÔ´Í¨µÀÊ£ÓàBD¸öÊı */
+    /* è·å–OMæºé€šé“å‰©ä½™BDä¸ªæ•° */
     if (VOS_OK != SCM_GetBDFreeNum(SOCP_CODER_SRC_GU_OM1, &ulFreeBdNum))
     {
         g_stAcpuUeToPcErrRecord.usGetBDErr++;
@@ -1609,7 +1609,7 @@ VOS_UINT32 OMRL_AcpuIsBDEnough(VOS_UINT8 ucMsgCnt)
         return VOS_ERR;
     }
 
-    /* ÅĞ¶ÏÊ£ÓàBDÊÇ·ñÂú×ã·Ö°ü¸öÊı */
+    /* åˆ¤æ–­å‰©ä½™BDæ˜¯å¦æ»¡è¶³åˆ†åŒ…ä¸ªæ•° */
     if (ucMsgCnt > ulFreeBdNum)
     {
         g_stAcpuUeToPcErrRecord.usBDLackErr++;
@@ -1621,23 +1621,23 @@ VOS_UINT32 OMRL_AcpuIsBDEnough(VOS_UINT8 ucMsgCnt)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : OMRL_ProcessSendData
- ¹¦ÄÜÃèÊö  : ½«¿ÉÎ¬¿É²âÊı¾İ·¢ËÍµÄSOCPÄ£¿é
- ÊäÈë²ÎÊı  : pucMsg    -- Ö¸Ïò·¢ËÍÊı¾İµÄÖ¸Õë
-             usMsgLen  -- ·¢ËÍÊı¾İµÄ³¤¶È
-             ucMsgCnt  -- ´ı·¢ËÍÊı¾İ°ü¸öÊı
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_UINT32
+ å‡½ æ•° å  : OMRL_ProcessSendData
+ åŠŸèƒ½æè¿°  : å°†å¯ç»´å¯æµ‹æ•°æ®å‘é€çš„SOCPæ¨¡å—
+ è¾“å…¥å‚æ•°  : pucMsg    -- æŒ‡å‘å‘é€æ•°æ®çš„æŒ‡é’ˆ
+             usMsgLen  -- å‘é€æ•°æ®çš„é•¿åº¦
+             ucMsgCnt  -- å¾…å‘é€æ•°æ®åŒ…ä¸ªæ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_UINT32
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2009Äê3ÔÂ28ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2009å¹´3æœˆ28æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 OMRL_AcpuProcessSendData(VOS_UINT8 *pucMsg, VOS_UINT8 ucMsgCnt, VOS_UINT16 usMsgLen)
 {
-    VOS_UINT8                           ucCurSegNum = 1; /*µ±Ç°¶ÎĞòºÅ*/
+    VOS_UINT8                           ucCurSegNum = 1; /*å½“å‰æ®µåºå·*/
     VOS_UINT_PTR                        ulTempAddress;
     VOS_BOOL                            bIsHead     = VOS_FALSE;
     OM_APP_TRACE_STRU_EX               *pstAppTrace;
@@ -1654,19 +1654,19 @@ VOS_UINT32 OMRL_AcpuProcessSendData(VOS_UINT8 *pucMsg, VOS_UINT8 ucMsgCnt, VOS_U
         bIsHead = VOS_TRUE;
     }
 
-    /* Ìî³äSOCPÍ·ÖĞµÄRTCÖµ */
+    /* å¡«å……SOCPå¤´ä¸­çš„RTCå€¼ */
     g_pstAcpuSegMsgEx->stSocpHdr.ulRTC = (VOS_UINT32)DRV_GET_RTC_VALUE();
     g_pstAcpuSegMsgEx->stMsgSeg.ucSegNum = ucMsgCnt;
     g_pstAcpuSegMsgEx->stMsgSeg.usSegLen = OM_APP_SPLIT_MSG_LEN;
 
-    /* ´óÓÚ×î´ó·Ö°ü´óĞ¡µÄÊı¾İ£¬°´ÕÕ×î´ó·Ö°ü´óĞ¡½øĞĞÊı¾İ·¢ËÍµÄ´¦Àí */
+    /* å¤§äºæœ€å¤§åˆ†åŒ…å¤§å°çš„æ•°æ®ï¼ŒæŒ‰ç…§æœ€å¤§åˆ†åŒ…å¤§å°è¿›è¡Œæ•°æ®å‘é€çš„å¤„ç† */
     for (ucCurSegNum = 1; ucCurSegNum < ucMsgCnt; ucCurSegNum++)
     {
         g_pstAcpuSegMsgEx->stMsgSeg.ucSegSn = ucCurSegNum;
 
         if (VOS_TRUE == bIsHead)
         {
-            /* ÏûÏ¢Í·Ç°¼ÓÉÏ³¤¶ÈĞÅ²¢·ÅÈë»·ĞÎ»º³åÇø*/
+            /* æ¶ˆæ¯å¤´å‰åŠ ä¸Šé•¿åº¦ä¿¡å¹¶æ”¾å…¥ç¯å½¢ç¼“å†²åŒº*/
             if (VOS_OK != OMRL_AcpuSendSocpData((VOS_UINT8 *)g_pstAcpuSegMsgEx,
                 (sizeof(OM_APP_MSG_SEG_EX_STRU) + OM_APP_TRACE_LEN),
                 (VOS_UINT8*)ulTempAddress, OM_APP_MSG_SEGMENT_LEN - OM_APP_TRACE_LEN))
@@ -1679,7 +1679,7 @@ VOS_UINT32 OMRL_AcpuProcessSendData(VOS_UINT8 *pucMsg, VOS_UINT8 ucMsgCnt, VOS_U
         }
         else
         {
-            /* ÏûÏ¢Í·Ç°¼ÓÉÏ³¤¶ÈĞÅ²¢·ÅÈë»·ĞÎ»º³åÇø*/
+            /* æ¶ˆæ¯å¤´å‰åŠ ä¸Šé•¿åº¦ä¿¡å¹¶æ”¾å…¥ç¯å½¢ç¼“å†²åŒº*/
             if (VOS_OK != OMRL_AcpuSendSocpData((VOS_UINT8 *)g_pstAcpuSegMsgEx,
                  sizeof(OM_APP_MSG_SEG_EX_STRU),
                 (VOS_UINT8*)ulTempAddress, OM_APP_MSG_SEGMENT_LEN))
@@ -1690,20 +1690,20 @@ VOS_UINT32 OMRL_AcpuProcessSendData(VOS_UINT8 *pucMsg, VOS_UINT8 ucMsgCnt, VOS_U
             ulTempAddress += OM_APP_MSG_SEGMENT_LEN;
         }
 
-        /* ¼ÆËãÊ£ÓàÊı¾İ°ü´óĞ¡ */
+        /* è®¡ç®—å‰©ä½™æ•°æ®åŒ…å¤§å° */
         usMsgLen -= OM_APP_MSG_SEGMENT_LEN;
     }
 
-    /*ÉèÖÃÏûÏ¢Í·²ÎÊı*/
+    /*è®¾ç½®æ¶ˆæ¯å¤´å‚æ•°*/
     g_pstAcpuSegMsgEx->stMsgSeg.usSegLen = (VOS_UINT16)(usMsgLen + OM_APP_MSG_SEGMENT_HEADER_LENGTH);
     g_pstAcpuSegMsgEx->stMsgSeg.ucSegSn  = ucCurSegNum;
 
-    /*ÎªÁË±£³ÖRingbufferÖĞ´æ·ÅµÄÊı¾İ°ü4×Ö½Ú¶ÔÆë*/
+    /*ä¸ºäº†ä¿æŒRingbufferä¸­å­˜æ”¾çš„æ•°æ®åŒ…4å­—èŠ‚å¯¹é½*/
     usMsgLen = (usMsgLen + 3U) & ~0x03U;
 
     if (VOS_TRUE == bIsHead)
     {
-        /* ÏûÏ¢Í·Ç°¼ÓÉÏ³¤¶È²¢·ÅÈë»·ĞÎ»º³åÇø */
+        /* æ¶ˆæ¯å¤´å‰åŠ ä¸Šé•¿åº¦å¹¶æ”¾å…¥ç¯å½¢ç¼“å†²åŒº */
         if ( VOS_OK != OMRL_AcpuSendSocpData((VOS_UINT8 *)g_pstAcpuSegMsgEx,
                             (sizeof(OM_APP_MSG_SEG_EX_STRU) + OM_APP_TRACE_LEN),
                             (VOS_UINT8*)ulTempAddress,
@@ -1714,7 +1714,7 @@ VOS_UINT32 OMRL_AcpuProcessSendData(VOS_UINT8 *pucMsg, VOS_UINT8 ucMsgCnt, VOS_U
     }
     else
     {
-        /* ÏûÏ¢Í·Ç°¼ÓÉÏ³¤¶È²¢·ÅÈë»·ĞÎ»º³åÇø */
+        /* æ¶ˆæ¯å¤´å‰åŠ ä¸Šé•¿åº¦å¹¶æ”¾å…¥ç¯å½¢ç¼“å†²åŒº */
         if ( VOS_OK != OMRL_AcpuSendSocpData((VOS_UINT8 *)g_pstAcpuSegMsgEx,
                                         sizeof(OM_APP_MSG_SEG_EX_STRU),
                                         (VOS_UINT8*)ulTempAddress,
@@ -1728,25 +1728,25 @@ VOS_UINT32 OMRL_AcpuProcessSendData(VOS_UINT8 *pucMsg, VOS_UINT8 ucMsgCnt, VOS_U
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : OMRL_AcpuMsgSplit
- ¹¦ÄÜÃèÊö  : µ±ÔÚUSBÉÏ½øĞĞÍ¨ĞÅÊ±£¬Ê¹ÓÃµÄÀ©Õ¹·Ö°üº¯Êı
- ÊäÈë²ÎÊı  : pucMsg    -- Ö¸Ïò·¢ËÍÊı¾İµÄÖ¸Õë
-             usMsgLen  -- ·¢ËÍÊı¾İµÄ³¤¶È
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_UINT32
+ å‡½ æ•° å  : OMRL_AcpuMsgSplit
+ åŠŸèƒ½æè¿°  : å½“åœ¨USBä¸Šè¿›è¡Œé€šä¿¡æ—¶ï¼Œä½¿ç”¨çš„æ‰©å±•åˆ†åŒ…å‡½æ•°
+ è¾“å…¥å‚æ•°  : pucMsg    -- æŒ‡å‘å‘é€æ•°æ®çš„æŒ‡é’ˆ
+             usMsgLen  -- å‘é€æ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_UINT32
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2009Äê3ÔÂ28ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2009å¹´3æœˆ28æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 OMRL_AcpuMsgSplit(VOS_UINT8 *pucMsg, VOS_UINT16 usMsgLen)
 {
-    VOS_UINT8                           ucMsgCnt    = 1; /*·Ö¶ÎµÄÊıÁ¿*/
+    VOS_UINT8                           ucMsgCnt    = 1; /*åˆ†æ®µçš„æ•°é‡*/
     VOS_UINT32                          ulRet;
 
-    /*½øĞĞ»¥³â²Ù×÷*/
+    /*è¿›è¡Œäº’æ–¥æ“ä½œ*/
 #if (VOS_LINUX == VOS_OS_VER)
     down(&g_stOmTxBuffSem);
 #else
@@ -1759,7 +1759,7 @@ VOS_UINT32 OMRL_AcpuMsgSplit(VOS_UINT8 *pucMsg, VOS_UINT16 usMsgLen)
     }
 #endif
 
-    /* ÊÍ·ÅÒÑ·¢ËÍÊı¾İÄÚ´æ */
+    /* é‡Šæ”¾å·²å‘é€æ•°æ®å†…å­˜ */
     if (VOS_OK != OMRL_AcpuReleaseSocpData())
     {
 #if (VOS_LINUX == VOS_OS_VER)
@@ -1770,10 +1770,10 @@ VOS_UINT32 OMRL_AcpuMsgSplit(VOS_UINT8 *pucMsg, VOS_UINT16 usMsgLen)
         return VOS_ERR;
     }
 
-    /* ¼ÆËã·Ö°ü¸öÊı */
+    /* è®¡ç®—åˆ†åŒ…ä¸ªæ•° */
     ucMsgCnt = (VOS_UINT8)(((usMsgLen + OM_APP_MSG_SEGMENT_LEN) - 1)/OM_APP_MSG_SEGMENT_LEN);
 
-    /* »ñÈ¡OMÔ´Í¨µÀÊ£ÓàBD¸öÊı */
+    /* è·å–OMæºé€šé“å‰©ä½™BDä¸ªæ•° */
     if (VOS_OK != OMRL_AcpuIsBDEnough(ucMsgCnt))
     {
 #if (VOS_LINUX == VOS_OS_VER)
@@ -1796,7 +1796,7 @@ VOS_UINT32 OMRL_AcpuMsgSplit(VOS_UINT8 *pucMsg, VOS_UINT16 usMsgLen)
 }
 VOS_UINT32 OMRL_AcpuUsbFrameInit(VOS_VOID)
 {
-    /* ·ÖÅä·Ö°ü½á¹¹µÄÄÚ´æ¿Õ¼ä */
+    /* åˆ†é…åˆ†åŒ…ç»“æ„çš„å†…å­˜ç©ºé—´ */
     g_pstAcpuSegMsgEx = (OM_APP_MSG_SEG_EX_STRU*)VOS_MemAlloc(ACPU_PID_OM, STATIC_MEM_PT,
                         sizeof(OM_APP_MSG_SEG_EX_STRU) + OM_APP_TRACE_LEN);
 
@@ -1809,7 +1809,7 @@ VOS_UINT32 OMRL_AcpuUsbFrameInit(VOS_VOID)
     g_pstAcpuSegMsgEx->stSocpHdr.ucCPUID   = OM_TOOL_ACPU_ID;
     g_pstAcpuSegMsgEx->ulFrameHead         = OM_USB_FRAME_HEAD;
 
-    /* ´´½¨OM·¢ËÍ»º³åÇø */
+    /* åˆ›å»ºOMå‘é€ç¼“å†²åŒº */
     if (VOS_OK != OM_CreateTraceBuffer(&g_stAcpuOmBufCtrl, OM_UPLINK_BUFFER_SIZE))
     {
         VOS_MemFree(ACPU_PID_OM, g_pstAcpuSegMsgEx);
@@ -1847,13 +1847,13 @@ VOS_UINT32 OMRL_AcpuInit(VOS_VOID)
 
     VOS_MemSet(&g_stMsgCombineInfo, 0, sizeof(g_stMsgCombineInfo));
 
-    /* Ê×°üĞòºÅÎª1 */
+    /* é¦–åŒ…åºå·ä¸º1 */
     g_stMsgCombineInfo.ucExpectedSegSn = 1;
 
 #if (FEATURE_ON == FEATURE_CBT_LOG)
     VOS_MemSet(&g_stCBTMsgCombineInfo, 0, sizeof(g_stCBTMsgCombineInfo));
 
-    /* Ê×°üĞòºÅÎª1 */
+    /* é¦–åŒ…åºå·ä¸º1 */
     g_stCBTMsgCombineInfo.ucExpectedSegSn = 1;
 #endif
 
@@ -1873,7 +1873,7 @@ VOS_UINT32 OMRL_AcpuInit(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ¶Á36ºÅNVÏîÎªÉÕÆ¬°æ±¾ */
+    /* è¯»36å·NVé¡¹ä¸ºçƒ§ç‰‡ç‰ˆæœ¬ */
     if (VOS_OK != OMRL_AcpuNVHdlcInit())
     {
         LogPrint("OMRL_AcpuInit:OMRL_AcpuNVHdlcInit Fail.\n");
@@ -1886,7 +1886,7 @@ VOS_UINT32 OMRL_AcpuInit(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ½«OM SOCPÄ¿µÄÍ¨µÀ´¦Àíº¯Êı×¢²á¸øSCM */
+    /* å°†OM SOCPç›®çš„é€šé“å¤„ç†å‡½æ•°æ³¨å†Œç»™SCM */
     if (VOS_OK != SCM_RegCoderDestProc(SOCP_CODER_DST_GU_OM, (SCM_CODERDESTFUCN)GU_OamSocpSendDataToUDI))
     {
         LogPrint("OMRL_AcpuInit:SCM_RegCoderDestProc Fail.\n");
@@ -2118,10 +2118,10 @@ VOS_VOID OmOpenLog(VOS_UINT32 ulFlag)
 
 VOS_VOID OmAcpuRate(VOS_VOID)
 {
-    VOS_UINT32            ulCurrTick;                    /*¼ÇÂ¼ÏÖÔÚÍ³¼ÆÊ±¼ä*/
-    VOS_UINT32            ulDeltaTick;                   /*¼ÇÂ¼Í³¼ÆÊ±¼ä*/
-    VOS_UINT32            ulDelData;                     /*¼ÇÂ¼Í³¼ÆÊı¾İ´óĞ¡*/
-    VOS_UINT32            ulBandWidth;                   /*¼ÇÂ¼Í³¼ÆÊı¾İ´óĞ¡*/
+    VOS_UINT32            ulCurrTick;                    /*è®°å½•ç°åœ¨ç»Ÿè®¡æ—¶é—´*/
+    VOS_UINT32            ulDeltaTick;                   /*è®°å½•ç»Ÿè®¡æ—¶é—´*/
+    VOS_UINT32            ulDelData;                     /*è®°å½•ç»Ÿè®¡æ•°æ®å¤§å°*/
+    VOS_UINT32            ulBandWidth;                   /*è®°å½•ç»Ÿè®¡æ•°æ®å¤§å°*/
 
     vos_printf("OmAcpuRate Show(ALL Data To UDI):\n");
 
@@ -2141,7 +2141,7 @@ VOS_VOID OmAcpuRate(VOS_VOID)
 
     ulBandWidth    = (ulDelData/ulDeltaTick)/10;
 
-    /*Í³¼ÆOMÔÚulDeltaTickÊ±¼ä(µ¥Î»10ms)ÄÚ·¢ËÍÁËulTotalLen×Ö½ÚÊı¾İ*/
+    /*ç»Ÿè®¡OMåœ¨ulDeltaTickæ—¶é—´(å•ä½10ms)å†…å‘é€äº†ulTotalLenå­—èŠ‚æ•°æ®*/
     vos_printf("OmAcpuRate,Tick <%u> Byte <%u>, BandWidth <%u>.\n",
                  ulDeltaTick, ulDelData, ulBandWidth);
 
@@ -2161,21 +2161,21 @@ VOS_VOID OmAcpuShowCombineInfo(VOS_VOID)
 }
 #else
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
-/* CNFÍ¨µÀ¿ØÖÆĞÅÏ¢È«¾Ö±äÁ¿ */
+/* CNFé€šé“æ§åˆ¶ä¿¡æ¯å…¨å±€å˜é‡ */
 OMRL_RCV_CHAN_CTRL_INFO_STRU            g_stAcpuCnfCtrlInfo;
 
-/* CBTÍ¨µÀ¿ØÖÆĞÅÏ¢È«¾Ö±äÁ¿ */
+/* CBTé€šé“æ§åˆ¶ä¿¡æ¯å…¨å±€å˜é‡ */
 OMRL_RCV_CHAN_CTRL_INFO_STRU            g_stAcpuCbtCtrlInfo;
 
-/*¼ÇÂ¼¿ªÊ¼Ê±¼ä*/
+/*è®°å½•å¼€å§‹æ—¶é—´*/
 VOS_UINT32                              g_ulAcpuLastTick = 0;
 
-/*¼ÇÂ¼×Ö½Ú³¤¶È*/
+/*è®°å½•å­—èŠ‚é•¿åº¦*/
 VOS_UINT32                              g_ulAcpuLastByteCnt = 0;
 
-/* ÓÃÀ´¿ØÖÆOMµÄ´òÓ¡Êä³ö */
+/* ç”¨æ¥æ§åˆ¶OMçš„æ‰“å°è¾“å‡º */
 #ifdef OAM_UT_DEBUG
 VOS_UINT32                              g_ulOmAcpuDbgFlag = VOS_NULL_DWORD;
 #else
@@ -2190,7 +2190,7 @@ OMRL_CBT_HDLC_ENCODE_MEM_CTRL           g_stCbtHdlcEncBuf;
 
 VOS_UINT32                              g_ulCBTLogEnable = 0;
 
-/* ±£´æSD¿¨µÄDebug ĞÅÏ¢ */
+/* ä¿å­˜SDå¡çš„Debug ä¿¡æ¯ */
 extern OM_SD_DEBUG_INFO                 g_stOmSDDebugInfo;
 extern OM_VCOM_DEBUG_INFO               g_stVComDebugInfo[3];
 extern OM_RECORD_BUF_STRU               g_astAcpuRecordInfo[VOS_EXC_DUMP_MEM_NUM_BUTT];
@@ -2198,7 +2198,7 @@ extern OM_RECORD_BUF_STRU               g_astAcpuRecordInfo[VOS_EXC_DUMP_MEM_NUM
 VOS_UINT32                              g_ulOmAcpuToCcpuCnf = 0;
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -2221,7 +2221,7 @@ VOS_UINT32 OMRL_AcpuCpuIdToPid(VOS_UINT8 ucCpuId, VOS_UINT32 *pulPid)
             *pulPid = ACPU_PID_MCU_OM;/* MCU om pid */
             break;
         default:
-            /* ´òÓ¡´íÎó */
+            /* æ‰“å°é”™è¯¯ */
             return VOS_ERR;
       }
 
@@ -2261,15 +2261,15 @@ VOS_UINT32 OMRL_AcpuMsgDispatch(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo)
 
     if (OM_LOGIC_CHANNEL_CBT == pstCtrlInfo->enChannel)
     {
-        /* È¡ÏûÏ¢ÖĞµÄfunction typeÅĞ¶ÏÊÇ²»ÊÇÊôÓÚĞ£×¼Êı¾İ */
+        /* å–æ¶ˆæ¯ä¸­çš„function typeåˆ¤æ–­æ˜¯ä¸æ˜¯å±äºæ ¡å‡†æ•°æ® */
         if (VOS_TRUE != OMRL_JudgeCbtMsg(pstAppToOmMsg->ucFuncType))
         {
-            /* Èç¹û²»ÊÇĞ£×¼Í¨µÀµÄÊı¾İÔò¶ÏµôĞ£×¼Í¨µÀµÄÁ´Â· */
+            /* å¦‚æœä¸æ˜¯æ ¡å‡†é€šé“çš„æ•°æ®åˆ™æ–­æ‰æ ¡å‡†é€šé“çš„é“¾è·¯ */
             return PPM_DisconnectGUPort(OM_LOGIC_CHANNEL_CBT);
         }
     }
 
-    /* CCPUµÄÏûÏ¢Í¨¹ıICCÍ¨µÀ·¢ËÍ */
+    /* CCPUçš„æ¶ˆæ¯é€šè¿‡ICCé€šé“å‘é€ */
     if (WUEPS_PID_OM == (pstCombineInfo->pstWholeMsg)->ulReceiverPid)
     {
         pstCtrlInfo->stPcToUeSucRecord.stCcpuData.ulDataLen += (pstCombineInfo->pstWholeMsg)->ulLength;
@@ -2279,12 +2279,12 @@ VOS_UINT32 OMRL_AcpuMsgDispatch(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo)
 
         ulRslt = GU_OamSndPcMsgToCcpu(pstCtrlInfo, (pstCombineInfo->pstWholeMsg)->aucValue, (pstCombineInfo->pstWholeMsg)->ulLength);
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, pstCombineInfo->pstWholeMsg);
     }
     else if (ACPU_PID_OM == (pstCombineInfo->pstWholeMsg)->ulReceiverPid)
     {
-        /* ÆäËûcpuµÄÏûÏ¢Í¨¹ıVOS_SendMsg·¢ËÍ */
+        /* å…¶ä»–cpuçš„æ¶ˆæ¯é€šè¿‡VOS_SendMsgå‘é€ */
         pstCtrlInfo->stPcToUeSucRecord.stAcpuData.ulDataLen += (pstCombineInfo->pstWholeMsg)->ulLength;
         pstCtrlInfo->stPcToUeSucRecord.stAcpuData.ulNum++;
 
@@ -2292,7 +2292,7 @@ VOS_UINT32 OMRL_AcpuMsgDispatch(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo)
     }
     else if (DSP_PID_HIFI_OM == (pstCombineInfo->pstWholeMsg)->ulReceiverPid)
     {
-        /* ÆäËûcpuµÄÏûÏ¢Í¨¹ıVOS_SendMsg·¢ËÍ */
+        /* å…¶ä»–cpuçš„æ¶ˆæ¯é€šè¿‡VOS_SendMsgå‘é€ */
         pstCtrlInfo->stPcToUeSucRecord.stHifiData.ulDataLen += (pstCombineInfo->pstWholeMsg)->ulLength;
         pstCtrlInfo->stPcToUeSucRecord.stHifiData.ulNum++;
 
@@ -2300,7 +2300,7 @@ VOS_UINT32 OMRL_AcpuMsgDispatch(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo)
     }
     else
     {
-        /* ÆäËûcpuµÄÏûÏ¢Í¨¹ıVOS_SendMsg·¢ËÍ */
+        /* å…¶ä»–cpuçš„æ¶ˆæ¯é€šè¿‡VOS_SendMsgå‘é€ */
         pstCtrlInfo->stPcToUeSucRecord.stMcuData.ulDataLen += (pstCombineInfo->pstWholeMsg)->ulLength;
         pstCtrlInfo->stPcToUeSucRecord.stMcuData.ulNum++;
 
@@ -2381,7 +2381,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UI
 
         pstCombineInfo->ulTotalMsgLen = pstAppOmMsg->usLength + APP_OM_HEADER_LENGTH;
 
-        /* ×é°üÍê³ÉºóÅĞ¶ÏÊÇ·ñ´óÓÚãĞÖµ */
+        /* ç»„åŒ…å®Œæˆååˆ¤æ–­æ˜¯å¦å¤§äºé˜ˆå€¼ */
         if (OM_RL_TOTAL_MSG_MAX_LEN < pstCombineInfo->ulTotalMsgLen)
         {
             pstCtrlInfo->stPcToUeErrRecord.usMsgTooLongErr++;
@@ -2389,7 +2389,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UI
             LogPrint1("OMRL_AcpuMsgCombine: receive first msg pack is too long %d;\r\n",
                         (VOS_INT32)pstCombineInfo->ulTotalMsgLen);
 
-            /* µ×Èí×î´óÖ§³Ö±£´æ1024×Ö½ÚµÄÄÚÈİ£¬µ×ÈíÃ»ÓĞÌá¹©ºê£¬ÕâÀïÖ±½ÓÊ¹ÓÃÊı×Ö */
+            /* åº•è½¯æœ€å¤§æ”¯æŒä¿å­˜1024å­—èŠ‚çš„å†…å®¹ï¼Œåº•è½¯æ²¡æœ‰æä¾›å®ï¼Œè¿™é‡Œç›´æ¥ä½¿ç”¨æ•°å­— */
             DRV_SYSTEM_ERROR(OAM_PC_LENGTH_TOO_BIG, (VOS_INT)pstCombineInfo->ulTotalMsgLen, 0, (VOS_CHAR *)pucData, 1024);
 
             return VOS_ERR;
@@ -2406,18 +2406,18 @@ VOS_UINT32 OMRL_AcpuMsgCombine(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UI
             return VOS_ERR;
         }
 
-        /* ¸ù¾İCPU ID²éÕÒµ½ÏàÓ¦µÄPID£¬¶ÔÓÚ¹¤¾ßÏÂ·¢Êı¾İÖ¡£¬ÓÃVOS_OM_HEADER½á¹¹ÖĞ±£Áô×Ö¶Î±íÊ¾CPUID */
+        /* æ ¹æ®CPU IDæŸ¥æ‰¾åˆ°ç›¸åº”çš„PIDï¼Œå¯¹äºå·¥å…·ä¸‹å‘æ•°æ®å¸§ï¼Œç”¨VOS_OM_HEADERç»“æ„ä¸­ä¿ç•™å­—æ®µè¡¨ç¤ºCPUID */
         ulRslt = OMRL_AcpuCpuIdToPid(pstAppOmMsg->ucCpuId, &(pstCombineInfo->pstWholeMsg)->ulReceiverPid);
         if (VOS_OK != ulRslt)
         {
-            /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+            /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
             VOS_FreeMsg(ACPU_PID_OM, pstCombineInfo->pstWholeMsg);
 
             pstCombineInfo->pstWholeMsg = VOS_NULL_PTR;
 
             pstCtrlInfo->stPcToUeErrRecord.usCpuIdErr++;
 
-            /* ´Ë´¦´íÎóÖ±½Ó·µ»Ø£¬²»ÓÃ¼ÇÂ¼£¬º¯ÊıÀïÃæÒÑ¾­¼ÇÂ¼ÁËCPU ID´íÎóµÄÇé¿ö */
+            /* æ­¤å¤„é”™è¯¯ç›´æ¥è¿”å›ï¼Œä¸ç”¨è®°å½•ï¼Œå‡½æ•°é‡Œé¢å·²ç»è®°å½•äº†CPU IDé”™è¯¯çš„æƒ…å†µ */
             return VOS_ERR;
         }
 
@@ -2428,7 +2428,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UI
     {
         LogPrint("OMRL_AcpuMsgCombine: The length of the packet is biger than the size of allocated memory.");
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, pstCombineInfo->pstWholeMsg);
 
         pstCombineInfo->pstWholeMsg = VOS_NULL_PTR;
@@ -2444,7 +2444,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UI
         /*Print the error info.*/
         LogPrint2("OMRL_AcpuMsgCombine: expected SN is %d, current SN is %d.", pstCombineInfo->ucExpectedSegSn, ucCurrentSegSn);
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, pstCombineInfo->pstWholeMsg);
 
         pstCombineInfo->pstWholeMsg = VOS_NULL_PTR;
@@ -2459,7 +2459,7 @@ VOS_UINT32 OMRL_AcpuMsgCombine(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UI
     {
         LogPrint("OMRL_AcpuMsgCombine: The length of the packet is biger than the size of allocated memory.\n");
 
-        /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+        /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
         VOS_FreeMsg(ACPU_PID_OM, pstCombineInfo->pstWholeMsg);
 
         pstCombineInfo->pstWholeMsg = VOS_NULL_PTR;
@@ -2477,12 +2477,12 @@ VOS_UINT32 OMRL_AcpuMsgCombine(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UI
     /*If the current MSG packet is an complete packet.*/
     if (pstCombineInfo->ucTotalSegNum == ucCurrentSegSn)
     {
-        /* ×é°üÍê³ÉºóÅĞ¶ÏÊÇ·ñ´óÓÚãĞÖµ */
+        /* ç»„åŒ…å®Œæˆååˆ¤æ–­æ˜¯å¦å¤§äºé˜ˆå€¼ */
         if (OM_RL_TOTAL_MSG_MAX_LEN < pstCombineInfo->ulTotalMsgLen)
         {
             pstCtrlInfo->stPcToUeErrRecord.usMsgTooLongErr++;
 
-            /* ÊÍ·ÅÏûÏ¢¿Õ¼ä */
+            /* é‡Šæ”¾æ¶ˆæ¯ç©ºé—´ */
             VOS_FreeMsg(ACPU_PID_OM, pstCombineInfo->pstWholeMsg);
 
             pstCombineInfo->pstWholeMsg = VOS_NULL_PTR;
@@ -2513,7 +2513,7 @@ VOS_UINT32 OMRL_AcpuSendMsg(VOS_UINT8 *pucData, VOS_UINT32 ulDataLen, VOS_UINT32
 
     pstAppOmMsg->ulReceiverPid = ulReceiverPid;
 
-    /* copy ÏûÏ¢ÄÚÈİ */
+    /* copy æ¶ˆæ¯å†…å®¹ */
     VOS_MemCpy((VOS_UINT8 *)pstAppOmMsg->aucValue, pucData, ulDataLen);
 
     return VOS_SendMsg(ulSenderPid, pstAppOmMsg);
@@ -2536,7 +2536,7 @@ VOS_UINT32 OMRL_AcpuHeadProc(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UINT
 
     if (OM_USB_FRAME_LEN >= ulSize)
     {
-        /* ´òÓ¡´íÎó */
+        /* æ‰“å°é”™è¯¯ */
         LogPrint("OMRL_AcpuHeadProc: The data length is error.");
         pstCtrlInfo->stPcToUeErrRecord.usPacketLenErr++;
         return VOS_ERR;
@@ -2544,25 +2544,25 @@ VOS_UINT32 OMRL_AcpuHeadProc(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UINT
 
     VOS_MemCpy(&ulValue, pucData, sizeof(VOS_UINT32));
 
-    /* ÅĞ¶ÏÊı¾İ°üÍ·ÊÇ²»ÊÇ0xaaaa5555 */
+    /* åˆ¤æ–­æ•°æ®åŒ…å¤´æ˜¯ä¸æ˜¯0xaaaa5555 */
     if (OM_USB_FRAME_HEAD != ulValue)
     {
-        /* ¼ÇÂ¼´íÎó */
+        /* è®°å½•é”™è¯¯ */
         pstCtrlInfo->stPcToUeErrRecord.usDataHeadErr++;
         return VOS_ERR;
     }
 
     VOS_MemCpy(&ulValue, (pucData + ulSize - OM_USB_TAIL_LEN), sizeof(VOS_UINT32));
 
-    /* ÅĞ¶ÏÊı¾İ°üÎ²ÊÇ²»ÊÇ0x5555aaaa */
+    /* åˆ¤æ–­æ•°æ®åŒ…å°¾æ˜¯ä¸æ˜¯0x5555aaaa */
     if (OM_USB_FRAME_TAIL != ulValue)
     {
-        /* ¼ÇÂ¼´íÎó */
+        /* è®°å½•é”™è¯¯ */
         pstCtrlInfo->stPcToUeErrRecord.usDataHeadErr++;
         return VOS_ERR;
     }
 
-    /* ÊÕµ½ÆÕÍ¨ÏûÏ¢Ê±ÏÈÅĞ¶Ïµ±Ç°Á´Â·×´Ì¬ */
+    /* æ”¶åˆ°æ™®é€šæ¶ˆæ¯æ—¶å…ˆåˆ¤æ–­å½“å‰é“¾è·¯çŠ¶æ€ */
     lRet = VOS_MemCmp(pucData, aucLinkData, ulSize);
 
     if ((OM_STATE_IDLE == pstCtrlInfo->ulOMSwitchOnOff)
@@ -2572,11 +2572,11 @@ VOS_UINT32 OMRL_AcpuHeadProc(OMRL_RCV_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UINT
         return VOS_ERR;
     }
 
-    /* Êı¾İÖ¸ÕëºÍ³¤¶È¸üĞÂ*/
+    /* æ•°æ®æŒ‡é’ˆå’Œé•¿åº¦æ›´æ–°*/
     pucData += OM_USB_HEAD_LEN;
     ulSize  -= OM_USB_FRAME_LEN;
 
-    /* ×é°ü */
+    /* ç»„åŒ… */
     return OMRL_AcpuMsgCombine(pstCtrlInfo, pucData, (VOS_UINT16)ulSize);
 }
 
@@ -2592,7 +2592,7 @@ VOS_UINT32 OMRL_RcvCbtChannel(SOCP_DECODER_DST_ENUM_U32 enChanlID,VOS_UINT8 *puc
 {
     if ((VOS_NULL_PTR != pucRBData)||(0 != ulRBSize))
     {
-        /* ´òÓ¡´íÎó */
+        /* æ‰“å°é”™è¯¯ */
         LogPrint("OMRL_RcvCbtChannel:para error!\n");
     }
 
@@ -2602,7 +2602,7 @@ VOS_UINT32 OMRL_RcvCnfChannel(SOCP_DECODER_DST_ENUM_U32 enChanlID,VOS_UINT8 *puc
 {
     if ((VOS_NULL_PTR != pucRBData)||(0 != ulRBSize))
     {
-        /* ´òÓ¡´íÎó */
+        /* æ‰“å°é”™è¯¯ */
         LogPrint("OMRL_RcvCnfChannel:para error!\n");
     }
 
@@ -2619,7 +2619,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     VOS_UINT_PTR             ulAddr;
     VOS_UINT16               usDebugEventID;
 
-    /* ´æ·ÅAºËµ÷²âĞÅÏ¢µÄ ´óĞ¡ºÍµØÖ·,·Ö°üÉÏ±¨ÏûÏ¢ */
+    /* å­˜æ”¾Aæ ¸è°ƒæµ‹ä¿¡æ¯çš„ å¤§å°å’Œåœ°å€,åˆ†åŒ…ä¸ŠæŠ¥æ¶ˆæ¯ */
     OM_SEND_DEBUG_INFO_STRU  astAcpuDbuginfoTab1[] = {
         {sizeof(g_stAcpuCnfCtrlInfo.stPcToUeSucRecord),                 (VOS_UINT8*)&g_stAcpuCnfCtrlInfo.stPcToUeSucRecord},
         {sizeof(g_stAcpuCbtCtrlInfo.stPcToUeSucRecord),                 (VOS_UINT8*)&g_stAcpuCbtCtrlInfo.stPcToUeSucRecord},
@@ -2644,7 +2644,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     astAcpuDebuginfoTab2[2].pucAddr = (VOS_UINT8*)SOCP_GetDebugLogInfo(OM_GET_SOCP_DEBUG_INFO);
     astAcpuDebuginfoTab2[2].ulLenth = SOCP_GetDebugLogInfoLen(OM_GET_SOCP_DEBUG_INFO);
 
-    /* ---------------µÚÒ»°üÊı¾İ astAcpuDbuginfoTab1[]  begin----------- */
+    /* ---------------ç¬¬ä¸€åŒ…æ•°æ® astAcpuDbuginfoTab1[]  begin----------- */
 
     ulEventLenth = (sizeof(PS_OM_EVENT_IND_STRU)-(4 * sizeof(VOS_UINT8)));
     for (ulIndex=0; ulIndex<(sizeof(astAcpuDbuginfoTab1)/sizeof(astAcpuDbuginfoTab1[0])); ulIndex ++)
@@ -2652,7 +2652,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
         ulEventLenth += astAcpuDbuginfoTab1[ulIndex].ulLenth;
     }
 
-    /* ¼ÓÉÏ·Ö¸ô·ûºÅ³¤¶È */
+    /* åŠ ä¸Šåˆ†éš”ç¬¦å·é•¿åº¦ */
     ulEventLenth += (ulIndex - 1) * (VOS_UINT32)sizeof(VOS_UINT32);
     pstEventInd = (PS_OM_EVENT_IND_STRU *)VOS_MemAlloc(ACPU_PID_OM, DYNAMIC_MEM_PT, ulEventLenth);
     if (VOS_NULL_PTR == pstEventInd)
@@ -2666,7 +2666,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     pstEventInd->ulModuleId = ACPU_PID_OM;
 
     /*lint -e419 -e416 */
-    /* pc²àµ½ue²àÊ±Õı³£½ÓÊÕÊı¾İĞÅÏ¢ */
+    /* pcä¾§åˆ°ueä¾§æ—¶æ­£å¸¸æ¥æ”¶æ•°æ®ä¿¡æ¯ */
     VOS_MemCpy((VOS_UINT8 *)pstEventInd->aucData,
         (VOS_UINT8*)&g_stAcpuCnfCtrlInfo.stPcToUeSucRecord,
         sizeof(OM_ACPU_PC_UE_SUC_STRU));
@@ -2676,7 +2676,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     for (ulIndex=1;ulIndex<(sizeof(astAcpuDbuginfoTab1)/sizeof(astAcpuDbuginfoTab1[0])); ulIndex ++)
     {
         /*lint -e419 -e416 */
-        /* ¼ÓÉÏ·Ö¸ô·ûºÅ */
+        /* åŠ ä¸Šåˆ†éš”ç¬¦å· */
         ulEventLenth += astAcpuDbuginfoTab1[ulIndex-1].ulLenth;
         VOS_MemCpy((VOS_UINT8 *)pstEventInd->aucData + ulEventLenth,
                    (VOS_UINT8 *)&ulTemp, sizeof(VOS_UINT32));
@@ -2692,15 +2692,15 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
     {
         PS_LOG(ACPU_PID_OM, VOS_NULL, PS_PRINT_WARNING, "OMRL_AcpuReportEvent: send event fail.");
     }
-    /* ÊÍ·ÅÏûÏ¢ÄÚÈİ¿Õ¼ä */
+    /* é‡Šæ”¾æ¶ˆæ¯å†…å®¹ç©ºé—´ */
     VOS_MemFree(ACPU_PID_OM, pstEventInd);
 
-    /* ---------------µÚÒ»°üÊı¾İ astAcpuDbuginfoTab1[]  end----------- */
+    /* ---------------ç¬¬ä¸€åŒ…æ•°æ® astAcpuDbuginfoTab1[]  end----------- */
 
-    /* ---------------astAcpuDbuginfoTab2[] Ã¿ÏîÊı¾İ½Ï´ó²ğ°ü·¢ËÍ£¬Ã¿°ü×î´ó·¢ËÍ2k----------- */
+    /* ---------------astAcpuDbuginfoTab2[] æ¯é¡¹æ•°æ®è¾ƒå¤§æ‹†åŒ…å‘é€ï¼Œæ¯åŒ…æœ€å¤§å‘é€2k----------- */
     /* Event Id */
     usDebugEventID  = OAM_DEGUG_EVENT_ID2;
-    /* Ò»´ÎĞÔÉêÇë 2k ¿Õ¼ä£¬×îºóÊÍ·Å */
+    /* ä¸€æ¬¡æ€§ç”³è¯· 2k ç©ºé—´ï¼Œæœ€åé‡Šæ”¾ */
     pstEventInd = (PS_OM_EVENT_IND_STRU *)VOS_MemAlloc(ACPU_PID_OM, DYNAMIC_MEM_PT,
                                           OM_SEND_DEBUG_INFO_MAX_LEN + sizeof(PS_OM_EVENT_IND_STRU)-(4 * sizeof(VOS_UINT8)));
     if (VOS_NULL_PTR == pstEventInd)
@@ -2709,10 +2709,10 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* Êı¾İ²ğ·Ö·¢ËÍ */
+    /* æ•°æ®æ‹†åˆ†å‘é€ */
     for(ulIndex =0; ulIndex<(sizeof(astAcpuDebuginfoTab2)/sizeof(astAcpuDebuginfoTab2[0])); ulIndex++)
     {
-        /* ·ÖÅäÄÚÈİ¿Õ¼ä ×î´óÎª 2k*/
+        /* åˆ†é…å†…å®¹ç©ºé—´ æœ€å¤§ä¸º 2k*/
         ulSendLen = 0;
 
         while(ulSendLen < astAcpuDebuginfoTab2[ulIndex].ulLenth)
@@ -2744,7 +2744,7 @@ VOS_UINT32 OMRL_AcpuReportEvent(VOS_VOID)
         }
     }
 
-    /* ÊÍ·ÅÏûÏ¢ÄÚÈİ¿Õ¼ä */
+    /* é‡Šæ”¾æ¶ˆæ¯å†…å®¹ç©ºé—´ */
     VOS_MemFree(ACPU_PID_OM, pstEventInd);
 
     return VOS_OK;
@@ -2756,7 +2756,7 @@ VOS_UINT32 OMRL_AcpuSendCbtData(VOS_UINT8  *pucSrc, VOS_UINT16  usSrcLen)
     VOS_UINT16                         usHdlcEncLen;
     VOS_UINT32                         ulResult;
 
-    /*½øĞĞ»¥³â²Ù×÷*/
+    /*è¿›è¡Œäº’æ–¥æ“ä½œ*/
     if ( VOS_OK != VOS_SmP(g_ulOmTxCbtSem, OM_PV_TIMEOUT) )
     {
         LogPrint("OMRL_AcpuMsgSplit, Error, OmTxBuffSem VOS_SmP Failed.\n");
@@ -2764,7 +2764,7 @@ VOS_UINT32 OMRL_AcpuSendCbtData(VOS_UINT8  *pucSrc, VOS_UINT16  usSrcLen)
         return VOS_ERR;
     }
 
-    /* ×öHDLC±àÂë */
+    /* åšHDLCç¼–ç  */
     if ( VOS_OK != Om_HdlcEncap(pucSrc,
                                 usSrcLen,
                                 g_stCbtHdlcEncBuf.pucBuf,
@@ -2799,10 +2799,10 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
 
     VOS_BOOL            bLoopFlag = VOS_TRUE;
 
-    /* ÎªÁË²âÊÔ³ä·Ö£¬ÕâÀïÏÈ°´Ò»¸öÒ»¸öRDÊÍ·Å */
+    /* ä¸ºäº†æµ‹è¯•å……åˆ†ï¼Œè¿™é‡Œå…ˆæŒ‰ä¸€ä¸ªä¸€ä¸ªRDé‡Šæ”¾ */
     do
     {
-        /* ´ÓSCM»ñµÃÒÑ·¢ËÍÏûÏ¢×Ü³¤¶È */
+        /* ä»SCMè·å¾—å·²å‘é€æ¶ˆæ¯æ€»é•¿åº¦ */
         if (VOS_OK != SCM_RlsSrcRDFirst(SOCP_CODER_SRC_GU_OM1, &ulDataAddr, &ulDataLen))
         {
             g_stAcpuUeToPcErrRecord.usRlsRdErr++;
@@ -2810,7 +2810,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
             return VOS_ERR;
         }
 
-        /* ÒÑ¾­Ã»ÓĞRD */
+        /* å·²ç»æ²¡æœ‰RD */
         if ((0 == ulDataAddr) || (0 == ulDataLen))
         {
             break;
@@ -2825,7 +2825,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
             return VOS_ERR;
         }
 
-        /* ÊÍ·ÅOM»º³åÇøÄÚ´æ */
+        /* é‡Šæ”¾OMç¼“å†²åŒºå†…å­˜ */
         if (VOS_OK != OM_ReleaseTraceMem(&g_stAcpuOmBufCtrl, pucRealAddr, (VOS_INT32)ulDataLen))
         {
             g_stAcpuUeToPcErrRecord.usRlsMemErr++;
@@ -2836,7 +2836,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
     }while(bLoopFlag);
 
 #else
-    /* Çå¿ÕËùÓĞÒÑ·¢ËÍRD */
+    /* æ¸…ç©ºæ‰€æœ‰å·²å‘é€RD */
     if (VOS_OK != SCM_RlsSrcRDAll(enChanlID, &DataAddr, &ulDataLen))
     {
         pstCtrlInfo->stUeToPcErrRecord.usRlsRdErr++;
@@ -2844,7 +2844,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
         return VOS_ERR;
     }
 
-    /* ÒÑ¾­Ã»ÓĞRD */
+    /* å·²ç»æ²¡æœ‰RD */
     if ((0 == DataAddr) || (0 == ulDataLen))
     {
         return VOS_OK;
@@ -2862,7 +2862,7 @@ VOS_UINT32 OMRL_AcpuReleaseSocpData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
         return VOS_ERR;
     }
 
-    /* ¸ù¾İÒÑ·¢ËÍRD×Ü³¤¶ÈÊÍ·ÅÄÚ´æ */
+    /* æ ¹æ®å·²å‘é€RDæ€»é•¿åº¦é‡Šæ”¾å†…å­˜ */
     if (VOS_OK != OM_ReleaseTraceMem(pstCtrlBuf, pucRealAddr, (VOS_INT32)ulDataLen))
     {
         pstCtrlInfo->stUeToPcErrRecord.usRlsMemErr++;
@@ -2896,13 +2896,13 @@ VOS_UINT32 OMRL_AcpuSendSocpData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInfo, 
         return VOS_ERR;
     }
 
-    /* ¿½±´Êı¾İÍ· */
+    /* æ‹·è´æ•°æ®å¤´ */
     VOS_MemCpy(pucMemAddr, pucHead, ulHeadLen);
 
-    /* ¿½±´Êı¾İÄÚÈİ */
+    /* æ‹·è´æ•°æ®å†…å®¹ */
     VOS_MemCpy(pucMemAddr + ulHeadLen, pucData, ulDataLen);
 
-    /* ÌîĞ´èåÎ² */
+    /* å¡«å†™æ¡¢å°¾ */
     *(VOS_UINT32*)(pucMemAddr + ulHeadLen + ulDataLen) = OM_USB_FRAME_TAIL;
 
     VOS_FlushCpuWriteBuf();
@@ -2916,7 +2916,7 @@ VOS_UINT32 OMRL_AcpuSendSocpData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInfo, 
         return VOS_ERR;
     }
 
-    /* µ÷ÓÃSCMÌá¹©µÄ½Ó¿Ú½«Êı¾İ·¢ËÍ¸øSOCP */
+    /* è°ƒç”¨SCMæä¾›çš„æ¥å£å°†æ•°æ®å‘é€ç»™SOCP */
     if (VOS_OK != SCM_SendCoderSrc(enChanlID, pucRealMemAddr, ulHeadLen + ulDataLen + (VOS_UINT32)sizeof(VOS_UINT32)))
     {
         pstCtrlInfo->stUeToPcErrRecord.usSendSocpDataErr++;
@@ -2946,7 +2946,7 @@ VOS_UINT32 OMRL_AcpuIsBDEnough(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VO
 
     enChanlID = pstCtrlInfo->enChanlID;
 
-    /* »ñÈ¡OMÔ´Í¨µÀÊ£ÓàBD¸öÊı */
+    /* è·å–OMæºé€šé“å‰©ä½™BDä¸ªæ•° */
     if (VOS_OK != SCM_GetBDFreeNum(enChanlID, &ulFreeBdNum))
     {
         pstCtrlInfo->stUeToPcErrRecord.usGetBDErr++;
@@ -2954,7 +2954,7 @@ VOS_UINT32 OMRL_AcpuIsBDEnough(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VO
         return VOS_ERR;
     }
 
-    /* ÅĞ¶ÏÊ£ÓàBDÊÇ·ñÂú×ã·Ö°ü¸öÊı */
+    /* åˆ¤æ–­å‰©ä½™BDæ˜¯å¦æ»¡è¶³åˆ†åŒ…ä¸ªæ•° */
     if (ucMsgCnt > ulFreeBdNum)
     {
         pstCtrlInfo->stUeToPcErrRecord.usBDLackErr++;
@@ -2966,30 +2966,30 @@ VOS_UINT32 OMRL_AcpuIsBDEnough(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VO
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : OMRL_ProcessSendData
- ¹¦ÄÜÃèÊö  : ½«¿ÉÎ¬¿É²âÊı¾İ·¢ËÍµÄSOCPÄ£¿é
- ÊäÈë²ÎÊı  : pucMsg    -- Ö¸Ïò·¢ËÍÊı¾İµÄÖ¸Õë
-             usMsgLen  -- ·¢ËÍÊı¾İµÄ³¤¶È
-             ucMsgCnt  -- ´ı·¢ËÍÊı¾İ°ü¸öÊı
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_UINT32
+ å‡½ æ•° å  : OMRL_ProcessSendData
+ åŠŸèƒ½æè¿°  : å°†å¯ç»´å¯æµ‹æ•°æ®å‘é€çš„SOCPæ¨¡å—
+ è¾“å…¥å‚æ•°  : pucMsg    -- æŒ‡å‘å‘é€æ•°æ®çš„æŒ‡é’ˆ
+             usMsgLen  -- å‘é€æ•°æ®çš„é•¿åº¦
+             ucMsgCnt  -- å¾…å‘é€æ•°æ®åŒ…ä¸ªæ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_UINT32
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2009Äê3ÔÂ28ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2009å¹´3æœˆ28æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 OMRL_AcpuProcessSendData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UINT8 *pucMsg, VOS_UINT8 ucMsgCnt, VOS_UINT16 usMsgLen)
 {
-    VOS_UINT8                           ucCurSegNum = 1; /*µ±Ç°¶ÎĞòºÅ*/
+    VOS_UINT8                           ucCurSegNum = 1; /*å½“å‰æ®µåºå·*/
     VOS_UINT_PTR                        ulTempAddress;
     VOS_BOOL                            bIsHead     = VOS_FALSE;
     OM_APP_TRACE_STRU_EX               *pstAppTrace;
-    /*Ö¸ÏòOM·Ö°üÍ·ÄÚÈİµÄÖ¸Õë*/
+    /*æŒ‡å‘OMåˆ†åŒ…å¤´å†…å®¹çš„æŒ‡é’ˆ*/
     OM_APP_MSG_SEG_EX_STRU             *pstSegMsgEx = VOS_NULL_PTR;
 
-    /*·ÖÅä·Ö°ü½á¹¹µÄÄÚ´æ¿Õ¼ä*/
+    /*åˆ†é…åˆ†åŒ…ç»“æ„çš„å†…å­˜ç©ºé—´*/
     pstSegMsgEx = (OM_APP_MSG_SEG_EX_STRU*)VOS_MemAlloc(WUEPS_PID_OM,
                 DYNAMIC_MEM_PT, sizeof(OM_APP_MSG_SEG_EX_STRU) + OM_APP_TRACE_LEN);
 
@@ -3014,19 +3014,19 @@ VOS_UINT32 OMRL_AcpuProcessSendData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
         bIsHead = VOS_TRUE;
     }
 
-    /* Ìî³äSOCPÍ·ÖĞµÄRTCÖµ */
+    /* å¡«å……SOCPå¤´ä¸­çš„RTCå€¼ */
     pstSegMsgEx->stSocpHdr.ulRTC = (VOS_UINT32)DRV_GET_RTC_VALUE();
     pstSegMsgEx->stMsgSeg.ucSegNum = ucMsgCnt;
     pstSegMsgEx->stMsgSeg.usSegLen = OM_APP_SPLIT_MSG_LEN;
 
-    /* ´óÓÚ×î´ó·Ö°ü´óĞ¡µÄÊı¾İ£¬°´ÕÕ×î´ó·Ö°ü´óĞ¡½øĞĞÊı¾İ·¢ËÍµÄ´¦Àí */
+    /* å¤§äºæœ€å¤§åˆ†åŒ…å¤§å°çš„æ•°æ®ï¼ŒæŒ‰ç…§æœ€å¤§åˆ†åŒ…å¤§å°è¿›è¡Œæ•°æ®å‘é€çš„å¤„ç† */
     for (ucCurSegNum = 1; ucCurSegNum < ucMsgCnt; ucCurSegNum++)
     {
         pstSegMsgEx->stMsgSeg.ucSegSn = ucCurSegNum;
 
         if (VOS_TRUE == bIsHead)
         {
-            /* ÏûÏ¢Í·Ç°¼ÓÉÏ³¤¶ÈĞÅ²¢·ÅÈë»·ĞÎ»º³åÇø*/
+            /* æ¶ˆæ¯å¤´å‰åŠ ä¸Šé•¿åº¦ä¿¡å¹¶æ”¾å…¥ç¯å½¢ç¼“å†²åŒº*/
             if (VOS_OK != OMRL_AcpuSendSocpData(pstCtrlInfo, (VOS_UINT8 *)pstSegMsgEx,
                 (sizeof(OM_APP_MSG_SEG_EX_STRU) + OM_APP_TRACE_LEN),
                 (VOS_UINT8*)ulTempAddress, OM_APP_MSG_SEGMENT_LEN - OM_APP_TRACE_LEN))
@@ -3041,7 +3041,7 @@ VOS_UINT32 OMRL_AcpuProcessSendData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
         }
         else
         {
-            /* ÏûÏ¢Í·Ç°¼ÓÉÏ³¤¶ÈĞÅ²¢·ÅÈë»·ĞÎ»º³åÇø*/
+            /* æ¶ˆæ¯å¤´å‰åŠ ä¸Šé•¿åº¦ä¿¡å¹¶æ”¾å…¥ç¯å½¢ç¼“å†²åŒº*/
             if (VOS_OK != OMRL_AcpuSendSocpData(pstCtrlInfo, (VOS_UINT8 *)pstSegMsgEx,
                  sizeof(OM_APP_MSG_SEG_EX_STRU),
                 (VOS_UINT8*)ulTempAddress, OM_APP_MSG_SEGMENT_LEN))
@@ -3054,20 +3054,20 @@ VOS_UINT32 OMRL_AcpuProcessSendData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
             ulTempAddress += OM_APP_MSG_SEGMENT_LEN;
         }
 
-        /* ¼ÆËãÊ£ÓàÊı¾İ°ü´óĞ¡ */
+        /* è®¡ç®—å‰©ä½™æ•°æ®åŒ…å¤§å° */
         usMsgLen -= OM_APP_MSG_SEGMENT_LEN;
     }
 
-    /*ÉèÖÃÏûÏ¢Í·²ÎÊı*/
+    /*è®¾ç½®æ¶ˆæ¯å¤´å‚æ•°*/
     pstSegMsgEx->stMsgSeg.usSegLen = (VOS_UINT16)(usMsgLen + OM_APP_MSG_SEGMENT_HEADER_LENGTH);
     pstSegMsgEx->stMsgSeg.ucSegSn  = ucCurSegNum;
 
-    /*ÎªÁË±£³ÖRingbufferÖĞ´æ·ÅµÄÊı¾İ°ü4×Ö½Ú¶ÔÆë*/
+    /*ä¸ºäº†ä¿æŒRingbufferä¸­å­˜æ”¾çš„æ•°æ®åŒ…4å­—èŠ‚å¯¹é½*/
     usMsgLen = (usMsgLen + 3U) & ~0x03U;
 
     if (VOS_TRUE == bIsHead)
     {
-        /* ÏûÏ¢Í·Ç°¼ÓÉÏ³¤¶È²¢·ÅÈë»·ĞÎ»º³åÇø */
+        /* æ¶ˆæ¯å¤´å‰åŠ ä¸Šé•¿åº¦å¹¶æ”¾å…¥ç¯å½¢ç¼“å†²åŒº */
         if ( VOS_OK != OMRL_AcpuSendSocpData(pstCtrlInfo, (VOS_UINT8 *)pstSegMsgEx,
                             (sizeof(OM_APP_MSG_SEG_EX_STRU) + OM_APP_TRACE_LEN),
                             (VOS_UINT8*)ulTempAddress,
@@ -3080,7 +3080,7 @@ VOS_UINT32 OMRL_AcpuProcessSendData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
     }
     else
     {
-        /* ÏûÏ¢Í·Ç°¼ÓÉÏ³¤¶È²¢·ÅÈë»·ĞÎ»º³åÇø */
+        /* æ¶ˆæ¯å¤´å‰åŠ ä¸Šé•¿åº¦å¹¶æ”¾å…¥ç¯å½¢ç¼“å†²åŒº */
         if ( VOS_OK != OMRL_AcpuSendSocpData(pstCtrlInfo, (VOS_UINT8 *)pstSegMsgEx,
                                         sizeof(OM_APP_MSG_SEG_EX_STRU),
                                         (VOS_UINT8*)ulTempAddress,
@@ -3099,25 +3099,25 @@ VOS_UINT32 OMRL_AcpuProcessSendData(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInf
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : OMRL_AcpuMsgSplit
- ¹¦ÄÜÃèÊö  : µ±ÔÚUSBÉÏ½øĞĞÍ¨ĞÅÊ±£¬Ê¹ÓÃµÄÀ©Õ¹·Ö°üº¯Êı
- ÊäÈë²ÎÊı  : pucMsg    -- Ö¸Ïò·¢ËÍÊı¾İµÄÖ¸Õë
-             usMsgLen  -- ·¢ËÍÊı¾İµÄ³¤¶È
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_UINT32
+ å‡½ æ•° å  : OMRL_AcpuMsgSplit
+ åŠŸèƒ½æè¿°  : å½“åœ¨USBä¸Šè¿›è¡Œé€šä¿¡æ—¶ï¼Œä½¿ç”¨çš„æ‰©å±•åˆ†åŒ…å‡½æ•°
+ è¾“å…¥å‚æ•°  : pucMsg    -- æŒ‡å‘å‘é€æ•°æ®çš„æŒ‡é’ˆ
+             usMsgLen  -- å‘é€æ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_UINT32
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2009Äê3ÔÂ28ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2009å¹´3æœˆ28æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 OMRL_AcpuMsgSplit(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_UINT8 *pucMsg, VOS_UINT16 usMsgLen)
 {
-    VOS_UINT8                           ucMsgCnt    = 1; /*·Ö¶ÎµÄÊıÁ¿*/
+    VOS_UINT8                           ucMsgCnt    = 1; /*åˆ†æ®µçš„æ•°é‡*/
     VOS_UINT32                          ulRet;
 
-    /*½øĞĞ»¥³â²Ù×÷*/
+    /*è¿›è¡Œäº’æ–¥æ“ä½œ*/
     if ( VOS_OK != VOS_SmP(pstCtrlInfo->OmTxBuffSem, OM_PV_TIMEOUT) )
     {
         LogPrint("OMRL_AcpuMsgSplit, Error, OmTxBuffSem VOS_SmP Failed.\n");
@@ -3126,17 +3126,17 @@ VOS_UINT32 OMRL_AcpuMsgSplit(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlInfo, VOS_
         return VOS_ERR;
     }
 
-    /* ÊÍ·ÅÒÑ·¢ËÍÊı¾İÄÚ´æ */
+    /* é‡Šæ”¾å·²å‘é€æ•°æ®å†…å­˜ */
     if (VOS_OK != OMRL_AcpuReleaseSocpData(pstCtrlInfo))
     {
         VOS_SmV(pstCtrlInfo->OmTxBuffSem);
         return VOS_ERR;
     }
 
-    /* ¼ÆËã·Ö°ü¸öÊı */
+    /* è®¡ç®—åˆ†åŒ…ä¸ªæ•° */
     ucMsgCnt = (VOS_UINT8)(((usMsgLen + OM_APP_MSG_SEGMENT_LEN) - 1)/OM_APP_MSG_SEGMENT_LEN);
 
-    /* »ñÈ¡OMÔ´Í¨µÀÊ£ÓàBD¸öÊı */
+    /* è·å–OMæºé€šé“å‰©ä½™BDä¸ªæ•° */
     if (VOS_OK != OMRL_AcpuIsBDEnough(pstCtrlInfo, ucMsgCnt))
     {
         VOS_SmV(pstCtrlInfo->OmTxBuffSem);
@@ -3165,7 +3165,7 @@ VOS_UINT32 OMRL_AcpuUsbFrameInit(VOS_VOID)
 
     g_stAcpuTxIndCtrlInfo.enChannel = OM_LOGIC_CHANNEL_IND;
 
-    /* ´´½¨OM CNF·¢ËÍ»º³åÇø */
+    /* åˆ›å»ºOM CNFå‘é€ç¼“å†²åŒº */
     if (VOS_OK != OM_CreateTraceBuffer(&(g_stAcpuTxCnfCtrlInfo.OmBufCtrl), OM_CNF_BUFFER_SIZE))
     {
         LogPrint("OMRL_AcpuUsbFrameInit:OM_CreateTraceBuffer Failed!\n");
@@ -3173,7 +3173,7 @@ VOS_UINT32 OMRL_AcpuUsbFrameInit(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ´´½¨OM IND·¢ËÍ»º³åÇø */
+    /* åˆ›å»ºOM INDå‘é€ç¼“å†²åŒº */
     if (VOS_OK != OM_CreateTraceBuffer(&(g_stAcpuTxIndCtrlInfo.OmBufCtrl), OM_UPLINK_BUFFER_SIZE))
     {
         LogPrint("OMRL_AcpuUsbFrameInit:OM_CreateTraceBuffer Failed!\n");
@@ -3181,21 +3181,21 @@ VOS_UINT32 OMRL_AcpuUsbFrameInit(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ´´½¨·¢ËÍĞÅºÅÁ¿ */
+    /* åˆ›å»ºå‘é€ä¿¡å·é‡ */
     if (VOS_OK != VOS_SmMCreate("TXCNF", VOS_SEMA4_PRIOR | VOS_SEMA4_INVERSION_SAFE, &g_stAcpuTxCnfCtrlInfo.OmTxBuffSem))
     {
         LogPrint("OMRL_AcpuUsbFrameInit: Error, VOS_SmMCreate Fail\n");
         return VOS_ERR;
     }
 
-    /* ´´½¨·¢ËÍĞÅºÅÁ¿ */
+    /* åˆ›å»ºå‘é€ä¿¡å·é‡ */
     if (VOS_OK != VOS_SmMCreate("TXIND", VOS_SEMA4_PRIOR | VOS_SEMA4_INVERSION_SAFE, &g_stAcpuTxIndCtrlInfo.OmTxBuffSem))
     {
         LogPrint("OMRL_AcpuUsbFrameInit: Error, VOS_SmMCreate Fail\n");
         return VOS_ERR;
     }
 
-    /* ÉêÇëCBTÍ¨µÀHDLC±àÂëÊ¹ÓÃµÄuncached memory */
+    /* ç”³è¯·CBTé€šé“HDLCç¼–ç ä½¿ç”¨çš„uncached memory */
     VOS_MemSet(&g_stCbtHdlcEncBuf, 0, sizeof(g_stCbtHdlcEncBuf));
 
     g_stCbtHdlcEncBuf.pucBuf = (VOS_UINT8 *)VOS_UnCacheMemAlloc(2 * OM_HDLC_BUF_MAX_LEN, &ulRealAddr);
@@ -3205,7 +3205,7 @@ VOS_UINT32 OMRL_AcpuUsbFrameInit(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ±£´æbufÊµµØÖ· */
+    /* ä¿å­˜bufå®åœ°å€ */
     g_stCbtHdlcEncBuf.pucRealBuf = (VOS_UINT8 *)ulRealAddr;
     g_stCbtHdlcEncBuf.ulBufSize  = 2 * OM_HDLC_BUF_MAX_LEN;
 
@@ -3217,14 +3217,14 @@ VOS_VOID OmAcpuInitVar(VOS_VOID)
 {
     VOS_MemSet(&g_stAcpuCnfCtrlInfo, 0, sizeof(g_stAcpuCnfCtrlInfo));
 
-    /* Ê×°üĞòºÅÎª1 */
+    /* é¦–åŒ…åºå·ä¸º1 */
     g_stAcpuCnfCtrlInfo.stMsgCombineInfo.ucExpectedSegSn = 1;
     g_stAcpuCnfCtrlInfo.ulOMSwitchOnOff = OM_STATE_IDLE;
     g_stAcpuCnfCtrlInfo.enChannel = OM_LOGIC_CHANNEL_CNF;
 
     VOS_MemSet(&g_stAcpuCbtCtrlInfo, 0, sizeof(g_stAcpuCbtCtrlInfo));
 
-    /* Ê×°üĞòºÅÎª1 */
+    /* é¦–åŒ…åºå·ä¸º1 */
     g_stAcpuCbtCtrlInfo.stMsgCombineInfo.ucExpectedSegSn = 1;
     g_stAcpuCbtCtrlInfo.ulOMSwitchOnOff = OM_STATE_IDLE;
     g_stAcpuCbtCtrlInfo.enChannel = OM_LOGIC_CHANNEL_CBT;
@@ -3558,10 +3558,10 @@ VOS_VOID OmOpenLog(VOS_UINT32 ulFlag)
 
 VOS_VOID OmAcpuRate(VOS_VOID)
 {
-    VOS_UINT32            ulCurrTick;                    /*¼ÇÂ¼ÏÖÔÚÍ³¼ÆÊ±¼ä*/
-    VOS_UINT32            ulDeltaTick;                   /*¼ÇÂ¼Í³¼ÆÊ±¼ä*/
-    VOS_UINT32            ulDelData;                     /*¼ÇÂ¼Í³¼ÆÊı¾İ´óĞ¡*/
-    VOS_UINT32            ulBandWidth;                   /*¼ÇÂ¼Í³¼ÆÊı¾İ´óĞ¡*/
+    VOS_UINT32            ulCurrTick;                    /*è®°å½•ç°åœ¨ç»Ÿè®¡æ—¶é—´*/
+    VOS_UINT32            ulDeltaTick;                   /*è®°å½•ç»Ÿè®¡æ—¶é—´*/
+    VOS_UINT32            ulDelData;                     /*è®°å½•ç»Ÿè®¡æ•°æ®å¤§å°*/
+    VOS_UINT32            ulBandWidth;                   /*è®°å½•ç»Ÿè®¡æ•°æ®å¤§å°*/
 
     vos_printf("OmAcpuRate Show(ALL Data To UDI):\n");
 
@@ -3581,7 +3581,7 @@ VOS_VOID OmAcpuRate(VOS_VOID)
 
     ulBandWidth    = (ulDelData/ulDeltaTick)/10;
 
-    /*Í³¼ÆOMÔÚulDeltaTickÊ±¼ä(µ¥Î»10ms)ÄÚ·¢ËÍÁËulTotalLen×Ö½ÚÊı¾İ*/
+    /*ç»Ÿè®¡OMåœ¨ulDeltaTickæ—¶é—´(å•ä½10ms)å†…å‘é€äº†ulTotalLenå­—èŠ‚æ•°æ®*/
     vos_printf("OmAcpuRate,Tick <%u> Byte <%u>, BandWidth <%u>.\n",
                  ulDeltaTick, ulDelData, ulBandWidth);
 

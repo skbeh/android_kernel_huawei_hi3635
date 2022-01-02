@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "pslog.h"
 #include "TafStdlib.h"
@@ -15,21 +15,21 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-  2 ³£Á¿¶¨Òå
+  2 å¸¸é‡å®šä¹‰
 *****************************************************************************/
 
 #define    THIS_FILE_ID        PS_FILE_ID_TAF_STD_LIB_C
 
 /*****************************************************************************
-  3 ÀàÐÍ¶¨Òå
+  3 ç±»åž‹å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  4 º¯ÊýÉùÃ÷
+  4 å‡½æ•°å£°æ˜Ž
 *****************************************************************************/
 
 /*****************************************************************************
-  5 ±äÁ¿¶¨Òå
+  5 å˜é‡å®šä¹‰
 *****************************************************************************/
 LOCAL VOS_UINT8 f_aucMsgAsciiSfxDefAlpha[TAF_STD_MAX_GSM7BITDEFALPHA_NUM] =
 {
@@ -45,7 +45,7 @@ LOCAL VOS_UINT8 f_aucMsgAsciiSfxDefAlpha[TAF_STD_MAX_GSM7BITDEFALPHA_NUM] =
 
 
 /*****************************************************************************
-  6 º¯Êý¶¨Òå
+  6 å‡½æ•°å®šä¹‰
 *****************************************************************************/
 
 VOS_UINT32 TAF_STD_Itoa(
@@ -82,7 +82,7 @@ VOS_UINT32 TAF_STD_AsciiNum2HexString(
     usSrcLen        = *pusSrcLen;
     pucDst          = pucSrc;
 
-    /* Èç¹ûÊÇÆæÊý¸ö°ë×Ö½ÚÔò·µ»Ø´íÎó */
+    /* å¦‚æžœæ˜¯å¥‡æ•°ä¸ªåŠå­—èŠ‚åˆ™è¿”å›žé”™è¯¯ */
     if (0 != (usSrcLen % 2))
     {
         return VOS_FALSE;
@@ -161,13 +161,13 @@ VOS_UINT16 TAF_STD_HexAlpha2AsciiString(
     ucHigh   = 0;
     ucLow    = 0;
 
-    /* É¨ÍêÕû¸ö×Ö´® */
+    /* æ‰«å®Œæ•´ä¸ªå­—ä¸² */
     while ( usChkLen++ < usSrcLen )
     {
         ucHigh = 0x0F & (*pucRead >> 4);
         ucLow  = 0x0F & *pucRead;
 
-        usLen += 2;    /* ¼ÇÂ¼³¤¶È */
+        usLen += 2;    /* è®°å½•é•¿åº¦ */
 
         if (0x09 >= ucHigh)   /* 0-9 */
         {
@@ -195,15 +195,15 @@ VOS_UINT16 TAF_STD_HexAlpha2AsciiString(
 
         }
 
-        /* ÏÂÒ»¸ö×Ö·û */
+        /* ä¸‹ä¸€ä¸ªå­—ç¬¦ */
         pucRead++;
     }
 
     return usLen;
 }
 
-/* MN_UnPack7Bit´ÓMnMsgDecode.cÒÆµ½±¾ÎÄ¼þ£¬¸üÃûÎªTAF_STD_UnPack7Bit */
-/* MN_Pack7Bit´ÓMnMsgEncode.cÒÆµ½±¾ÎÄ¼þ£¬¸üÃûÎªTAF_STD_Pack7Bit */
+/* MN_UnPack7Bitä»ŽMnMsgDecode.cç§»åˆ°æœ¬æ–‡ä»¶ï¼Œæ›´åä¸ºTAF_STD_UnPack7Bit */
+/* MN_Pack7Bitä»ŽMnMsgEncode.cç§»åˆ°æœ¬æ–‡ä»¶ï¼Œæ›´åä¸ºTAF_STD_Pack7Bit */
 
 VOS_UINT32  TAF_STD_UnPack7Bit(
     const VOS_UINT8                     *pucOrgChar,
@@ -212,9 +212,9 @@ VOS_UINT32  TAF_STD_UnPack7Bit(
     VOS_UINT8                           *pucUnPackedChar
 )
 {
-    /*´æ·Å×Ö½ÚµØÖ·*/
+    /*å­˜æ”¾å­—èŠ‚åœ°å€*/
     VOS_UINT32                          ulPos = 0;
-     /*´æ·ÅÎ»Æ«ÒÆ*/
+     /*å­˜æ”¾ä½åç§»*/
     VOS_UINT32                          ulOffset;
     VOS_UINT32                          ulLoop;
 
@@ -224,12 +224,12 @@ VOS_UINT32  TAF_STD_UnPack7Bit(
         return VOS_ERR;
     }
 
-    /*¸ù¾ÝÐ­Òé23040 9.2.3.24 UDHLºÍUDHºóÃæÊÇFill BitsºÍSM£¬È¥µôFill Bitsºó¾ÍÊÇSM(Unit: Septet),¿ÉÒÔ»ñµÃSMÖÐ°üº¬×Ö·û¸öÊý*/
+    /*æ ¹æ®åè®®23040 9.2.3.24 UDHLå’ŒUDHåŽé¢æ˜¯Fill Bitså’ŒSMï¼ŒåŽ»æŽ‰Fill BitsåŽå°±æ˜¯SM(Unit: Septet),å¯ä»¥èŽ·å¾—SMä¸­åŒ…å«å­—ç¬¦ä¸ªæ•°*/
     ulOffset = ucFillBit % 8;
 
-    /*µÚÒ»²½£¬ÒÆ³öµ±Ç°ÎÞÐ§µÄÆ«ÒÆÎ»ulOffset£¬µÃµ½×Ö·ûµÄµÍ(8 - ulOffset)Î»£¬
-      µÚ¶þ²½£¬Èô(8 - ulOffset)Ð¡ÓÚ7Î»£¬ÐèÒª´ÓÏÂÒ»¸öOCTETÖÐ»ñÈ¡¸ß(7 - (8 - ulOffset))Î»
-      µÚÈý²½£¬»ñÈ¡ÏÂÒ»¸öÊý¾ÝÔ´µÄÏÂ±ê(ulPos)ºÍÐèÒªÈ¥³ýµÄÊý¾ÝÎ»(Æ«ÒÆÎ»ulOffset)*/
+    /*ç¬¬ä¸€æ­¥ï¼Œç§»å‡ºå½“å‰æ— æ•ˆçš„åç§»ä½ulOffsetï¼Œå¾—åˆ°å­—ç¬¦çš„ä½Ž(8 - ulOffset)ä½ï¼Œ
+      ç¬¬äºŒæ­¥ï¼Œè‹¥(8 - ulOffset)å°äºŽ7ä½ï¼Œéœ€è¦ä»Žä¸‹ä¸€ä¸ªOCTETä¸­èŽ·å–é«˜(7 - (8 - ulOffset))ä½
+      ç¬¬ä¸‰æ­¥ï¼ŒèŽ·å–ä¸‹ä¸€ä¸ªæ•°æ®æºçš„ä¸‹æ ‡(ulPos)å’Œéœ€è¦åŽ»é™¤çš„æ•°æ®ä½(åç§»ä½ulOffset)*/
     for (ulLoop = 0; ulLoop < ulLen; ulLoop++)
     {
         pucUnPackedChar[ulLoop] = (VOS_UINT8)(pucOrgChar[ulPos] >> ulOffset);
@@ -260,9 +260,9 @@ VOS_UINT32  TAF_STD_Pack7Bit(
     VOS_UINT32                          *pulLen
 )
 {
-    /*´æ·Å×Ö½ÚµØÖ·*/
+    /*å­˜æ”¾å­—èŠ‚åœ°å€*/
     VOS_UINT32                          ulPos = 0;
-    /*´æ·ÅÎ»Æ«ÒÆ*/
+    /*å­˜æ”¾ä½åç§»*/
     VOS_UINT32                          ulOffset;
     VOS_UINT32                          ulLoop;
 
@@ -278,13 +278,13 @@ VOS_UINT32  TAF_STD_Pack7Bit(
     ulOffset = ucFillBit % 8;
 
     /*bit 7   6   5   4   3   2   1   0 */
-    /*    |digit1L|   |---ulOffset1---| */ /*×óÒÆulOffset1Î»*/
-    /*                |(0)  digit1H   | */ /*ÓÒÒÆ(8-ulOffset1Î»)*/
-    /*    |-digit2L-  |   |-ulOffset2-| */ /*Æ«ÒÆÁ¿Îª(8-1+ulOffset1)%8*/
+    /*    |digit1L|   |---ulOffset1---| */ /*å·¦ç§»ulOffset1ä½*/
+    /*                |(0)  digit1H   | */ /*å³ç§»(8-ulOffset1ä½)*/
+    /*    |-digit2L-  |   |-ulOffset2-| */ /*åç§»é‡ä¸º(8-1+ulOffset1)%8*/
 
-    /*µÚÒ»²½£¬¿Õ³öµ±Ç°ÒÑ¾­Ìî³äµÄÆ«ÒÆÎ»ulOffset£¬²¢´ÓÊý¾ÝÔ´ÖÐÈ¡³öÒ»¸öOCTETÌî³ä¸ß(8 - ulOffset)Î»£¬
-      µÚ¶þ²½£¬Èô(8 - ulOffset)Ð¡ÓÚ7Î»£¬ÐèÒª½«µ±Ç°Êý¾ÝÔ´×Ö·ûÓàÏÂ¸ß(7 - (8 - ulOffset))Î»Ìî³äµ½Ä¿µÄÊý¾ÝµÄÏÂÒ»¸öOCTETÖÐ
-      µÚÈý²½£¬»ñÈ¡ÏÂÒ»¸öÄ¿±êÊý¾ÝµÄÏÂ±ê(ulPos)ºÍÒÑ¾­Ìî³äµÄÊý¾ÝÎ»(Æ«ÒÆÎ»ulOffset)*/
+    /*ç¬¬ä¸€æ­¥ï¼Œç©ºå‡ºå½“å‰å·²ç»å¡«å……çš„åç§»ä½ulOffsetï¼Œå¹¶ä»Žæ•°æ®æºä¸­å–å‡ºä¸€ä¸ªOCTETå¡«å……é«˜(8 - ulOffset)ä½ï¼Œ
+      ç¬¬äºŒæ­¥ï¼Œè‹¥(8 - ulOffset)å°äºŽ7ä½ï¼Œéœ€è¦å°†å½“å‰æ•°æ®æºå­—ç¬¦ä½™ä¸‹é«˜(7 - (8 - ulOffset))ä½å¡«å……åˆ°ç›®çš„æ•°æ®çš„ä¸‹ä¸€ä¸ªOCTETä¸­
+      ç¬¬ä¸‰æ­¥ï¼ŒèŽ·å–ä¸‹ä¸€ä¸ªç›®æ ‡æ•°æ®çš„ä¸‹æ ‡(ulPos)å’Œå·²ç»å¡«å……çš„æ•°æ®ä½(åç§»ä½ulOffset)*/
     for (ulLoop = 0; ulLoop < ulLen; ulLoop++)
     {
         if ((pucOrgChar[ulLoop] & (~TAF_STD_7BIT_MASK)) != 0)
@@ -307,19 +307,19 @@ VOS_UINT32  TAF_STD_Pack7Bit(
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : TAF_STD_ConvertBcdNumberToAscii
- ¹¦ÄÜÃèÊö  : ½«BCD±àÂëµÄºÅÂë×ª»»³ÉAscii±àÂëµÄºÅÂë
- ÊäÈë²ÎÊý  : pBcdNumber     - BCDºÅÂë
-             ucBcdLen       - BCDºÅÂëµÄ³¤¶È
- Êä³ö²ÎÊý  : pcAsciiNumber  - ×ª»»µÃµ½µÄASCIIºÅÂë(ÒÔ'\0'½áÎ²)
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : TAF_STD_ConvertBcdNumberToAscii
+ åŠŸèƒ½æè¿°  : å°†BCDç¼–ç çš„å·ç è½¬æ¢æˆAsciiç¼–ç çš„å·ç 
+ è¾“å…¥å‚æ•°  : pBcdNumber     - BCDå·ç 
+             ucBcdLen       - BCDå·ç çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : pcAsciiNumber  - è½¬æ¢å¾—åˆ°çš„ASCIIå·ç (ä»¥'\0'ç»“å°¾)
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê9ÔÂ20ÈÕ
-    ×÷    Õß   : ¶¡Çì 49431
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´9æœˆ20æ—¥
+    ä½œ    è€…   : ä¸åº† 49431
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32  TAF_STD_ConvertBcdNumberToAscii(
     const VOS_UINT8                    *pucBcdNumber,
@@ -338,7 +338,7 @@ VOS_UINT32  TAF_STD_ConvertBcdNumberToAscii(
         return MN_ERR_NULLPTR;
     }
 
-    /*ÕûÀíºÅÂë×Ö·û´®£¬È¥³ýÎÞÐ§µÄ0XFFÊý¾Ý*/
+    /*æ•´ç†å·ç å­—ç¬¦ä¸²ï¼ŒåŽ»é™¤æ— æ•ˆçš„0XFFæ•°æ®*/
     while (ucBcdLen > 1)
     {
         if (0xFF == pucBcdNumber[ucBcdLen - 1])
@@ -351,8 +351,8 @@ VOS_UINT32  TAF_STD_ConvertBcdNumberToAscii(
         }
     }
 
-    /*ÅÐ¶ÏpucBcdAddressËùÖ¸ÏòµÄ×Ö·û´®µÄ×îºóÒ»¸ö×Ö½ÚµÄ¸ßÎ»ÊÇ·ñÎª1111£¬
-    Èç¹ûÊÇ£¬ËµÃ÷ºÅÂëÎ»ÊýÎªÆæÊý£¬·ñÔòÎªÅ¼Êý*/
+    /*åˆ¤æ–­pucBcdAddressæ‰€æŒ‡å‘çš„å­—ç¬¦ä¸²çš„æœ€åŽä¸€ä¸ªå­—èŠ‚çš„é«˜ä½æ˜¯å¦ä¸º1111ï¼Œ
+    å¦‚æžœæ˜¯ï¼Œè¯´æ˜Žå·ç ä½æ•°ä¸ºå¥‡æ•°ï¼Œå¦åˆ™ä¸ºå¶æ•°*/
     if ((pucBcdNumber[ucBcdLen - 1] & 0xF0) == 0xF0)
     {
         ucLen = (VOS_UINT8)((ucBcdLen * 2) - 1);
@@ -362,22 +362,22 @@ VOS_UINT32  TAF_STD_ConvertBcdNumberToAscii(
         ucLen = (VOS_UINT8)(ucBcdLen * 2);
     }
 
-    /*½âÎöºÅÂë*/
+    /*è§£æžå·ç */
     for (ucLoop = 0; ucLoop < ucLen; ucLoop++)
     {
-        /*ÅÐ¶Ïµ±Ç°½âÂëµÄÊÇÆæÊýÎ»ºÅÂë»¹ÊÇÅ¼ÊýÎ»ºÅÂë£¬´Ó0¿ªÊ¼£¬ÊÇÅ¼Êý*/
+        /*åˆ¤æ–­å½“å‰è§£ç çš„æ˜¯å¥‡æ•°ä½å·ç è¿˜æ˜¯å¶æ•°ä½å·ç ï¼Œä»Ž0å¼€å§‹ï¼Œæ˜¯å¶æ•°*/
         if (1 == (ucLoop % 2))
         {
-            /*Èç¹ûÊÇÆæÊýÎ»ºÅÂë£¬ÔòÈ¡¸ß4Î»µÄÖµ*/
+            /*å¦‚æžœæ˜¯å¥‡æ•°ä½å·ç ï¼Œåˆ™å–é«˜4ä½çš„å€¼*/
             ucBcdCode = ((pucBcdNumber[(ucLoop / 2)] >> 4) & 0x0F);
         }
         else
         {
-            /*Èç¹ûÊÇÅ¼ÊýÎ»ºÅÂë£¬ÔòÈ¡µÍ4Î»µÄÖµ*/
+            /*å¦‚æžœæ˜¯å¶æ•°ä½å·ç ï¼Œåˆ™å–ä½Ž4ä½çš„å€¼*/
             ucBcdCode = (pucBcdNumber[(ucLoop / 2)] & 0x0F);
         }
 
-        /*½«¶þ½øÖÆÊý×Ö×ª»»³ÉAsciiÂëÐÎÊ½*/
+        /*å°†äºŒè¿›åˆ¶æ•°å­—è½¬æ¢æˆAsciiç å½¢å¼*/
         ulRet = TAF_STD_ConvertBcdCodeToAscii(ucBcdCode, &(pcAsciiNumber[ucLoop]));
         if (MN_ERR_NO_ERROR != ulRet)
         {
@@ -385,24 +385,24 @@ VOS_UINT32  TAF_STD_ConvertBcdNumberToAscii(
         }
     }
 
-    pcAsciiNumber[ucLoop] = '\0';      /*×Ö·û´®Ä©Î²Îª0*/
+    pcAsciiNumber[ucLoop] = '\0';      /*å­—ç¬¦ä¸²æœ«å°¾ä¸º0*/
 
     return MN_ERR_NO_ERROR;
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : TAF_STD_ConvertBcdCodeToAscii
- ¹¦ÄÜÃèÊö  : ½«BCD±àÂëµÄ×Ö·û×ª»»³ÉAsciiÂë×Ö·û
- ÊäÈë²ÎÊý  : ucBcdCode   - BCD±àÂëµÄ×Ö·û
- Êä³ö²ÎÊý  : pcAsciiCode - ×ª»»µÃµ½µÄASCIIÂë×Ö·û
- ·µ »Ø Öµ  : VOS_UINT32:º¯Êý·µ»ØµÄ½á¹û,³É¹¦ÒÔ¼°Ê§°ÜµÄÔ­ÒòÖµ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : TAF_STD_ConvertBcdCodeToAscii
+ åŠŸèƒ½æè¿°  : å°†BCDç¼–ç çš„å­—ç¬¦è½¬æ¢æˆAsciiç å­—ç¬¦
+ è¾“å…¥å‚æ•°  : ucBcdCode   - BCDç¼–ç çš„å­—ç¬¦
+ è¾“å‡ºå‚æ•°  : pcAsciiCode - è½¬æ¢å¾—åˆ°çš„ASCIIç å­—ç¬¦
+ è¿” å›ž å€¼  : VOS_UINT32:å‡½æ•°è¿”å›žçš„ç»“æžœ,æˆåŠŸä»¥åŠå¤±è´¥çš„åŽŸå› å€¼
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê9ÔÂ20ÈÕ
-    ×÷    Õß   : ¸µÓ³¾ý 62575
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´9æœˆ20æ—¥
+    ä½œ    è€…   : å‚…æ˜ å› 62575
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32  TAF_STD_ConvertBcdCodeToAscii(
     VOS_UINT8                           ucBcdCode,
@@ -422,17 +422,17 @@ VOS_UINT32  TAF_STD_ConvertBcdCodeToAscii(
     }
     else if (0x0A == ucBcdCode)
     {
-        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x20);    /*×Ö·û'*'*/
+        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x20);    /*å­—ç¬¦'*'*/
     }
     else if (0x0B == ucBcdCode)
     {
-        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x18);    /*×Ö·û'#'*/
+        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x18);    /*å­—ç¬¦'#'*/
     }
     else if ((0x0C == ucBcdCode)
           || (0x0D == ucBcdCode)
           || (0x0E == ucBcdCode))
     {
-        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x55);    /*×Ö·û'a', 'b', 'c'*/
+        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x55);    /*å­—ç¬¦'a', 'b', 'c'*/
     }
     else
     {
@@ -445,19 +445,19 @@ VOS_UINT32  TAF_STD_ConvertBcdCodeToAscii(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : TAF_STD_ConvertAsciiNumberToBcd
- ¹¦ÄÜÃèÊö  : ½«Ascii±àÂëµÄºÅÂë×ª»»³ÉBCD±àÂëµÄºÅÂë
- ÊäÈë²ÎÊý  : pcAsciiNumber - ÒÔ'\0'½áÎ²µÄASCII×Ö·ûºÅÂë
- Êä³ö²ÎÊý  : pucBcdNumber   - ×ª»»µÃµ½µÄBCDºÅÂë
-             pucBcdLen      - ×ª»»µÃµ½µÄBCDºÅÂëµÄ³¤¶È
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : TAF_STD_ConvertAsciiNumberToBcd
+ åŠŸèƒ½æè¿°  : å°†Asciiç¼–ç çš„å·ç è½¬æ¢æˆBCDç¼–ç çš„å·ç 
+ è¾“å…¥å‚æ•°  : pcAsciiNumber - ä»¥'\0'ç»“å°¾çš„ASCIIå­—ç¬¦å·ç 
+ è¾“å‡ºå‚æ•°  : pucBcdNumber   - è½¬æ¢å¾—åˆ°çš„BCDå·ç 
+             pucBcdLen      - è½¬æ¢å¾—åˆ°çš„BCDå·ç çš„é•¿åº¦
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê9ÔÂ20ÈÕ
-    ×÷    Õß   : ¶¡Çì 49431
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´9æœˆ20æ—¥
+    ä½œ    è€…   : ä¸åº† 49431
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32  TAF_STD_ConvertAsciiNumberToBcd(
     const VOS_CHAR                     *pcAsciiNumber,
@@ -484,14 +484,14 @@ VOS_UINT32  TAF_STD_ConvertAsciiNumberToBcd(
             return ulRet;
         }
 
-        /*½«µ±Ç°ÐèÒªÌîÈëµÄ¿Õ¼äÇå0*/
+        /*å°†å½“å‰éœ€è¦å¡«å…¥çš„ç©ºé—´æ¸…0*/
         pucBcdNumber[(ucLoop / 2)] &= ((ucLoop % 2) == 1) ? 0x0F : 0xF0;
 
-        /*½«Êý×ÖÌîÈëÏàÓ¦µÄ¿Õ¼ä*/
+        /*å°†æ•°å­—å¡«å…¥ç›¸åº”çš„ç©ºé—´*/
         pucBcdNumber[(ucLoop / 2)] |= (((ucLoop % 2) == 1) ? ((ucBcdCode << 4) & 0xF0) : (ucBcdCode & 0x0F));
     }
 
-    /*Èç¹û³¤¶ÈÎªÆæÊý£¬Ôò×îºóÒ»¸ö×Ö·ûÐèÒªÌî F */
+    /*å¦‚æžœé•¿åº¦ä¸ºå¥‡æ•°ï¼Œåˆ™æœ€åŽä¸€ä¸ªå­—ç¬¦éœ€è¦å¡« F */
     if (1 == (ucLoop % 2))
     {
         pucBcdNumber[(ucLoop / 2)] |= 0xF0;
@@ -503,18 +503,18 @@ VOS_UINT32  TAF_STD_ConvertAsciiNumberToBcd(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : TAF_STD_ConvertAsciiAddrToBcd
- ¹¦ÄÜÃèÊö  : Í¬²½º¯Êý,½«MN_MSG_ASCII_ADDR_STRUÀàÐÍµØÖ·×ª»»³ÉMN_MSG_BCD_ADDR_STRUÀàÐÍµØÖ·
- ÊäÈë²ÎÊý  : pstAsciiAddr   - MN_MSG_ASCII_ADDR_STRUÀàÐÍµØÖ·
- Êä³ö²ÎÊý  : pstBcdAddr     - MN_MSG_BCD_ADDR_STRUÀàÐÍµØÖ·
- ·µ »Ø Öµ  : MN_ERR_NO_ERROR×ª»»²Ù×÷³É¹¦£¬·ñÔòÊ§°Ü
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : TAF_STD_ConvertAsciiAddrToBcd
+ åŠŸèƒ½æè¿°  : åŒæ­¥å‡½æ•°,å°†MN_MSG_ASCII_ADDR_STRUç±»åž‹åœ°å€è½¬æ¢æˆMN_MSG_BCD_ADDR_STRUç±»åž‹åœ°å€
+ è¾“å…¥å‚æ•°  : pstAsciiAddr   - MN_MSG_ASCII_ADDR_STRUç±»åž‹åœ°å€
+ è¾“å‡ºå‚æ•°  : pstBcdAddr     - MN_MSG_BCD_ADDR_STRUç±»åž‹åœ°å€
+ è¿” å›ž å€¼  : MN_ERR_NO_ERRORè½¬æ¢æ“ä½œæˆåŠŸï¼Œå¦åˆ™å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê2ÔÂ13ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´2æœˆ13æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 TAF_STD_ConvertAsciiAddrToBcd(
@@ -542,18 +542,18 @@ VOS_UINT32 TAF_STD_ConvertAsciiAddrToBcd(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : TAF_STD_ConvertAsciiCodeToBcd
- ¹¦ÄÜÃèÊö  : ½«AsciiÂë×Ö·û×ª»»³ÉBCDÂë×Ö·û
- ÊäÈë²ÎÊý  : ucAsciiCode  - ASCII×Ö·û
- Êä³ö²ÎÊý  : pucBcdCode   - ×ª»»µÃµ½µÄBCDÂë
- ·µ »Ø Öµ  : VOS_UINT32:º¯Êý·µ»ØµÄ½á¹û,³É¹¦ÒÔ¼°Ê§°ÜµÄÔ­ÒòÖµ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : TAF_STD_ConvertAsciiCodeToBcd
+ åŠŸèƒ½æè¿°  : å°†Asciiç å­—ç¬¦è½¬æ¢æˆBCDç å­—ç¬¦
+ è¾“å…¥å‚æ•°  : ucAsciiCode  - ASCIIå­—ç¬¦
+ è¾“å‡ºå‚æ•°  : pucBcdCode   - è½¬æ¢å¾—åˆ°çš„BCDç 
+ è¿” å›ž å€¼  : VOS_UINT32:å‡½æ•°è¿”å›žçš„ç»“æžœ,æˆåŠŸä»¥åŠå¤±è´¥çš„åŽŸå› å€¼
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê9ÔÂ20ÈÕ
-    ×÷    Õß   : ¸µÓ³¾ý 62575
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´9æœˆ20æ—¥
+    ä½œ    è€…   : å‚…æ˜ å› 62575
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32  TAF_STD_ConvertAsciiCodeToBcd(
     VOS_CHAR                            cAsciiCode,
@@ -593,20 +593,20 @@ VOS_UINT32  TAF_STD_ConvertAsciiCodeToBcd(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : TAF_STD_ConvertDeciDigitToBcd
- ¹¦ÄÜÃèÊö  : ½«Ê®½øÖÆÊý×Ö×ª»»³ÉBCDÂë
- ÊäÈë²ÎÊý  : ucDeciDigit Ê®½øÖÆÊý×Ö
-             bReverseOrder TAF_TRUE·´Ðò×ª»»,¼´BCDÂëµÄ¸ß4BIT¶ÔÓ¦Ê®½øÖÆµÄ¸öÎ»;
-                           TAF_FALSEË³Ðò×ª»»£¬¼´BCDÂëµÄ¸ß4BIT¶ÔÓ¦Ê®½øÖÆµÄÊ®Î»;
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : Ê®½øÖÆÊý×Ö×ª»»µÃµ½µÄBCDÂë
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : TAF_STD_ConvertDeciDigitToBcd
+ åŠŸèƒ½æè¿°  : å°†åè¿›åˆ¶æ•°å­—è½¬æ¢æˆBCDç 
+ è¾“å…¥å‚æ•°  : ucDeciDigit åè¿›åˆ¶æ•°å­—
+             bReverseOrder TAF_TRUEååºè½¬æ¢,å³BCDç çš„é«˜4BITå¯¹åº”åè¿›åˆ¶çš„ä¸ªä½;
+                           TAF_FALSEé¡ºåºè½¬æ¢ï¼Œå³BCDç çš„é«˜4BITå¯¹åº”åè¿›åˆ¶çš„åä½;
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : åè¿›åˆ¶æ•°å­—è½¬æ¢å¾—åˆ°çš„BCDç 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê1ÔÂ15ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´1æœˆ15æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT8 TAF_STD_ConvertDeciDigitToBcd(
@@ -618,16 +618,16 @@ VOS_UINT8 TAF_STD_ConvertDeciDigitToBcd(
 
     if (VOS_TRUE == bReverseOrder)
     {
-        /*µÍ4BIT´æ´¢Ê®½øÖÆÊýµÄ¸ßÎ»*/
+        /*ä½Ž4BITå­˜å‚¨åè¿›åˆ¶æ•°çš„é«˜ä½*/
         ucBcd  = ucDeciDigit / 10;
-        /*¸ß4BIT´æ´¢Ê®½øÖÆÊýµÄµÍÎ»*/
+        /*é«˜4BITå­˜å‚¨åè¿›åˆ¶æ•°çš„ä½Žä½*/
         ucBcd |= (ucDeciDigit % 10) << 4;
     }
     else
     {
-        /*µÍ4BIT´æ´¢Ê®½øÖÆÊýµÄµØÎ»*/
+        /*ä½Ž4BITå­˜å‚¨åè¿›åˆ¶æ•°çš„åœ°ä½*/
         ucBcd  = ucDeciDigit % 10;
-        /*¸ß4BIT´æ´¢Ê®½øÖÆÊýµÄ¸ßÎ»*/
+        /*é«˜4BITå­˜å‚¨åè¿›åˆ¶æ•°çš„é«˜ä½*/
         ucBcd |= (VOS_UINT8)((ucDeciDigit / 10) << 4);
     }
 
@@ -635,20 +635,20 @@ VOS_UINT8 TAF_STD_ConvertDeciDigitToBcd(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : TAF_STD_ConvertBcdToDeciDigit
- ¹¦ÄÜÃèÊö  : ½«BCD±àÂëµÄÊý×Ö×ª»»³ÉÊ®½øÖÆÊý×Ö
- ÊäÈë²ÎÊý  : ucBcdDigit BCD±àÂëµÄÊý×Ö
-             bReverseOrder MN_TRUE·´Ðò×ª»»,¼´BCDÂëµÄ¸ß4BIT¶ÔÓ¦Ê®½øÖÆµÄ¸öÎ»;
-                           MN_FALSEË³Ðò×ª»»£¬¼´BCDÂëµÄ¸ß4BIT¶ÔÓ¦Ê®½øÖÆµÄÊ®Î»;
- Êä³ö²ÎÊý  : pucDigit      ×ª»»ºóµÃµ½µÄÊ®½øÖÆÊý×Ö
- ·µ »Ø Öµ  : BCDÂë×ª»»µÃµ½µÄÊ®½øÖÆÊý×Ö
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : TAF_STD_ConvertBcdToDeciDigit
+ åŠŸèƒ½æè¿°  : å°†BCDç¼–ç çš„æ•°å­—è½¬æ¢æˆåè¿›åˆ¶æ•°å­—
+ è¾“å…¥å‚æ•°  : ucBcdDigit BCDç¼–ç çš„æ•°å­—
+             bReverseOrder MN_TRUEååºè½¬æ¢,å³BCDç çš„é«˜4BITå¯¹åº”åè¿›åˆ¶çš„ä¸ªä½;
+                           MN_FALSEé¡ºåºè½¬æ¢ï¼Œå³BCDç çš„é«˜4BITå¯¹åº”åè¿›åˆ¶çš„åä½;
+ è¾“å‡ºå‚æ•°  : pucDigit      è½¬æ¢åŽå¾—åˆ°çš„åè¿›åˆ¶æ•°å­—
+ è¿” å›ž å€¼  : BCDç è½¬æ¢å¾—åˆ°çš„åè¿›åˆ¶æ•°å­—
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê1ÔÂ15ÈÕ
-    ×÷    Õß   : ¸µÓ³¾ý 62575
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´1æœˆ15æ—¥
+    ä½œ    è€…   : å‚…æ˜ å› 62575
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 TAF_STD_ConvertBcdToDeciDigit(
@@ -704,13 +704,13 @@ VOS_UINT32  TAF_STD_ConvertAsciiToDefAlpha(
 
     ulRet = MN_ERR_NO_ERROR;
     /*
-    Ä¿Ç°²Î¿¼ÆäËûÆ½Ì¨½öÖ§³Ö23038 6.2.1 GSM 7 bit Default Alphabet±íÖÐ´æÔÚµÄ×Ö·û¼¯£¬
-    ²»Ö§³ÖÀ©Õ¹±íÖÐµÄ×Ö·û£»
-    ASCII±íÓëGSM 7 bit Default Alphabet½»¼¯²¿·ÖµÄ±ê×¼ASCIIÂë¿ÉÒÔ×ª»»ÎªGSM 7 bit Default Alphabet£»
-    ¼üÅÌÄÜ¹»ÊäÈëµÄ×Ö·ûÒÑ²âÊÔÍ¨¹ý£¬ÆäËûÎ´²âÊÔ£»
-    ASCII±íÖÐÆäËû×Ö·û£¬Èç{£¬Ôò¼ÇÂ¼Îª00£¬»Ø¶Á³öÀ´ÊÇ@£¬ÆäËûÔòÊ§°Ü£»
-    ¼üÅÌÄÜ¹»ÊäÈëµÄ×Ö·ûÒÑ²âÊÔÍ¨¹ý£¬ÆäËûÎ´²âÊÔ£»
-    ÐèÒª²Î¿¼ÆäËûÆ½Ì¨µÄ´¦Àí£»
+    ç›®å‰å‚è€ƒå…¶ä»–å¹³å°ä»…æ”¯æŒ23038 6.2.1 GSM 7 bit Default Alphabetè¡¨ä¸­å­˜åœ¨çš„å­—ç¬¦é›†ï¼Œ
+    ä¸æ”¯æŒæ‰©å±•è¡¨ä¸­çš„å­—ç¬¦ï¼›
+    ASCIIè¡¨ä¸ŽGSM 7 bit Default Alphabetäº¤é›†éƒ¨åˆ†çš„æ ‡å‡†ASCIIç å¯ä»¥è½¬æ¢ä¸ºGSM 7 bit Default Alphabetï¼›
+    é”®ç›˜èƒ½å¤Ÿè¾“å…¥çš„å­—ç¬¦å·²æµ‹è¯•é€šè¿‡ï¼Œå…¶ä»–æœªæµ‹è¯•ï¼›
+    ASCIIè¡¨ä¸­å…¶ä»–å­—ç¬¦ï¼Œå¦‚{ï¼Œåˆ™è®°å½•ä¸º00ï¼Œå›žè¯»å‡ºæ¥æ˜¯@ï¼Œå…¶ä»–åˆ™å¤±è´¥ï¼›
+    é”®ç›˜èƒ½å¤Ÿè¾“å…¥çš„å­—ç¬¦å·²æµ‹è¯•é€šè¿‡ï¼Œå…¶ä»–æœªæµ‹è¯•ï¼›
+    éœ€è¦å‚è€ƒå…¶ä»–å¹³å°çš„å¤„ç†ï¼›
     */
     for (ulLoop2 = 0; ulLoop2 < ulLen; ulLoop2++)
     {
@@ -756,12 +756,12 @@ VOS_UINT32  TAF_STD_ConvertDefAlphaToAscii(
     }
 
     /*
-    Ä¿Ç°²Î¿¼ÆäËûÆ½Ì¨½öÖ§³Ö23038 6.2.1 GSM 7 bit Default Alphabet±íÖÐ´æÔÚµÄ×Ö·û¼¯£¬
-    ²»Ö§³ÖÀ©Õ¹±íÖÐµÄ×Ö·û£»
-    ÓëASCII±í½»¼¯²¿·ÖµÄGSM 7 bit Default Alphabet¿ÉÒÔ×ª»»Îª±ê×¼ASCIIÂë¹©ÏÔÊ¾ÓÃ£»
-    À©Õ¹×Ö·û±ê¼Ç×ª»»Îª0XFE£¬²»Í¬Éè±¸ÉÏ¶ÔÆäÓÐË½ÓÐ½âÊÍ£»
-    ÆäËû·Ç±ê×¼×Ö·û×ª»»Îª0XFF£¬²»Í¬Éè±¸ÉÏ¶ÔÆäÓÐË½ÓÐ½âÊÍ£»
-    ÐèÒª²Î¿¼ÆäËûÆ½Ì¨µÄ´¦Àí£»
+    ç›®å‰å‚è€ƒå…¶ä»–å¹³å°ä»…æ”¯æŒ23038 6.2.1 GSM 7 bit Default Alphabetè¡¨ä¸­å­˜åœ¨çš„å­—ç¬¦é›†ï¼Œ
+    ä¸æ”¯æŒæ‰©å±•è¡¨ä¸­çš„å­—ç¬¦ï¼›
+    ä¸ŽASCIIè¡¨äº¤é›†éƒ¨åˆ†çš„GSM 7 bit Default Alphabetå¯ä»¥è½¬æ¢ä¸ºæ ‡å‡†ASCIIç ä¾›æ˜¾ç¤ºç”¨ï¼›
+    æ‰©å±•å­—ç¬¦æ ‡è®°è½¬æ¢ä¸º0XFEï¼Œä¸åŒè®¾å¤‡ä¸Šå¯¹å…¶æœ‰ç§æœ‰è§£é‡Šï¼›
+    å…¶ä»–éžæ ‡å‡†å­—ç¬¦è½¬æ¢ä¸º0XFFï¼Œä¸åŒè®¾å¤‡ä¸Šå¯¹å…¶æœ‰ç§æœ‰è§£é‡Šï¼›
+    éœ€è¦å‚è€ƒå…¶ä»–å¹³å°çš„å¤„ç†ï¼›
     */
     ulRet = MN_ERR_NO_ERROR;
     for (ulLoop = 0; ulLoop < ulDefAlphaLen; ulLoop++)
@@ -770,7 +770,7 @@ VOS_UINT32  TAF_STD_ConvertDefAlphaToAscii(
         *pucAsciiChar   = f_aucMsgAsciiSfxDefAlpha[ucPos];
         if (TAF_STD_NOSTANDARD_ASCII_CODE == (*pucAsciiChar))
         {
-            /* ¶Ô±È±ê¸Ë,¶ÔÎÞ·¨ÏÔÊ¾µÄ×Ö·ûÊ¹ÓÃ¿Õ¸ñÌæ»» */
+            /* å¯¹æ¯”æ ‡æ†,å¯¹æ— æ³•æ˜¾ç¤ºçš„å­—ç¬¦ä½¿ç”¨ç©ºæ ¼æ›¿æ¢ */
             (*pucAsciiChar) = ' ';
             pucAsciiChar++;
             ulValidLen++;

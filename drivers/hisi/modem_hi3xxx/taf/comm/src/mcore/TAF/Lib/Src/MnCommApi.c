@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "MnCommApi.h"
 #include "AtMnInterface.h"
@@ -15,12 +15,12 @@ extern "C" {
 #define    THIS_FILE_ID        PS_FILE_ID_MN_COMM_API_C
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
 extern VOS_UINT32 AT_GetDestPid(
@@ -124,10 +124,10 @@ VOS_UINT32  MN_FillAndSndAppReqMsg(
 
     pMsgPara = (VOS_UINT8 *)pPara;
 
-    /* »ñÈ¡ÏûÏ¢³¤¶È */
+    /* èŽ·å–æ¶ˆæ¯é•¿åº¦ */
     MN_GetAppReqMsgLen( ulParaLen, &ulMsgLen);
 
-    /* ÉêÇëÏûÏ¢ */
+    /* ç”³è¯·æ¶ˆæ¯ */
     pMsg = (VOS_UINT8 *)PS_ALLOC_MSG(WUEPS_PID_AT, ulMsgLen - VOS_MSG_HEAD_LENGTH);
 
     if (VOS_NULL_PTR == pMsg)
@@ -137,10 +137,10 @@ VOS_UINT32  MN_FillAndSndAppReqMsg(
 
     PS_MEM_SET( (pMsg + VOS_MSG_HEAD_LENGTH), 0, (ulMsgLen - VOS_MSG_HEAD_LENGTH));
 
-    /* Ìî³äÏûÏ¢Í· */
+    /* å¡«å……æ¶ˆæ¯å¤´ */
     MN_FillAppReqMsgHeader((MN_APP_REQ_MSG_STRU *)pMsg, ClientId, OpId, usMsgType, ulReceiverPid );
 
-    /* Ìî³äÏûÏ¢²ÎÊý */
+    /* å¡«å……æ¶ˆæ¯å‚æ•° */
     MN_FillAppReqMsgPara( &pMsg[sizeof(MN_APP_REQ_MSG_STRU) - 4], pMsgPara, ulParaLen );
 
     ulRet = PS_SEND_MSG(WUEPS_PID_AT, pMsg);

@@ -47,7 +47,7 @@ void nv_debug(u32 type,u32 reseverd1,u32 reserved2,u32 reserved3,u32 reserved4)
 }
 
 
-/*ÏµÍ³Æô¶¯log¼ÇÂ¼½Ó¿Ú£¬±£´æµ½ NV_LOG_PATH ÖĞ£¬´óĞ¡ÏŞ¶¨ÔÚ NV_LOG_MAX_SIZE*/
+/*ç³»ç»Ÿå¯åŠ¨logè®°å½•æ¥å£ï¼Œä¿å­˜åˆ° NV_LOG_PATH ä¸­ï¼Œå¤§å°é™å®šåœ¨ NV_LOG_MAX_SIZE*/
 void nv_mntn_record(char* fmt,...)
 {
     char   buffer[256];
@@ -96,7 +96,7 @@ void nv_mntn_record(char* fmt,...)
     /*lint -restore +e737*/
     BSP_fclose(fp);
 }
-/*´´½¨flag±êÖ¾ÎÄ¼ş,Êı¾İĞ´ÈëÖ®Ç°µ÷ÓÃ*/
+/*åˆ›å»ºflagæ ‡å¿—æ–‡ä»¶,æ•°æ®å†™å…¥ä¹‹å‰è°ƒç”¨*/
 void nv_create_flag_file(const s8* path)
 {
     FILE* fp = NULL;
@@ -113,7 +113,7 @@ void nv_create_flag_file(const s8* path)
         return;
 }
 
-/*É¾³ıflag±êÖ¾ÎÄ¼ş£¬Êı¾İĞ´ÍêÖ®ºóµ÷ÓÃ*/
+/*åˆ é™¤flagæ ‡å¿—æ–‡ä»¶ï¼Œæ•°æ®å†™å®Œä¹‹åè°ƒç”¨*/
 void nv_delete_flag_file(const s8* path)
 {
     if(BSP_access((char*)path,0))
@@ -122,13 +122,13 @@ void nv_delete_flag_file(const s8* path)
         BSP_remove((char*)path);
 }
 
-/*ÅĞ¶Ï±êÖ¾ÎÄ¼şÊÇ·ñ´æÔÚ true :´æÔÚ£¬ false :²»´æÔÚ*/
+/*åˆ¤æ–­æ ‡å¿—æ–‡ä»¶æ˜¯å¦å­˜åœ¨ true :å­˜åœ¨ï¼Œ false :ä¸å­˜åœ¨*/
 bool nv_flag_file_isExist(const s8* path)
 {
     return (BSP_access((char*)path,0) == 0)?true:false;
 }
 
-/*Æô¶¯Ö®ºóÈç¹û±¸·İÇøÓëÏµÍ³·ÖÇøflagÎÄ¼ş´æÔÚ£¬ÔòĞèÒª½«Êı¾İÖØĞÂĞ´Èë¶ÔÓ¦·ÖÇøÖĞ*/
+/*å¯åŠ¨ä¹‹åå¦‚æœå¤‡ä»½åŒºä¸ç³»ç»Ÿåˆ†åŒºflagæ–‡ä»¶å­˜åœ¨ï¼Œåˆ™éœ€è¦å°†æ•°æ®é‡æ–°å†™å…¥å¯¹åº”åˆ†åŒºä¸­*/
 void nv_file_flag_check(void)
 {
     if( !BSP_access((char*)NV_BACK_FLAG_PATH,0)){
@@ -147,7 +147,7 @@ void nv_file_flag_check(void)
     }
 }
 
-/*Éı¼¶»òÒì³£Çé¿öÏÂ½«Êı¾İĞ´Èë¸÷¸ö·ÖÇø*/
+/*å‡çº§æˆ–å¼‚å¸¸æƒ…å†µä¸‹å°†æ•°æ®å†™å…¥å„ä¸ªåˆ†åŒº*/
 u32 nv_data_writeback(void)
 {
     u32 ret;
@@ -176,7 +176,7 @@ u32 nv_data_writeback(void)
     return NV_OK;
 }
 
-/*½ô¼±½«Êı¾İ´Ó¹¤³§·ÖÇø»Ö¸´*/
+/*ç´§æ€¥å°†æ•°æ®ä»å·¥å‚åˆ†åŒºæ¢å¤*/
 u32 nv_load_err_proc(void)
 {
     struct nv_global_ddr_info_stru* ddr_info = (struct nv_global_ddr_info_stru*)NV_GLOBAL_INFO_ADDR;
@@ -226,7 +226,7 @@ u32 nv_load_err_proc(void)
     {
         return ret;
     }
-    /*Èç¹û³ö³§·ÖÇø´æÔÚÊı¾İÔò½«Êı¾İ´Ó³ö³§·ÖÇø»Ö¸´*/
+    /*å¦‚æœå‡ºå‚åˆ†åŒºå­˜åœ¨æ•°æ®åˆ™å°†æ•°æ®ä»å‡ºå‚åˆ†åŒºæ¢å¤*/
     if(!nv_file_access((s8*)NV_DEFAULT_PATH,0))
     {
         ret = nv_revertEx((s8*)NV_DEFAULT_PATH);
@@ -261,29 +261,29 @@ u32 nv_load_err_proc(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : nv_get_bin_file_len
- ¹¦ÄÜÃèÊö  : ¼ÆËãnv.binÎÄ¼şµÄ´óĞ¡
- ÊäÈë²ÎÊı  : fp:´ı¼ÆËãµÄÎÄ¼ş
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎÄ¼ş´óĞ¡
+ å‡½ æ•° å  : nv_get_bin_file_len
+ åŠŸèƒ½æè¿°  : è®¡ç®—nv.binæ–‡ä»¶çš„å¤§å°
+ è¾“å…¥å‚æ•°  : fp:å¾…è®¡ç®—çš„æ–‡ä»¶
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ–‡ä»¶å¤§å°
 *****************************************************************************/
 bool nv_check_file_validity(s8 * filePath, s8 *flagPath)
 {
     u32 ret;
 
-    /*ÎÄ¼ş²»´æÔÚ*/
+    /*æ–‡ä»¶ä¸å­˜åœ¨*/
     if(nv_file_access((s8*)filePath,0))
     {
         return false;
     }
-    /*ÓĞÎ´Ğ´ÈëÍê³ÉµÄ±êÖ¾ */
+    /*æœ‰æœªå†™å…¥å®Œæˆçš„æ ‡å¿— */
     if(true == nv_flag_file_isExist((s8*)flagPath))
     {
         nv_mntn_record("%s  last time write abornormal !\n",filePath);
         return false;
     }
 
-    /*imeiºÅ¼ì²é*/
+    /*imeiå·æ£€æŸ¥*/
     ret = nv_imei_data_comp((s8*)filePath);
     if(ret)
     {
@@ -297,12 +297,12 @@ bool nv_check_file_validity(s8 * filePath, s8 *flagPath)
 
 
 
-/*ĞèÒªÖ§³ÖÕı³£Éı¼¶µÄ±¸·İ»Ö¸´Ïî»Ö¸´¼°Âã°åÉı¼¶*/
+/*éœ€è¦æ”¯æŒæ­£å¸¸å‡çº§çš„å¤‡ä»½æ¢å¤é¡¹æ¢å¤åŠè£¸æ¿å‡çº§*/
 u32 nv_upgrade_revert_proc(void)
 {
     u32 ret;
 
-    /*¼ì²é¹¤×÷ÇøÊı¾İµÄÓĞĞ§ĞÔ*/
+    /*æ£€æŸ¥å·¥ä½œåŒºæ•°æ®çš„æœ‰æ•ˆæ€§*/
     if(true == nv_check_file_validity((s8 *)NV_IMG_PATH, (s8 *)NV_IMG_FLAG_PATH))
     {
         ret = nv_revertEx((s8*)NV_IMG_PATH);
@@ -312,9 +312,9 @@ u32 nv_upgrade_revert_proc(void)
             goto revert_backup;
         }
 
-        /*´Ó¹¤×÷Çø»Ö¸´Íê³ÉÖ®ºó£¬±¸·İ¹¤×÷ÇøÊı¾İµ½±¸·İ·ÖÇø*/
+        /*ä»å·¥ä½œåŒºæ¢å¤å®Œæˆä¹‹åï¼Œå¤‡ä»½å·¥ä½œåŒºæ•°æ®åˆ°å¤‡ä»½åˆ†åŒº*/
         ret = nv_copy_img2backup();
-        if(ret)/*¿½±´Òì³£Ö±½ÓÍË³ö*/
+        if(ret)/*æ‹·è´å¼‚å¸¸ç›´æ¥é€€å‡º*/
         {
             nv_mntn_record("copy img to backup fail,ret :0x%x\n",ret);
             return ret;
@@ -323,7 +323,7 @@ u32 nv_upgrade_revert_proc(void)
     }
 
 revert_backup:
-    /*¼ì²é±¸·İÇøÊı¾İµÄÓĞĞ§ĞÔ*/
+    /*æ£€æŸ¥å¤‡ä»½åŒºæ•°æ®çš„æœ‰æ•ˆæ€§*/
     if(true == nv_check_file_validity((s8 *)NV_BACK_PATH, (s8 *)NV_BACK_FLAG_PATH))
     {
         ret = nv_revertEx((s8*)NV_BACK_PATH);
@@ -337,7 +337,7 @@ revert_backup:
     }
 
 revert_factory:
-    /*³ö³§·ÖÇøÓĞÊı¾İÖ±½Ó´Ó³ö³§·ÖÇø»Ö¸´*/
+    /*å‡ºå‚åˆ†åŒºæœ‰æ•°æ®ç›´æ¥ä»å‡ºå‚åˆ†åŒºæ¢å¤*/
     if(!nv_file_access((s8*)NV_DEFAULT_PATH,0))
     {
         ret = nv_revertEx((s8*)NV_DEFAULT_PATH);
@@ -349,17 +349,17 @@ revert_factory:
 
     }
 
-    /*ÉÕÆ¬°æ±¾ÎŞÊı¾İ»Ö¸´£¬Ö±½Ó·µ»Øok*/
+    /*çƒ§ç‰‡ç‰ˆæœ¬æ— æ•°æ®æ¢å¤ï¼Œç›´æ¥è¿”å›ok*/
     return NV_OK;
 }
 bool nv_check_update_default_right(void)
 {
-    /*²»´æÔÚ£¬ÔòÖ±½Ó·µ»Øtrue*/
+    /*ä¸å­˜åœ¨ï¼Œåˆ™ç›´æ¥è¿”å›true*/
     if(nv_file_access((s8*)NV_DEFAULT_PATH,0))
     {
         return true;
     }
-    /*´æÔÚÔÊĞíĞ´ÈëµÄÎÄ¼ş*/
+    /*å­˜åœ¨å…è®¸å†™å…¥çš„æ–‡ä»¶*/
     if(!BSP_access((char*)NV_FACTORY_RIGHT_PATH,0))
     {
         return true;
@@ -452,7 +452,7 @@ void nv_AddListNode(u32 itemid)
     {
         list_for_each(me, &g_nv_ctrl.stList)
         {
-            cur = list_entry(me,struct nv_write_list_stru,stList);/*´æÔÚÏàÍ¬µÄnv id*/
+            cur = list_entry(me,struct nv_write_list_stru,stList);/*å­˜åœ¨ç›¸åŒçš„nv id*/
             if(cur->itemid == itemid){
                 cur->count ++;
                 cur->slice = bsp_get_slice_value() - cur->slice;
@@ -657,7 +657,7 @@ u32 nv_read_from_file(FILE* fp,u8* ptr,u32* datalen, u32 type)
     }
     if((NV_CRC_CHECK_YES)&&(type != NV_FILE_DLOAD))
     {
-        len = ddr_info->file_len + NV_CRC_CODE_COUNT((ddr_info->file_len - ctrl_info.ctrl_size))*sizeof(u32) + sizeof(u32);/*×îºó¼ÓÎÄ¼şÎ²±êÊ¶·û*/
+        len = ddr_info->file_len + NV_CRC_CODE_COUNT((ddr_info->file_len - ctrl_info.ctrl_size))*sizeof(u32) + sizeof(u32);/*æœ€ååŠ æ–‡ä»¶å°¾æ ‡è¯†ç¬¦*/
     }
     else
     {
@@ -865,7 +865,7 @@ u32 nv_revert_data(s8* path,const u16* revert_data,u32 len)
         if((img_ref_info.modem_num == NV_USIMM_CARD_2)
             &&(bak_ref_info.modem_num == NV_USIMM_CARD_2))
         {
-            bak_ref_info.nv_len *= 2; /*½«Ë«¿¨Êı¾İÍ¬Ê±»Ö¸´*/
+            bak_ref_info.nv_len *= 2; /*å°†åŒå¡æ•°æ®åŒæ—¶æ¢å¤*/
         }
         /*jump to nv off*/
         nv_file_seek(fp,(s32)file_offset,SEEK_SET);
@@ -1128,7 +1128,7 @@ u32 nv_icc_send(u32 chanid,u8* pdata,u32 len)
     for(i = 0;i<NV_ICC_SEND_COUNT;i++)
     {
         ret = bsp_icc_send(core_type,chanid,pdata,len);
-        if(ICC_INVALID_NO_FIFO_SPACE == ret)/*ÏûÏ¢¶ÓÁĞÂú,Ôò50msÖ®ºóÖØĞÂ·¢ËÍ*/
+        if(ICC_INVALID_NO_FIFO_SPACE == ret)/*æ¶ˆæ¯é˜Ÿåˆ—æ»¡,åˆ™50msä¹‹åé‡æ–°å‘é€*/
         {
             nv_taskdelay(50);
             continue;
@@ -1213,7 +1213,7 @@ u32 nv_write_to_file(struct nv_ref_data_info_stru* ref_info)
         nv_spin_unlock(nvflag, IPC_SEM_NV);
 
         /*[false alarm]:Value Never Read*/
-        if((temp_prio >= g_nv_ctrl.mid_prio)||(ddr_info->flush_info.count >= NV_FLUSH_LIST_SIZE))/*ÓÅÏÈ¼¶ÒÑ¾­×ã¹»,»òÕßÊıÁ¿ÒÑ¾­×ã¹»*/
+        if((temp_prio >= g_nv_ctrl.mid_prio)||(ddr_info->flush_info.count >= NV_FLUSH_LIST_SIZE))/*ä¼˜å…ˆçº§å·²ç»è¶³å¤Ÿ,æˆ–è€…æ•°é‡å·²ç»è¶³å¤Ÿ*/
         {
             ret = nv_flushList();
             if(ret)
@@ -1241,10 +1241,10 @@ u32 nv_write_to_file(struct nv_ref_data_info_stru* ref_info)
 }
 
 /* nv_get_key_data
- * ´Ó¶ÔÓ¦·ÖÇøÖĞ¸ù¾İnv idÌáÈ¡Êı¾İ
- * path : ÎÄ¼şÂ·¾¶
+ * ä»å¯¹åº”åˆ†åŒºä¸­æ ¹æ®nv idæå–æ•°æ®
+ * path : æ–‡ä»¶è·¯å¾„
  * itemid: nv id
- * buffer: Êı¾İ»º´æ,ÊäÈë/Êä³ö
+ * buffer: æ•°æ®ç¼“å­˜,è¾“å…¥/è¾“å‡º
  * len   : buffer len
  */
 u32 nv_get_key_data(const s8* path,u32 itemid,void* buffer,u32 len)
@@ -1322,8 +1322,8 @@ out:
 }
 
 /* nv_imei_data_comp
- * Ö¸¶¨·ÖÇøÖĞµÄimeiÓë³ö³§·ÖÇøÖĞµÄÊı¾İ¶Ô±ß
- * path : Ö¸¶¨·ÖÇøÎÄ¼şÂ·¾¶
+ * æŒ‡å®šåˆ†åŒºä¸­çš„imeiä¸å‡ºå‚åˆ†åŒºä¸­çš„æ•°æ®å¯¹è¾¹
+ * path : æŒ‡å®šåˆ†åŒºæ–‡ä»¶è·¯å¾„
  */
 u32 nv_imei_data_comp(const s8* path)
 {
@@ -1335,7 +1335,7 @@ u32 nv_imei_data_comp(const s8* path)
     memset(fac_imei,0,sizeof(fac_imei));
     memset(path_imei,0,sizeof(path_imei));
 
-    /*³ö³§·ÖÇøÖĞµÄimeiºÅ»ñÈ¡Ê§°ÜµÄÇé¿öÏÂÎŞĞè±È½Ï*/
+    /*å‡ºå‚åˆ†åŒºä¸­çš„imeiå·è·å–å¤±è´¥çš„æƒ…å†µä¸‹æ— éœ€æ¯”è¾ƒ*/
     ret = nv_get_key_data((s8*)NV_DEFAULT_PATH,NV_ID_DRV_IMEI,fac_imei,sizeof(fac_imei));
     if(ret)
     {
@@ -1343,7 +1343,7 @@ u32 nv_imei_data_comp(const s8* path)
         return NV_OK;
     }
 
-    /*³ö³§·ÖÇøimeiºÅÈç¹ûÈ«0ÎªÎŞĞ§Êı¾İ£¬Ôò²»±È½Ï*/
+    /*å‡ºå‚åˆ†åŒºimeiå·å¦‚æœå…¨0ä¸ºæ— æ•ˆæ•°æ®ï¼Œåˆ™ä¸æ¯”è¾ƒ*/
     ret = (u32)memcmp(fac_imei,path_imei,sizeof(fac_imei));
     if(!ret)
     {
@@ -1352,7 +1352,7 @@ u32 nv_imei_data_comp(const s8* path)
     }
 
     ret = nv_get_key_data((s8*)path,NV_ID_DRV_IMEI,path_imei,sizeof(path_imei));
-    if(BSP_ERR_NV_MALLOC_FAIL == ret)/*·ÖÅäÄÚ´æÊ§°ÜÎŞĞè±È½Ï*/
+    if(BSP_ERR_NV_MALLOC_FAIL == ret)/*åˆ†é…å†…å­˜å¤±è´¥æ— éœ€æ¯”è¾ƒ*/
     {
         nv_printf("mem malloc failed ,no compare!\n");
         return NV_OK;
@@ -1378,11 +1378,11 @@ u32 nv_imei_data_comp(const s8* path)
     return NV_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : nv_get_bin_file_len
- ¹¦ÄÜÃèÊö  : ¼ÆËãnv.binÎÄ¼şµÄ´óĞ¡
- ÊäÈë²ÎÊı  : fp:´ı¼ÆËãµÄÎÄ¼ş
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎÄ¼ş´óĞ¡
+ å‡½ æ•° å  : nv_get_bin_file_len
+ åŠŸèƒ½æè¿°  : è®¡ç®—nv.binæ–‡ä»¶çš„å¤§å°
+ è¾“å…¥å‚æ•°  : fp:å¾…è®¡ç®—çš„æ–‡ä»¶
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ–‡ä»¶å¤§å°
 *****************************************************************************/
 u32 nv_get_bin_file_len(struct nv_ctrl_file_info_stru* ctrl_info,struct nv_file_list_info_stru* file_info,u32 * file_len)
 {
@@ -1402,11 +1402,11 @@ u32 nv_get_bin_file_len(struct nv_ctrl_file_info_stru* ctrl_info,struct nv_file_
     return NV_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : nv_get_bin_file_len
- ¹¦ÄÜÃèÊö  : ¼ÆËãnv.bin+nv.binµÄcrcĞ£ÑéÂëÎÄ¼şµÄ´óĞ¡
- ÊäÈë²ÎÊı  : fp:´ı¼ÆËãµÄÎÄ¼ş
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎÄ¼ş´óĞ¡
+ å‡½ æ•° å  : nv_get_bin_file_len
+ åŠŸèƒ½æè¿°  : è®¡ç®—nv.bin+nv.binçš„crcæ ¡éªŒç æ–‡ä»¶çš„å¤§å°
+ è¾“å…¥å‚æ•°  : fp:å¾…è®¡ç®—çš„æ–‡ä»¶
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ–‡ä»¶å¤§å°
 *****************************************************************************/
 u32 nv_get_bin_crc_file_len(struct nv_ctrl_file_info_stru* ctrl_info,struct nv_file_list_info_stru* file_info,u32 * file_len)
 {
@@ -1419,7 +1419,7 @@ u32 nv_get_bin_crc_file_len(struct nv_ctrl_file_info_stru* ctrl_info,struct nv_f
         nv_printf("get nv.bin len error");
         return BSP_ERR_NV_ITEM_LEN_ERR;
     }
-    /*¼ÆËãĞèÒªÉú³ÉµÄĞ£ÑéÂë¸öÊı*/
+    /*è®¡ç®—éœ€è¦ç”Ÿæˆçš„æ ¡éªŒç ä¸ªæ•°*/
     if(NV_CRC_CHECK_YES)
     {
         count = NV_CRC_CODE_COUNT(*file_len - ctrl_info->ctrl_size);
@@ -1432,7 +1432,7 @@ u32 nv_get_bin_crc_file_len(struct nv_ctrl_file_info_stru* ctrl_info,struct nv_f
 
 
 
-/* ¼ÆËã×Ö·û´®µÄCRC */
+/* è®¡ç®—å­—ç¬¦ä¸²çš„CRC */
 u32 nv_cal_crc32(u8 *Packet, u32 dwLength)
 {
     u32 CRC32_TABLE[256] = {
@@ -1487,12 +1487,12 @@ u32 nv_cal_crc32(u8 *Packet, u32 dwLength)
     return CRC32;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : nv_make_nv_data_crc
- ¹¦ÄÜÃèÊö  : ¶ÔNVĞ´ÈëµÄNVÒÔ4KÎªµ¥Î»Éú³ÉCRCĞ£ÑéÂë,²¢Ğ´ÈëÄÚ´æ¶ÔÓ¦Î»ÖÃ
- ÊäÈë²ÎÊı  : offset:Ğ´ÈëÆ«ÒÆ,Ïà¶ÔÓÚctrlÎÄ¼şÍ·
-             datalen:¼ÆËãCRCÊı¾İµÄ³¤¶È
- Êä³ö²ÎÊı  : NV_OK:³É¹¦
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_make_nv_data_crc
+ åŠŸèƒ½æè¿°  : å¯¹NVå†™å…¥çš„NVä»¥4Kä¸ºå•ä½ç”ŸæˆCRCæ ¡éªŒç ,å¹¶å†™å…¥å†…å­˜å¯¹åº”ä½ç½®
+ è¾“å…¥å‚æ•°  : offset:å†™å…¥åç§»,ç›¸å¯¹äºctrlæ–‡ä»¶å¤´
+             datalen:è®¡ç®—CRCæ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : NV_OK:æˆåŠŸ
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32 nv_make_nv_data_crc(u32 offset, u32 datalen)
 {
@@ -1507,7 +1507,7 @@ u32 nv_make_nv_data_crc(u32 offset, u32 datalen)
     u32 skipCrcCount = 0;
     u32 *p_crc_code = NV_DDR_CRC_CODE_OFFSET;
 
-    if(!NV_CRC_CHECK_YES)/*ÊÇ·ñĞèÒª½øĞĞCRCĞ£Ñé*/
+    if(!NV_CRC_CHECK_YES)/*æ˜¯å¦éœ€è¦è¿›è¡ŒCRCæ ¡éªŒ*/
     {
         return NV_OK;
     }
@@ -1515,13 +1515,13 @@ u32 nv_make_nv_data_crc(u32 offset, u32 datalen)
     {
         return BSP_ERR_NV_INVALID_PARAM;
     }
-    /*ÒÔ4KÎªµ¥Î»£¬Éú³ÉCRCµÄ×ÜÁ¿*/
+    /*ä»¥4Kä¸ºå•ä½ï¼Œç”ŸæˆCRCçš„æ€»é‡*/
     crcCount = NV_CRC_CODE_COUNT((offset + datalen - ctrl_info->ctrl_size)) - (offset - ctrl_info->ctrl_size)/NV_CRC32_CHECK_SIZE;
-    /*ĞèÒªÌø¹ıµÄCRCĞ£ÑéÂëµÄ×ÜÊıÁ¿*/
+    /*éœ€è¦è·³è¿‡çš„CRCæ ¡éªŒç çš„æ€»æ•°é‡*/
     skipCrcCount = (offset - ctrl_info->ctrl_size)/NV_CRC32_CHECK_SIZE;
-    /*µÚÒ»¸öCRCµÄ4KÊı¾İµÄÆ«ÒÆ*/
+    /*ç¬¬ä¸€ä¸ªCRCçš„4Kæ•°æ®çš„åç§»*/
     FileCrcOffset = offset - (offset - ctrl_info->ctrl_size)%NV_CRC32_CHECK_SIZE;
-    /*ÒÔ4KÎªµ¥Î»¶ÔÊı¾İ½øĞĞCRCĞ£Ñé*/
+    /*ä»¥4Kä¸ºå•ä½å¯¹æ•°æ®è¿›è¡ŒCRCæ ¡éªŒ*/
     for(index = 0; index < crcCount; index++)
     {
         crcSize = (ddr_info->file_len - FileCrcOffset > NV_CRC32_CHECK_SIZE)?NV_CRC32_CHECK_SIZE:(ddr_info->file_len - FileCrcOffset);
@@ -1535,11 +1535,11 @@ u32 nv_make_nv_data_crc(u32 offset, u32 datalen)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : nv_make_ddr_crc
- ¹¦ÄÜÃèÊö  : ¶ÔNVÊı¾İnv.binÉú³ÉCRCĞ£ÑéÂë
- ÊäÈë²ÎÊı  : path ÎÄ¼şÂ·¾¶
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_make_ddr_crc
+ åŠŸèƒ½æè¿°  : å¯¹NVæ•°æ®nv.binç”ŸæˆCRCæ ¡éªŒç 
+ è¾“å…¥å‚æ•°  : path æ–‡ä»¶è·¯å¾„
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32 nv_make_ddr_crc(void)
 {
@@ -1555,9 +1555,9 @@ u32 nv_make_ddr_crc(void)
     }
     file_len = ddr_info->file_len;
 
-    /*¼ÆËãĞèÒªÉú³ÉµÄĞ£ÑéÂë¸öÊı*/
+    /*è®¡ç®—éœ€è¦ç”Ÿæˆçš„æ ¡éªŒç ä¸ªæ•°*/
     count = NV_CRC_CODE_COUNT((file_len - ctrl_info->ctrl_size));
-    /*Ê£ÓàÄÚ´æ¿Õ¼ä²»×ãÒÔ±£´æCRCĞ£ÑéÂë*/
+    /*å‰©ä½™å†…å­˜ç©ºé—´ä¸è¶³ä»¥ä¿å­˜CRCæ ¡éªŒç */
     if(count*sizeof(u32) > NV_MAX_FILE_SIZE - file_len - sizeof(u32))
     {
         nv_debug(NV_CRC32_MAKE_DDR, 0, BSP_ERR_NV_DDR_NOT_ENOUGH_ERR, count, file_len);
@@ -1578,14 +1578,14 @@ u32 nv_make_ddr_crc(void)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : nv_check_part_ddr_crc
- ¹¦ÄÜÃèÊö  : ¶ÔÒ»¶¨³¤¶ÈµÄNVÊı¾İ½øĞĞCRCĞ£Ñé
- ÊäÈë²ÎÊı  : pData:Êı¾İÖ¸Õë
-             old_crc:Ô­À´µÄCRCĞ£ÑéÂë
-             size:ĞèÒªĞ£ÑéµÄ´óĞ¡
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : BSP_ERR_NV_CRC_CODE_ERR Ğ£Ñé´íÎó
-             NV_OK:Ğ£Ñé³É¹¦
+ å‡½ æ•° å  : nv_check_part_ddr_crc
+ åŠŸèƒ½æè¿°  : å¯¹ä¸€å®šé•¿åº¦çš„NVæ•°æ®è¿›è¡ŒCRCæ ¡éªŒ
+ è¾“å…¥å‚æ•°  : pData:æ•°æ®æŒ‡é’ˆ
+             old_crc:åŸæ¥çš„CRCæ ¡éªŒç 
+             size:éœ€è¦æ ¡éªŒçš„å¤§å°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : BSP_ERR_NV_CRC_CODE_ERR æ ¡éªŒé”™è¯¯
+             NV_OK:æ ¡éªŒæˆåŠŸ
 *****************************************************************************/
 u32 nv_check_part_ddr_crc(u8 *pData, u32 old_crc, u32 size)
 {
@@ -1609,12 +1609,12 @@ u32 nv_check_part_ddr_crc(u8 *pData, u32 old_crc, u32 size)
     }
 }
 /*****************************************************************************
- º¯ Êı Ãû  : nv_check_nv_data_crc
- ¹¦ÄÜÃèÊö  : ¶ÔÆ«ÒÆÎªoffset£¬³¤¶ÈÎªdatalenµÄÊı¾İ°´ÕÕ4kÎªµ¥Î»£¬½øĞĞCRCĞ£Ñé
- ÊäÈë²ÎÊı  : offset:ÒªĞ´ÈëµÄÊı¾İµÄÆ«ÒÆ£¬Ïà¶ÔÓÚ¿ØÖÆÎÄ¼şÍ·
-             datalen:´ıĞ£ÑéµÄÊı¾İ³¤¶È
- Êä³ö²ÎÊı  : NV_OK:Ğ£ÑéÍ¨¹ı
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_check_nv_data_crc
+ åŠŸèƒ½æè¿°  : å¯¹åç§»ä¸ºoffsetï¼Œé•¿åº¦ä¸ºdatalençš„æ•°æ®æŒ‰ç…§4kä¸ºå•ä½ï¼Œè¿›è¡ŒCRCæ ¡éªŒ
+ è¾“å…¥å‚æ•°  : offset:è¦å†™å…¥çš„æ•°æ®çš„åç§»ï¼Œç›¸å¯¹äºæ§åˆ¶æ–‡ä»¶å¤´
+             datalen:å¾…æ ¡éªŒçš„æ•°æ®é•¿åº¦
+ è¾“å‡ºå‚æ•°  : NV_OK:æ ¡éªŒé€šè¿‡
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32 nv_check_nv_data_crc(u32 offset, u32 datalen)
 {
@@ -1630,7 +1630,7 @@ u32 nv_check_nv_data_crc(u32 offset, u32 datalen)
     u32 skipCrcCount = 0;
     u32 *p_crc_code = NV_DDR_CRC_CODE_OFFSET;
 
-    if(!NV_CRC_CHECK_YES)/*ÊÇ·ñĞèÒª½øĞĞCRCĞ£Ñé*/
+    if(!NV_CRC_CHECK_YES)/*æ˜¯å¦éœ€è¦è¿›è¡ŒCRCæ ¡éªŒ*/
     {
         return NV_OK;
     }
@@ -1638,13 +1638,13 @@ u32 nv_check_nv_data_crc(u32 offset, u32 datalen)
     {
         return BSP_ERR_NV_INVALID_PARAM;
     }
-    /*ÒÔ4KÎªµ¥Î»£¬Éú³ÉCRCµÄ×ÜÁ¿*/
+    /*ä»¥4Kä¸ºå•ä½ï¼Œç”ŸæˆCRCçš„æ€»é‡*/
     crcCount = NV_CRC_CODE_COUNT((offset + datalen- ctrl_info->ctrl_size)) - (offset- ctrl_info->ctrl_size)/NV_CRC32_CHECK_SIZE;
-    /*ĞèÒªÌø¹ıµÄCRCĞ£ÑéÂëµÄ×ÜÊıÁ¿*/
+    /*éœ€è¦è·³è¿‡çš„CRCæ ¡éªŒç çš„æ€»æ•°é‡*/
     skipCrcCount = (offset - ctrl_info->ctrl_size)/NV_CRC32_CHECK_SIZE;
-    /*µÚÒ»¸öCRCµÄ4KÊı¾İµÄÆ«ÒÆ*/
+    /*ç¬¬ä¸€ä¸ªCRCçš„4Kæ•°æ®çš„åç§»*/
     FileCrcOffset = offset - (offset - ctrl_info->ctrl_size)%NV_CRC32_CHECK_SIZE;
-    /*ÒÔ4KÎªµ¥Î»¶ÔÊı¾İ½øĞĞCRCĞ£Ñé*/
+    /*ä»¥4Kä¸ºå•ä½å¯¹æ•°æ®è¿›è¡ŒCRCæ ¡éªŒ*/
     for(index = 0;index < crcCount; index++)
     {
         crc_size = (ddr_info->file_len - FileCrcOffset > NV_CRC32_CHECK_SIZE)?NV_CRC32_CHECK_SIZE:(ddr_info->file_len - FileCrcOffset);
@@ -1662,11 +1662,11 @@ u32 nv_check_nv_data_crc(u32 offset, u32 datalen)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : nv_crc_make_crc
- ¹¦ÄÜÃèÊö  : ¶ÔNVÊı¾İnv.binÉú³ÉCRCĞ£ÑéÂë
- ÊäÈë²ÎÊı  : path ÎÄ¼şÂ·¾¶
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_crc_make_crc
+ åŠŸèƒ½æè¿°  : å¯¹NVæ•°æ®nv.binç”ŸæˆCRCæ ¡éªŒç 
+ è¾“å…¥å‚æ•°  : path æ–‡ä»¶è·¯å¾„
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32 nv_check_ddr_crc(void)
 {
@@ -1702,11 +1702,11 @@ u32 nv_check_ddr_crc(void)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : nv_dload_file_crc_check
- ¹¦ÄÜÃèÊö  : ¶ÔÉı¼¶°ü½øĞĞCRCĞ£Ñé
- ÊäÈë²ÎÊı  : fpÎÄ¼şÖ¸Õë
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_dload_file_crc_check
+ åŠŸèƒ½æè¿°  : å¯¹å‡çº§åŒ…è¿›è¡ŒCRCæ ¡éªŒ
+ è¾“å…¥å‚æ•°  : fpæ–‡ä»¶æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32 nv_dload_file_crc_check(FILE *fp)
 {
@@ -1727,7 +1727,7 @@ u32 nv_dload_file_crc_check(FILE *fp)
 
     headLen = 0;
 
-    /*ÕâÀïÒª¼ì²éÉı¼¶°üÖĞÊÇ·ñĞèÒª½øĞĞCRCĞ£Ñé???*/
+    /*è¿™é‡Œè¦æ£€æŸ¥å‡çº§åŒ…ä¸­æ˜¯å¦éœ€è¦è¿›è¡ŒCRCæ ¡éªŒ???*/
     (void)nv_file_seek(fp, headLen, SEEK_SET);
 
     ret = nv_file_read((u8 *)&ctrl_info, 1, sizeof(struct nv_ctrl_file_info_stru), fp);
@@ -1741,9 +1741,9 @@ u32 nv_dload_file_crc_check(FILE *fp)
     {
         return NV_OK;
     }
-    /*»ñÈ¡Éı¼¶°üµÄ´óĞ¡*/
+    /*è·å–å‡çº§åŒ…çš„å¤§å°*/
     file_len = nv_get_file_len(fp) - sizeof(u32);
-    /*Ã¿4KÊı¾İÒ»¸öcrcĞ£ÑéÂë*/
+    /*æ¯4Kæ•°æ®ä¸€ä¸ªcrcæ ¡éªŒç */
     crcCodeNum = NV_CRC_CODE_COUNT((file_len));
 
     pCheckData = (u8 *)nv_malloc(NV_CRC32_CHECK_SIZE);
@@ -1797,11 +1797,11 @@ out:
     return ret;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : nv_resume_ddr_from_img
- ¹¦ÄÜÃèÊö  : ´Ó¹¤×÷»òÕß±¸·İ·ÖÇø³ö³§·ÖÇø»Ö¸´NVÊı¾İ
- ÊäÈë²ÎÊı  : void
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_resume_ddr_from_img
+ åŠŸèƒ½æè¿°  : ä»å·¥ä½œæˆ–è€…å¤‡ä»½åˆ†åŒºå‡ºå‚åˆ†åŒºæ¢å¤NVæ•°æ®
+ è¾“å…¥å‚æ•°  : void
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32 nv_resume_ddr_from_img(void)
 {
@@ -1819,7 +1819,7 @@ u32 nv_resume_ddr_from_img(void)
     ddr_info->acore_init_state = NV_KERNEL_INIT_DOING;
     nv_spin_unlock(nvflag, IPC_SEM_NV);
 
-    /*¹¤×÷·ÖÇøÊı¾İ´æÔÚ£¬ÇÒÎŞÎ´Ğ´ÈëÍê³ÉµÄ±êÖ¾ÎÄ¼ş*/
+    /*å·¥ä½œåˆ†åŒºæ•°æ®å­˜åœ¨ï¼Œä¸”æ— æœªå†™å…¥å®Œæˆçš„æ ‡å¿—æ–‡ä»¶*/
     if( true == nv_check_file_validity((s8 *)NV_IMG_PATH, (s8 *)NV_IMG_FLAG_PATH))
     {
         nv_mntn_record("load from %s ...%s %s \n",NV_IMG_PATH,__DATE__,__TIME__);
@@ -1886,7 +1886,7 @@ load_bak:
             nv_debug(NV_CRC32_DDR_RESUME_IMG,9,ret,0,0);
             goto load_err_proc;
         }
-        /*´Ó±¸·İÇø¼ÓÔØĞèÒªÊ×ÏÈĞ´Èë¹¤×÷Çø*/
+        /*ä»å¤‡ä»½åŒºåŠ è½½éœ€è¦é¦–å…ˆå†™å…¥å·¥ä½œåŒº*/
         ret = bsp_nvm_flushEn();
         if(ret)
         {
@@ -1914,11 +1914,11 @@ load_err_proc:
     return NV_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : nv_set_crc_offset
- ¹¦ÄÜÃèÊö  : ÉèÖÃcrcµÄÆ«ÒÆ
- ÊäÈë²ÎÊı  : void
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_set_crc_offset
+ åŠŸèƒ½æè¿°  : è®¾ç½®crcçš„åç§»
+ è¾“å…¥å‚æ•°  : void
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32 nv_set_crc_offset(void)
 {
@@ -1946,11 +1946,11 @@ u32 nv_set_crc_offset(void)
     return NV_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : nv_flushList
- ¹¦ÄÜÃèÊö  : ³õÊ¼»¯¹Ø»úĞ´µÄÁ´±í
- ÊäÈë²ÎÊı  : void
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_flushList
+ åŠŸèƒ½æè¿°  : åˆå§‹åŒ–å…³æœºå†™çš„é“¾è¡¨
+ è¾“å…¥å‚æ•°  : void
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 void nv_flushListInit(void)
 {
@@ -1960,11 +1960,11 @@ void nv_flushListInit(void)
     return;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : nv_pushNvFlushList
- ¹¦ÄÜÃèÊö  : Ìí¼Ónvµ½Á´±íÖĞ 
- ÊäÈë²ÎÊı  : void
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_pushNvFlushList
+ åŠŸèƒ½æè¿°  : æ·»åŠ nvåˆ°é“¾è¡¨ä¸­ 
+ è¾“å…¥å‚æ•°  : void
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32  nv_pushNvFlushList(struct nv_ref_data_info_stru* ref_info)
 {
@@ -2005,11 +2005,11 @@ u32  nv_pushNvFlushList(struct nv_ref_data_info_stru* ref_info)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : nv_flushList
- ¹¦ÄÜÃèÊö  : ³õÊ¼»¯¹Ø»úĞ´µÄÁ´±í
- ÊäÈë²ÎÊı  : void
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_flushList
+ åŠŸèƒ½æè¿°  : åˆå§‹åŒ–å…³æœºå†™çš„é“¾è¡¨
+ è¾“å…¥å‚æ•°  : void
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 void nv_flushListMgr(struct nv_flush_list_stru * flush_info, struct nv_crc_flush_info_stru *CrcOffset)
 {
@@ -2059,18 +2059,18 @@ void nv_flushListMgr(struct nv_flush_list_stru * flush_info, struct nv_crc_flush
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : nv_flushList
- ¹¦ÄÜÃèÊö  : ½«ÄÚ´æÖĞµÄÊı¾İĞ´Èëµ½flashÖĞ
- ÊäÈë²ÎÊı  : void
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
+ å‡½ æ•° å  : nv_flushList
+ åŠŸèƒ½æè¿°  : å°†å†…å­˜ä¸­çš„æ•°æ®å†™å…¥åˆ°flashä¸­
+ è¾“å…¥å‚æ•°  : void
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
 *****************************************************************************/
 u32 nv_flushList(void)
 {
     struct nv_global_ddr_info_stru* shared_ddr_info = (struct nv_global_ddr_info_stru*)NV_GLOBAL_INFO_ADDR;
     struct nv_ctrl_file_info_stru* ctrl_info = (struct nv_ctrl_file_info_stru*)NV_GLOBAL_CTRL_INFO_ADDR;
     struct nv_flush_list_stru  flush_info = {};
-    struct nv_crc_flush_info_stru *pCrcOffset = NULL;/*´æ·ÅĞèÒªĞ´ÈëÎÄ¼şµÄ4KÊı¾İ¿éµÄÆ«ÒÆ*/
+    struct nv_crc_flush_info_stru *pCrcOffset = NULL;/*å­˜æ”¾éœ€è¦å†™å…¥æ–‡ä»¶çš„4Kæ•°æ®å—çš„åç§»*/
     unsigned long nvflag = 0;
     u32 ret = 0;
     u32 i = 0;
@@ -2194,7 +2194,7 @@ void show_ref_info(u32 arg1,u32 arg2)
 
     for(i = _min;i<_max;i++)
     {
-        printf("µÚ%dÏî :\n",i);
+        printf("ç¬¬%dé¡¹ :\n",i);
         printf("nvid   :0x%-8x, file id : 0x%-8x\n",ref_info->itemid,ref_info->file_id);
         printf("nvlen  :0x%-8x, nv_off  : 0x%-8x, nv_pri 0x%-8x\n",ref_info->nv_len,ref_info->nv_off,ref_info->priority);
         printf("dsda   :0x%-8x\n",ref_info->modem_num);
@@ -2220,7 +2220,7 @@ void nv_show_listInfo(void)
     list_for_each(me,&g_nv_ctrl.stList)
     {
         cur = list_entry(me, struct nv_write_list_stru, stList);
-        printf("NV ID :0x%4x Ğ´Èë %d ´Î£¬×î½üĞ´Èë¼ä¸ô:0x%x\n",cur->itemid,cur->count,cur->slice);
+        printf("NV ID :0x%4x å†™å…¥ %d æ¬¡ï¼Œæœ€è¿‘å†™å…¥é—´éš”:0x%x\n",cur->itemid,cur->count,cur->slice);
     }
 }
 

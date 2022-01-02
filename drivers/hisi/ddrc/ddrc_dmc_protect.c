@@ -117,7 +117,7 @@ void platform_ddr_protect_18M(int portnum, int flag)
         sec_map_region1_reg->reg.rgn_size = 0x17;/*16M*/
         sec_map_region1_reg->reg.rgn_en =0x1;
         /*region2,addr start*/
-        sec_map_region2_reg->reg.rgn_base_addr= 0x100; /*¸ßÎ»µØÖ·*/
+        sec_map_region2_reg->reg.rgn_base_addr= 0x100; /*é«˜ä½åœ°å€*/
         /*region2,addr end*/
         sec_map_region2_reg->reg.rgn_size =0x0;
         sec_rgn_region2_reg->reg.subrgn_disable =0x0;
@@ -125,7 +125,7 @@ void platform_ddr_protect_18M(int portnum, int flag)
 
         sec_map_region2_reg->reg.rgn_size = 0x14;/*2M*/
         sec_map_region2_reg->reg.rgn_en =0x1;
-        //*(volatile unsigned int*)(base_addr + 0x004 + 0x400*portnum)  &= (~0x1);    /*°²È«¹¦ÄÜÊ¹ÄÜ*/
+        //*(volatile unsigned int*)(base_addr + 0x004 + 0x400*portnum)  &= (~0x1);    /*å®‰å…¨åŠŸèƒ½ä½¿èƒ½*/
     }
     else/*stop ddr protect*/
     {
@@ -134,12 +134,12 @@ void platform_ddr_protect_18M(int portnum, int flag)
         sec_rgn_region1_reg->reg.subrgn_disable =0x0;
         sec_rgn_region1_reg->reg.sp=0x0;
 
-        sec_map_region2_reg->reg.rgn_base_addr= 0x0;; /*¸ßÎ»µØÖ·ÉèÎª0*/
+        sec_map_region2_reg->reg.rgn_base_addr= 0x0;; /*é«˜ä½åœ°å€è®¾ä¸º0*/
         sec_map_region2_reg->reg.rgn_size =0x0;
         sec_map_region2_reg->reg.rgn_en =0x0;
         sec_rgn_region2_reg->reg.subrgn_disable =0x0;
         sec_rgn_region2_reg->reg.sp=0x0;
-        //*(volatile unsigned int*)(base_addr + 0x004 + 0x400*portnum)  |= 0x1;    /*°²È«¹¦ÄÜbypass*/
+        //*(volatile unsigned int*)(base_addr + 0x004 + 0x400*portnum)  |= 0x1;    /*å®‰å…¨åŠŸèƒ½bypass*/
     }
     }
     DDRC_SEC_UNLOCK(flags);
@@ -149,7 +149,7 @@ void platform_ddr_protect_18M(int portnum, int flag)
 int platform_ddr_protect_init(int flag)
 {
     int port = 1;
-    int end_port = 4;   /*v8 ÓĞ5¸ö¶Ë¿Ú£¬¶Ë¿Ú0¸øccpu£¬ÊÇ·ñ¿ÉÒÔÊ¹ÓÃDTS*/
+    int end_port = 4;   /*v8 æœ‰5ä¸ªç«¯å£ï¼Œç«¯å£0ç»™ccpuï¼Œæ˜¯å¦å¯ä»¥ä½¿ç”¨DTS*/
 
     pr_info("platform_ddr_protect_18M_init %d\n",flag);
     while (port <= end_port) {
@@ -162,14 +162,14 @@ int platform_ddr_protect_init(int flag)
 
 int ddr_protect_init(void)
 {
-    ddrc_dmc0_protect_base_virt = ioremap(SOC_MDDRC_DMC_BASE_ADDR, PAGE_ALIGN(SZ_4K)); //y_todo:ÊÇ·ñ¿ÉÒÔÊ¹ÓÃDTS
+    ddrc_dmc0_protect_base_virt = ioremap(SOC_MDDRC_DMC_BASE_ADDR, PAGE_ALIGN(SZ_4K)); //y_todo:æ˜¯å¦å¯ä»¥ä½¿ç”¨DTS
 
     if (0 == ddrc_dmc0_protect_base_virt) {
         pr_err("%s: ioremap failed\n",__func__);
         return -1;
     }
 
-    ddrc_sec0_base_virt = ioremap(SOC_MDDRC_SECURITY_BASE_ADDR, PAGE_ALIGN(SZ_1K * 5));  //y_todo: ÊÇ·ñ¿ÉÒÔÊ¹ÓÃDTS
+    ddrc_sec0_base_virt = ioremap(SOC_MDDRC_SECURITY_BASE_ADDR, PAGE_ALIGN(SZ_1K * 5));  //y_todo: æ˜¯å¦å¯ä»¥ä½¿ç”¨DTS
 
     if (0 == ddrc_sec0_base_virt) {
         iounmap(ddrc_dmc0_protect_base_virt);
@@ -322,10 +322,10 @@ static irqreturn_t ddrc_events_handler(int irq, void *dev)
     }
 
     while (portnum <= end_port) {
-        if (readl(SOC_MDDRC_SECURITY_SEC_INT_STATUS_ADDR(base_addr) + 0x400*portnum)) {  /*ÖĞ¶Ï×´Ì¬ÓĞĞ§*/
-            fail_addr = readl(SOC_MDDRC_SECURITY_SEC_FAIL_CMD_INF_0_ADDR(base_addr) + 0x400*portnum); /*¼ÇÂ¼Ô½È¨µØÖ·*/
-            masterval = (readl(SOC_MDDRC_SECURITY_SEC_FAIL_CMD_INF_2_ADDR(base_addr) + 0x400*portnum))& 0xffffff; /*Ô½È¨Õß*/
-            accesstype = (readl (SOC_MDDRC_SECURITY_SEC_FAIL_CMD_INF_1_ADDR(base_addr) + 0x400*portnum));/*¶Á/Ğ´*/
+        if (readl(SOC_MDDRC_SECURITY_SEC_INT_STATUS_ADDR(base_addr) + 0x400*portnum)) {  /*ä¸­æ–­çŠ¶æ€æœ‰æ•ˆ*/
+            fail_addr = readl(SOC_MDDRC_SECURITY_SEC_FAIL_CMD_INF_0_ADDR(base_addr) + 0x400*portnum); /*è®°å½•è¶Šæƒåœ°å€*/
+            masterval = (readl(SOC_MDDRC_SECURITY_SEC_FAIL_CMD_INF_2_ADDR(base_addr) + 0x400*portnum))& 0xffffff; /*è¶Šæƒè€…*/
+            accesstype = (readl (SOC_MDDRC_SECURITY_SEC_FAIL_CMD_INF_1_ADDR(base_addr) + 0x400*portnum));/*è¯»/å†™*/
 
 			first_invader = portnum;
 			printk(KERN_ERR "ddr_protect_irq: portnum! (0x%x)\n", portnum);
@@ -345,7 +345,7 @@ static irqreturn_t ddrc_events_handler(int irq, void *dev)
                dump_err_sys_logger();
                copy_err_sys_logger(&p_ddrc_info->error_logger_info[0],REG_ERROR_LOGGER_0_IOSIZE);
             }
-            writel(0x1,SOC_MDDRC_SECURITY_SEC_INT_CLEAR_ADDR(base_addr) + 0x400*portnum); /*Çå³ıÖĞ¶ÏºÍÔ½È¨Ê§Ğ§µØÖ·*/
+            writel(0x1,SOC_MDDRC_SECURITY_SEC_INT_CLEAR_ADDR(base_addr) + 0x400*portnum); /*æ¸…é™¤ä¸­æ–­å’Œè¶Šæƒå¤±æ•ˆåœ°å€*/
        }
        portnum++;
     }

@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include <linux/module.h>
 #include <linux/debugfs.h>
@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    ¿ÉÎ¬¿É²âĞÅÏ¢ÖĞ°üº¬µÄCÎÄ¼ş±àºÅºê¶¨Òå
+    å¯ç»´å¯æµ‹ä¿¡æ¯ä¸­åŒ…å«çš„Cæ–‡ä»¶ç¼–å·å®å®šä¹‰
 *****************************************************************************/
 #undef  _MAILBOX_FILE_
 #define _MAILBOX_FILE_   "dbg"
@@ -37,7 +37,7 @@ extern "C" {
 #define MAILBOX_LOG_FILE_PATH_SIZE     (512)
 #define MAILBOX_LOG_FILE_NAME_SIZE     (40)
 #define MAILBOX_LOG_FILE_SIZE      	   (0x100000)
-#define MAILBOX_LOG_FILE_CNT           (20)/*±£´æÎÄ¼ş¸öÊı*/
+#define MAILBOX_LOG_FILE_CNT           (20)/*ä¿å­˜æ–‡ä»¶ä¸ªæ•°*/
 #define MAILBOX_LOG_NOT_DEPEND_CNT     (0)
 #define MAILBOX_LOG_DEPEND_CNT         (1)
 
@@ -54,11 +54,11 @@ struct work_mntn {
 };
 
 /*****************************************************************************
-  2 º¯ÊıÒıÓÃÉêÃ÷
+  2 å‡½æ•°å¼•ç”¨ç”³æ˜
 *****************************************************************************/
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 static unsigned int mailbox_log_work_cnt;
 static struct workqueue_struct *mailbox_log_wq;
@@ -67,7 +67,7 @@ static unsigned int mailbox_log_assert_flag = 0;
 #endif
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 #if (MAILBOX_LOG_LEVEL != MAILBOX_LOG_NONE)
 void mailbox_log_assert_set(unsigned int flag)
@@ -88,7 +88,7 @@ MAILBOX_EXTERN int mailbox_log_erro(
     unsigned int log_out = MAILBOX_FALSE;
     char * erro_str = MAILBOX_NULL;
 
-    /*1.¼ÇÂ¼×î½ü´íÎó¹ì¼£*/
+    /*1.è®°å½•æœ€è¿‘é”™è¯¯è½¨è¿¹*/
     record[mb->log_prob].erro_num = err_no;
     record[mb->log_prob].line    = line_no;
     record[mb->log_prob].param1  = param1;
@@ -97,7 +97,7 @@ MAILBOX_EXTERN int mailbox_log_erro(
     mb->log_prob = ((MAILBOX_ERRO_ARRAY_NUM - 1) == mb->log_prob) ? (0) :
                                                             (mb->log_prob + 1);
 
-    /*2.¸ù¾İ¸æ¾¯µÈ¼¶´òÓ¡¡£*/
+    /*2.æ ¹æ®å‘Šè­¦ç­‰çº§æ‰“å°ã€‚*/
 #if (MAILBOX_LOG_LEVEL >= MAILBOX_LOG_CRITICAL)
     if ((err_no > MAILBOX_CRIT_RET_START) && (err_no < MAILBOX_CRIT_RET_END)) {
         erro_str = "mb Critical!";
@@ -140,7 +140,7 @@ MAILBOX_EXTERN int mailbox_log_erro(
             erro_str, err_no,  param1,  param2, (unsigned int)line_no, file_name));/*printk set info, not error*/
     }
 
-    /*Èç¹ûÓÊÏäfifo ¿ÕÏĞ´óĞ¡µÍÓÚË®Ïß£¬ÔòÖ÷¶¯·¢Æğ¸´Î»*/
+    /*å¦‚æœé‚®ç®±fifo ç©ºé—²å¤§å°ä½äºæ°´çº¿ï¼Œåˆ™ä¸»åŠ¨å‘èµ·å¤ä½*/
     if((MAILBOX_ERR_GUT_MAILBOX_RECEIVE_FULL == err_no) &&  (1 == mailbox_log_assert_flag))
     {
         systemError(BSP_MODU_MAILBOX, EXCH_S_MAILBOX, err_no, 0, 0);
@@ -155,7 +155,7 @@ static unsigned int g_mb_trans_time_limit = MAILBOX_MAIL_TRANS_TIME_LIMIT;
 static unsigned int g_mb_deal_time_limit = MAILBOX_MAIL_DEAL_TIME_LIMIT;
 static unsigned int g_mb_sche_limit = MAILBOX_MAIL_SCHE_TIME_LIMIT;
 
-/*´ò¿ªÎÄ¼ş  µ÷ÓÃÕß²»ÄÜ·ÃÎÊ·µ»ØÖµÖµµÄ³ÉÔ±±äÁ¿*/
+/*æ‰“å¼€æ–‡ä»¶  è°ƒç”¨è€…ä¸èƒ½è®¿é—®è¿”å›å€¼å€¼çš„æˆå‘˜å˜é‡*/
 static int mailbox_log_dopen(const char *dirname)
 {
 	int fd;
@@ -183,11 +183,11 @@ static int mailbox_log_fopen( const char *filename, int flags )
         return MAILBOX_ERRO;
     }
 
-    /* ¸Ä±äÄÚ´æ·ÃÎÊÈ¨ÏŞ */
+    /* æ”¹å˜å†…å­˜è®¿é—®æƒé™ */
     fs = get_fs();
     set_fs(KERNEL_DS);
 
-    /*¶ÔÓÚV9£¬ret Êµ¼ÊÀàĞÍÎªFILE*£¬µ±Ç°´«ÊäµØÖ·*/
+    /*å¯¹äºV9ï¼Œret å®é™…ç±»å‹ä¸ºFILE*ï¼Œå½“å‰ä¼ è¾“åœ°å€*/
     fd = sys_open((const char __user *)filename, flags, S_IRWXU);
     if (fd < 0) {
         mailbox_out((KERN_ERR "mailbox_log_fopen:sys_open op 1st fail, filename:%s, fd is %x \n", \
@@ -228,13 +228,13 @@ error:
     return MAILBOX_ERRO;
 }
 
-/*¹Ø±ÕÎÄ¼ş*/
+/*å…³é—­æ–‡ä»¶*/
 static int mailbox_log_fclose(unsigned int fd)
 {
     int ret = 0;
     unsigned long fs;
 
-    /* ¸Ä±äÄÚ´æ·ÃÎÊÈ¨ÏŞ */
+    /* æ”¹å˜å†…å­˜è®¿é—®æƒé™ */
     fs = get_fs();
     set_fs(KERNEL_DS);
 
@@ -249,7 +249,7 @@ static int mailbox_log_fclose(unsigned int fd)
     return MAILBOX_OK;
 }
 
-/*Ğ´ÎÄ¼ş*/
+/*å†™æ–‡ä»¶*/
 static int mailbox_log_fwrite( void *buf, unsigned int count, unsigned int fd )
 {
     int ret = 0;
@@ -260,7 +260,7 @@ static int mailbox_log_fwrite( void *buf, unsigned int count, unsigned int fd )
         return MAILBOX_ERRO;
     }
 
-    /* ¸Ä±äÄÚ´æ·ÃÎÊÈ¨ÏŞ */
+    /* æ”¹å˜å†…å­˜è®¿é—®æƒé™ */
     fs = get_fs();
     set_fs(KERNEL_DS);
 
@@ -282,7 +282,7 @@ static int mailbox_log_fwrite( void *buf, unsigned int count, unsigned int fd )
     return MAILBOX_OK;
 }
 
-/*logÎÄ¼ş±£´æº¯Êı*/
+/*logæ–‡ä»¶ä¿å­˜å‡½æ•°*/
 static int mailbox_log_fsave(char *dir, char *file, void *data, int length)
 {
     int ret = 0;
@@ -340,7 +340,7 @@ static void mailbox_log_fprintf(char* fname, unsigned int flen, const char *fmt,
     va_list args;
 
     va_start(args, fmt);
-    vsnprintf(fname, flen-1, fmt, args);/* [false alarm]:Îó±¨ */
+    vsnprintf(fname, flen-1, fmt, args);/* [false alarm]:è¯¯æŠ¥ */
     va_end(args);
 
     fname[flen - 1] = '\0';
@@ -461,7 +461,7 @@ void mailbox_log_init(void)
     BUG_ON(!mailbox_log_wq);
 }
 
-/*¶Ô×ÜÊ±¼äºÍ×î´óµ¥´ÎÊ±¼ä½øĞĞÍ³¼Æ*/
+/*å¯¹æ€»æ—¶é—´å’Œæœ€å¤§å•æ¬¡æ—¶é—´è¿›è¡Œç»Ÿè®¡*/
 static void mailbox_statistic_slice(
                 struct mb_slice* slice,
                 unsigned int mailcode,
@@ -478,20 +478,20 @@ static void mailbox_statistic_slice(
         return;
     }*/
 
-    /*¼ÇÂ¼»Øµ÷ÀúÊ·×ÜºÄÊ±*/
+    /*è®°å½•å›è°ƒå†å²æ€»è€—æ—¶*/
     slice_end = slice->total;
     slice->total += slice_diff;
     if (slice_end > slice->total) {
-        slice->overflow = MAILBOX_TRUE; /*¼ÇÂ¼¼ÆÊ±Òç³ö£¬Êı¾İÎŞĞ§*/
+        slice->overflow = MAILBOX_TRUE; /*è®°å½•è®¡æ—¶æº¢å‡ºï¼Œæ•°æ®æ— æ•ˆ*/
     }
 
-    /*¼ÇÂ¼×î´ó»Øµ÷ºÄÊ±*/
+    /*è®°å½•æœ€å¤§å›è°ƒè€—æ—¶*/
     if (slice_diff > slice->max) {
         slice->max = slice_diff;
         slice->code = mailcode;
     }
 
-    /*¼ÇÂ¼ºÄÊ±Öµµ½×î½ü¼ÇÂ¼Àï*/
+    /*è®°å½•è€—æ—¶å€¼åˆ°æœ€è¿‘è®°å½•é‡Œ*/
     slice->rdiff[slice->rdiff_index] = slice_diff;
     slice->rdiff_index++;
     slice->rdiff_index = (MAILBOX_RECORD_RECENT_NUM == slice->rdiff_index) ? 0 : slice->rdiff_index;
@@ -507,19 +507,19 @@ static void mailbox_statistic_slice(
     }
 }
 
-/*¼ÇÂ¼ÖĞ¶ÏÏìÓ¦£¬µ÷¶È´¦ÀíÖ®Ç°µÄÊ±¼äµã(IPCÖĞ¶Ï¿ªÊ¼ÏìÓ¦µÄÊ±¿Ìµã)*/
+/*è®°å½•ä¸­æ–­å“åº”ï¼Œè°ƒåº¦å¤„ç†ä¹‹å‰çš„æ—¶é—´ç‚¹(IPCä¸­æ–­å¼€å§‹å“åº”çš„æ—¶åˆ»ç‚¹)*/
 void mailbox_record_sche_send(void *priv)
 {
     struct mb_buff *mbuf = (struct mb_buff *)priv;
     mbuf->mntn.sche.start = (unsigned long)mailbox_get_timestamp();
 }
 
-/*¼ÇÂ¼ÖĞ¶ÏÏìÓ¦ºó£¬µ÷¶È´¦ÀíµÄÊ±¼äµã£¬²¢½øĞĞÍ³¼Æ(MBÏß³ÌµÃµ½µ÷¶ÈµÄÊ±¿Ìµã)*/
+/*è®°å½•ä¸­æ–­å“åº”åï¼Œè°ƒåº¦å¤„ç†çš„æ—¶é—´ç‚¹ï¼Œå¹¶è¿›è¡Œç»Ÿè®¡(MBçº¿ç¨‹å¾—åˆ°è°ƒåº¦çš„æ—¶åˆ»ç‚¹)*/
 void mailbox_record_sche_recv(void *priv)
 {
     struct mb_buff *mbuf = (struct mb_buff *)priv;
 
-    /*¿ªÊ¼µ÷¶ÈÊ±ĞèÒª½«ÉÏÂÖÓÊÏä¼ÇÂ¼µÄ´¦ÀíÓÊ¼şĞòºÅÇå0*/
+    /*å¼€å§‹è°ƒåº¦æ—¶éœ€è¦å°†ä¸Šè½®é‚®ç®±è®°å½•çš„å¤„ç†é‚®ä»¶åºå·æ¸…0*/
     mbuf->mntn.per_sche_mail_cnt = 0;
 
     mailbox_statistic_slice(&mbuf->mntn.sche, mbuf->channel_id,
@@ -527,7 +527,7 @@ void mailbox_record_sche_recv(void *priv)
                     MAILBOX_WARNING_SCHE_TIME_OUT);
 }
 
-/*¿ÉÎ¬¿É²â: ¼ÇÂ¼Ê£Óà¿Õ¼ä×îĞ¡Öµ*/
+/*å¯ç»´å¯æµ‹: è®°å½•å‰©ä½™ç©ºé—´æœ€å°å€¼*/
 void mailbox_record_send(
                 struct mb_mntn* mntn,
                 unsigned int mailcode,
@@ -537,11 +537,11 @@ void mailbox_record_send(
     struct mb_queue *m_queue = &mntn->mbuff->mail_queue;
     unsigned int size_left = (unsigned int)mailbox_queue_left(m_queue->rear, m_queue->front, m_queue->length);
 
-    /*¿ÉÎ¬¿É²â: ¼ÇÂ¼Ê£Óà¿Õ¼ä×îĞ¡Öµ*/
+    /*å¯ç»´å¯æµ‹: è®°å½•å‰©ä½™ç©ºé—´æœ€å°å€¼*/
     if (size_left < mntn->peak_traffic_left){
         mntn->peak_traffic_left = size_left;
     }
-    /*¸üĞÂ¿ÉÎ¬¿É²âĞÅÏ¢. Ğ´Í¨µÀÖ»ÓĞ·¢ËÍÊ±¼äºÍUse ID*/
+    /*æ›´æ–°å¯ç»´å¯æµ‹ä¿¡æ¯. å†™é€šé“åªæœ‰å‘é€æ—¶é—´å’ŒUse ID*/
     mntn->track_array[mntn->track_prob].send_slice = time_stamp;
     mntn->track_array[mntn->track_prob].mail_addr  = mail_addr;
     mntn->track_array[mntn->track_prob].use_id     = mailbox_get_use_id(mailcode);
@@ -549,7 +549,7 @@ void mailbox_record_send(
                                                    (0) : (mntn->track_prob + 1);
 }
 
-/*¼ÇÂ¼·¢ËÍºËIPCÖĞ¶Ï´¥·¢µ½½ÓÊÜºËÖĞ¶ÏÏìÓ¦Ö®¼äµÄÊ±¼ä(ÓÊ¼ş¿ªÊ¼¶ÁÈ¡µÄÊ±¿Ìµã)*/
+/*è®°å½•å‘é€æ ¸IPCä¸­æ–­è§¦å‘åˆ°æ¥å—æ ¸ä¸­æ–­å“åº”ä¹‹é—´çš„æ—¶é—´(é‚®ä»¶å¼€å§‹è¯»å–çš„æ—¶åˆ»ç‚¹)*/
 void mailbox_record_transport(
                 struct mb_mntn* mntn,
                 unsigned int mailcode,
@@ -560,10 +560,10 @@ void mailbox_record_transport(
     struct mb_queue *m_queue = &mntn->mbuff->mail_queue;
     unsigned int  size_left = (unsigned int)mailbox_queue_left(m_queue->rear, m_queue->front, m_queue->length);
 
-    /*±¾ÂÖµ÷¶ÈºóÓÊÏä´¦ÀíÓÊ¼ş¸öÊı¼Ó1*/
+    /*æœ¬è½®è°ƒåº¦åé‚®ç®±å¤„ç†é‚®ä»¶ä¸ªæ•°åŠ 1*/
     mntn->per_sche_mail_cnt++;
 
-    /*¿ÉÎ¬¿É²â: ¼ÇÂ¼Ê£Óà¿Õ¼ä×îĞ¡Öµ*/
+    /*å¯ç»´å¯æµ‹: è®°å½•å‰©ä½™ç©ºé—´æœ€å°å€¼*/
     if (size_left < mntn->peak_traffic_left){
         mntn->peak_traffic_left = size_left;
     }
@@ -575,7 +575,7 @@ void mailbox_record_transport(
         }
     }
 
-    /*¼ÇÂ¼ÊÕµ½µÄÓÊ¼şuse id*/
+    /*è®°å½•æ”¶åˆ°çš„é‚®ä»¶use id*/
     mntn->track_array[mntn->track_prob].use_id        =
                                    (unsigned short)mailbox_get_use_id(mailcode);
     mntn->track_array[mntn->track_prob].send_slice    =  write_slice;
@@ -591,7 +591,7 @@ void mailbox_record_transport(
 
 }
 
-/*¼ÇÂ¼ÏìÓ¦ºËÓÊÏäÓÃ»§»Øµ÷º¯ÊıÖ´ĞĞÊ±¼ä(ÓÊ¼ş¶ÔÓ¦»Øµ÷µÄÊ±¿Ìµã)*/
+/*è®°å½•å“åº”æ ¸é‚®ç®±ç”¨æˆ·å›è°ƒå‡½æ•°æ‰§è¡Œæ—¶é—´(é‚®ä»¶å¯¹åº”å›è°ƒçš„æ—¶åˆ»ç‚¹)*/
 void mailbox_record_receive(
                 struct mb_mntn* mntn,
                 unsigned int mailcode,
@@ -603,7 +603,7 @@ void mailbox_record_receive(
                     MAILBOX_WARNING_RECEIVE_TIME_OUT);
 }
 
-/*Çå³ıÄ³¸öÓÊÏäÍ¨µÀµÄ¿ÉÎ¬¿É²âĞÅÏ¢*/
+/*æ¸…é™¤æŸä¸ªé‚®ç®±é€šé“çš„å¯ç»´å¯æµ‹ä¿¡æ¯*/
 static void mailbox_clear_mntn( struct mb_mntn *mntn, int clear)
 {
     struct mb_buff   *mbuff;
@@ -616,20 +616,20 @@ static void mailbox_clear_mntn( struct mb_mntn *mntn, int clear)
 }
 
 /*****************************************************************************/
-/*ÒÔÏÂÊÇ¿ÉÎ¬¿É²âº¯Êı*/
+/*ä»¥ä¸‹æ˜¯å¯ç»´å¯æµ‹å‡½æ•°*/
 
 MAILBOX_LOCAL void mailbox_show_general(struct mb_cfg *cfg)
 {
     struct mb_head   *pBoxHead   =  (struct mb_head*)(cfg->head_addr);
 
-    /*×ÜÌåĞÅÏ¢*/
+    /*æ€»ä½“ä¿¡æ¯*/
     mailbox_out((KERN_ERR "Max Id,      HeadAddr,    DataAddr,     DataSize,   IntSrcId"RT));
     mailbox_out((KERN_ERR "0x%08x,  0x%08x,  0x%08x,   0x%08x, %04d"RT,(unsigned int)cfg->butt_id,
                     (unsigned int)cfg->head_addr, (unsigned int)cfg->data_addr,
                     (unsigned int)cfg->data_size, (unsigned int)cfg->int_src));
     mailbox_out((KERN_ERR "Head information:"RT));
 
-    /*´òÓ¡´ËÓÊÏäµÄÓÊÏäÍ·ÄÚÈİ¡£*/
+    /*æ‰“å°æ­¤é‚®ç®±çš„é‚®ç®±å¤´å†…å®¹ã€‚*/
     mailbox_out((KERN_ERR "Head Front: 0x%x (0x%08x)"RT,  (unsigned int)pBoxHead->ulFront,
                 (unsigned int)(cfg->data_addr + (pBoxHead->ulFront * sizeof(unsigned long)))));
     mailbox_out((KERN_ERR "Head Rear: 0x%x (0x%08x)"RT, (unsigned int)pBoxHead->ulRear,
@@ -643,15 +643,15 @@ MAILBOX_LOCAL void mailbox_show_general(struct mb_cfg *cfg)
 
 MAILBOX_LOCAL void mailbox_show_receive(struct mb_buff *mbuf)
 {
-    struct mb_mntn      *mntn         =  &(mbuf->mntn);    /*´ËÓÊÏäÍ¨µÀµÄ¿ÉÎ¬¿É²âÊı¾İ*/
-    struct mb_cb        *callback     =  mbuf->read_cb;    /*´ËÓÊÏäÍ¨µÀµÄ¹¦ÄÜ»Øµ÷º¯Êı¶ÓÁĞ*/
+    struct mb_mntn      *mntn         =  &(mbuf->mntn);    /*æ­¤é‚®ç®±é€šé“çš„å¯ç»´å¯æµ‹æ•°æ®*/
+    struct mb_cb        *callback     =  mbuf->read_cb;    /*æ­¤é‚®ç®±é€šé“çš„åŠŸèƒ½å›è°ƒå‡½æ•°é˜Ÿåˆ—*/
     unsigned int        max_use      =  mailbox_get_use_id(mbuf->config->butt_id);
     unsigned int        i            =  0;
 
     mailbox_out((KERN_ERR ":---------------------------------------------:"RT));
     mailbox_out((KERN_ERR "Receive info:"RT));
 
-    /*´òÓ¡¹Ò½ÓÔÚ´ËÓÊÏäÍ¨µÀÉÏµÄÓ¦ÓÃºÅ¼°Ó¦ÓÃ»Øµ÷º¯ÊıµØÖ·*/
+    /*æ‰“å°æŒ‚æ¥åœ¨æ­¤é‚®ç®±é€šé“ä¸Šçš„åº”ç”¨å·åŠåº”ç”¨å›è°ƒå‡½æ•°åœ°å€*/
     mailbox_out((KERN_ERR "Mail Read Call Back show:"RT));
     mailbox_out((KERN_ERR "Use Id,  Call Back,     User Handle"RT));
     while (i < max_use) {
@@ -661,7 +661,7 @@ MAILBOX_LOCAL void mailbox_show_receive(struct mb_buff *mbuf)
         i++;
     }
 
-    /*Æ½¾ùµ÷¶ÈµÈ´ı¼°×î´óµ÷¶ÈµÈ´ıÊ±¼ä*/
+    /*å¹³å‡è°ƒåº¦ç­‰å¾…åŠæœ€å¤§è°ƒåº¦ç­‰å¾…æ—¶é—´*/
     if (MAILBOX_TRUE != mntn->sche.overflow) {
         mailbox_out((KERN_ERR "Schedule Avg. slice:%4d, total:%d"RT,
       (unsigned int)((mbuf->seq_num + 1) ? (mntn->sche.total)/(mbuf->seq_num + 1) : 0) , (unsigned int)(mbuf->seq_num)));
@@ -671,7 +671,7 @@ MAILBOX_LOCAL void mailbox_show_receive(struct mb_buff *mbuf)
     mailbox_out((KERN_ERR "Schedule Max. slice:%4d,  Use ID:0x%08x"RT, (unsigned int)(mntn->sche.max),
                                             (unsigned int)(mntn->sche.code)));
 
-    /*Æ½¾ù´«ËÍ¼°×î´ó´«ËÍÊ±¼ä*/
+    /*å¹³å‡ä¼ é€åŠæœ€å¤§ä¼ é€æ—¶é—´*/
     if (MAILBOX_TRUE != mntn->trans.overflow) {
         mailbox_out((KERN_ERR "Transfers Avg. slice:%4d, total:%d"RT,(int)((mbuf->seq_num + 1) ?
                 ((mntn->trans.total)/(mbuf->seq_num + 1)) : 0 ),  (unsigned int)(mbuf->seq_num)));
@@ -681,7 +681,7 @@ MAILBOX_LOCAL void mailbox_show_receive(struct mb_buff *mbuf)
     mailbox_out((KERN_ERR "Transfers Max. slice:%4d,  Use ID:0x%08x"RT, (unsigned int)(mntn->trans.max),
                 (int)(mntn->trans.code)));/*lint -e539*/
 
-    /*Æ½¾ù´¦Àí¼°×î´ó´¦ÀíÊ±¼ä*/
+    /*å¹³å‡å¤„ç†åŠæœ€å¤§å¤„ç†æ—¶é—´*/
     if (MAILBOX_TRUE != mntn->deal.overflow) {
         mailbox_out((KERN_ERR "Call Back Avg. slice:%4d, total:%d"RT,(unsigned int)((mbuf->seq_num + 1) ?
             (mntn->deal.total)/(mbuf->seq_num + 1) : 0), (unsigned int)(mbuf->seq_num)));
@@ -698,7 +698,7 @@ MAILBOX_LOCAL void mailbox_show_detail(struct mb *mb,
                 struct mb_buff *mbuf,
                 int clear)
 {
-    struct mb_mntn        *mntn         =  MAILBOX_NULL;  /*´ËÓÊÏäÍ¨µÀµÄ¿ÉÎ¬¿É²âÊı¾İ*/
+    struct mb_mntn        *mntn         =  MAILBOX_NULL;  /*æ­¤é‚®ç®±é€šé“çš„å¯ç»´å¯æµ‹æ•°æ®*/
     unsigned int          channel  =  mbuf->channel_id;
     struct mb_queue       *queue   =  &mbuf->mail_queue;
     struct mb_mail        *mail;
@@ -706,11 +706,11 @@ MAILBOX_LOCAL void mailbox_show_detail(struct mb *mb,
 
     mailbox_out((KERN_ERR "mail box show channel(0x%08x) information:"RT, (unsigned int)channel));
 
-    /*×ÜÌåĞÅÏ¢*/
+    /*æ€»ä½“ä¿¡æ¯*/
     mailbox_show_general(mbuf->config);
     mailbox_out((KERN_ERR ":---------------------------------------------:"RT));
     mntn = &(mbuf->mntn);
-    /*ÏÔÊ¾´ËÓÊÏä×î½ü´«ÊäµÄ¼¸¸öuse IDĞÅÏ¢, ×î½üµÄÏÔÊ¾ÔÚÇ°Ãæ*/
+    /*æ˜¾ç¤ºæ­¤é‚®ç®±æœ€è¿‘ä¼ è¾“çš„å‡ ä¸ªuse IDä¿¡æ¯, æœ€è¿‘çš„æ˜¾ç¤ºåœ¨å‰é¢*/
     i = mntn->track_prob ;
     mailbox_out((KERN_ERR "Latest transmit mails track:(%d total)"RT, (unsigned int)mbuf->seq_num));
     mailbox_out((KERN_ERR "id   ,address     ,send slice   ,recv slice  ,diff slice"RT));
@@ -732,12 +732,12 @@ MAILBOX_LOCAL void mailbox_show_detail(struct mb *mb,
     } while (i != (mntn->track_prob));
 
     if (mb->local_id == mailbox_get_dst_id(channel)) {
-        /*Èç¹ûÊÇ½ÓÊÕÍ¨µÀ*/
-        /*´òÓ¡Í¨µÀ·½Ïò*/
+        /*å¦‚æœæ˜¯æ¥æ”¶é€šé“*/
+        /*æ‰“å°é€šé“æ–¹å‘*/
         mailbox_out((KERN_ERR "Receive Channel"RT));
     }
 
-    /*´òÓ¡Í¨µÀ·½Ïò*/
+    /*æ‰“å°é€šé“æ–¹å‘*/
     if (mb->local_id == mailbox_get_src_id(channel)) {
         mailbox_out((KERN_ERR "Send Channel: sem id(0x%08x)"RT,(unsigned int)mbuf->mutex));
     } else if (mb->local_id == mailbox_get_dst_id(channel)) {
@@ -764,8 +764,8 @@ MAILBOX_EXTERN int mailbox_show(
 {
     struct mb_cfg         *config     = &g_mailbox_global_cfg_tbl[0];
     struct mb_buff        *mbuf       = MAILBOX_NULL;
-    struct mb_link        *send_tbl   = MAILBOX_NULL;    /*Ö¸ÏòÖ÷½á¹¹ÌåµÄ·¢ËÍÍ¨µÀÊı×é»ùµØÖ·*/
-    struct mb_link        *recv_tbl   = MAILBOX_NULL;    /*Ö¸ÏòÖ÷½á¹¹ÌåµÄ½ÓÊÕÍ¨µÀÊı×é»ùµØÖ·*/
+    struct mb_link        *send_tbl   = MAILBOX_NULL;    /*æŒ‡å‘ä¸»ç»“æ„ä½“çš„å‘é€é€šé“æ•°ç»„åŸºåœ°å€*/
+    struct mb_link        *recv_tbl   = MAILBOX_NULL;    /*æŒ‡å‘ä¸»ç»“æ„ä½“çš„æ¥æ”¶é€šé“æ•°ç»„åŸºåœ°å€*/
     struct mb             *mb   = MAILBOX_NULL;
     struct mb_log         *record = MAILBOX_NULL;
     unsigned int          i;
@@ -783,7 +783,7 @@ MAILBOX_EXTERN int mailbox_show(
 
     if (MAILBOX_SHOW_ALL & show_flag) {
         /*Show all channel's general information.*/
-        /*±éÀúÏÔÊ¾ËùÓĞµÄ·¢ËÍÍ¨µÀĞÅÏ¢*/
+        /*éå†æ˜¾ç¤ºæ‰€æœ‰çš„å‘é€é€šé“ä¿¡æ¯*/
         send_tbl = mb->send_tbl;
         for (i = 0; i < MAILBOX_CPUID_BUTT; i++) {
             if (MAILBOX_NULL != send_tbl[i].channel_buff) {
@@ -796,7 +796,7 @@ MAILBOX_EXTERN int mailbox_show(
         }
 
         recv_tbl = mb->recv_tbl;
-        /*±éÀúÏÔÊ¾ËùÓĞµÄ½ÓÊÕÍ¨µÀĞÅÏ¢*/
+        /*éå†æ˜¾ç¤ºæ‰€æœ‰çš„æ¥æ”¶é€šé“ä¿¡æ¯*/
         for (i = 0; i < MAILBOX_CPUID_BUTT; i++) {
             if (MAILBOX_NULL != recv_tbl[i].channel_buff) {
                 mbuf  =   recv_tbl[i].channel_buff;
@@ -807,20 +807,20 @@ MAILBOX_EXTERN int mailbox_show(
             }
         }
     } else {
-        /*Í¨µÀºÅÖ¸Ã÷£¬ÏÔÊ¾Õâ¸öÓÊÏäÍ¨µÀµÄÏêÏ¸ĞÅÏ¢*/
+        /*é€šé“å·æŒ‡æ˜ï¼Œæ˜¾ç¤ºè¿™ä¸ªé‚®ç®±é€šé“çš„è¯¦ç»†ä¿¡æ¯*/
         mbuf = mailbox_get_channel_handle(mb, channel);
 
         if (MAILBOX_NULL != mbuf) {
             mailbox_show_detail(mb, mbuf, (int)clear);
         } else {
-            /*Èç¹ûÍ¨µÀºÅÃ»ÓĞÖ¸Ã÷£¬ÁĞ³öÓÊÏäÄ£¿é¸÷Í¨µÀµÄ×ÜÌå×´Ì¬:*/
+            /*å¦‚æœé€šé“å·æ²¡æœ‰æŒ‡æ˜ï¼Œåˆ—å‡ºé‚®ç®±æ¨¡å—å„é€šé“çš„æ€»ä½“çŠ¶æ€:*/
             mailbox_out((KERN_ERR "mail box show global channel config:"RT));
             while (MAILBOX_MAILCODE_INVALID != config->butt_id) {
                 mailbox_show_general(config);
                 config++;
             }
 
-            /*ÏÔÊ¾´ËÓÊÏä×î½ü¼¸¸ö´íÎóĞÅÏ¢, ×î½üµÄÏÔÊ¾ÔÚÇ°Ãæ*/
+            /*æ˜¾ç¤ºæ­¤é‚®ç®±æœ€è¿‘å‡ ä¸ªé”™è¯¯ä¿¡æ¯, æœ€è¿‘çš„æ˜¾ç¤ºåœ¨å‰é¢*/
             i = mb->log_prob;
             record = &mb->log_array[0];
             mailbox_out((KERN_ERR "Latest error log track:"RT));

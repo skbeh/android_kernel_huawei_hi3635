@@ -4,8 +4,8 @@
   Author       : ---
   Version      : V200R001
   Date         : 2005-11-18
-  Description  : ��ͷ�ļ�������PPPģ��ĳ�ʼ�������Լ�ϵͳ����ʱ���õ�
-                 PPPģ��Ľ�������������˵����
+  Description  : 该头文件给出了PPP模块的初始化函数以及系统重启时调用的
+                 PPP模块的结束函数的引用说明。
   Function List:
         ---
         ---

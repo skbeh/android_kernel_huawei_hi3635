@@ -1,17 +1,17 @@
 /*************************************************************************
-*   °æÈ¨ËùÓĞ(C) 1987-2011, ÉîÛÚ»ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾.
+*   ç‰ˆæƒæ‰€æœ‰(C) 1987-2011, æ·±åœ³åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸.
 *
-*   ÎÄ ¼ş Ãû :  hisi_dmesg.c
+*   æ–‡ ä»¶ å :  hisi_dmesg.c
 *
-*   ×÷    Õß :
+*   ä½œ    è€… :
 *
-*   Ãè    Êö :  AºË´òÓ¡Êä³ö´¦Àíº¯Êı
+*   æ    è¿° :  Aæ ¸æ‰“å°è¾“å‡ºå¤„ç†å‡½æ•°
 *
-*   ĞŞ¸Ä¼ÇÂ¼ :
+*   ä¿®æ”¹è®°å½• :
 *************************************************************************/
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 /*lint -save -e322 -e7 -e537*/
 #include <linux/kernel.h>
@@ -74,15 +74,15 @@ void log_buff_info(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : log_buff_init
+* å‡½ æ•° å  : log_buff_init
 *
-* ¹¦ÄÜÃèÊö  : ³õÊ¼»¯logÉè±¸buffer, ºË¼äÍ¬²½, CºË¡¢MºË³õÊ¼»¯¿ÉÄÜÍíÓÚlog_init
+* åŠŸèƒ½æè¿°  : åˆå§‹åŒ–logè®¾å¤‡buffer, æ ¸é—´åŒæ­¥, Cæ ¸ã€Mæ ¸åˆå§‹åŒ–å¯èƒ½æ™šäºlog_init
 *
-* ÊäÈë²ÎÊı  : logger_info_stru * log_info
+* è¾“å…¥å‚æ•°  : logger_info_stru * log_info
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : 0 --- ³É¹¦£¬·Ç0 --- Ê§°Ü
+* è¿” å› å€¼  : 0 --- æˆåŠŸï¼Œé0 --- å¤±è´¥
 *****************************************************************************/
 static int log_buff_init(logger_info_stru * log_info)
 {
@@ -104,15 +104,15 @@ static int log_buff_init(logger_info_stru * log_info)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : log_task_func
+* å‡½ æ•° å  : log_task_func
 *
-* ¹¦ÄÜÃèÊö  : log task£¬¶¨Ê±»½ĞÑÒòÎŞÊı¾İ½øÈëË¯ÃßµÄÓ¦ÓÃ
+* åŠŸèƒ½æè¿°  : log taskï¼Œå®šæ—¶å”¤é†’å› æ— æ•°æ®è¿›å…¥ç¡çœ çš„åº”ç”¨
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  :
+* è¿” å› å€¼  :
 *****************************************************************************/
 static int log_task_func(void * data)
 {
@@ -129,7 +129,7 @@ static int log_task_func(void * data)
 
         list_for_each_entry(log_info, &kernel_log_list, logs)
         {
-            /* Èç¹ûÉè±¸log bufferÃ»ÓĞ³õÊ¼»¯£¬ÏÈ×ö³õÊ¼»¯ */
+            /* å¦‚æœè®¾å¤‡log bufferæ²¡æœ‰åˆå§‹åŒ–ï¼Œå…ˆåšåˆå§‹åŒ– */
             if(log_info->log_mem == NULL)
             {
                 if(0 != log_buff_init(log_info))
@@ -146,7 +146,7 @@ static int log_task_func(void * data)
             sleep_flag = log_info->sleep_flag;
             spin_unlock_irqrestore(&log_info->lock, lock_flag);
 
-            /* ÎŞÊı¾İ»òÕßÓ¦ÓÃÕıÔÚ¶ÁÈ¡Êı¾İ£¬²éÑ¯ÏÂÒ»¸öÉè±¸ */
+            /* æ— æ•°æ®æˆ–è€…åº”ç”¨æ­£åœ¨è¯»å–æ•°æ®ï¼ŒæŸ¥è¯¢ä¸‹ä¸€ä¸ªè®¾å¤‡ */
             if((sleep_flag == BSP_FALSE) || (log_info->log_mem->log_read == log_info->log_mem->log_write))
             {
                 continue;
@@ -155,7 +155,7 @@ static int log_task_func(void * data)
             spin_lock_irqsave(&log_info->lock, lock_flag);
             log_info->sleep_flag = BSP_FALSE;
             spin_unlock_irqrestore(&log_info->lock, lock_flag);
-            /* »½ĞÑÓ¦ÓÃ */
+            /* å”¤é†’åº”ç”¨ */
             wake_up_interruptible(&log_info->wq);
         }
     }
@@ -164,15 +164,15 @@ static int log_task_func(void * data)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : get_log_from_minor
+* å‡½ æ•° å  : get_log_from_minor
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡logÉè±¸Ö¸Õë
+* åŠŸèƒ½æè¿°  : è·å–logè®¾å¤‡æŒ‡é’ˆ
 *
-* ÊäÈë²ÎÊı  :  int minor£¬´ÎÉè±¸ºÅ
+* è¾“å…¥å‚æ•°  :  int minorï¼Œæ¬¡è®¾å¤‡å·
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : logger_info_stru *
+* è¿” å› å€¼  : logger_info_stru *
 *****************************************************************************/
 static logger_info_stru * get_log_from_minor(int minor)
 {
@@ -190,40 +190,40 @@ static logger_info_stru * get_log_from_minor(int minor)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : do_read_data_to_user
+* å‡½ æ•° å  : do_read_data_to_user
 *
-* ¹¦ÄÜÃèÊö  : ¿½±´Êı¾İÖÁÓÃ»§Ì¬
+* åŠŸèƒ½æè¿°  : æ‹·è´æ•°æ®è‡³ç”¨æˆ·æ€
 *
-* ÊäÈë²ÎÊı  : char * src, Êı¾İÔ´buffer
-*             char * dst£¬Êı¾İÄ¿µÄbuffer
-*             u32 len, ÆÚÍû¶ÁÈ¡µÄÊı¾İ³¤¶È
+* è¾“å…¥å‚æ•°  : char * src, æ•°æ®æºbuffer
+*             char * dstï¼Œæ•°æ®ç›®çš„buffer
+*             u32 len, æœŸæœ›è¯»å–çš„æ•°æ®é•¿åº¦
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : Êµ¼Ê¶ÁÈ¡µÄÊı¾İ³¤¶È
+* è¿” å› å€¼  : å®é™…è¯»å–çš„æ•°æ®é•¿åº¦
 *****************************************************************************/
 static int do_read_data_to_user(char * src, char * dst, u32 len)
 {
     u32 ret;
 
-    /* ·µ»ØÎ´ÄÜ¿½±´µÄÊı¾İ³¤¶È */
+    /* è¿”å›æœªèƒ½æ‹·è´çš„æ•°æ®é•¿åº¦ */
     ret = (u32)copy_to_user(dst, src, len);
 
     return (int)(len - ret);
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : is_log_buffer_full
+* å‡½ æ•° å  : is_log_buffer_full
 *
-* ¹¦ÄÜÃèÊö  : »º³åÇøÊÇ·ñÂú
+* åŠŸèƒ½æè¿°  : ç¼“å†²åŒºæ˜¯å¦æ»¡
 *
-* ÊäÈë²ÎÊı  : u32 read_p,  ¶ÁÖ¸Õë
-*             u32 write_p£¬Ğ´Ö¸Õë
-*             u32 buf_len, buffer³¤¶È
+* è¾“å…¥å‚æ•°  : u32 read_p,  è¯»æŒ‡é’ˆ
+*             u32 write_pï¼Œå†™æŒ‡é’ˆ
+*             u32 buf_len, bufferé•¿åº¦
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_TRUE:Âú£¬BSP_FALSE:Î´Âú
+* è¿” å› å€¼  : BSP_TRUE:æ»¡ï¼ŒBSP_FALSE:æœªæ»¡
 *****************************************************************************/
 static int is_log_buffer_full(u32 read_p, u32 write_p, u32 buf_len)
 {
@@ -248,18 +248,18 @@ static int is_log_buffer_full(u32 read_p, u32 write_p, u32 buf_len)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : log_read
+* å‡½ æ•° å  : log_read
 *
-* ¹¦ÄÜÃèÊö  : ´ÓlogÉè±¸¶ÁÈ¡Êı¾İ
+* åŠŸèƒ½æè¿°  : ä»logè®¾å¤‡è¯»å–æ•°æ®
 *
-* ÊäÈë²ÎÊı  : struct file *file, Éè±¸ÎÄ¼şfileÖ¸Õë
-*             buf£¬Ä¿µÄbuffer
-*             count, Ä¿µÄbuffer´óĞ¡
+* è¾“å…¥å‚æ•°  : struct file *file, è®¾å¤‡æ–‡ä»¶fileæŒ‡é’ˆ
+*             bufï¼Œç›®çš„buffer
+*             count, ç›®çš„bufferå¤§å°
 *
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : 0£¬´ò¿ª³É¹¦£¬ ·Ç0£¬´ò¿ªÊ§°Ü
+* è¿” å› å€¼  : 0ï¼Œæ‰“å¼€æˆåŠŸï¼Œ é0ï¼Œæ‰“å¼€å¤±è´¥
 *****************************************************************************/
 static ssize_t log_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
 {
@@ -280,7 +280,7 @@ static ssize_t log_read(struct file *file, char __user *buf, size_t count, loff_
         return -EPERM;
     }
 
-    /* bufferÎ´³õÊ¼»¯£¬½øÈëË¯Ãß */
+    /* bufferæœªåˆå§‹åŒ–ï¼Œè¿›å…¥ç¡çœ  */
     if(log_info->log_mem == NULL)
     {
         prepare_to_wait(&log_info->wq, &wait, TASK_INTERRUPTIBLE);
@@ -304,12 +304,12 @@ static ssize_t log_read(struct file *file, char __user *buf, size_t count, loff_
         prepare_to_wait(&log_info->wq, &wait, TASK_INTERRUPTIBLE);
 
         write_p = log_info->log_mem->log_write;
-        /* bufferÂú£¬¸ü¸Ä¶ÁÖ¸Õë£¬½«bufferÖÃ¿Õ */
+        /* bufferæ»¡ï¼Œæ›´æ”¹è¯»æŒ‡é’ˆï¼Œå°†bufferç½®ç©º */
         if(is_log_buffer_full(read_p, write_p, log_info->log_mem->log_buf_len))
         {
-            /* ¸üĞÂ¶ÁÖ¸Õë */
+            /* æ›´æ–°è¯»æŒ‡é’ˆ */
             log_info->log_mem->log_read += LOG_DROPPED_SIZE;
-            /* Êä³öÌáÊ¾ĞÅÏ¢ */
+            /* è¾“å‡ºæç¤ºä¿¡æ¯ */
             msg_len = (u32)strlen(LOG_OVERLAP_MESSAGE);
             len = (count > msg_len) ? msg_len : count;
             ret = do_read_data_to_user(LOG_OVERLAP_MESSAGE, buf, len);
@@ -321,19 +321,19 @@ static ssize_t log_read(struct file *file, char __user *buf, size_t count, loff_
             break;
         }
 
-        /* ¶ÁĞ´Ö¸ÕëÏàµÈ£¬ÎŞÊı¾İ£¬Èç¹ûÎª·Ç×èÈû·½Ê½´ò¿ª£¬ÔÙ´Î³¢ÊÔ */
+        /* è¯»å†™æŒ‡é’ˆç›¸ç­‰ï¼Œæ— æ•°æ®ï¼Œå¦‚æœä¸ºéé˜»å¡æ–¹å¼æ‰“å¼€ï¼Œå†æ¬¡å°è¯• */
         if (file->f_flags & O_NONBLOCK) {
             ret = -EAGAIN;
             break;
         }
 
-        /* Èç¹ûÓĞĞÅºÅĞèÒª´¦Àí£¬Ö±½Ó·µ»Ø */
+        /* å¦‚æœæœ‰ä¿¡å·éœ€è¦å¤„ç†ï¼Œç›´æ¥è¿”å› */
         if (signal_pending(current)) {
             ret = -EINTR;
             break;
         }
 
-        /* ÎŞÊı¾İ£¬Ë¯Ãß */
+        /* æ— æ•°æ®ï¼Œç¡çœ  */
         spin_lock_irqsave(&log_info->lock, lock_flag);
         log_info->sleep_flag = BSP_TRUE;
         spin_unlock_irqrestore(&log_info->lock, lock_flag);
@@ -373,10 +373,10 @@ static ssize_t log_read(struct file *file, char __user *buf, size_t count, loff_
 
 	set_wakelock(1);
 
-    /* ¿½±´Êı¾İ */
+    /* æ‹·è´æ•°æ® */
     ret = do_read_data_to_user(log_buff , buf, len);
 
-    /* ¸üĞÂ¶ÁÖ¸Õë */
+    /* æ›´æ–°è¯»æŒ‡é’ˆ */
     log_info->log_mem->log_read = (read_p + ret)%(log_info->log_mem->log_buf_len);
     if(log_info->log_mem->full_flag)
     {
@@ -388,16 +388,16 @@ static ssize_t log_read(struct file *file, char __user *buf, size_t count, loff_
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : log_open
+* å‡½ æ•° å  : log_open
 *
-* ¹¦ÄÜÃèÊö  : ´ò¿ªlogÉè±¸
+* åŠŸèƒ½æè¿°  : æ‰“å¼€logè®¾å¤‡
 *
-* ÊäÈë²ÎÊı  : struct inode *inode, Éè±¸ÎÄ¼şinode½Úµã
+* è¾“å…¥å‚æ•°  : struct inode *inode, è®¾å¤‡æ–‡ä»¶inodeèŠ‚ç‚¹
 *             struct file *file
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : 0£¬´ò¿ª³É¹¦£¬ ·Ç0£¬´ò¿ªÊ§°Ü
+* è¿” å› å€¼  : 0ï¼Œæ‰“å¼€æˆåŠŸï¼Œ é0ï¼Œæ‰“å¼€å¤±è´¥
 *****************************************************************************/
 static int log_open(struct inode *inode, struct file *file)
 {
@@ -423,16 +423,16 @@ static int log_open(struct inode *inode, struct file *file)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : log_release
+* å‡½ æ•° å  : log_release
 *
-* ¹¦ÄÜÃèÊö  : ¹Ø±ÕlogÉè±¸
+* åŠŸèƒ½æè¿°  : å…³é—­logè®¾å¤‡
 *
-* ÊäÈë²ÎÊı  : struct inode *inode, Éè±¸ÎÄ¼şinode½Úµã
+* è¾“å…¥å‚æ•°  : struct inode *inode, è®¾å¤‡æ–‡ä»¶inodeèŠ‚ç‚¹
 *             struct file *file
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : 0£¬³É¹¦
+* è¿” å› å€¼  : 0ï¼ŒæˆåŠŸ
 *****************************************************************************/
 static int log_release(struct inode *ignored, struct file *file)
 {
@@ -458,15 +458,15 @@ static const struct file_operations logger_fops = {
 };
 
 /*****************************************************************************
-* º¯ Êı Ãû  : log_int_handle
+* å‡½ æ•° å  : log_int_handle
 *
-* ¹¦ÄÜÃèÊö  : IPCÖĞ¶Ï´¦Àíº¯Êı£¬»½ĞÑlog task
+* åŠŸèƒ½æè¿°  : IPCä¸­æ–­å¤„ç†å‡½æ•°ï¼Œå”¤é†’log task
 *
-* ÊäÈë²ÎÊı  : u32 data
+* è¾“å…¥å‚æ•°  : u32 data
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 static void log_int_handle(u32 data)
 {
@@ -484,15 +484,15 @@ static void log_int_handle(u32 data)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : log_device_init
+* å‡½ æ•° å  : log_device_init
 *
-* ¹¦ÄÜÃèÊö  : ³õÊ¼»¯º¯Êı£¬´´½¨logÉè±¸½Úµã
+* åŠŸèƒ½æè¿°  : åˆå§‹åŒ–å‡½æ•°ï¼Œåˆ›å»ºlogè®¾å¤‡èŠ‚ç‚¹
 *
-* ÊäÈë²ÎÊı  : char * dev_name, Éè±¸Ãû, log_mem_stru * log_info, log»º³åÇø
+* è¾“å…¥å‚æ•°  : char * dev_name, è®¾å¤‡å, log_mem_stru * log_info, logç¼“å†²åŒº
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : 0£¬³É¹¦, ·Ç0£¬Ê§°Ü
+* è¿” å› å€¼  : 0ï¼ŒæˆåŠŸ, é0ï¼Œå¤±è´¥
 *****************************************************************************/
 static int __init log_device_init(char * dev_name)
 {
@@ -539,15 +539,15 @@ static int __init log_device_init(char * dev_name)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : log_init
+* å‡½ æ•° å  : log_init
 *
-* ¹¦ÄÜÃèÊö  : ³õÊ¼»¯º¯Êı£¬·ÖÅäÏà¹Ø×ÊÔ´
+* åŠŸèƒ½æè¿°  : åˆå§‹åŒ–å‡½æ•°ï¼Œåˆ†é…ç›¸å…³èµ„æº
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : 0£¬³É¹¦, ·Ç0£¬Ê§°Ü
+* è¿” å› å€¼  : 0ï¼ŒæˆåŠŸ, é0ï¼Œå¤±è´¥
 *****************************************************************************/
 static int __init log_init(void)
 {

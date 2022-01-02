@@ -94,7 +94,7 @@ BSP_VOID DRV_VICINT_LVLCHG_HOOK_DEL(BSP_VOID)
     return;
 }
 
-/*********************************** V7R2 ÐÂÔö **********************************/
+/*********************************** V7R2 æ–°å¢ž **********************************/
 BSP_S32 DRV_DUMP_SAVE_REGISTER_HOOK(DUMP_SAVE_MOD_ENUM ModId, DUMP_SAVE_HOOK pFunc)
 {
     return bsp_dump_register_hook(ModId, pFunc);

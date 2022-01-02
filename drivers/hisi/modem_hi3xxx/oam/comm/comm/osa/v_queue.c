@@ -37,7 +37,7 @@
 #include "v_int.h"
 #include "v_blkMem.h"
 
-/* LINUX ²»Ö§³Ö */
+/* LINUX ä¸æ”¯æŒ */
 #if (VOS_VXWORKS== VOS_OS_VER)
 #include "stdio.h"
 #include "stdlib.h"
@@ -52,7 +52,7 @@ extern "C" {
  
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_V_QUEUE_C
 
@@ -126,7 +126,7 @@ VOS_CHAR g_acVosQueueBuf[VOS_QUEUE_BUF_SIZE];
 /*the location of buf which should be allocated */
 VOS_UINT32 g_ulVosQueueBufSuffix = 0;
 
-/* ×ÔÐýËø£¬ÓÃÀ´×÷queueµÄÁÙ½ç×ÊÔ´±£»¤ */
+/* è‡ªæ—‹é”ï¼Œç”¨æ¥ä½œqueueçš„ä¸´ç•Œèµ„æºä¿æŠ¤ */
 VOS_SPINLOCK             g_stVosQueueSpinLock;
 
 /*****************************************************************************
@@ -849,8 +849,8 @@ VOS_VOID VOS_QueuePrintFull( VOS_UINT32 ulQueue, VOS_CHAR *pcBuf, VOS_UINT32 ulL
             return;
         }
 
-        pstDump->usSendPid = (VOS_UINT16)(pMsg->ulSenderPid); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
-        pstDump->usRcvPid = (VOS_UINT16)(pMsg->ulReceiverPid); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+        pstDump->usSendPid = (VOS_UINT16)(pMsg->ulSenderPid); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
+        pstDump->usRcvPid = (VOS_UINT16)(pMsg->ulReceiverPid); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
         pstDump->ulMsgName = *(VOS_UINT32 *)(pMsg->aucValue);
 
         pstDump++;
@@ -905,7 +905,7 @@ VOS_VOID VOS_DelQueueInfo( VOS_UINT32 ulQueueID, VOS_UINT32 ulTimeOutInMillSec)
 
     VOS_QUEUE_CONTROL_BLOCK *pQueueCtrlBlk = &vos_QueueCtrlBlcok[ulQueueID];
 
-    /* ±±ÑÐÌí¼ÓµÄÖ»ÔÚCºËÊ¹ÓÃËùÒÔ²»ÓÃÌæ»»Îª×ÔÐýËø */
+    /* åŒ—ç ”æ·»åŠ çš„åªåœ¨Cæ ¸ä½¿ç”¨æ‰€ä»¥ä¸ç”¨æ›¿æ¢ä¸ºè‡ªæ—‹é” */
     /* coverity[lock_acquire] */
     intLockLevel = VOS_SplIMP();
 

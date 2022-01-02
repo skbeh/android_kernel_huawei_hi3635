@@ -49,10 +49,10 @@ s32 bsp_ipc_int_enable (IPC_INT_LEV_E ulLvl)
     u32 u32IntMask = 0;
     unsigned long flags=0;
     IPC_CHECK_PARA(ulLvl,IPC_INT_BUTTOM);
-    /*Ğ´ÖĞ¶ÏÆÁ±Î¼Ä´æÆ÷*/
+    /*å†™ä¸­æ–­å±è”½å¯„å­˜å™¨*/
     spin_lock_irqsave(&ipc_ctrl.lock,flags);
     u32IntMask = readl((const volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_CPU_INT_MASK(ipc_ctrl.core_num)));
-    u32IntMask |= (u32)1 << ulLvl;/* [false alarm]:Îó±¨ */
+    u32IntMask |= (u32)1 << ulLvl;/* [false alarm]:è¯¯æŠ¥ */
     writel(u32IntMask,(volatile void *)(ipc_ctrl.ipc_base+BSP_IPC_CPU_INT_MASK(ipc_ctrl.core_num)));
     spin_unlock_irqrestore(&ipc_ctrl.lock,flags);
     return OK;
@@ -63,10 +63,10 @@ s32 bsp_ipc_int_disable(IPC_INT_LEV_E ulLvl)
 	u32 u32IntMask = 0;
 	unsigned long flags=0;
 	IPC_CHECK_PARA(ulLvl,IPC_INT_BUTTOM);
-	/*Ğ´ÖĞ¶ÏÆÁ±Î¼Ä´æÆ÷*/
+	/*å†™ä¸­æ–­å±è”½å¯„å­˜å™¨*/
 	spin_lock_irqsave(&ipc_ctrl.lock,flags);
 	u32IntMask = readl((const volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_CPU_INT_MASK(ipc_ctrl.core_num)));
-    u32IntMask = u32IntMask & (~((u32)1 << ulLvl));/* [false alarm]:Îó±¨ */
+    u32IntMask = u32IntMask & (~((u32)1 << ulLvl));/* [false alarm]:è¯¯æŠ¥ */
 	writel(u32IntMask,(volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_CPU_INT_MASK(ipc_ctrl.core_num)));
 	spin_unlock_irqrestore(&ipc_ctrl.lock,flags);
 	return OK;
@@ -103,9 +103,9 @@ OSL_IRQ_FUNC(irqreturn_t,ipc_int_handler,irq,dev_id)
 	u32 u32Date = 0x1;
 	u32 u32BitValue = 0;
 	u32IntStat=readl((const volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_CPU_INT_STAT(ipc_ctrl.core_num)));
-	/*ÇåÖĞ¶Ï*/
+	/*æ¸…ä¸­æ–­*/
 	writel(u32IntStat,(volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_CPU_INT_CLR(ipc_ctrl.core_num)));
-	/* ±éÀú32¸öÖĞ¶Ï */
+	/* éå†32ä¸ªä¸­æ–­ */
 	for (i = 0; i < INTSRC_NUM; i++)
 	{
 		if(0!=i)
@@ -113,10 +113,10 @@ OSL_IRQ_FUNC(irqreturn_t,ipc_int_handler,irq,dev_id)
 			u32Date <<= 1;   
 		} 
 		u32BitValue = u32IntStat & u32Date;
-		/* Èç¹ûÓĞÖĞ¶Ï ,Ôòµ÷ÓÃ¶ÔÓ¦ÖĞ¶Ï´¦Àíº¯Êı */
+		/* å¦‚æœæœ‰ä¸­æ–­ ,åˆ™è°ƒç”¨å¯¹åº”ä¸­æ–­å¤„ç†å‡½æ•° */
 		if (0 != u32BitValue)
 		{  
-			/*µ÷ÓÃ×¢²áµÄÖĞ¶Ï´¦Àíº¯Êı*/
+			/*è°ƒç”¨æ³¨å†Œçš„ä¸­æ–­å¤„ç†å‡½æ•°*/
 			if (NULL !=  ipc_ctrl.ipc_int_table[i].routine)
 			{
 				begin = bsp_get_slice_value();
@@ -139,10 +139,10 @@ OSL_IRQ_FUNC(irqreturn_t,ipc_int_handler,irq,dev_id)
 s32 bsp_ipc_int_send(IPC_INT_CORE_E enDstCore, IPC_INT_LEV_E ulLvl)
 {
 	unsigned long flags = 0,ret = 0;
-	/*Èç¹ûÊÇmodem´¦ÓÚ¸´Î»×´Ì¬£¬Ôòµ÷ÓÃAP²àIPC*/
+	/*å¦‚æœæ˜¯modemå¤„äºå¤ä½çŠ¶æ€ï¼Œåˆ™è°ƒç”¨APä¾§IPC*/
 	/*ap receive mabx 0,send mbx 13*/
 	 rproc_msg_t msg[2] ;
-	/*·¢ËÍ±êÖ¾£¬ÓÃÓÚLPM3ÉÏ½ÓÊÕÊ±½âÎö*/
+	/*å‘é€æ ‡å¿—ï¼Œç”¨äºLPM3ä¸Šæ¥æ”¶æ—¶è§£æ*/
 	msg[0]=(0<<24|9<<16|3<<8|14);
 	if(!bsp_reset_ccpu_status_get())
 	{
@@ -159,7 +159,7 @@ s32 bsp_ipc_int_send(IPC_INT_CORE_E enDstCore, IPC_INT_LEV_E ulLvl)
 	 
 		IPC_CHECK_PARA(ulLvl,IPC_INT_BUTTOM);
 		IPC_CHECK_PARA(enDstCore,IPC_CORE_BUTTOM);
-		/*Ğ´Ô­Ê¼ÖĞ¶Ï¼Ä´æÆ÷,²úÉúÖĞ¶Ï*/
+		/*å†™åŸå§‹ä¸­æ–­å¯„å­˜å™¨,äº§ç”Ÿä¸­æ–­*/
 		spin_lock_irqsave(&ipc_ctrl.lock,flags);
 		writel((u32)1 << ulLvl,(volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_CPU_RAW_INT(enDstCore)));
 		spin_unlock_irqrestore(&ipc_ctrl.lock,flags);
@@ -175,7 +175,7 @@ static void  mask_int(u32 u32SignalNum)
 	unsigned long flags=0;
 	spin_lock_irqsave(&ipc_ctrl.lock,flags);
 	u32IntMask = readl((const volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_SEM_INT_MASK(ipc_ctrl.core_num)));
-	u32IntMask = u32IntMask & (~((u32)1 << u32SignalNum)); /* [false alarm]:Îó±¨ */
+	u32IntMask = u32IntMask & (~((u32)1 << u32SignalNum)); /* [false alarm]:è¯¯æŠ¥ */
 	writel(u32IntMask,(volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_SEM_INT_MASK(ipc_ctrl.core_num)));
 	spin_unlock_irqrestore(&ipc_ctrl.lock,flags);
 }
@@ -183,7 +183,7 @@ static void  mask_int(u32 u32SignalNum)
  s32 bsp_ipc_sem_create(u32 u32SignalNum)
  {
 	 IPC_CHECK_PARA(u32SignalNum,IPC_SEM_BUTTOM);
-	 if(true != ipc_ctrl.sem_exist[u32SignalNum])/*±ÜÃâÍ¬Ò»¸öĞÅºÅÁ¿ÔÚÃ»ÓĞÉ¾³ıµÄÇé¿öÏÂ´´½¨¶à´Î*/
+	 if(true != ipc_ctrl.sem_exist[u32SignalNum])/*é¿å…åŒä¸€ä¸ªä¿¡å·é‡åœ¨æ²¡æœ‰åˆ é™¤çš„æƒ…å†µä¸‹åˆ›å»ºå¤šæ¬¡*/
 	 {
 	 	osl_sem_init(SEM_EMPTY,&(ipc_ctrl.sem_ipc_task[u32SignalNum]));
 		ipc_ctrl.sem_exist[u32SignalNum] = true;
@@ -219,9 +219,9 @@ static void  mask_int(u32 u32SignalNum)
  int bsp_ipc_sem_take(u32 u32SignalNum, int s32timeout)
  {
 	u32 u32IntMask = 0,ret = 0;    
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(u32SignalNum,IPC_SEM_BUTTOM);  
-	 /*½«ÉêÇëµÄĞÅºÅÁ¿¶ÔÓ¦µÄÊÍ·ÅÖĞ¶ÏÇåÁã*/
+	 /*å°†ç”³è¯·çš„ä¿¡å·é‡å¯¹åº”çš„é‡Šæ”¾ä¸­æ–­æ¸…é›¶*/
 	writel((u32)1<<u32SignalNum, (volatile void *)(ipc_ctrl.ipc_base+BSP_IPC_SEM_INT_CLR(ipc_ctrl.core_num)));
 	ret =  readl((const volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_HS_CTRL(ipc_ctrl.core_num, u32SignalNum)));
 	if(0 == ret)
@@ -240,9 +240,9 @@ static void  mask_int(u32 u32SignalNum)
 		}
 		if(0 != s32timeout)
 		{
-			/*Ê¹ÄÜĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï*/
+			/*ä½¿èƒ½ä¿¡å·é‡é‡Šæ”¾ä¸­æ–­*/
 			u32IntMask = readl((const volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_SEM_INT_MASK(ipc_ctrl.core_num)));
-			u32IntMask = u32IntMask | ((u32)1 << u32SignalNum);/* [false alarm]:Îó±¨ */
+			u32IntMask = u32IntMask | ((u32)1 << u32SignalNum);/* [false alarm]:è¯¯æŠ¥ */
 			writel(u32IntMask,(volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_SEM_INT_MASK(ipc_ctrl.core_num)));
 			 if (OK != osl_sem_downtimeout(&(ipc_ctrl.sem_ipc_task[u32SignalNum]), s32timeout))  
 			{
@@ -272,7 +272,7 @@ s32 bsp_ipc_sem_give(u32 u32SignalNum)
 {
 	IPC_CHECK_PARA(u32SignalNum,IPC_SEM_BUTTOM);
 	ipc_debug.u32SemGiveTimes[u32SignalNum]++;
-	/*ÏòĞÅºÅÁ¿ÇëÇó¼Ä´æÆ÷Ğ´0*/
+	/*å‘ä¿¡å·é‡è¯·æ±‚å¯„å­˜å™¨å†™0*/
 	writel(0,(volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_HS_CTRL(ipc_ctrl.core_num, u32SignalNum)));
 	return OK;
  }
@@ -297,16 +297,16 @@ s32 bsp_ipc_sem_give(u32 u32SignalNum)
  }
 
  /*****************************************************************************
- * º¯ Êı Ãû      : ipc_sem_int_handler
+ * å‡½ æ•° å      : ipc_sem_int_handler
  *
- * ¹¦ÄÜÃèÊö  : ĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï´¦Àíº¯Êı
+ * åŠŸèƒ½æè¿°  : ä¿¡å·é‡é‡Šæ”¾ä¸­æ–­å¤„ç†å‡½æ•°
  *
- * ÊäÈë²ÎÊı  : ÎŞ  
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : æ—   
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ      : ÎŞ
+ * è¿” å› å€¼      : æ— 
  *
- * ĞŞ¸Ä¼ÇÂ¼  :  2013Äê1ÔÂ9ÈÕ lixiaojie 
+ * ä¿®æ”¹è®°å½•  :  2013å¹´1æœˆ9æ—¥ lixiaojie 
  *****************************************************************************/
 OSL_IRQ_FUNC(irqreturn_t,ipc_sem_int_handler,irq,dev_id)
 {
@@ -317,7 +317,7 @@ OSL_IRQ_FUNC(irqreturn_t,ipc_sem_int_handler,irq,dev_id)
 	{
 		do
 		{
-			 /*Èç¹ûÓĞĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï£¬Çå³ı¸ÃÖĞ¶Ï*/
+			 /*å¦‚æœæœ‰ä¿¡å·é‡é‡Šæ”¾ä¸­æ–­ï¼Œæ¸…é™¤è¯¥ä¸­æ–­*/
 			writel((u32)1<<--u32SNum, (volatile void *)(ipc_ctrl.ipc_base+BSP_IPC_SEM_INT_CLR(ipc_ctrl.core_num)));
 			u32HsCtrl = readl((const volatile void *)(ipc_ctrl.ipc_base + BSP_IPC_HS_CTRL(ipc_ctrl.core_num, u32SNum)));
 			if (0 == u32HsCtrl)
@@ -368,7 +368,7 @@ static int hisi_k3_lpm2ap_ipc_handler(struct notifier_block *nb,
 	u32 *result = (u32 *)msg,i=0, u32SNum=0;
 	unsigned long flags = 0;
 	spin_lock_irqsave(&ipc_ctrl.lock,flags);
-	/*1ĞèÒªÅĞ¶ÏÊÇ·ñÊÇlPM3·¢¸øÄÄ¸öÓÃ»§µÄmsg[0]£¬Èç¹ûÊÇLPM3 modem ipcÊÊÅä½Ó¿Ú·¢ËÍµÄ²Å×ö´¦Àí*/
+	/*1éœ€è¦åˆ¤æ–­æ˜¯å¦æ˜¯lPM3å‘ç»™å“ªä¸ªç”¨æˆ·çš„msg[0]ï¼Œå¦‚æœæ˜¯LPM3 modem ipcé€‚é…æ¥å£å‘é€çš„æ‰åšå¤„ç†*/
 	if(result[0]==LPM3_TO_AP_IPC_FLAG)
 	{
 		u32SNum = ffSLsb(result[1]);
@@ -513,14 +513,14 @@ static void  bsp_ipc_exit(void)
 void bsp_ipc_debug_show(void)
 {
 	u32 i = 0;
-	bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"\nµ±Ç°Õ¼ÓÃµÄĞÅºÅÁ¿IDÎª       : \t%d\n", ipc_debug.u32SemId);
-	bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"µ±Ç°½ÓÊÕÖĞ¶ÏµÄCore IDÎª          : \t%d\n", ipc_debug.u32RecvIntCore);
+	bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"\nå½“å‰å ç”¨çš„ä¿¡å·é‡IDä¸º       : \t%d\n", ipc_debug.u32SemId);
+	bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"å½“å‰æ¥æ”¶ä¸­æ–­çš„Core IDä¸º          : \t%d\n", ipc_debug.u32RecvIntCore);
 	for(i = 0; i < INTSRC_NUM; i++)
 	{
-		bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"ĞÅºÅÁ¿%d»ñÈ¡´ÎÊı             : \t%d\n", i,ipc_debug.u32SemTakeTimes[i]);
-		bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"ĞÅºÅÁ¿%dÊÍ·Å´ÎÊı             : \t%d\n", i,ipc_debug.u32SemGiveTimes[i]);
-		bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"%dºÅÖĞ¶Ï½ÓÊÕµÄ´ÎÊıÎª         : \t%d\n",i, ipc_debug.u32IntHandleTimes[i]);
-		bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"%dºÅÖĞ¶Ï´¦Àíº¯ÊıÖ´ĞĞÊ±¼äÎª : \t%d us\n",i, ipc_debug.u32IntTimeDelta[i]*1000000/HI_TCXO_CLK);
+		bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"ä¿¡å·é‡%dè·å–æ¬¡æ•°             : \t%d\n", i,ipc_debug.u32SemTakeTimes[i]);
+		bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"ä¿¡å·é‡%dé‡Šæ”¾æ¬¡æ•°             : \t%d\n", i,ipc_debug.u32SemGiveTimes[i]);
+		bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"%då·ä¸­æ–­æ¥æ”¶çš„æ¬¡æ•°ä¸º         : \t%d\n",i, ipc_debug.u32IntHandleTimes[i]);
+		bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"%då·ä¸­æ–­å¤„ç†å‡½æ•°æ‰§è¡Œæ—¶é—´ä¸º : \t%d us\n",i, ipc_debug.u32IntTimeDelta[i]*1000000/HI_TCXO_CLK);
 	}      
 }
 
@@ -531,7 +531,7 @@ void bsp_int_send_info(void)
 	{
 		for(j=0;j<IPC_INT_BUTTOM;j++)
 		{
-			bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"ÍùºË%d·¢ËÍÖĞ¶Ï%dµÄ´ÎÊıÎª: \t%d\n",i,j, ipc_debug.u32IntSendTimes[i][j]);
+			bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_IPC,"å¾€æ ¸%då‘é€ä¸­æ–­%dçš„æ¬¡æ•°ä¸º: \t%d\n",i,j, ipc_debug.u32IntSendTimes[i][j]);
 		}
 	}
 		

@@ -1,9 +1,9 @@
 
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼ş°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 
-  notice:  ²»Òª°üº¬ÈÎºÎÆäËûÍ·ÎÄ¼ş!!!
+  notice:  ä¸è¦åŒ…å«ä»»ä½•å…¶ä»–å¤´æ–‡ä»¶!!!
 *****************************************************************************/
 
 
@@ -19,9 +19,9 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
-/* AP²àKernelÒôÆµÇı¶¯·¢ËÍÊı¾İ¸øhifiÊ±µÄbuffÃèÊö£¬bufAddrÎª×ÜÏßµØÖ·£¬bufSizeºÍdataSizeµ¥Î»byte */
+/* APä¾§KerneléŸ³é¢‘é©±åŠ¨å‘é€æ•°æ®ç»™hifiæ—¶çš„buffæè¿°ï¼ŒbufAddrä¸ºæ€»çº¿åœ°å€ï¼ŒbufSizeå’ŒdataSizeå•ä½byte */
 #if 0                                                                           /*_H2ASN_Skip*/
 #define DRV_SEND_DATA_STRU                                                      \
     VOS_UINT32                              uwBufAddr;                          \
@@ -36,7 +36,7 @@ extern "C" {
 
 #define HIFI_AUDIO_PCM_COMP_COEF_LEN_MAX    (128)
 /*********************************************************
-6402ÏûÏ¢Ã¶¾Ù
+6402æ¶ˆæ¯æšä¸¾
 *********************************************************/
 enum DSP_POWER_STATE_ENUM
 {
@@ -72,40 +72,40 @@ typedef unsigned int MLIB_MODULE_ENUM_UINT32;
 
 enum APDSP_MSG_ENUM
 {
-    ID_AP_DSP_IF_OPEN          = 0xDD10,  /*AP ·¢¸ø DSP£¬¶Ë¿Ú¿ª*/
-    ID_AP_DSP_IF_CLOSE         = 0xDD11,  /*AP ·¢¸ø DSP£¬¶Ë¿Ú¹Ø*/
-    ID_AP_DSP_PARAMETER_SET    = 0xDD12,  /*AP ·¢¸ø DSP£¬Ëã·¨set*/
-    ID_AP_DSP_PARAMETER_GET    = 0xDD13,  /*AP ·¢¸ø DSP£¬Ëã·¨get*/
-    ID_AP_DSP_OM               = 0xDD14,  /*AP ·¢¸ø DSP£¬ÅäÖÃ¹´È¡PCM»òLogÊı¾İ*/
-    ID_DSP_UPDATE_BUF          = 0xDD20,  /*DSP ÒôÆµ²¥·ÅÊı¾İ¸üĞÂÖĞ¶ÏÏûÏ¢*/
-    ID_DSP_LOG_HOOK            = 0xDD21,  /*DSP ×¥È¡logÊı¾İ*/
-    ID_AP_DSP_MADTEST_START    = 0xDD31,  /*AP·¢¸øDSP ÓÃÓÚ²úÏßÆô¶¯²âÊÔMAD*/
-    ID_AP_DSP_MADTEST_STOP     = 0xDD32,  /*AP·¢¸øDSP ÓÃÓÚ²úÏßÍ£Ö¹²âÊÔMAD*/
-    ID_AP_DSP_UARTMODE         = 0xDD33,  /*AP·¢¸øDSP ÓÃÓÚÉè¶¨µ±Ç°UARTÄ£Ê½ºÍ×¥È¡µã*/
-    ID_AP_IMGAE_DOWNLOAD       = 0xDD40,  /*AP ·¢¸ø DSP£¬¾µÏñ¼ÓÔØ*/
+    ID_AP_DSP_IF_OPEN          = 0xDD10,  /*AP å‘ç»™ DSPï¼Œç«¯å£å¼€*/
+    ID_AP_DSP_IF_CLOSE         = 0xDD11,  /*AP å‘ç»™ DSPï¼Œç«¯å£å…³*/
+    ID_AP_DSP_PARAMETER_SET    = 0xDD12,  /*AP å‘ç»™ DSPï¼Œç®—æ³•set*/
+    ID_AP_DSP_PARAMETER_GET    = 0xDD13,  /*AP å‘ç»™ DSPï¼Œç®—æ³•get*/
+    ID_AP_DSP_OM               = 0xDD14,  /*AP å‘ç»™ DSPï¼Œé…ç½®å‹¾å–PCMæˆ–Logæ•°æ®*/
+    ID_DSP_UPDATE_BUF          = 0xDD20,  /*DSP éŸ³é¢‘æ’­æ”¾æ•°æ®æ›´æ–°ä¸­æ–­æ¶ˆæ¯*/
+    ID_DSP_LOG_HOOK            = 0xDD21,  /*DSP æŠ“å–logæ•°æ®*/
+    ID_AP_DSP_MADTEST_START    = 0xDD31,  /*APå‘ç»™DSP ç”¨äºäº§çº¿å¯åŠ¨æµ‹è¯•MAD*/
+    ID_AP_DSP_MADTEST_STOP     = 0xDD32,  /*APå‘ç»™DSP ç”¨äºäº§çº¿åœæ­¢æµ‹è¯•MAD*/
+    ID_AP_DSP_UARTMODE         = 0xDD33,  /*APå‘ç»™DSP ç”¨äºè®¾å®šå½“å‰UARTæ¨¡å¼å’ŒæŠ“å–ç‚¹*/
+    ID_AP_IMGAE_DOWNLOAD       = 0xDD40,  /*AP å‘ç»™ DSPï¼Œé•œåƒåŠ è½½*/
 };
 
 typedef struct _PCM_IF_MSG_STRU
 {
-    unsigned int    uwIFId;         /* IF¿Ú id    */
-    unsigned int    uwIFDirect;     /* Êı¾İ´«Êä·½Ïò,ÊäÈë Êä³ö ¼´ÊäÈëÓÖÊä³ö */
-    unsigned int    uwSampleRateIn; /* ÊäÈë²ÉÑùÂÊ */
-    unsigned int    uwSampleRateOut;/* Êä³ö²ÉÑùÂÊ */
-    unsigned int    uwChannelCount; /* ÉùµÀÊı, ÓÃÀ´±êÊ¶ÓĞĞ§Êı¾İ, Î»¿í¹Ì¶¨32Î», 26Î»ÓĞĞ§ */
-    unsigned int    uwDMASetId;     /* ×éºÏid, 0 ÎŞ×éºÏ  */
-    unsigned int    ucResolution;    /* ÒôÆµÁ÷µÄÓĞĞ§±ÈÌØÂÊ 16bit/24bit */
+    unsigned int    uwIFId;         /* IFå£ id    */
+    unsigned int    uwIFDirect;     /* æ•°æ®ä¼ è¾“æ–¹å‘,è¾“å…¥ è¾“å‡º å³è¾“å…¥åˆè¾“å‡º */
+    unsigned int    uwSampleRateIn; /* è¾“å…¥é‡‡æ ·ç‡ */
+    unsigned int    uwSampleRateOut;/* è¾“å‡ºé‡‡æ ·ç‡ */
+    unsigned int    uwChannelCount; /* å£°é“æ•°, ç”¨æ¥æ ‡è¯†æœ‰æ•ˆæ•°æ®, ä½å®½å›ºå®š32ä½, 26ä½æœ‰æ•ˆ */
+    unsigned int    uwDMASetId;     /* ç»„åˆid, 0 æ— ç»„åˆ  */
+    unsigned int    ucResolution;    /* éŸ³é¢‘æµçš„æœ‰æ•ˆæ¯”ç‰¹ç‡ 16bit/24bit */
 
 } PCM_IF_MSG_STRU;
 
 typedef struct _PCM_PROCESS_DMA_MSG_STRU
 {
-   unsigned int     uwProcessId;    /* ³¡¾° id    */
-   unsigned int     uwIFCount;      /* ĞèÒªµÄIF¿Ú¸öÊı*/
-   PCM_IF_MSG_STRU  stIFCfgList[0]; /* if¿Ú²ÎÊıÁĞ±í,¿É±ä³¤¶È*/
+   unsigned int     uwProcessId;    /* åœºæ™¯ id    */
+   unsigned int     uwIFCount;      /* éœ€è¦çš„IFå£ä¸ªæ•°*/
+   PCM_IF_MSG_STRU  stIFCfgList[0]; /* ifå£å‚æ•°åˆ—è¡¨,å¯å˜é•¿åº¦*/
 } PCM_PROCESS_DMA_MSG_STRU;
 /*****************************************************************************
- ÊµÌåÃû³Æ  : DSP_IF_OPEN_REQ_STRU
- ¹¦ÄÜÃèÊö  : ¸ÃÏûÏ¢´ò¿ªIFÍ¨µÀ
+ å®ä½“åç§°  : DSP_IF_OPEN_REQ_STRU
+ åŠŸèƒ½æè¿°  : è¯¥æ¶ˆæ¯æ‰“å¼€IFé€šé“
 *****************************************************************************/
 typedef struct
 {
@@ -119,19 +119,19 @@ typedef struct
 {
     unsigned short  msgID;
     unsigned short  reserve;
-    unsigned int    uwProcessID;      /* ³¡¾° ID       */
-    unsigned int    uwModuleID;       /* Ä£¿éModule ID */
-    unsigned int    uwSize;           /* ²ÎÊı´óĞ¡      */
-    unsigned char   aucData[0];       /* ²ÎÊıÆğÊ¼µØÖ·  */
+    unsigned int    uwProcessID;      /* åœºæ™¯ ID       */
+    unsigned int    uwModuleID;       /* æ¨¡å—Module ID */
+    unsigned int    uwSize;           /* å‚æ•°å¤§å°      */
+    unsigned char   aucData[0];       /* å‚æ•°èµ·å§‹åœ°å€  */
 } MLIB_PARA_SET_REQ_STRU;
 
 typedef struct
 {
     unsigned short  msgID;
     unsigned short  reserve;
-    unsigned int    uwProcessID;      /* ³¡¾° ID       */
-    unsigned int    uwModuleID;       /* Ä£¿éModule ID */
-    unsigned int    uwSize;           /* ²ÎÊı´óĞ¡      */
+    unsigned int    uwProcessID;      /* åœºæ™¯ ID       */
+    unsigned int    uwModuleID;       /* æ¨¡å—Module ID */
+    unsigned int    uwSize;           /* å‚æ•°å¤§å°      */
 } MLIB_PARA_GET_REQ_STRU;
 
 typedef struct
@@ -143,42 +143,42 @@ typedef struct
 /* OM control */
 enum PCM_HOOK_POINT_ENUM{
     TRACK_LOG_NONE                 = 0x00000000,
-    TRACK_LOG_MAINMIC              = 0x00000001,  /* Ö÷micÊı¾İ      */
-    TRACK_LOG_SUBMIC               = 0x00000002,  /* ¸±micÊı¾İ      */
-    TRACK_LOG_THIRDMIC             = 0x00000004,  /* ÈımicÊı¾İ      */
-    TRACK_LOG_FORTHMIC             = 0x00000008,  /* ËÄmicÊı¾İ      */
-    TRACK_LOG_UPLINK_AFTERPRO      = 0x00000010,  /* ÉÏĞĞÒôĞ§´¦Àíºó */
-    TRACK_LOG_UPLINK_AFTERCODE     = 0x00000020,  /* ÉÏĞĞ±àÂëºó     */
-    TRACK_LOG_DOWNLINK_AFTERPRO    = 0x00000100,  /* ÏÂĞĞÒôĞ§´¦Àíºó */
-    TRACK_LOG_DOWNLINK_AFTERCODE   = 0x00000200,  /* ÏÂĞĞ½âÂëºó     */
-    TRACK_LOG_DOWNLINK_BEFORECODE  = 0x00000400,  /* ÏÂĞĞ½âÂëÇ°     */
-    TRACK_LOG_SMARTPA_IN           = 0x00001000,  /* smartpaÊäÈë    */
-    TRACK_LOG_SMARTPA_OUT          = 0x00002000,  /* smartpaÊä³ö    */
-    TRACK_LOG_SMARTPA_I            = 0x00004000,  /* smartpa IĞÅºÅ  */
-    TRACK_LOG_SMARTPA_V            = 0x00008000,  /* smartpa VĞÅºÅ  */
-    TRACK_LOG_AEC                  = 0x00010000,  /* AEC²Î¿¼ĞÅºÅ    */
-    TRACK_LOG_SOUNDTRIGGER_KEYWORD = 0x00020000,  /* ÓïÒô»½ĞÑ»½ĞÑ´ÊÊı¾İ */
-    TRACK_LOG_UPDATA_LEFT          = 0X00100000,  /* updataÖĞËã·¨Ç°×óÉùµÀÊı¾İ */
-    TRACK_LOG_UPDATA_RIGHT         = 0X00200000,  /* updataÖĞËã·¨Ç°ÓÒÉùµÀÊı¾İ */
-    TRACK_LOG_ALGORITHM_FAILURE    = 0x00400000,  /* Ëã·¨Òì³£ */
+    TRACK_LOG_MAINMIC              = 0x00000001,  /* ä¸»micæ•°æ®      */
+    TRACK_LOG_SUBMIC               = 0x00000002,  /* å‰¯micæ•°æ®      */
+    TRACK_LOG_THIRDMIC             = 0x00000004,  /* ä¸‰micæ•°æ®      */
+    TRACK_LOG_FORTHMIC             = 0x00000008,  /* å››micæ•°æ®      */
+    TRACK_LOG_UPLINK_AFTERPRO      = 0x00000010,  /* ä¸Šè¡ŒéŸ³æ•ˆå¤„ç†å */
+    TRACK_LOG_UPLINK_AFTERCODE     = 0x00000020,  /* ä¸Šè¡Œç¼–ç å     */
+    TRACK_LOG_DOWNLINK_AFTERPRO    = 0x00000100,  /* ä¸‹è¡ŒéŸ³æ•ˆå¤„ç†å */
+    TRACK_LOG_DOWNLINK_AFTERCODE   = 0x00000200,  /* ä¸‹è¡Œè§£ç å     */
+    TRACK_LOG_DOWNLINK_BEFORECODE  = 0x00000400,  /* ä¸‹è¡Œè§£ç å‰     */
+    TRACK_LOG_SMARTPA_IN           = 0x00001000,  /* smartpaè¾“å…¥    */
+    TRACK_LOG_SMARTPA_OUT          = 0x00002000,  /* smartpaè¾“å‡º    */
+    TRACK_LOG_SMARTPA_I            = 0x00004000,  /* smartpa Iä¿¡å·  */
+    TRACK_LOG_SMARTPA_V            = 0x00008000,  /* smartpa Vä¿¡å·  */
+    TRACK_LOG_AEC                  = 0x00010000,  /* AECå‚è€ƒä¿¡å·    */
+    TRACK_LOG_SOUNDTRIGGER_KEYWORD = 0x00020000,  /* è¯­éŸ³å”¤é†’å”¤é†’è¯æ•°æ® */
+    TRACK_LOG_UPDATA_LEFT          = 0X00100000,  /* updataä¸­ç®—æ³•å‰å·¦å£°é“æ•°æ® */
+    TRACK_LOG_UPDATA_RIGHT         = 0X00200000,  /* updataä¸­ç®—æ³•å‰å³å£°é“æ•°æ® */
+    TRACK_LOG_ALGORITHM_FAILURE    = 0x00400000,  /* ç®—æ³•å¼‚å¸¸ */
 };
 
 typedef struct
 {
-    unsigned short  uhwMsgId;         /* OM¿ØÖÆÏûÏ¢ID  0xDD14*/
+    unsigned short  uhwMsgId;         /* OMæ§åˆ¶æ¶ˆæ¯ID  0xDD14*/
     unsigned short  uhwReserve;
-    unsigned int    uwHookType;       /* ×¥È¡ÀàĞÍ: 0-HOOK_OFF, 1-HOOK_LOG, 2-HOOK_LOG_PCM*/
-    unsigned int    uwOutputMode;     /* Êä³öÄ£Ê½£º0-Uart¡¢1-dspif */
-    unsigned int    uwPortNum;        /* Êä³öÄ£Ê½ÎªdspifÊ±µÄdsp if¶Ë¿ÚºÅ */
-    unsigned int    uwForceOutPutLog; /* Ç¿ÖÆÊä³ölogÊı¾İ£º0-²»Ç¿ÖÆ¡¢1-Ç¿ÖÆÊä³ö */
-    unsigned int    uwHookPoints;     /* Êı¾İ¹´È¡µã */
-    unsigned int    uwLogMode;        /* ÀàĞÍÎªLOGÊı¾İÊ±µÄLOG´òÓ¡Ä£Ê½£º0-Ö±Í¨Ä£Ê½¡¢1-»º´æÄ£Ê½ */
-    unsigned int    uwLogLevel;       /* ´òÓ¡¼¶±ğ£º0-Error¡¢1-Warning¡¢2-Infor¡¢3-Debug */
+    unsigned int    uwHookType;       /* æŠ“å–ç±»å‹: 0-HOOK_OFF, 1-HOOK_LOG, 2-HOOK_LOG_PCM*/
+    unsigned int    uwOutputMode;     /* è¾“å‡ºæ¨¡å¼ï¼š0-Uartã€1-dspif */
+    unsigned int    uwPortNum;        /* è¾“å‡ºæ¨¡å¼ä¸ºdspifæ—¶çš„dsp ifç«¯å£å· */
+    unsigned int    uwForceOutPutLog; /* å¼ºåˆ¶è¾“å‡ºlogæ•°æ®ï¼š0-ä¸å¼ºåˆ¶ã€1-å¼ºåˆ¶è¾“å‡º */
+    unsigned int    uwHookPoints;     /* æ•°æ®å‹¾å–ç‚¹ */
+    unsigned int    uwLogMode;        /* ç±»å‹ä¸ºLOGæ•°æ®æ—¶çš„LOGæ‰“å°æ¨¡å¼ï¼š0-ç›´é€šæ¨¡å¼ã€1-ç¼“å­˜æ¨¡å¼ */
+    unsigned int    uwLogLevel;       /* æ‰“å°çº§åˆ«ï¼š0-Errorã€1-Warningã€2-Inforã€3-Debug */
 } OM_CTRL_BLOCK_STRU;
 
 /*****************************************************************************
- ÊµÌåÃû³Æ  : FW_DOWNLOAD_STRU
- ¹¦ÄÜÃèÊö  : ¾µÏñ¼ÓÔØÃüÁî½á¹¹£¬miscºÍhal²ã¹²ÓÃ£¬²»Éæ¼°hifi
+ å®ä½“åç§°  : FW_DOWNLOAD_STRU
+ åŠŸèƒ½æè¿°  : é•œåƒåŠ è½½å‘½ä»¤ç»“æ„ï¼Œmiscå’Œhalå±‚å…±ç”¨ï¼Œä¸æ¶‰åŠhifi
 *****************************************************************************/
 typedef struct
 {
@@ -189,13 +189,13 @@ typedef struct
 
 typedef struct
 {
-    unsigned short  uhwMsgId;/*MADÓïÒô»½ĞÑÀÏ»¯²âÊÔ*/
+    unsigned short  uhwMsgId;/*MADè¯­éŸ³å”¤é†’è€åŒ–æµ‹è¯•*/
     unsigned short  uhwReserve;
 } MAD_TEST_STRU;
 
 typedef struct
 {
-    unsigned short  uhwMsgId;   /*0xDD33,AP·¢¸øDSP ÓÃÓÚÉè¶¨µ±Ç°UARTÄ£Ê½*/
+    unsigned short  uhwMsgId;   /*0xDD33,APå‘ç»™DSP ç”¨äºè®¾å®šå½“å‰UARTæ¨¡å¼*/
     unsigned short  uhwReserve;
     unsigned int    uwUartMode;
 } UARTMODE_STRU;
@@ -203,7 +203,7 @@ typedef struct
 typedef unsigned short  APDSP_MSG_ENUM_UINT16;
 #define AUDIO_PLAY_DEBUG_OPEN_RESERVE (0x0000)
 
-/* OM×´Ì¬ĞÅÏ¢ÖĞÄ¿Ç°×¥È¡ÀàĞÍ*/
+/* OMçŠ¶æ€ä¿¡æ¯ä¸­ç›®å‰æŠ“å–ç±»å‹*/
 enum HOOK_TYPE_ENUM
 {
     HOOK_OFF = 0,
@@ -211,7 +211,7 @@ enum HOOK_TYPE_ENUM
     HOOK_LOG_PCM = 2,
 };
 
-/* OM×´Ì¬ĞÅÏ¢ÖĞÄ¿Ç°×¥È¡µÄÊı¾İÀàĞÍ*/
+/* OMçŠ¶æ€ä¿¡æ¯ä¸­ç›®å‰æŠ“å–çš„æ•°æ®ç±»å‹*/
 enum HOOK_FORCE_OUTPUT_LOG_ENUM
 {
     HOOK_DEFUALT = 0,

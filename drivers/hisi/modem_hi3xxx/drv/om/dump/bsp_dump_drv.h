@@ -17,10 +17,10 @@ extern "C"
 
 #ifndef BSP_CONFIG_HI3630
 /**************************************************************************
-  ºê¶¨Òå
+  å®å®šä¹‰
 **************************************************************************/
 
-/*È«¾ÖÄÚ´æ·ÖÅä*/
+/*å…¨å±€å†…å­˜åˆ†é…*/
 #define DUMP_MEM_BASE                       DDR_MNTN_ADDR_VIRT
 #define DUMP_MEM_TOTAL_SIZE                 DDR_MNTN_SIZE
 #define DUMP_GLOBAL_INFO_ADDR               DUMP_MEM_BASE
@@ -47,7 +47,7 @@ extern "C"
 #define DUMP_EXT_SECTION_SIZE               (DUMP_EXT_MEM_END - DUMP_EXT_SECTION_ADDR)
 #define DUMP_MEM_USED_SIZE                  (DUMP_EXT_MEM_END - DUMP_MEM_BASE)
 
-/*APP¶ÎÄÚ´æ·ÖÅä*/
+/*APPæ®µå†…å­˜åˆ†é…*/
 #define DUMP_CORE_BASE_ADDR                 (DUMP_APP_SECTION_ADDR)
 #define DUMP_MAP_ADDR                       (DUMP_CORE_BASE_ADDR)
 #define DUMP_MAP_SIZE                       (0x80)
@@ -68,7 +68,7 @@ extern "C"
 #define DUMP_PRINT_ADDR                     (DUMP_ALLTASK_TCB_ADDR+DUMP_ALLTASK_TCB_SIZE)
 #define DUMP_PRINT_SIZE                     (0x4000)
 #define DUMP_REGS_ADDR                      (DUMP_PRINT_ADDR+DUMP_PRINT_SIZE)
-#define DUMP_REGS_SIZE                      (0x3000)                                     // ´ı¶¨
+#define DUMP_REGS_SIZE                      (0x3000)                                     // å¾…å®š
 #define DUMP_CPUVIEW_ADDR                   (DUMP_REGS_ADDR+DUMP_REGS_SIZE)
 #define DUMP_CPUVIEW_SIZE                   (0)
 #define DUMP_MEMINFO_ADDR                   (DUMP_CPUVIEW_ADDR+DUMP_CPUVIEW_SIZE)
@@ -78,7 +78,7 @@ extern "C"
 #define DUMP_RSV_ADDR                       (DUMP_USER_DATA_ADDR+DUMP_USER_DATA_SIZE)
 #define DUMP_RSV_SIZE                       (0)
 
-/*À©Õ¹¶ÎÄÚ´æ·ÖÅä*/
+/*æ‰©å±•æ®µå†…å­˜åˆ†é…*/
 #define DUMP_EXT_MAP_ADDR                   (DUMP_EXT_SECTION_ADDR)
 #define DUMP_EXT_MAP_SIZE                   (0x100)
 #define DUMP_EXT_USB_DATA_ADDR              (DUMP_EXT_MAP_ADDR+DUMP_EXT_MAP_SIZE)
@@ -129,7 +129,7 @@ extern "C"
 
 #define DUMP_EXT_MEM_END                    (DUMP_EXT_AMON_ADDR+DUMP_EXT_AMON_SIZE)
 
-/*À©Õ¹¶ÎÓÃÓÚÄÚ²¿µÄÄÚ´æ·ÖÅä£¬Õâ²¿·ÖÄÚ´æ²»¼ÆÈëdumpÎÄ¼ş£¬Áô¸ø¸÷Ä£¿é×ÔÓÉÊ¹ÓÃ*/
+/*æ‰©å±•æ®µç”¨äºå†…éƒ¨çš„å†…å­˜åˆ†é…ï¼Œè¿™éƒ¨åˆ†å†…å­˜ä¸è®¡å…¥dumpæ–‡ä»¶ï¼Œç•™ç»™å„æ¨¡å—è‡ªç”±ä½¿ç”¨*/
 #define DUMP_INTER_OSA_APP_ADDR             (DUMP_EXT_MEM_END)
 #define DUMP_INTER_OSA_APP_SIZE             (64*1024)
 #define DUMP_INTER_OSA_COMM_ADDR            (DUMP_INTER_OSA_APP_ADDR+DUMP_INTER_OSA_APP_SIZE)
@@ -161,7 +161,7 @@ struct hpm_tem_print
 };
 
 /**************************************************************************
-  STRUCT¶¨Òå
+  STRUCTå®šä¹‰
 **************************************************************************/
 #ifndef FUNC_VOID
 typedef void (*func_void_t)(void);
@@ -180,7 +180,7 @@ typedef struct _dump_ctrl_s
 typedef struct
 {
     u32 wdtSwitch;
-    u32 wdtTimerOut;  /*¿´ÃÅ¹·³¬Ê±Ê±¼ä£¬µ¥Î»ms*/
+    u32 wdtTimerOut;  /*çœ‹é—¨ç‹—è¶…æ—¶æ—¶é—´ï¼Œå•ä½ms*/
     u32 sys_view;
 
     union
@@ -189,11 +189,11 @@ typedef struct
         struct
         {
             u32 sci_switch     : 1; /* 00: excdump, 01: usbdump, 1x: no dump */
-            u32 usb_switch     : 1; /* 2 ARMÒì³£¼ì²â¿ª¹Ø*/
-            u32 pmu_switch     : 1; /* 3 ¶ÑÕ»Òç³ö¼ì²â¿ª¹Ø*/
-            u32 sd_switch      : 1; /* 3 ¶ÑÕ»Òç³ö¼ì²â¿ª¹Ø*/
-            u32 icc_switch     : 1; /* 3 ¶ÑÕ»Òç³ö¼ì²â¿ª¹Ø*/
-            u32 ifc_switch     : 1; /* 4 ÈÎÎñÇĞ»»¼ÇÂ¼¿ª¹Ø*/
+            u32 usb_switch     : 1; /* 2 ARMå¼‚å¸¸æ£€æµ‹å¼€å…³*/
+            u32 pmu_switch     : 1; /* 3 å †æ ˆæº¢å‡ºæ£€æµ‹å¼€å…³*/
+            u32 sd_switch      : 1; /* 3 å †æ ˆæº¢å‡ºæ£€æµ‹å¼€å…³*/
+            u32 icc_switch     : 1; /* 3 å †æ ˆæº¢å‡ºæ£€æµ‹å¼€å…³*/
+            u32 ifc_switch     : 1; /* 4 ä»»åŠ¡åˆ‡æ¢è®°å½•å¼€å…³*/
             u32 reserved1      : 26;
         } Bits;
     } mod_cfg;
@@ -201,11 +201,11 @@ typedef struct
 
 
 /**************************************************************************
-  UNION¶¨Òå
+  UNIONå®šä¹‰
 **************************************************************************/
 
 /**************************************************************************
-  OTHERS¶¨Òå
+  OTHERSå®šä¹‰
 **************************************************************************/
 #define dump_debug(fmt, ...)    (bsp_trace(BSP_LOG_LEVEL_ERROR,   BSP_MODU_DUMP, "[dump]: <%s> "fmt, __FUNCTION__, ##__VA_ARGS__))
 #define dump_warning(fmt, ...)  (bsp_trace(BSP_LOG_LEVEL_WARNING, BSP_MODU_DUMP, "[dump]: <%s> "fmt, __FUNCTION__, ##__VA_ARGS__))
@@ -213,7 +213,7 @@ typedef struct
 #define dump_fetal(fmt, ...)    (bsp_trace(BSP_LOG_LEVEL_FATAL,   BSP_MODU_DUMP, "[dump]: <%s> "fmt, __FUNCTION__, ##__VA_ARGS__))
 
 /**************************************************************************
-  º¯ÊıÉùÃ÷
+  å‡½æ•°å£°æ˜
 **************************************************************************/
 
 

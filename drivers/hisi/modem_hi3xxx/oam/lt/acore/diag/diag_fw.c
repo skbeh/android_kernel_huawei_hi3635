@@ -24,7 +24,7 @@ extern "C" {
 #include "diag_tcp.h"
 #include  "drx_msp_api.h"
 /*lint -restore*/
-/*lint -save -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -save -e767 åŽŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_DIAG_FW_C
 /*lint -restore +e767*/
 /*lint --e{565, 718, 746} */
@@ -57,18 +57,18 @@ DIAG_FW_RX_INFO_STRU* diag_FwGetExeCmdNode(VOS_UINT32 ulCmdId)
     DIAG_FW_RX_INFO_STRU* pTempNode = NULL;
     LIST_S* me = NULL;
 
-    /* »ñÈ¡Á´±íÍ· */
+    /* èŽ·å–é“¾è¡¨å¤´ */
     pHeadNode= diag_FwGetDiagNodeInfo();
 
-    /*Ìí¼ÓÐÅºÅÁ¿±£»¤*/
+    /*æ·»åŠ ä¿¡å·é‡ä¿æŠ¤*/
     (VOS_VOID)VOS_SmP(g_DiagFwNodeSem,0);
 
-    /* ÔÚÁ´±íÖÐ²éÕÒÃ¿¸ö×ÓÃüÁî½áµã*/
+    /* åœ¨é“¾è¡¨ä¸­æŸ¥æ‰¾æ¯ä¸ªå­å‘½ä»¤ç»“ç‚¹*/
     blist_for_each(me, &pHeadNode->HiDiagFwList)
     {
         pTempNode = blist_entry(me, DIAG_FW_RX_INFO_STRU, HiDiagFwList);
 
-        /* ÕÒµ½ÐèÒªµÄ½Úµã*/
+        /* æ‰¾åˆ°éœ€è¦çš„èŠ‚ç‚¹*/
         if (ulCmdId == pTempNode->ulCmdId)
         {
             (VOS_VOID)VOS_SmV(g_DiagFwNodeSem);
@@ -79,7 +79,7 @@ DIAG_FW_RX_INFO_STRU* diag_FwGetExeCmdNode(VOS_UINT32 ulCmdId)
     return NULL;
 }
 
-/*lint -save -e40*/ /* PID ¶¨ÒåÕÒ²»µ½´íÎó*/
+/*lint -save -e40*/ /* PID å®šä¹‰æ‰¾ä¸åˆ°é”™è¯¯*/
 
 VOS_VOID diag_FwDelCmdNode(VOS_UINT32 ulCmdId)
 {
@@ -88,10 +88,10 @@ VOS_VOID diag_FwDelCmdNode(VOS_UINT32 ulCmdId)
     DIAG_FW_RX_INFO_STRU* pTempNode = NULL;
     LIST_S* me = NULL;
 
-    /* »ñÈ¡Á´±íÍ· */
+    /* èŽ·å–é“¾è¡¨å¤´ */
     pHeadNode = diag_FwGetDiagNodeInfo();
 
-    /*±éÀúÁ´±í²éÕÒÏàÍ¬cmd id*/
+    /*éåŽ†é“¾è¡¨æŸ¥æ‰¾ç›¸åŒcmd id*/
     (VOS_VOID)VOS_SmP(g_DiagFwNodeSem,0);
     blist_for_each(me, &pHeadNode->HiDiagFwList)
     {
@@ -100,7 +100,7 @@ VOS_VOID diag_FwDelCmdNode(VOS_UINT32 ulCmdId)
             break;
     }
     (VOS_VOID)VOS_SmV(g_DiagFwNodeSem);
-    /*Î´ÕÒµ½ÔòÖ±½Ó·µ»Ø*/
+    /*æœªæ‰¾åˆ°åˆ™ç›´æŽ¥è¿”å›ž*/
     if(NULL == pTempNode)
     {
         return;
@@ -109,15 +109,15 @@ VOS_VOID diag_FwDelCmdNode(VOS_UINT32 ulCmdId)
     {
         return;
     }
-    /*Ìí¼ÓÐÅºÅÁ¿±£»¤*/
+    /*æ·»åŠ ä¿¡å·é‡ä¿æŠ¤*/
     (VOS_VOID)VOS_SmP(g_DiagFwNodeSem,0);
 
-    /*É¾³ý½Úµã*/
+    /*åˆ é™¤èŠ‚ç‚¹*/
     blist_del(&pTempNode->HiDiagFwList);
 
     (VOS_VOID)VOS_SmV(g_DiagFwNodeSem);
 
-    /*ÊÍ·ÅÄÚ´æ*/
+    /*é‡Šæ”¾å†…å­˜*/
     VOS_MemFree(MSP_PID_DIAG_FW,pTempNode);
 
     return ;
@@ -131,7 +131,7 @@ DIAG_FW_RX_INFO_STRU* diag_FwAddCmdToList(VOS_UINT8 * pstReq, VOS_UINT32 ulRcvle
     DIAG_FW_RX_INFO_STRU* pNewNode = NULL;
     VOS_UINT32 ret;
 
-    /*ÉêÇëÒ»¸ö½Úµã´óÐ¡*/
+    /*ç”³è¯·ä¸€ä¸ªèŠ‚ç‚¹å¤§å°*/
     pNewNode = VOS_MemAlloc(MSP_PID_DIAG_FW,DYNAMIC_MEM_PT,sizeof(DIAG_FW_RX_INFO_STRU) + ulRcvlen);
     if (NULL == pNewNode)
     {
@@ -140,27 +140,27 @@ DIAG_FW_RX_INFO_STRU* diag_FwAddCmdToList(VOS_UINT8 * pstReq, VOS_UINT32 ulRcvle
 
     VOS_MemSet(pNewNode, 0, ulRcvlen + sizeof(DIAG_FW_RX_INFO_STRU));
 
-    /*½«ÐÂÀ´µÄÃüÁî»º´æµ½½ÚµãÖÐ*/
+    /*å°†æ–°æ¥çš„å‘½ä»¤ç¼“å­˜åˆ°èŠ‚ç‚¹ä¸­*/
     VOS_MemCpy(pNewNode->ucDiagRcvData, pstReq, ulRcvlen);
 
-    /*½«CMDIDÈ¡³öÀ´£¬ÓÃÓÚºóÃæ²éÕÒÖ´ÐÐ½Úµã*/
+    /*å°†CMDIDå–å‡ºæ¥ï¼Œç”¨äºŽåŽé¢æŸ¥æ‰¾æ‰§è¡ŒèŠ‚ç‚¹*/
     pNewNode->ulCmdId = (((MSP_DIAG_HEAD_STRU*)(pNewNode->ucDiagRcvData+sizeof(MSP_SOCP_HEAD_STRU)))->ulID);
 
     DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_LIST_CMD,pNewNode->ulCmdId,ulRcvlen,0);
 
-    /*Æô¶¯¶¨Ê±Æ÷£¬ÒÔ±ãAGENTÄ£¿éÃ»ÓÐ»Ø¸´Ê±DIAG FWÄÜÕý³£¹¤×÷*/
+    /*å¯åŠ¨å®šæ—¶å™¨ï¼Œä»¥ä¾¿AGENTæ¨¡å—æ²¡æœ‰å›žå¤æ—¶DIAG FWèƒ½æ­£å¸¸å·¥ä½œ*/
     ret = VOS_StartRelTimer(&pNewNode->fwCtrlTimer, MSP_PID_DIAG_FW,DIAG_CMD_TIMEOUT_TIME_LEN, 0,pNewNode->ulCmdId,VOS_RELTIMER_NOLOOP, VOS_TIMER_NO_PRECISION);
     if(ret != ERR_MSP_SUCCESS)
     {
         diag_printf("VOS_StartRelTimer fail [%s]\n",__func__);
     }
-    /* »ñÈ¡Á´±íÍ· */
+    /* èŽ·å–é“¾è¡¨å¤´ */
     pHeadNode = diag_FwGetDiagNodeInfo();
 
-    /*Ìí¼ÓÐÅºÅÁ¿±£»¤*/
+    /*æ·»åŠ ä¿¡å·é‡ä¿æŠ¤*/
     (VOS_VOID)VOS_SmP(g_DiagFwNodeSem,0);
 
-    /* ²åÈë½Úµãµ½Á´±íÎ²²¿ */
+    /* æ’å…¥èŠ‚ç‚¹åˆ°é“¾è¡¨å°¾éƒ¨ */
     blist_add_tail(&pNewNode->HiDiagFwList, &pHeadNode->HiDiagFwList);
 
     (VOS_VOID)VOS_SmV(g_DiagFwNodeSem);
@@ -171,20 +171,20 @@ VOS_VOID diag_FwTimeOutPackt(VOS_VOID * pstRxinfo, VOS_UINT8 * pstSocpPackt)
 {
     VOS_UINT64 ulTime = 0;
 
-    /* ´ÓREQ Êý¾ÝpstRxinfoÖÐ¸´ÖÆ³öÔ­ÓÐSOCPºÍDIAG HEADER£¬×éSOCPÍ·*/
+    /* ä»ŽREQ æ•°æ®pstRxinfoä¸­å¤åˆ¶å‡ºåŽŸæœ‰SOCPå’ŒDIAG HEADERï¼Œç»„SOCPå¤´*/
     VOS_MemCpy(pstSocpPackt, ((DIAG_FW_RX_INFO_STRU*)pstRxinfo)->ucDiagRcvData,
         sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
 
-    /* ×éSOCP °ü*/
+    /* ç»„SOCP åŒ…*/
     ulTime                           = diag_GetFrameTime();
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSId              = MSP_SOCP_SID_DIAG_SERVER;
-    ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSSId             = MSP_SOCP_HIGH4BIT_SSID;  // ¸ßËÄÎ»
+    ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSSId             = MSP_SOCP_HIGH4BIT_SSID;  // é«˜å››ä½
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ucServiceSessionId = MSP_SOCP_SERVER_SESSION_ID;
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ucMsgType          = MSP_SOCP_MSG_TYPE_IND;
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ulMsgTransId       = (g_DiagLogPktNum.ulIndNum)++;
     VOS_MemCpy(((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->aucTimeData, &ulTime, sizeof(VOS_UINT64));
 
-    /* ×é°ü½á¹¹»¯ID(DIAG HEADER)*/
+    /* ç»„åŒ…ç»“æž„åŒ–ID(DIAG HEADER)*/
     ((MSP_DIAG_HEAD_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU)))->ulID =
         (MSP_STRU_ID_GET_28_31_FIELD(MSP_STRU_ID_28_31_GROUP_MSP) | MSP_STRU_ID_GET_16_23_FIELD(MSP_STRU_ID_16_23_SYS_CMD)\
         | MSP_STRU_ID_GET_0_15_FIELD(DIAG_CMD_TIMER_OUT_IND));
@@ -192,7 +192,7 @@ VOS_VOID diag_FwTimeOutPackt(VOS_VOID * pstRxinfo, VOS_UINT8 * pstSocpPackt)
         sizeof(DIAG_CMD_TIMER_OUT_IND_STRU);
 
 
-    /*×é°üDIAG_CMD_TIMER_OUT_IND_STRU£¬Ó¦¸ÃÔÙ·¢ËÍ³¬Ê±ÏûÏ¢´¦×ö*/
+    /*ç»„åŒ…DIAG_CMD_TIMER_OUT_IND_STRUï¼Œåº”è¯¥å†å‘é€è¶…æ—¶æ¶ˆæ¯å¤„åš*/
     ((DIAG_CMD_TIMER_OUT_IND_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU) +
         sizeof(MSP_DIAG_HEAD_STRU)))->ulCmdID =
         ((MSP_DIAG_HEAD_STRU*)(((DIAG_FW_RX_INFO_STRU*)pstRxinfo)->ucDiagRcvData + sizeof(MSP_SOCP_HEAD_STRU)))->ulID;
@@ -209,18 +209,18 @@ VOS_UINT32 diag_FwCmdTimeOutProc(VOS_UINT32 ulCmdId)
     DIAG_FW_RX_INFO_STRU* pTempNode = NULL;
     LIST_S* me = NULL;
 
-    /* »ñÈ¡Á´±íÍ· */
+    /* èŽ·å–é“¾è¡¨å¤´ */
     pHeadNode= diag_FwGetDiagNodeInfo();
 
-    /*Ìí¼ÓÐÅºÅÁ¿±£»¤*/
+    /*æ·»åŠ ä¿¡å·é‡ä¿æŠ¤*/
     (VOS_VOID)VOS_SmP(g_DiagFwNodeSem,0);
 
-    /* ÔÚÁ´±íÖÐ²éÕÒÃ¿¸ö×ÓÃüÁî½áµã*/
+    /* åœ¨é“¾è¡¨ä¸­æŸ¥æ‰¾æ¯ä¸ªå­å‘½ä»¤ç»“ç‚¹*/
     blist_for_each(me, &pHeadNode->HiDiagFwList)
     {
         pTempNode = blist_entry(me, DIAG_FW_RX_INFO_STRU, HiDiagFwList);
 
-        /* ÕÒµ½ÐèÒªµÄ½Úµã*/
+        /* æ‰¾åˆ°éœ€è¦çš„èŠ‚ç‚¹*/
         if (ulCmdId == pTempNode->ulCmdId)
         {
             (VOS_VOID)VOS_SmV(g_DiagFwNodeSem);
@@ -228,7 +228,7 @@ VOS_UINT32 diag_FwCmdTimeOutProc(VOS_UINT32 ulCmdId)
             diag_printf("fw cmd 0x%x timer out, node found!\n", pTempNode->ulCmdId);
             ulTmpLen = (sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU)+ sizeof(DIAG_CMD_TIMER_OUT_IND_STRU));
 
-            /*ÉêÇë±àÂëÔ´buf*/
+            /*ç”³è¯·ç¼–ç æºbuf*/
             diag_LockCoderSrcBuf();
             pBuf = diag_GetCoderSrcBuf(ulTmpLen,SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
             if(NULL == pBuf)
@@ -236,10 +236,10 @@ VOS_UINT32 diag_FwCmdTimeOutProc(VOS_UINT32 ulCmdId)
                 diag_UnLockCoderSrcBuf();
                 return ERR_MSP_FAILURE;
             }
-            /*´ò°üSOCPÍ·*/
+            /*æ‰“åŒ…SOCPå¤´*/
             diag_FwTimeOutPackt(pTempNode, pBuf);
 
-            /*¿½±´Òª·¢ËÍÄÚÈÝµ½bufÖÐ£¬²¢·¢ËÍ¸øSOCP*/
+            /*æ‹·è´è¦å‘é€å†…å®¹åˆ°bufä¸­ï¼Œå¹¶å‘é€ç»™SOCP*/
             ret = diag_SendCoderSrcToSocp(pBuf,ulTmpLen,SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
             diag_UnLockCoderSrcBuf();
             return ret;
@@ -261,23 +261,23 @@ VOS_VOID diag_FwSocpCnfPackt(DIAG_FW_RX_INFO_STRU * pstRxinfo, VOS_UINT8 * pstSo
         return;
     }
 
-    /* ´ÓREQ Êý¾ÝpstRxinfoÖÐ¸´ÖÆ³öÔ­ÓÐSOCPºÍDIAG HEADER£¬×éSOCPÍ·*/
+    /* ä»ŽREQ æ•°æ®pstRxinfoä¸­å¤åˆ¶å‡ºåŽŸæœ‰SOCPå’ŒDIAG HEADERï¼Œç»„SOCPå¤´*/
     VOS_MemCpy(pstSocpPackt, (pstRxinfo)->ucDiagRcvData,
         sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU));
 
-    /*¸ü¸ÄSOCPÍ·ÖÐÒ»Ð©ÐèÒª¸ü¸ÄµÄ×Ö¶Î*/
+    /*æ›´æ”¹SOCPå¤´ä¸­ä¸€äº›éœ€è¦æ›´æ”¹çš„å­—æ®µ*/
     ulTime                           = diag_GetFrameTime();
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSId              = MSP_SOCP_SID_DIAG_SERVER;
-    ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSSId             = MSP_SOCP_HIGH4BIT_SSID_ACPU << 4;    // ¸ßËÄÎ»
+    ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->usSSId             = MSP_SOCP_HIGH4BIT_SSID_ACPU << 4;    // é«˜å››ä½
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ucServiceSessionId = MSP_SOCP_SERVER_SESSION_ID;
     ((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->ucMsgType          = MSP_SOCP_MSG_TYPE_CNF;
-    VOS_MemCpy(((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->aucTimeData, &ulTime, 8);  // ÔÝÊ±Ê¹ÓÃ TO DO
+    VOS_MemCpy(((MSP_SOCP_HEAD_STRU*)pstSocpPackt)->aucTimeData, &ulTime, 8);  // æš‚æ—¶ä½¿ç”¨ TO DO
 
-    /* ×é°ü½á¹¹»¯ID(DIAG HEADER)*/
+    /* ç»„åŒ…ç»“æž„åŒ–ID(DIAG HEADER)*/
     ((MSP_DIAG_HEAD_STRU*)(pstSocpPackt + sizeof(MSP_SOCP_HEAD_STRU)))->ulDataSize =
         sizeof(MSP_DIAG_DATA_CNF_STRU) + ulCmdParaLen;
 
-    /* ×é°üMSP_DIAG_DATA_CNF_STRU,È¡³ö½ÚµãµÄAUID*/
+    /* ç»„åŒ…MSP_DIAG_DATA_CNF_STRU,å–å‡ºèŠ‚ç‚¹çš„AUID*/
     ((MSP_DIAG_DATA_CNF_STRU*)(pstSocpPackt +
         sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU)))->ulAuid =
         ((MSP_DIAG_DATA_REQ_STRU*)(((DIAG_FW_RX_INFO_STRU*)pstRxinfo)->ucDiagRcvData +
@@ -297,7 +297,7 @@ VOS_UINT32 diag_FwCmdCnfProc(DIAG_FW_RX_INFO_STRU * pstRxinfo,VOS_UINT8* pData,V
 
     ulTmpLen = (DIAG_FULL_HEAD_LEN + ulLen);
 
-    /*ÉêÇë±àÂëÔ´buf*/
+    /*ç”³è¯·ç¼–ç æºbuf*/
     diag_LockCoderSrcBuf();
     pBuf = diag_GetCoderSrcBuf(ulTmpLen,SOCP_CODER_SRC_LOM_CNF);
     if(NULL == pBuf)
@@ -306,12 +306,12 @@ VOS_UINT32 diag_FwCmdCnfProc(DIAG_FW_RX_INFO_STRU * pstRxinfo,VOS_UINT8* pData,V
         return ERR_MSP_FAILURE;
     }
 
-    /*´ò°üSOCPÍ·*/
+    /*æ‰“åŒ…SOCPå¤´*/
     diag_FwSocpCnfPackt(pstRxinfo, pBuf,ulLen);
 
     VOS_MemCpy(pBuf + DIAG_FULL_HEAD_LEN, pData, ulLen);
 
-    /*·¢ËÍ¸øSOCP*/
+    /*å‘é€ç»™SOCP*/
     ret = diag_SendCoderSrcToSocp(pBuf,ulTmpLen,SOCP_CODER_SRC_LOM_CNF);
     diag_UnLockCoderSrcBuf();
     return ret;
@@ -324,13 +324,13 @@ VOS_UINT32 diag_FwAnsyCmdIndProc(VOS_UINT8* pData,VOS_UINT32 ulLen,VOS_UINT32 ul
 
     ulTmpLen = (sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU)+ ulLen);
 
-    /*¼ì²éDIAGÊÇ·ñ³õÊ¼»¯ÇÒHSOÊÇ·ñÁ¬½ÓÉÏ*/
+    /*æ£€æŸ¥DIAGæ˜¯å¦åˆå§‹åŒ–ä¸”HSOæ˜¯å¦è¿žæŽ¥ä¸Š*/
     if(!DIAG_IS_CONN_ON)
     {
         return ERR_MSP_NO_INITILIZATION;
     }
 
-    /*ÉêÇë±àÂëÔ´buf*/
+    /*ç”³è¯·ç¼–ç æºbuf*/
     diag_LockCoderSrcBuf();
     pBuf = diag_GetCoderSrcBuf(ulTmpLen,SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
     if(NULL == pBuf)
@@ -339,11 +339,11 @@ VOS_UINT32 diag_FwAnsyCmdIndProc(VOS_UINT8* pData,VOS_UINT32 ulLen,VOS_UINT32 ul
         return ERR_MSP_FAILURE;
     }
 
-    /*´ò°üSOCPÍ·*/
+    /*æ‰“åŒ…SOCPå¤´*/
     diag_SocpIndCmdPkt(pBuf, MSP_STRU_ID_16_23_PS_TRANS, ulLen, (VOS_UINT16)ulCmdId);
     VOS_MemCpy(pBuf + sizeof(MSP_SOCP_HEAD_STRU) + sizeof(MSP_DIAG_HEAD_STRU), pData, ulLen);
 
-    /*·¢ËÍ¸øSOCP*/
+    /*å‘é€ç»™SOCP*/
     ret = diag_SendCoderSrcToSocp(pBuf,ulTmpLen,SOCP_CODER_SRC_LOM_PRECEDENCE_IND);
     diag_UnLockCoderSrcBuf();
     return ret;
@@ -367,13 +367,13 @@ VOS_UINT32 diag_FwForwardCmdToAgent(DIAG_FW_RX_INFO_STRU * pNode,VOS_UINT32 ulSe
 
     ulCmdId = (((MSP_DIAG_HEAD_STRU*)DIAG_OFFSET_SOCP_GET_DIAG_HEAD(pNode->ucDiagRcvData))->ulID);
 
-    if((DRV_RESET_CALLCBFUN_RESET_BEFORE == g_DiagResetingCcore)&&(ulCmdId == ulConCmdId))/*µ¥¶À¸´Î»Ê±,Èç¹ûÊÇConnectÃüÁî,·µ»Ø´íÎó*/
+    if((DRV_RESET_CALLCBFUN_RESET_BEFORE == g_DiagResetingCcore)&&(ulCmdId == ulConCmdId))/*å•ç‹¬å¤ä½æ—¶,å¦‚æžœæ˜¯Connectå‘½ä»¤,è¿”å›žé”™è¯¯*/
     {
         return ERR_MSP_UNAVAILABLE;
     }
-    else if((DRV_RESET_CALLCBFUN_RESET_BEFORE == g_DiagResetingCcore)&&(ulCmdId == ulDisConCmdId))/*µ¥¶À¸´Î»Ê±,Èç¹ûÊÇDisConnectÃüÁî,Ö»¸øAºË*/
+    else if((DRV_RESET_CALLCBFUN_RESET_BEFORE == g_DiagResetingCcore)&&(ulCmdId == ulDisConCmdId))/*å•ç‹¬å¤ä½æ—¶,å¦‚æžœæ˜¯DisConnectå‘½ä»¤,åªç»™Aæ ¸*/
     {
-        /*½«ÃüÁî×ª·¢¸øAPP AGENT ´¦Àí*/
+        /*å°†å‘½ä»¤è½¬å‘ç»™APP AGENT å¤„ç†*/
         app_ret = diag_SendMsg(MSP_PID_DIAG_FW, MSP_PID_DIAG_APP_AGENT,ID_MSG_DIAG_CMD_REQ_FW_TO_APP_AGENT,pNode->ucDiagRcvData, ulSendSize);
         if(app_ret != ERR_MSP_SUCCESS)
         {
@@ -381,21 +381,21 @@ VOS_UINT32 diag_FwForwardCmdToAgent(DIAG_FW_RX_INFO_STRU * pNode,VOS_UINT32 ulSe
         }
         return app_ret;
     }
-    /*½«ÃüÁî×ª·¢¸øAPP AGENT ´¦Àí*/
+    /*å°†å‘½ä»¤è½¬å‘ç»™APP AGENT å¤„ç†*/
     app_ret = diag_SendMsg(MSP_PID_DIAG_FW, MSP_PID_DIAG_APP_AGENT,ID_MSG_DIAG_CMD_REQ_FW_TO_APP_AGENT,pNode->ucDiagRcvData, ulSendSize);
     if(app_ret != ERR_MSP_SUCCESS)
     {
        DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_DECODE_CMD_ENTRY_ERROR, 0, 0, 2);
     }
 
-     /*½«ÃüÁî×ª·¢¸øAGENT ´¦Àí*/
+     /*å°†å‘½ä»¤è½¬å‘ç»™AGENT å¤„ç†*/
     comm_ret = diag_SendMsg(MSP_PID_DIAG_FW, MSP_PID_DIAG_AGENT,ID_MSG_DIAG_CMD_REQ_FW_TO_AGENT,pNode->ucDiagRcvData, ulSendSize);
     if(comm_ret != ERR_MSP_SUCCESS)
     {
        DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_DECODE_CMD_ENTRY_ERROR, 0, 0, 3);
     }
 
-    /* Á½¸öÏûÏ¢¶¼·¢ËÍÊ§°Ü£¬²Å·µ»ØERROR£¬É¾³ý½Úµã */
+    /* ä¸¤ä¸ªæ¶ˆæ¯éƒ½å‘é€å¤±è´¥ï¼Œæ‰è¿”å›žERRORï¼Œåˆ é™¤èŠ‚ç‚¹ */
     return (app_ret&comm_ret);
 }
 
@@ -404,14 +404,14 @@ VOS_VOID diag_FwDealTimeOutCmdEntry(VOS_UINT32 ulCmdId)
 
     VOS_UINT32 ret = ERR_MSP_FAILURE;
 
-    /*´ò³¬Ê±°ü»Ø¸´*/
+    /*æ‰“è¶…æ—¶åŒ…å›žå¤*/
     ret = diag_FwCmdTimeOutProc(ulCmdId);
     if(ret != ERR_MSP_SUCCESS)
     {
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_TIME_OUT_ENTRY_ERROR,ret,0,0);
     }
 
-    /*É¾³ý³¬Ê±´¦Àí½Úµã*/
+    /*åˆ é™¤è¶…æ—¶å¤„ç†èŠ‚ç‚¹*/
     if(ret != ERR_MSP_INVALID_PARAMETER)
     {
         diag_FwDelCmdNode(ulCmdId);
@@ -443,7 +443,7 @@ VOS_VOID diag_FwDealDecodeCmdEntry(VOS_UINT8* pData,VOS_UINT32 ulLen)
     }
 #endif
 
-    /*½«½âÂëºóÊý¾Ý·ÅÈëÁ´±íÖÐ*/
+    /*å°†è§£ç åŽæ•°æ®æ”¾å…¥é“¾è¡¨ä¸­*/
     pNode = diag_FwAddCmdToList(pData,ulLen);
     if (NULL == pNode)
     {
@@ -451,14 +451,14 @@ VOS_VOID diag_FwDealDecodeCmdEntry(VOS_UINT8* pData,VOS_UINT32 ulLen)
         return ;
     }
 
-    /*×ª·¢ÃüÁî¸ø¶ÔÓ¦µÄAGENTÄ£¿é´¦Àí*/
+    /*è½¬å‘å‘½ä»¤ç»™å¯¹åº”çš„AGENTæ¨¡å—å¤„ç†*/
     ret = diag_FwForwardCmdToAgent(pNode,ulLen);
     if (ERR_MSP_SUCCESS != ret)
     {
-        /*É¾³ý¶¨Ê±Æ÷*/
+        /*åˆ é™¤å®šæ—¶å™¨*/
         VOS_StopRelTimer(&pNode->fwCtrlTimer);
 
-        /* ÃüÁî´¦ÀíÍê±Ï£¬É¾³ý½Úµã*/
+        /* å‘½ä»¤å¤„ç†å®Œæ¯•ï¼Œåˆ é™¤èŠ‚ç‚¹*/
         diag_FwDelCmdNode(pNode->ulCmdId);
     }
     return ;
@@ -476,7 +476,7 @@ VOS_VOID diag_FwDealAppAgentCnfEntry(VOS_UINT8* pData,VOS_UINT32 ulLen)
        return;
     }
 
-    /*¸ù¾ÝCMDID²éÕÒ½Úµã*/
+    /*æ ¹æ®CMDIDæŸ¥æ‰¾èŠ‚ç‚¹*/
     ulCmdId = ((DIAG_CMD_AGENT_TO_FW_CNF_STRU*)pData)->ulCmdId;
     pstRxinfo = diag_FwGetExeCmdNode(ulCmdId);
     if(NULL == pstRxinfo)
@@ -485,10 +485,10 @@ VOS_VOID diag_FwDealAppAgentCnfEntry(VOS_UINT8* pData,VOS_UINT32 ulLen)
         return;
     }
 
-    /*É¾³ý¶¨Ê±Æ÷*/
+    /*åˆ é™¤å®šæ—¶å™¨*/
     VOS_StopRelTimer(&pstRxinfo->fwCtrlTimer);
 
-    /* MSPÆÕÍ¨ÃüÁî»Ø¸´£¬°´ÕÕCNFÃüÁî°ü×é°ü*/
+    /* MSPæ™®é€šå‘½ä»¤å›žå¤ï¼ŒæŒ‰ç…§CNFå‘½ä»¤åŒ…ç»„åŒ…*/
     ret = diag_FwCmdCnfProc(pstRxinfo,((DIAG_CMD_AGENT_TO_FW_CNF_STRU*)pData)->aucData,(ulLen-sizeof(DIAG_CMD_AGENT_TO_FW_CNF_STRU)));
     if(ERR_MSP_SUCCESS !=ret)
     {
@@ -514,7 +514,7 @@ VOS_VOID diag_FwDealAppAgentCnfEntry(VOS_UINT8* pData,VOS_UINT32 ulLen)
     }
 #endif
 
-    /* ÃüÁî´¦ÀíÍê±Ï£¬É¾³ý½Úµã*/
+    /* å‘½ä»¤å¤„ç†å®Œæ¯•ï¼Œåˆ é™¤èŠ‚ç‚¹*/
     diag_FwDelCmdNode(pstRxinfo->ulCmdId);
 
     return;
@@ -532,16 +532,16 @@ VOS_VOID diag_FwDealAgentCnfEntry(VOS_UINT8* pData,VOS_UINT32 ulLen)
        return;
     }
 
-    /*¸ù¾ÝCMDID²éÕÒ½Úµã*/
+    /*æ ¹æ®CMDIDæŸ¥æ‰¾èŠ‚ç‚¹*/
     ulCmdId = ((DIAG_CMD_AGENT_TO_FW_CNF_STRU*)pData)->ulCmdId;
 
     pstRxinfo = diag_FwGetExeCmdNode(ulCmdId);
     if(DIAG_IS_PS_CMD(ulCmdId&0xffff))
     {
-        /* ÕÒ²»µ½½Úµã£¬ËµÃ÷ÊÇINDÃüÁî*/
+        /* æ‰¾ä¸åˆ°èŠ‚ç‚¹ï¼Œè¯´æ˜Žæ˜¯INDå‘½ä»¤*/
         if(NULL == pstRxinfo)
         {
-            /* °´ÕÕINDÃüÁî°ü×é°ü*/
+            /* æŒ‰ç…§INDå‘½ä»¤åŒ…ç»„åŒ…*/
             DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_AGENT_PS_IND_ENTRY, ulCmdId, ulLen, 1);
             ret = diag_FwAnsyCmdIndProc(((DIAG_CMD_AGENT_TO_FW_CNF_STRU*)pData)->aucData,(ulLen-sizeof(DIAG_CMD_AGENT_TO_FW_CNF_STRU)),ulCmdId);
             if(ERR_MSP_SUCCESS !=ret)
@@ -551,10 +551,10 @@ VOS_VOID diag_FwDealAgentCnfEntry(VOS_UINT8* pData,VOS_UINT32 ulLen)
             return;
         }
 
-        /*É¾³ý¶¨Ê±Æ÷*/
+        /*åˆ é™¤å®šæ—¶å™¨*/
         VOS_StopRelTimer(&pstRxinfo->fwCtrlTimer);
 
-        /* PSÍ¸´«ÃüÁî»Ø¸´£¬°´ÕÕCNFÃüÁî°ü×é°ü*/
+        /* PSé€ä¼ å‘½ä»¤å›žå¤ï¼ŒæŒ‰ç…§CNFå‘½ä»¤åŒ…ç»„åŒ…*/
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_AGENT_PS_CNF_ENTRY, ulCmdId, ulLen, 2);
         ret = diag_FwCmdCnfProc(pstRxinfo,((DIAG_CMD_AGENT_TO_FW_CNF_STRU*)pData)->aucData,(ulLen-sizeof(DIAG_CMD_AGENT_TO_FW_CNF_STRU)));
         if(ERR_MSP_SUCCESS !=ret)
@@ -562,7 +562,7 @@ VOS_VOID diag_FwDealAgentCnfEntry(VOS_UINT8* pData,VOS_UINT32 ulLen)
             DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_AGENT_PS_CNF_ENTRY_ERROR,ret,ulCmdId,1);
         }
 
-        /* ÃüÁî´¦ÀíÍê±Ï£¬É¾³ý½Úµã*/
+        /* å‘½ä»¤å¤„ç†å®Œæ¯•ï¼Œåˆ é™¤èŠ‚ç‚¹*/
         diag_FwDelCmdNode(pstRxinfo->ulCmdId);
         return;
     }
@@ -573,17 +573,17 @@ VOS_VOID diag_FwDealAgentCnfEntry(VOS_UINT8* pData,VOS_UINT32 ulLen)
         return;
     }
 
-    /*É¾³ý¶¨Ê±Æ÷*/
+    /*åˆ é™¤å®šæ—¶å™¨*/
     VOS_StopRelTimer(&pstRxinfo->fwCtrlTimer);
 
-    /* MSPÆÕÍ¨ÃüÁî»Ø¸´£¬°´ÕÕCNFÃüÁî°ü×é°ü*/
+    /* MSPæ™®é€šå‘½ä»¤å›žå¤ï¼ŒæŒ‰ç…§CNFå‘½ä»¤åŒ…ç»„åŒ…*/
     ret = diag_FwCmdCnfProc(pstRxinfo,((DIAG_CMD_AGENT_TO_FW_CNF_STRU*)pData)->aucData,(ulLen-sizeof(DIAG_CMD_AGENT_TO_FW_CNF_STRU)));
     if(ERR_MSP_SUCCESS !=ret)
     {
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_AGENT_CNF_ENTRY_ERROR,ret,ulCmdId,1);
     }
 
-    /* ÃüÁî´¦ÀíÍê±Ï£¬É¾³ý½Úµã*/
+    /* å‘½ä»¤å¤„ç†å®Œæ¯•ï¼Œåˆ é™¤èŠ‚ç‚¹*/
     diag_FwDelCmdNode(pstRxinfo->ulCmdId);
 
     return;
@@ -593,13 +593,13 @@ VOS_UINT32 diag_FwGlobalInit(VOS_VOID)
     DIAG_FW_RX_INFO_STRU* pHeadNode = NULL;
     VOS_UINT32 ret = ERR_MSP_SUCCESS;
 
-    /* »ñÈ¡Á´±íÍ· */
+    /* èŽ·å–é“¾è¡¨å¤´ */
     pHeadNode= diag_FwGetDiagNodeInfo();
 
-    /* ³õÊ¼»¯ÇëÇóÁ´±í */
+    /* åˆå§‹åŒ–è¯·æ±‚é“¾è¡¨ */
     blist_head_init(&pHeadNode->HiDiagFwList);
 
-    /* ´´½¨½Úµã±£»¤ÐÅºÅÁ¿*/
+    /* åˆ›å»ºèŠ‚ç‚¹ä¿æŠ¤ä¿¡å·é‡*/
     ret = VOS_SmBCreate(NULL, 1, VOS_SEMA4_FIFO,&g_DiagFwNodeSem);
 
     return ret;
@@ -607,7 +607,7 @@ VOS_UINT32 diag_FwGlobalInit(VOS_VOID)
 VOS_VOID diag_FwSetChanSta(VOS_UINT32 flag)
 {
 
-    /*Èç¹ûµ±Ç°ÒªÉèÖÃ×´Ì¬ºÍÏÖÔÚ×´Ì¬Ò»ÖÂ£¬Ôò²»Ðè¸Ä±ä*/
+    /*å¦‚æžœå½“å‰è¦è®¾ç½®çŠ¶æ€å’ŒçŽ°åœ¨çŠ¶æ€ä¸€è‡´ï¼Œåˆ™ä¸éœ€æ”¹å˜*/
     if(((g_ulDiagCfgInfo&0x2)>>1)== flag)
     {
         return;
@@ -628,7 +628,7 @@ VOS_VOID diag_FwSetChanSta(VOS_UINT32 flag)
         g_diagSocpIsEnable = FALSE;
 #endif
 
-        /*½«×´Ì¬·¢ËÍ¸øMºË*/
+        /*å°†çŠ¶æ€å‘é€ç»™Mæ ¸*/
         diag_SendMsg(MSP_PID_DIAG_FW,MSP_PID_DIAG_AGENT,ID_MSG_DIAG_HSO_DISCONN_IND,(VOS_UINT8*)&flag,sizeof(VOS_UINT32));
     }
 
@@ -645,7 +645,7 @@ VOS_UINT32 diag_FwMsgProcInit(enum VOS_INIT_PHASE_DEFINE ip)
     {
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_INIT,ret,0,0);
 
-        /*È«¾Ö±äÁ¿³õÊ¼»¯*/
+        /*å…¨å±€å˜é‡åˆå§‹åŒ–*/
         ret = diag_FwGlobalInit();
         if(ret != ERR_MSP_SUCCESS)
         {
@@ -653,7 +653,7 @@ VOS_UINT32 diag_FwMsgProcInit(enum VOS_INIT_PHASE_DEFINE ip)
             return ret;
         }
 
-        /*DIAG SOCP BUF³õÊ¼»¯*/
+        /*DIAG SOCP BUFåˆå§‹åŒ–*/
         ret = diag_BufCtrlGlobalInit();
         if(ret != ERR_MSP_SUCCESS)
         {
@@ -661,7 +661,7 @@ VOS_UINT32 diag_FwMsgProcInit(enum VOS_INIT_PHASE_DEFINE ip)
             return ret;
         }
 
-        /*×¢²á¸øSCMµÄ½âÂëÄ¿µÄ»Øµ÷*/
+        /*æ³¨å†Œç»™SCMçš„è§£ç ç›®çš„å›žè°ƒ*/
         ret = SCM_RegDecoderDestProc(SOCP_DECODER_DST_LOM,(SCM_DECODERDESTFUCN)Diag_SocpDecodeDesDataProc);
         if(ret != ERR_MSP_SUCCESS)
         {
@@ -669,7 +669,7 @@ VOS_UINT32 diag_FwMsgProcInit(enum VOS_INIT_PHASE_DEFINE ip)
             return ret;
         }
 
-        /*ÉèÖÃDIAG³õÊ¼»¯bit*/
+        /*è®¾ç½®DIAGåˆå§‹åŒ–bit*/
         ret = diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_INIT_BIT,DIAG_CFG_SWT_OPEN);
         if(ret != ERR_MSP_SUCCESS)
         {
@@ -694,19 +694,19 @@ VOS_VOID diag_FwMsgProc(MsgBlock* pMsgBlock)
     REL_TIMER_MSG *pTimer =NULL;
     DIAG_DATA_MSG_STRU* pMsgTmp =NULL;
     /*lint --e{740, 142} */
-    /*Èë²ÎÅÐ¶Ï*/
+    /*å…¥å‚åˆ¤æ–­*/
     if (NULL == pMsgBlock)
     {
         return;
     }
 
-    /*ÈÎÎñ¿ªÊ¼´¦Àí£¬²»ÔÊÐíË¯Ãß*/
+    /*ä»»åŠ¡å¼€å§‹å¤„ç†ï¼Œä¸å…è®¸ç¡çœ */
 	drx_msp_fid_vote_lock(DRX_DIAG_FW_VOTE);
     /*lint -save -e30*/
-    /*¸ù¾Ý·¢ËÍPID£¬Ö´ÐÐ²»Í¬´¦Àí*/
+    /*æ ¹æ®å‘é€PIDï¼Œæ‰§è¡Œä¸åŒå¤„ç†*/
     switch(pMsgBlock->ulSenderPid)
     {
-        /*³¬Ê±ÏûÏ¢£¬°´ÕÕ³¬Ê±°ü¸ñÊ½£¬´ò°ü»Ø¸´*/
+        /*è¶…æ—¶æ¶ˆæ¯ï¼ŒæŒ‰ç…§è¶…æ—¶åŒ…æ ¼å¼ï¼Œæ‰“åŒ…å›žå¤*/
         case DOPRA_PID_TIMER:
             diag_printf("fw cmd timer out!\n");
             DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_TIME_OUT_ENTRY,0,0,0);
@@ -714,7 +714,7 @@ VOS_VOID diag_FwMsgProc(MsgBlock* pMsgBlock)
             diag_FwDealTimeOutCmdEntry(pTimer->ulPara);
             break;
 #if 0
-        /*´¦ÀíHDLC½âÂëºóÊý¾Ý*/
+        /*å¤„ç†HDLCè§£ç åŽæ•°æ®*/
         case MSP_PID_DIAG_FW:
 
             pMsgTmp = (DIAG_DATA_MSG_STRU*)pMsgBlock;
@@ -722,7 +722,7 @@ VOS_VOID diag_FwMsgProc(MsgBlock* pMsgBlock)
             diag_FwDealDecodeCmdEntry(pMsgTmp->pContext,pMsgTmp->ulLen);
             break;
 #endif
-        /*´¦ÀíAºË·¢¹ýÀ´µÄ»Ø¸´*/
+        /*å¤„ç†Aæ ¸å‘è¿‡æ¥çš„å›žå¤*/
         case MSP_PID_DIAG_APP_AGENT:
 
             pMsgTmp = (DIAG_DATA_MSG_STRU*)pMsgBlock;
@@ -730,7 +730,7 @@ VOS_VOID diag_FwMsgProc(MsgBlock* pMsgBlock)
             diag_FwDealAppAgentCnfEntry(pMsgTmp->pContext,pMsgTmp->ulLen);
             break;
 
-        /*´¦ÀíMºË·¢¹ýÀ´µÄ»Ø¸´ */
+        /*å¤„ç†Mæ ¸å‘è¿‡æ¥çš„å›žå¤ */
         case MSP_PID_DIAG_AGENT:
 
             pMsgTmp = (DIAG_DATA_MSG_STRU*)pMsgBlock;
@@ -750,13 +750,13 @@ VOS_VOID diag_FwMsgProc(MsgBlock* pMsgBlock)
             }
             break;
 #endif
-        /*½ÓÊÕµ½ÆäËûPID·¢¹ýÀ´µÄ´íÎóÊý¾Ý£¬²»Óè´¦Àí */
+        /*æŽ¥æ”¶åˆ°å…¶ä»–PIDå‘è¿‡æ¥çš„é”™è¯¯æ•°æ®ï¼Œä¸äºˆå¤„ç† */
         default:
             DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_FW_ERROR_ENTRY,0,0,4);
             break;
     }
     /*lint -restore +e30*/
-    /*ÈÎÎñ´¦ÀíÍê³É£¬ÔÊÐíË¯Ãß*/
+    /*ä»»åŠ¡å¤„ç†å®Œæˆï¼Œå…è®¸ç¡çœ */
 	drx_msp_fid_vote_unlock(DRX_DIAG_FW_VOTE);
 
     return;
@@ -771,7 +771,7 @@ VOS_UINT32 diag_FwDecodeDataCheck(VOS_UINT8 * pDataBuf)
     pstSocpStru = (MSP_SOCP_HEAD_STRU *)pDataBuf;
     pstDiagStru = (MSP_DIAG_HEAD_STRU *)(pDataBuf + sizeof(MSP_SOCP_HEAD_STRU));
 
-    /*ÏÈÅÐ¶ÏSOCPÍ·ÊÇ·ñÕýÈ·*/
+    /*å…ˆåˆ¤æ–­SOCPå¤´æ˜¯å¦æ­£ç¡®*/
     if(pstSocpStru->usSId != MSP_SOCP_SID_DIAG_SERVER)
     {
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_DECODE_PACKET_RCVE_ERROR, pstSocpStru->usSId, (VOS_UINT32)0, 3);
@@ -786,7 +786,7 @@ VOS_UINT32 diag_FwDecodeDataCheck(VOS_UINT8 * pDataBuf)
         return ERR_MSP_NOT_SUPPORT;
     }
 
-    /*ÔÙÅÐ¶ÏDIAG Í·ÊÇ·ñÕýÈ·*/
+    /*å†åˆ¤æ–­DIAG å¤´æ˜¯å¦æ­£ç¡®*/
     if(((pstDiagStru->ulID)>>28 != MSP_STRU_ID_28_31_GROUP_MSP)
     && ((pstDiagStru->ulID)>>28 != MSP_STRU_ID_28_31_GROUP_PS)
     && ((pstDiagStru->ulID)>>28 != MSP_STRU_ID_28_31_GROUP_LTE_DSP)
@@ -806,7 +806,7 @@ VOS_UINT32 diag_FwSendDecodeCmdToFw(VOS_UINT8 * pDataBuf, VOS_UINT32 ulLen)
     /*lint -save -e958*/
    VOS_UINT32 ret = ERR_MSP_SUCCESS;
     /*lint -restore*/
-    /*²ÎÊý¼ì²é£¬È·ÈÏHSOÏÂ·¢Êý¾ÝÊÇ·ñÕýÈ·*/
+    /*å‚æ•°æ£€æŸ¥ï¼Œç¡®è®¤HSOä¸‹å‘æ•°æ®æ˜¯å¦æ­£ç¡®*/
     ret = diag_FwDecodeDataCheck(pDataBuf);
     if(ret != ERR_MSP_SUCCESS)
     {
@@ -816,7 +816,7 @@ VOS_UINT32 diag_FwSendDecodeCmdToFw(VOS_UINT8 * pDataBuf, VOS_UINT32 ulLen)
 
     diag_FwDealDecodeCmdEntry(pDataBuf,ulLen);
 #if 0
-    /*·¢ËÍ¸øDIAG FW½øÐÐ´¦Àí*/
+    /*å‘é€ç»™DIAG FWè¿›è¡Œå¤„ç†*/
     ret = diag_SendMsg(MSP_PID_DIAG_FW, MSP_PID_DIAG_FW,ID_MSG_DIAG_CMD_REQ_FW_TO_FW,pDataBuf, ulLen);
     if(ret != ERR_MSP_SUCCESS)
     {
@@ -889,7 +889,7 @@ VOS_UINT32 Diag_SocpDecodeDesDataProc(SOCP_DECODER_DST_ENUM_U32 enChanID,VOS_UIN
     DIAG_SOCP_DECODE_PACKET_HEAD* HeadInfo;
 
 
-    /*Èë²Î¼ì²é*/
+    /*å…¥å‚æ£€æŸ¥*/
     if(pucData == VOS_NULL)
     {
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_DECODE_PACKET_RCVE_ERROR, 0, 0, 0);
@@ -912,25 +912,25 @@ VOS_UINT32 Diag_SocpDecodeDesDataProc(SOCP_DECODER_DST_ENUM_U32 enChanID,VOS_UIN
 
     VOS_MemCpy(pData,pucData,ulSize);
 
-    /*»Ø¾íÖ¸Õë¿ÉÄÜÎª¿Õ*/
+    /*å›žå·æŒ‡é’ˆå¯èƒ½ä¸ºç©º*/
     if((VOS_NULL != pucRBData)&&(0 != ulRBSize))
     {
         VOS_MemCpy(pData+ulSize,pucRBData,ulRBSize);
     }
-    /*ÓÎ±êÖ¸Õë*/
+    /*æ¸¸æ ‡æŒ‡é’ˆ*/
     pCurData = pData;
     while(1)/*lint !e716*/
     {
         HeadInfo = (DIAG_SOCP_DECODE_PACKET_HEAD*)(pCurData+ulCurLen);
 
-        /*Ã»ÓÐHISI°üÍ·£¬ÈÏÎªÎÞÐ§°ü*/
+        /*æ²¡æœ‰HISIåŒ…å¤´ï¼Œè®¤ä¸ºæ— æ•ˆåŒ…*/
         if( HeadInfo->ulMagic != DIAG_SOCP_DECODE_HEAD_MAGIC )
         {
             DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_DECODE_PACKET_RCVE_ERROR, 0, HeadInfo->ulMagic, 3);
             diag_printf("err packet head 0x%x ,0x%x!\n",HeadInfo->ulMagic,HeadInfo->ulDatalen);
             break;
         }
-        /*Ê£ÓàÊý¾Ý³¤¶ÈÐ¡ÓÚ°üÍ·¼ÇÂ¼³¤¶È£¬ÈÏÎªÎÞÐ§°ü*/
+        /*å‰©ä½™æ•°æ®é•¿åº¦å°äºŽåŒ…å¤´è®°å½•é•¿åº¦ï¼Œè®¤ä¸ºæ— æ•ˆåŒ…*/
         if( HeadInfo->ulDatalen >(ulTotalLen-ulCurLen-sizeof(DIAG_SOCP_DECODE_PACKET_HEAD)) )
         {
             diag_printf("%s enter here %d!\n",__func__,__LINE__);
@@ -940,7 +940,7 @@ VOS_UINT32 Diag_SocpDecodeDesDataProc(SOCP_DECODER_DST_ENUM_U32 enChanID,VOS_UIN
 
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_DECODE_PACKET_RCVE, enChanID, (VOS_UINT32)(HeadInfo->ulDatalen), 0);
 
-        /*·¢ËÍµ¥¸ö°ü*/
+        /*å‘é€å•ä¸ªåŒ…*/
         ulRet = diag_FwSendDecodeCmdToFw(HeadInfo->data,HeadInfo->ulDatalen);
         if(ulRet)
         {
@@ -948,10 +948,10 @@ VOS_UINT32 Diag_SocpDecodeDesDataProc(SOCP_DECODER_DST_ENUM_U32 enChanID,VOS_UIN
             break;
         }
 
-        /*ÒÆ¶¯Ö¸Õëµ½ÏÂÒ»¸ö°ü*/
+        /*ç§»åŠ¨æŒ‡é’ˆåˆ°ä¸‹ä¸€ä¸ªåŒ…*/
         ulCurLen += ((sizeof(DIAG_SOCP_DECODE_PACKET_HEAD) + HeadInfo->ulDatalen + 7)&(~7));
 
-        /*ÏÂÒ»¸ö°üµÄÆðÊ¼³¤¶È¼ÓÉÏ°üÍ·³¤¶È²»ÄÜ³¬¹ýÊý¾Ý×Ü³¤¶È*/
+        /*ä¸‹ä¸€ä¸ªåŒ…çš„èµ·å§‹é•¿åº¦åŠ ä¸ŠåŒ…å¤´é•¿åº¦ä¸èƒ½è¶…è¿‡æ•°æ®æ€»é•¿åº¦*/
         if((ulCurLen + sizeof(DIAG_SOCP_DECODE_PACKET_HEAD)) >= ulTotalLen)
         {
             break;

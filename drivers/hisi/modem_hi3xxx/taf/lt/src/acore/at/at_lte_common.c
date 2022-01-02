@@ -2,29 +2,29 @@
  */
 /*
  */
-/*                  °æÈ¨ËùÓÐ (C), 1998-2009, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+/*                  ç‰ˆæƒæ‰€æœ‰ (C), 1998-2009, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
  */
 /*
  */
 /******************************************************************************
  */
-/*  ÎÄ ¼þ Ãû   : at_lte_common.c
+/*  æ–‡ ä»¶ å   : at_lte_common.c
  */
-/*  °æ ±¾ ºÅ   : V1.0
+/*  ç‰ˆ æœ¬ å·   : V1.0
  */
-/*  Éú³ÉÈÕÆÚ   : 2011-03-10
+/*  ç”Ÿæˆæ—¥æœŸ   : 2011-03-10
  */
-/*  ¹¦ÄÜÃèÊö   : AT¿ò¼ÜµÄÍ¨ÓÃ´¦Àí
+/*  åŠŸèƒ½æè¿°   : ATæ¡†æž¶çš„é€šç”¨å¤„ç†
  */
 /*
  */
-/*  º¯ÊýÁÐ±í   : TODO: ...
+/*  å‡½æ•°åˆ—è¡¨   : TODO: ...
  */
-/*  ÐÞ¸ÄÀúÊ·   :
+/*  ä¿®æ”¹åŽ†å²   :
  */
-/*  1.ÈÕ    ÆÚ : 2011-03-10
+/*  1.æ—¥    æœŸ : 2011-03-10
  */
-/*    ÐÞ¸ÄÄÚÈÝ : ´´½¨ÎÄ¼þ
+/*    ä¿®æ”¹å†…å®¹ : åˆ›å»ºæ–‡ä»¶
  */
 /*
  */
@@ -51,11 +51,11 @@
 #include "at_lte_common.h"
 #include "ATCmdProc.h"
 
-/*lint -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -e767 åŽŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_AT_LTE_COMMON_C
 /*lint +e767 */
 
-/* ·¢ËÍ»º³åÇø
+/* å‘é€ç¼“å†²åŒº
  */
 AT_SEND_DATA_BUFFER_STRU gstLAtSendData = {{0},};
 VOS_UINT8 *pgucLAtSndCodeAddr = &gstLAtSendData.aucBuffer[2];
@@ -76,7 +76,7 @@ AT_ERROR_CODE_TABLE_STRU g_stErrCodeTable[] = {
     {APP_ERR_NUM_VALUE_INVALID,                 AT_CME_INCORRECT_PARAMETERS},
     {APP_ERR_NUM_LEN_INVALID,                   AT_CME_INCORRECT_PARAMETERS},
 
-    /* ²¦ºÅ´íÎó
+    /* æ‹¨å·é”™è¯¯
  */
     {APP_ERR_SM_APN_LEN_ILLEGAL,                AT_CME_APN_LEN_ILLEGAL},
     {APP_ERR_SM_APN_SYNTACTICAL_ERROR,          AT_CME_APN_SYNTACTICAL_ERROR},
@@ -102,7 +102,7 @@ AT_ERROR_CODE_TABLE_STRU g_stErrCodeTable[] = {
     {ERR_MSP_NV_NOT_SUPPORT_LENTH,      AT_DEVICE_NV_WRITE_FAIL_OVERLEN},
     {ERR_MSP_NV_BAD_BLOCK,              AT_DEVICE_NV_WRITE_FAIL_BADFLASH},
     {ERR_MSP_NV_ERROR_WRITE,            AT_DEVICE_NV_WRITE_FAIL_UNKNOWN},
-    /* ×°±¸ ERROR CODE
+    /* è£…å¤‡ ERROR CODE
  */
     {ERR_MSP_SUCCESS,                   AT_OK},
     {ERR_MSP_FAILURE,                   AT_ERROR},
@@ -153,27 +153,27 @@ AT_ERROR_CODE_TABLE_STRU g_stErrCodeTable[] = {
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: atChgErrorCode
+/* å‡½æ•°åç§°: atChgErrorCode
  */
-/* ¹¦ÄÜÃèÊö: °ÑÆäËûÄ£¿é·µ»ØµÄ´íÎóÂë×ª»»³ÉATµÄ´íÎóÂë
- */
-/*
- */
-/* ²ÎÊýËµÃ÷:
- */
-/*   usTafErrorCode [in] ´íÎóÂë
+/* åŠŸèƒ½æè¿°: æŠŠå…¶ä»–æ¨¡å—è¿”å›žçš„é”™è¯¯ç è½¬æ¢æˆATçš„é”™è¯¯ç 
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* å‚æ•°è¯´æ˜Ž:
  */
-/*    ·µ»ØATµÄ´íÎóÂë
+/*   usTafErrorCode [in] é”™è¯¯ç 
  */
 /*
  */
-/* µ÷ÓÃÒªÇó: TODO: ...
+/* è¿” å›ž å€¼:
  */
-/* µ÷ÓÃ¾ÙÀý: TODO: ...
+/*    è¿”å›žATçš„é”™è¯¯ç 
+ */
+/*
+ */
+/* è°ƒç”¨è¦æ±‚: TODO: ...
+ */
+/* è°ƒç”¨ä¸¾ä¾‹: TODO: ...
  */
 /******************************************************************************
  */
@@ -200,33 +200,33 @@ static VOS_UINT32 ChgErrorCode(VOS_UINT32 usTafErrorCode)
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: CmdErrProc
+/* å‡½æ•°åç§°: CmdErrProc
  */
-/* ¹¦ÄÜÃèÊö: ´íÎóÂë×ª»»¼°AT»Ø¸´ÉÏ±¨
- */
-/*
- */
-/* ²ÎÊýËµÃ÷:
- */
-/*   ucClientId [in] ¿Í»§¶ËID
- */
-/*   ulErrCode [in]  ´íÎóÂë
- */
-/*   usBufLen [in]   »Ø¸´ÐÅÏ¢
- */
-/*   pucBuf [in]     »Ø¸´ÐÅÏ¢³¤¶È
+/* åŠŸèƒ½æè¿°: é”™è¯¯ç è½¬æ¢åŠATå›žå¤ä¸ŠæŠ¥
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* å‚æ•°è¯´æ˜Ž:
  */
-/*    ÎÞ
+/*   ucClientId [in] å®¢æˆ·ç«¯ID
+ */
+/*   ulErrCode [in]  é”™è¯¯ç 
+ */
+/*   usBufLen [in]   å›žå¤ä¿¡æ¯
+ */
+/*   pucBuf [in]     å›žå¤ä¿¡æ¯é•¿åº¦
  */
 /*
  */
-/* µ÷ÓÃÒªÇó: TODO: ...
+/* è¿” å›ž å€¼:
  */
-/* µ÷ÓÃ¾ÙÀý: TODO: ...
+/*    æ— 
+ */
+/*
+ */
+/* è°ƒç”¨è¦æ±‚: TODO: ...
+ */
+/* è°ƒç”¨ä¸¾ä¾‹: TODO: ...
  */
 /******************************************************************************
  */
@@ -238,7 +238,7 @@ VOS_VOID CmdErrProc(VOS_UINT8 ucClientId, VOS_UINT32 ulErrCode, VOS_UINT16 usBuf
     if(NULL != pucBuf)
     {
         /*MSP_MEMCPY(gstAtSendData.aucBuffer, pucBuf, usBufLen); */
-        /*¸Ä³ÉÏÂÃæµÄÒÔÆ¥Åäº¯Êý At_FormatResultData */
+        /*æ”¹æˆä¸‹é¢çš„ä»¥åŒ¹é…å‡½æ•° At_FormatResultData */
         MSP_MEMCPY(pgucAtSndCodeAddr, pucBuf, usBufLen);
     }
 
@@ -259,31 +259,31 @@ VOS_VOID CmdErrProc(VOS_UINT8 ucClientId, VOS_UINT32 ulErrCode, VOS_UINT16 usBuf
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: atSendFtmDataMsg
+/* å‡½æ•°åç§°: atSendFtmDataMsg
  */
-/* ¹¦ÄÜÃèÊö: ATÄ£¿é¸øFTM Ä£¿é·¢ËÍÏûÏ¢
+/* åŠŸèƒ½æè¿°: ATæ¨¡å—ç»™FTM æ¨¡å—å‘é€æ¶ˆæ¯
  */
 /*
  */
-/* ²ÎÊýËµÃ÷:
+/* å‚æ•°è¯´æ˜Ž:
  */
-/*   TaskId [in] ½ÓÊÕPID
+/*   TaskId [in] æŽ¥æ”¶PID
  */
-/*   MsgId  [in] ÏûÏ¢ID
+/*   MsgId  [in] æ¶ˆæ¯ID
  */
-/*   ulClientId [in] ¶Ë¿ÚºÅ
+/*   ulClientId [in] ç«¯å£å·
  */
-/*   pData  [in] Êý¾ÝÆðÊ¼
+/*   pData  [in] æ•°æ®èµ·å§‹
  */
-/*   uLen   [in] Êý¾Ý³¤¶È
+/*   uLen   [in] æ•°æ®é•¿åº¦
  */
-/* ·µ »Ø Öµ:
+/* è¿” å›ž å€¼:
  */
-/*    ERR_MSP_SUCCESS³É¹¦
+/*    ERR_MSP_SUCCESSæˆåŠŸ
  */
-/*    ·ÇERR_MSP_SUCCESSÊ§°Ü
+/*    éžERR_MSP_SUCCESSå¤±è´¥
  */
-/* ×÷    Õß: lwx26324 [20110927]
+/* ä½œ    è€…: lwx26324 [20110927]
  */
 /******************************************************************************
  */
@@ -341,7 +341,7 @@ VOS_UINT32 atSendDataMsg(VOS_UINT32 TaskId, VOS_UINT32 MsgId, VOS_VOID* pData, V
     return u32Ret;
 }
 
-/* ¶¨ÒåÁËLTEÓëTDSË½ÓÐATÃüÁî */
+/* å®šä¹‰äº†LTEä¸ŽTDSç§æœ‰ATå‘½ä»¤ */
 
 
 AT_PAR_CMD_ELEMENT_STRU g_astAtTLCmdTbl[] = {

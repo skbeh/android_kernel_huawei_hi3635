@@ -1,22 +1,22 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : NetfilterExCtrl.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : caikai
-  Éú³ÉÈÕÆÚ   : 2011Äê11ÔÂ22ÈÕ
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   :
-  º¯ÊýÁÐ±í   :
+  æ–‡ ä»¶ å   : NetfilterExCtrl.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : caikai
+  ç”Ÿæˆæ—¥æœŸ   : 2011å¹´11æœˆ22æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   :
+  å‡½æ•°åˆ—è¡¨   :
 
-  ÐÞ¸ÄÀúÊ·   :
+  ä¿®æ”¹åŽ†å²   :
 
 ******************************************************************************/
 
 /******************************************************************************
-   1 Í·ÎÄ¼þ°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "om.h"
 
@@ -31,40 +31,40 @@
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 #define THIS_FILE_ID PS_FILE_ID_ACPU_NFEX_C
 
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
-#define             PACKAGE_HEAD_LEN        (80)        /*Éè¶¨µÄ½ØÈ¡°üÍ·µÄ³¤¶È*/
-#define             OM_SOCK_PORT_NUM        (3000)      /*ÓëOMµÄºêSOCK_PORT_NUM±£³ÖÒ»ÖÂ*/
+#define             PACKAGE_HEAD_LEN        (80)        /*è®¾å®šçš„æˆªå–åŒ…å¤´çš„é•¿åº¦*/
+#define             OM_SOCK_PORT_NUM        (3000)      /*ä¸ŽOMçš„å®SOCK_PORT_NUMä¿æŒä¸€è‡´*/
 /*****************************************************************************
-  3 Íâ²¿º¯Êý±äÁ¿ÉùÃ÷
+  3 å¤–éƒ¨å‡½æ•°å˜é‡å£°æ˜Ž
 *****************************************************************************/
 
 extern NF_EXT_ENTITY_STRU           g_stExEntity;
 extern NF_EXT_FLOW_CTRL_ENTITY      g_stExFlowCtrlEntity;
 
 /******************************************************************************
-  4 º¯ÊýÊµÏÖ
+  4 å‡½æ•°å®žçŽ°
 ******************************************************************************/
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_IsOmData
- ¹¦ÄÜÃèÊö  : ÅÐ¶ÏÊÇ·ñOMµÃÊý¾Ý,¶ÔÓÚÐ­ÒéÕ»ÖÐµÃomÊý¾Ý²»ÄÜ×¥°ü£¬·ñÔò×¥°ü·ç±©
- ÊäÈë²ÎÊý  : struct sk_buff *skb    ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_EXT_FLAG_OM_DATA/NF_EXT_FLAG_NOT_OM_DATA
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_IsOmData
+ åŠŸèƒ½æè¿°  : åˆ¤æ–­æ˜¯å¦OMå¾—æ•°æ®,å¯¹äºŽåè®®æ ˆä¸­å¾—omæ•°æ®ä¸èƒ½æŠ“åŒ…ï¼Œå¦åˆ™æŠ“åŒ…é£Žæš´
+ è¾“å…¥å‚æ•°  : struct sk_buff *skb    å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_EXT_FLAG_OM_DATA/NF_EXT_FLAG_NOT_OM_DATA
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 NF_EXT_FLAG_OM_DATA_ENUM_U32 NFExt_IsOmData(struct sk_buff *skb)
 {
@@ -78,13 +78,13 @@ NF_EXT_FLAG_OM_DATA_ENUM_U32 NFExt_IsOmData(struct sk_buff *skb)
 
     ipHeader        = (struct iphdr *)(skb_network_header(skb));
 
-    /*Èç¹û²»ÊÇTCP±¨ÎÄÔòÖ±½Ó·µ»Ø*/
+    /*å¦‚æžœä¸æ˜¯TCPæŠ¥æ–‡åˆ™ç›´æŽ¥è¿”å›ž*/
     if ( NF_EXT_RPO_TCP != ipHeader->protocol )
     {
         return NF_EXT_FLAG_NOT_OM_DATA;
     }
 
-    /* ´«Êä²ãµÄÊý¾ÝÔÚip²ãÖ®ºó */
+    /* ä¼ è¾“å±‚çš„æ•°æ®åœ¨ipå±‚ä¹‹åŽ */
     tcpHeader       = (struct tcphdr *)(skb_network_header(skb) + sizeof(struct iphdr));
 
     srcIp           = ipHeader->saddr;
@@ -103,21 +103,21 @@ NF_EXT_FLAG_OM_DATA_ENUM_U32 NFExt_IsOmData(struct sk_buff *skb)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_BrDataExport
- ¹¦ÄÜÃèÊö  : ½«¹´È¡ÍøÇÅÖÐ×ª±¨ÎÄµ¼³öµ½SDT
- ÊäÈë²ÎÊý  : struct sk_buff *skb,       ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *device_in, Êý¾Ý·¢ËÍÉè±¸ÐÅÏ¢
-             const struct net_device *device_out, Êý¾Ý½ÓÊÕÉè±¸ÐÅÏ¢
-             IPS_MNTN_TRACE_MSG_TYPE_ENUM_UINT16 usType  ¿ÉÎ¬¿É²âÏûÏ¢ÀàÐÍ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_BrDataExport
+ åŠŸèƒ½æè¿°  : å°†å‹¾å–ç½‘æ¡¥ä¸­è½¬æŠ¥æ–‡å¯¼å‡ºåˆ°SDT
+ è¾“å…¥å‚æ•°  : struct sk_buff *skb,       å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *device_in, æ•°æ®å‘é€è®¾å¤‡ä¿¡æ¯
+             const struct net_device *device_out, æ•°æ®æŽ¥æ”¶è®¾å¤‡ä¿¡æ¯
+             IPS_MNTN_TRACE_MSG_TYPE_ENUM_UINT16 usType  å¯ç»´å¯æµ‹æ¶ˆæ¯ç±»åž‹
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_VOID NFExt_BrDataExport( struct sk_buff *skb,
                                 const struct net_device *device_in,
@@ -127,7 +127,7 @@ VOS_VOID NFExt_BrDataExport( struct sk_buff *skb,
     VOS_UINT8                       *pucData;
     VOS_UINT32                       ulHookDataLen;
 
-    /* skb->dataÖ¸ÏòÊý¾Ý°üµÄIPÍ·²¿£¬ÉÏÒÆ14¸ö×Ö½ÚÁî pucDataÖ¸ÏòÊý¾Ý°üµÄmacÍ·²¿ */
+    /* skb->dataæŒ‡å‘æ•°æ®åŒ…çš„IPå¤´éƒ¨ï¼Œä¸Šç§»14ä¸ªå­—èŠ‚ä»¤ pucDataæŒ‡å‘æ•°æ®åŒ…çš„macå¤´éƒ¨ */
     pucData             = skb->data - MAC_HEADER_LENGTH;
     ulHookDataLen       = ((skb->len > NF_EXT_MAX_IP_SIZE) ? NF_EXT_MAX_IP_SIZE : skb->len) + MAC_HEADER_LENGTH;
 
@@ -135,21 +135,21 @@ VOS_VOID NFExt_BrDataExport( struct sk_buff *skb,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_ArpDataExport
- ¹¦ÄÜÃèÊö  : ½«¹´È¡ARP±¨ÎÄµ¼³öµ½SDT
- ÊäÈë²ÎÊý  : struct sk_buff *skb,       ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *device_in, Êý¾Ý·¢ËÍÉè±¸ÐÅÏ¢
-             const struct net_device *device_out, Êý¾Ý½ÓÊÕÉè±¸ÐÅÏ¢
-             IPS_MNTN_TRACE_MSG_TYPE_ENUM_UINT16 usType  ¿ÉÎ¬¿É²âÏûÏ¢ÀàÐÍ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_ArpDataExport
+ åŠŸèƒ½æè¿°  : å°†å‹¾å–ARPæŠ¥æ–‡å¯¼å‡ºåˆ°SDT
+ è¾“å…¥å‚æ•°  : struct sk_buff *skb,       å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *device_in, æ•°æ®å‘é€è®¾å¤‡ä¿¡æ¯
+             const struct net_device *device_out, æ•°æ®æŽ¥æ”¶è®¾å¤‡ä¿¡æ¯
+             IPS_MNTN_TRACE_MSG_TYPE_ENUM_UINT16 usType  å¯ç»´å¯æµ‹æ¶ˆæ¯ç±»åž‹
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_VOID NFExt_ArpDataExport( struct sk_buff *skb,
                                     const struct net_device *device,
@@ -165,21 +165,21 @@ VOS_VOID NFExt_ArpDataExport( struct sk_buff *skb,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_IpDataExport
- ¹¦ÄÜÃèÊö  : ½«¹´È¡IP±¨ÎÄµ¼³öµ½SDT
- ÊäÈë²ÎÊý  : struct sk_buff *skb,       ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *device_in, Êý¾Ý·¢ËÍÉè±¸ÐÅÏ¢
-             const struct net_device *device_out, Êý¾Ý½ÓÊÕÉè±¸ÐÅÏ¢
-             IPS_MNTN_TRACE_MSG_TYPE_ENUM_UINT16 usType  ¿ÉÎ¬¿É²âÏûÏ¢ÀàÐÍ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_IpDataExport
+ åŠŸèƒ½æè¿°  : å°†å‹¾å–IPæŠ¥æ–‡å¯¼å‡ºåˆ°SDT
+ è¾“å…¥å‚æ•°  : struct sk_buff *skb,       å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *device_in, æ•°æ®å‘é€è®¾å¤‡ä¿¡æ¯
+             const struct net_device *device_out, æ•°æ®æŽ¥æ”¶è®¾å¤‡ä¿¡æ¯
+             IPS_MNTN_TRACE_MSG_TYPE_ENUM_UINT16 usType  å¯ç»´å¯æµ‹æ¶ˆæ¯ç±»åž‹
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 VOS_VOID NFExt_IpDataExport( struct sk_buff *skb,
                          const struct net_device *device,
@@ -193,7 +193,7 @@ VOS_VOID NFExt_IpDataExport( struct sk_buff *skb,
         return;
     }
 
-    /* skb->dataÖ¸ÏòÊý¾Ý°üµÄIPÍ·²¿£¬ÉÏÒÆ14¸ö×Ö½ÚÁî pucDataÖ¸ÏòÊý¾Ý°üµÄmacÍ·²¿ */
+    /* skb->dataæŒ‡å‘æ•°æ®åŒ…çš„IPå¤´éƒ¨ï¼Œä¸Šç§»14ä¸ªå­—èŠ‚ä»¤ pucDataæŒ‡å‘æ•°æ®åŒ…çš„macå¤´éƒ¨ */
     pucData           = skb->data - MAC_HEADER_LENGTH;
     ulHookDataLen     = ((skb->len > NF_EXT_MAX_IP_SIZE) ? NF_EXT_MAX_IP_SIZE : skb->len) + MAC_HEADER_LENGTH;
 
@@ -202,22 +202,22 @@ VOS_VOID NFExt_IpDataExport( struct sk_buff *skb,
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_BrPreRoutingHook
- ¹¦ÄÜÃèÊö  : BRIGE¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_BrPreRoutingHook
+ åŠŸèƒ½æè¿°  : BRIGEé’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_BrPreRoutingHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -225,7 +225,7 @@ unsigned int NFExt_BrPreRoutingHook(unsigned int hooknum,
                             const struct net_device *out,
                             int (*okfn)(struct sk_buff *))
 {
-    /* ÅÐ¶ÏÊÇ·ñOMµÄÊý¾Ý */
+    /* åˆ¤æ–­æ˜¯å¦OMçš„æ•°æ® */
     if ( NF_EXT_FLAG_OM_DATA == NFExt_IsOmData(skb) )
     {
         return NF_ACCEPT;
@@ -237,22 +237,22 @@ unsigned int NFExt_BrPreRoutingHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_BrPostRoutingHook
- ¹¦ÄÜÃèÊö  : Bridge¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_BrPostRoutingHook
+ åŠŸèƒ½æè¿°  : Bridgeé’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_BrPostRoutingHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -271,22 +271,22 @@ unsigned int NFExt_BrPostRoutingHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_BrLocalInHook
- ¹¦ÄÜÃèÊö  : Bridge¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_BrLocalInHook
+ åŠŸèƒ½æè¿°  : Bridgeé’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_BrLocalInHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -305,22 +305,22 @@ unsigned int NFExt_BrLocalInHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_BrLocalOutHook
- ¹¦ÄÜÃèÊö  : Bridge¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_BrLocalOutHook
+ åŠŸèƒ½æè¿°  : Bridgeé’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_BrLocalOutHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -339,22 +339,22 @@ unsigned int NFExt_BrLocalOutHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_BrForwardHook
- ¹¦ÄÜÃèÊö  : Bridge¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_BrForwardHook
+ åŠŸèƒ½æè¿°  : Bridgeé’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_BrForwardHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -368,22 +368,22 @@ unsigned int NFExt_BrForwardHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_ArpInHook
- ¹¦ÄÜÃèÊö  : ARP¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_ArpInHook
+ åŠŸèƒ½æè¿°  : ARPé’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_ArpInHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -397,22 +397,22 @@ unsigned int NFExt_ArpInHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_ArpOutHook
- ¹¦ÄÜÃèÊö  : ARP¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_ArpOutHook
+ åŠŸèƒ½æè¿°  : ARPé’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 
 unsigned int NFExt_ArpOutHook(unsigned int hooknum,
@@ -428,22 +428,22 @@ unsigned int NFExt_ArpOutHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip4PreRoutingHook
- ¹¦ÄÜÃèÊö  : IPV4¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip4PreRoutingHook
+ åŠŸèƒ½æè¿°  : IPV4é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_Ip4PreRoutingHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -457,22 +457,22 @@ unsigned int NFExt_Ip4PreRoutingHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip4PostRoutingHook
- ¹¦ÄÜÃèÊö  : IPV4¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip4PostRoutingHook
+ åŠŸèƒ½æè¿°  : IPV4é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 
 unsigned int NFExt_Ip4PostRoutingHook(unsigned int hooknum,
@@ -487,22 +487,22 @@ unsigned int NFExt_Ip4PostRoutingHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip4LocalInHook
- ¹¦ÄÜÃèÊö  : IPV4¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip4LocalInHook
+ åŠŸèƒ½æè¿°  : IPV4é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_Ip4LocalInHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -517,22 +517,22 @@ unsigned int NFExt_Ip4LocalInHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip4LocalOutHook
- ¹¦ÄÜÃèÊö  : IPV4¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip4LocalOutHook
+ åŠŸèƒ½æè¿°  : IPV4é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_Ip4LocalOutHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -546,22 +546,22 @@ unsigned int NFExt_Ip4LocalOutHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip4ForwardHook
- ¹¦ÄÜÃèÊö  : IPV4¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip4ForwardHook
+ åŠŸèƒ½æè¿°  : IPV4é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_Ip4ForwardHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -575,22 +575,22 @@ unsigned int NFExt_Ip4ForwardHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip6PreRoutingHook
- ¹¦ÄÜÃèÊö  : IPV6¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip6PreRoutingHook
+ åŠŸèƒ½æè¿°  : IPV6é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_Ip6PreRoutingHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -604,22 +604,22 @@ unsigned int NFExt_Ip6PreRoutingHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip6PostRoutingHook
- ¹¦ÄÜÃèÊö  : IPV6¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip6PostRoutingHook
+ åŠŸèƒ½æè¿°  : IPV6é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_Ip6PostRoutingHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -633,22 +633,22 @@ unsigned int NFExt_Ip6PostRoutingHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip6LocalInHook
- ¹¦ÄÜÃèÊö  : IPV6¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip6LocalInHook
+ åŠŸèƒ½æè¿°  : IPV6é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_Ip6LocalInHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -662,22 +662,22 @@ unsigned int NFExt_Ip6LocalInHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip6LocalOutHook
- ¹¦ÄÜÃèÊö  : IPV6¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip6LocalOutHook
+ åŠŸèƒ½æè¿°  : IPV6é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_Ip6LocalOutHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -691,22 +691,22 @@ unsigned int NFExt_Ip6LocalOutHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : NFExt_Ip6ForwardHook
- ¹¦ÄÜÃèÊö  : IPV6¹³×Óº¯Êý
- ÊäÈë²ÎÊý  : unsigned int hooknum,          ¹³×Óº¯ÊýµÄhooknum
-             struct sk_buff *skb,           ´ý¹´È¡±¨ÎÄµÄsk_buff½á¹¹
-             const struct net_device *in,   ÊäÈëÉè±¸ÐÅÏ¢
-             const struct net_device *out,  Êä³öÉè±¸ÐÅÏ¢
-             int (*okfn)(struct sk_buff *)  Ä¬ÈÏ´¦Àíº¯Êý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : NF_ACCEPT
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : NFExt_Ip6ForwardHook
+ åŠŸèƒ½æè¿°  : IPV6é’©å­å‡½æ•°
+ è¾“å…¥å‚æ•°  : unsigned int hooknum,          é’©å­å‡½æ•°çš„hooknum
+             struct sk_buff *skb,           å¾…å‹¾å–æŠ¥æ–‡çš„sk_buffç»“æž„
+             const struct net_device *in,   è¾“å…¥è®¾å¤‡ä¿¡æ¯
+             const struct net_device *out,  è¾“å‡ºè®¾å¤‡ä¿¡æ¯
+             int (*okfn)(struct sk_buff *)  é»˜è®¤å¤„ç†å‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : NF_ACCEPT
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : Created
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : Created
 *****************************************************************************/
 unsigned int NFExt_Ip6ForwardHook(unsigned int hooknum,
                             struct sk_buff *skb,
@@ -720,7 +720,7 @@ unsigned int NFExt_Ip6ForwardHook(unsigned int hooknum,
 }
 
 /*****************************************************************************
-                        Á÷¿Ø¹¦ÄÜ
+                        æµæŽ§åŠŸèƒ½
 *****************************************************************************/
 
 
@@ -733,11 +733,11 @@ unsigned int NFExt_BrForwardFlowCtrlHook(unsigned int hooknum,
 {
     NF_EXT_STATS_INC(1, NF_EXT_STATS_BR_FC_ENTER);
 
-    /* ÍøÇÅ×ª·¢Í³¼Æ */
+    /* ç½‘æ¡¥è½¬å‘ç»Ÿè®¡ */
     NF_EXT_TX_BYTES_INC(skb->len, NF_EXT_TX_BYTES_CNT_BR);
 
 
-    /* µ±Ç°ÔÚÍøÇÅforwardÁ÷¿Ø×´Ì¬£¬Ö±½Ó¶ª°ü */
+    /* å½“å‰åœ¨ç½‘æ¡¥forwardæµæŽ§çŠ¶æ€ï¼Œç›´æŽ¥ä¸¢åŒ… */
     if (NF_EXT_BR_FORWARD_FLOW_CTRL_MASK == (g_stExFlowCtrlEntity.ulFlowCtrlMsk & NF_EXT_BR_FORWARD_FLOW_CTRL_MASK))
     {
         NF_EXT_STATS_INC(1, NF_EXT_STATS_BR_FC_DROP);

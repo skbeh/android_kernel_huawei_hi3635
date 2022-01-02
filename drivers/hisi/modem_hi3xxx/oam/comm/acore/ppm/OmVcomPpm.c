@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 **************************************************************************** */
 //#include "AtAppVcomInterface.h"
 #include "OmVcomPpm.h"
@@ -20,33 +20,33 @@ extern "C" {
 /* lint +e767  */
 
 /* ****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 **************************************************************************** */
-/* ÓÃÓÚ¼ÇÂ¼ VCOM Í¨µÀ·¢ËÍµÄÍ³¼ÆÐÅÏ¢ */
+/* ç”¨äºŽè®°å½• VCOM é€šé“å‘é€çš„ç»Ÿè®¡ä¿¡æ¯ */
 OM_VCOM_DEBUG_INFO                      g_stVComDebugInfo[3];
 
 /*****************************************************************************
-  3 Íâ²¿ÒýÓÃÉùÃ÷
+  3 å¤–éƒ¨å¼•ç”¨å£°æ˜Ž
 *****************************************************************************/
 
 
 /*****************************************************************************
-  4 º¯ÊýÊµÏÖ
+  4 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  :
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊý  :
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  :
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê5ÔÂ31ÈÕ
-    ×÷    Õß   : XXXXXXXX
-    ÐÞ¸ÄÄÚÈÝ   : V8R1 OM_OptimizeÏîÄ¿ÐÂÔö
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´5æœˆ31æ—¥
+    ä½œ    è€…   : XXXXXXXX
+    ä¿®æ”¹å†…å®¹   : V8R1 OM_Optimizeé¡¹ç›®æ–°å¢ž
 
 *****************************************************************************/
 
@@ -85,7 +85,7 @@ VOS_VOID PPM_VComEvtCB(VOS_UINT32 ulChan, VOS_UINT32 ulEvent)
         return;
     }
 
-    /*´ò¿ª²Ù×÷Ö±½Ó·µ»Ø*/
+    /*æ‰“å¼€æ“ä½œç›´æŽ¥è¿”å›ž*/
     if(ulEvent == DMS_CHAN_EVT_OPEN)
     {
         g_stVComDebugInfo[enChannel].ulVCOMCloseNum++;
@@ -169,10 +169,10 @@ VOS_UINT32 PPM_VComIndSendData(VOS_UINT8 *pucVirAddr, VOS_UINT8 *pucPhyAddr, VOS
 VOS_VOID PPM_VComCfgPortInit(VOS_VOID)
 {
 
-    /* ÅäÖÃÊý¾Ý×ßVCOM28£¬»áÓÐÊý¾ÝÏÂ·¢ */
+    /* é…ç½®æ•°æ®èµ°VCOM28ï¼Œä¼šæœ‰æ•°æ®ä¸‹å‘ */
     DMS_RegOmChanDataReadCB(DMS_VCOM_OM_CHAN_TL_CTRL, PPM_VComCfgReadData);
 
-    /*CTRL¿ÚÊÂ¼þ»Øµ÷*/
+    /*CTRLå£äº‹ä»¶å›žè°ƒ*/
     DMS_RegOmChanEventCB(DMS_VCOM_OM_CHAN_TL_CTRL, PPM_VComEvtCB);
 
     CPM_PhySendReg(CPM_VCOM_CFG_PORT, PPM_VComCfgSendData);
@@ -183,10 +183,10 @@ VOS_VOID PPM_VComCfgPortInit(VOS_VOID)
 
 VOS_VOID PPM_VComIndPortInit(VOS_VOID)
 {
-    /* ¿ÉÎ¬¿É²âÊý¾ÝÊý¾ÝÉÏ±¨×ßVCOM31£¬²»»áÓÐÊý¾ÝÏÂ·¢ */
+    /* å¯ç»´å¯æµ‹æ•°æ®æ•°æ®ä¸ŠæŠ¥èµ°VCOM31ï¼Œä¸ä¼šæœ‰æ•°æ®ä¸‹å‘ */
     DMS_RegOmChanDataReadCB(DMS_VCOM_OM_CHAN_TL_DATA, VOS_NULL_PTR);
 
-    /*DATA¿ÚÊÂ¼þ»Øµ÷*/
+    /*DATAå£äº‹ä»¶å›žè°ƒ*/
     DMS_RegOmChanEventCB(DMS_VCOM_OM_CHAN_TL_DATA, PPM_VComEvtCB);
 
     CPM_PhySendReg(CPM_VCOM_IND_PORT, PPM_VComIndSendData);
@@ -199,13 +199,13 @@ VOS_VOID PPM_VComPortInit(VOS_VOID)
 {
     VOS_MemSet(&g_stVComDebugInfo[0], 0, sizeof(g_stVComDebugInfo));
 
-    /* Vcom ¿ÚOM INDÍ¨µÀµÄ³õÊ¼»¯ */
+    /* Vcom å£OM INDé€šé“çš„åˆå§‹åŒ– */
     PPM_VComIndPortInit();
 
-    /* Vcom ¿ÚOM CNFÍ¨µÀµÄ³õÊ¼»¯ */
+    /* Vcom å£OM CNFé€šé“çš„åˆå§‹åŒ– */
     PPM_VComCfgPortInit();
 
-    /* Vcom ¿ÚerrorlogÍ¨µÀµÄ³õÊ¼»¯ */
+    /* Vcom å£errorlogé€šé“çš„åˆå§‹åŒ– */
     GU_OamErrLogVComPortInit();
 
     return;

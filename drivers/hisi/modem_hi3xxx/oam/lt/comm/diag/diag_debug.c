@@ -118,7 +118,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
     DIAG_DEBUG_INFO_TBL_STRU* pstTable;
     pstTable = diag_DebugGetInfo();
 
-    /* ¿Õ¿Ú×ÔÕï¶Ï*/
+    /* ç©ºå£è‡ªè¯Šæ–­*/
     if(DIAG_DEBUG_API == ulApiType || DIAG_DEBUG_API_AIR == ulApiType)
     {
         vos_printf("*------------DIAG ReportAirMessageLog is called?----------------\n");
@@ -128,14 +128,14 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("No Use                                 : %d \n\n", pstTable[EN_SDM_DIAG_ReportAirMessageLog].ulRserved3);
         vos_printf("DIAG ReportAirMessageLog RTC Time      : %d \n\n", pstTable[EN_SDM_DIAG_ReportAirMessageLog].ulRtcTime);
 
-        vos_printf("*------------DIAG ReportAirMessageLog Ê§°Ü´ÎÊı----------------\n");
+        vos_printf("*------------DIAG ReportAirMessageLog å¤±è´¥æ¬¡æ•°----------------\n");
         vos_printf("ReportAirMessageLog Call failure Times : %d \n",pstTable[EN_SDM_DIAG_ReportAirMessageLog_ERR].ulCalledNum);
         vos_printf("ReportAirMessageLog PRIOR call         : %#x \n", pstTable[EN_SDM_DIAG_ReportAirMessageLog_ERR].ulRserved1);
         vos_printf("ReportAirMessageLog para ID            : %#x \n", pstTable[EN_SDM_DIAG_ReportAirMessageLog_ERR].ulRserved2);
         vos_printf("Failure Position 1 mean first branch   : %d \n\n", pstTable[EN_SDM_DIAG_ReportAirMessageLog_ERR].ulRserved3);
         vos_printf("ReportAirMessageLog RTC Time           : %d \n\n", pstTable[EN_SDM_DIAG_ReportAirMessageLog_ERR].ulRtcTime);
     }
-    /*voLTE×ÔÕï¶Ï*/
+    /*voLTEè‡ªè¯Šæ–­*/
     if(DIAG_DEBUG_API == ulApiType || DIAG_DEBUG_VOLTE == ulApiType)
     {
         vos_printf("*------------DIAG ReportAirMessageLog is called?----------------\n");
@@ -145,7 +145,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("No Use                                 : %d \n\n", pstTable[EN_SDM_DIAG_ReportVoLTELog_ERR].ulRserved3);
         vos_printf("DIAG ReportAirMessageLog RTC Time      : %d \n\n", pstTable[EN_SDM_DIAG_ReportVoLTELog_ERR].ulRtcTime);
 
-        vos_printf("*------------DIAG ReportVolTEMessageLog Ê§°Ü´ÎÊı----------------\n");
+        vos_printf("*------------DIAG ReportVolTEMessageLog å¤±è´¥æ¬¡æ•°----------------\n");
         vos_printf("ReportVolTEMessageLog Call failure Times : %d \n",pstTable[EN_SDM_DIAG_ReportVoLTELog_ERR].ulCalledNum);
         vos_printf("ReportVolTEMessageLog PRIOR call         : %#x \n", pstTable[EN_SDM_DIAG_ReportVoLTELog_ERR].ulRserved1);
         vos_printf("ReportVolTEMessageLog para ID            : %#x \n", pstTable[EN_SDM_DIAG_ReportVoLTELog_ERR].ulRserved2);
@@ -153,7 +153,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("ReportVolTEMessageLog RTC Time           : %d \n\n", pstTable[EN_SDM_DIAG_ReportVoLTELog_ERR].ulRtcTime);
     }
 
-    /* ²ã¼ä×ÔÕï¶Ï*/
+    /* å±‚é—´è‡ªè¯Šæ–­*/
     if(DIAG_DEBUG_API == ulApiType || DIAG_DEBUG_API_LAYER == ulApiType)
     {
         vos_printf("*------------DIAG ReportLayerMessageLog is called?----------------\n");
@@ -163,7 +163,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("No Use                                 : %d \n\n", pstTable[EN_SDM_DIAG_ReportLayerMessageLog].ulRserved3);
         vos_printf("DIAG ReportLayerMessageLog RTC Time    : %d \n\n", pstTable[EN_SDM_DIAG_ReportLayerMessageLog].ulRtcTime);
 
-        vos_printf("*------------DIAG ReportLayerMessageLog Ê§°Ü´ÎÊı----------------\n");
+        vos_printf("*------------DIAG ReportLayerMessageLog å¤±è´¥æ¬¡æ•°----------------\n");
         vos_printf("ReportLayerMessageLog Call failure Times: %d \n",pstTable[EN_SDM_DIAG_ReportLayerMessageLog_ERR].ulCalledNum);
         vos_printf("ReportLayerMessageLog PRIOR call       : %#x \n", pstTable[EN_SDM_DIAG_ReportLayerMessageLog_ERR].ulRserved1);
         vos_printf("ReportLayerMessageLog para ID          : %#x \n", pstTable[EN_SDM_DIAG_ReportLayerMessageLog_ERR].ulRserved2);
@@ -171,7 +171,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("ReportLayerMessageLog RTC Time         : %d \n\n", pstTable[EN_SDM_DIAG_ReportLayerMessageLog_ERR].ulRtcTime);
     }
 
-    /* ÓÃ»§Ãæ×ÔÕï¶Ï*/
+    /* ç”¨æˆ·é¢è‡ªè¯Šæ–­*/
     if(DIAG_DEBUG_API == ulApiType || DIAG_DEBUG_API_USERPLANE == ulApiType)
     {
         vos_printf("*------------DIAG ReportUserPlaneMessageLog is called?----------------\n");
@@ -181,7 +181,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("No Use                                 : %d \n\n", pstTable[EN_SDM_DIAG_ReportUserPlaneMessageLog].ulRserved3);
         vos_printf("DIAG ReportUserPlaneMessageLog RTC Time: %d \n\n", pstTable[EN_SDM_DIAG_ReportUserPlaneMessageLog].ulRtcTime);
 
-        vos_printf("*------------DIAG ReportUserPlaneMessageLog Ê§°Ü´ÎÊı----------------\n");
+        vos_printf("*------------DIAG ReportUserPlaneMessageLog å¤±è´¥æ¬¡æ•°----------------\n");
         vos_printf("ReportUserPlaneMessageLog Call failure Times: %d \n",pstTable[EN_SDM_DIAG_ReportUserPlaneMessageLog_ERR].ulCalledNum);
         vos_printf("ReportUserPlaneMessageLog PRIOR call   : %#x \n", pstTable[EN_SDM_DIAG_ReportUserPlaneMessageLog_ERR].ulRserved1);
         vos_printf("ReportUserPlaneMessageLog para ID      : %#x \n", pstTable[EN_SDM_DIAG_ReportUserPlaneMessageLog_ERR].ulRserved2);
@@ -189,7 +189,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("ReportUserPlaneMessageLog RTC Time     : %d \n\n", pstTable[EN_SDM_DIAG_ReportUserPlaneMessageLog_ERR].ulRtcTime);
     }
 
-    /* ÊÂ¼ş×ÔÕï¶Ï*/
+    /* äº‹ä»¶è‡ªè¯Šæ–­*/
     if(DIAG_DEBUG_API == ulApiType || DIAG_DEBUG_API_EVENT == ulApiType)
     {
         vos_printf("*------------DIAG ReportEventLog is called?----------------\n");
@@ -199,7 +199,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("No Use                                 : %d \n\n", pstTable[EN_SDM_DIAG_ReportEventLog].ulRserved3);
         vos_printf("DIAG ReportEventLog RTC Time           : %d \n\n", pstTable[EN_SDM_DIAG_ReportEventLog].ulRtcTime);
 
-        vos_printf("*------------DIAG ReportEventLog Ê§°Ü´ÎÊı----------------\n");
+        vos_printf("*------------DIAG ReportEventLog å¤±è´¥æ¬¡æ•°----------------\n");
         vos_printf("ReportEventLog Call failure Times      : %d \n",pstTable[EN_SDM_DIAG_ReportEventLog_ERR].ulCalledNum);
         vos_printf("ReportEventLog PRIOR call              : %#x \n", pstTable[EN_SDM_DIAG_ReportEventLog_ERR].ulRserved1);
         vos_printf("ReportEventLog para ID                 : %#x \n", pstTable[EN_SDM_DIAG_ReportEventLog_ERR].ulRserved2);
@@ -207,7 +207,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("ReportEventLog RTC Time                : %d \n\n", pstTable[EN_SDM_DIAG_ReportEventLog_ERR].ulRtcTime);
     }
 
-    /* ÃüÁî×ÔÕï¶Ï*/
+    /* å‘½ä»¤è‡ªè¯Šæ–­*/
     if(DIAG_DEBUG_API == ulApiType || DIAG_DEBUG_API_REPORT_INFO == ulApiType)
     {
         vos_printf("*------------DIAG_ReportStatLog is called?----------------\n");
@@ -217,7 +217,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("No Use                                 : %d \n\n", pstTable[EN_SDM_DIAG_ReportStatLog].ulRserved3);
         vos_printf("DIAG_ReportStatLog RTC Time            : %d \n\n", pstTable[EN_SDM_DIAG_ReportStatLog].ulRtcTime);
 
-        vos_printf("*------------DIAG_ReportStatLog Ê§°Ü´ÎÊı----------------\n");
+        vos_printf("*------------DIAG_ReportStatLog å¤±è´¥æ¬¡æ•°----------------\n");
         vos_printf("DIAG_ReportStatLog Call failure Times  : %d \n", pstTable[EN_SDM_DIAG_ReportStatLog_ERR].ulCalledNum);
         vos_printf("DIAG_ReportStatLog PRIOR call          : %#x \n", pstTable[EN_SDM_DIAG_ReportStatLog_ERR].ulRserved1);
         vos_printf("DIAG_ReportStatLog para ID             : %#x \n", pstTable[EN_SDM_DIAG_ReportStatLog_ERR].ulRserved2);
@@ -225,7 +225,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("DIAG_ReportStatLog RTC Time            : %d \n\n", pstTable[EN_SDM_DIAG_ReportStatLog_ERR].ulRtcTime);
     }
 
-    /* ´òÓ¡×ÔÕï¶Ï*/
+    /* æ‰“å°è‡ªè¯Šæ–­*/
     if(DIAG_DEBUG_API == ulApiType || DIAG_DEBUG_API_PRINTF == ulApiType)
     {
         vos_printf("*------------DIAG PRINTFV is called?----------------\n");
@@ -235,7 +235,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("No Use                      : %d \n\n", pstTable[EN_SDM_DIAG_PRINTFV].ulRserved3);
         vos_printf("DIAG PRINTFV RTC Time       : %d \n\n", pstTable[EN_SDM_DIAG_PRINTFV].ulRtcTime);
 
-        vos_printf("*------------DIAG PRINTF V Ê§°Ü´ÎÊı----------------\n");
+        vos_printf("*------------DIAG PRINTF V å¤±è´¥æ¬¡æ•°----------------\n");
         vos_printf("PRINTFV Call failure Times  : %d \n",pstTable[EN_SDM_DIAG_PRINTFV_ERR].ulCalledNum);
         vos_printf("PRINTFV PRIOR call          : %#x \n", pstTable[EN_SDM_DIAG_PRINTFV_ERR].ulRserved1);
         vos_printf("PRINTFV para ID             : %#x \n", pstTable[EN_SDM_DIAG_PRINTFV_ERR].ulRserved2);
@@ -249,7 +249,7 @@ VOS_VOID Debug_DiagApi(VOS_UINT32 ulApiType)
         vos_printf("No Use                      : %d \n\n", pstTable[EN_SDM_DIAG_DOT].ulRserved3);
         vos_printf("DOT PRINT RTC Time          : %d \n\n", pstTable[EN_SDM_DIAG_DOT].ulRtcTime);
 
-        vos_printf("*------------DIAG DOT PRINT Ê§°Ü´ÎÊı----------------\n");
+        vos_printf("*------------DIAG DOT PRINT å¤±è´¥æ¬¡æ•°----------------\n");
         vos_printf("DOT PRINT Call failure Times  : %d \n",pstTable[EN_SDM_DIAG_DOT_ERR].ulCalledNum);
         vos_printf("DOT PRINT ERROR CODE          : %#x \n", pstTable[EN_SDM_DIAG_DOT_ERR].ulRserved1);
         vos_printf("DOT PRINT para ID             : %#x \n", pstTable[EN_SDM_DIAG_DOT_ERR].ulRserved2);
@@ -268,65 +268,65 @@ VOS_VOID Debug_DiagSocp(VOS_VOID)
     pstTable = diag_DebugGetInfo();
 
 	
-    vos_printf("*------------vcom·¢ËÍ¸øSOCP½âÂëÔ´×ÜÊı:-------------------\n");
+    vos_printf("*------------vcomå‘é€ç»™SOCPè§£ç æºæ€»æ•°:-------------------\n");
     vos_printf("Call Counts   : %d \nulChanID   : %d \nulDataSize   : %d\n\n",
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_START].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_START].ulRserved1,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_START].ulRserved2);
 
-	vos_printf("*------------vcom·¢ËÍ¸øSOCP½âÂëÔ´Ê§°ÜÊı:-------------------\n");
+	vos_printf("*------------vcomå‘é€ç»™SOCPè§£ç æºå¤±è´¥æ•°:-------------------\n");
     vos_printf("Fail Counts   : %d \nulRserved1   : %d \nulRserved2   : %d \nbranch    : %d\n\n",
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_START_ERROR].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_START_ERROR].ulRserved1,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_START_ERROR].ulRserved2,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_START_ERROR].ulRserved3);
 
-    vos_printf("*------------SOCP½âÂë»Øµ÷½øÈë:-------------------\n");
+    vos_printf("*------------SOCPè§£ç å›è°ƒè¿›å…¥:-------------------\n");
     vos_printf("Call Counts   : %d \nulChanID   : %d \nulDataSize   : %d\n\n",
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_RCVE].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_RCVE].ulRserved1,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_RCVE].ulRserved2);
         
-    vos_printf("*------------SOCP½âÂë»Øµ÷Ê§°Ü:-------------------\n");
+    vos_printf("*------------SOCPè§£ç å›è°ƒå¤±è´¥:-------------------\n");
     vos_printf("Fail Counts   : %d \nulRserved1   : %d \nulRserved2   : %d \nbranch    : %d\n\n",
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_RCVE_ERROR].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_RCVE_ERROR].ulRserved1,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_RCVE_ERROR].ulRserved2,
         pstTable[EN_DIAG_DEBUG_DECODE_PACKET_RCVE_ERROR].ulRserved3);
 
-    vos_printf("*------------»ñÈ¡SOCP ±àÂëÔ´BUF½øÈë:-------------------\n");
+    vos_printf("*------------è·å–SOCP ç¼–ç æºBUFè¿›å…¥:-------------------\n");
     vos_printf("Call Counts   : %d \nulChanID   : %d \nulDataSize   : %d\n\n",
         pstTable[EN_DIAG_DEBUG_GET_SRC_BUF_START].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_GET_SRC_BUF_START].ulRserved1,
         pstTable[EN_DIAG_DEBUG_GET_SRC_BUF_START].ulRserved2);
         
-    vos_printf("*------------»ñÈ¡SOCP ±àÂëÔ´BUFÊ§°Ü:-------------------\n");
+    vos_printf("*------------è·å–SOCP ç¼–ç æºBUFå¤±è´¥:-------------------\n");
     vos_printf("Fail Counts   : %d \nulRserved1   : %d \nulRserved2   : %d \nbranch    : %d\n\n",
         pstTable[EN_DIAG_DEBUG_GET_SRC_BUF_START_ERROR].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_GET_SRC_BUF_START_ERROR].ulRserved1,
         pstTable[EN_DIAG_DEBUG_GET_SRC_BUF_START_ERROR].ulRserved2,
         pstTable[EN_DIAG_DEBUG_GET_SRC_BUF_START_ERROR].ulRserved3);
 
-    vos_printf("*------------Ğ´¸øSOCP±àÂë½øÈë:-------------------\n");
+    vos_printf("*------------å†™ç»™SOCPç¼–ç è¿›å…¥:-------------------\n");
     vos_printf("Call Counts   : %d \nulChanID   : %d \nulDataSize   : %d\n\n",
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_START].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_START].ulRserved1,
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_START].ulRserved2);
         
-    vos_printf("*------------Ğ´¸øSOCP±àÂëÊ§°Ü:-------------------\n");
+    vos_printf("*------------å†™ç»™SOCPç¼–ç å¤±è´¥:-------------------\n");
     vos_printf("Fail Counts   : %d \nulRserved1   : %d \nulRserved2   : %d \nbranch    : %d\n\n",
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_START_ERROR].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_START_ERROR].ulRserved1,
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_START_ERROR].ulRserved2,
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_START_ERROR].ulRserved3);
 
-    vos_printf("*------------±àÂëÄ¿µÄ½øÈë×ÜÊı-------------------\n");
+    vos_printf("*------------ç¼–ç ç›®çš„è¿›å…¥æ€»æ•°-------------------\n");
     vos_printf("Call Counts   : %d \nulChanID   : %d \nulDataSize   : %d\n\n",
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_RCVE].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_RCVE].ulRserved1,
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_RCVE].ulRserved2);
 	
-    vos_printf("*------------±àÂëÄ¿µÄĞ´ÈëUSBÊ§°Ü-------------------\n");
+    vos_printf("*------------ç¼–ç ç›®çš„å†™å…¥USBå¤±è´¥-------------------\n");
     vos_printf("Fail Counts   : %d \nulRserved1   : %d \nulRserved2   : %d \nbranch    : %d\n\n",
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_RCVE_ERROR].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_CODE_PACKET_RCVE_ERROR].ulRserved1,
@@ -585,7 +585,7 @@ VOS_VOID  Debug_DiagVcom(VOS_VOID)
         pstTable[EN_DIAG_DEBUG_VCOM2_CLOSE_ERR].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_VCOM2_CLOSE_ERR].ulRserved1);
 
-    vos_printf("*------------WRITE_Òì²½Ğ´-------------------\n");
+    vos_printf("*------------WRITE_å¼‚æ­¥å†™-------------------\n");
     vos_printf("VCOM1 write counts  : %d \n VCOM1  write len : %d \n VCOM1 write OK counts  : %d \n  VCOM1 Last write OK len : %d\n\n",
         pstTable[EN_DIAG_DEBUG_VCOM1_WRT].ulCalledNum,
         pstTable[EN_DIAG_DEBUG_VCOM1_WRT].ulRserved1,
@@ -687,27 +687,27 @@ VOS_VOID diag_help(VOS_VOID);
 VOS_VOID diag_help(VOS_VOID)
 {
 	
-    vos_printf("Debug_DiagVcom:      ²é¿´ACOREÍ¨µÀ´ò¿ª×´Ì¬,·¢ËÍ¸øUSB´ÎÊı¼°USB¸ø»Øµ÷´ÎÊı\n"); 	
-    vos_printf("Debug_DiagUdiRead:   ²é¿´ACORE´ÓUSB¶ÁÈ¡ÌõÊı\n");	
-    vos_printf("Debug_DiagSocp:      ²é¿´SOCP±à½âÂëÇé¿ö¼ÇÂ¼\n"); 
-	vos_printf("Debug_DiagFw:        ²é¿´¿ò¼ÜÊÕµ½ÃüÁî£¬¼°agent»Ø¸´Çé¿ö\n"); 
-    vos_printf("Debug_DiagApi:		 ²é¿´PSµ÷ÓÃAPI¼ÆÊı\n"); 
-    vos_printf("Debug_DiagCfg:		 ²é¿´HSOÏÂ·¢¿ª¹ØÉèÖÃ×´Ì¬\n"); 
-    vos_printf("Debug_DiagCmd:       ²é¿´FW,AGENTÄ£¿éÊÕµ½ÃüÁî\n"); 
-    vos_printf("Debug_DiagAppgent:   ²é¿´APP AGENT¸÷ÃüÁî´¦Àí½á¹û\n");	
-    vos_printf("Debug_DiagAgent:     ²é¿´AGENT¸÷ÃüÁî´¦Àí½á¹û\n"); 
-	vos_printf("diag_BufHelp:        ²é¿´DIAG buf×´Ì¬¼°´íÎó\n");
+    vos_printf("Debug_DiagVcom:      æŸ¥çœ‹ACOREé€šé“æ‰“å¼€çŠ¶æ€,å‘é€ç»™USBæ¬¡æ•°åŠUSBç»™å›è°ƒæ¬¡æ•°\n"); 	
+    vos_printf("Debug_DiagUdiRead:   æŸ¥çœ‹ACOREä»USBè¯»å–æ¡æ•°\n");	
+    vos_printf("Debug_DiagSocp:      æŸ¥çœ‹SOCPç¼–è§£ç æƒ…å†µè®°å½•\n"); 
+	vos_printf("Debug_DiagFw:        æŸ¥çœ‹æ¡†æ¶æ”¶åˆ°å‘½ä»¤ï¼ŒåŠagentå›å¤æƒ…å†µ\n"); 
+    vos_printf("Debug_DiagApi:		 æŸ¥çœ‹PSè°ƒç”¨APIè®¡æ•°\n"); 
+    vos_printf("Debug_DiagCfg:		 æŸ¥çœ‹HSOä¸‹å‘å¼€å…³è®¾ç½®çŠ¶æ€\n"); 
+    vos_printf("Debug_DiagCmd:       æŸ¥çœ‹FW,AGENTæ¨¡å—æ”¶åˆ°å‘½ä»¤\n"); 
+    vos_printf("Debug_DiagAppgent:   æŸ¥çœ‹APP AGENTå„å‘½ä»¤å¤„ç†ç»“æœ\n");	
+    vos_printf("Debug_DiagAgent:     æŸ¥çœ‹AGENTå„å‘½ä»¤å¤„ç†ç»“æœ\n"); 
+	vos_printf("diag_BufHelp:        æŸ¥çœ‹DIAG bufçŠ¶æ€åŠé”™è¯¯\n");
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)    
-    vos_printf("Debug_DiagSocpVote:  ²é¿´DIAG APPÏòSOCPÍ¶Æ±×´Ì¬¼°´íÎó\n");
-    vos_printf("Debug_DiagDspMb:     ²é¿´DIAG AGENTÓëLDSPÓÊÏä½»»¥´¦Àí½á¹û\n");
+    vos_printf("Debug_DiagSocpVote:  æŸ¥çœ‹DIAG APPå‘SOCPæŠ•ç¥¨çŠ¶æ€åŠé”™è¯¯\n");
+    vos_printf("Debug_DiagDspMb:     æŸ¥çœ‹DIAG AGENTä¸LDSPé‚®ç®±äº¤äº’å¤„ç†ç»“æœ\n");
 #endif
 }
 /*****************************************************************************
-º¯ Êı Ãû  : Debug_DiagCreateFile
-¹¦ÄÜÃèÊö  : ´´½¨Õï¶ÏdebugÎÄ¼ş£¬Èç¹ûÒÑ¾­´æÔÚÔò½øĞĞÉ¾³ı
-ÊäÈë²ÎÊı  : VOS_VOID
-Êä³ö²ÎÊı  : VOS_VOID
-·µ »Ø Öµ  : VOS_VOID
+å‡½ æ•° å  : Debug_DiagCreateFile
+åŠŸèƒ½æè¿°  : åˆ›å»ºè¯Šæ–­debugæ–‡ä»¶ï¼Œå¦‚æœå·²ç»å­˜åœ¨åˆ™è¿›è¡Œåˆ é™¤
+è¾“å…¥å‚æ•°  : VOS_VOID
+è¾“å‡ºå‚æ•°  : VOS_VOID
+è¿” å› å€¼  : VOS_VOID
 *****************************************************************************/
 VOS_VOID Debug_DiagCreateFile(VOS_VOID)
 {
@@ -737,13 +737,13 @@ VOS_VOID Debug_DiagCreateFile(VOS_VOID)
     return;
 }
 /*****************************************************************************
-º¯ Êı Ãû  : diag_PrintToFile
-¹¦ÄÜÃèÊö  : ±£´æ¶ş½øÖÆÊı¾İµ½ÎÄ¼şÏµÍ³
-ÊäÈë²ÎÊı  : VOS_CHAR* logpath:ÎÄ¼şÂ·¾¶
-            VOS_CHAR* pdata:Òª´æ´¢µÄÊı¾İµÄÖ¸Õë
-            VOS_UINT len:Òª´æ´¢µÄÊı¾İµÄ³¤¶È
-Êä³ö²ÎÊı  : VOS_VOID
-·µ »Ø Öµ  : VOS_VOID
+å‡½ æ•° å  : diag_PrintToFile
+åŠŸèƒ½æè¿°  : ä¿å­˜äºŒè¿›åˆ¶æ•°æ®åˆ°æ–‡ä»¶ç³»ç»Ÿ
+è¾“å…¥å‚æ•°  : VOS_CHAR* logpath:æ–‡ä»¶è·¯å¾„
+            VOS_CHAR* pdata:è¦å­˜å‚¨çš„æ•°æ®çš„æŒ‡é’ˆ
+            VOS_UINT len:è¦å­˜å‚¨çš„æ•°æ®çš„é•¿åº¦
+è¾“å‡ºå‚æ•°  : VOS_VOID
+è¿” å› å€¼  : VOS_VOID
 *****************************************************************************/
 VOS_VOID diag_PrintToFile(VOS_CHAR* logpath, VOS_CHAR* pdata, VOS_UINT len)
 {

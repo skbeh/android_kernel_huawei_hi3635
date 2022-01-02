@@ -24,13 +24,13 @@ struct rtc_control g_hi6559_rtc_ctrl =
 /*lint -save -e438*/
 /*lint -save -e533*/
 /*****************************************************************************
- º¯ Êı Ãû  : hi6559_rtc_read_reg
- ¹¦ÄÜÃèÊö  : ¶ÁÈ¡RTC¼Ä´æÆ÷
- ÊäÈë²ÎÊı  : void
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : unsigned int
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : hi6559_rtc_read_reg
+ åŠŸèƒ½æè¿°  : è¯»å–RTCå¯„å­˜å™¨
+ è¾“å…¥å‚æ•°  : void
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : unsigned int
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 u32 hi6559_rtc_read_reg(u16 addr)
 {
@@ -52,13 +52,13 @@ u32 hi6559_rtc_read_reg(u16 addr)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : hi6559_rtc_write_reg
- ¹¦ÄÜÃèÊö  : Ğ´RTC¼Ä´æÆ÷
- ÊäÈë²ÎÊı  : void
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : RTC_OK
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : hi6559_rtc_write_reg
+ åŠŸèƒ½æè¿°  : å†™RTCå¯„å­˜å™¨
+ è¾“å…¥å‚æ•°  : void
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : RTC_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 /*lint -save -e958*/
 u32 hi6559_rtc_write_reg(u16 addr, u32 pValue)
@@ -112,7 +112,7 @@ s32 hi6559_rtc_settime(struct device *dev, struct rtc_time *tm)
     s32  ret = 0;
     u32 alarmtime = 0;
     u32 alarmenable = 0, alarm_id = 0;
-    u32 curtime = 0;/*µ±Ç°µÄÊ±¼äÖµ*/
+    u32 curtime = 0;/*å½“å‰çš„æ—¶é—´å€¼*/
 
     ret  = rtc_valid_tm(tm);
     if (0 != ret)
@@ -132,8 +132,8 @@ s32 hi6559_rtc_settime(struct device *dev, struct rtc_time *tm)
     {
         alarmtime = hi6559_rtc_read_reg(g_hi6559_rtc_ctrl.alarm_base_addr[alarm_id]);
 
-        /*Ö»ÓĞÔÚÉèÖÃÁËÄÖÖÓµÄÊ±ºò²Å½øĞĞÏÂÃæµÄÖØĞÂÉèÖÃÄÖÖÓÊ±¼ä¶¯×÷*/
-        /*²éÑ¯ÊÇ·ñÊÇÄÜÁË¸ÃÄÖÖÓ*/
+        /*åªæœ‰åœ¨è®¾ç½®äº†é—¹é’Ÿçš„æ—¶å€™æ‰è¿›è¡Œä¸‹é¢çš„é‡æ–°è®¾ç½®é—¹é’Ÿæ—¶é—´åŠ¨ä½œ*/
+        /*æŸ¥è¯¢æ˜¯å¦æ˜¯èƒ½äº†è¯¥é—¹é’Ÿ*/
         alarmenable = (u32)bsp_pmu_irq_is_masked(g_hi6559_rtc_ctrl.alarm_irq[alarm_id]);
 
         if ((alarmenable)&&( curtime < alarmtime )) {
@@ -163,7 +163,7 @@ s32 hi6559_alarm_irq_enable(struct device *dev, unsigned int enabled)
     struct platform_device *rtc_dev = NULL;
     u32 alarm_id = 0;
 	/* Clear any pending alarm interrupts. */
-	/*Çå³ıÖĞ¶Ï*/
+	/*æ¸…é™¤ä¸­æ–­*/
     /*lint -save -e413 -e831*/
     rtc_dev = to_platform_device(dev);
     alarm_id = rtc_dev->id;
@@ -228,7 +228,7 @@ s32 hi6559_rtc_setalarm(struct device *dev, struct rtc_wkalrm *alarm)
     /*lint -restore*/
     hi6559_rtc_print_dbg("alarm_id = %d", alarm_id);
 
-    /*ÇëÖĞ¶Ï*/
+    /*è¯·ä¸­æ–­*/
     /********************************************/
     bsp_pmu_irq_mask(g_hi6559_rtc_ctrl.alarm_irq[alarm_id]);
 
@@ -278,7 +278,7 @@ void hi6559_rtc_alarmhandler(void *data)
     /*lint -restore*/
 }
 
-/*RTC²Ù×÷º¯ÊıÊı¾İ½á¹¹*/
+/*RTCæ“ä½œå‡½æ•°æ•°æ®ç»“æ„*/
 /*lint -save -e527*/
 static const struct rtc_class_ops hi6559_rtc_ops = {
 /*lint -restore*/

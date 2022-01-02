@@ -1,23 +1,23 @@
 /******************************************************************************
 
-                  ��Ȩ���� (C), 2001-2011, ��Ϊ�������޹�˾
+                  版权所有 (C), 2001-2011, 华为技术有限公司
 
  ******************************************************************************
-  �� �� ��      : Om.c
-  �� �� ��      : ����
-  ��    ��      : ����47350
-  ��������      : 2008��5��3��
-  ����޸�      :
-  ��������      : ��C�ļ�������OMģ���ʵ��
-  �����б�      :
-  �޸���ʷ      :
-  1.��    ��    : 2008��5��3��
-    ��    ��    : ����47350
-    �޸�����    : �����ļ�
+  文 件 名      : Om.c
+  版 本 号      : 初稿
+  作    者      : 甘兰47350
+  生成日期      : 2008年5月3日
+  最近修改      :
+  功能描述      : 该C文件给出了OM模块的实现
+  函数列表      :
+  修改历史      :
+  1.日    期    : 2008年5月3日
+    作    者    : 甘兰47350
+    修改内容    : 创建文件
 
 ******************************************************************************/
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "om.h"
 #include "OmApp.h"
@@ -57,58 +57,58 @@ extern "C"{
 #endif
 
 
-/*lint -e767 �޸��ˣ�����47350�������ˣ�����46160��ԭ�������LOG���������Ҫ*/
+/*lint -e767 修改人：甘兰47350；检视人：李霄46160；原因简述：LOG方案设计需要*/
 #define    THIS_FILE_ID        PS_FILE_ID_ACPU_OM_C
-/*lint +e767 �޸��ˣ�����47350�������ˣ�lixiao��*/
+/*lint +e767 修改人：甘兰47350；检视人：lixiao；*/
 
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
 /*caution: no more 30 char */
 #define OAM_PLATFORM_VERSION "V700R001C01B010"
 
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
 
-/*��������TRACE��EVENT�ϱ��Ĺ�����Ϣ*/
+/*用来保存TRACE和EVENT上报的过滤信息*/
 OM_TRACE_EVENT_CONFIG_PS_STRU           g_stAcpuTraceEventConfig;
 
-/*���кţ�����TRACE,EVENT��Ϣ�����*/
+/*序列号，用来TRACE,EVENT消息的序号*/
 /*VOS_UINT32                            g_ulAcpuOMMsgSN         = 1;*/
 #if ( (VOS_LINUX == VOS_OS_VER) || (VOS_WIN32 == VOS_OS_VER) )
 atomic_t                                g_ulAcpuOMMsgSN;
 #endif
 
-/*���浱ǰ�Ĺ���ID��*/
+/*保存当前的工具ID号*/
 VOS_UINT16                              g_usAcpuToolId          = 0;
 
-/* ����ͬ��NV��д��ErrorLog�������,��֤ÿ��ֻ��һ�������ڽ��в���*/
+/* 用来同步NV读写和ErrorLog输出操作,保证每次只有一个任务在进行操作*/
 VOS_SEM                                 g_ulOmAcpuSyncSem;
 
-/* �������ź����������ȴ����ؽ�� */
+/* 二进制信号量，用来等待返回结果 */
 VOS_SEM                                 g_ulOmAcpuCnfSem;
 
-/*�����ź�������������OM HSIC���� */
+/*互斥信号量，用来保护OM HSIC关联 */
 VOS_SEM                                 g_ulOmAcpuHsicSem;
 
-/* ����ظ���Ϣ��ָ�� */
+/* 保存回复消息的指针 */
 MsgBlock                               *g_pstOmAcpuCnfMsg  = VOS_NULL_PTR;
 
-/*OM BUF FULL �����ϱ�CPU��Ϣ��ʱ��*/
+/*OM BUF FULL 周期上报CPU消息定时器*/
 HTIMER                                  g_stAcpuRegularBufFullTmr = VOS_NULL_PTR ;
 
-/* HSIC��OM����״̬��Ĭ��Ϊ������ */
+/* HSIC和OM关联状态，默认为不关联 */
 OM_HSIC_PORT_STATUS_ENUM_UINT32         g_ulOmHsicConnectStatus = OM_HSIC_PORT_STATUS_OFF;
 
-/*����OMͨ����·��״̬�������Ƿ��������ͨ��*/
+/*保存OM通行链路的状态，标明是否可以正常通信*/
 VOS_UINT32                              g_ulAcpuOMSwitchOnOff = OM_STATE_IDLE;
 
-/* ��¼�յ���Ϣ��Ϣ��buffer����ǰ���� */
+/* 记录收到消息信息的buffer及当前长度 */
 OM_RECORD_BUF_STRU                      g_astAcpuRecordInfo[VOS_EXC_DUMP_MEM_NUM_BUTT];
 
-/* ��¼CCORE ��ǰ״̬*/
+/* 记录CCORE 当前状态*/
 OM_CPU_STATUS_INFO                      g_astCcoreStatus[OM_CPU_STATUS_BUTT];
 
-/* ��¼ICC�˼���Ϣ�ļ�·�� */
+/* 记录ICC核间消息文件路径 */
 VOS_CHAR                                g_acICCLogFilePath[OM_ICC_MAX_NAME_LEN];
 
 #if (FEATURE_ON == FEATURE_MULTI_FS_PARTITION)
@@ -119,16 +119,16 @@ VOS_CHAR                                g_acICCLogFilePath[OM_ICC_MAX_NAME_LEN];
 #define  OM_ICC_UNITARY_LOG_PATH        "/modem_log/Log/Icc-log"
 #endif
 
-/* ��¼ICC�˼���Ϣ�ļ�����ֵ��Ĭ��0 */
+/* 记录ICC核间消息文件序列值，默认0 */
 VOS_UINT32                              g_ulICCLogFileIndex;
 
-/* ��¼ICC�˼���ϢBUFF */
+/* 记录ICC核间消息BUFF */
 OM_ICC_INFO_STRU                        g_astIccRecordInfo[OAM_ICC_RECORD_MAX_NUM];
 
-/* ��¼ICC�˼���Ϣ����ֵ */
+/* 记录ICC核间消息索引值 */
 VOS_UINT32                              g_ulIccRecordIndex = 0;
 
-/* ��¼ICC�˼���Ϣ��ʱ�� */
+/* 记录ICC核间消息定时器 */
 HTIMER                                  g_AcpuIccLogTimerId;
 
 #define NO_CONFIG_BIT                   (0)
@@ -138,7 +138,7 @@ HTIMER                                  g_AcpuIccLogTimerId;
 
 
 /*****************************************************************************
-  3 ��������
+  3 函数声明
 *****************************************************************************/
 extern VOS_VOID   Log_AcpuOmMsgProc(OM_REQ_PACKET_STRU *pRspPacket, OM_RSP_FUNC *pRspFuncPtr);
 extern VOS_UINT32 WuepsDiagPidInit(enum VOS_INIT_PHASE_DEFINE ip);
@@ -237,7 +237,7 @@ VOS_UINT32 OM_AcpuSendData(OM_RSP_PACKET_STRU *pucMsg, VOS_UINT16 usMsgLen)
     g_stAcpuUeToPcSucRecord.stTotalData.ulDataLen += usMsgLen;
     g_stAcpuUeToPcSucRecord.stTotalData.ulNum++;
 
-    /* ������� */
+    /* 参数检测 */
     if ( (0 == usMsgLen) || (VOS_NULL_PTR == pucMsg ) )
     {
         LogPrint("The input parameter is wrong.\n");
@@ -310,20 +310,20 @@ VOS_VOID OM_AcpuSendContent(VOS_UINT8 ucFuncType,
 }
 
 /*****************************************************************************
- �� �� ��  : OM_AppGreenChannel
- ��������  : ��ɫͨ����OM�ṩ���ⲿ�ķ��ͽӿ�
- �������  : ucFuncType  - ����ID
-             usPrimId    - ԭ��ֵ
-             pucData     - ָ�������ݵ�ָ��
-             usLen       - �������ݵĳ���
- �������  : ��
- �� �� ֵ  : VOS_OK  - �ɹ�
-             VOS_ERR - ʧ��
+ 函 数 名  : OM_AppGreenChannel
+ 功能描述  : 绿色通道，OM提供给外部的发送接口
+ 输入参数  : ucFuncType  - 功能ID
+             usPrimId    - 原语值
+             pucData     - 指向发送数据的指针
+             usLen       - 发送数据的长度
+ 输出参数  : 无
+ 返 回 值  : VOS_OK  - 成功
+             VOS_ERR - 失败
 
- �޸���ʷ      :
-  1.��    ��   : 2009��6��22��
-    ��    ��   : ���� 47350
-    �޸�����   : �����ɺ���
+ 修改历史      :
+  1.日    期   : 2009年6月22日
+    作    者   : 甘兰 47350
+    修改内容   : 新生成函数
 *****************************************************************************/
 VOS_UINT32 OM_AppGreenChannel(VOS_UINT8 ucFuncType, VOS_UINT16 usPrimId,
                               VOS_UINT8 *pucData, VOS_UINT16 usLen)
@@ -347,7 +347,7 @@ VOS_UINT32 OM_AppGreenChannel(VOS_UINT8 ucFuncType, VOS_UINT16 usPrimId,
 
     OM_AcpuAddSNTime(&(pstAppMsg->stAppHeader.ulSn), &(pstAppMsg->stAppHeader.ulTimeStamp));
 
-    /*�������ݳ���Ϊ0����ʾû�з�������*/
+    /*假如内容长度为0，表示没有发送内容*/
     if ((0 != usLen) && (VOS_NULL_PTR != pucData))
     {
         VOS_MemCpy(pstAppMsg->aucPara, pucData, usLen);
@@ -362,26 +362,26 @@ VOS_UINT32 OM_AppGreenChannel(VOS_UINT8 ucFuncType, VOS_UINT16 usPrimId,
 
 
 /*****************************************************************************
- �� �� ��  : OM_AcpuSendLog
- ��������  : ��ACPU's LOG����ͨ��OM��������߲ࡣ
- �������  : pucLogData  - ָ�������ݵ�ָ��
-             lLength     - �������ݵĳ���
- �������  : ��
- �� �� ֵ  : VOS_OK  - �ɹ�
-             VOS_ERR - ʧ��
+ 函 数 名  : OM_AcpuSendLog
+ 功能描述  : 将ACPU's LOG数据通过OM输出到工具侧。
+ 输入参数  : pucLogData  - 指向发送数据的指针
+             lLength     - 发送数据的长度
+ 输出参数  : 无
+ 返 回 值  : VOS_OK  - 成功
+             VOS_ERR - 失败
 
- �޸���ʷ      :
-  1.��    ��   : 2011��7��1��
-    ��    ��   : ���� 47350
-    �޸�����   : �����ɺ���,���ӿ�ά�ɲ�����׶�����
+ 修改历史      :
+  1.日    期   : 2011年7月1日
+    作    者   : 甘兰 47350
+    修改内容   : 新生成函数,添加可维可测第三阶段需求
 *****************************************************************************/
 VOS_UINT32 OM_AcpuSendLog(VOS_UINT8 *pucLogData, VOS_UINT32 ulLength)
 {
     VOS_UINT8   *pucLogMsg;
     VOS_UINT32   ulLogMsgLen;
 
-    /*���㷢�͸����߲�LOG��Ϣ�����ܳ��ȣ�����OM_APP_LOG_LEN��
-    �Ѿ�������ModuleId�ĳ��ȣ�����Ҫ�����ȥ*/
+    /*计算发送给工具侧LOG消息包的总长度，由于OM_APP_LOG_LEN中
+    已经包括了ModuleId的长度，故需要将其减去*/
     ulLogMsgLen = (ulLength + OM_APP_LOG_LEN) - LOG_MODULE_ID_LEN;
     pucLogMsg = (VOS_UINT8*)VOS_MemAlloc(ACPU_PID_OM,
                                            DYNAMIC_MEM_PT, ulLogMsgLen);
@@ -431,13 +431,13 @@ VOS_VOID OM_AcpuSavePSConfigInfo(VOS_UINT32* pulModuleIds,VOS_UINT32 ulModuleNum
         return;
     }
 
-    /* ����ϴ����� */
+    /* 清除上次配置 */
     for (ulModuleIndex = 0; ulModuleIndex < OM_MAX_PS_MODULE_NUM; ulModuleIndex++)
     {
         g_stAcpuTraceEventConfig.aulRptConfigLevl[ulModuleIndex] &= (~ulConfigBit);
     }
 
-    /* �������� */
+    /* 重新配置 */
     for (ulModuleIndex = 0; ulModuleIndex < ulModuleNum; ulModuleIndex++)
     {
         ulModuleId = pulModuleIds[ulModuleIndex];
@@ -464,7 +464,7 @@ VOS_VOID OM_AcpuShowPSConfigInfo(VOS_UINT32 ulModuleId)
         ulModuleId, g_stAcpuTraceEventConfig.aulRptConfigLevl[ulModuleId - VOS_PID_DOPRAEND]);
 }
 
-/*lint -e416 -e661 -e662 -e717 �޸���:����*/
+/*lint -e416 -e661 -e662 -e717 修改人:甘兰*/
 
 VOS_VOID OM_AcpuConfigMsgProc(OM_REQ_PACKET_STRU *pRspPacket, OM_RSP_FUNC *pRspFuncPtr)
 {
@@ -523,7 +523,7 @@ OM_FUNCID_PROC_STRU g_astAcpuOmFuncIdProcTbl[OM_FUNCID_MAX_NUM] =
     {VOS_NULL_PTR,                OM_WRF_FUNC,      LEVEL_NORMAL},
     {VOS_NULL_PTR,                OM_GRF_FUNC,      LEVEL_NORMAL},
     {VOS_NULL_PTR,                OM_AUTH_NV_FUNC,  LEVEL_NORMAL},
-    {OM_AcpuQueryMsgProc,         OM_QUERY_FUNC,    LEVEL_NORMAL}, /*���ڴ�����·��Ϣ*/
+    {OM_AcpuQueryMsgProc,         OM_QUERY_FUNC,    LEVEL_NORMAL}, /*用于处理链路消息*/
     {VOS_NULL_PTR,                OM_NV_FUNC,       LEVEL_NORMAL},
     {VOS_NULL_PTR,                OM_SIGCAL_FUNC,   LEVEL_NORMAL},
     {VOS_NULL_PTR,                OM_GREEN_FUNC,    LEVEL_NORMAL},
@@ -614,7 +614,7 @@ VOS_VOID OM_AcpuTimerMsgProc(MsgBlock* pMsg)
 
 OM_HSIC_PORT_STATUS_ENUM_UINT32 OM_GetHsicPortStatus(VOS_VOID)
 {
-    /* ����OM�ں�HSIC����״̬ */
+    /* 返回OM口和HSIC关联状态 */
     return g_ulOmHsicConnectStatus;
 }
 VOS_VOID Om_HsicConnectProc(VOS_VOID)
@@ -624,7 +624,7 @@ VOS_VOID Om_HsicConnectProc(VOS_VOID)
         return;
     }
 
-    /* ��Ʒ��֧��HSIC���ԣ�ֱ�ӳ�ʼ���ɹ� */
+    /* 产品不支持HSIC特性，直接初始化成功 */
     if (BSP_MODULE_SUPPORT != DRV_GET_HSIC_SUPPORT())
     {
         VOS_SmV(g_ulOmAcpuHsicSem);
@@ -632,7 +632,7 @@ VOS_VOID Om_HsicConnectProc(VOS_VOID)
         return;
     }
 
-    /* ����Ѿ������ϲ������� */
+    /* 如果已经关联上不做关联 */
     if (OM_HSIC_PORT_STATUS_ON == g_ulOmHsicConnectStatus)
     {
         VOS_SmV(g_ulOmAcpuHsicSem);
@@ -640,7 +640,7 @@ VOS_VOID Om_HsicConnectProc(VOS_VOID)
         return;
     }
 
-    /* ��ȫ�ֱ�������Ϊ�ѹ����� */
+    /* 将全局变量设置为已关联上 */
     g_ulOmHsicConnectStatus = OM_HSIC_PORT_STATUS_ON;
 
     VOS_SmV(g_ulOmAcpuHsicSem);
@@ -649,19 +649,19 @@ VOS_VOID Om_HsicConnectProc(VOS_VOID)
 }
 VOS_VOID Om_HsicDisconnectProc(VOS_VOID)
 {
-    /* ��Ʒ��֧��HSIC���ԣ�ֱ�ӳ�ʼ���ɹ� */
+    /* 产品不支持HSIC特性，直接初始化成功 */
     if (BSP_MODULE_SUPPORT != DRV_GET_HSIC_SUPPORT())
     {
         return;
     }
 
-    /* ����Ѿ���δ����״̬��������������� */
+    /* 如果已经是未关联状态不做解除关联操作 */
     if (OM_HSIC_PORT_STATUS_OFF == g_ulOmHsicConnectStatus)
     {
         return;
     }
 
-    /* ��ȫ�ֱ�������Ϊ�ѽ�������� */
+    /* 将全局变量设置为已解除关联上 */
     g_ulOmHsicConnectStatus = OM_HSIC_PORT_STATUS_OFF;
 
     return;
@@ -724,10 +724,10 @@ VOS_VOID OM_AcpuMsgProc(MsgBlock* pMsg)
 
     OM_RecordInfoStart(VOS_EXC_DUMP_MEM_NUM_1, pMsg->ulSenderPid, ACPU_PID_OM, *((VOS_UINT32*)pMsg->aucValue));
 
-    /* ����Error log �ϱ� */
+    /* 商用Error log 上报 */
     OM_AcpuErrLogMsgProc(pMsg);
 
-    /*�������Թ��߲����Ϣ*/
+    /*处理来自工具侧的消息*/
     if ((ACPU_PID_OM == pMsg->ulSenderPid) || (UEPS_PID_OMRL == pMsg->ulSenderPid))
     {
         pstAppToOmMsg = (APP_OM_MSG_EX_STRU*)pMsg->aucValue;
@@ -754,7 +754,7 @@ VOS_VOID OM_AcpuMsgProc(MsgBlock* pMsg)
             pOmFuncProc((OM_REQ_PACKET_STRU*)pstAppToOmMsg, OM_AcpuSendData);
 
         }
-        /*����ACPU CallBack����������*/
+        /*交由ACPU CallBack任务来处理*/
         else if ((OM_FUNCID_ACPU_PART_NUM < ulOriginalId) && (OM_FUNCID_MAX_NUM > ulOriginalId))
         {
             VOS_ReserveMsg(WUEPS_PID_OM, pMsg);
@@ -895,7 +895,7 @@ VOS_UINT32 OM_AcpuEvent(PS_OM_EVENT_IND_STRU *pstEvent)
     return VOS_OK;
 }
 
-/* ��C��OM�ӿ��г�ͻ��ȷ��ST���̱���ͨ�� */
+/* 与C核OM接口有冲突，确保ST工程编译通过 */
 #if (VOS_WIN32 != VOS_OS_VER)
 
 VOS_UINT32 OM_GetSlice(VOS_VOID)
@@ -945,7 +945,7 @@ VOS_VOID OM_RecordInfoEnd(VOS_EXC_DUMP_MEM_NUM_ENUM_UINT32 enNumber)
         return;
     }
 
-    /* ��start���Ѿ�����˼�¼endslice�ĳ��ȣ���˴˴������ĸ��ֽ���дendslice��ֵ */
+    /* 在start中已经变更了记录endslice的长度，因此此处回退四个字节填写endslice的值 */
     pulBuf = (VOS_UINT32*)(g_astAcpuRecordInfo[enNumber].pucBuf + g_astAcpuRecordInfo[enNumber].ulLen - sizeof(VOS_UINT32));
 
     *pulBuf = VOS_GetSlice();
@@ -955,11 +955,11 @@ VOS_VOID OM_RecordInfoEnd(VOS_EXC_DUMP_MEM_NUM_ENUM_UINT32 enNumber)
 
 /*****************************************************************************
  Prototype       : OM_RecordInfoStart
- Description     : A�˱���׮����
- Input           : ulNumer -- �����
-                   ulSendPid -- ����PID
-                   ulRcvPid -- ����PID
-                   ulMsgName -- ��Ϣ����
+ Description     : A核保留桩函数
+ Input           : ulNumer -- 任务号
+                   ulSendPid -- 发送PID
+                   ulRcvPid -- 接收PID
+                   ulMsgName -- 消息名称
  Output          : None
  Return Value    : VOS_VOID
 
@@ -1005,7 +1005,7 @@ VOS_VOID OM_RecordMemInit(VOS_VOID)
 
    VOS_MemSet(g_astAcpuRecordInfo, 0, sizeof(g_astAcpuRecordInfo));
 
-   /* ����ÿ��ģ���¼��ν�ɲ���Ϣ�Ŀռ� */
+   /* 分配每个模块记录可谓可测信息的空间 */
    for(i = 0; i < VOS_EXC_DUMP_MEM_NUM_BUTT; i++)
    {
       g_astAcpuRecordInfo[i].pucBuf = (VOS_UINT8*)VOS_ExcDumpMemAlloc(i);
@@ -1052,7 +1052,7 @@ ssize_t NV_LinuxUserRead(struct file *file, char __user *buf, size_t len, loff_t
         return VOS_ERROR;
     }
 
-    if(VOS_OK != copy_from_user(&stNvData, buf, len))   /*�����û��ռ����ݵ��ں˿ռ�����*/
+    if(VOS_OK != copy_from_user(&stNvData, buf, len))   /*拷贝用户空间数据到内核空间上面*/
     {
         printk("\r\n NV_LinuxUserRead: copy_from_user is Error");
         return VOS_ERROR;
@@ -1064,7 +1064,7 @@ ssize_t NV_LinuxUserRead(struct file *file, char __user *buf, size_t len, loff_t
         return VOS_ERROR;
     }
 
-    stNvData.ulResult = NV_ReadEx(MODEM_ID_0,stNvData.usNvId, stNvData.aucData, stNvData.usLength);    /*���� Nv ��ȡ�ӿ�*/
+    stNvData.ulResult = NV_ReadEx(MODEM_ID_0,stNvData.usNvId, stNvData.aucData, stNvData.usLength);    /*调用 Nv 读取接口*/
 
     if(NV_OK != stNvData.ulResult)
     {
@@ -1095,7 +1095,7 @@ ssize_t NV_LinuxUserWrite(struct file *file, const char __user *buf, size_t len,
         return VOS_ERROR;
     }
 
-    if(VOS_OK != copy_from_user(&stNvData, buf, len))   /*�����û��ռ����ݵ��ں˿ռ�����*/
+    if(VOS_OK != copy_from_user(&stNvData, buf, len))   /*拷贝用户空间数据到内核空间上面*/
     {
         printk("\r\n NV_LinuxUserRead: copy_from_user is Error");
         return VOS_ERROR;
@@ -1145,16 +1145,16 @@ VOS_UINT32 NV_VFInit(VOS_VOID)
 #endif
 
 /*****************************************************************************
- �� �� ��  : OM_AcpuRegNvInit
- ��������  : ����NVģ�����Ƶ������������������ϲ�Ľӿ���ҪЭ��ջ������ע�ᡣ
- �������  : ��
- �������  : ��
- �� �� ֵ  : VOS_OK - �ɹ�
-             VOS_ERR - ʧ��
- �޸���ʷ      :
-  1.��    ��   : 2013��2��17��
-    ��    ��   : ���� 47350
-    �޸�����   : �����ɺ���
+ 函 数 名  : OM_AcpuRegNvInit
+ 功能描述  : 由于NV模块下移到底软，部分依赖于上层的接口需要协议栈启动后注册。
+ 输入参数  : 无
+ 输出参数  : 无
+ 返 回 值  : VOS_OK - 成功
+             VOS_ERR - 失败
+ 修改历史      :
+  1.日    期   : 2013年2月17日
+    作    者   : 甘兰 47350
+    修改内容   : 新生成函数
 *****************************************************************************/
 VOS_UINT32 OM_AcpuRegNvInit(VOS_VOID)
 {
@@ -1183,10 +1183,10 @@ VOS_VOID OM_AcpuICCInfoFileName( VOS_CHAR * cFileName )
         return;
     }
 
-    /* ��ȡ��󱣴��ļ�����ֵ */
+    /* 读取最后保存文件序列值 */
     fp = DRV_FILE_OPEN((VOS_CHAR*)g_acICCLogFilePath, "rb+");
 
-    /* ���û�ж�ȡ���ļ�����ֵ�ļ��������״α��棬�ļ�����ֵʹ��Ĭ��ֵ0��ʼ */
+    /* 如果没有读取到文件序列值文件，代表首次保存，文件序列值使用默认值0开始 */
     if (VOS_NULL_PTR == fp)
     {
         g_ulICCLogFileIndex = 0;
@@ -1216,9 +1216,9 @@ VOS_VOID OM_AcpuICCInfoWriteLog(VOS_UINT32 ulParam, VOS_UINT32 ulTimerName)
 
     OM_AcpuICCInfoFileName(ucFileName);
 
-    fp = DRV_FILE_OPEN((VOS_CHAR*)ucFileName, "ab+");  /*����׷�ӷ�ʽ���ļ�*/
+    fp = DRV_FILE_OPEN((VOS_CHAR*)ucFileName, "ab+");  /*按照追加方式打开文件*/
 
-    if(VOS_NULL_PTR == fp)                      /*����ļ���ʧ��˵�������ļ�Ҳ���ɹ�*/
+    if(VOS_NULL_PTR == fp)                      /*如果文件打开失败说明建立文件也不成功*/
     {
         return;
     }
@@ -1227,7 +1227,7 @@ VOS_VOID OM_AcpuICCInfoWriteLog(VOS_UINT32 ulParam, VOS_UINT32 ulTimerName)
 
     ulLen = (VOS_UINT32)DRV_FILE_TELL(fp);
 
-    if(ulLen >= OM_LOG_FILE_MAX_SIZE)            /*�ļ���С��������*/
+    if(ulLen >= OM_LOG_FILE_MAX_SIZE)            /*文件大小超过限制*/
     {
         DRV_FILE_CLOSE(fp);
 
@@ -1238,7 +1238,7 @@ VOS_VOID OM_AcpuICCInfoWriteLog(VOS_UINT32 ulParam, VOS_UINT32 ulTimerName)
             g_ulICCLogFileIndex = 0;
         }
 
-        /* ����ǰ�ļ�����ֵ��¼��Icc-log�ļ��� */
+        /* 将当前文件序列值记录至Icc-log文件中 */
         fp = DRV_FILE_OPEN((VOS_CHAR*)g_acICCLogFilePath, "wb+");
 
         if(VOS_NULL_PTR == fp)
@@ -1250,23 +1250,23 @@ VOS_VOID OM_AcpuICCInfoWriteLog(VOS_UINT32 ulParam, VOS_UINT32 ulTimerName)
 
         DRV_FILE_CLOSE(fp);
 
-        /* ��ȡ�¼�¼�ļ��� */
+        /* 获取新记录文件名 */
         OM_AcpuICCInfoFileName(ucFileName);
 
-        fp = DRV_FILE_OPEN((VOS_CHAR*)ucFileName, "wb+");  /*����ļ�����*/
+        fp = DRV_FILE_OPEN((VOS_CHAR*)ucFileName, "wb+");  /*清空文件内容*/
     }
 
-    if(VOS_NULL_PTR == fp)                      /*����ļ���ʧ��˵�������ļ�Ҳ���ɹ�*/
+    if(VOS_NULL_PTR == fp)                      /*如果文件打开失败说明建立文件也不成功*/
     {
         return;
     }
 
-    /* ͨ����¼����Ϣ����ֵ��¼��ǰ�����ICC��Ϣ */
+    /* 通过记录的消息索引值记录当前保存的ICC消息 */
     DRV_FILE_WRITE(g_astIccRecordInfo, sizeof(OM_ICC_INFO_STRU), OAM_ICC_RECORD_MAX_NUM, fp);
 
     DRV_FILE_CLOSE(fp);
 
-    /* ÿ�μ�¼��ɺ���յ�ǰICC��ά�ɲ�BUFF */
+    /* 每次记录完成后，清空当前ICC可维可测BUFF */
     VOS_MemSet(g_astIccRecordInfo, 0, sizeof(OM_ICC_INFO_STRU)*OAM_ICC_RECORD_MAX_NUM);
 
     g_ulIccRecordIndex = 0;
@@ -1292,7 +1292,7 @@ VOS_UINT32  OM_AcpuICCInfoInit( VOS_VOID )
         return VOS_OK;
     }
 
-    /* ʹ���ӳ�д��NVʱ����������ʱ���涨ʱ�� */
+    /* 使用延迟写入NV时长，启动定时保存定时器 */
     (VOS_VOID)VOS_StartRelTimer(&g_AcpuIccLogTimerId, ACPU_PID_PAM_OM, stInfoCfg.ulTimeOutValue,
                     OM_ICC_TIMER, 0, VOS_RELTIMER_LOOP, VOS_TIMER_PRECISION_5);
 #endif
@@ -1313,7 +1313,7 @@ VOS_VOID OM_AcpuICCInfoRecord(MsgBlock *pMsgCtrlBlk)
 
     g_ulIccRecordIndex++;
 
-    /* ����¼��ICC��Ϣ����BUFF�������ֵ����BUFFͷ��ʼ���¼�¼ */
+    /* 当记录的ICC消息超过BUFF数组最大值，从BUFF头开始重新记录 */
     if (g_ulIccRecordIndex >= OAM_ICC_RECORD_MAX_NUM)
     {
         g_ulIccRecordIndex = 0;
@@ -1327,7 +1327,7 @@ VOS_UINT32 OM_AcpuGetLogPath(VOS_CHAR *pucBuf, VOS_CHAR *pucOldPath, VOS_CHAR *p
 
     if (VOS_OK != NV_Read(en_NV_Item_ProductTypeForLogDirectory, &stLogDir, sizeof(stLogDir)))
     {
-        /* ��NVʧ��,ֱ�ӷ��� */
+        /* 读NV失败,直接返回 */
         return VOS_ERR;
     }
 
@@ -1348,7 +1348,7 @@ VOS_UINT32 OM_AcpuGetLogPath(VOS_CHAR *pucBuf, VOS_CHAR *pucOldPath, VOS_CHAR *p
 
 VOS_UINT32 OM_AcpuInit(VOS_VOID)
 {
-    /* ԭ�ӱ�������ʼֵΪ0����Ϊʹ��ʱ���ȼ�һ�ٷ��ص� */
+    /* 原子变量附初始值为0，因为使用时是先加一再返回的 */
 #if ( (VOS_LINUX == VOS_OS_VER) || (VOS_WIN32 == VOS_OS_VER) )
     atomic_set(&g_ulAcpuOMMsgSN, 0);
 #endif
@@ -1356,47 +1356,47 @@ VOS_UINT32 OM_AcpuInit(VOS_VOID)
 #if (VOS_WIN32 == VOS_OS_VER)
     OM_RegisterMsgHook(OM_AcpuTraceMsgHook, OM_MSG_HOOK_LTE);
 #else
-    /* ��OSA�ҽӹ��Ӻ��� */
+    /* 向OSA挂接钩子函数 */
     VOS_RegisterMsgGetHook(OM_AcpuTraceMsgHook);
 #endif
 
-    /* ���以���ź��� */
+    /* 分配互斥信号量 */
     if (VOS_OK != VOS_SmMCreate("SYNC", VOS_SEMA4_FIFO, &g_ulOmAcpuSyncSem))
     {
         return VOS_ERR;
     }
 
-    /* ���以���ź��� */
+    /* 分配互斥信号量 */
     if (VOS_OK != VOS_SmMCreate("HSIC", VOS_SEMA4_FIFO, &g_ulOmAcpuHsicSem))
     {
         return VOS_ERR;
     }
 
-    /* ����������ź��� */
+    /* 分配二进制信号量 */
     if (VOS_OK != VOS_SmBCreate( "CNF", 0, VOS_SEMA4_FIFO, &g_ulOmAcpuCnfSem))
     {
         return VOS_ERR;
     }
 
-    /* ��ʼ������ͨ�� */
+    /* 初始化物理通道 */
     if (VOS_OK != CPM_InitPhyPort())
     {
         return VOS_ERR;
     }
 
-    /* ��ʼ��OM�߼�ͨ�� */
+    /* 初始化OM逻辑通道 */
     if (VOS_OK != OMRL_AcpuInit())
     {
         return VOS_ERR;
     }
 
-    /*ע�ắ��������ʹ��*/
+    /*注册函数给底软使用*/
     OM_AcpuRegisterDrvCB();
 
-    /* ��ʼ��PS������Ϣ */
+    /* 初始化PS配置信息 */
     VOS_MemSet(&g_stAcpuTraceEventConfig, 0, sizeof(OM_TRACE_EVENT_CONFIG_PS_STRU));
 
-    /* ��ʼ��C�˸�λ��¼ȫ�ֱ��� */
+    /* 初始化C核复位记录全局变量 */
     VOS_MemSet(g_astCcoreStatus,0,sizeof(g_astCcoreStatus));
 
     if (VOS_OK != OM_PrintfInit())
@@ -1432,13 +1432,13 @@ VOS_UINT32 OM_AcpuPortInit(VOS_VOID)
 #if (VOS_OS_VER == VOS_WIN32)
     stPortCfg.enPortNum = CPM_WIFI_OM_PORT;
 #else
-    /* ��Ʒ֧��HSIC���ԣ�ֱ�ӷ��سɹ��������˿ڹ��� */
+    /* 产品支持HSIC特性，直接返回成功，不做端口关联 */
     if (BSP_MODULE_SUPPORT == DRV_GET_HSIC_SUPPORT())
     {
         return VOS_OK;
     }
 
-    /* ��ȡOM���������ͨ�� */
+    /* 读取OM的物理输出通道 */
     if (NV_OK != NV_Read(en_NV_Item_Om_Port_Type, &stPortCfg, sizeof(OM_CHANNLE_PORT_CFG_STRU)))
     {
         return VOS_ERR;
@@ -1447,7 +1447,7 @@ VOS_UINT32 OM_AcpuPortInit(VOS_VOID)
     stPortCfg.enPortNum += CPM_APP_PORT;
 #endif
 
-    /* ������*/
+    /* 检测参数*/
     if (CPM_PORT_BUTT >= stPortCfg.enPortNum)
     {
         CPM_ConnectPorts(stPortCfg.enPortNum, CPM_OM_COMM);
@@ -1478,11 +1478,11 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
         return;
     }
 
-    /* �жϵ�ǰ�Ƿ�ΪSD����ʽ��� */
+    /* 判断当前是否为SD卡方式输出 */
     if ( (CPM_SD_PORT == (stPortCfg.enPortNum + CPM_APP_PORT)) ||
         (CPM_FS_PORT == (stPortCfg.enPortNum + CPM_APP_PORT)))
     {
-        /*SD������Log��FLASH����Log��������Ҫ���������ļ���ʼ������*/
+        /*SD卡保存Log和FLASH保存Log场景，需要进行配置文件初始化流程*/
     }
     else
     {
@@ -1491,7 +1491,7 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
 
     g_ulAcpuOMSwitchOnOff   = OM_STATE_ACTIVE;
 
-    /* ֪ͨCCPU */
+    /* 通知CCPU */
     (VOS_VOID)GU_OamSndPcMsgToCcpu((VOS_UINT8*)aucEstablishReq, sizeof(aucEstablishReq));
 
     if (VOS_OK != OM_AcpuGetLogPath(aucConfigPath, OM_CONFIG_PATH, OM_CONFIG_UNITARY_PATH))
@@ -1499,7 +1499,7 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
         return;
     }
 
-    /*��ȡ�����ļ�*/
+    /*读取配置文件*/
     lCfgFile = DRV_FILE_OPEN(aucConfigPath, "rb");
     if (DRV_FILE_NULL == lCfgFile)
     {
@@ -1517,11 +1517,11 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
             break;
         }
 
-        /*���������Ϣ�ĳ���, ǰ3���ֽ�Ϊ���߱����ֶ�*/
+        /*获得配置消息的长度, 前3个字节为工具保留字段*/
         VOS_MemCpy(&ulMsgLen, (VOS_UINT8*)(aucHeadData + 3), sizeof(VOS_UINT32));
 
-        /*����Ϣ���Ƚ��кϷ�ֵ�жϣ�����PC�뵥�彻���ĳ����ֶ�Ϊ2�ֽ�,
-        ����ʹ��0xffff�����ж�*/
+        /*对消息长度进行合法值判断，由于PC与单板交互的长度字段为2字节,
+        所以使用0xffff进行判断*/
         if (ulMsgLen > 0xffff)
         {
             LogPrint1("OM_AutoConfig: The Msg Len is too big : %d!\n", (VOS_INT32)ulMsgLen);
@@ -1546,7 +1546,7 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
             continue;
         }
 
-        /*��������Ϣ���͸�OM����*/
+        /*将配置消息发送给OM处理*/
         if (VOS_OK != VOS_SendMsg(UEPS_PID_OMRL, pstMsgBlk))
         {
             break;
@@ -1570,7 +1570,7 @@ VOS_UINT32 OM_AcpuPidInit(enum VOS_INIT_PHASE_DEFINE ip)
             pstAutoConfigReq = (OM_AUTOCONFIG_REQ_STRU*)VOS_AllocMsg(ACPU_PID_OMAGENT,
                                 sizeof(OM_AUTOCONFIG_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
 
-            /* ������Ϣʧ�� */
+            /* 分配消息失败 */
             if (VOS_NULL_PTR == pstAutoConfigReq)
             {
                 return VOS_ERR;
@@ -1612,7 +1612,7 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
     }
 #endif
 
-    /*��ȡPcVoice��NV�е�����*/
+    /*读取PcVoice在NV中的配置*/
     if(NV_OK!= NV_Read(en_NV_Item_PCVOICE_Support_Flg, &stPcvConfig, sizeof(APP_VC_NVIM_PC_VOICE_SUPPORT_FLAG_STRU)))
     {
         PS_LOG(WUEPS_PID_OM, 0, PS_PRINT_ERROR, "OM_AcpuSelfTaskReg:Read NV Config fail!");
@@ -1620,12 +1620,12 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
         stPcvConfig.usPcVoiceSupportFlag =  VOS_FALSE;
     }
 
-    /*��ȡPcVoice��NV�е�����Ϊ1��ʱ���ʹ��*/
+    /*读取PcVoice在NV中的配置为1的时候才使能*/
     if(VOS_TRUE == stPcvConfig.usPcVoiceSupportFlag)
     {
         vos_printf("\r\nOM_AcpuSelfTaskReg: Reg the PCVoice Task and PID ");
 
-        /* ����OM_PCVģ���Դ������� */
+        /* 增加OM_PCV模块自处理任务 */
         ulRslt = VOS_RegisterSelfTask(ACPU_FID_OM,
                                      (VOS_TASK_ENTRY_TYPE)OM_PcvTransmitTaskEntry,
                                      VOS_PRIORITY_P2, PCV_TRANS_TASK_STACK_SIZE);
@@ -1643,7 +1643,7 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
         }
     }
 
-    /*��ȡӦ����NV�е�����Ϊ1��ʱ���ʹ��*/
+    /*读取应用在NV中的配置为1的时候才使能*/
     if(NV_OK != NV_Read(en_NV_Item_System_APP_Config, &stAPPConfig, sizeof(NAS_NVIM_SYSTEM_APP_CONFIG_STRU)))
     {
         PS_LOG(WUEPS_PID_OM, 0, PS_PRINT_ERROR, "OM_AcpuSelfTaskReg:Read NV en_NV_Item_System_APP_Config fail!");
@@ -1655,7 +1655,7 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
     {
         vos_printf("\r\nOM_AcpuSelfTaskReg: Reg the OMPrintf Task");
 
-        /* ����OM_printfģ���Դ������� */
+        /* 增加OM_printf模块自处理任务 */
         ulRslt = VOS_RegisterSelfTaskPrio(ACPU_FID_OM,
                                      (VOS_TASK_ENTRY_TYPE)OM_PrintfTask,
                                      COMM_PRINTF_SELFTASK_PRIO, OM_PRINTF_TASK_STACK_SIZE);
@@ -1669,7 +1669,7 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
 }
 VOS_INT OM_AcpuCcoreResetCB(DRV_RESET_CALLCBFUN_MOMENT enParam, VOS_INT lUserData)
 {
-    if(DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam) /* ��λǰ����*/
+    if(DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam) /* 复位前调用*/
     {
         g_astCcoreStatus[OM_CPU_STATUS_RESET].ulResetNum++;
         g_astCcoreStatus[OM_CPU_STATUS_RESET].ulSlice = OM_GetSlice();
@@ -1678,7 +1678,7 @@ VOS_INT OM_AcpuCcoreResetCB(DRV_RESET_CALLCBFUN_MOMENT enParam, VOS_INT lUserDat
 
         SCM_StopAllSrcChan();
     }
-    else if(DRV_RESET_CALLCBFUN_RESET_AFTER == enParam) /*��λ��*/
+    else if(DRV_RESET_CALLCBFUN_RESET_AFTER == enParam) /*复位后*/
     {
         g_astCcoreStatus[OM_CPU_STATUS_OK].ulResetNum++;
         g_astCcoreStatus[OM_CPU_STATUS_OK].ulSlice = OM_GetSlice();
@@ -1754,7 +1754,7 @@ VOS_UINT32 OM_AcpuFidInit(enum VOS_INIT_PHASE_DEFINE ip)
                 return VOS_ERR;
             }
 
-            /* ע��C�˵�����λ���� */
+            /* 注册C核单独复位函数 */
             lResut = DRV_CCORERESET_REGCBFUNC(OAM_MODELE_NAME,(pdrv_reset_cbfun)OM_AcpuCcoreResetCB,
                 VOS_NULL,OAM_CCORE_RESET_CBFUN_PRI);
 
@@ -1784,7 +1784,7 @@ VOS_VOID OM_OSAEvent(VOS_VOID *pData, VOS_UINT32 ulLength)
 
     ulEventLenth = (VOS_UINT32)sizeof(PS_OM_EVENT_IND_STRU)
                     + ulLength
-                    - 4U * (VOS_UINT32)sizeof(VOS_UINT8);/*�ṹ���а�����4byte������������Ҫ��ȥ*/
+                    - 4U * (VOS_UINT32)sizeof(VOS_UINT8);/*结构体中包含了4byte的数据所以需要减去*/
 
     pstEventInd = (PS_OM_EVENT_IND_STRU *)VOS_MemAlloc(ACPU_PID_OM, DYNAMIC_MEM_PT, ulEventLenth);
     if(VOS_NULL_PTR == pstEventInd)
@@ -1818,43 +1818,43 @@ VOS_VOID OM_OSAEvent(VOS_VOID *pData, VOS_UINT32 ulLength)
 #define OAM_PLATFORM_VERSION "V700R001C01B010"
 
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
 
-/*��������TRACE��EVENT�ϱ��Ĺ�����Ϣ*/
+/*用来保存TRACE和EVENT上报的过滤信息*/
 OM_TRACE_EVENT_CONFIG_PS_STRU           g_stAcpuTraceEventConfig;
 
-/*���кţ�����TRACE,EVENT��Ϣ�����*/
+/*序列号，用来TRACE,EVENT消息的序号*/
 /*VOS_UINT32                            g_ulAcpuOMMsgSN         = 1;*/
 #if ( (VOS_LINUX == VOS_OS_VER) || (VOS_WIN32 == VOS_OS_VER) )
 atomic_t                                g_ulAcpuOMMsgSN;
 #endif
 
-/*���浱ǰ�Ĺ���ID��*/
+/*保存当前的工具ID号*/
 VOS_UINT16                              g_usAcpuToolId          = 0;
 
-/* ����ͬ��NV��д��ErrorLog�������,��֤ÿ��ֻ��һ�������ڽ��в���*/
+/* 用来同步NV读写和ErrorLog输出操作,保证每次只有一个任务在进行操作*/
 VOS_SEM                                 g_ulOmAcpuSyncSem;
 
-/* �������ź����������ȴ����ؽ�� */
+/* 二进制信号量，用来等待返回结果 */
 VOS_SEM                                 g_ulOmAcpuCnfSem;
 
-/*�����ź�������������OM HSIC���� */
+/*互斥信号量，用来保护OM HSIC关联 */
 VOS_SEM                                 g_ulOmTxCbtSem;
 
-/* ����ظ���Ϣ��ָ�� */
+/* 保存回复消息的指针 */
 MsgBlock                               *g_pstOmAcpuCnfMsg  = VOS_NULL_PTR;
 
-/*OM BUF FULL �����ϱ�CPU��Ϣ��ʱ��*/
+/*OM BUF FULL 周期上报CPU消息定时器*/
 HTIMER                                  g_stAcpuRegularBufFullTmr = VOS_NULL_PTR ;
 
-/* ��¼�յ���Ϣ��Ϣ��buffer����ǰ���� */
+/* 记录收到消息信息的buffer及当前长度 */
 OM_RECORD_BUF_STRU                      g_astAcpuRecordInfo[VOS_EXC_DUMP_MEM_NUM_BUTT];
 
-/* ��¼CCORE ��ǰ״̬*/
+/* 记录CCORE 当前状态*/
 OM_CPU_STATUS_INFO                      g_astCcoreStatus[OM_CPU_STATUS_BUTT];
 
-/* ��¼ICC�˼���Ϣ�ļ�·�� */
+/* 记录ICC核间消息文件路径 */
 VOS_CHAR                                g_acICCLogFilePath[OM_ICC_MAX_NAME_LEN];
 
 #if (FEATURE_ON == FEATURE_MULTI_FS_PARTITION)
@@ -1865,16 +1865,16 @@ VOS_CHAR                                g_acICCLogFilePath[OM_ICC_MAX_NAME_LEN];
 #define  OM_ICC_UNITARY_LOG_PATH        "/modem_log/Log/Icc-log"
 #endif
 
-/* ��¼ICC�˼���Ϣ�ļ�����ֵ��Ĭ��0 */
+/* 记录ICC核间消息文件序列值，默认0 */
 VOS_UINT32                              g_ulICCLogFileIndex;
 
-/* ��¼ICC�˼���ϢBUFF */
+/* 记录ICC核间消息BUFF */
 OM_ICC_INFO_STRU                        g_astIccRecordInfo[OAM_ICC_RECORD_MAX_NUM];
 
-/* ��¼ICC�˼���Ϣ����ֵ */
+/* 记录ICC核间消息索引值 */
 VOS_UINT32                              g_ulIccRecordIndex = 0;
 
-/* ��¼ICC�˼���Ϣ��ʱ�� */
+/* 记录ICC核间消息定时器 */
 HTIMER                                  g_AcpuIccLogTimerId;
 
 #define NO_CONFIG_BIT                   (0)
@@ -1884,7 +1884,7 @@ HTIMER                                  g_AcpuIccLogTimerId;
 
 
 /*****************************************************************************
-  3 ��������
+  3 函数声明
 *****************************************************************************/
 extern VOS_VOID   Log_AcpuOmMsgProc(OM_REQ_PACKET_STRU *pRspPacket, OM_RSP_FUNC *pRspFuncPtr);
 extern VOS_UINT32 WuepsDiagPidInit(enum VOS_INIT_PHASE_DEFINE ip);
@@ -1981,7 +1981,7 @@ VOS_UINT32 OM_AcpuSendDataMNTNChannel(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlI
     pstUeToPcSucRecord->stTotalData.ulDataLen += usMsgLen;
     pstUeToPcSucRecord->stTotalData.ulNum++;
 
-    /* ������� */
+    /* 参数检测 */
     if ( (0 == usMsgLen) || (VOS_NULL_PTR == pucMsg ) )
     {
         LogPrint("The input parameter is wrong.\n");
@@ -2022,11 +2022,11 @@ VOS_UINT32 OM_AcpuSendDataMNTNChannel(OMRL_MNTN_TX_CHAN_CTRL_INFO_STRU *pstCtrlI
 }
 VOS_UINT32 OM_AcpuSendDataCbtChannel(OM_RSP_PACKET_STRU *pucMsg, VOS_UINT16 usMsgLen)
 {
-    VOS_UINT8                           ucCurSegNum = 1; /*��ǰ�����*/
+    VOS_UINT8                           ucCurSegNum = 1; /*当前段序号*/
     VOS_UINT_PTR                        ulTempAddress;
-    /*ָ��OM�ְ�ͷ���ݵ�ָ��*/
+    /*指向OM分包头内容的指针*/
     OM_APP_MSG_SEG_EX_STRU              stSegMsgEx;
-    VOS_UINT8                           ucMsgCnt    = 1; /*�ֶε�����*/
+    VOS_UINT8                           ucMsgCnt    = 1; /*分段的数量*/
     OM_APP_MSG_EX_STRU                 *pstAppMsg;
     VOS_UINT8                          *pucBuf = VOS_NULL_PTR;
     VOS_UINT8                          *pucTmpBuf;
@@ -2039,11 +2039,11 @@ VOS_UINT32 OM_AcpuSendDataCbtChannel(OM_RSP_PACKET_STRU *pucMsg, VOS_UINT16 usMs
             &&(OM_APP_ESTABLISH_CNF == pstAppMsg->usPrimId)))
     {
 
-        /************************ ���Ȼ��hdlc������� ***********************/
-        /* ����ְ����� */
+        /************************ 拆包然后hdlc编码后发送 ***********************/
+        /* 计算分包个数 */
         ucMsgCnt = (VOS_UINT8)(((usMsgLen + OM_APP_MSG_SEGMENT_LEN) - 1)/OM_APP_MSG_SEGMENT_LEN);
 
-        /*����ְ��ṹ���ڴ�ռ�*/
+        /*分配分包结构的内存空间*/
         pucTmpBuf = (VOS_UINT8*)VOS_MemAlloc(WUEPS_PID_OM,
                     DYNAMIC_MEM_PT, sizeof(OM_APP_MSG_SEG_EX_STRU) + OM_APP_MSG_SEGMENT_LEN + OM_RL_DATATYPE_LEN + OM_USB_TAIL_LEN);
 
@@ -2053,7 +2053,7 @@ VOS_UINT32 OM_AcpuSendDataCbtChannel(OM_RSP_PACKET_STRU *pucMsg, VOS_UINT16 usMs
             return VOS_ERR;
         }
 
-        /* ÿ����Ҫ����һ�ֽ�datatype����ʾGU���� */
+        /* 每包需要添加一字节datatype，表示GU数据 */
         pucTmpBuf[0] = SCM_DATA_TYPE_GU;
         pucBuf = pucTmpBuf + OM_RL_DATATYPE_LEN;
 
@@ -2062,12 +2062,12 @@ VOS_UINT32 OM_AcpuSendDataCbtChannel(OM_RSP_PACKET_STRU *pucMsg, VOS_UINT16 usMs
 
         ulTempAddress = (VOS_UINT_PTR)pucMsg;
 
-        /* ���SOCPͷ�е�RTCֵ */
+        /* 填充SOCP头中的RTC值 */
         stSegMsgEx.stSocpHdr.ulRTC = (VOS_UINT32)DRV_GET_RTC_VALUE();
         stSegMsgEx.stMsgSeg.ucSegNum = ucMsgCnt;
         stSegMsgEx.stMsgSeg.usSegLen = OM_APP_SPLIT_MSG_LEN;
 
-        /* �������ְ���С�����ݣ��������ְ���С�������ݷ��͵Ĵ��� */
+        /* 大于最大分包大小的数据，按照最大分包大小进行数据发送的处理 */
         for (ucCurSegNum = 1; ucCurSegNum < ucMsgCnt; ucCurSegNum++)
         {
             stSegMsgEx.stMsgSeg.ucSegSn = ucCurSegNum;
@@ -2080,7 +2080,7 @@ VOS_UINT32 OM_AcpuSendDataCbtChannel(OM_RSP_PACKET_STRU *pucMsg, VOS_UINT16 usMs
 
             VOS_MemCpy(pucBuf, (VOS_UINT8*)&ulTmpValue, OM_USB_TAIL_LEN);
 
-            /* ��Ϣͷǰ���ϳ��Ȳ�����USB�ӿڷ��ͳ�ȥ */
+            /* 消息头前加上长度并调用USB接口发送出去 */
             if (VOS_OK != OMRL_AcpuSendCbtData(pucTmpBuf, sizeof(OM_APP_MSG_SEG_EX_STRU)+ OM_RL_DATATYPE_LEN + OM_APP_MSG_SEGMENT_LEN + OM_USB_TAIL_LEN))
             {
                 VOS_MemFree(WUEPS_PID_OM, pucTmpBuf);
@@ -2092,15 +2092,15 @@ VOS_UINT32 OM_AcpuSendDataCbtChannel(OM_RSP_PACKET_STRU *pucMsg, VOS_UINT16 usMs
 
             ulTempAddress += OM_APP_MSG_SEGMENT_LEN;
 
-            /* ����ʣ�����ݰ���С */
+            /* 计算剩余数据包大小 */
             usMsgLen -= OM_APP_MSG_SEGMENT_LEN;
         }
 
-        /*������Ϣͷ����*/
+        /*设置消息头参数*/
         stSegMsgEx.stMsgSeg.usSegLen = (VOS_UINT16)(usMsgLen + OM_APP_MSG_SEGMENT_HEADER_LENGTH);
         stSegMsgEx.stMsgSeg.ucSegSn  = ucCurSegNum;
 
-        /*Ϊ�˱���Ringbuffer�д�ŵ����ݰ�4�ֽڶ���*/
+        /*为了保持Ringbuffer中存放的数据包4字节对齐*/
         usMsgLen = (usMsgLen + 3U) & ~0x03U;
 
         VOS_MemCpy(pucBuf, &stSegMsgEx, sizeof(stSegMsgEx));
@@ -2111,7 +2111,7 @@ VOS_UINT32 OM_AcpuSendDataCbtChannel(OM_RSP_PACKET_STRU *pucMsg, VOS_UINT16 usMs
 
         VOS_MemCpy(pucBuf, (VOS_UINT8*)&ulTmpValue, OM_USB_TAIL_LEN);
 
-        /* ��Ϣͷǰ���ϳ��Ȳ�����USB�ӿڷ��ͳ�ȥ */
+        /* 消息头前加上长度并调用USB接口发送出去 */
         if ( VOS_OK != OMRL_AcpuSendCbtData(pucTmpBuf, sizeof(OM_APP_MSG_SEG_EX_STRU) + OM_RL_DATATYPE_LEN + usMsgLen + OM_USB_TAIL_LEN))
         {
             VOS_MemFree(WUEPS_PID_OM, pucTmpBuf);
@@ -2143,7 +2143,7 @@ VOS_UINT32 OM_AcpuSendDataChannel(OM_LOGIC_CHANNEL_ENUM_UINT32 enChannel, OM_RSP
         return OM_AcpuSendDataCbtChannel(pucMsg, usMsgLen);
     }
 
-    /* ��ӡ���� */
+    /* 打印错误 */
     LogPrint("OM_AcpuSendDataChannel, enChannel is error.\n");
 
     return VOS_ERR;
@@ -2206,20 +2206,20 @@ VOS_VOID OM_AcpuSendContent(VOS_UINT8 ucFuncType,
 }
 
 /*****************************************************************************
- �� �� ��  : OM_AppGreenChannel
- ��������  : ��ɫͨ����OM�ṩ���ⲿ�ķ��ͽӿ�
- �������  : ucFuncType  - ����ID
-             usPrimId    - ԭ��ֵ
-             pucData     - ָ�������ݵ�ָ��
-             usLen       - �������ݵĳ���
- �������  : ��
- �� �� ֵ  : VOS_OK  - �ɹ�
-             VOS_ERR - ʧ��
+ 函 数 名  : OM_AppGreenChannel
+ 功能描述  : 绿色通道，OM提供给外部的发送接口
+ 输入参数  : ucFuncType  - 功能ID
+             usPrimId    - 原语值
+             pucData     - 指向发送数据的指针
+             usLen       - 发送数据的长度
+ 输出参数  : 无
+ 返 回 值  : VOS_OK  - 成功
+             VOS_ERR - 失败
 
- �޸���ʷ      :
-  1.��    ��   : 2009��6��22��
-    ��    ��   : ���� 47350
-    �޸�����   : �����ɺ���
+ 修改历史      :
+  1.日    期   : 2009年6月22日
+    作    者   : 甘兰 47350
+    修改内容   : 新生成函数
 *****************************************************************************/
 VOS_UINT32 OM_AppGreenChannel(VOS_UINT8 ucFuncType, VOS_UINT16 usPrimId,
                               VOS_UINT8 *pucData, VOS_UINT16 usLen)
@@ -2243,7 +2243,7 @@ VOS_UINT32 OM_AppGreenChannel(VOS_UINT8 ucFuncType, VOS_UINT16 usPrimId,
 
     OM_AcpuAddSNTime(&(pstAppMsg->stAppHeader.ulSn), &(pstAppMsg->stAppHeader.ulTimeStamp));
 
-    /*�������ݳ���Ϊ0����ʾû�з�������*/
+    /*假如内容长度为0，表示没有发送内容*/
     if ((0 != usLen) && (VOS_NULL_PTR != pucData))
     {
         VOS_MemCpy(pstAppMsg->aucPara, pucData, usLen);
@@ -2258,26 +2258,26 @@ VOS_UINT32 OM_AppGreenChannel(VOS_UINT8 ucFuncType, VOS_UINT16 usPrimId,
 
 
 /*****************************************************************************
- �� �� ��  : OM_AcpuSendLog
- ��������  : ��ACPU's LOG����ͨ��OM��������߲ࡣ
- �������  : pucLogData  - ָ�������ݵ�ָ��
-             lLength     - �������ݵĳ���
- �������  : ��
- �� �� ֵ  : VOS_OK  - �ɹ�
-             VOS_ERR - ʧ��
+ 函 数 名  : OM_AcpuSendLog
+ 功能描述  : 将ACPU's LOG数据通过OM输出到工具侧。
+ 输入参数  : pucLogData  - 指向发送数据的指针
+             lLength     - 发送数据的长度
+ 输出参数  : 无
+ 返 回 值  : VOS_OK  - 成功
+             VOS_ERR - 失败
 
- �޸���ʷ      :
-  1.��    ��   : 2011��7��1��
-    ��    ��   : ���� 47350
-    �޸�����   : �����ɺ���,���ӿ�ά�ɲ�����׶�����
+ 修改历史      :
+  1.日    期   : 2011年7月1日
+    作    者   : 甘兰 47350
+    修改内容   : 新生成函数,添加可维可测第三阶段需求
 *****************************************************************************/
 VOS_UINT32 OM_AcpuSendLog(VOS_UINT8 *pucLogData, VOS_UINT32 ulLength)
 {
     VOS_UINT8   *pucLogMsg;
     VOS_UINT32   ulLogMsgLen;
 
-    /*���㷢�͸����߲�LOG��Ϣ�����ܳ��ȣ�����OM_APP_LOG_LEN��
-    �Ѿ�������ModuleId�ĳ��ȣ�����Ҫ�����ȥ*/
+    /*计算发送给工具侧LOG消息包的总长度，由于OM_APP_LOG_LEN中
+    已经包括了ModuleId的长度，故需要将其减去*/
     ulLogMsgLen = (ulLength + OM_APP_LOG_LEN) - LOG_MODULE_ID_LEN;
     pucLogMsg = (VOS_UINT8*)VOS_MemAlloc(ACPU_PID_OM,
                                            DYNAMIC_MEM_PT, ulLogMsgLen);
@@ -2327,13 +2327,13 @@ VOS_VOID OM_AcpuSavePSConfigInfo(VOS_UINT32* pulModuleIds,VOS_UINT32 ulModuleNum
         return;
     }
 
-    /* ����ϴ����� */
+    /* 清除上次配置 */
     for (ulModuleIndex = 0; ulModuleIndex < OM_MAX_PS_MODULE_NUM; ulModuleIndex++)
     {
         g_stAcpuTraceEventConfig.aulRptConfigLevl[ulModuleIndex] &= (~ulConfigBit);
     }
 
-    /* �������� */
+    /* 重新配置 */
     for (ulModuleIndex = 0; ulModuleIndex < ulModuleNum; ulModuleIndex++)
     {
         ulModuleId = pulModuleIds[ulModuleIndex];
@@ -2360,7 +2360,7 @@ VOS_VOID OM_AcpuShowPSConfigInfo(VOS_UINT32 ulModuleId)
         ulModuleId, g_stAcpuTraceEventConfig.aulRptConfigLevl[ulModuleId - VOS_PID_DOPRAEND]);
 }
 
-/*lint -e416 -e661 -e662 -e717 �޸���:����*/
+/*lint -e416 -e661 -e662 -e717 修改人:甘兰*/
 
 VOS_VOID OM_AcpuConfigMsgProc(OM_REQ_PACKET_STRU *pRspPacket, OM_RSP_FUNC *pRspFuncPtr)
 {
@@ -2419,7 +2419,7 @@ OM_FUNCID_PROC_STRU g_astAcpuOmFuncIdProcTbl[OM_FUNCID_MAX_NUM] =
     {VOS_NULL_PTR,                OM_WRF_FUNC,      LEVEL_NORMAL},
     {VOS_NULL_PTR,                OM_GRF_FUNC,      LEVEL_NORMAL},
     {OM_AcpuQueryMsgProc,         OM_AUTH_NV_FUNC,  LEVEL_NORMAL},
-    {OM_AcpuQueryMsgProc,         OM_QUERY_FUNC,    LEVEL_NORMAL}, /*���ڴ�����·��Ϣ*/
+    {OM_AcpuQueryMsgProc,         OM_QUERY_FUNC,    LEVEL_NORMAL}, /*用于处理链路消息*/
     {OM_AcpuQueryMsgProc,         OM_NV_FUNC,       LEVEL_NORMAL},
     {VOS_NULL_PTR,                OM_SIGCAL_FUNC,   LEVEL_NORMAL},
     {VOS_NULL_PTR,                OM_GREEN_FUNC,    LEVEL_NORMAL},
@@ -2473,7 +2473,7 @@ VOS_VOID OM_AcpuRegisterDrvCB(VOS_VOID)
 
 /*****************************************************************************
  Prototype       : OM_AcpuVerQryDbgInfoReqSnd
- Description     : OM�汾��ѯ��Ϣ������������CCPU����
+ Description     : OM版本查询信息请求函数，发到CCPU处理
  Input           : None
  Output          : None
  Return Value    :
@@ -2594,10 +2594,10 @@ VOS_VOID OM_AcpuMsgProc(MsgBlock* pMsg)
 
     OM_RecordInfoStart(VOS_EXC_DUMP_MEM_NUM_1, pMsg->ulSenderPid, ACPU_PID_OM, *((VOS_UINT32*)pMsg->aucValue));
 
-    /* ����Error log �ϱ� */
+    /* 商用Error log 上报 */
     OM_AcpuErrLogMsgProc(pMsg);
 
-    /*�������Թ��߲����Ϣ*/
+    /*处理来自工具侧的消息*/
     if ((ACPU_PID_OM == pMsg->ulSenderPid) || (UEPS_PID_OMRL == pMsg->ulSenderPid))
     {
         pstAppToOmMsg = (APP_OM_MSG_EX_STRU*)pMsg->aucValue;
@@ -2624,7 +2624,7 @@ VOS_VOID OM_AcpuMsgProc(MsgBlock* pMsg)
             pOmFuncProc((OM_REQ_PACKET_STRU*)pstAppToOmMsg, OM_AcpuSendData);
 
         }
-        /*����ACPU CallBack����������*/
+        /*交由ACPU CallBack任务来处理*/
         else if ((OM_FUNCID_ACPU_PART_NUM < ulOriginalId) && (OM_FUNCID_MAX_NUM > ulOriginalId))
         {
             VOS_ReserveMsg(WUEPS_PID_OM, pMsg);
@@ -2765,7 +2765,7 @@ VOS_UINT32 OM_AcpuEvent(PS_OM_EVENT_IND_STRU *pstEvent)
     return VOS_OK;
 }
 
-/* ��C��OM�ӿ��г�ͻ��ȷ��ST���̱���ͨ�� */
+/* 与C核OM接口有冲突，确保ST工程编译通过 */
 #if (VOS_WIN32 != VOS_OS_VER)
 
 VOS_UINT32 OM_GetSlice(VOS_VOID)
@@ -2815,7 +2815,7 @@ VOS_VOID OM_RecordInfoEnd(VOS_EXC_DUMP_MEM_NUM_ENUM_UINT32 enNumber)
         return;
     }
 
-    /* ��start���Ѿ�����˼�¼endslice�ĳ��ȣ���˴˴������ĸ��ֽ���дendslice��ֵ */
+    /* 在start中已经变更了记录endslice的长度，因此此处回退四个字节填写endslice的值 */
     pulBuf = (VOS_UINT32*)(g_astAcpuRecordInfo[enNumber].pucBuf + g_astAcpuRecordInfo[enNumber].ulLen - sizeof(VOS_UINT32));
 
     *pulBuf = VOS_GetSlice();
@@ -2825,11 +2825,11 @@ VOS_VOID OM_RecordInfoEnd(VOS_EXC_DUMP_MEM_NUM_ENUM_UINT32 enNumber)
 
 /*****************************************************************************
  Prototype       : OM_RecordInfoStart
- Description     : A�˱���׮����
- Input           : ulNumer -- �����
-                   ulSendPid -- ����PID
-                   ulRcvPid -- ����PID
-                   ulMsgName -- ��Ϣ����
+ Description     : A核保留桩函数
+ Input           : ulNumer -- 任务号
+                   ulSendPid -- 发送PID
+                   ulRcvPid -- 接收PID
+                   ulMsgName -- 消息名称
  Output          : None
  Return Value    : VOS_VOID
 
@@ -2875,7 +2875,7 @@ VOS_VOID OM_RecordMemInit(VOS_VOID)
 
    VOS_MemSet(g_astAcpuRecordInfo, 0, sizeof(g_astAcpuRecordInfo));
 
-   /* ����ÿ��ģ���¼��ν�ɲ���Ϣ�Ŀռ� */
+   /* 分配每个模块记录可谓可测信息的空间 */
    for(i = 0; i < VOS_EXC_DUMP_MEM_NUM_BUTT; i++)
    {
       g_astAcpuRecordInfo[i].pucBuf = (VOS_UINT8*)VOS_ExcDumpMemAlloc(i);
@@ -2922,7 +2922,7 @@ ssize_t NV_LinuxUserRead(struct file *file, char __user *buf, size_t len, loff_t
         return VOS_ERROR;
     }
 
-    if(VOS_OK != copy_from_user(&stNvData, buf, len))   /*�����û��ռ����ݵ��ں˿ռ�����*/
+    if(VOS_OK != copy_from_user(&stNvData, buf, len))   /*拷贝用户空间数据到内核空间上面*/
     {
         printk("\r\n NV_LinuxUserRead: copy_from_user is Error");
         return VOS_ERROR;
@@ -2934,7 +2934,7 @@ ssize_t NV_LinuxUserRead(struct file *file, char __user *buf, size_t len, loff_t
         return VOS_ERROR;
     }
 
-    stNvData.ulResult = NV_ReadEx(MODEM_ID_0,stNvData.usNvId, stNvData.aucData, stNvData.usLength);    /*���� Nv ��ȡ�ӿ�*/
+    stNvData.ulResult = NV_ReadEx(MODEM_ID_0,stNvData.usNvId, stNvData.aucData, stNvData.usLength);    /*调用 Nv 读取接口*/
 
     if(NV_OK != stNvData.ulResult)
     {
@@ -2965,7 +2965,7 @@ ssize_t NV_LinuxUserWrite(struct file *file, const char __user *buf, size_t len,
         return VOS_ERROR;
     }
 
-    if(VOS_OK != copy_from_user(&stNvData, buf, len))   /*�����û��ռ����ݵ��ں˿ռ�����*/
+    if(VOS_OK != copy_from_user(&stNvData, buf, len))   /*拷贝用户空间数据到内核空间上面*/
     {
         printk("\r\n NV_LinuxUserRead: copy_from_user is Error");
         return VOS_ERROR;
@@ -3015,16 +3015,16 @@ VOS_UINT32 NV_VFInit(VOS_VOID)
 #endif
 
 /*****************************************************************************
- �� �� ��  : OM_AcpuRegNvInit
- ��������  : ����NVģ�����Ƶ������������������ϲ�Ľӿ���ҪЭ��ջ������ע�ᡣ
- �������  : ��
- �������  : ��
- �� �� ֵ  : VOS_OK - �ɹ�
-             VOS_ERR - ʧ��
- �޸���ʷ      :
-  1.��    ��   : 2013��2��17��
-    ��    ��   : ���� 47350
-    �޸�����   : �����ɺ���
+ 函 数 名  : OM_AcpuRegNvInit
+ 功能描述  : 由于NV模块下移到底软，部分依赖于上层的接口需要协议栈启动后注册。
+ 输入参数  : 无
+ 输出参数  : 无
+ 返 回 值  : VOS_OK - 成功
+             VOS_ERR - 失败
+ 修改历史      :
+  1.日    期   : 2013年2月17日
+    作    者   : 甘兰 47350
+    修改内容   : 新生成函数
 *****************************************************************************/
 VOS_UINT32 OM_AcpuRegNvInit(VOS_VOID)
 {
@@ -3053,10 +3053,10 @@ VOS_VOID OM_AcpuICCInfoFileName( VOS_CHAR * cFileName )
         return;
     }
 
-    /* ��ȡ��󱣴��ļ�����ֵ */
+    /* 读取最后保存文件序列值 */
     fp = DRV_FILE_OPEN((VOS_CHAR*)g_acICCLogFilePath, "rb+");
 
-    /* ���û�ж�ȡ���ļ�����ֵ�ļ��������״α��棬�ļ�����ֵʹ��Ĭ��ֵ0��ʼ */
+    /* 如果没有读取到文件序列值文件，代表首次保存，文件序列值使用默认值0开始 */
     if (VOS_NULL_PTR == fp)
     {
         g_ulICCLogFileIndex = 0;
@@ -3086,9 +3086,9 @@ VOS_VOID OM_AcpuICCInfoWriteLog(VOS_UINT32 ulParam, VOS_UINT32 ulTimerName)
 
     OM_AcpuICCInfoFileName(ucFileName);
 
-    fp = DRV_FILE_OPEN((VOS_CHAR*)ucFileName, "ab+");  /*����׷�ӷ�ʽ���ļ�*/
+    fp = DRV_FILE_OPEN((VOS_CHAR*)ucFileName, "ab+");  /*按照追加方式打开文件*/
 
-    if(VOS_NULL_PTR == fp)                      /*����ļ���ʧ��˵�������ļ�Ҳ���ɹ�*/
+    if(VOS_NULL_PTR == fp)                      /*如果文件打开失败说明建立文件也不成功*/
     {
         return;
     }
@@ -3097,7 +3097,7 @@ VOS_VOID OM_AcpuICCInfoWriteLog(VOS_UINT32 ulParam, VOS_UINT32 ulTimerName)
 
     ulLen = (VOS_UINT32)DRV_FILE_TELL(fp);
 
-    if(ulLen >= OM_LOG_FILE_MAX_SIZE)            /*�ļ���С��������*/
+    if(ulLen >= OM_LOG_FILE_MAX_SIZE)            /*文件大小超过限制*/
     {
         DRV_FILE_CLOSE(fp);
 
@@ -3108,7 +3108,7 @@ VOS_VOID OM_AcpuICCInfoWriteLog(VOS_UINT32 ulParam, VOS_UINT32 ulTimerName)
             g_ulICCLogFileIndex = 0;
         }
 
-        /* ����ǰ�ļ�����ֵ��¼��Icc-log�ļ��� */
+        /* 将当前文件序列值记录至Icc-log文件中 */
         fp = DRV_FILE_OPEN((VOS_CHAR*)g_acICCLogFilePath, "wb+");
 
         if(VOS_NULL_PTR == fp)
@@ -3120,23 +3120,23 @@ VOS_VOID OM_AcpuICCInfoWriteLog(VOS_UINT32 ulParam, VOS_UINT32 ulTimerName)
 
         DRV_FILE_CLOSE(fp);
 
-        /* ��ȡ�¼�¼�ļ��� */
+        /* 获取新记录文件名 */
         OM_AcpuICCInfoFileName(ucFileName);
 
-        fp = DRV_FILE_OPEN((VOS_CHAR*)ucFileName, "wb+");  /*����ļ�����*/
+        fp = DRV_FILE_OPEN((VOS_CHAR*)ucFileName, "wb+");  /*清空文件内容*/
     }
 
-    if(VOS_NULL_PTR == fp)                      /*����ļ���ʧ��˵�������ļ�Ҳ���ɹ�*/
+    if(VOS_NULL_PTR == fp)                      /*如果文件打开失败说明建立文件也不成功*/
     {
         return;
     }
 
-    /* ͨ����¼����Ϣ����ֵ��¼��ǰ�����ICC��Ϣ */
+    /* 通过记录的消息索引值记录当前保存的ICC消息 */
     DRV_FILE_WRITE(g_astIccRecordInfo, sizeof(OM_ICC_INFO_STRU), OAM_ICC_RECORD_MAX_NUM, fp);
 
     DRV_FILE_CLOSE(fp);
 
-    /* ÿ�μ�¼��ɺ���յ�ǰICC��ά�ɲ�BUFF */
+    /* 每次记录完成后，清空当前ICC可维可测BUFF */
     VOS_MemSet(g_astIccRecordInfo, 0, sizeof(OM_ICC_INFO_STRU)*OAM_ICC_RECORD_MAX_NUM);
 
     g_ulIccRecordIndex = 0;
@@ -3162,7 +3162,7 @@ VOS_UINT32  OM_AcpuICCInfoInit( VOS_VOID )
         return VOS_OK;
     }
 
-    /* ʹ���ӳ�д��NVʱ����������ʱ���涨ʱ�� */
+    /* 使用延迟写入NV时长，启动定时保存定时器 */
     (VOS_VOID)VOS_StartRelTimer(&g_AcpuIccLogTimerId, ACPU_PID_OM, stInfoCfg.ulTimeOutValue,
                     OM_ICC_TIMER, 0, VOS_RELTIMER_LOOP, VOS_TIMER_PRECISION_5);
 #endif
@@ -3182,7 +3182,7 @@ VOS_VOID OM_AcpuICCInfoRecord(MsgBlock *pMsgCtrlBlk)
 
     g_ulIccRecordIndex++;
 
-    /* ����¼��ICC��Ϣ����BUFF�������ֵ����BUFFͷ��ʼ���¼�¼ */
+    /* 当记录的ICC消息超过BUFF数组最大值，从BUFF头开始重新记录 */
     if (g_ulIccRecordIndex >= OAM_ICC_RECORD_MAX_NUM)
     {
         g_ulIccRecordIndex = 0;
@@ -3196,7 +3196,7 @@ VOS_UINT32 OM_AcpuGetLogPath(VOS_CHAR *pucBuf, VOS_CHAR *pucOldPath, VOS_CHAR *p
 
     if (VOS_OK != NV_Read(en_NV_Item_ProductTypeForLogDirectory, &stLogDir, sizeof(stLogDir)))
     {
-        /* ��NVʧ��,ֱ�ӷ��� */
+        /* 读NV失败,直接返回 */
         return VOS_ERR;
     }
 
@@ -3217,7 +3217,7 @@ VOS_UINT32 OM_AcpuGetLogPath(VOS_CHAR *pucBuf, VOS_CHAR *pucOldPath, VOS_CHAR *p
 
 VOS_UINT32 OM_AcpuInit(VOS_VOID)
 {
-    /* ԭ�ӱ�������ʼֵΪ0����Ϊʹ��ʱ���ȼ�һ�ٷ��ص� */
+    /* 原子变量附初始值为0，因为使用时是先加一再返回的 */
 #if ( (VOS_LINUX == VOS_OS_VER) || (VOS_WIN32 == VOS_OS_VER) )
     atomic_set(&g_ulAcpuOMMsgSN, 0);
 #endif
@@ -3225,48 +3225,48 @@ VOS_UINT32 OM_AcpuInit(VOS_VOID)
 #if (VOS_WIN32 == VOS_OS_VER)
     OM_RegisterMsgHook(OM_AcpuTraceMsgHook, OM_MSG_HOOK_LTE);
 #else
-    /* ��OSA�ҽӹ��Ӻ��� */
+    /* 向OSA挂接钩子函数 */
     VOS_RegisterMsgGetHook(OM_AcpuTraceMsgHook);
 #endif
 
-    /* ���以���ź��� */
+    /* 分配互斥信号量 */
     if (VOS_OK != VOS_SmMCreate("SYNC", VOS_SEMA4_PRIOR | VOS_SEMA4_INVERSION_SAFE, &g_ulOmAcpuSyncSem))
     {
         return VOS_ERR;
     }
 
-    /* ���以���ź��� */
+    /* 分配互斥信号量 */
     if (VOS_OK != VOS_SmMCreate("HSIC", VOS_SEMA4_PRIOR | VOS_SEMA4_INVERSION_SAFE, &g_ulOmAcpuHsicSem))
     {
         return VOS_ERR;
     }
 
-    /* ����������ź��� */
+    /* 分配二进制信号量 */
     if (VOS_OK != VOS_SmBCreate( "CNF", 0, VOS_SEMA4_FIFO, &g_ulOmAcpuCnfSem))
     {
         return VOS_ERR;
     }
 
-    /* ���������ź��� */
+    /* 创建发送信号量 */
     if (VOS_OK != VOS_SmMCreate("TXCBT", VOS_SEMA4_PRIOR | VOS_SEMA4_INVERSION_SAFE, &g_ulOmTxCbtSem))
     {
         LogPrint("OM_AcpuInit: Error, VOS_SmMCreate Fail\n");
         return VOS_ERR;
     }
 
-    /* ��ʼ��OM�߼�ͨ�� */
+    /* 初始化OM逻辑通道 */
     if (VOS_OK != OMRL_AcpuInit())
     {
         return VOS_ERR;
     }
 
-    /*ע�ắ��������ʹ��*/
+    /*注册函数给底软使用*/
     OM_AcpuRegisterDrvCB();
 
-    /* ��ʼ��PS������Ϣ */
+    /* 初始化PS配置信息 */
     VOS_MemSet(&g_stAcpuTraceEventConfig, 0, sizeof(OM_TRACE_EVENT_CONFIG_PS_STRU));
 
-    /* ��ʼ��C�˸�λ��¼ȫ�ֱ��� */
+    /* 初始化C核复位记录全局变量 */
     VOS_MemSet(g_astCcoreStatus,0,sizeof(g_astCcoreStatus));
 
     if (VOS_OK != OM_PrintfInit())
@@ -3314,13 +3314,13 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
         return;
     }
 
-    /* �жϵ�ǰ�Ƿ�ΪSD����ʽ��� */
+    /* 判断当前是否为SD卡方式输出 */
     //if ( (CPM_SD_PORT == (stPortCfg.enPortNum + CPM_APP_PORT)) ||
       //  (CPM_FS_PORT == (stPortCfg.enPortNum + CPM_APP_PORT)))
     if ( (CPM_OM_PORT_TYPE_SD == stPortCfg.enPortNum)
        || (CPM_OM_PORT_TYPE_FS == stPortCfg.enPortNum))
     {
-        /*SD������Log��FLASH����Log��������Ҫ���������ļ���ʼ������*/
+        /*SD卡保存Log和FLASH保存Log场景，需要进行配置文件初始化流程*/
     }
     else
     {
@@ -3329,7 +3329,7 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
 
     g_stAcpuCnfCtrlInfo.ulOMSwitchOnOff   = OM_STATE_ACTIVE;
 
-    /* ֪ͨCCPU */
+    /* 通知CCPU */
     (VOS_VOID)GU_OamSndPcMsgToCcpu(&g_stAcpuCnfCtrlInfo, (VOS_UINT8*)aucEstablishReq, sizeof(aucEstablishReq));
 
     if (VOS_OK != OM_AcpuGetLogPath(aucConfigPath, OM_CONFIG_PATH, OM_CONFIG_UNITARY_PATH))
@@ -3337,7 +3337,7 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
         return;
     }
 
-    /*��ȡ�����ļ�*/
+    /*读取配置文件*/
     lCfgFile = DRV_FILE_OPEN(aucConfigPath, "rb");
     if (DRV_FILE_NULL == lCfgFile)
     {
@@ -3355,11 +3355,11 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
             break;
         }
 
-        /*���������Ϣ�ĳ���, ǰ3���ֽ�Ϊ���߱����ֶ�*/
+        /*获得配置消息的长度, 前3个字节为工具保留字段*/
         VOS_MemCpy(&ulMsgLen, (VOS_UINT8*)(aucHeadData + 3), sizeof(VOS_UINT32));
 
-        /*����Ϣ���Ƚ��кϷ�ֵ�жϣ�����PC�뵥�彻���ĳ����ֶ�Ϊ2�ֽ�,
-        ����ʹ��0xffff�����ж�*/
+        /*对消息长度进行合法值判断，由于PC与单板交互的长度字段为2字节,
+        所以使用0xffff进行判断*/
         if (ulMsgLen > 0xffff)
         {
             LogPrint1("OM_AutoConfig: The Msg Len is too big : %d!\n", (VOS_INT32)ulMsgLen);
@@ -3384,7 +3384,7 @@ VOS_VOID OM_AutoConfigProc(VOS_VOID)
             continue;
         }
 
-        /*��������Ϣ���͸�OM����*/
+        /*将配置消息发送给OM处理*/
         if (VOS_OK != VOS_SendMsg(UEPS_PID_OMRL, pstMsgBlk))
         {
             break;
@@ -3408,7 +3408,7 @@ VOS_UINT32 OM_AcpuPidInit(enum VOS_INIT_PHASE_DEFINE ip)
             pstAutoConfigReq = (OM_AUTOCONFIG_REQ_STRU*)VOS_AllocMsg(ACPU_PID_OMAGENT,
                                 sizeof(OM_AUTOCONFIG_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
 
-            /* ������Ϣʧ�� */
+            /* 分配消息失败 */
             if (VOS_NULL_PTR == pstAutoConfigReq)
             {
                 return VOS_ERR;
@@ -3451,7 +3451,7 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
     }
 #endif
 
-    /*��ȡPcVoice��NV�е�����*/
+    /*读取PcVoice在NV中的配置*/
     if(NV_OK!= NV_Read(en_NV_Item_PCVOICE_Support_Flg, &stPcvConfig, sizeof(APP_VC_NVIM_PC_VOICE_SUPPORT_FLAG_STRU)))
     {
         PS_LOG(WUEPS_PID_OM, 0, PS_PRINT_ERROR, "OM_AcpuSelfTaskReg:Read NV Config fail!");
@@ -3459,12 +3459,12 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
         stPcvConfig.usPcVoiceSupportFlag =  VOS_FALSE;
     }
 
-    /*��ȡPcVoice��NV�е�����Ϊ1��ʱ���ʹ��*/
+    /*读取PcVoice在NV中的配置为1的时候才使能*/
     if(VOS_TRUE == stPcvConfig.usPcVoiceSupportFlag)
     {
         vos_printf("\r\nOM_AcpuSelfTaskReg: Reg the PCVoice Task and PID ");
 
-        /* ����OM_PCVģ���Դ������� */
+        /* 增加OM_PCV模块自处理任务 */
         ulRslt = VOS_RegisterSelfTask(ACPU_FID_OM,
                                      (VOS_TASK_ENTRY_TYPE)OM_PcvTransmitTaskEntry,
                                      VOS_PRIORITY_P2, PCV_TRANS_TASK_STACK_SIZE);
@@ -3482,7 +3482,7 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
         }
     }
 
-    /*��ȡӦ����NV�е�����Ϊ1��ʱ���ʹ��*/
+    /*读取应用在NV中的配置为1的时候才使能*/
     if(NV_OK != NV_Read(en_NV_Item_System_APP_Config, &stAPPConfig, sizeof(NAS_NVIM_SYSTEM_APP_CONFIG_STRU)))
     {
         PS_LOG(WUEPS_PID_OM, 0, PS_PRINT_ERROR, "OM_AcpuSelfTaskReg:Read NV en_NV_Item_System_APP_Config fail!");
@@ -3494,7 +3494,7 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
     {
         vos_printf("\r\nOM_AcpuSelfTaskReg: Reg the OMPrintf Task");
 
-        /* ����OM_printfģ���Դ������� */
+        /* 增加OM_printf模块自处理任务 */
         ulRslt = VOS_RegisterSelfTaskPrio(ACPU_FID_OM,
                                      (VOS_TASK_ENTRY_TYPE)OM_PrintfTask,
                                      COMM_PRINTF_SELFTASK_PRIO, OM_PRINTF_TASK_STACK_SIZE);
@@ -3508,7 +3508,7 @@ VOS_UINT32 OM_AcpuSelfTaskReg(VOS_VOID)
 }
 VOS_INT OM_AcpuCcoreResetCB(DRV_RESET_CALLCBFUN_MOMENT enParam, VOS_INT lUserData)
 {
-    if(DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam) /* ��λǰ����*/
+    if(DRV_RESET_CALLCBFUN_RESET_BEFORE == enParam) /* 复位前调用*/
     {
         g_astCcoreStatus[OM_CPU_STATUS_RESET].ulResetNum++;
         g_astCcoreStatus[OM_CPU_STATUS_RESET].ulSlice = OM_GetSlice();
@@ -3517,7 +3517,7 @@ VOS_INT OM_AcpuCcoreResetCB(DRV_RESET_CALLCBFUN_MOMENT enParam, VOS_INT lUserDat
 
         SCM_StopAllSrcChan();
     }
-    else if(DRV_RESET_CALLCBFUN_RESET_AFTER == enParam) /*��λ��*/
+    else if(DRV_RESET_CALLCBFUN_RESET_AFTER == enParam) /*复位后*/
     {
         g_astCcoreStatus[OM_CPU_STATUS_OK].ulResetNum++;
         g_astCcoreStatus[OM_CPU_STATUS_OK].ulSlice = OM_GetSlice();
@@ -3593,7 +3593,7 @@ VOS_UINT32 OM_AcpuFidInit(enum VOS_INIT_PHASE_DEFINE ip)
                 return VOS_ERR;
             }
 
-            /* ע��C�˵�����λ���� */
+            /* 注册C核单独复位函数 */
             lResut = DRV_CCORERESET_REGCBFUNC(OAM_MODELE_NAME,(pdrv_reset_cbfun)OM_AcpuCcoreResetCB,
                 VOS_NULL,OAM_CCORE_RESET_CBFUN_PRI);
 
@@ -3604,13 +3604,13 @@ VOS_UINT32 OM_AcpuFidInit(enum VOS_INIT_PHASE_DEFINE ip)
                 return VOS_ERR;
             }
 
-            /* CBT�Դ������񴴽� */
+            /* CBT自处理任务创建 */
             if (VOS_OK != CBTSCM_SoftDecodeReqRcvTaskInit())
             {
                 return VOS_ERR;
             }
 
-            /* OM CFGͨ�����ݽ����Դ������񴴽� */
+            /* OM CFG通道数据接收自处理任务创建 */
             if (VOS_OK != SCM_SoftDecodeCfgRcvTaskInit())
             {
                 return VOS_ERR;
@@ -3635,7 +3635,7 @@ VOS_VOID OM_OSAEvent(VOS_VOID *pData, VOS_UINT32 ulLength)
 
     ulEventLenth = (VOS_UINT32)sizeof(PS_OM_EVENT_IND_STRU)
                     + ulLength
-                    - 4U * (VOS_UINT32)sizeof(VOS_UINT8);/*�ṹ���а�����4byte������������Ҫ��ȥ*/
+                    - 4U * (VOS_UINT32)sizeof(VOS_UINT8);/*结构体中包含了4byte的数据所以需要减去*/
 
     pstEventInd = (PS_OM_EVENT_IND_STRU *)VOS_MemAlloc(ACPU_PID_OM, DYNAMIC_MEM_PT, ulEventLenth);
     if(VOS_NULL_PTR == pstEventInd)

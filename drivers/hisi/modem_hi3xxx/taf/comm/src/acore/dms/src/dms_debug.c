@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 
 #include <dms.h>
@@ -16,7 +16,7 @@
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 /*lint -e767 -e960*/
@@ -25,7 +25,7 @@
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 DMS_DEBUG_INFO_TBL_STRU                 g_astDmsSdmInfoTable[DMS_SDM_DBG_INFO_MAX];
@@ -35,7 +35,7 @@ DMS_MNTN_NLK_STATS_STRU                 g_stDmsMntnNlkStats = {0};
 
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 VOS_VOID DMS_ShowNlkEntityInfo(VOS_VOID)
@@ -155,18 +155,18 @@ VOS_VOID DMS_ShowAtServerNvInfo(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DMS_ShowPortCfgInfo
- ¹¦ÄÜÃèÊö  : ¶Ë¿ÚÅäÖÃÐÅÏ¢
- ÊäÈë²ÎÊý  : VOS_VOID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : DMS_ShowPortCfgInfo
+ åŠŸèƒ½æè¿°  : ç«¯å£é…ç½®ä¿¡æ¯
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê10ÔÂ25ÈÕ
-    ×÷    Õß   : z6057
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´10æœˆ25æ—¥
+    ä½œ    è€…   : z6057
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_VOID  DMS_ShowPortCfgInfo(VOS_VOID)
 {
@@ -181,7 +181,7 @@ VOS_VOID DMS_ShowVcomStats(VOS_VOID)
 {
     DMS_DEBUG_INFO_TBL_STRU* pstTable;
 
-    /* Èç¹ûÄ³¸ö³ÉÔ±ÔÚÄ³¸öÀà±ðÃ»ÓÐÊ¹ÓÃ¿ÉÒÔ²»´òÓ¡ */
+    /* å¦‚æžœæŸä¸ªæˆå‘˜åœ¨æŸä¸ªç±»åˆ«æ²¡æœ‰ä½¿ç”¨å¯ä»¥ä¸æ‰“å° */
 
     pstTable = DMS_GetDebugInfo();
 
@@ -217,7 +217,7 @@ VOS_VOID DMS_ShowVcomStats(VOS_VOID)
         pstTable[DMS_SDM_VCOM_CLOSE_ERR_CTRL].ulCalledNum,
         pstTable[DMS_SDM_VCOM_CLOSE_ERR_CTRL].ulRserved1);
 
-    vos_printf("*------------WRITE_Òì²½Ð´-------------------\n");
+    vos_printf("*------------WRITE_å¼‚æ­¥å†™-------------------\n");
     vos_printf("VCOM_AT write counts  : %d \n VCOM_AT write OK counts  : %d \n  VCOM_AT Last write OK len : %d\n\n",
         pstTable[DMS_SDM_VCOM_WRT_PCUI].ulCalledNum,
         pstTable[DMS_SDM_VCOM_WRT_SUSS_PCUI].ulCalledNum,
@@ -246,7 +246,7 @@ VOS_VOID DMS_ShowVcomStats(VOS_VOID)
         pstTable[DMS_SDM_VCOM_EVT_PCUI].ulRserved1);
 
     vos_printf("*------------NCM SEND TO DRV INFO------------------\n");
-    vos_printf("·¢ËÍµ½Çý¶¯´ÎÊý   : %d\n ·¢ËÍbuf: %x\n ·¢ËÍ³¤¶È:%d\n Çý¶¯·µ»Ø³É¹¦´ÎÊý  : %d \n\n",
+    vos_printf("å‘é€åˆ°é©±åŠ¨æ¬¡æ•°   : %d\n å‘é€buf: %x\n å‘é€é•¿åº¦:%d\n é©±åŠ¨è¿”å›žæˆåŠŸæ¬¡æ•°  : %d \n\n",
         pstTable[DMS_SDM_VCOM_WRT_NCM].ulCalledNum,
         pstTable[DMS_SDM_VCOM_WRT_NCM].ulRserved1,
         pstTable[DMS_SDM_VCOM_WRT_NCM].ulRserved2,
@@ -257,7 +257,7 @@ VOS_VOID DMS_ShowVcomStats(VOS_VOID)
 VOS_VOID DMS_Help(VOS_VOID)
 {
     vos_printf("****************************************************\n");
-    vos_printf("DMSÈíµ÷ÐÅÏ¢                                         \n");
+    vos_printf("DMSè½¯è°ƒä¿¡æ¯                                         \n");
     vos_printf("****************************************************\n");
     vos_printf("DMS_SetLogLevel                                   \n");
     vos_printf("DMS_ShowDebugInfo                                   \n");

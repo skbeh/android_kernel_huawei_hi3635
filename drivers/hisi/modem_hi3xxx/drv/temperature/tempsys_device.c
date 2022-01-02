@@ -47,7 +47,7 @@
 
 
 #define THERMAL_OK          0
-#define THERMAL_ERROR      1 /* errorµ¥´Ê */
+#define THERMAL_ERROR      1 /* errorå•è¯ */
 #define HKADC_NULL      (void*)(0)
 
 
@@ -57,9 +57,9 @@
 #define TEMPERATOR_DEV_MAX        HKADC_TEMP_BUTT
 
 
-typedef struct drv_hkadc_map TEMPSYS_DEV; /* tempsys_dev»»³É´óĞ´ */
+typedef struct drv_hkadc_map TEMPSYS_DEV; /* tempsys_devæ¢æˆå¤§å†™ */
 
-/* ½¨Òé½á¹¹Ìå¾«¼ò 
+/* å»ºè®®ç»“æ„ä½“ç²¾ç®€ 
 struct drv_hkadc_map g_hkadc_chan_map[] = {
     {HKADC_TEMP_BATTERY,    0, 0, 0, 0, "battery"},
     {HKADC_TEMP_PA0,        0, 0, 0, 0, "pa0"},
@@ -94,7 +94,7 @@ struct hkadc_chan_name g_hkadc_chan_map[] = {
     {HKADC_TEMP_BUTT,        "buttom"}
 };	
 
-/* ¸Ãº¯ÊıÓÃÊı×é´úÌæ 
+/* è¯¥å‡½æ•°ç”¨æ•°ç»„ä»£æ›¿ 
 struct drv_hkadc_map *bsp_hkadc_get_chan_map(int logic_chan)
 {
     struct drv_hkadc_map *map = &g_hkadc_chan_map[0];
@@ -120,8 +120,8 @@ static  ssize_t tempsys_val_store(struct device *dev, struct device_attribute *a
 
 
 
-/*¶¨Òå: dev_attr_val*/
-DEVICE_ATTR(val, S_IRUGO, tempsys_val_show, tempsys_val_store);/* È·ÈÏÕâÁ½¸öÊôĞÔÅäÖÃÎªÖ»¶Á */
+/*å®šä¹‰: dev_attr_val*/
+DEVICE_ATTR(val, S_IRUGO, tempsys_val_show, tempsys_val_store);/* ç¡®è®¤è¿™ä¸¤ä¸ªå±æ€§é…ç½®ä¸ºåªè¯» */
 
 
 
@@ -138,7 +138,7 @@ static ssize_t tempsys_val_show(struct device * dev,
 		return -1;
 	}	
 
-    /*·µ»Ø×Ö·ûĞÎÊ½µÄÉè±¸ÎÂ¶ÈÖµ*/
+    /*è¿”å›å­—ç¬¦å½¢å¼çš„è®¾å¤‡æ¸©åº¦å€¼*/
 	/*lint -save -e123*/
     return snprintf(buf, PAGE_SIZE, "%d\n",temp);
 	/*lint -restore*/
@@ -155,12 +155,12 @@ static ssize_t tempsys_val_store(struct device *dev, struct device_attribute *at
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : tempsys_create_device
- ¹¦ÄÜÃèÊö  : ¸ù¾İhkadcµÄÂß¼­Í¨µÀºÅÁĞ±í£¬´´½¨thermal classÏÂÃæµÄsysfsÎÄ¼ş½Úµã
- ÊäÈë²ÎÊı  : ÎÂ±£Éè±¸ÀàÃèÊö
+ å‡½ æ•° å  : tempsys_create_device
+ åŠŸèƒ½æè¿°  : æ ¹æ®hkadcçš„é€»è¾‘é€šé“å·åˆ—è¡¨ï¼Œåˆ›å»ºthermal classä¸‹é¢çš„sysfsæ–‡ä»¶èŠ‚ç‚¹
+ è¾“å…¥å‚æ•°  : æ¸©ä¿è®¾å¤‡ç±»æè¿°
 
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  : ³É¹¦·µ»Ø0£¬Ê§°Ü·µ»Ø´íÎóºÅ
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  : æˆåŠŸè¿”å›0ï¼Œå¤±è´¥è¿”å›é”™è¯¯å·
 *****************************************************************************/
 int tempsys_create_device(struct class* thermal_class)
 {
@@ -169,7 +169,7 @@ int tempsys_create_device(struct class* thermal_class)
 	int ret;
 	struct hkadc_chan_name map;
 	dev_t devno = 0;
-	char dev_name[64];/* ½¨Òé¼õĞ¡£¬×¢Òâ¶ÔÆë */
+	char dev_name[64];/* å»ºè®®å‡å°ï¼Œæ³¨æ„å¯¹é½ */
 	
 	for (i = 0 ; i < TEMPERATOR_DEV_MAX ; i++) {
 		 
@@ -177,7 +177,7 @@ int tempsys_create_device(struct class* thermal_class)
 			memset(dev_name, 0, sizeof(dev_name));
 			snprintf(dev_name,64,"%s:%s", THERMAL_DEVICE_NAME, map.name);
 			
-			/*ÔÚÉè±¸Àà±ğÄ¿Â¼´´½¨charĞÍÎÄ¼ş½Úµã: /sys/class/thermal/temp:i*/
+			/*åœ¨è®¾å¤‡ç±»åˆ«ç›®å½•åˆ›å»ºcharå‹æ–‡ä»¶èŠ‚ç‚¹: /sys/class/thermal/temp:i*/
 			new_dev = device_create(thermal_class, NULL, devno, "%s",
 									dev_name);
 			if (IS_ERR(new_dev)) {
@@ -212,12 +212,12 @@ int tempsys_create_device(struct class* thermal_class)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : tempsys_device_init
- ¹¦ÄÜÃèÊö  : ÎÂ¶Èsysfs½ÚµãÉè±¸´´½¨³õÊ¼»¯
- ÊäÈë²ÎÊı  :
+ å‡½ æ•° å  : tempsys_device_init
+ åŠŸèƒ½æè¿°  : æ¸©åº¦sysfsèŠ‚ç‚¹è®¾å¤‡åˆ›å»ºåˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  :
 
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
 *****************************************************************************/
 static int __init tempsys_device_init(void)
 {
@@ -226,7 +226,7 @@ static int __init tempsys_device_init(void)
 	int ret = THERMAL_ERROR;
 	struct class * thermal_class;
 
-	/* ´´½¨Ä¿Â¼/sys/class/thermal/  */
+	/* åˆ›å»ºç›®å½•/sys/class/thermal/  */
 	thermal_class = class_create(THIS_MODULE, THERMAL_CLASS_NAME);
 	if (IS_ERR(thermal_class)) {
         ret = PTR_ERR(thermal_class);
@@ -234,7 +234,7 @@ static int __init tempsys_device_init(void)
         goto destory_class;
     }
 
-    printk(KERN_INFO " initialize thermal device.\n");/* ´òÓ¡¼¶±ğ */
+    printk(KERN_INFO " initialize thermal device.\n");/* æ‰“å°çº§åˆ« */
 
 	
 	if (tempsys_create_device(thermal_class))

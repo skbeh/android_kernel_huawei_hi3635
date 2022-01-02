@@ -5,7 +5,7 @@
 /*lint -restore +e767 */
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 /*lint -save -e537*/
 #include <linux/semaphore.h>
@@ -22,7 +22,7 @@
 #include "osl_malloc.h"
 /*lint -restore*/
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 bsp_om_global_s     g_om_global_info    = {0};
 
@@ -69,7 +69,7 @@ bsp_om_list_s        *g_send_list_head = NULL;
 bsp_om_list_debug_s  g_list_debug = {0};
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 u32 bsp_om_socp_chan_init(void);
 u32 bsp_om_buf_init(void);
@@ -86,15 +86,15 @@ void bsp_om_sysview_swt_reset(void);
 #endif
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_virt_phy
+* å‡½ æ•° å  : bsp_om_virt_phy
 *
-* ¹¦ÄÜÃèÊö  :ĞéµØÖ·×ª»»³ÉÎïÀíµØÖ·
+* åŠŸèƒ½æè¿°  :è™šåœ°å€è½¬æ¢æˆç‰©ç†åœ°å€
 *
-* ÊäÈë²ÎÊı  : virt_addr:ĞéµØÖ·
+* è¾“å…¥å‚æ•°  : virt_addr:è™šåœ°å€
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : ÎïÀíµØÖ·
+* è¿” å› å€¼  : ç‰©ç†åœ°å€
 *****************************************************************************/
 
 static INLINE u32 bsp_om_virt_phy(void* virt_addr)
@@ -111,15 +111,15 @@ static INLINE u32 bsp_om_virt_phy(void* virt_addr)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_phy_virt
+* å‡½ æ•° å  : bsp_om_phy_virt
 *
-* ¹¦ÄÜÃèÊö  :ÎïÀíµØÖ·×ª»»ÎªĞéÄâµØÖ·
+* åŠŸèƒ½æè¿°  :ç‰©ç†åœ°å€è½¬æ¢ä¸ºè™šæ‹Ÿåœ°å€
 *
-* ÊäÈë²ÎÊı  : phy_addr:ĞéµØÖ·
+* è¾“å…¥å‚æ•°  : phy_addr:è™šåœ°å€
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : ĞéÄâµØÖ·
+* è¿” å› å€¼  : è™šæ‹Ÿåœ°å€
 *****************************************************************************/
 
 static INLINE void* bsp_om_phy_virt(u32 phy_addr)
@@ -137,16 +137,16 @@ static INLINE void* bsp_om_phy_virt(u32 phy_addr)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_alloc
+* å‡½ æ•° å  : bsp_om_alloc
 *
-* ¹¦ÄÜÃèÊö  :ÉêÇëÄÚ´æ
+* åŠŸèƒ½æè¿°  :ç”³è¯·å†…å­˜
 *
-* ÊäÈë²ÎÊı  : size ÉêÇëbufµÄ³¤¶È
-*                        phy_real_addr :·µ»ØµÄ¶ÔÓ¦µÄÎïÀíµØÖ·
+* è¾“å…¥å‚æ•°  : size ç”³è¯·bufçš„é•¿åº¦
+*                        phy_real_addr :è¿”å›çš„å¯¹åº”çš„ç‰©ç†åœ°å€
 *
-* Êä³ö²ÎÊı  :
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  :ĞéÄâÄÚ´æµØÖ·
+* è¿” å› å€¼  :è™šæ‹Ÿå†…å­˜åœ°å€
 *****************************************************************************/
 
 void* bsp_om_alloc(u32 size, u32*phy_real_addr)
@@ -270,24 +270,24 @@ int bsp_om_buf_sem_give(void)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_socp_chan_init
+* å‡½ æ•° å  : bsp_om_socp_chan_init
 *
-* ¹¦ÄÜÃèÊö  : µ×ÈíSOCPÍ¨µÀ³õÊ¼»¯´¦Àí
+* åŠŸèƒ½æè¿°  : åº•è½¯SOCPé€šé“åˆå§‹åŒ–å¤„ç†
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :³õÊ¼»¯½á¹û
+* è¿” å› å€¼  :åˆå§‹åŒ–ç»“æœ
 *****************************************************************************/
 
 u32 bsp_om_socp_chan_init(void)
 {
     SOCP_CODER_SRC_CHAN_STRU               channle_stu = {0};
 
-    /*±àÂëÔ´Í¨µÀbuf³õÊ¼»¯*/
-    /* ÉêÇëBD¿Õ¼ä */
+    /*ç¼–ç æºé€šé“bufåˆå§‹åŒ–*/
+    /* ç”³è¯·BDç©ºé—´ */
     g_bsp_om_socp_chan_info.bd_buf = bsp_om_alloc(BSP_OM_CODER_SRC_BDSIZE,&(g_bsp_om_socp_chan_info.bd_buf_phy));
 
     if(( 0== g_bsp_om_socp_chan_info.bd_buf)||(0 == g_bsp_om_socp_chan_info.bd_buf_phy ))
@@ -296,7 +296,7 @@ u32 bsp_om_socp_chan_init(void)
         return BSP_ERR_OMS_MALLOC_FAIL;
     }
 
-    /* ÉêÇëRD¿Õ¼ä */
+    /* ç”³è¯·RDç©ºé—´ */
     g_bsp_om_socp_chan_info.rd_buf = bsp_om_alloc(BSP_OM_CODER_SRC_RDSIZE,&(g_bsp_om_socp_chan_info.rd_buf_phy));
 
     if(( 0== g_bsp_om_socp_chan_info.rd_buf)||(0 == g_bsp_om_socp_chan_info.rd_buf_phy ))
@@ -306,21 +306,21 @@ u32 bsp_om_socp_chan_init(void)
     }
 
 
-    channle_stu.u32DestChanID = (u32)g_bsp_om_socp_chan_info.en_dst_chan_id;    /*  Ä¿±êÍ¨µÀID */
-    channle_stu.eDataType     = g_bsp_om_socp_chan_info.en_data_type;               /*  Êı¾İÀàĞÍ£¬Ö¸Ã÷Êı¾İ·â×°Ğ­Òé£¬ÓÃÓÚ¸´ÓÃ¶àÆ½Ì¨ */
-    channle_stu.eMode         = g_bsp_om_socp_chan_info.en_chan_mode;               /*  Í¨µÀÊı¾İÄ£Ê½ */
-    channle_stu.ePriority     = g_bsp_om_socp_chan_info.en_chan_level;              /*  Í¨µÀÓÅÏÈ¼¶ */
-    channle_stu.u32BypassEn   = SOCP_HDLC_ENABLE;             /*  Í¨µÀbypassÊ¹ÄÜ */
-    channle_stu.eDataTypeEn   = SOCP_DATA_TYPE_EN;            /*  Êı¾İÀàĞÍÊ¹ÄÜÎ» */
-    channle_stu.eDebugEn      = SOCP_ENC_DEBUG_DIS;           /*  µ÷ÊÔÎ»Ê¹ÄÜ */
+    channle_stu.u32DestChanID = (u32)g_bsp_om_socp_chan_info.en_dst_chan_id;    /*  ç›®æ ‡é€šé“ID */
+    channle_stu.eDataType     = g_bsp_om_socp_chan_info.en_data_type;               /*  æ•°æ®ç±»å‹ï¼ŒæŒ‡æ˜æ•°æ®å°è£…åè®®ï¼Œç”¨äºå¤ç”¨å¤šå¹³å° */
+    channle_stu.eMode         = g_bsp_om_socp_chan_info.en_chan_mode;               /*  é€šé“æ•°æ®æ¨¡å¼ */
+    channle_stu.ePriority     = g_bsp_om_socp_chan_info.en_chan_level;              /*  é€šé“ä¼˜å…ˆçº§ */
+    channle_stu.u32BypassEn   = SOCP_HDLC_ENABLE;             /*  é€šé“bypassä½¿èƒ½ */
+    channle_stu.eDataTypeEn   = SOCP_DATA_TYPE_EN;            /*  æ•°æ®ç±»å‹ä½¿èƒ½ä½ */
+    channle_stu.eDebugEn      = SOCP_ENC_DEBUG_DIS;           /*  è°ƒè¯•ä½ä½¿èƒ½ */
 
-    channle_stu.sCoderSetSrcBuf.u32InputStart  = (u32)g_bsp_om_socp_chan_info.bd_buf_phy;           /*  ÊäÈëÍ¨µÀÆğÊ¼µØÖ· */
+    channle_stu.sCoderSetSrcBuf.u32InputStart  = (u32)g_bsp_om_socp_chan_info.bd_buf_phy;           /*  è¾“å…¥é€šé“èµ·å§‹åœ°å€ */
     channle_stu.sCoderSetSrcBuf.u32InputEnd    = (u32)((g_bsp_om_socp_chan_info.bd_buf_phy
-                                                                + g_bsp_om_socp_chan_info.bd_buf_len)-1);   /*  ÊäÈëÍ¨µÀ½áÊøµØÖ· */
-    channle_stu.sCoderSetSrcBuf.u32RDStart     = (u32)(g_bsp_om_socp_chan_info.rd_buf_phy);                              /* RD bufferÆğÊ¼µØÖ· */
+                                                                + g_bsp_om_socp_chan_info.bd_buf_len)-1);   /*  è¾“å…¥é€šé“ç»“æŸåœ°å€ */
+    channle_stu.sCoderSetSrcBuf.u32RDStart     = (u32)(g_bsp_om_socp_chan_info.rd_buf_phy);                              /* RD bufferèµ·å§‹åœ°å€ */
     channle_stu.sCoderSetSrcBuf.u32RDEnd       = (u32)((g_bsp_om_socp_chan_info.rd_buf_phy
-                                                                + g_bsp_om_socp_chan_info.rd_buf_len)-1);    /*  RD buffer½áÊøµØÖ· */
-    channle_stu.sCoderSetSrcBuf.u32RDThreshold = 0;                                                                  /* RD bufferÊı¾İÉÏ±¨ãĞÖµ */
+                                                                + g_bsp_om_socp_chan_info.rd_buf_len)-1);    /*  RD bufferç»“æŸåœ°å€ */
+    channle_stu.sCoderSetSrcBuf.u32RDThreshold = 0;                                                                  /* RD bufferæ•°æ®ä¸ŠæŠ¥é˜ˆå€¼ */
 
     if (BSP_OK != bsp_socp_coder_set_src_chan(g_bsp_om_socp_chan_info.en_src_chan_id, &channle_stu))
     {
@@ -328,10 +328,10 @@ u32 bsp_om_socp_chan_init(void)
         return BSP_ERR_OMS_SOCP_INIT_ERR;
     }
 
-     /*³õÊ¼»¯SOCPÍ¨µÀ²Ù×÷µÄĞÅºÅÁ¿ */
+     /*åˆå§‹åŒ–SOCPé€šé“æ“ä½œçš„ä¿¡å·é‡ */
     osl_sem_init(SEM_FULL,&socp_opt_sem);
 
-    /*Í¨µÀÊ¹ÄÜ²Ù×÷ÔÚÄ¿µÄÍ¨µÀ³õÊ¼»¯Íê³ÉÖ®ºó½øĞĞ*/
+    /*é€šé“ä½¿èƒ½æ“ä½œåœ¨ç›®çš„é€šé“åˆå§‹åŒ–å®Œæˆä¹‹åè¿›è¡Œ*/
 
     g_bsp_om_socp_chan_info.init_state= BSP_OM_SOCP_CHAN_INIT_SUCC;
 
@@ -340,16 +340,16 @@ u32 bsp_om_socp_chan_init(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_socp_chan_enable
+* å‡½ æ•° å  : bsp_socp_chan_enable
 *
-* ¹¦ÄÜÃèÊö  : µ×ÈíSOCPÍ¨µÀÊ¹ÄÜ²Ù×÷
+* åŠŸèƒ½æè¿°  : åº•è½¯SOCPé€šé“ä½¿èƒ½æ“ä½œ
 *
-* ÊäÈë²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :³õÊ¼»¯½á¹û
+* è¿” å› å€¼  :åˆå§‹åŒ–ç»“æœ
 *****************************************************************************/
 
 void bsp_socp_chan_enable(void)
@@ -361,16 +361,16 @@ void bsp_socp_chan_enable(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_send_coder_src
+* å‡½ æ•° å  : bsp_om_send_coder_src
 *
-* ¹¦ÄÜÃèÊö  :·¢ËÍÊı¾İµ½SOCPµÄ±àÂëÔ´Í¨µÀ
+* åŠŸèƒ½æè¿°  :å‘é€æ•°æ®åˆ°SOCPçš„ç¼–ç æºé€šé“
 *
-* ÊäÈë²ÎÊı  : send_data_virt :ĞèÒª·¢ËÍµÄĞéÄâµØÖ·
-*                         send_len:         ĞèÒª·¢ËÍµÄ³¤¶È
+* è¾“å…¥å‚æ•°  : send_data_virt :éœ€è¦å‘é€çš„è™šæ‹Ÿåœ°å€
+*                         send_len:         éœ€è¦å‘é€çš„é•¿åº¦
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :Ğ´½á¹û
+* è¿” å› å€¼  :å†™ç»“æœ
 *****************************************************************************/
 
 u32 bsp_om_send_coder_src(u8 *send_data_virt, u32 send_len)
@@ -383,7 +383,7 @@ u32 bsp_om_send_coder_src(u8 *send_data_virt, u32 send_len)
 
     osl_sem_down(&socp_opt_sem);
 
-    /*  ½«ÓÃ»§ĞéÄâµØÖ·×ª»»³ÉÎïÀíµØÖ·*/
+    /*  å°†ç”¨æˆ·è™šæ‹Ÿåœ°å€è½¬æ¢æˆç‰©ç†åœ°å€*/
     send_data_phy = bsp_om_virt_phy((void *)send_data_virt);
 
     if(send_data_phy == 0)
@@ -394,10 +394,10 @@ u32 bsp_om_send_coder_src(u8 *send_data_virt, u32 send_len)
 
     bsp_socp_get_write_buff(g_bsp_om_socp_chan_info.en_src_chan_id, &bd_buf);
 
-    /* ¼ÆËã¿ÕÏĞBDµÄÖµ */
+    /* è®¡ç®—ç©ºé—²BDçš„å€¼ */
     ulBDNum = (bd_buf.u32Size + bd_buf.u32RbSize)/ sizeof(SOCP_BD_DATA_STRU);
 
-    /* ÅĞ¶ÏÊÇ·ñ»¹ÓĞ¿Õ¼ä */
+    /* åˆ¤æ–­æ˜¯å¦è¿˜æœ‰ç©ºé—´ */
     if (1 >= ulBDNum)
     {
         bsp_om_debug(BSP_LOG_LEVEL_ERROR," GET BD fail,ulBDNum = %d\n",ulBDNum);
@@ -405,7 +405,7 @@ u32 bsp_om_send_coder_src(u8 *send_data_virt, u32 send_len)
         goto fail;
     }
 
-    /*SOCP¸ø³öµÄÊÇÎïÀíµØÖ·*/
+    /*SOCPç»™å‡ºçš„æ˜¯ç‰©ç†åœ°å€*/
     if(NULL == bd_buf.pBuffer )
     {
         bsp_om_debug(BSP_LOG_LEVEL_ERROR," GET BD fail,pBuffer = NULL \n");
@@ -422,7 +422,7 @@ u32 bsp_om_send_coder_src(u8 *send_data_virt, u32 send_len)
     dma_map_single(NULL, (void*)bsp_om_phy_virt(((uintptr_t)bd_buf.pBuffer)), sizeof(SOCP_BD_DATA_STRU), DMA_TO_DEVICE);
     dma_map_single(NULL, (void *)(send_data_virt), send_len, DMA_TO_DEVICE);
     /*lint -restore*/
-    ret =  (u32)bsp_socp_write_done(g_bsp_om_socp_chan_info.en_src_chan_id, sizeof(SOCP_BD_DATA_STRU)) ;  /* µ±Ç°Êı¾İĞ´ÈëÍê±Ï */
+    ret =  (u32)bsp_socp_write_done(g_bsp_om_socp_chan_info.en_src_chan_id, sizeof(SOCP_BD_DATA_STRU)) ;  /* å½“å‰æ•°æ®å†™å…¥å®Œæ¯• */
 
     if(ret != BSP_OK)
     {
@@ -444,23 +444,23 @@ successful:
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_buf_init
+* å‡½ æ•° å  : bsp_om_buf_init
 *
-* ¹¦ÄÜÃèÊö  :³õÊ¼»¯om»º´æbuf
+* åŠŸèƒ½æè¿°  :åˆå§‹åŒ–omç¼“å­˜buf
 *
-* ÊäÈë²ÎÊı  :ÎŞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 
 u32 bsp_om_buf_init(void)
 {
     u32 i;
 
-    /* LOG BUG ²»ÔÚ´Ë³õÊ¼»¯*/
+    /* LOG BUG ä¸åœ¨æ­¤åˆå§‹åŒ–*/
     i = BSP_OM_SOCP_BUF_TYPE;
 
     g_bsp_om_socp_buf_info[i].start_ptr = bsp_om_alloc(g_bsp_om_socp_buf_info[i].buf_len,(u32*)(&(g_bsp_om_socp_buf_info[i].start_phy_ptr)));
@@ -479,7 +479,7 @@ u32 bsp_om_buf_init(void)
 
     osl_sem_init(SEM_FULL,&om_buf_sem);
 
-    /* LOG BUG µ¥¶À³õÊ¼»¯*/
+    /* LOG BUG å•ç‹¬åˆå§‹åŒ–*/
     g_bsp_log_buf_info.start_ptr = bsp_om_alloc(BSP_OM_LOG_BUF_SIZE,(u32*)(&(g_bsp_log_buf_info.start_phy_ptr)));
 
     if(g_bsp_log_buf_info.start_ptr == 0)
@@ -509,16 +509,16 @@ u32 bsp_om_buf_init(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_socp_clean_rd_buf
+* å‡½ æ•° å  : bsp_om_socp_clean_rd_buf
 *
-* ¹¦ÄÜÃèÊö  :ÇåÀíSOCPµÄRD»º´æ
+* åŠŸèƒ½æè¿°  :æ¸…ç†SOCPçš„RDç¼“å­˜
 *
-* ÊäÈë²ÎÊı  :chan_id :socp µÄÍ¨µÀID
-*                       rd_stru: Èë²Î
+* è¾“å…¥å‚æ•°  :chan_id :socp çš„é€šé“ID
+*                       rd_stru: å…¥å‚
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK ³É¹¦; ÆäËû Ê§°Ü
+* è¿” å› å€¼  : BSP_OK æˆåŠŸ; å…¶ä»– å¤±è´¥
 *****************************************************************************/
 
 u32 bsp_om_socp_clean_rd_buf(u32 chan_id,SOCP_BUFFER_RW_STRU *rd_stru)
@@ -537,14 +537,14 @@ u32 bsp_om_socp_clean_rd_buf(u32 chan_id,SOCP_BUFFER_RW_STRU *rd_stru)
         goto fail;
     }
 
-    /* ÎŞRDĞèÒªÊÍ·Å*/
+    /* æ— RDéœ€è¦é‡Šæ”¾*/
     if( (0 ==rd_buf_stru.u32Size)&&(0 == rd_buf_stru.u32RbSize))
     {
          ret  = BSP_OK;
          goto successful;
     }
 
-    /* »ñÈ¡µ½µÄRDÊı¾İÒì³£*/
+    /* è·å–åˆ°çš„RDæ•°æ®å¼‚å¸¸*/
     if((rd_buf_stru.u32Size + rd_buf_stru.u32RbSize) > BSP_OM_CODER_SRC_RDSIZE)
     {
         ret  = BSP_ERR_OMS_SOCP_CLEAN_RD_ERR;
@@ -566,7 +566,7 @@ u32 bsp_om_socp_clean_rd_buf(u32 chan_id,SOCP_BUFFER_RW_STRU *rd_stru)
         goto fail;
     }
 
-    ret = (u32)bsp_socp_read_rd_done(chan_id, rd_buf_stru.u32Size);  /* ÊÍ·Ård»º´æ */
+    ret = (u32)bsp_socp_read_rd_done(chan_id, rd_buf_stru.u32Size);  /* é‡Šæ”¾rdç¼“å­˜ */
     if( BSP_OK !=ret)
     {
         goto fail;
@@ -587,16 +587,16 @@ successful:
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_clean_rd
+* å‡½ æ•° å  : bsp_om_clean_rd
 *
-* ¹¦ÄÜÃèÊö  :ÇåÀíRD»º´æºÍOM buf»º´æ
+* åŠŸèƒ½æè¿°  :æ¸…ç†RDç¼“å­˜å’ŒOM bufç¼“å­˜
 *
-* ÊäÈë²ÎÊı  :ÎŞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK ³É¹¦; ÆäËû Ê§°Ü
+* è¿” å› å€¼  : BSP_OK æˆåŠŸ; å…¶ä»– å¤±è´¥
 *****************************************************************************/
 
 u32 bsp_om_clean_rd(void)
@@ -640,16 +640,16 @@ u32 bsp_om_clean_rd(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_get_log_buf
+* å‡½ æ•° å  : bsp_om_get_log_buf
 *
-* ¹¦ÄÜÃèÊö  :ÉêÇë»º´æbuf,bsp_trace ×¨ÓÃ
+* åŠŸèƒ½æè¿°  :ç”³è¯·ç¼“å­˜buf,bsp_trace ä¸“ç”¨
 *
-* ÊäÈë²ÎÊı  :buf_len :ÉêÇëµÄ³¤¶È
+* è¾“å…¥å‚æ•°  :buf_len :ç”³è¯·çš„é•¿åº¦
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : NULL ÉêÇëÊ§°Ü£»ÆäËû ÄÚ´æµØÖ·
+* è¿” å› å€¼  : NULL ç”³è¯·å¤±è´¥ï¼›å…¶ä»– å†…å­˜åœ°å€
 *****************************************************************************/
 
 void* bsp_om_get_log_buf(u32 get_buf_len)
@@ -681,16 +681,16 @@ void* bsp_om_get_log_buf(u32 get_buf_len)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_free_log_buf
+* å‡½ æ•° å  : bsp_om_free_log_buf
 *
-* ¹¦ÄÜÃèÊö  :ÊÍ·Åbuf,bsp_trace ×¨ÓÃ
+* åŠŸèƒ½æè¿°  :é‡Šæ”¾buf,bsp_trace ä¸“ç”¨
 *
-* ÊäÈë²ÎÊı  :buf_len :ÉêÇëµÄ³¤¶È
+* è¾“å…¥å‚æ•°  :buf_len :ç”³è¯·çš„é•¿åº¦
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : NULL ÉêÇëÊ§°Ü£»ÆäËû ÄÚ´æµØÖ·
+* è¿” å› å€¼  : NULL ç”³è¯·å¤±è´¥ï¼›å…¶ä»– å†…å­˜åœ°å€
 *****************************************************************************/
 
 u32 bsp_om_free_log_buf(void* buf_addr,u32 len)
@@ -721,16 +721,16 @@ u32 bsp_om_free_log_buf(void* buf_addr,u32 len)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_get_buf
+* å‡½ æ•° å  : bsp_om_get_buf
 *
-* ¹¦ÄÜÃèÊö  :ÉêÇë»º´æbuf
+* åŠŸèƒ½æè¿°  :ç”³è¯·ç¼“å­˜buf
 *
-* ÊäÈë²ÎÊı  :buf_len :ÉêÇëµÄ³¤¶È
+* è¾“å…¥å‚æ•°  :buf_len :ç”³è¯·çš„é•¿åº¦
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : NULL ÉêÇëÊ§°Ü£»ÆäËû ÄÚ´æµØÖ·
+* è¿” å› å€¼  : NULL ç”³è¯·å¤±è´¥ï¼›å…¶ä»– å†…å­˜åœ°å€
 *****************************************************************************/
 
 void* bsp_om_get_buf(u32 buf_type,u32 get_buf_len)
@@ -747,7 +747,7 @@ void* bsp_om_get_buf(u32 buf_type,u32 get_buf_len)
     buf_len = g_bsp_om_socp_buf_info[buf_type].buf_len;
     start_ptr = g_bsp_om_socp_buf_info[buf_type].start_ptr;
 
-    /* ÉêÇë±àÂëÔ´buf*/
+    /* ç”³è¯·ç¼–ç æºbuf*/
     if(read_ptr <= write_ptr)
     {
         free_size = (u32)(buf_len - (((char*)write_ptr - (char*)start_ptr) & 0xFFFFFFFF));
@@ -757,7 +757,7 @@ void* bsp_om_get_buf(u32 buf_type,u32 get_buf_len)
             return_addr = write_ptr;
             g_bsp_om_socp_buf_info[buf_type].write_ptr = (void*)((char*)write_ptr + get_buf_len);
         }
-        /*·­×ªĞ´Ö¸Õë*/
+        /*ç¿»è½¬å†™æŒ‡é’ˆ*/
         else
         {
             g_bsp_om_socp_buf_info[buf_type].last_pading_len = free_size;
@@ -779,7 +779,7 @@ void* bsp_om_get_buf(u32 buf_type,u32 get_buf_len)
             }
         }
     }
-    /*¶ÁĞ´Ö¸Õë·­×ª*/
+    /*è¯»å†™æŒ‡é’ˆç¿»è½¬*/
     else
     {
         free_size = (u32)(((char*)read_ptr - (char*)write_ptr)&0xFFFFFFFF );
@@ -805,16 +805,16 @@ void* bsp_om_get_buf(u32 buf_type,u32 get_buf_len)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_free_buf
+* å‡½ æ•° å  : bsp_om_free_buf
 *
-* ¹¦ÄÜÃèÊö  :ÊÍ·Å»º´æbuf
+* åŠŸèƒ½æè¿°  :é‡Šæ”¾ç¼“å­˜buf
 *
-* ÊäÈë²ÎÊı  :buf_addr :ÊÍ·Å»º´æµØÖ·
-*                       len           : ĞèÒªÊÍ·ÅµÄµØÖ·
+* è¾“å…¥å‚æ•°  :buf_addr :é‡Šæ”¾ç¼“å­˜åœ°å€
+*                       len           : éœ€è¦é‡Šæ”¾çš„åœ°å€
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK ÊÍ·Å³É¹¦;ÆäËû ÊÍ·ÅÊ§°Ü
+* è¿” å› å€¼  : BSP_OK é‡Šæ”¾æˆåŠŸ;å…¶ä»– é‡Šæ”¾å¤±è´¥
 *****************************************************************************/
 
 u32 bsp_om_free_buf(void* buf_addr,u32 len)
@@ -841,7 +841,7 @@ u32 bsp_om_free_buf(void* buf_addr,u32 len)
         return BSP_ERR_OMS_INVALID_PARAM;
     }
 
-    /*LOG BUF µ¥¶À´¦Àí*/
+    /*LOG BUF å•ç‹¬å¤„ç†*/
     if(buf_type == BSP_OM_LOG_BUF_TYPE)
     {
         return bsp_om_free_log_buf(buf_addr,len);
@@ -855,7 +855,7 @@ u32 bsp_om_free_buf(void* buf_addr,u32 len)
 
     end_ptr = ((char*)start_ptr + buf_len);
 
-    /*Ë³ĞòÉêÇëºÍÊÍ·ÅµÄÇé¿ö*/
+    /*é¡ºåºç”³è¯·å’Œé‡Šæ”¾çš„æƒ…å†µ*/
     if((buf_addr == read_ptr )||( buf_addr == start_ptr))
     {
         if((read_ptr + last_pading_len + len) < end_ptr)
@@ -874,7 +874,7 @@ u32 bsp_om_free_buf(void* buf_addr,u32 len)
         }
 
     }
-      /*ÉêÇëÖ®ºó×é°ü·¢ËÍ´íÎó£¬Ö±½ÓÊÍ·ÅµÄÇé¿ö*/
+      /*ç”³è¯·ä¹‹åç»„åŒ…å‘é€é”™è¯¯ï¼Œç›´æ¥é‡Šæ”¾çš„æƒ…å†µ*/
     else if(buf_addr == (write_ptr- len))
     {
         g_bsp_om_socp_buf_info[buf_type].write_ptr  = buf_addr;
@@ -886,7 +886,7 @@ u32 bsp_om_free_buf(void* buf_addr,u32 len)
         g_bsp_om_socp_buf_info[buf_type].buf_size  -= len;
         g_bsp_om_socp_buf_info[buf_type].last_pading_len = 0;
     }
-    /*Òì³£buf*/
+    /*å¼‚å¸¸buf*/
     else
     {
         bsp_om_debug(BSP_LOG_LEVEL_ERROR, " bsp om invalid buf  %p, read_ptr = %p,write_ptr = %p",buf_addr,read_ptr,write_ptr);
@@ -937,22 +937,22 @@ u32 bsp_om_send_log_buf(u32 buf_type,u32 packet_len)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_global_init
+* å‡½ æ•° å  : bsp_om_global_init
 *
-* ¹¦ÄÜÃèÊö  : ³õÊ¼»¯OMÄ£¿éÈ«¾ÖĞÅÏ¢
+* åŠŸèƒ½æè¿°  : åˆå§‹åŒ–OMæ¨¡å—å…¨å±€ä¿¡æ¯
 *
-* ÊäÈë²ÎÊı  :ÎŞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :ÎŞ
+* è¿” å› å€¼  :æ— 
 *****************************************************************************/
 
 void bsp_om_global_init(void)
 {
     g_om_global_info.hso_connect_flag = FALSE;
-    /* ĞèÒªÔö¼ÓÒ»¸öNVÏî¿ØÖÆ*/
+    /* éœ€è¦å¢åŠ ä¸€ä¸ªNVé¡¹æ§åˆ¶*/
     g_om_global_info.om_cfg.nv_cfg.log_switch = BSP_LOG_SEND_TO_HSO;
 
     return;
@@ -1063,7 +1063,7 @@ int bsp_om_send_task(void * para)
     /* coverity[no_escape] */
     for(;;)
     {
-        /* ÇåÀíRD*/
+        /* æ¸…ç†RD*/
         bsp_om_clean_rd();
         /* coverity[check_return] */
         osl_sem_down(&send_task_sem);
@@ -1096,16 +1096,16 @@ int bsp_om_send_task(void * para)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_server_init
+* å‡½ æ•° å  : bsp_om_server_init
 *
-* ¹¦ÄÜÃèÊö  : om³õÊ¼»¯×ÜÈë¿Ú
+* åŠŸèƒ½æè¿°  : omåˆå§‹åŒ–æ€»å…¥å£
 *
-* ÊäÈë²ÎÊı  :ÎŞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  :BSP_OK ³õÊ¼»¯³É¹¦;ÆäËû ³õÊ¼»¯Ê§°Ü
+* è¿” å› å€¼  :BSP_OK åˆå§‹åŒ–æˆåŠŸ;å…¶ä»– åˆå§‹åŒ–å¤±è´¥
 *****************************************************************************/
 s32 bsp_om_server_init(void)
 {
@@ -1114,7 +1114,7 @@ s32 bsp_om_server_init(void)
     spin_lock_init(&g_st_buf_lock);
     spin_lock_init(&g_st_control_lock);
 
-     /* ³õÊ¼»¯ BSP OM SOCP Ô´»º´æbuf*/
+     /* åˆå§‹åŒ– BSP OM SOCP æºç¼“å­˜buf*/
     ret =  bsp_om_buf_init();
 
     if(BSP_OK != ret)
@@ -1123,7 +1123,7 @@ s32 bsp_om_server_init(void)
         return (s32)ret;
     }
 
-    /* ³õÊ¼»¯ BSPÊ¹ÓÃµÄSOCPÔ´Í¨µÀ*/
+    /* åˆå§‹åŒ– BSPä½¿ç”¨çš„SOCPæºé€šé“*/
     ret = bsp_om_socp_chan_init();
     if(BSP_OK !=ret )
     {
@@ -1131,13 +1131,13 @@ s32 bsp_om_server_init(void)
         return  (s32)ret;
     }
 
-    /*³õÊ¼»¯omÄ£¿éÈ«¾ÖĞÅÏ¢*/
+    /*åˆå§‹åŒ–omæ¨¡å—å…¨å±€ä¿¡æ¯*/
     bsp_om_global_init();
-    /* ³õÊ¼»¯log´òÓ¡¼¶±ğÎªdefaultÖµ*/
+    /* åˆå§‹åŒ–logæ‰“å°çº§åˆ«ä¸ºdefaultå€¼*/
     bsp_log_level_reset();
     
 #ifdef ENABLE_BUILD_SYSVIEW
-    /* ³õÊ¼»¯sysviewÈ«¾ÖÊı¾İ*/
+    /* åˆå§‹åŒ–sysviewå…¨å±€æ•°æ®*/
     ret = sys_view_init();
     if(BSP_OK != ret)
     {
@@ -1154,16 +1154,16 @@ s32 bsp_om_server_init(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_set_hso_conn_flag
+* å‡½ æ•° å  : bsp_om_set_hso_conn_flag
 *
-* ¹¦ÄÜÃèÊö  :¸Ã½Ó¿ÚĞèÒªMSPµÄÕï¶ÏÄ£¿éÔÚHSOÁ¬½Ó»òÕßÈ¥Á¬½ÓµÄÊ±ºòµ÷ÓÃ
+* åŠŸèƒ½æè¿°  :è¯¥æ¥å£éœ€è¦MSPçš„è¯Šæ–­æ¨¡å—åœ¨HSOè¿æ¥æˆ–è€…å»è¿æ¥çš„æ—¶å€™è°ƒç”¨
 *
-* ÊäÈë²ÎÊı  : flag :Á¬½Ó±êÖ¾£¬1±íÊ¾Á¬½Ó£¬0±íÊ¾¶Ï¿ª
+* è¾“å…¥å‚æ•°  : flag :è¿æ¥æ ‡å¿—ï¼Œ1è¡¨ç¤ºè¿æ¥ï¼Œ0è¡¨ç¤ºæ–­å¼€
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 
 void bsp_om_set_hso_conn_flag(u32 flag)

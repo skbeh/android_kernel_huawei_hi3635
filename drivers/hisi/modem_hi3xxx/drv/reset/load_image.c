@@ -32,13 +32,13 @@ typedef enum SVC_SECBOOT_CMD_ID SECBOOT_CMD_ID;
 #if (defined CONFIG_TZDRIVER) && (defined CONFIG_LOAD_SEC_IMAGE)
 /******************************************************************************
 Function:	    TEEK_init
-Description:	TEEK³õÊ¼»¯
+Description:	TEEKåˆå§‹åŒ–
 Input:		    session	
                 context
                 
 Output:		    none
 
-Return:		    0: OK  ÆäËû: ERRORÂë
+Return:		    0: OK  å…¶ä»–: ERRORç 
 ******************************************************************************/
 static s32 TEEK_init(TEEC_Session *session, TEEC_Context *context)
 {
@@ -95,15 +95,15 @@ error1:
 
 /******************************************************************************
 Function:	    bsp_trans_to_os
-Description:	´ÓÖ¸¶¨Æ«ÒÆ¿ªÊ¼´«ËÍÖ¸¶¨´óĞ¡µÄ¾µÏñ
+Description:	ä»æŒ‡å®šåç§»å¼€å§‹ä¼ é€æŒ‡å®šå¤§å°çš„é•œåƒ
 Input:		    
-            cmd_id      - ´«ËÍ¸ø°²È«OSµÄcmd_id
-            *buf		- ÊäÈë²ÎÊı£¬´æ·ÅÒª´«ËÍµ½°²È«osÖĞµÄÖµ
-		    size		- ÊäÈë²ÎÊı£¬ÒªĞ´ÈëµÄ¾µÏñµÄbytes´óĞ¡
-		    offset		- ¾µÏñĞèÒªĞ´ÈëµÄÆ«ÒÆµØÖ·
+            cmd_id      - ä¼ é€ç»™å®‰å…¨OSçš„cmd_id
+            *buf		- è¾“å…¥å‚æ•°ï¼Œå­˜æ”¾è¦ä¼ é€åˆ°å®‰å…¨osä¸­çš„å€¼
+		    size		- è¾“å…¥å‚æ•°ï¼Œè¦å†™å…¥çš„é•œåƒçš„byteså¤§å°
+		    offset		- é•œåƒéœ€è¦å†™å…¥çš„åç§»åœ°å€
 
 Output:		    none
-Return:		    0: OK  ÆäËû: ERRORÂë
+Return:		    0: OK  å…¶ä»–: ERRORç 
 ******************************************************************************/
 static s32 bsp_trans_to_os(TEEC_Session *session,
 		  SECBOOT_CMD_ID cmd_id,
@@ -149,12 +149,12 @@ static s32 bsp_trans_to_os(TEEC_Session *session,
 
 /******************************************************************************
 Function:	    load_done
-Description:	È«²¿¾µÏñ·¢ËÍÍê±Ï¿ªÊ¼Ğ£Ñé
+Description:	å…¨éƒ¨é•œåƒå‘é€å®Œæ¯•å¼€å§‹æ ¡éªŒ
 Input:		    
-            cmd_id      - ´«ËÍ¸ø°²È«OSµÄcmd_id
+            cmd_id      - ä¼ é€ç»™å®‰å…¨OSçš„cmd_id
 
 Output:		    none
-Return:		    0: OK  ÆäËû: ERRORÂë
+Return:		    0: OK  å…¶ä»–: ERRORç 
 ******************************************************************************/
 static s32 load_done(TEEC_Session *session, SECBOOT_CMD_ID cmd_id)		  		  
 {
@@ -189,14 +189,14 @@ static s32 load_done(TEEC_Session *session, SECBOOT_CMD_ID cmd_id)
 
 /******************************************************************************
 Function:	    load_data_to_secos
-Description:	´ÓÖ¸¶¨Æ«ÒÆ¿ªÊ¼´«ËÍÖ¸¶¨´óĞ¡µÄ¾µÏñ
+Description:	ä»æŒ‡å®šåç§»å¼€å§‹ä¼ é€æŒ‡å®šå¤§å°çš„é•œåƒ
 Input:		
-			part_name   - Òª·¢ËÍ¾µÏñµÄÃû³Æ
-			offset      - Æ«ÒÆµØÖ· 
-		    sizeToRead	- ÊäÈë²ÎÊı£¬ÒªĞ´ÈëµÄ¾µÏñµÄbytes´óĞ¡
+			part_name   - è¦å‘é€é•œåƒçš„åç§°
+			offset      - åç§»åœ°å€ 
+		    sizeToRead	- è¾“å…¥å‚æ•°ï¼Œè¦å†™å…¥çš„é•œåƒçš„byteså¤§å°
 
 Output:		    none
-Return:		    SEC_OK: OK  SEC_ERROR: ERRORÂë
+Return:		    SEC_OK: OK  SEC_ERROR: ERRORç 
 ******************************************************************************/
 static s32 load_data_to_secos(TEEC_Session *session, char* part_name, u32 offset, u32 sizeToRead, u32 * skip_len)
 {

@@ -1,13 +1,13 @@
 /*************************************************************************
-*   °æÈ¨ËùÓÐ(C) 2008-2013, ÉîÛÚ»ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾.
+*   ç‰ˆæƒæ‰€æœ‰(C) 2008-2013, æ·±åœ³åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸.
 *
-*   ÎÄ ¼þ Ãû :  kdf.c
+*   æ–‡ ä»¶ å :  kdf.c
 *
-*   ×÷    Õß :  wangxiandong
+*   ä½œ    è€… :  wangxiandong
 *
-*   Ãè    Êö :  kdf¼ÆËãÃÜÔ¿ÊµÏÖ£¬ÎªÒ»¼üÉý¼¶¼ÆËãHASH¶¨ÖÆ¹¦ÄÜ
+*   æ    è¿° :  kdfè®¡ç®—å¯†é’¥å®žçŽ°ï¼Œä¸ºä¸€é”®å‡çº§è®¡ç®—HASHå®šåˆ¶åŠŸèƒ½
 *
-*   ÐÞ¸Ä¼ÇÂ¼ :  2013Äê06ÔÂ19ÈÕ  v1.00  wangxiandong ´´½¨
+*   ä¿®æ”¹è®°å½• :  2013å¹´06æœˆ19æ—¥  v1.00  wangxiandong åˆ›å»º
 *************************************************************************/
 #include <linux/gfp.h>
 #include <osl_module.h>
@@ -24,20 +24,20 @@ void kdf_move_rdq_r_pos(void);
 static struct kdf_s ch4_info = {0, 0, 0, 0, BD_RD_NUM, 0, 0};
 
 /*****************************************************************************
-* º¯ Êý Ãû  : kdf_reg_init
+* å‡½ æ•° å  : kdf_reg_init
 *
-* ¹¦ÄÜÃèÊö  : AºËKDF¼Ä´æÆ÷ÅäÖÃ£¬ÓÃÓÚ¼ÆËãHASHÖµ£¬ÔÚCºËÆô¶¯Ö®Ç°Ê¹ÓÃ
+* åŠŸèƒ½æè¿°  : Aæ ¸KDFå¯„å­˜å™¨é…ç½®ï¼Œç”¨äºŽè®¡ç®—HASHå€¼ï¼Œåœ¨Cæ ¸å¯åŠ¨ä¹‹å‰ä½¿ç”¨
 *
-* ÊäÈë²ÎÊý  : ÎÞ
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : ÎÞ
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : æ— 
 *****************************************************************************/
 void kdf_reg_init(void)
 {
 	u32 reg_val = 0;
 	int i = 0;
 
-	/*¸´Î»ch4*/
+	/*å¤ä½ch4*/
 	writel(0x7, HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_SOFTRESET_OFFSET);
 	i = 1000;
 	do
@@ -50,22 +50,22 @@ void kdf_reg_init(void)
 		return;
 	}
 
-	/*ÅäÖÃBD¼Ä´æÆ÷*/
+	/*é…ç½®BDå¯„å­˜å™¨*/
 	writel(ch4_info.bdq_real_addr, HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_BDQ_BADDR_OFFSET);
 	writel(BD_RD_NUM - 1, HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_BDQ_SIZE_OFFSET);
 
-	/*ÅäÖÃRD¼Ä´æÆ÷*/
+	/*é…ç½®RDå¯„å­˜å™¨*/
 	writel(ch4_info.rdq_real_addr, HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_RDQ_BADDR_OFFSET);
 	writel(BD_RD_NUM - 1, HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_RDQ_SIZE_OFFSET);
 
-    /*Ê¹ÄÜKDFÍ¨µÀ*/
+    /*ä½¿èƒ½KDFé€šé“*/
 	writel(0x1, HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_EN_OFFSET);
 
-    /* ÅäÖÃKDFÍ¨µÀconfig¼Ä´æÆ÷*/
-    reg_val= CHN_IV_SEL| (CHN_RDQ_CTRL << CHN_RDQCTRL_BIT)| KDF_CHN_USRFIELD_LEN << CHN_USRFIELDLEN_BIT;/* [false alarm]:Îó±¨ */
+    /* é…ç½®KDFé€šé“configå¯„å­˜å™¨*/
+    reg_val= CHN_IV_SEL| (CHN_RDQ_CTRL << CHN_RDQCTRL_BIT)| KDF_CHN_USRFIELD_LEN << CHN_USRFIELDLEN_BIT;/* [false alarm]:è¯¯æŠ¥ */
 	writel(reg_val, HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_CONFIG_OFFSET);
 
-    /* KeyRamÖÐµÄÄÚÈÝÉèÖÃÎª0£¬Ö»Ê¹ÓÃÁË0ºÅË÷ÒýÎ»ÖÃ*/
+    /* KeyRamä¸­çš„å†…å®¹è®¾ç½®ä¸º0ï¼Œåªä½¿ç”¨äº†0å·ç´¢å¼•ä½ç½®*/
     for(i = 0; i < KDF_SHA_KEY_LENGTH; i += 4)
     {
         writel(0, (volatile void *)(HI_CIPHER_BASE_ADDR_VIRT + HI_KEY_RAM_OFFSET + KEY_INDEX * CIPHER_KEY_LEN + i));/*lint !e737*/
@@ -74,14 +74,14 @@ void kdf_reg_init(void)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : kdf_init
+* å‡½ æ•° å  : kdf_init
 *
-* ¹¦ÄÜÃèÊö  : AºËKDF¶ÓÁÐ¿Õ¼äÉêÇë³õÊ¼»¯£¬ÓÃÓÚ¼ÆËãHASHÖµ£¬ÔÚCºËÆô¶¯Ö®Ç°Ê¹ÓÃ
+* åŠŸèƒ½æè¿°  : Aæ ¸KDFé˜Ÿåˆ—ç©ºé—´ç”³è¯·åˆå§‹åŒ–ï¼Œç”¨äºŽè®¡ç®—HASHå€¼ï¼Œåœ¨Cæ ¸å¯åŠ¨ä¹‹å‰ä½¿ç”¨
 *
-* ÊäÈë²ÎÊý  : ÎÞ
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : 0    : ÕýÈ·
-*             ÆäËû : ´íÎó
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : 0    : æ­£ç¡®
+*             å…¶ä»– : é”™è¯¯
 *****************************************************************************/
 int kdf_init(void)
 {
@@ -90,7 +90,7 @@ int kdf_init(void)
 	void * virtual_bdq_pt = NULL;
 	u32  bdq_pt           = 0;
 
-	/*ÉêÇëRDQºÍBDQ¿Õ¼ä*/
+	/*ç”³è¯·RDQå’ŒBDQç©ºé—´*/
 	#pragma pack(8)
 	virtual_rdq_pt = dma_alloc_coherent(NULL, RDQ_SIZE, &rdq_pt, GFP_KERNEL);
 	virtual_bdq_pt = dma_alloc_coherent(NULL, BDQ_SIZE, &bdq_pt, GFP_KERNEL);
@@ -154,7 +154,7 @@ void kdf_move_rdq_r_pos(void)
 	reg_val_rdq_size++;
 	reg_val_rdq_rwptr = reg_val_rdq_rwptr % reg_val_rdq_size;
 	/*reg_val_rdq_rwptr = ((reg_val_rdq_rwptr & 0x3FF0000) >> 16 + 1) % (1 + reg_val_rdq_size);*/
-	reg_val_rdq_rwptr = reg_val_rdq_rwptr << 16;/* [false alarm]:Îó±¨ */
+	reg_val_rdq_rwptr = reg_val_rdq_rwptr << 16;/* [false alarm]:è¯¯æŠ¥ */
 	writel(reg_val_rdq_rwptr, HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_RDQ_PTR_OFFSET);
 }
 
@@ -168,7 +168,7 @@ void kdf_move_bdq_w_pos(void)
 	reg_val_bdq_rwptr = reg_val_bdq_rwptr & 0x3FF;
 	reg_val_bdq_rwptr += 1;
 	reg_val_bdq_size++;
-	reg_val_bdq_rwptr = reg_val_bdq_rwptr % reg_val_bdq_size;/* [false alarm]:Îó±¨ */
+	reg_val_bdq_rwptr = reg_val_bdq_rwptr % reg_val_bdq_size;/* [false alarm]:è¯¯æŠ¥ */
 	/*reg_val_bdq_rwptr = (reg_val_bdq_rwptr & 0x3FF + 1) % (1 + reg_val_bdq_size);*/
 	writel(reg_val_bdq_rwptr, HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_BDQ_PTR_OFFSET);
 }
@@ -177,16 +177,16 @@ int kdf_start_channel(void)
 {
     u32 reg_val;
     KDF_RD_SCPT_S *pCurRDAddr = NULL;
-	s32 delay_loops = 20000;/*Ñ­»·20000´Î£¬Ã¿´ÎÑÓ³Ù1us£¬¹²ÑÓ³Ù20000us*/
+	s32 delay_loops = 20000;/*å¾ªçŽ¯20000æ¬¡ï¼Œæ¯æ¬¡å»¶è¿Ÿ1usï¼Œå…±å»¶è¿Ÿ20000us*/
 
-	/* ÒÆ¶¯¼Ä´æÆ÷Ð´Ö¸Õë */
+	/* ç§»åŠ¨å¯„å­˜å™¨å†™æŒ‡é’ˆ */
 	kdf_move_bdq_w_pos();
 
 	do
     {
 		reg_val = readl(HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_EN_OFFSET);
         delay_loops = delay_loops - 1;
-		/*delay(1);Ë¯1us*/
+		/*delay(1);ç¡1us*/
     }
     while((reg_val & 0x80000000) && (delay_loops > 0));
 	if(delay_loops <= 0)
@@ -194,18 +194,18 @@ int kdf_start_channel(void)
 		return CIPHER_TIME_OUT;
 	}
 
-    /* »ñÈ¡µ±Ç°µÄRDÃèÊö·û*/ 
+    /* èŽ·å–å½“å‰çš„RDæè¿°ç¬¦*/ 
 	reg_val = readl((volatile void *)(HI_CIPHER_BASE_ADDR_VIRT + HI_CH4_RDQ_PTR_OFFSET));
 	reg_val = (reg_val & 0x3FF0000) >> 16;
     pCurRDAddr = (KDF_RD_SCPT_S *)(ch4_info.rdq_virt_addr) + reg_val;
-    /* Çå³ýRDÓÐÐ§Î»*/
+    /* æ¸…é™¤RDæœ‰æ•ˆä½*/
     pCurRDAddr->u32KdfConfig &= (~0x80000000);
-    /* ÅÐ¶ÏÊÇ·ñÓÐÍêÕûÐÔ¼ì²é´íÎó*/
+    /* åˆ¤æ–­æ˜¯å¦æœ‰å®Œæ•´æ€§æ£€æŸ¥é”™è¯¯*/
     if(CIPHER_STAT_CHECK_ERR == ((pCurRDAddr->u32KdfConfig >> 29) & 0x3))
     {
         return CIPHER_CHECK_ERROR;
     }
-	/* ÒÆ¶¯¼Ä´æÆ÷ÖÐµÄRD¶ÁµØÖ·*/
+	/* ç§»åŠ¨å¯„å­˜å™¨ä¸­çš„RDè¯»åœ°å€*/
 	kdf_move_rdq_r_pos();
 
     return CIPHER_SUCCESS;
@@ -216,13 +216,13 @@ int kdf_hash_make(void * sha_s_addr, u32 sha_s_len)
     KDF_BDCONFIG_INFO_S stBDCfgInfo;
 	u32 i = 0;
 
-    stBDCfgInfo.enShaKeySource  = SHA_KEY_SOURCE_KEYRAM;           /*sha_key×ÜÊÇÈ¥key ramÀïÈ¡*/ 
-    stBDCfgInfo.u32ShaKeyIndex  = KEY_INDEX;                       /*sha_sÔÚkey ramÖÐµÄÎ»ÖÃ*/
-    stBDCfgInfo.u32ShaSIndex    = 0;                               /*sha_s×ÜÊÇÀ´Ô´ÓÚDDR£¬Ë÷ÒýÎ»ÖÃÎÞËùÎ½*/
-    stBDCfgInfo.u32Length       = sha_s_len - 1;                   /*Ó¦¸Ã¼õ1£¬Âß¼­»á¼Ó1*/
-    stBDCfgInfo.u32DestIndex    = KEY_INDEX;                       /*Éú³ÉµÄHASH½á¹û¹Ì¶¨·ÅÔÚkey ramµÄµÚ15¸öÎ»ÖÃ*/
-    stBDCfgInfo.pAddress        = (void*)(ch4_info.sha_s_buff_real_addr);   /*sha_sÄÚ´æµØÖ·*/
-	stBDCfgInfo.enShaSSource    = SHA_S_SOURCE_DDR;                /*sha_s×ÜÊÇÀ´Ô´ÓÚDDR*/
+    stBDCfgInfo.enShaKeySource  = SHA_KEY_SOURCE_KEYRAM;           /*sha_keyæ€»æ˜¯åŽ»key ramé‡Œå–*/ 
+    stBDCfgInfo.u32ShaKeyIndex  = KEY_INDEX;                       /*sha_såœ¨key ramä¸­çš„ä½ç½®*/
+    stBDCfgInfo.u32ShaSIndex    = 0;                               /*sha_sæ€»æ˜¯æ¥æºäºŽDDRï¼Œç´¢å¼•ä½ç½®æ— æ‰€è°“*/
+    stBDCfgInfo.u32Length       = sha_s_len - 1;                   /*åº”è¯¥å‡1ï¼Œé€»è¾‘ä¼šåŠ 1*/
+    stBDCfgInfo.u32DestIndex    = KEY_INDEX;                       /*ç”Ÿæˆçš„HASHç»“æžœå›ºå®šæ”¾åœ¨key ramçš„ç¬¬15ä¸ªä½ç½®*/
+    stBDCfgInfo.pAddress        = (void*)(ch4_info.sha_s_buff_real_addr);   /*sha_så†…å­˜åœ°å€*/
+	stBDCfgInfo.enShaSSource    = SHA_S_SOURCE_DDR;                /*sha_sæ€»æ˜¯æ¥æºäºŽDDR*/
 
 	for(i = 0; i < sha_s_len; i++)
 	{

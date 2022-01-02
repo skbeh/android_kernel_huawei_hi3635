@@ -96,7 +96,7 @@ BSP_S32 drv_hkadc_get_temp(HKADC_TEMP_PROTECT_E enMode, unsigned short* pusVolt,
     volt   = p_area->chan_out[phy_chan].volt_l;
     //volt_r = p_area->chan_out[phy_chan].volt_r;
 
-    /*ȡ��У����ʱ���ж�*/
+    /*取反校验暂时不判断*/
     if(NULL != pusVolt)
     {
         *pusVolt = volt;
@@ -158,7 +158,7 @@ void tem_volt_get_test(void)
     }
 }
 
-/* �¶ȱ���DEBUG���� */
+/* 温度保护DEBUG函数 */
 void tem_phy_logic(void)
 {
     int i = 0;
@@ -179,15 +179,15 @@ void tem_battery_show(void)
     DRV_HKADC_DATA_AREA *p_area = (DRV_HKADC_DATA_AREA *)TEMPERATURE_VIRT_ADDR;
     
     tem_print_info("-------------BATTERY TEMPERATURE PROTECT CONFIG------------\n");
-    tem_print_info("high tem protect:        %s\n", p_area->sys_temp_cfg.enable & 0x1 ? "yes" : "no"); /* bit0�����±���ʹ�ܣ�bit1�����±���ʹ�� */
+    tem_print_info("high tem protect:        %s\n", p_area->sys_temp_cfg.enable & 0x1 ? "yes" : "no"); /* bit0：高温保护使能；bit1：低温保护使能 */
     tem_print_info("low tem protect:         %s\n", p_area->sys_temp_cfg.enable & 0x2 ? "yes" : "no");
     
-    tem_print_info("hkadc count is:          %d\n", p_area->sys_temp_cfg.hkadc_id);          /* �ߵ��±�����hkadcͨ��ID */
-    tem_print_info("high tem gate is:        %d\n", p_area->sys_temp_cfg.high_thres);        /* ���±����ķ�ֵ */
-    tem_print_info("high gate count is:      %d\n", p_area->sys_temp_cfg.high_count);        /* ���±����������ޣ�����ô�����ϵͳ�ػ� */
+    tem_print_info("hkadc count is:          %d\n", p_area->sys_temp_cfg.hkadc_id);          /* 高低温保护的hkadc通道ID */
+    tem_print_info("high tem gate is:        %d\n", p_area->sys_temp_cfg.high_thres);        /* 高温保护的阀值 */
+    tem_print_info("high gate count is:      %d\n", p_area->sys_temp_cfg.high_count);        /* 高温保护次数门限，到达该次数后系统关机 */
     
-    tem_print_info("low tem gate is:         %d\n", p_area->sys_temp_cfg.low_thres);         /* ���±����ķ�ֵ */
-    tem_print_info("low gate count is:       %d\n", p_area->sys_temp_cfg.low_count);         /* ���±����������ޣ�����ô�����ϵͳ�ػ� */
+    tem_print_info("low tem gate is:         %d\n", p_area->sys_temp_cfg.low_thres);         /* 低温保护的阀值 */
+    tem_print_info("low gate count is:       %d\n", p_area->sys_temp_cfg.low_count);         /* 低温保护次数门限，到达该次数后系统关机 */
     
     tem_print_info("-------------------------------------------------------------\n");
     

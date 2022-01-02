@@ -6,18 +6,18 @@ extern "C" {
 #endif /* __cpluscplus */
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "PcscProc.h"
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e767*/
 #define    THIS_FILE_ID PS_FILE_ID_PCSC_APP_PROC_C
 /*lint +e767*/
 
-/*ACPUÉÏÎ¬»¤¿¨×´Ì¬µÄÈ«¾Ö±äÁ¿*/
+/*ACPUä¸Šç»´æŠ¤å¡çŠ¶æ€çš„å…¨å±€å˜é‡*/
 USIMM_CARD_SERVIC_ENUM_UINT32 g_enAcpuCardStatus = USIMM_CARD_SERVIC_BUTT;
 
 extern VOS_VOID OM_RecordInfoStart(VOS_EXC_DUMP_MEM_NUM_ENUM_UINT32 enNumber, VOS_UINT32 ulSendPid, VOS_UINT32 ulRcvPid, VOS_UINT32 ulMsgName);
@@ -36,11 +36,11 @@ VOS_UINT32 PCSC_AcpuCmdReq(VOS_UINT32 ulCmdType, VOS_UINT8 *pucAPDU, VOS_UINT32 
                         (sizeof(SI_PIH_PCSC_REQ_STRU) - VOS_MSG_HEAD_LENGTH) + ulAPDULen);
     if (VOS_NULL_PTR == pstMsg)
     {
-        /* ´òÓ¡´íÎó */
+        /* æ‰“å°é”™è¯¯ */
         PS_LOG(ACPU_PID_PCSC, 0, PS_PRINT_WARNING, "PCSC_AcpuCmdReq: VOS_AllocMsg is Failed");
         vos_printf("PCSC_AcpuCmdReq: VOS_AllocMsg is Failed.\r\n");
 
-        return VOS_ERR; /* ·µ»Øº¯Êý´íÎóÐÅÏ¢ */
+        return VOS_ERR; /* è¿”å›žå‡½æ•°é”™è¯¯ä¿¡æ¯ */
     }
 
     pstMsg->stMsgHeader.ulReceiverPid = MAPS_PIH_PID;
@@ -56,7 +56,7 @@ VOS_UINT32 PCSC_AcpuCmdReq(VOS_UINT32 ulCmdType, VOS_UINT8 *pucAPDU, VOS_UINT32 
 
     if (VOS_OK != VOS_SendMsg(ACPU_PID_PCSC, pstMsg))
     {
-        /*´òÓ¡´íÎó*/
+        /*æ‰“å°é”™è¯¯*/
         PS_LOG(ACPU_PID_PCSC, 0, PS_PRINT_WARNING, "PCSC_AcpuCmdReq: VOS_SendMsg is Failed.");
         vos_printf("PCSC_AcpuCmdReq: VOS_SendMsg is Failed.");
         return VOS_ERR;
@@ -68,10 +68,10 @@ VOS_INT PCSC_AcpuGetCardStatus(VOS_VOID)
 {
     if (USIMM_CARD_SERVIC_ABSENT == g_enAcpuCardStatus)
     {
-        /*ÉÏ±¨ÎÞ¿¨×´Ì¬*/
+        /*ä¸ŠæŠ¥æ— å¡çŠ¶æ€*/
         return VOS_ERROR;
     }
-    /*ÉÏ±¨ÓÐ¿¨×´Ì¬*/
+    /*ä¸ŠæŠ¥æœ‰å¡çŠ¶æ€*/
     return VOS_OK;
 }
 
@@ -87,7 +87,7 @@ VOS_VOID PCSC_UpdateCardStatus(PS_USIM_STATUS_IND_STRU *pstMsg)
 #endif
     }
 
-    /*¸üÐÂ±¾µØ¿¨×´Ì¬µÄÈ«¾Ö±äÁ¿*/
+    /*æ›´æ–°æœ¬åœ°å¡çŠ¶æ€çš„å…¨å±€å˜é‡*/
     g_enAcpuCardStatus = pstMsg->enCardStatus;
 
     vos_printf("Update Card Status: %d .\r\n", g_enAcpuCardStatus);

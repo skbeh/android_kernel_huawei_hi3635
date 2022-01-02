@@ -20,7 +20,7 @@ static BSP_S32 udiAdpIccInit(VOID);
 
 
 
-/* ¸÷Ä£¿éÌØÐÔÖµ¶¨Òå */
+/* å„æ¨¡å—ç‰¹æ€§å€¼å®šä¹‰ */
 #define UDI_USB_ACM_CAPA		(UDI_CAPA_BLOCK_READ | UDI_CAPA_BLOCK_WRITE | UDI_CAPA_READ_CB | UDI_CAPA_WRITE_CB)
 #define UDI_USB_NCM_NDIS_CAPA	(UDI_CAPA_READ_CB | UDI_CAPA_BUFFER_LIST)
 #define UDI_USB_NCM_CTRL_CAPA	(UDI_CAPA_READ_CB | UDI_CAPA_CTRL_OPT)
@@ -28,7 +28,7 @@ static BSP_S32 udiAdpIccInit(VOID);
 #define UDI_UART_CAPA			(UDI_CAPA_BLOCK_READ | UDI_CAPA_BLOCK_WRITE)
 
 
-/* ¸÷Ä£¿é³õÊ¼»¯º¯Êý¶¨Òå */
+/* å„æ¨¡å—åˆå§‹åŒ–å‡½æ•°å®šä¹‰ */
 VOID* g_udiInitFuncTable[(BSP_U32)UDI_DEV_MAX+1] =
 {
 	/* ACM Init */
@@ -71,7 +71,7 @@ static BSP_S32 udiAdpAcmInit(VOID)
 	UDI_DRV_INTEFACE_TABLE* pDrvInterface = NULL;
 	BSP_U32 u32Cnt;
 
-	/* ¹¹Ôì»Øµ÷º¯ÊýÖ¸ÕëÁÐ±í */
+	/* æž„é€ å›žè°ƒå‡½æ•°æŒ‡é’ˆåˆ—è¡¨ */
 	pDrvInterface = kmalloc(sizeof(UDI_DRV_INTEFACE_TABLE), GFP_KERNEL);
 	if (NULL == pDrvInterface)
 	{
@@ -80,14 +80,14 @@ static BSP_S32 udiAdpAcmInit(VOID)
 	}
 	memset((VOID*)pDrvInterface, 0, sizeof(UDI_DRV_INTEFACE_TABLE));
 
-	/* Ö»ÉèÖÃÐèÒªÊµÏÖµÄ¼¸¸ö½Ó¿Ú */
+	/* åªè®¾ç½®éœ€è¦å®žçŽ°çš„å‡ ä¸ªæŽ¥å£ */
 	pDrvInterface->udi_open_cb = udiAcmAdpOpen;
 	pDrvInterface->udi_close_cb = (UDI_CLOSE_CB_T)bsp_acm_close;
 	pDrvInterface->udi_write_cb = (UDI_WRITE_CB_T)bsp_acm_write;
 	pDrvInterface->udi_read_cb = (UDI_READ_CB_T)bsp_acm_read;
 	pDrvInterface->udi_ioctl_cb = (UDI_IOCTL_CB_T)bsp_acm_ioctl;
 
-	/*  ACM ¶¼Ê¹ÓÃÍ¬Ò»Ì×Çý¶¯º¯ÊýÖ¸Õë */
+	/*  ACM éƒ½ä½¿ç”¨åŒä¸€å¥—é©±åŠ¨å‡½æ•°æŒ‡é’ˆ */
 	for (u32Cnt = UDI_USB_ACM_CTRL; u32Cnt < UDI_USB_ACM_MAX; u32Cnt++)
 	{
 		(BSP_VOID)BSP_UDI_SetCapability((UDI_DEVICE_ID)UDI_BUILD_DEV_ID(UDI_DEV_USB_ACM, u32Cnt), UDI_USB_ACM_CAPA);
@@ -98,9 +98,9 @@ static BSP_S32 udiAdpAcmInit(VOID)
 }
 
 /**************************************************************************
-  NCM ÊÊÅäÊµÏÖ
+  NCM é€‚é…å®žçŽ°
 **************************************************************************/
-#define BSP_NCM_MAX_DEV_NUM  4 /* ×î´óNCMÉè±¸ÊýÁ¿£¬ÓÃ×÷Êý×é¶¨Òå*/
+#define BSP_NCM_MAX_DEV_NUM  4 /* æœ€å¤§NCMè®¾å¤‡æ•°é‡ï¼Œç”¨ä½œæ•°ç»„å®šä¹‰*/
 static BSP_U32 sg_chnNcmDataHandleTbl[BSP_NCM_MAX_DEV_NUM] = {0};
 #define UDI2NCM_ID(udi_id) ((udi_id) / 2)
 
@@ -173,7 +173,7 @@ static BSP_S32 udiAdpNcmInit(VOID)
 	UDI_DRV_INTEFACE_TABLE* pDrvDataInterface = NULL;
 	UDI_DRV_INTEFACE_TABLE* pDrvCtrlInterface = NULL;
 
-	/* ¹¹Ôì»Øµ÷º¯ÊýÖ¸ÕëÁÐ±í(Êý¾ÝÍ¨µÀ) */
+	/* æž„é€ å›žè°ƒå‡½æ•°æŒ‡é’ˆåˆ—è¡¨(æ•°æ®é€šé“) */
 	pDrvDataInterface = kmalloc(sizeof(UDI_DRV_INTEFACE_TABLE), GFP_KERNEL);
 	if (NULL == pDrvDataInterface)
 	{
@@ -182,20 +182,20 @@ static BSP_S32 udiAdpNcmInit(VOID)
 	}
 	memset((VOID*)pDrvDataInterface, 0, sizeof(UDI_DRV_INTEFACE_TABLE));
 
-	/* Ö»ÉèÖÃÐèÒªÊµÏÖµÄ¼¸¸ö½Ó¿Ú(Êý¾ÝÍ¨µÀ) */
+	/* åªè®¾ç½®éœ€è¦å®žçŽ°çš„å‡ ä¸ªæŽ¥å£(æ•°æ®é€šé“) */
 	pDrvDataInterface->udi_open_cb = (UDI_OPEN_CB_T)udiNcmAdpOpen;
 	pDrvDataInterface->udi_close_cb = (UDI_CLOSE_CB_T)udiNcmAdpClose;
 	pDrvDataInterface->udi_write_cb = (UDI_WRITE_CB_T)udiNcmAdpWrite;
 	pDrvDataInterface->udi_ioctl_cb = (UDI_IOCTL_CB_T)bsp_ncm_ioctl;
 
-	/* ÉèÖÃº¯ÊýÖ¸Õë(Êý¾ÝÍ¨µÀ) */
+	/* è®¾ç½®å‡½æ•°æŒ‡é’ˆ(æ•°æ®é€šé“) */
 	for(i=0; i<UDI_USB_NCM_BOTTOM/2; i++)
 	{
 		(BSP_VOID)BSP_UDI_SetCapability(UDI_NCM_NDIS_ID, UDI_USB_NCM_NDIS_CAPA);
 		(BSP_VOID)BSP_UDI_SetInterfaceTable(UDI_NCM_NDIS_ID, pDrvDataInterface);
 	}
 
-	/* ¹¹Ôì»Øµ÷º¯ÊýÖ¸ÕëÁÐ±í(¿ØÖÆÍ¨µÀ) */
+	/* æž„é€ å›žè°ƒå‡½æ•°æŒ‡é’ˆåˆ—è¡¨(æŽ§åˆ¶é€šé“) */
 	pDrvCtrlInterface = kmalloc(sizeof(UDI_DRV_INTEFACE_TABLE), GFP_KERNEL);
 	if (NULL == pDrvCtrlInterface)
 	{
@@ -204,13 +204,13 @@ static BSP_S32 udiAdpNcmInit(VOID)
 	}
 	memset((VOID*)pDrvCtrlInterface, 0, sizeof(UDI_DRV_INTEFACE_TABLE));
 
-	/* ¹¹Ôì»Øµ÷º¯ÊýÖ¸ÕëÁÐ±í(¿ØÖÆÍ¨µÀ) */
+	/* æž„é€ å›žè°ƒå‡½æ•°æŒ‡é’ˆåˆ—è¡¨(æŽ§åˆ¶é€šé“) */
 	pDrvCtrlInterface->udi_open_cb = (UDI_OPEN_CB_T)udiNcmAdpCtrlOpen;
 	pDrvCtrlInterface->udi_close_cb = (UDI_CLOSE_CB_T)udiNcmAdpCtrlClose;
 	pDrvCtrlInterface->udi_write_cb = (UDI_WRITE_CB_T)udiNcmAdpWrite;
 	pDrvCtrlInterface->udi_ioctl_cb = (UDI_IOCTL_CB_T)bsp_ncm_ioctl;
 
-	/* ÉèÖÃº¯ÊýÖ¸Õë(Êý¾ÝÍ¨µÀ) */
+	/* è®¾ç½®å‡½æ•°æŒ‡é’ˆ(æ•°æ®é€šé“) */
 	for(i=0; i<UDI_USB_NCM_BOTTOM/2; i++)
 	{
 		(BSP_VOID)BSP_UDI_SetCapability(UDI_NCM_CTRL_ID, UDI_USB_NCM_CTRL_CAPA);
@@ -237,7 +237,7 @@ ADP_NCM_INIT_ERR:
 
 
 /**************************************************************************
-  ICC ÊÊÅäÊµÏÖ
+  ICC é€‚é…å®žçŽ°
 **************************************************************************/
 static BSP_U32 sg_chnHandleTbl[ICC_CHAN_NUM_MAX] = {0};
 
@@ -254,7 +254,7 @@ static BSP_S32 udiIccAdpOpen(UDI_OPEN_PARAM *param, UDI_HANDLE handle)
 	u32ChanId = UDI_GET_DEV_TYPE(param->devid);
 	(BSP_VOID)BSP_UDI_SetPrivate(param->devid, (void*)u32ChanId);
 
-	/* ´Óparam ÖÐ½âÎö³ö¸÷¸ö²ÎÊý */
+	/* ä»Žparam ä¸­è§£æžå‡ºå„ä¸ªå‚æ•° */
 	pstOpenParam = (ICC_CHAN_ATTR_S *)param->pPrivate;
 	sg_chnHandleTbl[u32ChanId] = handle;     /*lint !e732*/
 
@@ -266,7 +266,7 @@ static BSP_S32 udiAdpIccInit(VOID)
 	UDI_DRV_INTEFACE_TABLE* pDrvInterface = NULL;
 	BSP_U32 u32Cnt;
 
-	/* ¹¹Ôì»Øµ÷º¯ÊýÖ¸ÕëÁÐ±í */
+	/* æž„é€ å›žè°ƒå‡½æ•°æŒ‡é’ˆåˆ—è¡¨ */
 	pDrvInterface = kmalloc(sizeof(UDI_DRV_INTEFACE_TABLE), GFP_KERNEL);
 	if (NULL == pDrvInterface)
 	{
@@ -275,14 +275,14 @@ static BSP_S32 udiAdpIccInit(VOID)
 	}
 	memset((VOID*)pDrvInterface, 0, sizeof(UDI_DRV_INTEFACE_TABLE));
 
-	/* Ö»ÉèÖÃÐèÒªÊµÏÖµÄ¼¸¸ö½Ó¿Ú */
+	/* åªè®¾ç½®éœ€è¦å®žçŽ°çš„å‡ ä¸ªæŽ¥å£ */
 	pDrvInterface->udi_open_cb = (UDI_OPEN_CB_T)udiIccAdpOpen;
 	pDrvInterface->udi_close_cb = (UDI_CLOSE_CB_T)BSP_ICC_Close;
 	pDrvInterface->udi_write_cb = (UDI_WRITE_CB_T)BSP_ICC_Write;
 	pDrvInterface->udi_read_cb = (UDI_READ_CB_T)BSP_ICC_Read;
 	pDrvInterface->udi_ioctl_cb = (UDI_IOCTL_CB_T)BSP_ICC_Ioctl;
 
-	/* ¼¸¸ö ICC ¶¼Ê¹ÓÃÍ¬Ò»Ì×Çý¶¯º¯ÊýÖ¸Õë */
+	/* å‡ ä¸ª ICC éƒ½ä½¿ç”¨åŒä¸€å¥—é©±åŠ¨å‡½æ•°æŒ‡é’ˆ */
 	for (u32Cnt = 0; u32Cnt < ICC_CHAN_NUM_MAX; u32Cnt++)
 	{
 		(BSP_VOID)BSP_UDI_SetCapability((UDI_DEVICE_ID)UDI_BUILD_DEV_ID(UDI_DEV_ICC, u32Cnt), UDI_ICC_CAPA);

@@ -2,7 +2,7 @@
 
 
 /*****************************************************************************
-   1 Õ∑Œƒº˛∞¸∫¨
+   1 Â§¥Êñá‰ª∂ÂåÖÂê´
 *****************************************************************************/
 
 #include "pslog.h"
@@ -22,18 +22,18 @@
 #endif
 
 /*****************************************************************************
-    –≠“È’ª¥Ú”°¥Úµ„∑Ω Ωœ¬µƒ.CŒƒº˛∫Í∂®“Â
+    ÂçèËÆÆÊ†àÊâìÂç∞ÊâìÁÇπÊñπÂºè‰∏ãÁöÑ.CÊñá‰ª∂ÂÆèÂÆö‰πâ
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_TAF_APS_API_C
 
 
 /*****************************************************************************
-   2 »´æ÷±‰¡ø∂®“Â
+   2 ÂÖ®Â±ÄÂèòÈáèÂÆö‰πâ
 *****************************************************************************/
 
 
 /*****************************************************************************
-   3 Õ‚≤ø∫Ø ˝…˘√˜
+   3 Â§ñÈÉ®ÂáΩÊï∞Â£∞Êòé
 *****************************************************************************/
 
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
@@ -45,7 +45,7 @@ extern VOS_UINT32 AT_GetDestPid(
 
 
 /*****************************************************************************
-   4 ∫Ø ˝ µœ÷
+   4 ÂáΩÊï∞ÂÆûÁé∞
 *****************************************************************************/
 
 
@@ -65,13 +65,13 @@ VOS_UINT32 TAF_PS_SndMsg(
 
     pstCtrl = (TAF_CTRL_STRU *)pData;
 
-    /* ÃÓ–¥œ˚œ¢Õ∑ */
+    /* Â°´ÂÜôÊ∂àÊÅØÂ§¥ */
     ulPid = AT_GetDestPid(pstCtrl->usClientId, ulTaskId);
 #else
     ulPid = WUEPS_PID_TAF;
 #endif
 
-    /* ππ‘Ïœ˚œ¢ */
+    /* ÊûÑÈÄ†Ê∂àÊÅØ */
     pstMsg = (TAF_PS_MSG_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                 ulPid,
                                 sizeof(MSG_HEADER_STRU) + ulLength);
@@ -83,10 +83,10 @@ VOS_UINT32 TAF_PS_SndMsg(
     pstMsg->stHeader.ulReceiverPid      = ulPid;
     pstMsg->stHeader.ulMsgName          = ulMsgId;
 
-    /* ÃÓ–¥œ˚œ¢ƒ⁄»› */
+    /* Â°´ÂÜôÊ∂àÊÅØÂÜÖÂÆπ */
     PS_MEM_CPY(pstMsg->aucContent, pData, ulLength);
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = PS_SEND_MSG(ulPid, pstMsg);
     if (VOS_OK != ulResult)
     {
@@ -107,17 +107,17 @@ VOS_UINT32 TAF_PS_SetPrimPdpContextInfo(
     VOS_UINT32                                  ulResult;
     TAF_PS_SET_PRIM_PDP_CONTEXT_INFO_REQ_STRU   stSetPdpCtxInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetPdpCtxInfoReq, 0x00, sizeof(TAF_PS_SET_PRIM_PDP_CONTEXT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_PRIM_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_PRIM_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stSetPdpCtxInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetPdpCtxInfoReq.stCtrl.usClientId = usClientId;
     stSetPdpCtxInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetPdpCtxInfoReq.stPdpContextInfo  = *pstPdpContextInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_PRIM_PDP_CONTEXT_INFO_REQ,
                              &stSetPdpCtxInfoReq,
@@ -134,16 +134,16 @@ VOS_UINT32 TAF_PS_GetPrimPdpContextInfo(
     VOS_UINT32                                  ulResult;
     TAF_PS_GET_PRIM_PDP_CONTEXT_INFO_REQ_STRU   stGetPdpCtxInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetPdpCtxInfoReq, 0x00, sizeof(TAF_PS_GET_PRIM_PDP_CONTEXT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_PRIM_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_PRIM_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stGetPdpCtxInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetPdpCtxInfoReq.stCtrl.usClientId = usClientId;
     stGetPdpCtxInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_PRIM_PDP_CONTEXT_INFO_REQ,
                              &stGetPdpCtxInfoReq,
@@ -160,16 +160,16 @@ VOS_UINT32 TAF_PS_GetPdpContextInfo(
     VOS_UINT32                                  ulResult;
     TAF_PS_GET_PDP_CONTEXT_INFO_REQ_STRU        stGetPdpCtxInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetPdpCtxInfoReq, 0x00, sizeof(TAF_PS_GET_PDP_CONTEXT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_PRIM_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_PRIM_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stGetPdpCtxInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetPdpCtxInfoReq.stCtrl.usClientId = usClientId;
     stGetPdpCtxInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_PDPCONT_INFO_REQ,
                              &stGetPdpCtxInfoReq,
@@ -189,17 +189,17 @@ VOS_UINT32 TAF_PS_SetSecPdpContextInfo(
     VOS_UINT32                                  ulResult;
     TAF_PS_SET_SEC_PDP_CONTEXT_INFO_REQ_STRU    stSetPdpCtxInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetPdpCtxInfoReq, 0x00, sizeof(TAF_PS_SET_SEC_PDP_CONTEXT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_SEC_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_SEC_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stSetPdpCtxInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetPdpCtxInfoReq.stCtrl.usClientId = usClientId;
     stSetPdpCtxInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetPdpCtxInfoReq.stPdpContextInfo  = *pstPdpContextInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_SEC_PDP_CONTEXT_INFO_REQ,
                              &stSetPdpCtxInfoReq,
@@ -216,16 +216,16 @@ VOS_UINT32 TAF_PS_GetSecPdpContextInfo(
     VOS_UINT32                                  ulResult;
     TAF_PS_GET_SEC_PDP_CONTEXT_INFO_REQ_STRU    stGetPdpCtxInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetPdpCtxInfoReq, 0x00, sizeof(TAF_PS_GET_SEC_PDP_CONTEXT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_SEC_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_SEC_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stGetPdpCtxInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetPdpCtxInfoReq.stCtrl.usClientId = usClientId;
     stGetPdpCtxInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_SEC_PDP_CONTEXT_INFO_REQ,
                              &stGetPdpCtxInfoReq,
@@ -243,17 +243,17 @@ VOS_UINT32 TAF_PS_SetTftInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_SET_TFT_INFO_REQ_STRU        stSetTftInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetTftInfoReq, 0x00, sizeof(TAF_PS_SET_TFT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_TFT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_TFT_INFO_REQÊ∂àÊÅØ */
     stSetTftInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetTftInfoReq.stCtrl.usClientId = usClientId;
     stSetTftInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetTftInfoReq.stTftInfo         = *pstTftInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_TFT_INFO_REQ,
                              &stSetTftInfoReq,
@@ -270,16 +270,16 @@ VOS_UINT32 TAF_PS_GetTftInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_GET_TFT_INFO_REQ_STRU        stGetTftInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetTftInfoReq, 0x00, sizeof(TAF_PS_GET_TFT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_SEC_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_SEC_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stGetTftInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetTftInfoReq.stCtrl.usClientId = usClientId;
     stGetTftInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_TFT_INFO_REQ,
                              &stGetTftInfoReq,
@@ -297,17 +297,17 @@ VOS_UINT32 TAF_PS_SetUmtsQosInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_SET_UMTS_QOS_INFO_REQ_STRU   stSetUmtsQosInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetUmtsQosInfoReq, 0x00, sizeof(TAF_PS_SET_UMTS_QOS_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_UMTS_QOS_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_UMTS_QOS_INFO_REQÊ∂àÊÅØ */
     stSetUmtsQosInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetUmtsQosInfoReq.stCtrl.usClientId = usClientId;
     stSetUmtsQosInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetUmtsQosInfoReq.stUmtsQosInfo     = *pstUmtsQosInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_UMTS_QOS_INFO_REQ,
                              &stSetUmtsQosInfoReq,
@@ -324,16 +324,16 @@ VOS_UINT32 TAF_PS_GetUmtsQosInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_GET_UMTS_QOS_INFO_REQ_STRU   stGetUmtsQosInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetUmtsQosInfoReq, 0x00, sizeof(TAF_PS_GET_UMTS_QOS_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_UMTS_QOS_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_UMTS_QOS_INFO_REQÊ∂àÊÅØ */
     stGetUmtsQosInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetUmtsQosInfoReq.stCtrl.usClientId = usClientId;
     stGetUmtsQosInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_UMTS_QOS_INFO_REQ,
                              &stGetUmtsQosInfoReq,
@@ -351,17 +351,17 @@ VOS_UINT32 TAF_PS_SetUmtsQosMinInfo(
     VOS_UINT32                              ulResult;
     TAF_PS_SET_UMTS_QOS_MIN_INFO_REQ_STRU   stSetUmtsQosMinInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetUmtsQosMinInfoReq, 0x00, sizeof(TAF_PS_SET_UMTS_QOS_MIN_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_UMTS_QOS_MIN_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_UMTS_QOS_MIN_INFO_REQÊ∂àÊÅØ */
     stSetUmtsQosMinInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetUmtsQosMinInfoReq.stCtrl.usClientId = usClientId;
     stSetUmtsQosMinInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetUmtsQosMinInfoReq.stUmtsQosMinInfo  = *pstUmtsQosMinInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_UMTS_QOS_MIN_INFO_REQ,
                              &stSetUmtsQosMinInfoReq,
@@ -378,16 +378,16 @@ VOS_UINT32 TAF_PS_GetUmtsQosMinInfo(
     VOS_UINT32                              ulResult;
     TAF_PS_GET_UMTS_QOS_MIN_INFO_REQ_STRU   stGetUmtsQosMinInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetUmtsQosMinInfoReq, 0x00, sizeof(TAF_PS_GET_UMTS_QOS_MIN_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_UMTS_QOS_MIN_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_UMTS_QOS_MIN_INFO_REQÊ∂àÊÅØ */
     stGetUmtsQosMinInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetUmtsQosMinInfoReq.stCtrl.usClientId = usClientId;
     stGetUmtsQosMinInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_UMTS_QOS_MIN_INFO_REQ,
                              &stGetUmtsQosMinInfoReq,
@@ -405,17 +405,17 @@ VOS_UINT32 TAF_PS_GetDynamicUmtsQosInfo(
     VOS_UINT32                                  ulResult;
     TAF_PS_GET_DYNAMIC_UMTS_QOS_INFO_REQ_STRU   stGetDynamicUmtsQosInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetDynamicUmtsQosInfoReq, 0x00, sizeof(TAF_PS_GET_DYNAMIC_UMTS_QOS_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_DYNAMIC_UMTS_QOS_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_DYNAMIC_UMTS_QOS_INFO_REQÊ∂àÊÅØ */
     stGetDynamicUmtsQosInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetDynamicUmtsQosInfoReq.stCtrl.usClientId = usClientId;
     stGetDynamicUmtsQosInfoReq.stCtrl.ucOpId     = ucOpId;
     stGetDynamicUmtsQosInfoReq.stCidListInfo     = *pstCidListInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_DYNAMIC_UMTS_QOS_INFO_REQ,
                              &stGetDynamicUmtsQosInfoReq,
@@ -433,17 +433,17 @@ VOS_UINT32 TAF_PS_SetPdpContextState(
     VOS_UINT32                          ulResult;
     TAF_PS_SET_PDP_STATE_REQ_STRU       stSetPdpStateReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetPdpStateReq, 0x00, sizeof(TAF_PS_SET_PDP_STATE_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_PDP_STATE_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_PDP_STATE_REQÊ∂àÊÅØ */
     stSetPdpStateReq.stCtrl.ulModuleId = ulModuleId;
     stSetPdpStateReq.stCtrl.usClientId = usClientId;
     stSetPdpStateReq.stCtrl.ucOpId     = ucOpId;
     stSetPdpStateReq.stCidListStateInfo   = *pstCidListStateInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_PDP_CONTEXT_STATE_REQ,
                              &stSetPdpStateReq,
@@ -460,16 +460,16 @@ VOS_UINT32 TAF_PS_GetPdpContextState(
     VOS_UINT32                          ulResult;
     TAF_PS_GET_PDP_STATE_REQ_STRU       stGetPdpStateReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetPdpStateReq, 0x00, sizeof(TAF_PS_GET_PDP_STATE_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_PDP_STATE_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_PDP_STATE_REQÊ∂àÊÅØ */
     stGetPdpStateReq.stCtrl.ulModuleId = ulModuleId;
     stGetPdpStateReq.stCtrl.usClientId = usClientId;
     stGetPdpStateReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_PDP_CONTEXT_STATE_REQ,
                              &stGetPdpStateReq,
@@ -487,17 +487,17 @@ VOS_UINT32 TAF_PS_CallModify(
     VOS_UINT32                          ulResult;
     TAF_PS_CALL_MODIFY_REQ_STRU         stCallModifyReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stCallModifyReq, 0x00, sizeof(TAF_PS_CALL_MODIFY_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_CALL_MODIFY_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_CALL_MODIFY_REQÊ∂àÊÅØ */
     stCallModifyReq.stCtrl.ulModuleId = ulModuleId;
     stCallModifyReq.stCtrl.usClientId = usClientId;
     stCallModifyReq.stCtrl.ucOpId     = ucOpId;
     stCallModifyReq.stCidListInfo     = *pstCidListInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_CALL_MODIFY_REQ,
                              &stCallModifyReq,
@@ -515,17 +515,17 @@ VOS_UINT32 TAF_PS_CallAnswer(
     VOS_UINT32                          ulResult;
     TAF_PS_CALL_ANSWER_REQ_STRU         stCallAnswerReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stCallAnswerReq, 0x00, sizeof(TAF_PS_CALL_ANSWER_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_CALL_ANSWER_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_CALL_ANSWER_REQÊ∂àÊÅØ */
     stCallAnswerReq.stCtrl.ulModuleId = ulModuleId;
     stCallAnswerReq.stCtrl.usClientId = usClientId;
     stCallAnswerReq.stCtrl.ucOpId     = ucOpId;
     stCallAnswerReq.stAnsInfo         = *pstAnsInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_CALL_ANSWER_REQ,
                              &stCallAnswerReq,
@@ -542,16 +542,16 @@ VOS_UINT32 TAF_PS_CallHangup(
     VOS_UINT32                          ulResult;
     TAF_PS_CALL_HANGUP_REQ_STRU         stCallHangupReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stCallHangupReq, 0x00, sizeof(TAF_PS_CALL_HANGUP_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_CALL_HANGUP_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_CALL_HANGUP_REQÊ∂àÊÅØ */
     stCallHangupReq.stCtrl.ulModuleId = ulModuleId;
     stCallHangupReq.stCtrl.usClientId = usClientId;
     stCallHangupReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_CALL_HANGUP_REQ,
                              &stCallHangupReq,
@@ -569,17 +569,17 @@ VOS_UINT32 TAF_PS_CallOrig(
     VOS_UINT32                          ulResult;
     TAF_PS_CALL_ORIG_REQ_STRU           stCallOrigReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stCallOrigReq, 0x00, sizeof(TAF_PS_CALL_ORIG_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_CALL_ORIG_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_CALL_ORIG_REQÊ∂àÊÅØ */
     stCallOrigReq.stCtrl.ulModuleId = ulModuleId;
     stCallOrigReq.stCtrl.usClientId = usClientId;
     stCallOrigReq.stCtrl.ucOpId     = ucOpId;
     stCallOrigReq.stDialParaInfo    = *pstDialParaInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_CALL_ORIG_REQ,
                              &stCallOrigReq,
@@ -597,17 +597,17 @@ VOS_UINT32 TAF_PS_CallEnd(
     VOS_UINT32                          ulResult;
     TAF_PS_CALL_END_REQ_STRU            stCallEndReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stCallEndReq, 0x00, sizeof(TAF_PS_CALL_END_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_CALL_END_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_CALL_END_REQÊ∂àÊÅØ */
     stCallEndReq.stCtrl.ulModuleId = ulModuleId;
     stCallEndReq.stCtrl.usClientId = usClientId;
     stCallEndReq.stCtrl.ucOpId     = ucOpId;
     stCallEndReq.ucCid             = ucCid;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_CALL_END_REQ,
                              &stCallEndReq,
@@ -625,17 +625,17 @@ VOS_UINT32 TAF_PS_GetPdpIpAddrInfo(
     VOS_UINT32                              ulResult;
     TAF_PS_GET_PDP_IP_ADDR_INFO_REQ_STRU    stGetPdpIpAddrReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetPdpIpAddrReq, 0x00, sizeof(TAF_PS_GET_PDP_IP_ADDR_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_PDP_IP_ADDR_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_PDP_IP_ADDR_INFO_REQÊ∂àÊÅØ */
     stGetPdpIpAddrReq.stCtrl.ulModuleId = ulModuleId;
     stGetPdpIpAddrReq.stCtrl.usClientId = usClientId;
     stGetPdpIpAddrReq.stCtrl.ucOpId     = ucOpId;
     stGetPdpIpAddrReq.stCidListInfo     = *pstCidListInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_PDP_IP_ADDR_INFO_REQ,
                              &stGetPdpIpAddrReq,
@@ -653,17 +653,17 @@ VOS_UINT32 TAF_PS_SetAnsModeInfo(
     VOS_UINT32                              ulResult;
     TAF_PS_SET_ANSWER_MODE_INFO_REQ_STRU    stSetAnsModeReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetAnsModeReq, 0x00, sizeof(TAF_PS_SET_ANSWER_MODE_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_ANSWER_MODE_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_ANSWER_MODE_INFO_REQÊ∂àÊÅØ */
     stSetAnsModeReq.stCtrl.ulModuleId = ulModuleId;
     stSetAnsModeReq.stCtrl.usClientId = usClientId;
     stSetAnsModeReq.stCtrl.ucOpId     = ucOpId;
     stSetAnsModeReq.ulAnsMode         = ulAnsMode;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_ANSWER_MODE_INFO_REQ,
                              &stSetAnsModeReq,
@@ -680,16 +680,16 @@ VOS_UINT32 TAF_PS_GetAnsModeInfo(
     VOS_UINT32                              ulResult;
     TAF_PS_GET_ANSWER_MODE_INFO_REQ_STRU    stGetAnsModeReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetAnsModeReq, 0x00, sizeof(TAF_PS_GET_ANSWER_MODE_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_ANSWER_MODE_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_ANSWER_MODE_INFO_REQÊ∂àÊÅØ */
     stGetAnsModeReq.stCtrl.ulModuleId   = ulModuleId;
     stGetAnsModeReq.stCtrl.usClientId   = usClientId;
     stGetAnsModeReq.stCtrl.ucOpId       = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_ANSWER_MODE_INFO_REQ,
                              &stGetAnsModeReq,
@@ -707,17 +707,17 @@ VOS_UINT32 TAF_PS_GetDynamicPrimPdpContextInfo(
     VOS_UINT32                                          ulResult;
     TAF_PS_GET_DYNAMIC_PRIM_PDP_CONTEXT_INFO_REQ_STRU   stGetDynamicPrimPdpCtxInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetDynamicPrimPdpCtxInfoReq, 0x00, sizeof(TAF_PS_GET_DYNAMIC_PRIM_PDP_CONTEXT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_DYNAMIC_PRIM_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_DYNAMIC_PRIM_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stGetDynamicPrimPdpCtxInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetDynamicPrimPdpCtxInfoReq.stCtrl.usClientId = usClientId;
     stGetDynamicPrimPdpCtxInfoReq.stCtrl.ucOpId     = ucOpId;
     stGetDynamicPrimPdpCtxInfoReq.ucCid             = ucCid;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_DYNAMIC_PRIM_PDP_CONTEXT_INFO_REQ,
                              &stGetDynamicPrimPdpCtxInfoReq,
@@ -735,17 +735,17 @@ VOS_UINT32 TAF_PS_GetDynamicSecPdpContextInfo(
     VOS_UINT32                                          ulResult;
     TAF_PS_GET_DYNAMIC_SEC_PDP_CONTEXT_INFO_REQ_STRU    stGetDynamicSecPdpCtxInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetDynamicSecPdpCtxInfoReq, 0x00, sizeof(TAF_PS_GET_DYNAMIC_SEC_PDP_CONTEXT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_DYNAMIC_SEC_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_DYNAMIC_SEC_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stGetDynamicSecPdpCtxInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetDynamicSecPdpCtxInfoReq.stCtrl.usClientId = usClientId;
     stGetDynamicSecPdpCtxInfoReq.stCtrl.ucOpId     = ucOpId;
     stGetDynamicSecPdpCtxInfoReq.ucCid             = ucCid;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_DYNAMIC_SEC_PDP_CONTEXT_INFO_REQ,
                              &stGetDynamicSecPdpCtxInfoReq,
@@ -763,17 +763,17 @@ VOS_UINT32 TAF_PS_GetDynamicTftInfo(
     VOS_UINT32                              ulResult;
     TAF_PS_GET_DYNAMIC_TFT_INFO_REQ_STRU    stGetDynamicTftInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetDynamicTftInfoReq, 0x00, sizeof(TAF_PS_GET_DYNAMIC_TFT_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_DYNAMIC_TFT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_DYNAMIC_TFT_INFO_REQÊ∂àÊÅØ */
     stGetDynamicTftInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetDynamicTftInfoReq.stCtrl.usClientId = usClientId;
     stGetDynamicTftInfoReq.stCtrl.ucOpId     = ucOpId;
     stGetDynamicTftInfoReq.ucCid             = ucCid;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_DYNAMIC_TFT_INFO_REQ,
                              &stGetDynamicTftInfoReq,
@@ -791,17 +791,17 @@ VOS_UINT32 TAF_PS_SetEpsQosInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_SET_EPS_QOS_INFO_REQ_STRU    stSetEpsQosInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetEpsQosInfoReq, 0x00, sizeof(TAF_PS_SET_EPS_QOS_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_EPS_QOS_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_EPS_QOS_INFO_REQÊ∂àÊÅØ */
     stSetEpsQosInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetEpsQosInfoReq.stCtrl.usClientId = usClientId;
     stSetEpsQosInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetEpsQosInfoReq.stEpsQosInfo      = *pstEpsQosInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_EPS_QOS_INFO_REQ,
                              &stSetEpsQosInfoReq,
@@ -818,16 +818,16 @@ VOS_UINT32 TAF_PS_GetEpsQosInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_GET_EPS_QOS_INFO_REQ_STRU    stGetEpsQosInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetEpsQosInfoReq, 0x00, sizeof(TAF_PS_GET_EPS_QOS_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_EPS_QOS_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_EPS_QOS_INFO_REQÊ∂àÊÅØ */
     stGetEpsQosInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetEpsQosInfoReq.stCtrl.usClientId = usClientId;
     stGetEpsQosInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_EPS_QOS_INFO_REQ,
                              &stGetEpsQosInfoReq,
@@ -845,17 +845,17 @@ VOS_UINT32 TAF_PS_GetDynamicEpsQosInfo(
     VOS_UINT32                                  ulResult;
     TAF_PS_GET_DYNAMIC_EPS_QOS_INFO_REQ_STRU    stGetDynamicEpsQosInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetDynamicEpsQosInfoReq, 0x00, sizeof(TAF_PS_GET_DYNAMIC_EPS_QOS_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_DYNAMIC_EPS_QOS_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_DYNAMIC_EPS_QOS_INFO_REQÊ∂àÊÅØ */
     stGetDynamicEpsQosInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetDynamicEpsQosInfoReq.stCtrl.usClientId = usClientId;
     stGetDynamicEpsQosInfoReq.stCtrl.ucOpId     = ucOpId;
     stGetDynamicEpsQosInfoReq.ucCid             = ucCid;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_DYNAMIC_EPS_QOS_INFO_REQ,
                              &stGetDynamicEpsQosInfoReq,
@@ -872,16 +872,16 @@ VOS_UINT32 TAF_PS_GetDsFlowInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_GET_DSFLOW_INFO_REQ_STRU     stGetDsFlowInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetDsFlowInfoReq, 0x00, sizeof(TAF_PS_GET_DSFLOW_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_DSFLOW_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_DSFLOW_INFO_REQÊ∂àÊÅØ */
     stGetDsFlowInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetDsFlowInfoReq.stCtrl.usClientId = usClientId;
     stGetDsFlowInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_DSFLOW_INFO_REQ,
                              &stGetDsFlowInfoReq,
@@ -899,17 +899,17 @@ VOS_UINT32 TAF_PS_ClearDsFlowInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_CLEAR_DSFLOW_REQ_STRU        stClearDsFlowReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stClearDsFlowReq, 0x00, sizeof(TAF_PS_CLEAR_DSFLOW_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_CLEAR_DSFLOW_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_CLEAR_DSFLOW_REQÊ∂àÊÅØ */
     stClearDsFlowReq.stCtrl.ulModuleId = ulModuleId;
     stClearDsFlowReq.stCtrl.usClientId = usClientId;
     stClearDsFlowReq.stCtrl.ucOpId     = ucOpId;
     stClearDsFlowReq.stClearConfigInfo = *pstClearConfigInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_CLEAR_DSFLOW_REQ,
                              &stClearDsFlowReq,
@@ -927,17 +927,17 @@ VOS_UINT32 TAF_PS_ConfigDsFlowRpt(
     VOS_UINT32                          ulResult;
     TAF_PS_CONFIG_DSFLOW_RPT_REQ_STRU   stConfigDsFlowRptReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stConfigDsFlowRptReq, 0x00, sizeof(TAF_PS_CONFIG_DSFLOW_RPT_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_CONFIG_DSFLOW_RPT_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_CONFIG_DSFLOW_RPT_REQÊ∂àÊÅØ */
     stConfigDsFlowRptReq.stCtrl.ulModuleId = ulModuleId;
     stConfigDsFlowRptReq.stCtrl.usClientId = usClientId;
     stConfigDsFlowRptReq.stCtrl.ucOpId     = ucOpId;
     stConfigDsFlowRptReq.stReportConfigInfo   = *pstReportConfigInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_CONFIG_DSFLOW_RPT_REQ,
                              &stConfigDsFlowRptReq,
@@ -955,17 +955,17 @@ VOS_UINT32 TAF_PS_SetPdpAuthInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_SET_PDP_AUTH_INFO_REQ_STRU   stSetPdpAuthInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetPdpAuthInfoReq, 0x00, sizeof(TAF_PS_SET_PDP_AUTH_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_PDP_AUTH_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_PDP_AUTH_INFO_REQÊ∂àÊÅØ */
     stSetPdpAuthInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetPdpAuthInfoReq.stCtrl.usClientId = usClientId;
     stSetPdpAuthInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetPdpAuthInfoReq.stPdpAuthInfo     = *pstPdpAuthInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_PDP_AUTH_INFO_REQ,
                              &stSetPdpAuthInfoReq,
@@ -982,16 +982,16 @@ VOS_UINT32 TAF_PS_GetPdpAuthInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_GET_PDP_AUTH_INFO_REQ_STRU   stGetPdpAuthInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetPdpAuthInfoReq, 0x00, sizeof(TAF_PS_GET_PDP_AUTH_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_PDP_AUTH_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_PDP_AUTH_INFO_REQÊ∂àÊÅØ */
     stGetPdpAuthInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetPdpAuthInfoReq.stCtrl.usClientId = usClientId;
     stGetPdpAuthInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_PDP_AUTH_INFO_REQ,
                              &stGetPdpAuthInfoReq,
@@ -1009,17 +1009,17 @@ VOS_UINT32 TAF_PS_SetPdpDnsInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_SET_PDP_DNS_INFO_REQ_STRU    stSetPdpDnsInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetPdpDnsInfoReq, 0x00, sizeof(TAF_PS_SET_PDP_DNS_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_PDP_DNS_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_PDP_DNS_INFO_REQÊ∂àÊÅØ */
     stSetPdpDnsInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetPdpDnsInfoReq.stCtrl.usClientId = usClientId;
     stSetPdpDnsInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetPdpDnsInfoReq.stPdpDnsInfo      = *pstPdpDnsInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_PDP_DNS_INFO_REQ,
                              &stSetPdpDnsInfoReq,
@@ -1036,16 +1036,16 @@ VOS_UINT32 TAF_PS_GetPdpDnsInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_GET_PDP_DNS_INFO_REQ_STRU    stGetPdpDnsInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetPdpDnsInfoReq, 0x00, sizeof(TAF_PS_GET_PDP_DNS_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_PDP_DNS_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_PDP_DNS_INFO_REQÊ∂àÊÅØ */
     stGetPdpDnsInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetPdpDnsInfoReq.stCtrl.usClientId = usClientId;
     stGetPdpDnsInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_PDP_DNS_INFO_REQ,
                              &stGetPdpDnsInfoReq,
@@ -1063,17 +1063,17 @@ VOS_UINT32 TAF_PS_TrigGprsData(
     VOS_UINT32                          ulResult;
     TAF_PS_TRIG_GPRS_DATA_REQ_STRU      stTrigGprsDataReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stTrigGprsDataReq, 0x00, sizeof(TAF_PS_TRIG_GPRS_DATA_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_TRIG_GPRS_DATA_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_TRIG_GPRS_DATA_REQÊ∂àÊÅØ */
     stTrigGprsDataReq.stCtrl.ulModuleId = ulModuleId;
     stTrigGprsDataReq.stCtrl.usClientId = usClientId;
     stTrigGprsDataReq.stCtrl.ucOpId     = ucOpId;
     stTrigGprsDataReq.stGprsDataInfo    = *pstGprsDataInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_TRIG_GPRS_DATA_REQ,
                              &stTrigGprsDataReq,
@@ -1091,17 +1091,17 @@ VOS_UINT32 TAF_PS_ConfigNbnsFunction(
     VOS_UINT32                              ulResult;
     TAF_PS_CONFIG_NBNS_FUNCTION_REQ_STRU    stConfigNbnsFunReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stConfigNbnsFunReq, 0x00, sizeof(TAF_PS_CONFIG_NBNS_FUNCTION_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_CONFIG_NBNS_FUNCTION_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_CONFIG_NBNS_FUNCTION_REQÊ∂àÊÅØ */
     stConfigNbnsFunReq.stCtrl.ulModuleId = ulModuleId;
     stConfigNbnsFunReq.stCtrl.usClientId = usClientId;
     stConfigNbnsFunReq.stCtrl.ucOpId     = ucOpId;
     stConfigNbnsFunReq.ulEnabled         = ulEnabled;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_CONFIG_NBNS_FUNCTION_REQ,
                              &stConfigNbnsFunReq,
@@ -1119,17 +1119,17 @@ VOS_UINT32 TAF_PS_SetAuthDataInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_SET_AUTHDATA_INFO_REQ_STRU   stSetAuthDataInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetAuthDataInfoReq, 0x00, sizeof(TAF_PS_SET_AUTHDATA_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_AUTHDATA_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_AUTHDATA_INFO_REQÊ∂àÊÅØ */
     stSetAuthDataInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetAuthDataInfoReq.stCtrl.usClientId = usClientId;
     stSetAuthDataInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetAuthDataInfoReq.stAuthDataInfo    = *pstAuthDataInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_AUTHDATA_INFO_REQ,
                              &stSetAuthDataInfoReq,
@@ -1146,16 +1146,16 @@ VOS_UINT32 TAF_PS_GetAuthDataInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_GET_AUTHDATA_INFO_REQ_STRU   stGetAuthDataInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetAuthDataInfoReq, 0x00, sizeof(TAF_PS_GET_AUTHDATA_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_AUTHDATA_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_AUTHDATA_INFO_REQÊ∂àÊÅØ */
     stGetAuthDataInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetAuthDataInfoReq.stCtrl.usClientId = usClientId;
     stGetAuthDataInfoReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_AUTHDATA_INFO_REQ,
                              &stGetAuthDataInfoReq,
@@ -1173,17 +1173,17 @@ VOS_UINT32 TAF_PS_GetGprsActiveType(
     VOS_UINT32                              ulResult;
     TAF_PS_GET_D_GPRS_ACTIVE_TYPE_REQ_STRU  stGetGprsActiveTypeReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetGprsActiveTypeReq, 0x00, sizeof(TAF_PS_GET_D_GPRS_ACTIVE_TYPE_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_AUTHDATA_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_AUTHDATA_INFO_REQÊ∂àÊÅØ */
     stGetGprsActiveTypeReq.stCtrl.ulModuleId = ulModuleId;
     stGetGprsActiveTypeReq.stCtrl.usClientId = usClientId;
     stGetGprsActiveTypeReq.stCtrl.ucOpId     = ucOpId;
     stGetGprsActiveTypeReq.stAtdPara         = *pstAtdPara;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_D_GPRS_ACTIVE_TYPE_REQ,
                              &stGetGprsActiveTypeReq,
@@ -1202,11 +1202,11 @@ VOS_UINT32 TAF_PS_PppDialOrig(
     VOS_UINT32                          ulResult;
     TAF_PS_PPP_DIAL_ORIG_REQ_STRU       stPppDialOrigReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stPppDialOrigReq, 0x00, sizeof(TAF_PS_PPP_DIAL_ORIG_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_PPP_DIAL_ORIG_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_PPP_DIAL_ORIG_REQÊ∂àÊÅØ */
     stPppDialOrigReq.stCtrl.ulModuleId          = ulModuleId;
     stPppDialOrigReq.stCtrl.usClientId          = usClientId;
     stPppDialOrigReq.stCtrl.ucOpId              = ucOpId;
@@ -1218,7 +1218,7 @@ VOS_UINT32 TAF_PS_PppDialOrig(
                pstPppReqConfigInfo,
                sizeof(TAF_PPP_REQ_CONFIG_INFO_STRU));
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_PPP_DIAL_ORIG_REQ,
                              &stPppDialOrigReq,
@@ -1239,17 +1239,17 @@ VOS_UINT32 TAF_PS_GetLteCsInfo(
     VOS_UINT32                                  ulResult;
     TAF_PS_LTECS_REQ_STRU   stGetLteCsInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetLteCsInfoReq, 0x00, sizeof(TAF_PS_LTECS_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_PRIM_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_PRIM_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stGetLteCsInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetLteCsInfoReq.stCtrl.usClientId = usClientId;
     stGetLteCsInfoReq.stCtrl.ucOpId     = ucOpId;
 
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_LTE_CS_REQ,
                              &stGetLteCsInfoReq,
@@ -1269,17 +1269,17 @@ VOS_UINT32 TAF_PS_GetCemodeInfo(
 
 
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stGetCemodeInfoReq, 0x00, sizeof(TAF_PS_CEMODE_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_PRIM_PDP_CONTEXT_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_PRIM_PDP_CONTEXT_INFO_REQÊ∂àÊÅØ */
     stGetCemodeInfoReq.stCtrl.ulModuleId = ulModuleId;
     stGetCemodeInfoReq.stCtrl.usClientId = usClientId;
     stGetCemodeInfoReq.stCtrl.ucOpId     = ucOpId;
 
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_CEMODE_REQ,
                              &stGetCemodeInfoReq,
@@ -1298,17 +1298,17 @@ VOS_UINT32 TAF_PS_SetPdpProfInfo(
     VOS_UINT32                          ulResult;
     TAF_PS_SET_PROFILE_INFO_REQ_STRU    stSetPdpProfInfoReq;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetPdpProfInfoReq, 0x00, sizeof(TAF_PS_SET_PROFILE_INFO_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_AUTHDATA_INFO_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_AUTHDATA_INFO_REQÊ∂àÊÅØ */
     stSetPdpProfInfoReq.stCtrl.ulModuleId = ulModuleId;
     stSetPdpProfInfoReq.stCtrl.usClientId = usClientId;
     stSetPdpProfInfoReq.stCtrl.ucOpId     = ucOpId;
     stSetPdpProfInfoReq.stPdpProfInfo     = *stPdpProfInfo;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_PDPROFMOD_INFO_REQ,
                              &stSetPdpProfInfoReq,
@@ -1333,15 +1333,15 @@ VOS_UINT32 TAF_PS_GetCidSdfParaInfo(
     ulResult = VOS_ERR;
     PS_MEM_SET(&stSdfInfoReq, 0x00, sizeof(TAF_PS_SDF_INFO_REQ_STRU));
 
-    /* »Áπ˚≥ˆ≤ŒŒ™ø’£¨‘Ú≤…”√“Ï≤Ω∑Ω ΩªÒ»°SDF–≈œ¢ */
+    /* Â¶ÇÊûúÂá∫ÂèÇ‰∏∫Á©∫ÔºåÂàôÈááÁî®ÂºÇÊ≠•ÊñπÂºèËé∑ÂèñSDF‰ø°ÊÅØ */
     if (VOS_NULL_PTR == pstSdfQueryInfo)
     {
-        /* ππ‘ÏID_MSG_TAF_GET_CID_SDF_REQœ˚œ¢ */
+        /* ÊûÑÈÄ†ID_MSG_TAF_GET_CID_SDF_REQÊ∂àÊÅØ */
         stSdfInfoReq.stCtrl.ulModuleId = ulModuleId;
         stSdfInfoReq.stCtrl.usClientId = usClientId;
         stSdfInfoReq.stCtrl.ucOpId     = ucOpId;
 
-        /* ∑¢ÀÕœ˚œ¢ */
+        /* ÂèëÈÄÅÊ∂àÊÅØ */
         ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                                  ID_MSG_TAF_PS_GET_CID_SDF_REQ,
                                  &stSdfInfoReq,
@@ -1351,7 +1351,7 @@ VOS_UINT32 TAF_PS_GetCidSdfParaInfo(
     }
 
     PS_MEM_SET(pstSdfQueryInfo, 0, sizeof(TAF_SDF_PARA_QUERY_INFO_STRU));
-/* Õ¨≤Ω∑Ω Ωƒø«∞Ωˆ÷ß≥÷C∫À */
+/* ÂêåÊ≠•ÊñπÂºèÁõÆÂâç‰ªÖÊîØÊåÅCÊ†∏ */
 #if (OSA_CPU_CCPU == VOS_OSA_CPU)
     for (ucNum = 1; ucNum <= TAF_MAX_CID_NV; ucNum++)
     {
@@ -1363,7 +1363,7 @@ VOS_UINT32 TAF_PS_GetCidSdfParaInfo(
     }
     ulResult = VOS_OK;
 
-    /* Õ¨≤Ωœ˚œ¢π¥∞¸ */
+    /* ÂêåÊ≠•Ê∂àÊÅØÂãæÂåÖ */
     TAF_APS_TraceSyncMsg(ID_MSG_TAF_PS_GET_CID_SDF_REQ,
                          (VOS_UINT8 *)pstSdfQueryInfo,
                          sizeof(TAF_SDF_PARA_QUERY_INFO_STRU));
@@ -1384,20 +1384,20 @@ VOS_UINT32 TAF_PS_GetUnusedCid(
 
     if (VOS_NULL_PTR == puCid)
     {
-        /* ƒø«∞‘›≤ª÷ß≥÷“Ï≤Ω∑Ω Ω */
+        /* ÁõÆÂâçÊöÇ‰∏çÊîØÊåÅÂºÇÊ≠•ÊñπÂºè */
         return VOS_ERR;
     }
 
-/* Õ¨≤Ω∑Ω Ωƒø«∞Ωˆ÷ß≥÷C∫À */
+/* ÂêåÊ≠•ÊñπÂºèÁõÆÂâç‰ªÖÊîØÊåÅCÊ†∏ */
 #if (OSA_CPU_CCPU == VOS_OSA_CPU)
-    /* –Ë’“ø…”√”⁄≤¶∫≈µƒCID */
+    /* ÈúÄÊâæÂèØÁî®‰∫éÊã®Âè∑ÁöÑCID */
     *puCid = TAF_APS_FindCidForDial(ulModuleId);
     if ( TAF_INVALID_CID == *puCid )
     {
         ulResult = VOS_ERR;
     }
 
-    /* Õ¨≤Ωœ˚œ¢π¥∞¸ */
+    /* ÂêåÊ≠•Ê∂àÊÅØÂãæÂåÖ */
     TAF_APS_TraceSyncMsg(ID_MSG_TAF_PS_GET_UNUSED_CID_REQ,
                          puCid,
                          sizeof(VOS_UINT8));
@@ -1418,10 +1418,10 @@ VOS_UINT32 TAF_PS_GetDynamicDnsInfo(
 
     TAF_PS_GET_NEGOTIATION_DNS_REQ_STRU stNegoDns;
 
-    /* ≥ı ºªØ */
+    /* ÂàùÂßãÂåñ */
     PS_MEM_SET(&stNegoDns, 0x00, sizeof(TAF_PS_GET_NEGOTIATION_DNS_REQ_STRU));
 
-    /* ÃÓ≥‰œ˚œ¢Ω·ππ */
+    /* Â°´ÂÖÖÊ∂àÊÅØÁªìÊûÑ */
     stNegoDns.stCtrl.ulModuleId = ulModuleId;
     stNegoDns.stCtrl.usClientId = usClientId;
     stNegoDns.stCtrl.ucOpId     = ucOpId;
@@ -1448,7 +1448,7 @@ VOS_UINT32 TAF_PS_SetApDsFlowRptCfg(
 
     PS_MEM_SET(&stSetRptCfgReq, 0x00, sizeof(TAF_PS_SET_APDSFLOW_RPT_CFG_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_APDSFLOW_RPT_CFG_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_APDSFLOW_RPT_CFG_REQÊ∂àÊÅØ */
     stSetRptCfgReq.stCtrl.ulModuleId = ulModuleId;
     stSetRptCfgReq.stCtrl.usClientId = usClientId;
     stSetRptCfgReq.stCtrl.ucOpId     = ucOpId;
@@ -1457,7 +1457,7 @@ VOS_UINT32 TAF_PS_SetApDsFlowRptCfg(
                pstRptCfg,
                sizeof(TAF_APDSFLOW_RPT_CFG_STRU));
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_APDSFLOW_RPT_CFG_REQ,
                              &stSetRptCfgReq,
@@ -1478,12 +1478,12 @@ VOS_UINT32 TAF_PS_GetApDsFlowRptCfg(
 
     PS_MEM_SET(&stGetRptCfgReq, 0x00, sizeof(TAF_PS_GET_APDSFLOW_RPT_CFG_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_APDSFLOW_RPT_CFG_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_APDSFLOW_RPT_CFG_REQÊ∂àÊÅØ */
     stGetRptCfgReq.stCtrl.ulModuleId = ulModuleId;
     stGetRptCfgReq.stCtrl.usClientId = usClientId;
     stGetRptCfgReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_APDSFLOW_RPT_CFG_REQ,
                              &stGetRptCfgReq,
@@ -1505,7 +1505,7 @@ VOS_UINT32 TAF_PS_SetDsFlowNvWriteCfg(
 
     PS_MEM_SET(&stSetWriteNvCfgReq, 0x00, sizeof(TAF_PS_SET_DSFLOW_NV_WRITE_CFG_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_SET_DSFLOW_NV_WRITE_CFG_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_SET_DSFLOW_NV_WRITE_CFG_REQÊ∂àÊÅØ */
     stSetWriteNvCfgReq.stCtrl.ulModuleId = ulModuleId;
     stSetWriteNvCfgReq.stCtrl.usClientId = usClientId;
     stSetWriteNvCfgReq.stCtrl.ucOpId     = ucOpId;
@@ -1514,7 +1514,7 @@ VOS_UINT32 TAF_PS_SetDsFlowNvWriteCfg(
                pstNvWriteCfg,
                sizeof(TAF_DSFLOW_NV_WRITE_CFG_STRU));
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_SET_DSFLOW_NV_WRITE_CFG_REQ,
                              &stSetWriteNvCfgReq,
@@ -1535,12 +1535,12 @@ VOS_UINT32 TAF_PS_GetDsFlowNvWriteCfg(
 
     PS_MEM_SET(&stGetNvWriteCfgReq, 0x00, sizeof(TAF_PS_GET_DSFLOW_NV_WRITE_CFG_REQ_STRU));
 
-    /* ππ‘ÏID_MSG_TAF_PS_GET_DSFLOW_WRITE_NV_CFG_REQœ˚œ¢ */
+    /* ÊûÑÈÄ†ID_MSG_TAF_PS_GET_DSFLOW_WRITE_NV_CFG_REQÊ∂àÊÅØ */
     stGetNvWriteCfgReq.stCtrl.ulModuleId = ulModuleId;
     stGetNvWriteCfgReq.stCtrl.usClientId = usClientId;
     stGetNvWriteCfgReq.stCtrl.ucOpId     = ucOpId;
 
-    /* ∑¢ÀÕœ˚œ¢ */
+    /* ÂèëÈÄÅÊ∂àÊÅØ */
     ulResult = TAF_PS_SndMsg(I0_WUEPS_PID_TAF,
                              ID_MSG_TAF_PS_GET_DSFLOW_NV_WRITE_CFG_REQ,
                              &stGetNvWriteCfgReq,

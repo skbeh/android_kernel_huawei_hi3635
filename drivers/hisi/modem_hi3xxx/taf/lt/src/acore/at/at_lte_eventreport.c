@@ -2,29 +2,29 @@
  */
 /*
  */
-/*                  °æÈ¨ËùÓÐ (C), 1998-2009, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+/*                  ç‰ˆæƒæ‰€æœ‰ (C), 1998-2009, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
  */
 /*
  */
 /******************************************************************************
  */
-/*  ÎÄ ¼þ Ãû   : at_lte_eventreport.c
+/*  æ–‡ ä»¶ å   : at_lte_eventreport.c
  */
-/*  °æ ±¾ ºÅ   : V1.0
+/*  ç‰ˆ æœ¬ å·   : V1.0
  */
-/*  Éú³ÉÈÕÆÚ   : 2011-10-22
+/*  ç”Ÿæˆæ—¥æœŸ   : 2011-10-22
  */
-/*  ¹¦ÄÜÃèÊö   : LTEÃüÁîÉÏ±¨´¦Àí
+/*  åŠŸèƒ½æè¿°   : LTEå‘½ä»¤ä¸ŠæŠ¥å¤„ç†
  */
 /*
  */
-/*  º¯ÊýÁÐ±í   : TODO: ...
+/*  å‡½æ•°åˆ—è¡¨   : TODO: ...
  */
-/*  ÐÞ¸ÄÀúÊ·   :
+/*  ä¿®æ”¹åŽ†å²   :
  */
-/*  1.ÈÕ    ÆÚ : 2011-10-22
+/*  1.æ—¥    æœŸ : 2011-10-22
  */
-/*    ÐÞ¸ÄÄÚÈÝ : ´´½¨ÎÄ¼þ
+/*    ä¿®æ”¹å†…å®¹ : åˆ›å»ºæ–‡ä»¶
  */
 /*
  */
@@ -41,7 +41,7 @@
 //#include "AtDataProc.h"
 
 
-#include "AtParse.h"/*Îª°üº¬MnClient.h
+#include "AtParse.h"/*ä¸ºåŒ…å«MnClient.h
  */
 #include "gen_common.h"
 #include "at_common.h"
@@ -53,7 +53,7 @@
   #endif
 #endif
 
-/*lint -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -e767 åŽŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_AT_LTE_EVENTREPORT_C
 /*lint +e767 */
 
@@ -61,27 +61,27 @@
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: atCsqInfoIndProc
+/* å‡½æ•°åç§°: atCsqInfoIndProc
  */
-/* ¹¦ÄÜÃèÊö: ´¦ÀíCSQÖ÷¶¯ÉÏ±¨ÐÅÏ¢
- */
-/*
- */
-/* ²ÎÊýËµÃ÷: pMsgBlock£¬MSP MSGÏûÏ¢½á¹¹
+/* åŠŸèƒ½æè¿°: å¤„ç†CSQä¸»åŠ¨ä¸ŠæŠ¥ä¿¡æ¯
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* å‚æ•°è¯´æ˜Ž: pMsgBlockï¼ŒMSP MSGæ¶ˆæ¯ç»“æž„
  */
 /*
  */
-/* µ÷ÓÃÒªÇó: TODO: ...
+/* è¿” å›ž å€¼:
  */
-/* µ÷ÓÃ¾ÙÀý: TODO: ...
+/*
+ */
+/* è°ƒç”¨è¦æ±‚: TODO: ...
+ */
+/* è°ƒç”¨ä¸¾ä¾‹: TODO: ...
  */
 /******************************************************************************
  */
-/*°´ÕÕV1ÖÐµÄ#define MSP_HAVE_AT_RSSI_REPORTÐÞ¸ÄµÄ
+/*æŒ‰ç…§V1ä¸­çš„#define MSP_HAVE_AT_RSSI_REPORTä¿®æ”¹çš„
  */
 VOS_UINT32 atCsqInfoIndProc(VOS_VOID *pMsgBlock)
 {
@@ -133,7 +133,7 @@ VOS_UINT8 AT_CalculateLTEAntennaLevel(
 {
 	VOS_INT16 usLevel = 0;
        g_ATE5Order =4;
-	/*ÌìÏß¸ñÊ½ÏÔÊ¾¹æÔò
+	/*å¤©çº¿æ ¼å¼æ˜¾ç¤ºè§„åˆ™
  */
 	if ( usRsrp <= g_stRsrpCfg.ssValue[3])
 	{
@@ -161,7 +161,7 @@ VOS_UINT8 AT_GetSmoothLTEAntennaLevel(
 {
     VOS_UINT8                               i;
     g_ATE5Order =5;
-    /* ¶ªÍøÊ± Á¢¼´¸üÐÂ  */
+    /* ä¸¢ç½‘æ—¶ ç«‹å³æ›´æ–°  */
     if ( AT_CMD_ANTENNA_LEVEL_0 == enLevel )
     {
         g_ulAntennaLevel = enLevel;
@@ -170,7 +170,7 @@ VOS_UINT8 AT_GetSmoothLTEAntennaLevel(
         return g_ulAntennaLevel;
     }
 
-    /* ¶ªÍøµ½ÓÐ·þÎñ×´Ì¬  Á¢¼´¸üÐÂ  */
+    /* ä¸¢ç½‘åˆ°æœ‰æœåŠ¡çŠ¶æ€  ç«‹å³æ›´æ–°  */
     if ( AT_CMD_ANTENNA_LEVEL_0 == g_ulAntennaLevel )
     {
         g_ulAntennaLevel = enLevel;
@@ -180,7 +180,7 @@ VOS_UINT8 AT_GetSmoothLTEAntennaLevel(
         return g_ulAntennaLevel;
     }
 
-    /* ÓëÉÏ´ÎµÄÐÅºÅ¸ñÊý±È½Ï, ±ä»¯±È½Ï´ó(³¬¹ý1¸ñ)¾ÍÁ¢¼´¸üÐÂ */
+    /* ä¸Žä¸Šæ¬¡çš„ä¿¡å·æ ¼æ•°æ¯”è¾ƒ, å˜åŒ–æ¯”è¾ƒå¤§(è¶…è¿‡1æ ¼)å°±ç«‹å³æ›´æ–° */
     if ( enLevel > (g_ulAntennaLevel + 1) )
     {
         g_ulAntennaLevel = enLevel;
@@ -202,7 +202,7 @@ VOS_UINT8 AT_GetSmoothLTEAntennaLevel(
       /* Do nothing... */
     }
 
-    /* ÏÈ½øÏÈ³ö´æ×î½ü3´ÎµÄ²éÑ¯½á¹û */
+    /* å…ˆè¿›å…ˆå‡ºå­˜æœ€è¿‘3æ¬¡çš„æŸ¥è¯¢ç»“æžœ */
     for ( i=0; i<AT_ANTENNA_LEVEL_NUM-1; i++ )
     {
          g_ATAntennaLevel[i] = g_ATAntennaLevel[i+1];
@@ -210,7 +210,7 @@ VOS_UINT8 AT_GetSmoothLTEAntennaLevel(
     g_ATAntennaLevel[i] = enLevel;
 
 
-    /* ¸ñÊý²¨¶¯Ôò²»¸üÐÂ£¬ÒÔ´ïµ½Æ½»¬µÄÐ§¹û */
+    /* æ ¼æ•°æ³¢åŠ¨åˆ™ä¸æ›´æ–°ï¼Œä»¥è¾¾åˆ°å¹³æ»‘çš„æ•ˆæžœ */
     for ( i=0; i<AT_ANTENNA_LEVEL_NUM-1; i++ )
     {
         if (g_ATAntennaLevel[i]  != g_ATAntennaLevel[i+1] )
@@ -219,7 +219,7 @@ VOS_UINT8 AT_GetSmoothLTEAntennaLevel(
         }
     }
 
-    /* ÐÅºÅ¸ñÊýÎÈ¶¨ÁË AT_ANTENNA_LEVEL_MAX_NUM ´ÎÊ±²Å×ö¸üÐÂ */
+    /* ä¿¡å·æ ¼æ•°ç¨³å®šäº† AT_ANTENNA_LEVEL_MAX_NUM æ¬¡æ—¶æ‰åšæ›´æ–° */
     g_ulAntennaLevel = enLevel;
 	return g_ulAntennaLevel;
 }
@@ -241,7 +241,7 @@ VOS_UINT32 at_CsqInfoProc(VOS_VOID *pMsgBlock,AT_ANLEVEL_INFO_CNF_STRU* pAnlevel
     pAnlevelAnqueryInfo->usClientId= pCsqInfo->usClientId;
     pAnlevelAnqueryInfo->ulErrorCode = pCsqInfo->ulErrorCode;
 
-    /*RSSI ¸ñÊ½ÏÔÊ¾¹æÔò
+    /*RSSI æ ¼å¼æ˜¾ç¤ºè§„åˆ™
  */
     if(AT_RSSI_UNKNOWN == pCsqInfo->sRssi)
     {
@@ -260,22 +260,22 @@ VOS_UINT32 at_CsqInfoProc(VOS_VOID *pMsgBlock,AT_ANLEVEL_INFO_CNF_STRU* pAnlevel
         pAnlevelAnqueryInfo->sRssi = ( VOS_UINT16)((pCsqInfo->sRssi - AT_RSSI_LOW) / 2);
     }
 
-	/* ÉÏ±¨Êý¾Ý×ª»»:½« Rscp¡¢EcioÏÔÊ¾Îª·Ç¸ºÖµ£¬ÈôRscp¡¢EcioÎª-145£¬-32£¬»òÕßrssiÎª99£¬
-       Ôò×ª»»Îª0 */
+	/* ä¸ŠæŠ¥æ•°æ®è½¬æ¢:å°† Rscpã€Ecioæ˜¾ç¤ºä¸ºéžè´Ÿå€¼ï¼Œè‹¥Rscpã€Ecioä¸º-145ï¼Œ-32ï¼Œæˆ–è€…rssiä¸º99ï¼Œ
+       åˆ™è½¬æ¢ä¸º0 */
     if ( (AT_RSSI_UNKNOWN  == pCsqInfo->sRsrp)|| (AT_RSSI_UNKNOWN == pCsqInfo->sRssi) )
     {
-        /* ¶ªÍø·µ»Ø0, ¶ÔÓ¦Ó¦ÓÃµÄÈ¦Íâ */
+        /* ä¸¢ç½‘è¿”å›ž0, å¯¹åº”åº”ç”¨çš„åœˆå¤– */
         enCurAntennaLevel       = AT_CMD_ANTENNA_LEVEL_0;
     }
     else
     {
-    	 /* È¡¾ø¶ÔÖµ */
+    	 /* å–ç»å¯¹å€¼ */
     	usRsrp                    = ( VOS_UINT16)(-(pCsqInfo->sRsrp));
-	    /* µ÷ÓÃº¯ÊýAT_CalculateAntennaLevelÀ´¸ù¾ÝD25Ëã·¨¼ÆËã³öÐÅºÅ¸ñÊý */
+	    /* è°ƒç”¨å‡½æ•°AT_CalculateAntennaLevelæ¥æ ¹æ®D25ç®—æ³•è®¡ç®—å‡ºä¿¡å·æ ¼æ•° */
         enCurAntennaLevel = AT_CalculateLTEAntennaLevel((VOS_INT16)usRsrp);
     }
 
-    /* ÐÅºÅ´ÅÖÍ´¦Àí */
+    /* ä¿¡å·ç£æ»žå¤„ç† */
     pAnlevelAnqueryInfo->sLevel = AT_GetSmoothLTEAntennaLevel( enCurAntennaLevel );
 
 	pAnlevelAnqueryInfo->sRsrp = pCsqInfo->sRsrp;
@@ -356,28 +356,28 @@ VOS_UINT32 atSetAnlevelCnfSameProc(VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: atSetCsqCnfProc
+/* å‡½æ•°åç§°: atSetCsqCnfProc
  */
-/* ¹¦ÄÜÃèÊö: ´¦ÀíSET CSQÃüÁî»Ø¸´ÐÅÏ¢
- */
-/*
- */
-/* ²ÎÊýËµÃ÷: pMsgBlock£¬MSP MSGÏûÏ¢½á¹¹
+/* åŠŸèƒ½æè¿°: å¤„ç†SET CSQå‘½ä»¤å›žå¤ä¿¡æ¯
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* å‚æ•°è¯´æ˜Ž: pMsgBlockï¼ŒMSP MSGæ¶ˆæ¯ç»“æž„
  */
 /*
  */
-/* µ÷ÓÃÒªÇó: TODO: ...
+/* è¿” å›ž å€¼:
  */
-/* µ÷ÓÃ¾ÙÀý: TODO: ...
+/*
+ */
+/* è°ƒç”¨è¦æ±‚: TODO: ...
+ */
+/* è°ƒç”¨ä¸¾ä¾‹: TODO: ...
  */
 /******************************************************************************
  */
 
-/*Õâ¸öº¯Êý¸úATÃüÁî±íÖÐµÄº¯ÊýÃû×ÖÏàÍ¬£¬ÊÇ²»ÊÇÒªÖØÐÂ¸ÄÃû×Ö
+/*è¿™ä¸ªå‡½æ•°è·ŸATå‘½ä»¤è¡¨ä¸­çš„å‡½æ•°åå­—ç›¸åŒï¼Œæ˜¯ä¸æ˜¯è¦é‡æ–°æ”¹åå­—
  */
 VOS_UINT32 atSetCsqCnfSameProc(VOS_VOID *pMsgBlock)
 {
@@ -456,7 +456,7 @@ VOS_UINT32 atCerssiInfoCnfProc(VOS_VOID *pMsgBlock)
 
     pCerssi = (L4A_CSQ_INFO_CNF_STRU*)pMsgBlock;
 
-    /* Í¨¹ýclientid»ñÈ¡index */
+    /* é€šè¿‡clientidèŽ·å–index */
     /* coverity[example_checked] */
     if (AT_FAILURE == At_ClientIdToUserId(pCerssi->usClientId,&ucIndex))
     {
@@ -484,23 +484,23 @@ VOS_UINT32 atCerssiInfoCnfProc(VOS_VOID *pMsgBlock)
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: atSysModeIndProc
+/* å‡½æ•°åç§°: atSysModeIndProc
  */
-/* ¹¦ÄÜÃèÊö: ´¦ÀíSYSMODEÖ÷¶¯ÉÏ±¨ÐÅÏ¢
- */
-/*
- */
-/* ²ÎÊýËµÃ÷: pMsgBlock£¬MSP MSGÏûÏ¢½á¹¹
+/* åŠŸèƒ½æè¿°: å¤„ç†SYSMODEä¸»åŠ¨ä¸ŠæŠ¥ä¿¡æ¯
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* å‚æ•°è¯´æ˜Ž: pMsgBlockï¼ŒMSP MSGæ¶ˆæ¯ç»“æž„
  */
 /*
  */
-/* µ÷ÓÃÒªÇó: TODO: ...
+/* è¿” å›ž å€¼:
  */
-/* µ÷ÓÃ¾ÙÀý: TODO: ...
+/*
+ */
+/* è°ƒç”¨è¦æ±‚: TODO: ...
+ */
+/* è°ƒç”¨ä¸¾ä¾‹: TODO: ...
  */
 /******************************************************************************
  */
@@ -550,15 +550,15 @@ VOS_UINT32 atLwclashCnfProc(VOS_VOID *pMsgBlock)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : atLacellCnfProc
- ¹¦ÄÜÃèÊö  : ^LCACELLÃüÁîÓ¦´ð´¦Àí
- ÊäÈë²ÎÊý  : VOS_VOID *pMsgBlock
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : atLacellCnfProc
+ åŠŸèƒ½æè¿°  : ^LCACELLå‘½ä»¤åº”ç­”å¤„ç†
+ è¾“å…¥å‚æ•°  : VOS_VOID *pMsgBlock
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·  :
+ ä¿®æ”¹åŽ†å²  :
 *****************************************************************************/
 VOS_UINT32 atLcacellCnfProc(VOS_VOID *pMsgBlock)
 {
@@ -706,7 +706,7 @@ VOS_UINT32 atQryCellInfoCnfProc(VOS_VOID *pMsgBlock)
     }
     else
     {
-        /*Í¬Æµ*/
+        /*åŒé¢‘*/
         for( i =0; i< pstcnf->stNcellListInfo.stIntraFreqNcellList.ulNCellNumber ;i++)
         {
             g_ulCellNum ++;
@@ -720,7 +720,7 @@ VOS_UINT32 atQryCellInfoCnfProc(VOS_VOID *pMsgBlock)
                 pstcnf->stNcellListInfo.stIntraFreqNcellList.stCellMeasInfo[i].stMeasRslt.sRssi,
                 gaucAtCrLf);
         }
-         /*ÒìÆµ*/
+         /*å¼‚é¢‘*/
         for( i =0; i< pstcnf->stNcellListInfo.stInterFreqNcellList.ulNCellNumber ;i++)
         {
             g_ulCellNum ++;
@@ -734,7 +734,7 @@ VOS_UINT32 atQryCellInfoCnfProc(VOS_VOID *pMsgBlock)
                 pstcnf->stNcellListInfo.stInterFreqNcellList.stCellMeasInfo[i].stMeasRslt.sRssi,
                 gaucAtCrLf);
         }
-        /*WÒìÆµ*/
+        /*Wå¼‚é¢‘*/
         for( i =0; i< pstcnf->stNcellListInfo.stInterRATUMTSNcellList.ulNCellNumber ;i++)
         {
             g_ulCellNum ++;
@@ -748,7 +748,7 @@ VOS_UINT32 atQryCellInfoCnfProc(VOS_VOID *pMsgBlock)
                 pstcnf->stNcellListInfo.stInterRATUMTSNcellList.stUMTSNcellList[i].sCpichRscp,
                 gaucAtCrLf);
         }
-        /*GÒìÆµ*/
+        /*Gå¼‚é¢‘*/
         for( i =0; i< pstcnf->stNcellListInfo.stInterRATGeranNcellList.ulNCellNumber ;i++)
         {
             g_ulCellNum ++;
@@ -801,15 +801,15 @@ VOS_VOID atLwclashInd(VOS_VOID *pMsgBlock)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : atLcacellInd
- ¹¦ÄÜÃèÊö  : ^LCACELLURCÃüÁîÖ÷¶¯ÉÏ±¨´¦Àí
- ÊäÈë²ÎÊý  : VOS_VOID *pMsgBlock
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : atLcacellInd
+ åŠŸèƒ½æè¿°  : ^LCACELLURCå‘½ä»¤ä¸»åŠ¨ä¸ŠæŠ¥å¤„ç†
+ è¾“å…¥å‚æ•°  : VOS_VOID *pMsgBlock
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·  :
+ ä¿®æ”¹åŽ†å²  :
 
 *****************************************************************************/
 VOS_VOID atLcacellInd(VOS_VOID *pMsgBlock)
@@ -820,7 +820,7 @@ VOS_VOID atLcacellInd(VOS_VOID *pMsgBlock)
 
     pstLcacell = (L4A_READ_LCACELL_IND_STRU *)pMsgBlock;
 
-    /* ´ËÃüÁîÍ·Î²Ìí¼Ó\r\n */
+    /* æ­¤å‘½ä»¤å¤´å°¾æ·»åŠ \r\n */
     usLength += (VOS_UINT16)At_sprintf( AT_CMD_MAX_LEN,
                 (VOS_CHAR *)pgucLAtSndCodeAddr,
                 (VOS_CHAR *)pgucLAtSndCodeAddr+usLength,
@@ -889,23 +889,23 @@ static const AT_L4A_MSG_FUN_TABLE_STRU g_astAtL4aIndMsgFunTable[] = {
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: atL4aGetMsgFun
+/* å‡½æ•°åç§°: atL4aGetMsgFun
  */
-/* ¹¦ÄÜÃèÊö: »ñÈ¡´¦ÀíL4A»Ø¸´ÏûÏ¢µÄº¯Êý
- */
-/*
- */
-/* ²ÎÊýËµÃ÷: ulMsgId£¬ÏûÏ¢ID
+/* åŠŸèƒ½æè¿°: èŽ·å–å¤„ç†L4Aå›žå¤æ¶ˆæ¯çš„å‡½æ•°
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* å‚æ•°è¯´æ˜Ž: ulMsgIdï¼Œæ¶ˆæ¯ID
  */
 /*
  */
-/* µ÷ÓÃÒªÇó: TODO: ...
+/* è¿” å›ž å€¼:
  */
-/* µ÷ÓÃ¾ÙÀý: TODO: ...
+/*
+ */
+/* è°ƒç”¨è¦æ±‚: TODO: ...
+ */
+/* è°ƒç”¨ä¸¾ä¾‹: TODO: ...
  */
 /******************************************************************************
  */
@@ -926,30 +926,30 @@ AT_L4A_MSG_FUN_TABLE_STRU* atL4aGetCnfMsgFun(VOS_UINT32 ulMsgId)
         }
     }
 
-    /*Èç¹ûÕÒ²»µ½
+    /*å¦‚æžœæ‰¾ä¸åˆ°
  */
     return NULL;
 }
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: atL4aGetIndMsgFun
+/* å‡½æ•°åç§°: atL4aGetIndMsgFun
  */
-/* ¹¦ÄÜÃèÊö: »ñÈ¡´¦ÀíL4A»Ø¸´ÏûÏ¢µÄº¯Êý
- */
-/*
- */
-/* ²ÎÊýËµÃ÷: ulMsgId£¬ÏûÏ¢ID
+/* åŠŸèƒ½æè¿°: èŽ·å–å¤„ç†L4Aå›žå¤æ¶ˆæ¯çš„å‡½æ•°
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* å‚æ•°è¯´æ˜Ž: ulMsgIdï¼Œæ¶ˆæ¯ID
  */
 /*
  */
-/* µ÷ÓÃÒªÇó: TODO: ...
+/* è¿” å›ž å€¼:
  */
-/* µ÷ÓÃ¾ÙÀý: TODO: ...
+/*
+ */
+/* è°ƒç”¨è¦æ±‚: TODO: ...
+ */
+/* è°ƒç”¨ä¸¾ä¾‹: TODO: ...
  */
 /******************************************************************************
  */
@@ -970,7 +970,7 @@ AT_L4A_MSG_FUN_TABLE_STRU* atL4aGetIndMsgFun(VOS_UINT32 ulMsgId)
         }
     }
 
-    /*Èç¹ûÕÒ²»µ½
+    /*å¦‚æžœæ‰¾ä¸åˆ°
  */
     return NULL;
 }
@@ -978,23 +978,23 @@ AT_L4A_MSG_FUN_TABLE_STRU* atL4aGetIndMsgFun(VOS_UINT32 ulMsgId)
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: at_L4aCnfProc
+/* å‡½æ•°åç§°: at_L4aCnfProc
  */
-/* ¹¦ÄÜÃèÊö: ½ÓÊÕL4AµÄCNF£¬INDÏûÏ¢£¬²¢²éÕÒ¶ÔÓ¦º¯Êý½øÐÐ´¦Àí
- */
-/*
- */
-/* ²ÎÊýËµÃ÷: pMsgBlockTmp£¬VOSÏûÏ¢
+/* åŠŸèƒ½æè¿°: æŽ¥æ”¶L4Açš„CNFï¼ŒINDæ¶ˆæ¯ï¼Œå¹¶æŸ¥æ‰¾å¯¹åº”å‡½æ•°è¿›è¡Œå¤„ç†
  */
 /*
  */
-/* ·µ »Ø Öµ:
+/* å‚æ•°è¯´æ˜Ž: pMsgBlockTmpï¼ŒVOSæ¶ˆæ¯
  */
 /*
  */
-/* µ÷ÓÃÒªÇó: TODO: ...
+/* è¿” å›ž å€¼:
  */
-/* µ÷ÓÃ¾ÙÀý: TODO: ...
+/*
+ */
+/* è°ƒç”¨è¦æ±‚: TODO: ...
+ */
+/* è°ƒç”¨ä¸¾ä¾‹: TODO: ...
  */
 /******************************************************************************
  */
@@ -1073,11 +1073,11 @@ AT_FTM_CNF_MSG_PROC_STRU g_astLteAtFtmCnfMsgTbl[] =
     { ID_MSG_FTM_SET_RXON_CNF,          atSetFRXONParaCnfProc },
     { ID_MSG_FTM_RD_RXON_CNF,           atQryFRXONParaCnfProc },
     { ID_MSG_FTM_SET_FWAVE_CNF,         atSetFWAVEParaCnfProc },
-    { ID_MSG_FTM_SET_TSELRF_CNF,        atSetTselrfParaCnfProc},/*TSELRF ÒÑÊµÏÖÎ´Áªµ÷ */
+    { ID_MSG_FTM_SET_TSELRF_CNF,        atSetTselrfParaCnfProc},/*TSELRF å·²å®žçŽ°æœªè”è°ƒ */
     { ID_MSG_FTM_SET_AAGC_CNF,          atSetFLNAParaCnfProc },
     { ID_MSG_FTM_RD_AAGC_CNF,           atQryFLNAParaCnfProc },
     { ID_MSG_FTM_FRSSI_CNF,             atQryFRSSIParaCnfProc },
-    { ID_MSG_FTM_SET_FPDMS_CNF,         atSetFPDMSParaCnfProc},/*FPDMS ÒÑÊµÏÖÎ´Áªµ÷*/
+    { ID_MSG_FTM_SET_FPDMS_CNF,         atSetFPDMSParaCnfProc},/*FPDMS å·²å®žçŽ°æœªè”è°ƒ*/
     { ID_MSG_FTM_RD_FPDMS_CNF,          atQryFPDMSParaCnfProc},
     { ID_MSG_FTM_SET_SSYNC_CNF,         atSetSSYNCParaCnfProc },
     { ID_MSG_FTM_RD_SSYNC_CNF,          atQrySSYNCParaCnfProc },
@@ -1161,23 +1161,23 @@ AT_FTM_CNF_MSG_PROC_STRU g_astLteAtFtmCnfMsgTbl[] =
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: atGetFtmCnfMsgProc
+/* å‡½æ•°åç§°: atGetFtmCnfMsgProc
  */
-/* ¹¦ÄÜÃèÊö: ¸ù¾Ý»Ø¸´µÄÏûÏ¢ÕÒµ½Æ¥ÅäµÄ´¦Àíº¯Êý
+/* åŠŸèƒ½æè¿°: æ ¹æ®å›žå¤çš„æ¶ˆæ¯æ‰¾åˆ°åŒ¹é…çš„å¤„ç†å‡½æ•°
  */
 /*
  */
-/* ²ÎÊýËµÃ÷:
+/* å‚æ•°è¯´æ˜Ž:
  */
-/*   MsgId  [in] ÏûÏ¢ID
+/*   MsgId  [in] æ¶ˆæ¯ID
  */
-/* ·µ »Ø Öµ:
+/* è¿” å›ž å€¼:
  */
-/*    ·ÇNULL g_astLteAtFtmCnfMsgTbl ÔªËØµØÖ·£¬°üº¬ÁË´¦Àíº¯Êý
+/*    éžNULL g_astLteAtFtmCnfMsgTbl å…ƒç´ åœ°å€ï¼ŒåŒ…å«äº†å¤„ç†å‡½æ•°
  */
-/*    NULL Æ¥ÅäÊ§°Ü
+/*    NULL åŒ¹é…å¤±è´¥
  */
-/* ×÷    Õß: lwx26324 [20110927]
+/* ä½œ    è€…: lwx26324 [20110927]
  */
 /******************************************************************************
  */
@@ -1199,23 +1199,23 @@ AT_FTM_CNF_MSG_PROC_STRU* atGetFtmCnfMsgProc(VOS_UINT32 ulMsgId)
 
 /******************************************************************************
  */
-/* º¯ÊýÃû³Æ: atGetFtmCnfMsgProc
+/* å‡½æ•°åç§°: atGetFtmCnfMsgProc
  */
-/* ¹¦ÄÜÃèÊö: AT´¦ÀíLTE×°±¸FTM»Ø¸´ÏûÏ¢Èë¿Ú
+/* åŠŸèƒ½æè¿°: ATå¤„ç†LTEè£…å¤‡FTMå›žå¤æ¶ˆæ¯å…¥å£
  */
 /*
  */
-/* ²ÎÊýËµÃ÷:
+/* å‚æ•°è¯´æ˜Ž:
  */
-/*   pMsg  [in] ºË¼äÏûÏ¢½á¹¹
+/*   pMsg  [in] æ ¸é—´æ¶ˆæ¯ç»“æž„
  */
-/* ·µ »Ø Öµ:
+/* è¿” å›ž å€¼:
  */
-/*    ERR_MSP_SUCCESS ³É¹¦
+/*    ERR_MSP_SUCCESS æˆåŠŸ
  */
-/*    ERR_MSP_FAILURE Ê§°Ü
+/*    ERR_MSP_FAILURE å¤±è´¥
  */
-/* ×÷    Õß: lwx26324 [20110927]
+/* ä½œ    è€…: lwx26324 [20110927]
  */
 /******************************************************************************
  */
@@ -1235,7 +1235,7 @@ VOS_UINT32 At_FtmEventMsgProc(VOS_VOID* pMsg)
     	return ERR_MSP_FAILURE;
     }
 
-    /*ÏûÏ¢½á¹¹×ª»»
+    /*æ¶ˆæ¯ç»“æž„è½¬æ¢
  */
     pOsMsg = (OS_MSG_STRU *)(pstMsgBlock->aucValue);
     pOsMsg->ulMsgId = pDataMsg->ulMsgId;
@@ -1253,7 +1253,7 @@ VOS_UINT32 At_FtmEventMsgProc(VOS_VOID* pMsg)
 
     MSP_MEMCPY((VOS_UINT8*)(pOsMsg->ulParam1), pDataMsg->pContext, pDataMsg->ulLen);
 
-    /*ÏûÏ¢´¦Àí
+    /*æ¶ˆæ¯å¤„ç†
  */
     pMsgProcItem = atGetFtmCnfMsgProc(pDataMsg->ulMsgId);
 
@@ -1273,18 +1273,18 @@ VOS_UINT32 At_FtmEventMsgProc(VOS_VOID* pMsg)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : AT_ProcTempprtEventInd
- ¹¦ÄÜÃèÊö  : ´¦ÀíÏûÏ¢ID_TEMPPRT_AT_EVENT_IND
- ÊäÈë²ÎÊý  : pstMsg - À´×ÔSPYµÄÏûÏ¢
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : AT_ProcTempprtEventInd
+ åŠŸèƒ½æè¿°  : å¤„ç†æ¶ˆæ¯ID_TEMPPRT_AT_EVENT_IND
+ è¾“å…¥å‚æ•°  : pstMsg - æ¥è‡ªSPYçš„æ¶ˆæ¯
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
- 1.ÈÕ    ÆÚ   :
-   ×÷    Õß   :
-   ÐÞ¸ÄÄÚÈÝ   :
+ ä¿®æ”¹åŽ†å²      :
+ 1.æ—¥    æœŸ   :
+   ä½œ    è€…   :
+   ä¿®æ”¹å†…å®¹   :
 
 *****************************************************************************/
 VOS_UINT32    AT_ProcTempprtEventInd(

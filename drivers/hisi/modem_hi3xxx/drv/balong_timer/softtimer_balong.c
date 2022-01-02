@@ -32,15 +32,15 @@ s32 show_list(u32 wake);
 
 struct softtimer_ctrl
 {
-    unsigned char timer_id_alloc[SOFTTIMER_MAX_NUM];              /*×î¶àÖ§³Ö40¸ösofttimerÔÚÁ´±íÖĞ,ÓÃÓÚ·ÖÅäÈítimerId  */
+    unsigned char timer_id_alloc[SOFTTIMER_MAX_NUM];              /*æœ€å¤šæ”¯æŒ40ä¸ªsofttimeråœ¨é“¾è¡¨ä¸­,ç”¨äºåˆ†é…è½¯timerId  */
     struct list_head timer_list_head;
-    u32 softtimer_start_value;                         /*¼ÇÂ¼Ã¿´ÎÎïÀítimer¼ÆÊıÆğÊ¼Öµ                     */
-    u32 hard_timer_id;                                 /*ÈítimerÊ¹ÓÃµÄÎïÀítimer id                      */
+    u32 softtimer_start_value;                         /*è®°å½•æ¯æ¬¡ç‰©ç†timerè®¡æ•°èµ·å§‹å€¼                     */
+    u32 hard_timer_id;                                 /*è½¯timerä½¿ç”¨çš„ç‰©ç†timer id                      */
      /*lint -save -e43*/
-    spinlock_t  timer_list_lock;                       /*»¥³â·ÃÎÊÈítimerÁ´±í                            */
-    osl_sem_id soft_timer_sem;                         /*Ó²timerÖĞ¶ÏĞÅºÅÁ¿                              */
-    struct task_struct* softtimer_task;                /*¼ÇÂ¼´´½¨µÄÈÎÎñ                                 */
-    u32 clk;                                           /*ËùÊ¹ÓÃÎïÀítimerµÄÊ±ÖÓÆµÂÊ                       */
+    spinlock_t  timer_list_lock;                       /*äº’æ–¥è®¿é—®è½¯timeré“¾è¡¨                            */
+    osl_sem_id soft_timer_sem;                         /*ç¡¬timerä¸­æ–­ä¿¡å·é‡                              */
+    struct task_struct* softtimer_task;                /*è®°å½•åˆ›å»ºçš„ä»»åŠ¡                                 */
+    u32 clk;                                           /*æ‰€ä½¿ç”¨ç‰©ç†timerçš„æ—¶é’Ÿé¢‘ç‡                       */
 };
 
 static struct softtimer_ctrl timer_control[2];         /*timer_control[0] wake, timer_control[1] normal*/
@@ -81,7 +81,7 @@ void bsp_softtimer_add(struct softtimer_list * timer)
         return;
     }
     spin_lock_irqsave(&(timer_control[timer->wake_type].timer_list_lock),flags);
-    /*Èç¹ûÒÑ¾­ÔÚ³¬Ê±Á´±íÖĞ£¬Ôò²»²åÈë*/
+    /*å¦‚æœå·²ç»åœ¨è¶…æ—¶é“¾è¡¨ä¸­ï¼Œåˆ™ä¸æ’å…¥*/
     if(!list_empty(&timer->entry))
     {
     	 spin_unlock_irqrestore(&(timer_control[timer->wake_type].timer_list_lock),flags);
@@ -90,12 +90,12 @@ void bsp_softtimer_add(struct softtimer_list * timer)
     timer->timeout = timer->count_num;
     elapsed_time = hard_timer_elapsed_time(timer->wake_type);
     timer->timeout += elapsed_time;
-    /*Èç¹ûtimerÁ´±íÎª¿Õ£¬Ôò²åÈëÍ·½áµã*/
+    /*å¦‚æœtimeré“¾è¡¨ä¸ºç©ºï¼Œåˆ™æ’å…¥å¤´ç»“ç‚¹*/
     if (list_empty(&(timer_control[timer->wake_type].timer_list_head)))
     {
         list_add_tail(&(timer->entry),&(timer_control[timer->wake_type].timer_list_head));
     }
-    /*Èç¹ûÁ´±í²»Îª¿Õ£¬Ôò°´ÕÕ³¬Ê±Ê±¼ä´ÓĞ¡µ½´ó²åÈë*/
+    /*å¦‚æœé“¾è¡¨ä¸ä¸ºç©ºï¼Œåˆ™æŒ‰ç…§è¶…æ—¶æ—¶é—´ä»å°åˆ°å¤§æ’å…¥*/
     else
     {
     	  /*lint -save -e413 *//*lint -save -e613*/
@@ -160,12 +160,12 @@ s32 bsp_softtimer_delete(struct softtimer_list * timer)
     }
     else
     {
-        if(timer->entry.next == &(timer_control[timer->wake_type].timer_list_head))/*Èç¹ûÉ¾³ıµÄÊÇ×îºóÒ»¸ö½Úµã£¬Ö±½ÓÉ¾³ı*/
+        if(timer->entry.next == &(timer_control[timer->wake_type].timer_list_head))/*å¦‚æœåˆ é™¤çš„æ˜¯æœ€åä¸€ä¸ªèŠ‚ç‚¹ï¼Œç›´æ¥åˆ é™¤*/
         {
             timer->is_running = TIMER_FALSE;
             list_del_init(&(timer->entry));
         }
-	 /*Èç¹ûÉ¾³ıµÄÊÇÁ´±íÖĞµÚÒ»¸ö½áµã,²¢ÇÒÆäºó»¹ÓĞÆäËû½áµã*/
+	 /*å¦‚æœåˆ é™¤çš„æ˜¯é“¾è¡¨ä¸­ç¬¬ä¸€ä¸ªç»“ç‚¹,å¹¶ä¸”å…¶åè¿˜æœ‰å…¶ä»–ç»“ç‚¹*/
         else if((timer->entry.prev == &(timer_control[timer->wake_type].timer_list_head))
 			&&(timer->entry.next != &(timer_control[timer->wake_type].timer_list_head)))
         {
@@ -176,7 +176,7 @@ s32 bsp_softtimer_delete(struct softtimer_list * timer)
 			start_hard_timer(&timer_control[p->wake_type], p->timeout);
 			p->is_running = TIMER_TRUE;
         }
-	 /*Èç¹ûÉ¾³ıµÄÊÇÖĞ¼ä½Úµã*/
+	 /*å¦‚æœåˆ é™¤çš„æ˜¯ä¸­é—´èŠ‚ç‚¹*/
         else
         {
             p = list_entry(timer->entry.next,struct softtimer_list,entry);
@@ -185,7 +185,7 @@ s32 bsp_softtimer_delete(struct softtimer_list * timer)
 	        list_del_init(&(timer->entry));
         }
     }
-    if (list_empty(&(timer_control[timer->wake_type].timer_list_head)))/*Èç¹ûÉ¾³ıÍêÊÂºóÁ´±íÎª¿Õ£¬ÔòÍ£Ö¹¼ÆÊı*/
+    if (list_empty(&(timer_control[timer->wake_type].timer_list_head)))/*å¦‚æœåˆ é™¤å®Œäº‹åé“¾è¡¨ä¸ºç©ºï¼Œåˆ™åœæ­¢è®¡æ•°*/
     {
         stop_hard_timer(&timer_control[timer->wake_type]);
     }
@@ -210,7 +210,7 @@ s32 bsp_softtimer_modify(struct softtimer_list *timer,u32 new_expire_time)
 	    {
 	        timer->timeout= (WAKE_SOURCE_CLK* new_expire_time)/1000;
 	    }
-	    else /* ·ÀÖ¹³Ë·¨Òç³ö */ 
+	    else /* é˜²æ­¢ä¹˜æ³•æº¢å‡º */ 
 	    {
 	        timer->timeout= WAKE_SOURCE_CLK * (new_expire_time/1000);
 	    }
@@ -241,17 +241,17 @@ s32 bsp_softtimer_create(struct softtimer_list *sft_info)
     sft_info->init_flags=TIMER_INIT_FLAG;
     if(WAKE_SOURCE_CLK==timer_control[sft_info->wake_type].clk)
     {
-    	/*Èç¹û³¬³ö×î´óÖµ£¬Ôò·µ»ØÊ§°Ü,µ¥Î»Îªms*/
+    	/*å¦‚æœè¶…å‡ºæœ€å¤§å€¼ï¼Œåˆ™è¿”å›å¤±è´¥,å•ä½ä¸ºms*/
 		if(sft_info->timeout>SOFTTIMER_MAX_LENGTH*1000)
 		{
 			bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_SOFTTIMER,"time too long ,not support\n");
 			return ERROR;
 		}
-		if((sft_info->timeout) < SOFTTIMER_MAX_LENGTH)  /* ¶ÔĞ¡ÓÚSOFTTIMER_MAX_LENGTHµÄ¼ÆÊ±£¬¿ÉÒÔ±£³Ö¾«¶È */
+		if((sft_info->timeout) < SOFTTIMER_MAX_LENGTH)  /* å¯¹å°äºSOFTTIMER_MAX_LENGTHçš„è®¡æ—¶ï¼Œå¯ä»¥ä¿æŒç²¾åº¦ */
 		{
 			sft_info->timeout= (WAKE_SOURCE_CLK*(sft_info->timeout))/1000;
 		}
-		else /* ·ÀÖ¹³Ë·¨Òç³ö */ 
+		else /* é˜²æ­¢ä¹˜æ³•æº¢å‡º */ 
 		{
 			sft_info->timeout= WAKE_SOURCE_CLK* ((sft_info->timeout)/1000);
 		}	
@@ -259,7 +259,7 @@ s32 bsp_softtimer_create(struct softtimer_list *sft_info)
 	}
 	else if(NOWAKE_SOURCE_CLK==timer_control[sft_info->wake_type].clk)
 	{
-		/*Èç¹û³¬³ö×î´óÖµ£¬Ôò·µ»ØÊ§°Ü,µ¥Î»Îªms*/
+		/*å¦‚æœè¶…å‡ºæœ€å¤§å€¼ï¼Œåˆ™è¿”å›å¤±è´¥,å•ä½ä¸ºms*/
 		if(sft_info->timeout>SOFTTIMER_MAX_LENGTH_NORMAL*1000)
 		{
 			bsp_trace(BSP_LOG_LEVEL_ERROR,BSP_MODU_SOFTTIMER,"time too long ,not support\n");
@@ -344,7 +344,7 @@ int  softtimer_task_func(void* data)
 					else
 						break;
 				}
-				if (!list_empty(&ptimer_control->timer_list_head))/*Èç¹û»¹ÓĞÎ´³¬Ê±¶¨Ê±Æ÷*/
+				if (!list_empty(&ptimer_control->timer_list_head))/*å¦‚æœè¿˜æœ‰æœªè¶…æ—¶å®šæ—¶å™¨*/
 				{
 					p=list_first_entry(&ptimer_control->timer_list_head,struct softtimer_list,entry);
 					p->is_running = TIMER_TRUE;
@@ -377,8 +377,8 @@ OSL_IRQ_FUNC(static irqreturn_t,softtimer_interrupt_call_back,irq,dev)
 {    
 	struct softtimer_ctrl *ptimer_control;
 	u32 readValue = 0;    
-	/*1¡¢¶ÁÈ¡Ó²¼ş¶¨Ê±Æ÷µÄÖĞ¶Ï×´Ì¬
-	  2¡¢Èç¹ûÓĞÖĞ¶Ï£¬ÔòÇåÖĞ¶Ï£¬Í¬Ê±ÊÍ·ÅĞÅºÅÁ¿
+	/*1ã€è¯»å–ç¡¬ä»¶å®šæ—¶å™¨çš„ä¸­æ–­çŠ¶æ€
+	  2ã€å¦‚æœæœ‰ä¸­æ–­ï¼Œåˆ™æ¸…ä¸­æ–­ï¼ŒåŒæ—¶é‡Šæ”¾ä¿¡å·é‡
 	 */
 
 	ptimer_control = dev;

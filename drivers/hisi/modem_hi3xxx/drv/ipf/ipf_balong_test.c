@@ -143,7 +143,7 @@ SEM_ID g_IpfUlIntSemId;
 
 BSP_S32 CmpDMAData(BSP_U32* p1, BSP_U32* p2, BSP_U32 u32Len);
 
-/*CH0ÎªÉÏĞĞÍ¨µÀ£¬¹Ê±àµ½Ccore*/
+/*CH0ä¸ºä¸Šè¡Œé€šé“ï¼Œæ•…ç¼–åˆ°Ccore*/
 void print_CH0_BUFFED_AD_Num()
 {
 	HI_IPF_CH0_ADQ0_STAT_T ad0_stat;
@@ -213,7 +213,7 @@ BSP_S32 IpfUlIntCb101()
 	for(j = 0; j < u32Num; j++)
 	{	
 		s32Ret = CmpDMAData((BSP_U32 *)g_pu8STUlData, (BSP_U32 *)stRd[j].u32OutPtr, stRd[j].u16PktLen);
-		/*Êı¾İ±È¶Ô*/
+		/*æ•°æ®æ¯”å¯¹*/
 		if(0 != s32Ret)
 		{
 		    IPF_PRINT("Comp error \n");
@@ -264,7 +264,7 @@ BSP_S32 IpfUlIntCb111(BSP_VOID)
 	
 	for(j = 0; j < u32Num; j++)
 	{			
-		/*¹ıÂË½á¹û*/
+		/*è¿‡æ»¤ç»“æœ*/
 		if(stRd[j].u16Result == 0x3f)
 		{
 			IPF_PRINT("stRd[j].u16Result ERROR !value is 0x%x \n",j,stRd[j].u16Result);
@@ -342,23 +342,23 @@ BSP_S32 IPF_ST_INIT(BSP_VOID)
     IPF_COMMON_PARA_S stCommPara;
     BSP_S32 s32Ret = 0;
 
-    /*³õÊ¼»¯Ê±IP¹ıÂËµÄ²ÎÊıÅäÖÃ*/
-    stCommPara.bEspSpiDisable = 1;      /* ESP SPIÊÇ·ñ²ÎÓëÆ¥Åä¿ØÖÆĞÅºÅ */
-    stCommPara.bAhSpiDisable = 1;       /* AH SPIÊÇ·ñ²ÎÓëÆ¥Åä¿ØÖÆĞÅºÅ */
-    stCommPara.bEspAhSel= 0;           /* 0Ñ¡ESP£¬1Ñ¡AH */
+    /*åˆå§‹åŒ–æ—¶IPè¿‡æ»¤çš„å‚æ•°é…ç½®*/
+    stCommPara.bEspSpiDisable = 1;      /* ESP SPIæ˜¯å¦å‚ä¸åŒ¹é…æ§åˆ¶ä¿¡å· */
+    stCommPara.bAhSpiDisable = 1;       /* AH SPIæ˜¯å¦å‚ä¸åŒ¹é…æ§åˆ¶ä¿¡å· */
+    stCommPara.bEspAhSel= 0;           /* 0é€‰ESPï¼Œ1é€‰AH */
     stCommPara.bIpv6NextHdSel = 0;
-    stCommPara.eMaxBurst = IPF_BURST_16;       /* BURST×î´ó³¤¶È */
+    stCommPara.eMaxBurst = IPF_BURST_16;       /* BURSTæœ€å¤§é•¿åº¦ */
     stCommPara.bSpWrrModeSel = 0;
-    stCommPara.bSpPriSel = 0;          /* SPÓÅÏÈ¼¶Ñ¡Ôñ */
-    stCommPara.bFltAddrReverse = 1;        /* ÅäÖÃÎª0,µØÖ·Îª´ó¶Ë */
-    stCommPara.bFilterSeq = 0;         /* ¹ıÂËÆ÷ÅäÖÃË³ĞòÖ¸Ê¾ */
-    stCommPara.bAdReport = 0; /*ÉÏ±¨ADµÚ¶ş¸ö×ÖÖ¸Õë*/
+    stCommPara.bSpPriSel = 0;          /* SPä¼˜å…ˆçº§é€‰æ‹© */
+    stCommPara.bFltAddrReverse = 1;        /* é…ç½®ä¸º0,åœ°å€ä¸ºå¤§ç«¯ */
+    stCommPara.bFilterSeq = 0;         /* è¿‡æ»¤å™¨é…ç½®é¡ºåºæŒ‡ç¤º */
+    stCommPara.bAdReport = 0; /*ä¸ŠæŠ¥ADç¬¬äºŒä¸ªå­—æŒ‡é’ˆ*/
 #ifdef IPF_NO_FILTER_TEST
-    stCommPara.bMultiFilterChainEn = 0;/*µ¥¼Ä´æÆ÷Á´Ä£Ê½*/
-    stCommPara.bMultiModeEn = 0;/*¾²Ì¬ÒµÎñÄ£Ê½*/
+    stCommPara.bMultiFilterChainEn = 0;/*å•å¯„å­˜å™¨é“¾æ¨¡å¼*/
+    stCommPara.bMultiModeEn = 0;/*é™æ€ä¸šåŠ¡æ¨¡å¼*/
 #endif
-    stCommPara.bMultiFilterChainEn = 1;/*¶à¼Ä´æÆ÷Á´Ä£Ê½*/
-    stCommPara.bMultiModeEn = 1;/*¶¯Ì¬ÒµÎñÄ£Ê½*/
+    stCommPara.bMultiFilterChainEn = 1;/*å¤šå¯„å­˜å™¨é“¾æ¨¡å¼*/
+    stCommPara.bMultiModeEn = 1;/*åŠ¨æ€ä¸šåŠ¡æ¨¡å¼*/
 	
     s32Ret = BSP_IPF_Init(&stCommPara) ;
     if (s32Ret != IPF_SUCCESS)
@@ -557,7 +557,7 @@ BSP_S32 IPF_ST_UL_INIT(BSP_VOID)
     }
 
     stCtrl.bDataChain = BSP_FALSE;
-    stCtrl.bEndian = BSP_TRUE; /* Ğ¡¶Ë */
+    stCtrl.bEndian = BSP_TRUE; /* å°ç«¯ */
     stCtrl.eIpfMode = IPF_MODE_FILTERANDTRANS;
     stCtrl.u32WrrValue = 0;
     s32Ret = BSP_IPF_ConfigUlChannel(&stCtrl);
@@ -660,7 +660,7 @@ BSP_S32 IPF_ST_DL_INIT(BSP_VOID)
     }
 
     stCtrl.bDataChain = BSP_TRUE;
-    stCtrl.bEndian = BSP_TRUE; /* Ğ¡¶Ë */
+    stCtrl.bEndian = BSP_TRUE; /* å°ç«¯ */
     stCtrl.eIpfMode = IPF_MODE_FILTERONLY;
     stCtrl.u32WrrValue = 0;
     s32Ret = BSP_IPF_ConfigDlChannel(&stCtrl);
@@ -698,7 +698,7 @@ struct task_struct * g_IpfDlTaskId;
 BSP_U8  * g_pu8STDlData = BSP_NULL;
 
 typedef int (*IPFTHREADFN)(void *pdata);
-/*CH1ÎªÏÂĞĞÍ¨µÀ£¬¹Ê±àµ½Acore*/
+/*CH1ä¸ºä¸‹è¡Œé€šé“ï¼Œæ•…ç¼–åˆ°Acore*/
 BSP_VOID print_CH1_BUFFED_AD_Num(BSP_VOID)
 {
 	HI_IPF_CH1_ADQ0_STAT_T ad0_stat;
@@ -870,7 +870,7 @@ BSP_S32 IpfDlIntSTCb(BSP_VOID)
     print_CH1_BUFFED_AD_Num();
     return OK;
 }
-/*ÓÃÓÚÑéÖ¤AD_BUFFµÄÓĞĞ§ĞÔ*/
+/*ç”¨äºéªŒè¯AD_BUFFçš„æœ‰æ•ˆæ€§*/
 BSP_S32 IpfDlIntCb300(BSP_VOID)
 {
 
@@ -915,7 +915,7 @@ BSP_S32 IpfDlIntCb301(BSP_VOID)
 		}
 		s32Ret = CmpDMAData((BSP_U32 *)g_pu8STDlData, (BSP_U32 *)phys_to_virt((unsigned long)stRd[j].u32OutPtr), stRd[j].u16PktLen);
 		
-		/*Êı¾İ±È¶Ô*/
+		/*æ•°æ®æ¯”å¯¹*/
 		if(0 != s32Ret)
 		{
 		    bsp_trace(BSP_LOG_LEVEL_FATAL, BSP_MODU_IPF, "\r Data transfer unmatch! Num:%d \n",j,0,0,0,0,0,0);
@@ -972,7 +972,7 @@ BSP_S32 IpfDlIntCb302(BSP_VOID)
 		}
 		s32Ret = CmpDMAData((BSP_U32 *)g_pu8STDlData, (BSP_U32 *)phys_to_virt((unsigned long)stRd[j].u32OutPtr), stRd[j].u16PktLen);
 		
-		/*Êı¾İ±È¶Ô*/
+		/*æ•°æ®æ¯”å¯¹*/
 		if(0 != s32Ret)
 		{
 		#ifdef printcmpresult
@@ -1048,7 +1048,7 @@ BSP_S32 IpfDlIntCb304(BSP_VOID)
 	for(j = 0; j < u32Num; j++)
 	{	
 		
-		/*¹ıÂË½á¹û*/
+		/*è¿‡æ»¤ç»“æœ*/
 		if(stRd[j].u16Result == 0x3f)
 		{
 			IPF_PRINT("stRd[%d].u16Result ERROR ! value is 0x%x \n",j,stRd[j].u16Result);
@@ -1237,13 +1237,13 @@ BSP_S32 CmpDMAData(BSP_U32* p1, BSP_U32* p2, BSP_U32 u32Len)
 }
 
 /****************************************
-* 0   Á½ºË¸÷×Ô¶¼ÓÃµÄ²âÊÔÓÃÀı
-* 1   ÏÈÖ´ĞĞMºËºóÖ´ĞĞAºËÓÃÀı
-* 2   C   ºËµÄ²âÊÔÓÃÀı
-* 3   ÏÈÖ´ĞĞAºËºóÖ´ĞĞMºËÓÃÀı
-* x2x   Ñ¹Á¦²âÊÔÓÃÀı
+* 0   ä¸¤æ ¸å„è‡ªéƒ½ç”¨çš„æµ‹è¯•ç”¨ä¾‹
+* 1   å…ˆæ‰§è¡ŒMæ ¸åæ‰§è¡ŒAæ ¸ç”¨ä¾‹
+* 2   C   æ ¸çš„æµ‹è¯•ç”¨ä¾‹
+* 3   å…ˆæ‰§è¡ŒAæ ¸åæ‰§è¡ŒMæ ¸ç”¨ä¾‹
+* x2x   å‹åŠ›æµ‹è¯•ç”¨ä¾‹
 ****************************************/
-/*¼ìÑéÊÇ·ñInit³É¹¦*/
+/*æ£€éªŒæ˜¯å¦InitæˆåŠŸ*/
 BSP_S32  BSP_IPF_AINIT(BSP_VOID)
 {
 	BSP_S32 ret;
@@ -1721,9 +1721,9 @@ BSP_S32 BSP_IPF_ST_201(BSP_VOID)
         goto error;
     }
 
-    stCommPara.bAdReport = 1; /*ÉÏ±¨Êı¾İÖ¸Õë*/
-    stCommPara.bMultiFilterChainEn = 0;/*¶à¼Ä´æÆ÷Á´Ä£Ê½*/
-    stCommPara.bMultiModeEn = 0;/*¶¯Ì¬ÒµÎñÄ£Ê½*/
+    stCommPara.bAdReport = 1; /*ä¸ŠæŠ¥æ•°æ®æŒ‡é’ˆ*/
+    stCommPara.bMultiFilterChainEn = 0;/*å¤šå¯„å­˜å™¨é“¾æ¨¡å¼*/
+    stCommPara.bMultiModeEn = 0;/*åŠ¨æ€ä¸šåŠ¡æ¨¡å¼*/
     stCommPara.bEspSpiDisable = BSP_TRUE;
     stCommPara.bAhSpiDisable = BSP_TRUE;
     stCommPara.bEspAhSel = BSP_TRUE;
@@ -1756,9 +1756,9 @@ BSP_S32 BSP_IPF_ST_201(BSP_VOID)
     stCommPara.bSpPriSel = BSP_FALSE;
     stCommPara.bFltAddrReverse = BSP_FALSE;
     stCommPara.bFilterSeq = BSP_FALSE;       
-    stCommPara.bAdReport = 0; /*ÉÏ±¨Êı¾İÖ¸Õë*/
-    stCommPara.bMultiFilterChainEn = 1;/*¶à¼Ä´æÆ÷Á´Ä£Ê½*/
-    stCommPara.bMultiModeEn = 1;/*¶¯Ì¬ÒµÎñÄ£Ê½*/
+    stCommPara.bAdReport = 0; /*ä¸ŠæŠ¥æ•°æ®æŒ‡é’ˆ*/
+    stCommPara.bMultiFilterChainEn = 1;/*å¤šå¯„å­˜å™¨é“¾æ¨¡å¼*/
+    stCommPara.bMultiModeEn = 1;/*åŠ¨æ€ä¸šåŠ¡æ¨¡å¼*/
 
     s32Ret = BSP_IPF_Init(&stCommPara);
     if(s32Ret != IPF_SUCCESS)
@@ -1992,7 +1992,7 @@ BSP_S32 BSP_IPF_ST_ULAD(BSP_VOID)
 }
 
 
-/*½ÓÊÕ×¼±¸*/
+/*æ¥æ”¶å‡†å¤‡*/
 BSP_S32 BSP_IPF_ST_100_INIT(BSP_VOID)
 {
     BSP_U32 u32Timeout = 100;
@@ -2070,7 +2070,7 @@ BSP_S32 BSP_IPF_ST_100_INIT(BSP_VOID)
         return ERROR;
     }
 	
-    IPF_PRINT(" AºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Aæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
 
     return OK;
 }
@@ -2116,7 +2116,7 @@ BSP_S32 BSP_IPF_ST_103_INIT(BSP_VOID)
         return ERROR;
     }
 
-    IPF_PRINT(" AºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Aæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
 
 
     s32Ret = BSP_IPF_ConfigTimeout(500);
@@ -2153,7 +2153,7 @@ BSP_S32 BSP_IPF_ST_111_INIT(BSP_VOID)
         return ERROR;
     }
 
-    IPF_PRINT(" AºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Aæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
     return OK;
 }
 
@@ -2181,7 +2181,7 @@ BSP_S32 BSP_IPF_ST_112_INIT(BSP_VOID)
         return ERROR;
     }
 
-    IPF_PRINT(" AºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Aæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
     return OK;
 }
 
@@ -2215,7 +2215,7 @@ BSP_S32 BSP_IPF_ST_113_INIT(BSP_VOID)
         IPF_PRINT(" TESTERROR    BSP_IPF_ConfigTimeout :%d\n",__LINE__);
         return ERROR;
     }
-    IPF_PRINT(" AºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Aæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
     return OK;
 }
 
@@ -2279,7 +2279,7 @@ BSP_S32 ipf_ul_stress_test_init(BSP_S32 task_priority)
 		return ERROR;
 	}
 
-	IPF_PRINT(" AºË¿ÉÒÔÊäÈëipf_ul_stress_test_start\n");
+	IPF_PRINT(" Aæ ¸å¯ä»¥è¾“å…¥ipf_ul_stress_test_start\n");
 	
 	return OK;
 }
@@ -2312,12 +2312,12 @@ BSP_S32 IpfUltestIntCb(void)
     BSP_U32 i = 0;
     BSP_S32 s32Ret = 0;
 
-    /*´¦ÀíRD*/
+    /*å¤„ç†RD*/
     BSP_IPF_GetUlRd(&u32Num, stRd);
     for(i = 0; i < u32Num; i++)
     {
         s32Ret = CmpDMAData((BSP_U32 *)g_pu8STUlData, (BSP_U32 *)stRd[i].u32OutPtr, stRd[i].u16PktLen);
-        /*Êı¾İ±È¶Ô*/
+        /*æ•°æ®æ¯”å¯¹*/
         if(!s32Ret)
         {
             g_u32UlError++;
@@ -2329,7 +2329,7 @@ BSP_S32 IpfUltestIntCb(void)
 	u32RecivedData += stRd[i].u16PktLen;
     }
 
-    /*Í³¼Æ½á¹û*/
+    /*ç»Ÿè®¡ç»“æœ*/
     g_u32UlTotalDataNum += u32RecivedData/1024;
     g_u32UlTotalBDNum += u32Num;
     s32Ret = BSP_IPF_GetUlAdNum(&u32AD0Num,&u32AD1Num);
@@ -2374,12 +2374,12 @@ BSP_S32 IpfUltestIntCb122(void)
     BSP_U32 i = 0;
     BSP_S32 s32Ret = 0;
 
-    /*´¦ÀíRD*/
+    /*å¤„ç†RD*/
     BSP_IPF_GetUlRd(&u32Num, stRd);
     for(i = 0; i < u32Num; i++)
     {
         s32Ret = CmpDMAData((BSP_U32 *)g_pu8STUlData, (BSP_U32 *)stRd[i].u32OutPtr, stRd[i].u16PktLen);
-        /*Êı¾İ±È¶Ô*/
+        /*æ•°æ®æ¯”å¯¹*/
         if(!s32Ret)
         {
             g_u32UlError++;
@@ -2391,7 +2391,7 @@ BSP_S32 IpfUltestIntCb122(void)
 	u32RecivedData += stRd[i].u16PktLen;
     }
 
-    /*Í³¼Æ½á¹û*/
+    /*ç»Ÿè®¡ç»“æœ*/
     g_u32UlTotalDataNum += u32RecivedData/1024;
     g_u32UlTotalBDNum += u32Num;
     return OK;
@@ -2411,7 +2411,7 @@ BSP_VOID BSP_IPF_ST_122_Result(BSP_VOID)
 	BSP_IPF_ST_121_Result();
 }
 
-/*ÉÏĞĞÑ¹Á¦²âÊÔCºË×¼±¸º¯Êı*/
+/*ä¸Šè¡Œå‹åŠ›æµ‹è¯•Cæ ¸å‡†å¤‡å‡½æ•°*/
 BSP_S32 BSP_IPF_ST_121_INIT(BSP_VOID)
 {
     BSP_S32 s32Ret = 0;
@@ -2475,12 +2475,12 @@ BSP_S32 BSP_IPF_ST_121_INIT(BSP_VOID)
         IPF_PRINT(" TESTERROR    BSP_IPF_ConfigTimeout :%d\n",__LINE__);
         return ERROR;
     }
-    IPF_PRINT(" AºË¿ÉÒÔÊäÈëÑ¹Á¦²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Aæ ¸å¯ä»¥è¾“å…¥å‹åŠ›æµ‹è¯•ç”¨ä¾‹\n");
     return OK;
 }
 
 
-/*ÉÏĞĞÑ¹Á¦²âÊÔCºË×¼±¸º¯Êı*/
+/*ä¸Šè¡Œå‹åŠ›æµ‹è¯•Cæ ¸å‡†å¤‡å‡½æ•°*/
 BSP_S32 BSP_IPF_ST_122_INIT(BSP_VOID)
 {
 
@@ -2513,8 +2513,8 @@ BSP_S32 CmpFilterInfo(IPF_FILTER_CONFIG_S* p1, IPF_FILTER_CONFIG_S* p2)
     u32Len = sizeof(IPF_MATCH_INFO_S);
     u32Len = u32Len/4;
 
-    /*¹ıÂËÆ÷ÅäÖÃĞÅÏ¢Àï²»°üÀ¨ÏÂÒ»¸ö¹ıÂËÆ÷Óò£¬
-    ¸ÃÓòÓÉµ×Èí¶¯Ì¬·ÖÅä£¬¹Ê±È½ÏÊ±ÆÁ±Î¸ÃÓò*/
+    /*è¿‡æ»¤å™¨é…ç½®ä¿¡æ¯é‡Œä¸åŒ…æ‹¬ä¸‹ä¸€ä¸ªè¿‡æ»¤å™¨åŸŸï¼Œ
+    è¯¥åŸŸç”±åº•è½¯åŠ¨æ€åˆ†é…ï¼Œæ•…æ¯”è¾ƒæ—¶å±è”½è¯¥åŸŸ*/
     (p2t->unFltChain).Bits.u16NextIndex = (p1t->unFltChain).Bits.u16NextIndex;
 	
     for(i=0; i<u32Len; i++)
@@ -2655,7 +2655,7 @@ s32 check_filter_zero_status(IPF_FILTER_CHAIN_TYPE_E filter_serial)
     }
     return IPF_SUCCESS;
 }
-/* test  ²âÊÔÒ»¸öÉÏĞĞ¹ıÂËÆ÷ÉèÖÃºÍ²éÑ¯ */
+/* test  æµ‹è¯•ä¸€ä¸ªä¸Šè¡Œè¿‡æ»¤å™¨è®¾ç½®å’ŒæŸ¥è¯¢ */
 BSP_S32 BSP_IPF_ST_205(BSP_VOID)
 {
     IPF_FILTER_CONFIG_S stUlFilterInfo = {0};
@@ -2692,7 +2692,7 @@ BSP_S32 BSP_IPF_ST_205(BSP_VOID)
     stUlFilterInfo.stMatchInfo.unFltChain.Bits.u16NextIndex = 200;
     stUlFilterInfo.stMatchInfo.u32FltSpi = 4;
 
-    /* µÚÒ»´ÎÅäÖÃÉÏĞĞ£¬PS IDÊÇ50 */
+    /* ç¬¬ä¸€æ¬¡é…ç½®ä¸Šè¡Œï¼ŒPS IDæ˜¯50 */
     s32Ret = BSP_IPF_SetFilter(IPF_MODEM0_ULFC, &stUlFilterInfo, 1);
     if(s32Ret != IPF_SUCCESS)    
     {
@@ -2717,7 +2717,7 @@ BSP_S32 BSP_IPF_ST_205(BSP_VOID)
         return ERROR;   
     }
 
-    /* µÚ¶ş´ÎÅäÖÃÉÏĞĞ£¬PS IDÊÇ30 */
+    /* ç¬¬äºŒæ¬¡é…ç½®ä¸Šè¡Œï¼ŒPS IDæ˜¯30 */
     stUlFilterInfo.u32FilterID = 30;
     s32Ret = BSP_IPF_SetFilter(IPF_MODEM0_ULFC, &stUlFilterInfo, 1);
     if(s32Ret != IPF_SUCCESS)    
@@ -2750,7 +2750,7 @@ BSP_S32 BSP_IPF_ST_205(BSP_VOID)
         return ERROR;   
     }
 
-    /* ²éÑ¯Ã»ÓĞÅäÖÃµÄFilter·µ»Ø´íÎó */
+    /* æŸ¥è¯¢æ²¡æœ‰é…ç½®çš„Filterè¿”å›é”™è¯¯ */
     if(BSP_IPF_GetFilter(IPF_MODEM0_ULFC, 90, (IPF_FILTER_CONFIG_S *)(&stUlFilterInfo1)) != IPF_ERROR)
     {
         IPF_PRINT(" TESTERROR    BSP_IPF_GetFilter :%d\n",__LINE__);
@@ -2768,7 +2768,7 @@ BSP_S32 BSP_IPF_ST_205(BSP_VOID)
     return OK; 
 }
 
-/* test  ²âÊÔ2¸ö¹ıÂËÆ÷ÉèÖÃºÍ²éÑ¯(Ps ID Ò»ÖÂ ) */
+/* test  æµ‹è¯•2ä¸ªè¿‡æ»¤å™¨è®¾ç½®å’ŒæŸ¥è¯¢(Ps ID ä¸€è‡´ ) */
 BSP_S32 BSP_IPF_ST_206(BSP_VOID)
 {
     IPF_FILTER_CONFIG_S stUlFilterInfo[2];
@@ -2895,8 +2895,8 @@ BSP_S32 BSP_IPF_ST_206(BSP_VOID)
 }
 
 
-/* test  ²âÊÔÅäÖÃ150¸öÉÏĞĞ¹ıÂËÆ÷²¢²éÑ¯±È½Ï 150¸ö£¬µ÷ÓÃ¹ıÂËÆ÷ÀàĞÍ±êÖ¾£¬
-ÓÃµ½ÁËÀ©Õ¹¹ıÂËÆ÷ */
+/* test  æµ‹è¯•é…ç½®150ä¸ªä¸Šè¡Œè¿‡æ»¤å™¨å¹¶æŸ¥è¯¢æ¯”è¾ƒ 150ä¸ªï¼Œè°ƒç”¨è¿‡æ»¤å™¨ç±»å‹æ ‡å¿—ï¼Œ
+ç”¨åˆ°äº†æ‰©å±•è¿‡æ»¤å™¨ */
 BSP_S32 BSP_IPF_ST_207(BSP_VOID)
 {
     IPF_FILTER_CONFIG_S stUlFilterInfo[150];
@@ -3031,7 +3031,7 @@ BSP_S32 BSP_IPF_ST_207(BSP_VOID)
     return OK; 
 }
 
-/* test  ²âÊÔÅäÖÃ150¸öÏÂĞĞ¹ıÂËÆ÷È«²¿ÉèÖÃÎª»ù±¾²âÊÔ»ù±¾×ªÀ©Õ¹ÊÇ·ñÓĞĞ§£¬²¢²éÑ¯±È½Ï */
+/* test  æµ‹è¯•é…ç½®150ä¸ªä¸‹è¡Œè¿‡æ»¤å™¨å…¨éƒ¨è®¾ç½®ä¸ºåŸºæœ¬æµ‹è¯•åŸºæœ¬è½¬æ‰©å±•æ˜¯å¦æœ‰æ•ˆï¼Œå¹¶æŸ¥è¯¢æ¯”è¾ƒ */
 BSP_S32 BSP_IPF_ST_208(BSP_VOID)
 {
     IPF_FILTER_CONFIG_S stDlFilterInfo[150];
@@ -3126,7 +3126,7 @@ BSP_S32 BSP_IPF_ST_208(BSP_VOID)
     return OK; 
 }
 
-/* test  ²âÊÔ¹ıÂËÆ÷ÉèÖÃºÍ²éÑ¯  */
+/* test  æµ‹è¯•è¿‡æ»¤å™¨è®¾ç½®å’ŒæŸ¥è¯¢  */
 BSP_S32 BSP_IPF_ST_209(BSP_VOID)
 {
     IPF_FILTER_CONFIG_S stUlFilterInfo = {0};
@@ -3213,7 +3213,7 @@ BSP_S32 BSP_IPF_ST_209(BSP_VOID)
 
 }
 
-/*ÅäÖÃ»ù±¾À©Õ¹¹ıÂËÆ÷½»ÌæµÄ³¡¾°*/
+/*é…ç½®åŸºæœ¬æ‰©å±•è¿‡æ»¤å™¨äº¤æ›¿çš„åœºæ™¯*/
 BSP_S32 BSP_IPF_ST_210(BSP_VOID)
 {
     IPF_FILTER_CONFIG_S stUlFilterInfo[150];
@@ -3278,7 +3278,7 @@ BSP_S32 BSP_IPF_ST_210(BSP_VOID)
 }
 
 
-/*ÅäÖÃÂúÈ«»ù±¾¹ıÂËÆ÷³¡¾°*/
+/*é…ç½®æ»¡å…¨åŸºæœ¬è¿‡æ»¤å™¨åœºæ™¯*/
 BSP_S32 BSP_IPF_ST_211(BSP_VOID)
 {
     IPF_FILTER_CONFIG_S stUlFilterInfo[57];
@@ -3333,7 +3333,7 @@ BSP_S32 BSP_IPF_ST_211(BSP_VOID)
 
 
 
-/*ÅäÖÃ»ù±¾¼ÓÀ©Õ¹³¡¾°*/
+/*é…ç½®åŸºæœ¬åŠ æ‰©å±•åœºæ™¯*/
 BSP_S32 BSP_IPF_ST_212(u32 basic_num, u32 ext_num, u32 chain_head)
 {
     IPF_FILTER_CONFIG_S stUlFilterInfo[511];
@@ -3427,12 +3427,12 @@ void ipf_set_sche_mode(u32 sche_mode)
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_IPF, "\r ipf_set_sche_mode to BD AD RD \n");
     }
 
-    /* ÅäÖÃÉÏÏÂĞĞÍ¨µÀµÄAD·§Öµ*/
+    /* é…ç½®ä¸Šä¸‹è¡Œé€šé“çš„ADé˜€å€¼*/
     ipf_writel(control_info, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CTRL_OFFSET);
     return;
 }
 
-/* 2¸öTTF½áµã£¬Åä2¸öBD Ò»³¤Ò»¶Ì£¬ÓÃÓÚÑéÖ¤AD»ØÍËµÄÓĞĞ§ĞÔ*/
+/* 2ä¸ªTTFç»“ç‚¹ï¼Œé…2ä¸ªBD ä¸€é•¿ä¸€çŸ­ï¼Œç”¨äºéªŒè¯ADå›é€€çš„æœ‰æ•ˆæ€§*/
 BSP_S32 BSP_IPF_ST_300(BSP_VOID)
 {
     StreamIPv4Header stIPHeader;
@@ -3455,7 +3455,7 @@ BSP_S32 BSP_IPF_ST_300(BSP_VOID)
     {
         if(u32BDNum != IPF_DLBD_DESC_SIZE)
         {
-            IPF_PRINT(" %d :  ÏÂĞĞ¶ÓÁĞ²»Îª¿Õu32BDNum = %d,  u32CDNum = %d\n"
+            IPF_PRINT(" %d :  ä¸‹è¡Œé˜Ÿåˆ—ä¸ä¸ºç©ºu32BDNum = %d,  u32CDNum = %d\n"
             ,__LINE__, u32BDNum, u32CDNum);
         } 
     }
@@ -3503,7 +3503,7 @@ BSP_S32 BSP_IPF_ST_300(BSP_VOID)
     stDlPara[0].u16UsrField1= 1200;
     stDlPara[0].u16Len= 200;
 
-    /*ÉèÖĞ¶Ï£¬½ö°áÒÆ*/
+    /*è®¾ä¸­æ–­ï¼Œä»…æ¬ç§»*/
     stDlPara[0].u16Attribute= 7; 
 
     cacheFlush(DATA_CACHE,stSrcTtf.pData,1000);
@@ -3518,7 +3518,7 @@ BSP_S32 BSP_IPF_ST_300(BSP_VOID)
     stDlPara[1].u16UsrField1= 200;
     stDlPara[1].u16Len= 200;
 
-    /*ÉèÖĞ¶Ï£¬½ö°áÒÆ*/
+    /*è®¾ä¸­æ–­ï¼Œä»…æ¬ç§»*/
     stDlPara[1].u16Attribute= 7; 
 
     cacheFlush(DATA_CACHE,stSrcTtfShort.pData,200);
@@ -3541,7 +3541,7 @@ error1:
 }
 
 
-/* 1¸öTTF½áµã£¬Åä1¸öBD */
+/* 1ä¸ªTTFç»“ç‚¹ï¼Œé…1ä¸ªBD */
 BSP_S32 BSP_IPF_ST_301(BSP_VOID)
 {
     StreamIPv4Header stIPHeader;
@@ -3563,7 +3563,7 @@ BSP_S32 BSP_IPF_ST_301(BSP_VOID)
     {
         if(u32BDNum != IPF_DLBD_DESC_SIZE)
         {
-            IPF_PRINT(" %d :  ÏÂĞĞ¶ÓÁĞ²»Îª¿Õu32BDNum = %d,  u32CDNum = %d\n"
+            IPF_PRINT(" %d :  ä¸‹è¡Œé˜Ÿåˆ—ä¸ä¸ºç©ºu32BDNum = %d,  u32CDNum = %d\n"
             ,__LINE__, u32BDNum, u32CDNum);
         } 
     }
@@ -3604,7 +3604,7 @@ BSP_S32 BSP_IPF_ST_301(BSP_VOID)
     stDlPara.u16UsrField1= 200;
     stDlPara.u16Len= 1000;
 
-    /*ÉèÖĞ¶Ï£¬½ö°áÒÆ*/
+    /*è®¾ä¸­æ–­ï¼Œä»…æ¬ç§»*/
     stDlPara.u16Attribute= 7; 
 
     cacheFlush(DATA_CACHE,stSrcTtf.pData,1000);
@@ -3624,7 +3624,7 @@ error1:
     return ERROR;
 }
 
-/* 5¸öTTF½áµã£¬Åä1¸öBD */
+/* 5ä¸ªTTFç»“ç‚¹ï¼Œé…1ä¸ªBD */
 BSP_S32 BSP_IPF_ST_302(BSP_VOID)
 {
     StreamIPv4Header stIPHeader;
@@ -3653,7 +3653,7 @@ BSP_S32 BSP_IPF_ST_302(BSP_VOID)
     {
         if(u32BDNum != IPF_DLBD_DESC_SIZE)
         {
-            IPF_PRINT(" %d :  ÏÂĞĞ¶ÓÁĞ²»Îª¿Õu32BDNum = %d,  u32CDNum = %d\n"
+            IPF_PRINT(" %d :  ä¸‹è¡Œé˜Ÿåˆ—ä¸ä¸ºç©ºu32BDNum = %d,  u32CDNum = %d\n"
             ,__LINE__, u32BDNum, u32CDNum);
         } 
     }
@@ -3740,7 +3740,7 @@ BSP_S32 BSP_IPF_ST_302(BSP_VOID)
     stDlPara.u32Data = (BSP_U32)stSrcTtf;
     stDlPara.u16UsrField1= 200;
     stDlPara.u16Len= 1000;
-    /*ÉèÖĞ¶Ï£¬½ö°áÒÆ*/
+    /*è®¾ä¸­æ–­ï¼Œä»…æ¬ç§»*/
     stDlPara.u16Attribute= 7; 
 	
     s32Ret = BSP_IPF_ConfigDownFilter(u32Num, &stDlPara);
@@ -3771,7 +3771,7 @@ error4:
 
 }
 
-/* 5¸öTTF½áµã£¬Åä62¸öBD ½ö°áÒÆ*/
+/* 5ä¸ªTTFç»“ç‚¹ï¼Œé…62ä¸ªBD ä»…æ¬ç§»*/
 BSP_S32 BSP_IPF_ST_3031(BSP_VOID)
 {
     BSP_U32 BDNUM = 60;
@@ -3801,7 +3801,7 @@ BSP_S32 BSP_IPF_ST_3031(BSP_VOID)
     {
         if(u32BDNum != IPF_DLBD_DESC_SIZE)
         {
-            IPF_PRINT(" %d :  ÏÂĞĞ¶ÓÁĞ²»Îª¿Õu32BDNum = %d,  u32CDNum = %d\n"
+            IPF_PRINT(" %d :  ä¸‹è¡Œé˜Ÿåˆ—ä¸ä¸ºç©ºu32BDNum = %d,  u32CDNum = %d\n"
             ,__LINE__, u32BDNum, u32CDNum);
         } 
     }
@@ -3889,7 +3889,7 @@ BSP_S32 BSP_IPF_ST_3031(BSP_VOID)
 	    stDlPara[i].u16UsrField1= 200+i;
 	    stDlPara[i].u16Len= 1000;
 
-	    /*ÉèÖĞ¶Ï£¬½ö°áÒÆ*/
+	    /*è®¾ä¸­æ–­ï¼Œä»…æ¬ç§»*/
 	    stDlPara[i].u16Attribute= 6; 
 	}	
 	    stDlPara[61].u16Attribute= 7; 
@@ -3920,7 +3920,7 @@ error4:
 
 }
 
-/* 5¸öTTF½áµã£¬Åä31¸öBD ¹ıÂË°áÒÆ*/
+/* 5ä¸ªTTFç»“ç‚¹ï¼Œé…31ä¸ªBD è¿‡æ»¤æ¬ç§»*/
 BSP_S32 BSP_IPF_ST_3032(BSP_VOID)
 {
     BSP_U32 BDNUM =  31;
@@ -3950,7 +3950,7 @@ BSP_S32 BSP_IPF_ST_3032(BSP_VOID)
     {
         if(u32BDNum != IPF_DLBD_DESC_SIZE)
         {
-            IPF_PRINT(" %d :  ÏÂĞĞ¶ÓÁĞ²»Îª¿Õu32BDNum = %d,  u32CDNum = %d\n"
+            IPF_PRINT(" %d :  ä¸‹è¡Œé˜Ÿåˆ—ä¸ä¸ºç©ºu32BDNum = %d,  u32CDNum = %d\n"
             ,__LINE__, u32BDNum, u32CDNum);
         } 
     }
@@ -4038,7 +4038,7 @@ BSP_S32 BSP_IPF_ST_3032(BSP_VOID)
 	    stDlPara[i].u32Data = (BSP_U32)stSrcTtf;
 	    stDlPara[i].u16UsrField1= 200+i;
 	    stDlPara[i].u16Len= 1000;
-	    /*ÉèÖĞ¶Ï£¬½ö°áÒÆ*/
+	    /*è®¾ä¸­æ–­ï¼Œä»…æ¬ç§»*/
 	    stDlPara[i].u16Attribute= 0; 
 	}	
 	    stDlPara[29].u16Attribute= 1; 
@@ -4066,7 +4066,7 @@ error4:
 }
 
 
-/* 5¸öTTF½áµã£¬Åä60¸öBD */
+/* 5ä¸ªTTFç»“ç‚¹ï¼Œé…60ä¸ªBD */
 BSP_S32 BSP_IPF_ST_304(BSP_VOID)
 {
     BSP_U32 BDNUM = 60;
@@ -4115,7 +4115,7 @@ BSP_S32 BSP_IPF_ST_304(BSP_VOID)
     {
         if(u32BDNum != IPF_DLBD_DESC_SIZE)
         {
-            IPF_PRINT(" %d :  ÏÂĞĞ¶ÓÁĞ²»Îª¿Õu32BDNum = %d,  u32CDNum = %d\n"
+            IPF_PRINT(" %d :  ä¸‹è¡Œé˜Ÿåˆ—ä¸ä¸ºç©ºu32BDNum = %d,  u32CDNum = %d\n"
             ,__LINE__, u32BDNum, u32CDNum);
         } 
     }
@@ -4303,7 +4303,7 @@ BSP_S32 BSP_IPF_DlSend_n2(BSP_U32 SendTimes,BSP_U32 SendNum)
 		    stDlPara[i].u32Data = (BSP_U32)stSrcTtf;
 		    stDlPara[i].u16UsrField1= 200;
 		    stDlPara[i].u16Len= u32Len*5;
-		    /*ÉèÖĞ¶Ï£¬½ö°áÒÆ*/
+		    /*è®¾ä¸­æ–­ï¼Œä»…æ¬ç§»*/
 		    stDlPara[i].u16Attribute= 0x6; 
 		}	
 		stDlPara[SendNum-1].u16Attribute= 0x7; 
@@ -4348,7 +4348,7 @@ BSP_S32 BSP_IPF_ST_321(BSP_VOID)
         IPF_PRINT(" TESTERROR    IPF_ST_DL_INIT :%d\n",__LINE__);
         return ERROR;
     }
-	/*ÆğÒ»¸ö½ø³Ì£¬²»Í£µØ·¢¶«Î÷*/
+	/*èµ·ä¸€ä¸ªè¿›ç¨‹ï¼Œä¸åœåœ°å‘ä¸œè¥¿*/
     g_IpfUlTaskId = taskSpawn("IpfDlTask1", 132, 2000, 20000, (FUNCPTR) BSP_IPF_DlSend,
                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 return OK;
@@ -4362,7 +4362,7 @@ BSP_S32 BSP_IPF_ST_321_n2(BSP_U32 sendtimes,BSP_U32 sendnum)
         IPF_PRINT(" TESTERROR    IPF_ST_DL_INIT :%d\n",__LINE__);
         return ERROR;
     }
-	/*ÆğÒ»¸ö½ø³Ì£¬²»Í£µØ·¢¶«Î÷*/
+	/*èµ·ä¸€ä¸ªè¿›ç¨‹ï¼Œä¸åœåœ°å‘ä¸œè¥¿*/
     g_IpfUlTaskId = taskSpawn("IpfDlTask1", 132, 2000, 20000, (FUNCPTR) BSP_IPF_DlSend_n2,
                                 sendtimes, sendnum, 0, 0, 0, 0, 0, 0, 0, 0);
 return OK;
@@ -4370,7 +4370,7 @@ return OK;
 
 
 
-/* 1¸öTTF½áµã£¬Åä1¸öBD ÓÃÓÚÑéÖ¤ADQµÄrptrÒÆ¶¯ÊÇ·ñ³É¹¦ĞŞÕı */
+/* 1ä¸ªTTFç»“ç‚¹ï¼Œé…1ä¸ªBD ç”¨äºéªŒè¯ADQçš„rptrç§»åŠ¨æ˜¯å¦æˆåŠŸä¿®æ­£ */
 BSP_S32 BSP_IPF_ST_331(BSP_VOID)
 {
     StreamIPv4Header stIPHeader;
@@ -4393,7 +4393,7 @@ BSP_S32 BSP_IPF_ST_331(BSP_VOID)
     {
         if(u32BDNum != IPF_DLBD_DESC_SIZE)
         {
-            IPF_PRINT(" %d :  ÏÂĞĞ¶ÓÁĞ²»Îª¿Õu32BDNum = %d,  u32CDNum = %d\n"
+            IPF_PRINT(" %d :  ä¸‹è¡Œé˜Ÿåˆ—ä¸ä¸ºç©ºu32BDNum = %d,  u32CDNum = %d\n"
             ,__LINE__, u32BDNum, u32CDNum);
         } 
     }
@@ -4428,7 +4428,7 @@ BSP_S32 BSP_IPF_ST_331(BSP_VOID)
 	    stDlPara[i].u16UsrField1= 200;
 	    stDlPara[i].u16Len= stSrcTtf[i].usUsed;
 
-	    /*ÉèÖĞ¶Ï£¬½ö°áÒÆ*/
+	    /*è®¾ä¸­æ–­ï¼Œä»…æ¬ç§»*/
 	    stDlPara[i].u16Attribute= 7; 
 	    cacheFlush(DATA_CACHE,stSrcTtf[i].pData,stSrcTtf[i].usUsed);
     }
@@ -4516,7 +4516,7 @@ IPF_UL_S g_stIpfUl = {0};
 IPF_DL_S g_stIpfDl = {0};
 
 
-    /* ³õÊ¼»¯È«¾Ö½á¹¹Ìå */
+    /* åˆå§‹åŒ–å…¨å±€ç»“æ„ä½“ */
     memset((BSP_VOID*)IPF_ULBD_MEM_ADDR, 0x0, SHM_MEM_IPF_SIZE - IPF_DLDESC_SIZE);/* [false alarm]:fortify disable */
 
     g_stIpfUl.pstIpfBDQ = (IPF_BD_DESC_S*)IPF_ULBD_MEM_ADDR;
@@ -4537,19 +4537,19 @@ IPF_DL_S g_stIpfDl = {0};
     g_stIpfDl.u32IdleBd = IPF_DLBD_DESC_SIZE;
 	
     
-    /* ÅäÖÃÀ©Õ¹¹ıÂËÆ÷µÄÆğÊ¼µØÖ· */	
+    /* é…ç½®æ‰©å±•è¿‡æ»¤å™¨çš„èµ·å§‹åœ°å€ */	
     ipf_writel((BSP_U32)IPF_EXT_FILTER_ADDR, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_EF_BADDR_OFFSET);
     
-    /* ÅäÖÃ³¬Ê±ÅäÖÃ¼Ä´æÆ÷£¬Ê¹ÄÜ³¬Ê±ÖĞ¶Ï£¬ÉèÖÃ³¬Ê±Ê±¼ä */
+    /* é…ç½®è¶…æ—¶é…ç½®å¯„å­˜å™¨ï¼Œä½¿èƒ½è¶…æ—¶ä¸­æ–­ï¼Œè®¾ç½®è¶…æ—¶æ—¶é—´ */
     u32Timeout = TIME_OUT_CFG | (TIME_OUT_ENABLE);
     ipf_writel(u32Timeout, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_TIME_OUT_OFFSET);
 
-    /* ÅäÖÃÊ±ÖÓÃÅ¿ØÅäÖÃ¼Ä´æÆ÷£¬ÉèÖÃÎª×Ô¶¯ÃÅ¿Ø*/
+    /* é…ç½®æ—¶é’Ÿé—¨æ§é…ç½®å¯„å­˜å™¨ï¼Œè®¾ç½®ä¸ºè‡ªåŠ¨é—¨æ§*/
     u32IntGate = GATE_CFG;
 #if (defined(BSP_CONFIG_HI3630))
  //   ipf_writel(u32IntGate, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_GATE_OFFSET);/* [false alarm]:fortify disable */
 #endif
-    /* Çå³ıÉÏÏÂĞĞ¶ÓÁĞ */
+    /* æ¸…é™¤ä¸Šä¸‹è¡Œé˜Ÿåˆ— */
     u32ChanCtrl[IPF_CHANNEL_UP] = ipf_readl(HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_CTRL_OFFSET);
     u32ChanCtrl[IPF_CHANNEL_UP] |= 0x30;
     ipf_writel(u32ChanCtrl[IPF_CHANNEL_UP], HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_CTRL_OFFSET);
@@ -4558,27 +4558,27 @@ IPF_DL_S g_stIpfDl = {0};
     u32ChanCtrl[IPF_CHANNEL_DOWN] |= 0x30;
     ipf_writel(u32ChanCtrl[IPF_CHANNEL_DOWN], HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_CTRL_OFFSET);
 
-    /* ÅäÖÃÉÏĞĞÍ¨µÀµÄAD¡¢BDºÍRDÉî¶È */
+    /* é…ç½®ä¸Šè¡Œé€šé“çš„ADã€BDå’ŒRDæ·±åº¦ */
     ipf_writel(u32BDSize[IPF_CHANNEL_UP]-1, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_BDQ_SIZE_OFFSET);
     ipf_writel(u32RDSize[IPF_CHANNEL_UP]-1, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_RDQ_SIZE_OFFSET);
     ipf_writel(u32ADCtrl[IPF_CHANNEL_UP], HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_ADQ_CTRL_OFFSET);
 
-    /* ÉÏĞĞÍ¨µÀµÄBDºÍRDÆğÊ¼µØÖ·*/    
+    /* ä¸Šè¡Œé€šé“çš„BDå’ŒRDèµ·å§‹åœ°å€*/    
     ipf_writel((BSP_U32)g_stIpfUl.pstIpfBDQ, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_BDQ_BADDR_OFFSET);
     ipf_writel((BSP_U32)g_stIpfUl.pstIpfRDQ, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_RDQ_BADDR_OFFSET);
     ipf_writel((BSP_U32)g_stIpfUl.pstIpfADQ0, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_ADQ0_BASE_OFFSET);
     ipf_writel((BSP_U32)g_stIpfUl.pstIpfADQ1, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_ADQ1_BASE_OFFSET);
 	
-    /* ÅäÖÃÖĞ¶ÏÆÁ±Î,Ö»¿ª5¸öÖĞ¶Ï£¬½á¹ûÉÏ±¨£¬½á¹û³¬Ê±£¬RDÏÂÒç£¬AD0¡¢AD1¿Õ */
-    u32IntMask0 = IPF_INT_OPEN0;  /* 0ºÅÎªModem CPU */
+    /* é…ç½®ä¸­æ–­å±è”½,åªå¼€5ä¸ªä¸­æ–­ï¼Œç»“æœä¸ŠæŠ¥ï¼Œç»“æœè¶…æ—¶ï¼ŒRDä¸‹æº¢ï¼ŒAD0ã€AD1ç©º */
+    u32IntMask0 = IPF_INT_OPEN0;  /* 0å·ä¸ºModem CPU */
     u32IntMask1 = IPF_INT_OPEN1;
     ipf_writel(u32IntMask0, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_INT_MASK0_OFFSET);
     ipf_writel(u32IntMask1, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_INT_MASK1_OFFSET);
 
-    /* ÇåÖĞ¶Ï */
+    /* æ¸…ä¸­æ–­ */
     u32IntStatus = ipf_readl(HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_INT_STATE_OFFSET);
     ipf_writel(u32IntStatus, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_INT_STATE_OFFSET);
-    /*¿ªDMAÍ¨µÀµÄOutstanding¶ÁĞ´*/
+    /*å¼€DMAé€šé“çš„Outstandingè¯»å†™*/
     ipf_writel(u32DMAOutstanding, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_DMA_CTRL1_OFFSET);
 
 
@@ -4711,7 +4711,7 @@ BSP_S32 ipf_dl_stress_test_routine(BSP_S32 dtime)
 		    stDlPara[i].u32Data = (u32)stSrcTtf;
 		    stDlPara[i].u16UsrField1= 200+i;
 		    stDlPara[i].u16Len= 900;
-		    /*ÉèÖĞ¶Ï£¬½ö°áÒÆ*/
+		    /*è®¾ä¸­æ–­ï¼Œä»…æ¬ç§»*/
 		    stDlPara[i].u16Attribute= 6; 
 		}	
 		stDlPara[u32BDNum-3].u16Attribute= 7; 
@@ -4767,14 +4767,14 @@ BSP_S32 ipf_dl_stress_test_stop()
 
 #endif
 
-/*ipfÊı´«¸´Î»»Øµ÷²âÊÔ£¬
-Ö÷ÒªÓÃÓÚ²âÊÔÊı´«Í£Ö¹ÊÇ·ñ³É¹¦
-½øĞĞÊı´«£¬Ô¤ÆÚ·µ»ØÊ§°Ü*/
+/*ipfæ•°ä¼ å¤ä½å›è°ƒæµ‹è¯•ï¼Œ
+ä¸»è¦ç”¨äºæµ‹è¯•æ•°ä¼ åœæ­¢æ˜¯å¦æˆåŠŸ
+è¿›è¡Œæ•°ä¼ ï¼Œé¢„æœŸè¿”å›å¤±è´¥*/
 BSP_VOID BSP_IPF_ST_501_CCORE(BSP_VOID)
 {
     IPF_CONFIG_DLPARAM_S stDlPara[IPF_ULBD_DESC_SIZE];	
     BSP_S32 s32Ret;
-    /*µ÷ÓÃConfigUpFilter*/
+    /*è°ƒç”¨ConfigUpFilter*/
     s32Ret = BSP_IPF_ConfigDownFilter(5, stDlPara);
 
     if(s32Ret != BSP_ERR_IPF_CCORE_RESETTING)
@@ -4855,7 +4855,7 @@ BSP_S32 BSP_IPF_ST_100(BSP_VOID)
     stUlPara[0].u16UsrField1 = 0;
     stUlPara[0].u32UsrField2 = 0x102;
     stUlPara[0].u32UsrField3 = 0;
-    /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+    /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
     stUlPara[0].u16Attribute = 0x06;
 	
     pBuff = (BSP_VOID *)dma_map_single(&(balong_device_ipf.dev), (BSP_VOID *)pu8shortData, u16shortLen, DMA_TO_DEVICE);        
@@ -4864,7 +4864,7 @@ BSP_S32 BSP_IPF_ST_100(BSP_VOID)
     stUlPara[1].u16UsrField1 = 0;
     stUlPara[1].u32UsrField2 = 0x102;
     stUlPara[1].u32UsrField3 = 0;
-    /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+    /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
     stUlPara[1].u16Attribute = 0x06;
 	
     s32Ret = BSP_IPF_ConfigUpFilter(2, stUlPara);
@@ -4879,7 +4879,7 @@ BSP_S32 BSP_IPF_ST_100(BSP_VOID)
 }
 
 
-/*·¢ËÍº¯Êı*/
+/*å‘é€å‡½æ•°*/
 BSP_S32 BSP_IPF_ST_101(BSP_VOID)
 {
     IPF_CONFIG_ULPARAM_S stUlPara[IPF_ULBD_DESC_SIZE];
@@ -4948,7 +4948,7 @@ BSP_S32 BSP_IPF_ST_101(BSP_VOID)
     stUlPara[0].u16UsrField1 = 0;
     stUlPara[0].u32UsrField2 = 0x101;
     stUlPara[0].u32UsrField3= 0;
-    /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+    /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
     stUlPara[0].u16Attribute = 0x6;
 	
     for(i = 1; i < IPF_ULBD_DESC_SIZE; i++)
@@ -4959,7 +4959,7 @@ BSP_S32 BSP_IPF_ST_101(BSP_VOID)
     stUlPara[IPF_ULBD_DESC_SIZE-1].u32UsrField3 = 1;
     stUlPara[31].u16Attribute= 0x7;
 
-    /*µ÷ÓÃConfigUpFilter*/
+    /*è°ƒç”¨ConfigUpFilter*/
     s32Ret = BSP_IPF_ConfigUpFilter(34, stUlPara);
 
     if(s32Ret != IPF_SUCCESS)
@@ -5037,7 +5037,7 @@ BSP_S32 BSP_IPF_ST_102(BSP_VOID)
     stUlPara[0].u16UsrField1 = 0;
     stUlPara[0].u32UsrField2 = 0x102;
     stUlPara[0].u32UsrField3 = 0;
-    /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+    /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
     stUlPara[0].u16Attribute = 0x06;
 
     pBuff = (BSP_VOID *)dma_map_single(&(balong_device_ipf.dev), (BSP_VOID *)pu8shortData, u16shortLen, DMA_TO_DEVICE);        
@@ -5046,7 +5046,7 @@ BSP_S32 BSP_IPF_ST_102(BSP_VOID)
     stUlPara[1].u16UsrField1 = 0;
     stUlPara[1].u32UsrField2 = 0x102;
     stUlPara[1].u32UsrField3 = 0;
-    /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+    /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
     stUlPara[1].u16Attribute = 0x7;
 	
     s32Ret = BSP_IPF_ConfigUpFilter(2, stUlPara);
@@ -5146,7 +5146,7 @@ for(i=0;i<IPF_ULBD_DESC_SIZE;i++)
     stUlPara[i].u16UsrField1 = 0;
     stUlPara[i].u32UsrField2 = 0x102;
     stUlPara[i].u32UsrField3 = 0;
-    /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+    /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
     stUlPara[i].u16Attribute = 0x06;
 }		
     stUlPara[u32sendnum-2].u16Attribute = 0x07;
@@ -5219,7 +5219,7 @@ BSP_S32 BSP_IPF_ST_103(BSP_VOID)
         stUlPara[i].u16UsrField1 = 0;
         stUlPara[i].u32UsrField2 = 0x102;
         stUlPara[i].u32UsrField3 = 0;
-        /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+        /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
         stUlPara[i].u16Attribute = 0x06;
     }		
     stUlPara[31].u16Attribute = 0x07;
@@ -5234,7 +5234,7 @@ BSP_S32 BSP_IPF_ST_103(BSP_VOID)
     return OK;    
 }
 
-/*·¢ËÍº¯Êı*/
+/*å‘é€å‡½æ•°*/
 BSP_S32 BSP_IPF_ST_104(BSP_VOID)
 {
     IPF_CONFIG_ULPARAM_S stUlPara[IPF_ULBD_DESC_SIZE];
@@ -5303,7 +5303,7 @@ BSP_S32 BSP_IPF_ST_104(BSP_VOID)
     stUlPara[0].u16UsrField1 = 0;
     stUlPara[0].u32UsrField2 = 0x101;
     stUlPara[0].u32UsrField3= 0;
-    /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+    /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
     stUlPara[0].u16Attribute = 0x6;
 	
     for(i = 1; i < IPF_ULBD_DESC_SIZE; i++)
@@ -5314,7 +5314,7 @@ BSP_S32 BSP_IPF_ST_104(BSP_VOID)
     stUlPara[IPF_ULBD_DESC_SIZE-1].u32UsrField3 = 1;
     stUlPara[31].u16Attribute= 0x7;
 
-    /*µ÷ÓÃConfigUpFilter£¬Éè¶¨ÖÕ¶ËÉÏ±¨Î»*/
+    /*è°ƒç”¨ConfigUpFilterï¼Œè®¾å®šç»ˆç«¯ä¸ŠæŠ¥ä½*/
     s32Ret = BSP_IPF_ConfigUpFilter(34, stUlPara);
 
     if(s32Ret != IPF_SUCCESS)
@@ -5323,7 +5323,7 @@ BSP_S32 BSP_IPF_ST_104(BSP_VOID)
         kfree(pu8Data);
         return BSP_ERROR;
     }    
-    /*µ÷ÓÃConfigUpFilter£¬Ã»ÓĞÉè¶¨ÖÕ¶ËÉÏ±¨Î»*/
+    /*è°ƒç”¨ConfigUpFilterï¼Œæ²¡æœ‰è®¾å®šç»ˆç«¯ä¸ŠæŠ¥ä½*/
     s32Ret = BSP_IPF_ConfigUpFilter(34, stUlPara);
 
     if(s32Ret != IPF_SUCCESS)
@@ -5335,7 +5335,7 @@ BSP_S32 BSP_IPF_ST_104(BSP_VOID)
     return OK;    
 }
 
-/*·¢ËÍº¯Êı*/
+/*å‘é€å‡½æ•°*/
 BSP_S32 BSP_IPF_ST_105(BSP_VOID)
 {
     IPF_CONFIG_ULPARAM_S stUlPara[IPF_ULBD_DESC_SIZE];
@@ -5404,7 +5404,7 @@ BSP_S32 BSP_IPF_ST_105(BSP_VOID)
     stUlPara[0].u16UsrField1 = 0;
     stUlPara[0].u32UsrField2 = 0x101;
     stUlPara[0].u32UsrField3= 0;
-    /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+    /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
     stUlPara[0].u16Attribute = 0x6;
 	
     for(i = 1; i < IPF_ULBD_DESC_SIZE; i++)
@@ -5415,7 +5415,7 @@ BSP_S32 BSP_IPF_ST_105(BSP_VOID)
     stUlPara[IPF_ULBD_DESC_SIZE-1].u32UsrField3 = 1;
     stUlPara[31].u16Attribute= 0x7;
 
-    /*µ÷ÓÃConfigUpFilter£¬Éè¶¨ÖÕ¶ËÉÏ±¨Î»*/
+    /*è°ƒç”¨ConfigUpFilterï¼Œè®¾å®šç»ˆç«¯ä¸ŠæŠ¥ä½*/
     s32Ret = BSP_IPF_ConfigUpFilter(30, stUlPara);
 
     if(s32Ret != IPF_SUCCESS)
@@ -5424,7 +5424,7 @@ BSP_S32 BSP_IPF_ST_105(BSP_VOID)
         kfree(pu8Data);
         return BSP_ERROR;
     }    
-    /*µ÷ÓÃConfigUpFilter£¬Ã»ÓĞÉè¶¨ÖÕ¶ËÉÏ±¨Î»*/
+    /*è°ƒç”¨ConfigUpFilterï¼Œæ²¡æœ‰è®¾å®šç»ˆç«¯ä¸ŠæŠ¥ä½*/
     s32Ret = BSP_IPF_ConfigUpFilter(30, stUlPara);
 
     if(s32Ret != IPF_SUCCESS)
@@ -5436,7 +5436,7 @@ BSP_S32 BSP_IPF_ST_105(BSP_VOID)
     return OK;    
 }
 
-/*ÒÔÏÂ´úÂë²âÊÔ¹ıÂË°áÒÆ*/
+/*ä»¥ä¸‹ä»£ç æµ‹è¯•è¿‡æ»¤æ¬ç§»*/
 BSP_S32 BSP_IPF_ST_111(BSP_VOID)
 {
     IPF_CONFIG_ULPARAM_S stUlPara[IPF_ULBD_DESC_SIZE];
@@ -5714,7 +5714,7 @@ BSP_S32 BSP_IPF_ST_113(BSP_VOID)
     return OK;
 }
 
-/*dpm²âÊÔ*/
+/*dpmæµ‹è¯•*/
 #ifdef CONFIG_PM
 BSP_S32 BSP_IPF_ST_130(BSP_VOID)
 {
@@ -5783,7 +5783,7 @@ BSP_S32 BSP_IPF_UlSend(BSP_VOID)
         stUlPara[i].u16UsrField1 = 0;
         stUlPara[i].u32UsrField2 = 0x102;
         stUlPara[i].u32UsrField3 = 0;
-        /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+        /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
         stUlPara[i].u16Attribute = 0x06;
     }		
 
@@ -5806,7 +5806,7 @@ BSP_S32 BSP_IPF_UlSend(BSP_VOID)
     return OK;    
 }
 
-/*ÉÏĞĞÊı´«²âÊÔ£¬¹æ±Ü¶ÓÍ·×èÈû°æ±¾*/
+/*ä¸Šè¡Œæ•°ä¼ æµ‹è¯•ï¼Œè§„é¿é˜Ÿå¤´é˜»å¡ç‰ˆæœ¬*/
 BSP_S32 BSP_IPF_UlSend122(BSP_VOID)
 {
     IPF_CONFIG_ULPARAM_S stUlPara[IPF_ULBD_DESC_SIZE];
@@ -5859,7 +5859,7 @@ BSP_S32 BSP_IPF_UlSend122(BSP_VOID)
         stUlPara[i].u16UsrField1 = 0;
         stUlPara[i].u32UsrField2 = 0x102;
         stUlPara[i].u32UsrField3 = 0;
-        /*Á´0Ö»°áÒÆÎŞÖĞ¶Ï*/
+        /*é“¾0åªæ¬ç§»æ— ä¸­æ–­*/
         stUlPara[i].u16Attribute = 0x06;
     }		
 
@@ -5900,7 +5900,7 @@ BSP_S32 BSP_IPF_UlSend122(BSP_VOID)
 BSP_S32 BSP_IPF_ST_121(BSP_VOID)
 {
 
-    /*ÆğÒ»¸ö½ø³Ì£¬²»Í£µØ·¢¶«Î÷*/
+    /*èµ·ä¸€ä¸ªè¿›ç¨‹ï¼Œä¸åœåœ°å‘ä¸œè¥¿*/
     g_IpfDlTaskId = kthread_run((IPFTHREADFN)BSP_IPF_UlSend, BSP_NULL, "IpfUlTask");  
     return OK;
 
@@ -5911,13 +5911,13 @@ BSP_S32 BSP_IPF_ST_121(BSP_VOID)
 BSP_S32 BSP_IPF_ST_122(BSP_VOID)
 {
 
-    /*ÆğÒ»¸ö½ø³Ì£¬²»Í£µØ·¢¶«Î÷*/
+    /*èµ·ä¸€ä¸ªè¿›ç¨‹ï¼Œä¸åœåœ°å‘ä¸œè¥¿*/
     g_IpfDlTaskId = kthread_run((IPFTHREADFN)BSP_IPF_UlSend122, BSP_NULL, "IpfUlTask");  
     return OK;
 
 }
 
-/*·¢ËÍº¯Êı*/
+/*å‘é€å‡½æ•°*/
 BSP_S32 BSP_IPF_ST_131(BSP_VOID)
 {
     IPF_CONFIG_ULPARAM_S stUlPara[IPF_ULBD_DESC_SIZE];
@@ -5968,7 +5968,7 @@ BSP_S32 BSP_IPF_ST_131(BSP_VOID)
     }
     stUlPara[1].u16Len = 200;
 
-    /*µ÷ÓÃConfigUpFilter*/
+    /*è°ƒç”¨ConfigUpFilter*/
     s32Ret = BSP_IPF_ConfigUpFilter(2, stUlPara);
     if(s32Ret != IPF_SUCCESS)
     {
@@ -6189,7 +6189,7 @@ BSP_S32 BSP_IPF_ST_300_INIT(BSP_VOID)
         IPF_PRINT(" TESTERROR    BSP_IPF_RegisterWakeupDlCb :%d\n",__LINE__);
         return ERROR;
     }   
-    IPF_PRINT(" MºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Mæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
 
     
     return OK;
@@ -6251,7 +6251,7 @@ BSP_S32 BSP_IPF_ST_301_INIT(BSP_VOID)
         IPF_PRINT(" TESTERROR    BSP_IPF_RegisterWakeupDlCb :%d\n",__LINE__);
         return ERROR;
     }   
-    IPF_PRINT(" MºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Mæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
 
     
     return OK;
@@ -6365,7 +6365,7 @@ BSP_S32 BSP_IPF_ST_302_INIT(BSP_VOID)
         IPF_PRINT(" TESTERROR    BSP_IPF_RegisterWakeupDlCb :%d\n",__LINE__);
         return ERROR;
     }   
-    IPF_PRINT(" MºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Mæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
 	kfree(pu8IPData1);
 	kfree(pu8IPData2);
 	kfree(pu8IPData3);
@@ -6410,7 +6410,7 @@ BSP_S32 BSP_IPF_ST_304_INIT(BSP_VOID)
         IPF_PRINT(" TESTERROR    BSP_IPF_RegisterWakeupDlCb :%d\n",__LINE__);
         return ERROR;
     }   
-    IPF_PRINT(" MºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Mæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
 
     
     return OK;
@@ -6498,7 +6498,7 @@ BSP_S32 IpfDltestIntCb(void)
     IPF_RD_DESC_S stRd[IPF_DLRD_DESC_SIZE];
     BSP_U32	u32AD0wptr;
     BSP_U32	u32AD1wptr;
-	/*´¦ÀíRD*/
+	/*å¤„ç†RD*/
         BSP_IPF_GetDlRd(&u32Num, stRd);
 #if 1
         for(j = 0; j < u32Num; j++)
@@ -6514,7 +6514,7 @@ BSP_S32 IpfDltestIntCb(void)
 
 		s32Ret = CmpDMAData((BSP_U32 *)g_pu8STDlData, (BSP_U32 *)phys_to_virt((unsigned long)stRd[j].u32OutPtr), stRd[j].u16PktLen);
 		u32RecivedData += stRd[j].u16PktLen;
-		/*Êı¾İ±È¶Ô*/
+		/*æ•°æ®æ¯”å¯¹*/
 		if(0 != s32Ret)
 		{
 			g_u32DlError++;
@@ -6550,7 +6550,7 @@ BSP_S32 IpfDltestIntCb(void)
         }
 #endif
 	u32RecivedData = u32RecivedData/1024;
-	/*Í³¼Æ½á¹û*/
+	/*ç»Ÿè®¡ç»“æœ*/
 	g_u32DlTotalDataNum += u32RecivedData;
 	g_u32DlTotalBDNum += u32Num;
 	s32Ret = BSP_IPF_GetDlAdNum(&u32AD0Num,&u32AD1Num);
@@ -6641,7 +6641,7 @@ BSP_VOID BSP_IPF_ST_321_Result(BSP_VOID)
 		IPF_PRINT(" g_u32DlTotalBDNum(BDs) :%d\n",g_u32DlTotalBDNum);
 }
 
-/*ÏÂĞĞÑ¹Á¦²âÊÔAºË×¼±¸º¯Êı*/
+/*ä¸‹è¡Œå‹åŠ›æµ‹è¯•Aæ ¸å‡†å¤‡å‡½æ•°*/
 BSP_S32 BSP_IPF_ST_321_INIT(BSP_VOID)
 {
     BSP_S32 s32Ret = 0;
@@ -6760,7 +6760,7 @@ BSP_S32 BSP_IPF_ST_321_INIT(BSP_VOID)
         return ERROR;
     }
 
-    IPF_PRINT(" MºË¿ÉÒÔÊäÈë²âÊÔÓÃÀı\n");
+    IPF_PRINT(" Mæ ¸å¯ä»¥è¾“å…¥æµ‹è¯•ç”¨ä¾‹\n");
 	kfree(pu8IPData1);
 	kfree(pu8IPData2);
 	kfree(pu8IPData3);
@@ -6780,8 +6780,8 @@ error1:
    
 }
 
-/*ipfÊı´«¸´Î»»Øµ÷²âÊÔ£¬³õÊ¼»¯ipf
-ÓÃÓÚ²âÊÔÊı´«Í£Ö¹ÊÇ·ñ³É¹¦*/
+/*ipfæ•°ä¼ å¤ä½å›è°ƒæµ‹è¯•ï¼Œåˆå§‹åŒ–ipf
+ç”¨äºæµ‹è¯•æ•°ä¼ åœæ­¢æ˜¯å¦æˆåŠŸ*/
 BSP_VOID BSP_IPF_ST_501_INIT(BSP_U32 reset_flag)
 {
 	if(0 == reset_flag)
@@ -6798,14 +6798,14 @@ BSP_VOID BSP_IPF_ST_501_INIT(BSP_U32 reset_flag)
 
 
 
-/*ipfÊı´«¸´Î»»Øµ÷²âÊÔ£¬
-ÓÃÓÚ²âÊÔÊı´«Í£Ö¹ÊÇ·ñ³É¹¦
-½øĞĞÊı´«£¬Ô¤ÆÚ·µ»ØÊ§°Ü*/
+/*ipfæ•°ä¼ å¤ä½å›è°ƒæµ‹è¯•ï¼Œ
+ç”¨äºæµ‹è¯•æ•°ä¼ åœæ­¢æ˜¯å¦æˆåŠŸ
+è¿›è¡Œæ•°ä¼ ï¼Œé¢„æœŸè¿”å›å¤±è´¥*/
 BSP_VOID BSP_IPF_ST_501_ACORE(BSP_VOID)
 {
     IPF_CONFIG_ULPARAM_S stUlPara[IPF_ULBD_DESC_SIZE];	
     BSP_S32 s32Ret;
-    /*µ÷ÓÃConfigUpFilter*/
+    /*è°ƒç”¨ConfigUpFilter*/
     s32Ret = BSP_IPF_ConfigUpFilter(5, stUlPara);
 
     if(s32Ret != BSP_ERR_IPF_CCORE_RESETTING)
@@ -6824,7 +6824,7 @@ void print_ad_status(void)
 
 	u32 current_ad_wptr,current_ad_rptr,current_ad_offset,current_ad_state;
 
-	/*´òÓ¡ÏÂĞĞAD¶ÁĞ´Ö¸ÕëÎ»ÖÃ£¬È·¶¨Ô¤¶Á×´Ì¬*/
+	/*æ‰“å°ä¸‹è¡ŒADè¯»å†™æŒ‡é’ˆä½ç½®ï¼Œç¡®å®šé¢„è¯»çŠ¶æ€*/
 	current_ad_wptr = ipf_readl(HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ0_WPTR_OFFSET);
 	current_ad_rptr = ipf_readl(HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ0_RPTR_OFFSET);
 	current_ad_state = ipf_readl(HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ0_STAT_OFFSET);
@@ -6863,11 +6863,11 @@ void print_ad_status(void)
 
 }
 
-/*ipfÊı´«¸´Î»»Øµ÷²âÊÔ£¬
-¼ì²âÄÚ´æÊ¹ÓÃÇé¿ö£¬²é¿´ÄÜ·ñÕı³£ÊÍ·Å
-ÔÚÓÃÀıÖĞ·´¸´·ÖÅäºÍÊÍ·ÅÄÚ´æ£¬
-×¢Òâ¸²³¡¾°(»ØÍË¸öÊı£¬»ØÍËµ½0Ö®Ç°)
-ÓÃÀıÊ¹ÓÃ¿ª¹ØADµÄ·½Ê½µ÷ÕûAD¶ÁĞ´Ö¸Õë*/
+/*ipfæ•°ä¼ å¤ä½å›è°ƒæµ‹è¯•ï¼Œ
+æ£€æµ‹å†…å­˜ä½¿ç”¨æƒ…å†µï¼ŒæŸ¥çœ‹èƒ½å¦æ­£å¸¸é‡Šæ”¾
+åœ¨ç”¨ä¾‹ä¸­åå¤åˆ†é…å’Œé‡Šæ”¾å†…å­˜ï¼Œ
+æ³¨æ„è¦†åœºæ™¯(å›é€€ä¸ªæ•°ï¼Œå›é€€åˆ°0ä¹‹å‰)
+ç”¨ä¾‹ä½¿ç”¨å¼€å…³ADçš„æ–¹å¼è°ƒæ•´ADè¯»å†™æŒ‡é’ˆ*/
 	IPF_AD_DESC_S ad0_buffer[IPF_DLAD0_DESC_SIZE];
 	IPF_AD_DESC_S ad1_buffer[IPF_DLAD1_DESC_SIZE];
 	IPF_AD_DESC_S ad_result_buffer[IPF_DLAD0_DESC_SIZE];
@@ -6891,15 +6891,15 @@ s32 BSP_IPF_ST_502(u32 target_ad_wptr, u32 target_ad_rptr, u32 ad_len)
 		ad1_buffer[i].u32OutPtr1 = i*2+0xff0000;
 	}
 
-	/*½ûÖ¹ÏÂĞĞAD£¬¼´½«ÏÂĞĞÍ¨µÀµ÷ÕûÎªv7r1Ä£Ê½£¬Çå¿Õad¶ÓÁĞ*/
+	/*ç¦æ­¢ä¸‹è¡ŒADï¼Œå³å°†ä¸‹è¡Œé€šé“è°ƒæ•´ä¸ºv7r1æ¨¡å¼ï¼Œæ¸…ç©ºadé˜Ÿåˆ—*/
 	u32ADCtrl[IPF_CHANNEL_DOWN] = ipf_readl(HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ_CTRL_OFFSET);
 	u32ADCtrl[IPF_CHANNEL_DOWN] &= IPF_ADQ_EN_MASK;
 	u32ADCtrl[IPF_CHANNEL_DOWN] |= (IPF_NO_ADQ);
 
-	/*¹Ø±ÕADQÍ¨µÀ£¬ÓÃÓÚ·ÀÖ¹²úÉúADQÔ¤È¡*/
+	/*å…³é—­ADQé€šé“ï¼Œç”¨äºé˜²æ­¢äº§ç”ŸADQé¢„å–*/
 	ipf_writel(u32ADCtrl[IPF_CHANNEL_DOWN], HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ_CTRL_OFFSET);
 
-	/*Çå¿Õad¶ÓÁĞ*/
+	/*æ¸…ç©ºadé˜Ÿåˆ—*/
 	memset((void *)IPF_DLAD0_MEM_ADDR, 0xFFFFFFFF, IPF_DLAD0_MEM_SIZE);
 	memset((void *)IPF_DLAD1_MEM_ADDR, 0xFFFFFFFF, IPF_DLAD1_MEM_SIZE);
 
@@ -6909,23 +6909,23 @@ s32 BSP_IPF_ST_502(u32 target_ad_wptr, u32 target_ad_rptr, u32 ad_len)
 	ipf_writel(0, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_SRST_OFFSET); 
 
 	
-	/*´òÓ¡µ±Ç°AD¶ÓÁĞÇé¿ö*/
+	/*æ‰“å°å½“å‰ADé˜Ÿåˆ—æƒ…å†µ*/
 	print_ad_status();
 	
-	/*½«AD¶ÁĞ´Ö¸ÕëÅäÖÃÎªÌØ¶¨Öµ*/
+	/*å°†ADè¯»å†™æŒ‡é’ˆé…ç½®ä¸ºç‰¹å®šå€¼*/
 	ipf_writel(target_ad_wptr, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ0_WPTR_OFFSET);
 	ipf_writel(target_ad_rptr, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ0_RPTR_OFFSET);
 	ipf_writel(target_ad_wptr, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ1_WPTR_OFFSET);
 	ipf_writel(target_ad_rptr, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ1_RPTR_OFFSET);
 	
-	/*ÔÊĞíÏÂĞĞAD*/
+	/*å…è®¸ä¸‹è¡ŒAD*/
 	u32ADCtrl[IPF_CHANNEL_UP] |= (IPF_BOTH_ADQ_EN);
 	u32ADCtrl[IPF_CHANNEL_DOWN] |= (IPF_BOTH_ADQ_EN);
 	ipf_writel(u32ADCtrl[IPF_CHANNEL_UP], HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH0_ADQ_CTRL_OFFSET);
 	ipf_writel(u32ADCtrl[IPF_CHANNEL_DOWN], HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_CH1_ADQ_CTRL_OFFSET);
 	
 
-	/*Í¨¹ıconfigAD¸ø´úÂëÅäÈëÌØ¶¨¸öÊı¸öAD£¬Ã¿¸öadÌîÈëÌØ¶¨Öµ£¬¼ÇÂ¼ÌîÈëµÄadÊı*/
+	/*é€šè¿‡configADç»™ä»£ç é…å…¥ç‰¹å®šä¸ªæ•°ä¸ªADï¼Œæ¯ä¸ªadå¡«å…¥ç‰¹å®šå€¼ï¼Œè®°å½•å¡«å…¥çš„adæ•°*/
 	ret = BSP_IPF_ConfigDlAd(IPF_AD_0, ad_len, ad0_buffer);
 	if(IPF_SUCCESS != ret)
 	{
@@ -6940,10 +6940,10 @@ s32 BSP_IPF_ST_502(u32 target_ad_wptr, u32 target_ad_rptr, u32 ad_len)
 		return IPF_ERROR;
 	}
 
-	/*´òÓ¡ÏÂĞĞAD¶ÁĞ´Ö¸ÕëÎ»ÖÃ£¬È·¶¨Ô¤¶Á×´Ì¬*/
+	/*æ‰“å°ä¸‹è¡ŒADè¯»å†™æŒ‡é’ˆä½ç½®ï¼Œç¡®å®šé¢„è¯»çŠ¶æ€*/
 	print_ad_status();
 	
-	/*µ÷ÓÃµ×Èí½Ó¿Ú»ñÈ¡ĞèÒªÊÍ·ÅµÄad*/
+	/*è°ƒç”¨åº•è½¯æ¥å£è·å–éœ€è¦é‡Šæ”¾çš„ad*/
 	ret = BSP_IPF_GetUsedDlAd(IPF_AD_0, &ad_num, ad_result_buffer);
 	if(IPF_SUCCESS != ret)
 	{
@@ -6951,7 +6951,7 @@ s32 BSP_IPF_ST_502(u32 target_ad_wptr, u32 target_ad_rptr, u32 ad_len)
 		return IPF_ERROR;
 	}
 
-	/*ÓëconfigadÅä¸øipfµÄad½øĞĞ±È½Ï£¬²é¿´ÊÇ·ñÕıÈ·*/
+	/*ä¸configadé…ç»™ipfçš„adè¿›è¡Œæ¯”è¾ƒï¼ŒæŸ¥çœ‹æ˜¯å¦æ­£ç¡®*/
 
 	if(ad_num != ad_len)
 	{
@@ -6967,7 +6967,7 @@ s32 BSP_IPF_ST_502(u32 target_ad_wptr, u32 target_ad_rptr, u32 ad_len)
 		}
 	}
 
-	/*µ÷ÓÃµ×Èí½Ó¿Ú»ñÈ¡ĞèÒªÊÍ·ÅµÄad*/
+	/*è°ƒç”¨åº•è½¯æ¥å£è·å–éœ€è¦é‡Šæ”¾çš„ad*/
 	ret = BSP_IPF_GetUsedDlAd(IPF_AD_1, &ad_num, ad_result_buffer);
 	if(IPF_SUCCESS != ret)
 	{
@@ -6975,7 +6975,7 @@ s32 BSP_IPF_ST_502(u32 target_ad_wptr, u32 target_ad_rptr, u32 ad_len)
 		return IPF_ERROR;
 	}
 	
-	/*ÓëconfigadÅä¸øipfµÄad½øĞĞ±È½Ï£¬²é¿´ÊÇ·ñÕıÈ·*/
+	/*ä¸configadé…ç»™ipfçš„adè¿›è¡Œæ¯”è¾ƒï¼ŒæŸ¥çœ‹æ˜¯å¦æ­£ç¡®*/
 
 	if(ad_num != ad_len)
 	{
@@ -6993,17 +6993,17 @@ s32 BSP_IPF_ST_502(u32 target_ad_wptr, u32 target_ad_rptr, u32 ad_len)
 	return IPF_SUCCESS;
 }
 
-/*ipfÊı´«¸´Î»»Øµ÷²âÊÔ£¬
-Ä£Äâ¸´Î»È«Á÷³Ì£¬±¾º¯ÊıÍ£Ö¹Êı´«
-reset¡¢unreset ipf
-µ÷ÓÃAcore ipf½Ó¿Ú»Øµ÷ÖØĞÂ³õÊ¼»¯acore ipf
+/*ipfæ•°ä¼ å¤ä½å›è°ƒæµ‹è¯•ï¼Œ
+æ¨¡æ‹Ÿå¤ä½å…¨æµç¨‹ï¼Œæœ¬å‡½æ•°åœæ­¢æ•°ä¼ 
+resetã€unreset ipf
+è°ƒç”¨Acore ipfæ¥å£å›è°ƒé‡æ–°åˆå§‹åŒ–acore ipf
 */
 BSP_VOID BSP_IPF_ST_503(BSP_VOID)
 {
 	BSP_IPF_SetControlFLagForCcoreReset(IPF_FORRESET_CONTROL_FORBID);
-	/*Ê¡ÂÔÁËÊÍ·ÅÄÚ´æµÄ²½ÖèÊÇÒòÎª
-	1.Ïà¹Øº¯ÊıÒÑ¾­ÔÚcase 502ÖĞ³ä·Ö²âÊÔ¹ıÁË
-	2.ÊÍ·ÅÄÚ´æÊÇÎªÁË·ÀÖ¹ÄÚ´æĞ¹Â¶£¬ÓÃÀıÖĞ²»ÓÃ¿¼ÂÇÕâÖÖ³¡¾°*/
+	/*çœç•¥äº†é‡Šæ”¾å†…å­˜çš„æ­¥éª¤æ˜¯å› ä¸º
+	1.ç›¸å…³å‡½æ•°å·²ç»åœ¨case 502ä¸­å……åˆ†æµ‹è¯•è¿‡äº†
+	2.é‡Šæ”¾å†…å­˜æ˜¯ä¸ºäº†é˜²æ­¢å†…å­˜æ³„éœ²ï¼Œç”¨ä¾‹ä¸­ä¸ç”¨è€ƒè™‘è¿™ç§åœºæ™¯*/
 
 	/*reset unreset ipf*/
 	ipf_writel(1, HI_IPF_REGBASE_ADDR_VIRT + HI_IPF_SRST_OFFSET); 

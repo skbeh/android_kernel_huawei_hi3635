@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "IMMmem_Intra.h"
 #include "DrvInterface.h"
@@ -21,18 +21,18 @@ extern "C" {
 
 #if 0
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
-/* ´æ·ÅCºË²éÑ¯AºËÄÚ´æµÄÔ¤ÁôÊıÄ¿µÄµØÖ· */
+/* å­˜æ”¾Cæ ¸æŸ¥è¯¢Aæ ¸å†…å­˜çš„é¢„ç•™æ•°ç›®çš„åœ°å€ */
 #define TTF_MEM_ACPU_FREE_MEM_CNT_ADDR  (ECS_TTF_ACPU_FREE_MEM_CNT_ADDR)
 
-/* A ºËÏòCºËÉÏ±¨ÄÚ´æ¿ÕÏĞ¿éÊıµÄµØÖ· */
+/* A æ ¸å‘Cæ ¸ä¸ŠæŠ¥å†…å­˜ç©ºé—²å—æ•°çš„åœ°å€ */
 unsigned int *                         g_pACpuFreeMemBlkCnt;
 
-/* IMM MEM Êı¾İÄÚ´æ³ØµµÎ»¿ØÖÆ½á¹¹ */
+/* IMM MEM æ•°æ®å†…å­˜æ± æ¡£ä½æ§åˆ¶ç»“æ„ */
 const IMM_MEM_CLUSTER_CFG_INFO_STRU     g_astImmMemSharePoolClusterTableInfo[] =
 {
-    {IMM_MEM_SHARE_POOL_SIZE_CLUSTER_0,         IMM_MEM_SHARE_POOL_CNT_CLUSTER_0},             /* ÄÚ´æ¿é³¤¶È±ØĞë32×Ö½Ú¶ÔÆë */
+    {IMM_MEM_SHARE_POOL_SIZE_CLUSTER_0,         IMM_MEM_SHARE_POOL_CNT_CLUSTER_0},             /* å†…å­˜å—é•¿åº¦å¿…é¡»32å­—èŠ‚å¯¹é½ */
     {IMM_MEM_SHARE_POOL_SIZE_CLUSTER_1,         IMM_MEM_SHARE_POOL_CNT_CLUSTER_1}
 };
 
@@ -42,42 +42,42 @@ const IMM_MEM_CLUSTER_CFG_INFO_STRU     g_astImmMemCtrlPoolClusterTableInfo[] =
 };
 
 #if (FEATURE_ON == FEATURE_IMM_MEM_DEBUG)
-/* IMM MEM ¿ØÖÆÍ·ÄÚ´æ³ØÊ¹ÓÃµÄÄÚ´æ³¤¶È Byte(Ã¿¿é36B) */
+/* IMM MEM æ§åˆ¶å¤´å†…å­˜æ± ä½¿ç”¨çš„å†…å­˜é•¿åº¦ Byte(æ¯å—36B) */
 #define IMM_MEM_CTRL_MEM_TOTAL_SIZE     (IMM_MEM_CTRL_MEM_TOTAL_CNT*36)
 #else
-/* IMM MEM ¿ØÖÆÍ·ÄÚ´æ³ØÊ¹ÓÃµÄÄÚ´æ³¤¶È Byte(Ã¿¿é16B) */
+/* IMM MEM æ§åˆ¶å¤´å†…å­˜æ± ä½¿ç”¨çš„å†…å­˜é•¿åº¦ Byte(æ¯å—16B) */
 #define IMM_MEM_CTRL_MEM_TOTAL_SIZE     (IMM_MEM_CTRL_MEM_TOTAL_CNT*16)
 #endif
 
-/* IMM MEM ¿ØÖÆÍ·ÄÚ´æ³ØÄÚ´æ¿éÒÑÊ¹ÓÃµÄ³¤¶È */
+/* IMM MEM æ§åˆ¶å¤´å†…å­˜æ± å†…å­˜å—å·²ä½¿ç”¨çš„é•¿åº¦ */
 unsigned int                           g_ulImmMemCtrlMemSuffix = 0;
 const  unsigned int * const            g_pulImmMemCtrlMemSuffix = &g_ulImmMemCtrlMemSuffix;
 
-/* IMM MEM ¿ØÖÆÍ·ÄÚ´æ³ØÄÚ´æ */
+/* IMM MEM æ§åˆ¶å¤´å†…å­˜æ± å†…å­˜ */
 unsigned int                           g_aulImmMemCtrlMemSpace[IMM_MEM_CTRL_MEM_TOTAL_SIZE/4];
 const unsigned int * const             g_paulImmMemCtrlMemSpace = &g_aulImmMemCtrlMemSpace[0];
 
 
-/* IMM MEM Êı¾İÄÚ´æ³ØµµÎ»¸öÊı */
+/* IMM MEM æ•°æ®å†…å­˜æ± æ¡£ä½ä¸ªæ•° */
 const unsigned char IMM_MEM_SHARE_POOL_CLUSTER_CNT = (sizeof(g_astImmMemSharePoolClusterTableInfo)/sizeof(IMM_MEM_CLUSTER_CFG_INFO_STRU));
 
-/* IMM MEM ¿ØÖÆÍ·ÄÚ´æ³ØµµÎ»¸öÊı */
+/* IMM MEM æ§åˆ¶å¤´å†…å­˜æ± æ¡£ä½ä¸ªæ•° */
 const unsigned char IMM_MEM_CTRL_POOL_CLUSTER_CNT  = (sizeof(g_astImmMemCtrlPoolClusterTableInfo)/sizeof(IMM_MEM_CLUSTER_CFG_INFO_STRU));
 
-/* IMM MEM ¿ØÖÆ¿éÄ§Êõ×Ö£¬¼ì²é¸ÃÇøÓòÊÇ·ñ±»²È */
+/* IMM MEM æ§åˆ¶å—é­”æœ¯å­—ï¼Œæ£€æŸ¥è¯¥åŒºåŸŸæ˜¯å¦è¢«è¸© */
 const unsigned short IMM_MAGIC_NUM = 0x4E8F;
 
-/* Áã¿½±´ÄÚ´æ³Ø³õÊ¼»¯±êÖ¾£¬·ÀÖ¹ÖØ¸´µ÷ÓÃ³õÊ¼»¯º¯Êı */
+/* é›¶æ‹·è´å†…å­˜æ± åˆå§‹åŒ–æ ‡å¿—ï¼Œé˜²æ­¢é‡å¤è°ƒç”¨åˆå§‹åŒ–å‡½æ•° */
 unsigned int                           g_ulImmMemInitFlag  = IMM_FALSE;
 
-/* IMM MEM Êı¾İÄÚ´æ³Ø×Ü¿ØÖÆ½á¹¹ */
+/* IMM MEM æ•°æ®å†…å­˜æ± æ€»æ§åˆ¶ç»“æ„ */
 IMM_MEM_POOL_STRU                       g_astImmMemPool[IMM_MEM_POOL_ID_BUTT];
 
-/* IMM MEM Íâ²¿ÄÚ´æ³Ø×Ü¿ØÖÆ½á¹¹Ö¸Õë */
+/* IMM MEM å¤–éƒ¨å†…å­˜æ± æ€»æ§åˆ¶ç»“æ„æŒ‡é’ˆ */
 IMM_MEM_POOL_STRU *const                g_pstImmExtMemPool = &g_astImmMemPool[IMM_MEM_POOL_ID_EXT];
 
 
-/* ÄÚ´æÉêÇëÊ§°ÜÖ¸ÕëÊı¾İ */
+/* å†…å­˜ç”³è¯·å¤±è´¥æŒ‡é’ˆæ•°æ® */
 unsigned short *const                   g_apusImmAllocFailCnt[IMM_MEM_POOL_ID_BUTT] =
                                         {
                                             &g_astImmMemPool[IMM_MEM_POOL_ID_SHARE].usImmAllocFailCnt,
@@ -85,7 +85,7 @@ unsigned short *const                   g_apusImmAllocFailCnt[IMM_MEM_POOL_ID_BU
                                         };
 
 
-/* ÄÚ´æÉêÇëÊ§°Ü³¬¹ıÃÅÏŞ´ÎÊı */
+/* å†…å­˜ç”³è¯·å¤±è´¥è¶…è¿‡é—¨é™æ¬¡æ•° */
 unsigned short *const                   g_apusImmExcThresholdCnt[IMM_MEM_POOL_ID_BUTT] =
                                         {
                                             &g_astImmMemPool[IMM_MEM_POOL_ID_SHARE].usImmExcThresholdCnt,
@@ -93,23 +93,23 @@ unsigned short *const                   g_apusImmExcThresholdCnt[IMM_MEM_POOL_ID
                                         };
 
 
-/* IMM MEM MNTN¹ÜÀí¿ØÖÆÈ«¾Ö±äÁ¿ */
+/* IMM MEM MNTNç®¡ç†æ§åˆ¶å…¨å±€å˜é‡ */
 IMM_MEM_REG_MNTN_FUNC_STRU              g_stImmRegMntnFuc;
 IMM_MEM_REG_MNTN_FUNC_STRU * const      g_pstImmRegMntnFuc = &g_stImmRegMntnFuc;
 
-/* IMM MEM »ñÈ¡¸Ã³¤¶ÈËùÔÚµÄµµÎ»²ÎÊı */
+/* IMM MEM è·å–è¯¥é•¿åº¦æ‰€åœ¨çš„æ¡£ä½å‚æ•° */
 #define IMM_GET_LEN_INDEX(pstImmMemPoolInfo, usLen) \
             ((pstImmMemPoolInfo)->aucLenIndexTable[(usLen)])
 
 #if(IMM_DEBUG_TRACE_FUNC == FEATURE_ON)
-/* IMM ÄÚ´æ¿éµ÷ÊÔ´òÓ¡¿ª¹Ø */
+/* IMM å†…å­˜å—è°ƒè¯•æ‰“å°å¼€å…³ */
 unsigned char                           g_ucImmMemDebugPrint = IMM_FALSE;
 #endif
 
-/* Ã¿´Î·¢ÉúÄÚ´æÉÏ±¨ÊÂ¼şÊ±£¬Ã¿´ÎËùÄÜÄÚ´æÊÂ¼ş´ÎÊıÃÅÏŞ */
+/* æ¯æ¬¡å‘ç”Ÿå†…å­˜ä¸ŠæŠ¥äº‹ä»¶æ—¶ï¼Œæ¯æ¬¡æ‰€èƒ½å†…å­˜äº‹ä»¶æ¬¡æ•°é—¨é™ */
 unsigned short                           g_usImmAllocFailCntThreshold = 1000;
 
-/* IMM MEM FREE ¿ÉÎ¬¿É²âÊµÌå */
+/* IMM MEM FREE å¯ç»´å¯æµ‹å®ä½“ */
 IMM_MEM_FREE_MNTN_INFO_STRU             g_stImmMemFreeMntnEntity;
 
 VOS_SPINLOCK                      g_astImmSpinLock[IMM_MEM_POOL_ID_BUTT];
@@ -117,7 +117,7 @@ VOS_SPINLOCK                      g_astImmSpinLock[IMM_MEM_POOL_ID_BUTT];
 VOS_SPINLOCK                      g_stImmFreeMntnSpinLock;
 
 
-/* ±£´æÄÚ´æÊÍ·Å¿ÕÖ¸ÕëĞÅÏ¢ */
+/* ä¿å­˜å†…å­˜é‡Šæ”¾ç©ºæŒ‡é’ˆä¿¡æ¯ */
 #define IMM_MEM_FREE_SAVE_NULL_PTR_INFO(stNullPtrInfo,usFileId,usLineNum,pstSpinLock,ulFlags) \
             do{\
                 VOS_SpinLockIntLock(pstSpinLock, ulFlags);\
@@ -127,7 +127,7 @@ VOS_SPINLOCK                      g_stImmFreeMntnSpinLock;
                 VOS_SpinUnlockIntUnlock(pstSpinLock , ulFlags);\
             }while(0)
 
-/* ±£´æÄÚ´æÊÍ·Å´íÎóÄÚ´æĞÅÏ¢ */
+/* ä¿å­˜å†…å­˜é‡Šæ”¾é”™è¯¯å†…å­˜ä¿¡æ¯ */
 #define IMM_MEM_FREE_SAVE_INVALID_MEM_INFO(astImmMemFreeInvalidMemInfo,pstTtfMem,ucType,usInvalidvalue,usFileId,usLineNum,pstSpinLock,ulFlags) \
             do{\
                 VOS_SpinLockIntLock(pstSpinLock , ulFlags);\
@@ -145,7 +145,7 @@ void *IMM_MemCtrlMemAlloc(unsigned int ulSize)
     void                                *pAlloc;
 
 
-    /* ÉêÇë³¤¶È·¶Î§¼ì²é */
+    /* ç”³è¯·é•¿åº¦èŒƒå›´æ£€æŸ¥ */
     if ( IMM_MEM_CTRL_MEM_TOTAL_SIZE < (g_ulImmMemCtrlMemSuffix + ulSize) )
     {
         /*lint -e718 -e746*/
@@ -158,7 +158,7 @@ void *IMM_MemCtrlMemAlloc(unsigned int ulSize)
 
     pAlloc   = pucSpace + g_ulImmMemCtrlMemSuffix;
 
-    /* ËÄ×Ö½Ú¶ÔÆë£¬¿ØÖÆ¿éÊ¹ÓÃ³¤¶ÈÆ«ÒÆ */
+    /* å››å­—èŠ‚å¯¹é½ï¼Œæ§åˆ¶å—ä½¿ç”¨é•¿åº¦åç§» */
     g_ulImmMemCtrlMemSuffix += IMM_GET_4BYTE_ALIGN_VALUE(ulSize);
 
     return pAlloc;
@@ -185,7 +185,7 @@ unsigned int IMM_MemPoolInit
 
     pstImmMemPool = IMM_MEM_GET_POOL(ucPoolId);
 
-    /* ÉêÇë¶ÔÓ¦ÄÚ´æ³ØµÄ¿ÉÓÃÄÚ´æË÷Òı±í£¬Ã¿¸öPOOLÉêÇëÒ»´Î£¬ºóÃæ·Ö¸î¸øÃ¿¸öclusterÊ¹ÓÃ */
+    /* ç”³è¯·å¯¹åº”å†…å­˜æ± çš„å¯ç”¨å†…å­˜ç´¢å¼•è¡¨ï¼Œæ¯ä¸ªPOOLç”³è¯·ä¸€æ¬¡ï¼Œåé¢åˆ†å‰²ç»™æ¯ä¸ªclusterä½¿ç”¨ */
     ppst1stImmMem = (IMM_MEM_STRU **)IMM_MemCtrlMemAlloc(sizeof(IMM_MEM_STRU *) * pstImmMemPool->usImmMemTotalCnt);
 
     if (VOS_NULL_PTR == ppst1stImmMem)
@@ -193,7 +193,7 @@ unsigned int IMM_MemPoolInit
         return IMM_FAIL;
     }
 
-    /* ÉêÇë¶ÔÓ¦ÄÚ´æ³ØµÄIMM_MEM£¬Ã¿¸öPOOLÉêÇëÒ»´Î£¬ºóÃæ·Ö¸î¸øÃ¿¸öclusterÊ¹ÓÃ */
+    /* ç”³è¯·å¯¹åº”å†…å­˜æ± çš„IMM_MEMï¼Œæ¯ä¸ªPOOLç”³è¯·ä¸€æ¬¡ï¼Œåé¢åˆ†å‰²ç»™æ¯ä¸ªclusterä½¿ç”¨ */
     pstImmMem = (IMM_MEM_STRU *)IMM_MemCtrlMemAlloc(sizeof(IMM_MEM_STRU) * pstImmMemPool->usImmMemTotalCnt);
 
     if (VOS_NULL_PTR == pstImmMem)
@@ -206,15 +206,15 @@ unsigned int IMM_MemPoolInit
 
     ppTempMem = ppst1stImmMem;
 
-    /* ¼ÇÂ¼¸ÃÄÚ´æ³ØËùÓĞIMM_MEMÖ¸Õë£¬¼ì²éÄÚ´æĞ¹Â¶Ê¹ÓÃ */
+    /* è®°å½•è¯¥å†…å­˜æ± æ‰€æœ‰IMM_MEMæŒ‡é’ˆï¼Œæ£€æŸ¥å†…å­˜æ³„éœ²ä½¿ç”¨ */
     pstImmMemPool->pstImmMemStStartAddr = pstImmMem;
 
-    /* ½¨Á¢Ã¿¸öclusterµÄIMM_MEM */
+    /* å»ºç«‹æ¯ä¸ªclusterçš„IMM_MEM */
     for (ucClusterId = 0; ucClusterId < pstImmMemPool->ucClusterCnt; ++ucClusterId )
     {
         pstImmMemCluster    = &(pstImmMemPool->astClusterTable[ucClusterId]);
 
-        /* ½¨Á¢¼¶ÊıË÷Òı±íºÍ¿ÉÓÃÄÚ´æË÷Òı±íµÄ¹ØÏµ */
+        /* å»ºç«‹çº§æ•°ç´¢å¼•è¡¨å’Œå¯ç”¨å†…å­˜ç´¢å¼•è¡¨çš„å…³ç³» */
         pstImmMemCluster->apstFreeStack = ppTempMem;
 
         for(ulImmMemCnt = 0;
@@ -231,10 +231,10 @@ unsigned int IMM_MemPoolInit
             }
             else
             {
-                pstImmMem->pstMemBlk    = *ppucDataMemAddr; /* ½¨Á¢IMM_MEM_STRUºÍ¶ÔÓ¦Êı¾İµÄ¹ØÏµ */
+                pstImmMem->pstMemBlk    = *ppucDataMemAddr; /* å»ºç«‹IMM_MEM_STRUå’Œå¯¹åº”æ•°æ®çš„å…³ç³» */
             }
 
-            /* ½¨Á¢¿ÉÓÃÄÚ´æË÷Òı±íºÍIMM_MEM_STRUµÄ¹ØÏµ */
+            /* å»ºç«‹å¯ç”¨å†…å­˜ç´¢å¼•è¡¨å’ŒIMM_MEM_STRUçš„å…³ç³» */
            *ppTempMem               = pstImmMem;
 
             pstImmMem++;
@@ -293,7 +293,7 @@ unsigned int IMM_MemPoolCreate
 
     pstImmMemPool   = IMM_MEM_GET_POOL(ucPoolId);
 
-    /* ¼ì²é¶ÔÓ¦IDµÄÄÚ´æ³ØÊÇ·ñÓĞ±»ÖØ¸´´´½¨ */
+    /* æ£€æŸ¥å¯¹åº”IDçš„å†…å­˜æ± æ˜¯å¦æœ‰è¢«é‡å¤åˆ›å»º */
     if ( IMM_TRUE == pstImmMemPool->ucUsedFlag )
     {
         /*lint -e515 -e830*/
@@ -307,17 +307,17 @@ unsigned int IMM_MemPoolCreate
     ucClusterCnt                    = pstPoolCfg->ucClusterCnt;
     pstPoolClusterCfgTable          = pstPoolCfg->pstClusterCfgInfo;
 
-    /* ³õÊ¼»¯ÄÚ´æ³ØµÄÍ¨ÓÃ±äÁ¿ */
+    /* åˆå§‹åŒ–å†…å­˜æ± çš„é€šç”¨å˜é‡ */
     pstImmMemPool->ucUsedFlag       = IMM_FALSE;
     pstImmMemPool->ucClusterCnt     = ucClusterCnt;
     pstImmMemPool->usImmMemTotalCnt = 0;
 
-    /* Ã¿¸öPOOLµÄ×îºóÒ»¼¶size×î´ó£¬ËùÒÔÆ«ÒÆµ½×îºóÒ»¼¶£¬Çó³ö¸ÃPOOLµÄ×î´ósize */
+    /* æ¯ä¸ªPOOLçš„æœ€åä¸€çº§sizeæœ€å¤§ï¼Œæ‰€ä»¥åç§»åˆ°æœ€åä¸€çº§ï¼Œæ±‚å‡ºè¯¥POOLçš„æœ€å¤§size */
     pstClusterCfgInfo               = pstPoolClusterCfgTable + (ucClusterCnt - 1);
     pstImmMemPool->usMaxByteLen     = pstClusterCfgInfo->usSize;
 
 
-    /* ÉêÇë³¤¶ÈË÷Òı±í£¬ÒÔ³¤¶ÈÎªÊı×éÏÂ±ê£¬ËùÒÔ×î´ó³¤¶ÈÒª±ÈÊı×é¸öÊıĞ¡1 */
+    /* ç”³è¯·é•¿åº¦ç´¢å¼•è¡¨ï¼Œä»¥é•¿åº¦ä¸ºæ•°ç»„ä¸‹æ ‡ï¼Œæ‰€ä»¥æœ€å¤§é•¿åº¦è¦æ¯”æ•°ç»„ä¸ªæ•°å°1 */
     if (pstImmMemPool->usMaxByteLen > (IMM_MEM_BLK_MAX_BYTE_LEN - 1))
     {
         /*lint -e515 -e830*/
@@ -398,7 +398,7 @@ unsigned int IMM_MemBlkInit(void)
     IMM_MEM_POOL_CFG_INFO_STRU          stExtPoolCfgInfo;
     unsigned int                       ulBaseAddr;
 
-    /*³õÊ¼»¯º¯ÊıÖ»»á±»skbuf_init µ÷ÓÃ */
+    /*åˆå§‹åŒ–å‡½æ•°åªä¼šè¢«skbuf_init è°ƒç”¨ */
     if ( IMM_TRUE == g_ulImmMemInitFlag )
     {
         vos_printf( "IMM_MemBlkInit, Warning, Memory pools were already initialized!\n");
@@ -406,47 +406,47 @@ unsigned int IMM_MemBlkInit(void)
         return IMM_SUCC;
     }
 
-    /* ÉèÖÃÄÚ´æ³ØĞÅÏ¢ */
+    /* è®¾ç½®å†…å­˜æ± ä¿¡æ¯ */
     memset(g_astImmMemPool, 0, sizeof(IMM_MEM_POOL_STRU)* IMM_MEM_POOL_ID_BUTT);
     memset(&g_stImmRegMntnFuc, 0, sizeof(IMM_MEM_REG_MNTN_FUNC_STRU));
 
-    /* ³õÊ¼»¯ IMM MEM FREE ¿ÉÎ¬¿É²âÊµÌå */
+    /* åˆå§‹åŒ– IMM MEM FREE å¯ç»´å¯æµ‹å®ä½“ */
     memset(&g_stImmMemFreeMntnEntity, 0, sizeof(IMM_MEM_FREE_MNTN_INFO_STRU));
 
     memset(&stSharePoolCfgInfo, 0, sizeof(IMM_MEM_POOL_CFG_INFO_STRU));
     memset(&stExtPoolCfgInfo, 0, sizeof(IMM_MEM_POOL_CFG_INFO_STRU));
 
-    /* ±£´æ¹²ÏíÄÚ´æ³ØÅäÖÃ²ÎÊı */
+    /* ä¿å­˜å…±äº«å†…å­˜æ± é…ç½®å‚æ•° */
     stSharePoolCfgInfo.pstClusterCfgInfo       = (IMM_MEM_CLUSTER_CFG_INFO_STRU *)g_astImmMemSharePoolClusterTableInfo;
     stSharePoolCfgInfo.ucClusterCnt            = IMM_MEM_SHARE_POOL_CLUSTER_CNT;
     stSharePoolCfgInfo.enPoolId                = IMM_MEM_POOL_ID_SHARE;
 
-    /* ±£´æÍâ²¿ÄÚ´æ³ØÅäÖÃ²ÎÊı */
+    /* ä¿å­˜å¤–éƒ¨å†…å­˜æ± é…ç½®å‚æ•° */
     stExtPoolCfgInfo.pstClusterCfgInfo        = (IMM_MEM_CLUSTER_CFG_INFO_STRU *)g_astImmMemCtrlPoolClusterTableInfo;
     stExtPoolCfgInfo.ucClusterCnt             = IMM_MEM_CTRL_POOL_CLUSTER_CNT;
     stExtPoolCfgInfo.enPoolId                 = IMM_MEM_POOL_ID_EXT;
 
     ulBaseAddr = IMM_MemGetBaseAddr();
 
-    /* ÄÚ´æ¿é»ùµØÖ·£¬½øĞĞÊµµØÖ·×ªĞéµØÖ· */
+    /* å†…å­˜å—åŸºåœ°å€ï¼Œè¿›è¡Œå®åœ°å€è½¬è™šåœ°å€ */
     pucBaseAddr = (unsigned char *)ulBaseAddr;
 
-    /*´´½¨IMM_MEMÄÚ´æ¿éÊÍ·Å±£´æ¿ÉÎ¬¿É²âĞÅÏ¢ËùĞèµÄ×ÔĞıËø*/
+    /*åˆ›å»ºIMM_MEMå†…å­˜å—é‡Šæ”¾ä¿å­˜å¯ç»´å¯æµ‹ä¿¡æ¯æ‰€éœ€çš„è‡ªæ—‹é”*/
     VOS_SpinLockInit(&g_stImmFreeMntnSpinLock);
 
-    /*´´½¨¹²ÏíÄÚ´æ³Ø¶ÔÓ¦µÄ×ÔĞıËø*/
+    /*åˆ›å»ºå…±äº«å†…å­˜æ± å¯¹åº”çš„è‡ªæ—‹é”*/
     VOS_SpinLockInit(&g_astImmSpinLock[IMM_MEM_POOL_ID_SHARE]);
 
-    /* ´´½¨¹²ÏíÄÚ´æ³Ø */
+    /* åˆ›å»ºå…±äº«å†…å­˜æ±  */
     ulRet1 = IMM_MemPoolCreate(&stSharePoolCfgInfo, &pucBaseAddr);
 
-    /*´´½¨Íâ²¿ÄÚ´æ³Ø¶ÔÓ¦µÄ×ÔĞıËø*/
+    /*åˆ›å»ºå¤–éƒ¨å†…å­˜æ± å¯¹åº”çš„è‡ªæ—‹é”*/
     VOS_SpinLockInit(&g_astImmSpinLock[IMM_MEM_POOL_ID_EXT]);
 
-    /* ´´½¨Íâ²¿ÄÚ´æ³Ø */
+    /* åˆ›å»ºå¤–éƒ¨å†…å­˜æ±  */
     ulRet2 = IMM_MemPoolCreate(&stExtPoolCfgInfo, &pucBaseAddr);
 
-    /* ÖÃÉÏÒÑ±»³õÊ¼»¯µÄ±êÖ¾ */
+    /* ç½®ä¸Šå·²è¢«åˆå§‹åŒ–çš„æ ‡å¿— */
     g_ulImmMemInitFlag = IMM_TRUE;
 
     if ( ( IMM_FAIL == ulRet1 ) || ( IMM_FAIL == ulRet2 ) )
@@ -551,7 +551,7 @@ unsigned char IMM_MemSaveFreeDebugInfo(unsigned short usFileId, unsigned short u
 
     ulMemAddr = (unsigned int)pstImmMem;
 
-    /*pstImmMem µØÖ··¶Î§¼ì²é*/
+    /*pstImmMem åœ°å€èŒƒå›´æ£€æŸ¥*/
     if (( (unsigned int)g_paulImmMemCtrlMemSpace > ulMemAddr )
         ||(((unsigned int)g_paulImmMemCtrlMemSpace + (*g_pulImmMemCtrlMemSuffix)) < ulMemAddr))
     {
@@ -563,7 +563,7 @@ unsigned char IMM_MemSaveFreeDebugInfo(unsigned short usFileId, unsigned short u
         return IMM_FAIL;
     }
 
-    /* ÅĞ¶ÏÄÚ´æÖ¸Õë×´Ì¬ÊÇ·ñÕıÈ· */
+    /* åˆ¤æ–­å†…å­˜æŒ‡é’ˆçŠ¶æ€æ˜¯å¦æ­£ç¡® */
     if ( MEM_BLK_STATE_ALLOC != pstImmMemDebugInfo->enMemStateFlag )
     {
         /*lint -e717*/
@@ -629,19 +629,19 @@ IMM_MEM_STRU *IMM_MemAlloc_Debug(unsigned short usFileID, unsigned short usLineN
 
     IMM_DEBUG_TRACE_FUNC_ENTER();
 
-    if (IMM_MEM_POOL_ID_EXT <= ucPoolId )   /*Èç¹ûÎªEXTÖ±½ÓÍË³ö*/
+    if (IMM_MEM_POOL_ID_EXT <= ucPoolId )   /*å¦‚æœä¸ºEXTç›´æ¥é€€å‡º*/
     {
         vos_printf("IMM_MemBlkAlloc_Debug,Poolid %d is invalid,FileId=%d,LineNum=%d!\n", ucPoolId,usFileID,usLineNum);
         return VOS_NULL_PTR;
     }
 
-     /* »ñÈ¡ÄÚ´æ³Ø */
+     /* è·å–å†…å­˜æ±  */
     pstImmMemPool = IMM_MEM_GET_POOL(ucPoolId);
 
-    /* »ñÈ¡×ÔĞıËø */
+    /* è·å–è‡ªæ—‹é” */
     pstImmSpinLock = &g_astImmSpinLock[ucPoolId];
 
-    /* ¼ì²éÄÚ´æ³ØÊÇ·ñÒÑ¾­³õÊ¼»¯ */
+    /* æ£€æŸ¥å†…å­˜æ± æ˜¯å¦å·²ç»åˆå§‹åŒ– */
     if ( IMM_TRUE != pstImmMemPool->ucUsedFlag )
     {
         vos_printf("IMM_MemBlkAlloc_Debug,Pool %d is not used,FileId=%d,LineNum=%d!\n", ucPoolId,usFileID,usLineNum);
@@ -655,7 +655,7 @@ IMM_MEM_STRU *IMM_MemAlloc_Debug(unsigned short usFileID, unsigned short usLineN
         return VOS_NULL_PTR;
     }
 
-    /* ´ÓÄÚ´æ³ØµÄ¶à¸ö´ØÀïÑ°ÕÒºÏÊÊµÄIMM_MEM */
+    /* ä»å†…å­˜æ± çš„å¤šä¸ªç°‡é‡Œå¯»æ‰¾åˆé€‚çš„IMM_MEM */
     ucMostFitLev = IMM_GET_LEN_INDEX(pstImmMemPool, ulLen);
 
     for(ucClusterId = ucMostFitLev;
@@ -668,7 +668,7 @@ IMM_MEM_STRU *IMM_MemAlloc_Debug(unsigned short usFileID, unsigned short usLineN
 
         if (0 != pstImmMemCluster->usFreeCnt)
         {
-            /* »ñÈ¡Ò»¸öÃ»ÓĞÊ¹ÓÃµÄIMM_MEM_ST½áµã */
+            /* è·å–ä¸€ä¸ªæ²¡æœ‰ä½¿ç”¨çš„IMM_MEM_STç»“ç‚¹ */
             pMem    = pstImmMemCluster->apstFreeStack[--pstImmMemCluster->usFreeCnt];
             ++pstImmMemPool->usImmMemUsedCnt;
             ulMaxClusterFreeCnt = pstImmMemPool->astClusterTable[pstImmMemPool->ucClusterCnt - 1].usFreeCnt;
@@ -677,7 +677,7 @@ IMM_MEM_STRU *IMM_MemAlloc_Debug(unsigned short usFileID, unsigned short usLineN
 
             VOS_SpinUnlockIntUnlock(pstImmSpinLock ,ulSaveFlags);
 
-            /* ÏòÁ÷¿ØÄ£¿éÉÏ±¨ÄÚ´æÉêÇëÊÂ¼ş */
+            /* å‘æµæ§æ¨¡å—ä¸ŠæŠ¥å†…å­˜ç”³è¯·äº‹ä»¶ */
             if (VOS_NULL_PTR != pstImmMemPool->pMemAllocEvent)
             {
                 pstImmMemPool->pMemAllocEvent( ulMaxClusterFreeCnt );
@@ -709,7 +709,7 @@ IMM_MEM_STRU *IMM_MemAlloc_Debug(unsigned short usFileID, unsigned short usLineN
 
     VOS_SpinUnlockIntUnlock(pstImmSpinLock, ulSaveFlags);
 
-    /* ÏòSDTÉÏ±¨ÄÚ´æÉêÇëÊ§°ÜÊÂ¼ş */
+    /* å‘SDTä¸ŠæŠ¥å†…å­˜ç”³è¯·å¤±è´¥äº‹ä»¶ */
     if ( VOS_NULL_PTR != g_pstImmRegMntnFuc->pImmMemEventRptFunc)
     {
         g_pstImmRegMntnFuc->pImmMemEventRptFunc(ucPoolId, IMM_MEM_TRIG_TYPE_ALLOC_FAIL);
@@ -731,7 +731,7 @@ void IMM_MemFree_Debug(unsigned short usFileId, unsigned short usLineNum, IMM_ME
 
     IMM_DEBUG_TRACE_FUNC_ENTER();
 
-    /* ´ıÊÍ·ÅÄÚ´æºÏ·¨ĞÔ¼ì²é */
+    /* å¾…é‡Šæ”¾å†…å­˜åˆæ³•æ€§æ£€æŸ¥ */
     if ( IMM_SUCC != IMM_MemFreeMemCheck(usFileId, usLineNum, ppstMem, &g_stImmFreeMntnSpinLock, ulSaveFlags) )
     {
         vos_printf( "Error: IMM_MemFree_Debug input ppstMem is invalid! FileId=%d,LineNum=%d \n", usFileId, usLineNum);
@@ -742,7 +742,7 @@ void IMM_MemFree_Debug(unsigned short usFileId, unsigned short usLineNum, IMM_ME
 
     pstImmMemPool   = IMM_MEM_GET_POOL(pstImmMem->enPoolId);
 
-    /* ¼ì²é¶ÔÓ¦µÄÄÚ´æÊÇ·ñÊ¹ÓÃ */
+    /* æ£€æŸ¥å¯¹åº”çš„å†…å­˜æ˜¯å¦ä½¿ç”¨ */
     if (IMM_TRUE != pstImmMemPool->ucUsedFlag)
     {
         vos_printf("Error: IMM_MemFree_Debug, Pool %d is not used! \n",
@@ -758,17 +758,17 @@ void IMM_MemFree_Debug(unsigned short usFileId, unsigned short usLineNum, IMM_ME
     }
 #endif
 
-    /* Íâ²¿ÄÚ´æ³Ø£¬ĞèÒªÊÍ·ÅÍâ²¿ÄÚ´æ¿é */
+    /* å¤–éƒ¨å†…å­˜æ± ï¼Œéœ€è¦é‡Šæ”¾å¤–éƒ¨å†…å­˜å— */
     if ( IMM_MEM_POOL_ID_EXT == pstImmMem->enPoolId )
     {
         vos_printf("Error: IMM_MemFree_Debug, Pool ID is IMM_MEM_POOL_ID_EXT! \n");
         return ;
     }
 
-    /* »ñÈ¡ÄÚ´æ¿éËùÔÚµÄµµÎ» */
+    /* è·å–å†…å­˜å—æ‰€åœ¨çš„æ¡£ä½ */
     pstImmMemCluster = &(pstImmMemPool->astClusterTable[pstImmMem->ucClusterId]);
 
-    /* »ñÈ¡×ÔĞıËø */
+    /* è·å–è‡ªæ—‹é” */
     pstImmSpinLock  = &g_astImmSpinLock[pstImmMem->enPoolId];
 
     VOS_SpinLockIntLock(pstImmSpinLock, ulSaveFlags);
@@ -782,11 +782,11 @@ void IMM_MemFree_Debug(unsigned short usFileId, unsigned short usLineNum, IMM_ME
         return ;
     }
 
-    /* ½«ÄÚ´æ¿é¹Ò½Ó»ØÄÚ´æ³Ø */
+    /* å°†å†…å­˜å—æŒ‚æ¥å›å†…å­˜æ±  */
     pstImmMemCluster->apstFreeStack[pstImmMemCluster->usFreeCnt] = pstImmMem;
     ++pstImmMemCluster->usFreeCnt;
     --pstImmMemPool->usImmMemUsedCnt;
-    /* ¼ÆËãÄÚ´æ³Ø×î´óµµÎ»Ê£ÓàÄÚ´æ¿éÊı */
+    /* è®¡ç®—å†…å­˜æ± æœ€å¤§æ¡£ä½å‰©ä½™å†…å­˜å—æ•° */
     ulMaxClusterFreeCnt = pstImmMemPool->astClusterTable[pstImmMemPool->ucClusterCnt - 1].usFreeCnt;
 
     IMM_ZcSetLocalFreeMemCnt(ulMaxClusterFreeCnt);
@@ -794,7 +794,7 @@ void IMM_MemFree_Debug(unsigned short usFileId, unsigned short usLineNum, IMM_ME
     VOS_SpinUnlockIntUnlock(pstImmSpinLock ,ulSaveFlags);
 
 
-    /* ÏòÁ÷¿ØÄ£¿éÉÏ±¨ÄÚ´æÊÍ·ÅÊÂ¼ş */
+    /* å‘æµæ§æ¨¡å—ä¸ŠæŠ¥å†…å­˜é‡Šæ”¾äº‹ä»¶ */
     if ( VOS_NULL_PTR != pstImmMemPool->pMemFreeEvent )
     {
         pstImmMemPool->pMemFreeEvent(ulMaxClusterFreeCnt );
@@ -831,7 +831,7 @@ void IMM_MemRegMntnFuncCallBack
     IMM_MEM_USED_INFO_EVENT_RPT_CALLBACK    pImmMemEventRptFunc
 )
 {
-    /* ²ÎÊı¼ì²é£¬pImmOmGetSliceFunc ¿ÉÒÔÔÚ·ÇDEBUGÄ£Ê½ÏÂÎª¿Õ */
+    /* å‚æ•°æ£€æŸ¥ï¼ŒpImmOmGetSliceFunc å¯ä»¥åœ¨éDEBUGæ¨¡å¼ä¸‹ä¸ºç©º */
     if ( VOS_NULL_PTR == pImmMemEventRptFunc )
     {
         vos_printf("IMM_MemRegPsFuncCallBack fail: invalid input paras! \n");
@@ -863,7 +863,7 @@ unsigned int IMM_MemRegEventCallBack
     pstImmMemPool->pMemAllocEvent = pMemAllocEvent;
     pstImmMemPool->pMemFreeEvent  = pMemFreeEvent;
 
-    /* »ñÈ¡×î´óµµÎ»ÄÚ´æµÄÊ£Óà¿éÊı */
+    /* è·å–æœ€å¤§æ¡£ä½å†…å­˜çš„å‰©ä½™å—æ•° */
     ulMaxClusterFreeCnt = pstImmMemPool->astClusterTable[pstImmMemPool->ucClusterCnt - 1].usFreeCnt;
     IMM_ZcSetLocalFreeMemCnt(ulMaxClusterFreeCnt);
 
@@ -879,40 +879,40 @@ void IMM_MemFreeShowMntnInfo( void )
     IMM_MEM_FREE_NULL_PTR_INFO_STRU        *pstNullPPtrInfo     = &g_stImmMemFreeMntnEntity.astImmMemFreeNullPPtrInfo;
 
 
-    vos_printf( "IMM MEM FREE ¿ÉÎ¬¿É²âĞÅÏ¢ :\n");
+    vos_printf( "IMM MEM FREE å¯ç»´å¯æµ‹ä¿¡æ¯ :\n");
     vos_printf( "==========================================\n");
-    vos_printf( "IMM MEM FREE ·Ç·¨ÄÚ´æĞÅÏ¢ :\n");
-    vos_printf( "IMM MEM FREE ÊÕµ½µÄ·Ç·¨ÄÚ´æ¸öÊı       : %u \n", (unsigned int)pstInvalidMemInfo->ulInvalidImmMemCnt);
-    vos_printf( "IMM MEM FREE ·Ç·¨IMM MEM ÄÚ´æµØÖ·     : 0x%u \n", (unsigned int)pstInvalidMemInfo->ulInvalidImmMemAddr);
-    vos_printf( "IMM MEM FREE ·Ç·¨IMM MEM ÄÚ´æÎÄ¼şID   : %d \n", pstInvalidMemInfo->usImmMemFreeFileId);
-    vos_printf( "IMM MEM FREE ·Ç·¨IMM MEM ÄÚ´æĞĞºÅĞÅÏ¢ : %d \n", pstInvalidMemInfo->usImmMemFreeLineNum);
-    vos_printf( "IMM MEM FREE ·Ç·¨IMM MEM ÄÚ´æÀàĞÍ     : %d \n", pstInvalidMemInfo->ucImmMemInvalidType);
-    vos_printf( "IMM MEM FREE ·Ç·¨IMM MEM ÄÚ´æÖµ       : %d \n", pstInvalidMemInfo->usImmMemInvalidValue);
-    vos_printf( "IMM MEM ÄÚ´æ¿ØÖÆÍ·ÆğÊ¼µØÖ·            : 0x%u ~ 0x%u \n\n", (unsigned int)g_paulImmMemCtrlMemSpace,((unsigned int)((unsigned int)g_paulImmMemCtrlMemSpace + (*g_pulImmMemCtrlMemSuffix))) );
+    vos_printf( "IMM MEM FREE éæ³•å†…å­˜ä¿¡æ¯ :\n");
+    vos_printf( "IMM MEM FREE æ”¶åˆ°çš„éæ³•å†…å­˜ä¸ªæ•°       : %u \n", (unsigned int)pstInvalidMemInfo->ulInvalidImmMemCnt);
+    vos_printf( "IMM MEM FREE éæ³•IMM MEM å†…å­˜åœ°å€     : 0x%u \n", (unsigned int)pstInvalidMemInfo->ulInvalidImmMemAddr);
+    vos_printf( "IMM MEM FREE éæ³•IMM MEM å†…å­˜æ–‡ä»¶ID   : %d \n", pstInvalidMemInfo->usImmMemFreeFileId);
+    vos_printf( "IMM MEM FREE éæ³•IMM MEM å†…å­˜è¡Œå·ä¿¡æ¯ : %d \n", pstInvalidMemInfo->usImmMemFreeLineNum);
+    vos_printf( "IMM MEM FREE éæ³•IMM MEM å†…å­˜ç±»å‹     : %d \n", pstInvalidMemInfo->ucImmMemInvalidType);
+    vos_printf( "IMM MEM FREE éæ³•IMM MEM å†…å­˜å€¼       : %d \n", pstInvalidMemInfo->usImmMemInvalidValue);
+    vos_printf( "IMM MEM å†…å­˜æ§åˆ¶å¤´èµ·å§‹åœ°å€            : 0x%u ~ 0x%u \n\n", (unsigned int)g_paulImmMemCtrlMemSpace,((unsigned int)((unsigned int)g_paulImmMemCtrlMemSpace + (*g_pulImmMemCtrlMemSuffix))) );
 
 
     vos_printf( "==========================================\n");
-    vos_printf( "IMM MEM FREE ¿ÕÖ¸ÕëĞÅÏ¢ :\n");
-    vos_printf( "IMM MEM FREE Ò»¼¶Ö¸ÕëÎª¿ÕµÄ´ÎÊı    : %u \n", (unsigned int)pstNullPtrInfo->ulImmMemFreeNullPtrCnt);
-    vos_printf( "IMM MEM FREE ÊäÈëÖ¸ÕëÎÄ¼şID        : %d \n", pstNullPtrInfo->usImmMemFreeFileId);
-    vos_printf( "IMM MEM FREE ÊäÈëÖ¸ÕëÄÚ´æĞĞºÅĞÅÏ¢  : %d \n", pstNullPtrInfo->usImmMemFreeLineNum);
+    vos_printf( "IMM MEM FREE ç©ºæŒ‡é’ˆä¿¡æ¯ :\n");
+    vos_printf( "IMM MEM FREE ä¸€çº§æŒ‡é’ˆä¸ºç©ºçš„æ¬¡æ•°    : %u \n", (unsigned int)pstNullPtrInfo->ulImmMemFreeNullPtrCnt);
+    vos_printf( "IMM MEM FREE è¾“å…¥æŒ‡é’ˆæ–‡ä»¶ID        : %d \n", pstNullPtrInfo->usImmMemFreeFileId);
+    vos_printf( "IMM MEM FREE è¾“å…¥æŒ‡é’ˆå†…å­˜è¡Œå·ä¿¡æ¯  : %d \n", pstNullPtrInfo->usImmMemFreeLineNum);
 
-    vos_printf( "IMM MEM FREE ¶ş¼¶Ö¸ÕëÎª¿ÕµÄ´ÎÊı    : %u \n", (unsigned int)pstNullPPtrInfo->ulImmMemFreeNullPtrCnt);
-    vos_printf( "IMM MEM FREE ÊäÈëÖ¸ÕëÄÚ´æÎÄ¼şID    : %d \n", pstNullPPtrInfo->usImmMemFreeFileId);
-    vos_printf( "IMM MEM FREE ÊäÈëÖ¸ÕëÄÚ´æĞĞºÅĞÅÏ¢  : %d \n", pstNullPPtrInfo->usImmMemFreeLineNum);
+    vos_printf( "IMM MEM FREE äºŒçº§æŒ‡é’ˆä¸ºç©ºçš„æ¬¡æ•°    : %u \n", (unsigned int)pstNullPPtrInfo->ulImmMemFreeNullPtrCnt);
+    vos_printf( "IMM MEM FREE è¾“å…¥æŒ‡é’ˆå†…å­˜æ–‡ä»¶ID    : %d \n", pstNullPPtrInfo->usImmMemFreeFileId);
+    vos_printf( "IMM MEM FREE è¾“å…¥æŒ‡é’ˆå†…å­˜è¡Œå·ä¿¡æ¯  : %d \n", pstNullPPtrInfo->usImmMemFreeLineNum);
 
     vos_printf( "IMM MEM Pool Status: IMM_MEM_POOL_ID_DL_SHARE %d\n", g_astImmMemPool[IMM_MEM_POOL_ID_SHARE].ucUsedFlag);
     vos_printf( "                     IMM_MEM_POOL_ID_EXT      %d\n", g_astImmMemPool[IMM_MEM_POOL_ID_EXT].ucUsedFlag);
 
-    vos_printf( "IMM_MEM_POOL_ID_EXT ÊÍ·Åº¯Êı      : 0x%u\n", (unsigned int)g_astImmMemPool[IMM_MEM_POOL_ID_EXT].pMemExtFreeFunc);
-    vos_printf( "IMM Ext MEM FREE Ê§°Ü´ÎÊı         : %u \n", (unsigned int)g_stImmMemFreeMntnEntity.ulImmMemExtFreeFailCnt);
+    vos_printf( "IMM_MEM_POOL_ID_EXT é‡Šæ”¾å‡½æ•°      : 0x%u\n", (unsigned int)g_astImmMemPool[IMM_MEM_POOL_ID_EXT].pMemExtFreeFunc);
+    vos_printf( "IMM Ext MEM FREE å¤±è´¥æ¬¡æ•°         : %u \n", (unsigned int)g_stImmMemFreeMntnEntity.ulImmMemExtFreeFailCnt);
 
 }
 
 #endif
 
 /******************************************************************************/
-/*******************************V9R1°æ±¾***************************************/
+/*******************************V9R1ç‰ˆæœ¬***************************************/
 /******************************************************************************/
 
 unsigned int IMM_MemRegEventCallBack

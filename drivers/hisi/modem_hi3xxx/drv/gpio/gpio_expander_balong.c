@@ -6,8 +6,8 @@
 * Author        :
 * Created       : 2013-04-23
 * Last Modified : 
-* Description   : fastbootÒ²´æÔÚÀ©Õ¹GPIOÇı¶¯£¬×¢Òâ²»ÒªÏà»¥Ó°Ïì¡£
-* Function List : (³§ÉÌÇı¶¯probe»á²Ù×÷À©Õ¹gpio£¬¿ÉÄÜĞèÒªÊÊÅä)
+* Description   : fastbootä¹Ÿå­˜åœ¨æ‰©å±•GPIOé©±åŠ¨ï¼Œæ³¨æ„ä¸è¦ç›¸äº’å½±å“ã€‚
+* Function List : (å‚å•†é©±åŠ¨probeä¼šæ“ä½œæ‰©å±•gpioï¼Œå¯èƒ½éœ€è¦é€‚é…)
 * History       : 
 * 1 Date        : 
 * Author        : 
@@ -71,7 +71,7 @@ static struct i2c_board_info expander_board_info[GPIO_I2C_EXPANDER_NUM] = {
 		{/* v711 UDP E5*/
         	.type = "pca9574",
         	.addr = 0x20,
-        	.platform_data = &gpio_i2c_expander_data[0],/* ×¢ÒâĞŞ¸ÄÎª1 */
+        	.platform_data = &gpio_i2c_expander_data[0],/* æ³¨æ„ä¿®æ”¹ä¸º1 */
 		},
 #if 0
 		{/*v711 E5*/

@@ -1,7 +1,7 @@
 
 
 /*******************************************************************************
-  1 ÆäËûÍ·ÎÄ¼ş°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *******************************************************************************/
 #include  "global_ddr_map.h"
 #include  <asm/io.h>
@@ -20,7 +20,7 @@ extern "C" {
 
 
 /*******************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *******************************************************************************/
 
 #define EXCH_TEST_FUNCTION_ON
@@ -46,12 +46,12 @@ extern "C" {
 #define EXCH_RTC_TIME_LEN           16
 #define EXCH_MODID_PIDMASK	(1<<24)
 
-/*¼ÇÂ¼ÈÎÎñĞÅÏ¢¸öÊı*/
+/*è®°å½•ä»»åŠ¡ä¿¡æ¯ä¸ªæ•°*/
 #define EXCH_RECORD_TASK_NUM_MAX    124
 #define EXCH_CUST_TASK_NUM_MAX      8
 #define EXCH_CUST_FUNC_NUM_MAX      64
 #define EXCH_8K_SIZE                0x2000
-/*#define EXCH_CB_NAME_SIZE           32  ¸úCºËMºË±£´æÒ»ÖÂ*/
+/*#define EXCH_CB_NAME_SIZE           32  è·ŸCæ ¸Mæ ¸ä¿å­˜ä¸€è‡´*/
 #define EXCH_MEM_IS_READY           0x12345678
 #define EXCH_TASK_NAME_LEN          16
 #define EXCH_TASK_NAME_PART_LEN     12
@@ -76,11 +76,11 @@ extern "C" {
 
 /*******************************************************************************
 *                                                                              *
-*                    ÒÔÏÂ±£´æÒì³£Ê±¼Ä´æÆ÷µØÖ·-Begin                            *
+*                    ä»¥ä¸‹ä¿å­˜å¼‚å¸¸æ—¶å¯„å­˜å™¨åœ°å€-Begin                            *
 *                                                                              *
 *******************************************************************************/
 
-/*È·¶¨ÁÙÖÕÒÅÑÔÄ£¿éDDRÄÚ´æµÄÆğÊ¼µØÖ·Óë´óĞ¡*/
+/*ç¡®å®šä¸´ç»ˆé—è¨€æ¨¡å—DDRå†…å­˜çš„èµ·å§‹åœ°å€ä¸å¤§å°*/
 #define EXCH_DDR_BASE_ADDR              ANDROID_DUMP_LOG_ADDR
 #define EXCH_BASE_ADDR                  EXCH_A_CORE_BASE_ADDR
 #define EXCH_ALL_SIZE                   (EXCH_A_CORE_SIZE + EXCH_C_CORE_SIZE + EXCH_M_CORE_SIZE)
@@ -99,72 +99,72 @@ extern "C" {
 
 
 
-/********************************AºËÄÚ´æÇø¹æ»®*********************************/
-/*AºËÆğÊ¼µØÖ·*/
+/********************************Aæ ¸å†…å­˜åŒºè§„åˆ’*********************************/
+/*Aæ ¸èµ·å§‹åœ°å€*/
 #define EXCH_A_CORE_BASE               (EXCH_A_CORE_BASE_ADDR)//
 
-/*AºËÄÚ´æÇøÆğÊ¼¶ÎÓÃÓÚ±£´æÈ«¾Ö½á¹¹Ìåg_pExchRoot*/
+/*Aæ ¸å†…å­˜åŒºèµ·å§‹æ®µç”¨äºä¿å­˜å…¨å±€ç»“æ„ä½“g_pExchRoot*/
 #define EXCH_ROOT_ADDR                 (EXCH_A_CORE_BASE) //0x0
 #define EXCH_ROOT_SIZE                 (0x400)   //1K
 
-/*¼ÇÂ¼Ã¿¸öCPUÉÏ×îºóÒ»¸öÈÎÎñTCBĞÅÏ¢*/
+/*è®°å½•æ¯ä¸ªCPUä¸Šæœ€åä¸€ä¸ªä»»åŠ¡TCBä¿¡æ¯*/
 #define EXCH_LAST_TASK_TCB_ADDR        (EXCH_ROOT_ADDR + EXCH_ROOT_SIZE)//0x400
 #define EXCH_LAST_TASK_TCB_SIZE        (EXCH_TASK_TCB_SIZE * NR_CPUS)     //8K(0x400*8)
 
-/*¼ÇÂ¼ÓÃ»§¶©ÖÆ²ÎÊıĞÅÏ¢*/
+/*è®°å½•ç”¨æˆ·è®¢åˆ¶å‚æ•°ä¿¡æ¯*/
 #define EXCH_CUSTOM_ARG_ADDR           (EXCH_LAST_TASK_TCB_ADDR + EXCH_LAST_TASK_TCB_SIZE)//0x2400
 #define EXCH_CUSTOM_ARG_SIZE           (0x0400)
 
-/*¼ÇÂ¼Ã¿¸öCPUÉÏÖĞ¶ÏÇĞ»»ĞÅÏ¢*/
+/*è®°å½•æ¯ä¸ªCPUä¸Šä¸­æ–­åˆ‡æ¢ä¿¡æ¯*/
 #define EXCH_INT_SWITCH_ADDR           (EXCH_CUSTOM_ARG_ADDR + EXCH_CUSTOM_ARG_SIZE)    //0x2800
 #define EXCH_INT_SWITCH_SIZE           (0x10000)    //64K
 
-/*¼ÇÂ¼Ã¿¸öCPUÉÏÈÎÎñÇĞ»»ĞÅÏ¢*/
+/*è®°å½•æ¯ä¸ªCPUä¸Šä»»åŠ¡åˆ‡æ¢ä¿¡æ¯*/
 #define EXCH_TASK_SWITCH_ADDR          (EXCH_INT_SWITCH_ADDR + EXCH_INT_SWITCH_SIZE)    //0x12800
 #define EXCH_TASK_SWITCH_SIZE          (0x40000)    //256K
 
-/*¼ÇÂ¼Ã¿¸öCPUÉÏ×îºóÒ»¸öÒì³£ÖĞ¶ÏÕ»ĞÅÏ¢*/
+/*è®°å½•æ¯ä¸ªCPUä¸Šæœ€åä¸€ä¸ªå¼‚å¸¸ä¸­æ–­æ ˆä¿¡æ¯*/
 #define EXCH_LAST_INT_STACK_ADDR       (EXCH_TASK_SWITCH_ADDR + EXCH_TASK_SWITCH_SIZE)  //0x52800
 #define EXCH_LAST_INT_STACK_SIZE       (0x0400)     //1K
 
-/*¼ÇÂ¼Ã¿¸öCPUÉÏ×îºóÒ»¸öÒì³£ÈÎÎñÕ»ĞÅÏ¢*/
+/*è®°å½•æ¯ä¸ªCPUä¸Šæœ€åä¸€ä¸ªå¼‚å¸¸ä»»åŠ¡æ ˆä¿¡æ¯*/
 #define EXCH_LAST_TASK_STACK_ADDR      (EXCH_LAST_INT_STACK_ADDR + EXCH_LAST_INT_STACK_SIZE)    //0x52C00
 #define EXCH_LAST_TASK_STACK_SIZE      (EXCH_8K_SIZE * NR_CPUS)     //64K(0x2000*8)
 
-/*¼ÇÂ¼AºË124¸öÈÎÎñµÄÈÎÎñÃû*/
+/*è®°å½•Aæ ¸124ä¸ªä»»åŠ¡çš„ä»»åŠ¡å*/
 #define EXCH_ALL_TASK_NAME_ADDR        (EXCH_LAST_TASK_STACK_ADDR + EXCH_LAST_TASK_STACK_SIZE)  //0x62C00
 #define EXCH_ALL_TASK_NAME_SIZE        (0x1000)   //4K
 
-/*¼ÇÂ¼AºË124¸öÈÎÎñµÄTCB*/
+/*è®°å½•Aæ ¸124ä¸ªä»»åŠ¡çš„TCB*/
 #define EXCH_ALL_TASK_TCB_ADDR         (EXCH_ALL_TASK_NAME_ADDR + EXCH_ALL_TASK_NAME_SIZE)      //0x63C00
 #define EXCH_ALL_TASK_TCB_SIZE         (0x1F000)  //124K
 
-/*¼ÇÂ¼OMÄ£¿éÒì³£ĞÅÏ¢*/
+/*è®°å½•OMæ¨¡å—å¼‚å¸¸ä¿¡æ¯*/
 #define EXCH_OSA_ADDR                   (EXCH_ALL_TASK_TCB_ADDR + EXCH_ALL_TASK_TCB_SIZE)       //0x82C00
 #define EXCH_OSA_SIZE                   (0x8000)  //32K
 
-/*ÓÃÓÚ¼ÇÂ¼ÓÃ»§Ö¸¶¨ÈÎÎñ¶ÓÁĞĞÅÏ¢*/
+/*ç”¨äºè®°å½•ç”¨æˆ·æŒ‡å®šä»»åŠ¡é˜Ÿåˆ—ä¿¡æ¯*/
 #define EXCH_CUSTOM_TASK_QUEUE_ADDR     (EXCH_OSA_ADDR + EXCH_OSA_SIZE) //0x8AC00
 #define EXCH_CUSTOM_TASK_QUEUE_SIZE     (0x400)
-/*ÓÃÓÚ¼ÇÂ¼ÓÃ»§Ö¸¶¨ÈÎÎñµÄÈÎÎñĞÅÏ¢*/
+/*ç”¨äºè®°å½•ç”¨æˆ·æŒ‡å®šä»»åŠ¡çš„ä»»åŠ¡ä¿¡æ¯*/
 #define EXCH_CUSTOM_TASK_INFO_ADDR      (EXCH_CUSTOM_TASK_QUEUE_ADDR + EXCH_CUSTOM_TASK_QUEUE_SIZE) //0x8B000
 #define EXCH_CUSTOM_TASK_INFO_SIZE      (0x10000) //64K
-/*ÓÃÓÚ¼ÇÂ¼ÓÃ»§×¢²áµÄ»Øµ÷½Ó¿ÚĞÅÏ¢*/
+/*ç”¨äºè®°å½•ç”¨æˆ·æ³¨å†Œçš„å›è°ƒæ¥å£ä¿¡æ¯*/
 #define EXCH_CUSTOM_FUNC_QUEUE_ADDR     (EXCH_CUSTOM_TASK_INFO_ADDR + EXCH_CUSTOM_TASK_INFO_SIZE)   //0x9B000
 #define EXCH_CUSTOM_FUNC_QUEUE_SIZE     (0x400)
-/*ÓÃÓÚ¼ÇÂ¼Ó¦ÓÃ×¢²áµÄ»Øµ÷´«ÈëµÄbuffer*/
+/*ç”¨äºè®°å½•åº”ç”¨æ³¨å†Œçš„å›è°ƒä¼ å…¥çš„buffer*/
 #define EXCH_CUSTOM_FUNC_INFO_ADDR      (EXCH_CUSTOM_FUNC_QUEUE_ADDR + EXCH_CUSTOM_FUNC_QUEUE_SIZE) //0x9B400
 #define EXCH_CUSTOM_FUNC_INFO_SIZE      (0x10000) //64K
 
-/*¼ÇÂ¼ÏµÍ³GIC×´Ì¬¼Ä´æÆ÷*/
+/*è®°å½•ç³»ç»ŸGICçŠ¶æ€å¯„å­˜å™¨*/
 #define EXCH_A_GIC_INT_STS_ADDR         (EXCH_CUSTOM_FUNC_INFO_ADDR + EXCH_CUSTOM_FUNC_INFO_SIZE)//0xAB400
 #define EXCH_A_GIC_INT_STS_SIZE         (0x80)    //128B
 
-/*¼ÇÂ¼ÏµÍ³Òì³£´òÓ¡ĞÅÏ¢*/
+/*è®°å½•ç³»ç»Ÿå¼‚å¸¸æ‰“å°ä¿¡æ¯*/
 #define EXCH_LOG_KMSG_ADDR              (EXCH_A_GIC_INT_STS_ADDR + EXCH_A_GIC_INT_STS_SIZE)//0xAB480
 #define EXCH_LOG_KMSG_SIZE              (0x40000) //256K
 
-/* ram-consoleÒòÒ³¶ÔÆëÕ¼ÓÃÒ»²¿·Ö¸Ã¿Õ¼ä */
+/* ram-consoleå› é¡µå¯¹é½å ç”¨ä¸€éƒ¨åˆ†è¯¥ç©ºé—´ */
 #define EXCH_LOG_KMSG_RESERVED_ADDR     (EXCH_LOG_KMSG_ADDR + EXCH_LOG_KMSG_SIZE)//0xEB480
 #define EXCH_LOG_KMSG_RESERVED_SIZE     (0x1C00) //7K
 
@@ -177,10 +177,10 @@ extern "C" {
 #define EXCH_DRV_CUSTOM_INFO_ADDR       (SOC_AO_SCTRL_ADDR + SOC_AO_SCTRL_SIZE)   //0xEF480
 #define EXCH_DRV_CUSTOM_INFO_SIZE       (0x2000)  //8K
 
-/****************************A/C/MºËÄÚ´æ¹²ÏíÇø¹æ»®*****************************/
+/****************************A/C/Mæ ¸å†…å­˜å…±äº«åŒºè§„åˆ’*****************************/
 
-/* A/C/MºËÄÚ´æ¹²ÏíÇø£¬Î»ÓÚSRAM */
-/* ¹²ÏíÄÚ´æÇø£¬ÓÃÓÚ±£´æ¸÷ºË¹²ÏíĞÅÏ¢£¬Ö÷¿ØºËĞ´£¬¸÷ºË¾ù¿É¶Á */
+/* A/C/Mæ ¸å†…å­˜å…±äº«åŒºï¼Œä½äºSRAM */
+/* å…±äº«å†…å­˜åŒºï¼Œç”¨äºä¿å­˜å„æ ¸å…±äº«ä¿¡æ¯ï¼Œä¸»æ§æ ¸å†™ï¼Œå„æ ¸å‡å¯è¯» */
 #define EXCH_CORES_SHARE_ADDR             (EXCH_DRV_CUSTOM_INFO_ADDR + EXCH_DRV_CUSTOM_INFO_SIZE)   //0xF1480
 #define EXCH_CORES_SHARE_SIZE             (0x1000)                //4K
 
@@ -278,18 +278,18 @@ struct task_info
 #define EXCH_RFS_SIZE (MEMORY_RAM_CORESHARE_RFS_MNTN_SIZE)
 
 /*******************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æšä¸¾å®šä¹‰
 *******************************************************************************/
 typedef enum
 {
     EXCH_S_DIE,
     EXCH_S_PANIC,
     EXCH_S_NOC,   /*if the value change, please also change  EXCH_S_NOC of hisi_err_probe.h*/
-    EXCH_S_PMU,   /*systemErrorCcore ±£³Ö¸úCºËÒ»ÖÂ*/
-    EXCH_S_DORESET,     /*Acore reset,CºË/hifiµ¥¶À¸´Î»Ê§°Ü*/
-    EXCH_S_LOGDUMP,     /*°´×éºÏ¼üÖ÷¶¯¸´Î»ÏµÍ³½øÈëlog dump*/
+    EXCH_S_PMU,   /*systemErrorCcore ä¿æŒè·ŸCæ ¸ä¸€è‡´*/
+    EXCH_S_DORESET,     /*Acore reset,Cæ ¸/hifiå•ç‹¬å¤ä½å¤±è´¥*/
+    EXCH_S_LOGDUMP,     /*æŒ‰ç»„åˆé”®ä¸»åŠ¨å¤ä½ç³»ç»Ÿè¿›å…¥log dump*/
     EXCH_S_DDRC_SEC,     /*DDRC SECURITY reboot*/
-    EXCH_S_WATCHPOINT,      /*for watchpoint ¹¦ÄÜ*/
+    EXCH_S_WATCHPOINT,      /*for watchpoint åŠŸèƒ½*/
     EXCH_S_GPIO,
     EXCH_S_MAILBOX,
 	EXCH_S_CSI0,
@@ -322,21 +322,21 @@ enum himntnEnum
     HIMNTN_GOBAL_RESETLOG,
     HIMNTN_MODEM_RESETLOG,
     HIMNTN_HIFI_RESETLOG,
-    HIMNTN_NOC_ErrLog,/* ¸Ã×Ö½ÚÈç¹ûÊÇ×Ö·û0£¬Ôò±íÊ¾nocµÄ³¬Ê±ÉÏ±¨errLog¹¦ÄÜ±»¹Ø±Õ£»ÆäËû±íÊ¾´ò¿ª */
+    HIMNTN_NOC_ErrLog,/* è¯¥å­—èŠ‚å¦‚æœæ˜¯å­—ç¬¦0ï¼Œåˆ™è¡¨ç¤ºnocçš„è¶…æ—¶ä¸ŠæŠ¥errLogåŠŸèƒ½è¢«å…³é—­ï¼›å…¶ä»–è¡¨ç¤ºæ‰“å¼€ */
     HIMNTN_NOC_ERR_LOGGER_RESET = 10,    /*used in kernel, whether reset system when noc error logger irq happend*/
     HIMNTN_FIQ_DEBUGGER,
-    HIMNTN_ACCESS_ERROR_REBOOT,/*DDR °²È«ÖĞ¶Ï¸´Î»Ê¹ÄÜÎ»*/
-    HIMNTN_MBX_ERRLOG_SAVE,     /*ÀÏÓÊÏäÒì³£logÎÄ¼ş±£´æ*/
+    HIMNTN_ACCESS_ERROR_REBOOT,/*DDR å®‰å…¨ä¸­æ–­å¤ä½ä½¿èƒ½ä½*/
+    HIMNTN_MBX_ERRLOG_SAVE,     /*è€é‚®ç®±å¼‚å¸¸logæ–‡ä»¶ä¿å­˜*/
 
-    /* ¹¦ÄÜÄ¬ÈÏ¹Ø±ÕµÄ,Çë·ÅÖÃ23Ö®ºó */
-    HIMNTN_LOAD_DDR_RESETLOG = 23,/*´ø¿í ¸ºÔØ´¥·¢ÏµÍ³Òì³£ ¼ÇÂ¼LOG Ê¹ ÄÜ£¬Ä¬ÈÏ ¹Ø±Õ */
+    /* åŠŸèƒ½é»˜è®¤å…³é—­çš„,è¯·æ”¾ç½®23ä¹‹å */
+    HIMNTN_LOAD_DDR_RESETLOG = 23,/*å¸¦å®½ è´Ÿè½½è§¦å‘ç³»ç»Ÿå¼‚å¸¸ è®°å½•LOG ä½¿ èƒ½ï¼Œé»˜è®¤ å…³é—­ */
     HIMNTN_MBFULL_ASSERT,
     HIMNTN_PRINTK_WHO_WAKEUP_ACPU = 25,
-    HIMNTN_LOAD_DDR_EN, /*´ø¿í Í³¼Æ Ê¹ ÄÜ£¬Ä¬ÈÏ ´ò¿ª*/
-    HIMNTN_LOAD_DDR_SINGLE_PORT,   /*µ¥´ø¿í¶Ë¿Ú Í³¼ÆÊ¹ÄÜ*/
+    HIMNTN_LOAD_DDR_EN, /*å¸¦å®½ ç»Ÿè®¡ ä½¿ èƒ½ï¼Œé»˜è®¤ æ‰“å¼€*/
+    HIMNTN_LOAD_DDR_SINGLE_PORT,   /*å•å¸¦å®½ç«¯å£ ç»Ÿè®¡ä½¿èƒ½*/
     HIMNTN_POWERKEY_RESET,
     HIMNTN_UNLOCK_CORE_FOR_MCUSAVEPC,/*MCU saves pc of acpu*/
-    HIMNTN_WATCHPOINT_EN = 30,/*WatchpointÊ¹ÄÜÎ»*/
+    HIMNTN_WATCHPOINT_EN = 30,/*Watchpointä½¿èƒ½ä½*/
     HIMNTN_KMEMLEAK_SWITCH,
 
     /*Add above, and keep the same as definition in nv_number.h in fastboot !!!!*/
@@ -347,35 +347,35 @@ extern unsigned int himntn_modem_resetlog;
 extern unsigned int himntn_hifi_resetlog;
 #define HIMNTN_ALWAYS_RESETLOG     1
 /*******************************************************************************
-  4 ÏûÏ¢Í·¶¨Òå
+  4 æ¶ˆæ¯å¤´å®šä¹‰
 *******************************************************************************/
 
 
 /*******************************************************************************
-  5 ÏûÏ¢¶¨Òå
+  5 æ¶ˆæ¯å®šä¹‰
 *******************************************************************************/
 
 
 /*******************************************************************************
-  6 STRUCT¶¨Òå
+  6 STRUCTå®šä¹‰
 *******************************************************************************/
 
 
 typedef struct
 {
-    unsigned int    reboot_reason;  //¸´Î»Ô­Òò£¬AºËĞ´£¬¸÷ºË¿É¶Á
-    unsigned int    reboot_core;    //¸´Î»ºË£¬AºËĞ´£¬¸÷ºË¿É¶Á
-    unsigned int    mem_ready;      //ÄÚ´æ×¼±¸ºÃ£¬AºËĞ´£¬¸÷ºË¶Á£¬¿ªÊ¼³õÊ¼»¯
-    unsigned int    is_rebooting;   //ÏµÍ³ÖØÆôÖĞ
+    unsigned int    reboot_reason;  //å¤ä½åŸå› ï¼ŒAæ ¸å†™ï¼Œå„æ ¸å¯è¯»
+    unsigned int    reboot_core;    //å¤ä½æ ¸ï¼ŒAæ ¸å†™ï¼Œå„æ ¸å¯è¯»
+    unsigned int    mem_ready;      //å†…å­˜å‡†å¤‡å¥½ï¼ŒAæ ¸å†™ï¼Œå„æ ¸è¯»ï¼Œå¼€å§‹åˆå§‹åŒ–
+    unsigned int    is_rebooting;   //ç³»ç»Ÿé‡å¯ä¸­
 
 }cores_share_info_t;
 
 typedef struct
 {
-    unsigned int*    reboot_reason;  /*¸´Î»Ô­Òò£¬AºËĞ´£¬¸÷ºË¿É¶Á*/
-    unsigned int*    reboot_core;    /*¸´Î»ºË£¬AºËĞ´£¬¸÷ºË¿É¶Á*/
-    unsigned int*    mem_ready;      /*ÄÚ´æ×¼±¸ºÃ£¬AºËĞ´£¬¸÷ºË¶Á£¬¿ªÊ¼³õÊ¼»¯*/
-    unsigned int*    is_rebooting;   /*ÏµÍ³ÖØÆôÖĞ*/
+    unsigned int*    reboot_reason;  /*å¤ä½åŸå› ï¼ŒAæ ¸å†™ï¼Œå„æ ¸å¯è¯»*/
+    unsigned int*    reboot_core;    /*å¤ä½æ ¸ï¼ŒAæ ¸å†™ï¼Œå„æ ¸å¯è¯»*/
+    unsigned int*    mem_ready;      /*å†…å­˜å‡†å¤‡å¥½ï¼ŒAæ ¸å†™ï¼Œå„æ ¸è¯»ï¼Œå¼€å§‹åˆå§‹åŒ–*/
+    unsigned int*    is_rebooting;   /*ç³»ç»Ÿé‡å¯ä¸­*/
 }cores_share_addr_info_t;
 typedef struct
 {
@@ -438,7 +438,7 @@ typedef struct
     char taskname[EXCH_TASK_NAME_PART_LEN];
 } TASK_NAME_STRU;
 
-/*AP CP ½âñî£¬¸Ã²¿·Ö include/drv/acore/mdrv_stub.h ÖĞÒ²¶¨ÒåÁËÒ»·İ£¬ĞèÒªÍ¬²½ĞŞ¸Ä begin*/
+/*AP CP è§£è€¦ï¼Œè¯¥éƒ¨åˆ† include/drv/acore/mdrv_stub.h ä¸­ä¹Ÿå®šä¹‰äº†ä¸€ä»½ï¼Œéœ€è¦åŒæ­¥ä¿®æ”¹ begin*/
 #define EXCH_CB_NAME_SIZE           (32)
 typedef struct
 {
@@ -448,7 +448,7 @@ typedef struct
 }exch_cb_buf_t;
 
 typedef int  (*exch_CBReg)(exch_cb_buf_t *);
-/*AP CP ½âñî£¬¸Ã²¿·ÖÔÚ¸Ã²¿·Ö include/drv/acore/mdrv_stub.h ÖĞÒ²¶¨ÒåÁËÒ»·İ£¬ĞèÒªÍ¬²½ĞŞ¸Ä end*/
+/*AP CP è§£è€¦ï¼Œè¯¥éƒ¨åˆ†åœ¨è¯¥éƒ¨åˆ† include/drv/acore/mdrv_stub.h ä¸­ä¹Ÿå®šä¹‰äº†ä¸€ä»½ï¼Œéœ€è¦åŒæ­¥ä¿®æ”¹ end*/
 
 typedef void  (*exch_mdm_panic_reg)(void);
 
@@ -489,17 +489,17 @@ struct hifi_om_virtual_addr {
 };
 
 /*******************************************************************************
-  7 UNION¶¨Òå
+  7 UNIONå®šä¹‰
 *******************************************************************************/
 
 
 /*******************************************************************************
-  8 OTHERS¶¨Òå
+  8 OTHERSå®šä¹‰
 *******************************************************************************/
 
 
 /*******************************************************************************
-  9 È«¾Ö±äÁ¿ÉùÃ÷
+  9 å…¨å±€å˜é‡å£°æ˜
 *******************************************************************************/
 typedef void (*FUNC_VOID)(void);
 /*typedef int  (*exchCBReg)(cb_buf_t *);, remove, redefined!*/
@@ -516,7 +516,7 @@ extern unsigned int g_task_record_offset[NR_CPUS];
 extern unsigned int g_acpu_unlock_flag_tmp;
 
 /*******************************************************************************
-  10 º¯ÊıÉùÃ÷
+  10 å‡½æ•°å£°æ˜
 *******************************************************************************/
 extern void systemError(int modId, int arg1, int arg2, char *arg3, int arg3Length);
 extern int  exch_file_save(char *file_name, void *address, unsigned int length);

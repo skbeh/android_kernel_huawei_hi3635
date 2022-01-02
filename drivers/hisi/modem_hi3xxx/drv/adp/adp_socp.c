@@ -9,15 +9,15 @@ extern "C"
 
 #ifndef ENABLE_BUILD_SOCP /* do not build socp, stub */
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_INIT
+* å‡½ æ•° å  : DRV_SOCP_INIT
 *
-* ¹¦ÄÜÃèÊö  : Ä£¿é³õÊ¼»¯º¯Êý
+* åŠŸèƒ½æè¿°  : æ¨¡å—åˆå§‹åŒ–å‡½æ•°
 *
-* ÊäÈë²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ³õÊ¼»¯³É¹¦µÄ±êÊ¶Âë
+* è¿” å›ž å€¼  : åˆå§‹åŒ–æˆåŠŸçš„æ ‡è¯†ç 
 *****************************************************************************/
 BSP_S32 DRV_SOCP_INIT()
 {
@@ -25,13 +25,13 @@ BSP_S32 DRV_SOCP_INIT()
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_CORDER_SET_SRC_CHAN
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÍê³ÉSOCP±àÂëÆ÷Ô´Í¨µÀµÄ·ÖÅä£¬¸ù¾Ý±àÂëÆ÷Ô´Í¨µÀ²ÎÊýÉèÖÃÍ¨µÀÊôÐÔ£¬Á¬½ÓÄ¿±êÍ¨µÀ£¬·µ»Øº¯ÊýÖ´ÐÐ½á¹û¡£
- ÊäÈë²ÎÊý  : pSrcAttr:±àÂëÆ÷Ô´Í¨µÀ²ÎÊý½á¹¹ÌåÖ¸Õë¡£
-             pSrcChanID:ÉêÇëµ½µÄÔ´Í¨µÀID¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:±àÂëÔ´Í¨µÀ·ÖÅä³É¹¦¡£
-             SOCP_ERROR:±àÂëÔ´Í¨µÀ·ÖÅäÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_CORDER_SET_SRC_CHAN
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£å®ŒæˆSOCPç¼–ç å™¨æºé€šé“çš„åˆ†é…ï¼Œæ ¹æ®ç¼–ç å™¨æºé€šé“å‚æ•°è®¾ç½®é€šé“å±žæ€§ï¼Œè¿žæŽ¥ç›®æ ‡é€šé“ï¼Œè¿”å›žå‡½æ•°æ‰§è¡Œç»“æžœã€‚
+ è¾“å…¥å‚æ•°  : pSrcAttr:ç¼–ç å™¨æºé€šé“å‚æ•°ç»“æž„ä½“æŒ‡é’ˆã€‚
+             pSrcChanID:ç”³è¯·åˆ°çš„æºé€šé“IDã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:ç¼–ç æºé€šé“åˆ†é…æˆåŠŸã€‚
+             SOCP_ERROR:ç¼–ç æºé€šé“åˆ†é…å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_CORDER_SET_SRC_CHAN(SOCP_CODER_SRC_ENUM_U32 enSrcChanID, SOCP_CODER_SRC_CHAN_STRU *pSrcAttr)
 {
@@ -39,13 +39,13 @@ BSP_S32 DRV_SOCP_CORDER_SET_SRC_CHAN(SOCP_CODER_SRC_ENUM_U32 enSrcChanID, SOCP_C
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_CODER_SET_DEST_CHAN_ATTR
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÍê³ÉÄ³Ò»±àÂëÄ¿±êÍ¨µÀµÄÅäÖÃ£¬·µ»Øº¯ÊýÖ´ÐÐµÄ½á¹û¡£
- ÊäÈë²ÎÊý  : u32DestChanID:SOCP±àÂëÆ÷µÄÄ¿±êÍ¨µÀID¡£
-             pDestAttr:SOCP±àÂëÆ÷Ä¿±êÍ¨µÀ²ÎÊý½á¹¹ÌåÖ¸Õë¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:±àÂëÄ¿µÄÍ¨µÀÉèÖÃ³É¹¦¡£
-             SOCP_ERROR:±àÂëÄ¿µÄÍ¨µÀÉèÖÃÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_CODER_SET_DEST_CHAN_ATTR
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£å®ŒæˆæŸä¸€ç¼–ç ç›®æ ‡é€šé“çš„é…ç½®ï¼Œè¿”å›žå‡½æ•°æ‰§è¡Œçš„ç»“æžœã€‚
+ è¾“å…¥å‚æ•°  : u32DestChanID:SOCPç¼–ç å™¨çš„ç›®æ ‡é€šé“IDã€‚
+             pDestAttr:SOCPç¼–ç å™¨ç›®æ ‡é€šé“å‚æ•°ç»“æž„ä½“æŒ‡é’ˆã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:ç¼–ç ç›®çš„é€šé“è®¾ç½®æˆåŠŸã€‚
+             SOCP_ERROR:ç¼–ç ç›®çš„é€šé“è®¾ç½®å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_CODER_SET_DEST_CHAN_ATTR(BSP_U32 u32DestChanID, SOCP_CODER_DEST_CHAN_STRU *pDestAttr)
 {
@@ -53,15 +53,15 @@ BSP_S32 DRV_SOCP_CODER_SET_DEST_CHAN_ATTR(BSP_U32 u32DestChanID, SOCP_CODER_DEST
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_DECODER_SET_DEST_CHAN
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÍê³ÉSOCP½âÂëÆ÷Ä¿±êÍ¨µÀµÄ·ÖÅä£¬
-             ¸ù¾Ý½âÂëÄ¿±êÍ¨µÀ²ÎÊýÉèÖÃÍ¨µÀÊôÐÔ£¬
-             ²¢Á¬½ÓÔ´Í¨µÀ£¬·µ»Øº¯ÊýÖ´ÐÐ½á¹û¡£
- ÊäÈë²ÎÊý  : pAttr:½âÂëÆ÷Ä¿±êÍ¨µÀ²ÎÊý½á¹¹ÌåÖ¸Õë
-             pDestChanID:ÉêÇëµ½µÄÄ¿±êÍ¨µÀID
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:½âÂëÄ¿µÄÍ¨µÀ·ÖÅä³É¹¦¡£
-             SOCP_ERROR:½âÂëÄ¿µÄÍ¨µÀÉèÖÃÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_DECODER_SET_DEST_CHAN
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£å®ŒæˆSOCPè§£ç å™¨ç›®æ ‡é€šé“çš„åˆ†é…ï¼Œ
+             æ ¹æ®è§£ç ç›®æ ‡é€šé“å‚æ•°è®¾ç½®é€šé“å±žæ€§ï¼Œ
+             å¹¶è¿žæŽ¥æºé€šé“ï¼Œè¿”å›žå‡½æ•°æ‰§è¡Œç»“æžœã€‚
+ è¾“å…¥å‚æ•°  : pAttr:è§£ç å™¨ç›®æ ‡é€šé“å‚æ•°ç»“æž„ä½“æŒ‡é’ˆ
+             pDestChanID:ç”³è¯·åˆ°çš„ç›®æ ‡é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è§£ç ç›®çš„é€šé“åˆ†é…æˆåŠŸã€‚
+             SOCP_ERROR:è§£ç ç›®çš„é€šé“è®¾ç½®å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_DECODER_SET_DEST_CHAN(SOCP_DECODER_DST_ENUM_U32 enDestChanID, SOCP_DECODER_DEST_CHAN_STRU *pAttr)
 {
@@ -69,13 +69,13 @@ BSP_S32 DRV_SOCP_DECODER_SET_DEST_CHAN(SOCP_DECODER_DST_ENUM_U32 enDestChanID, S
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_DECODER_SET_SRC_CHAN_ATTR
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÍê³ÉÄ³Ò»½âÂëÔ´Í¨µÀµÄÅäÖÃ£¬·µ»Øº¯ÊýÖ´ÐÐµÄ½á¹û¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:½âÂëÆ÷Ô´Í¨µÀID
-             pInputAttr:½âÂëÆ÷Ô´Í¨µÀ²ÎÊý½á¹¹ÌåÖ¸Õë
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:½âÂëÔ´Í¨µÀÉèÖÃ³É¹¦
-             SOCP_ERROR:½âÂëÔ´Í¨µÀÉèÖÃÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_DECODER_SET_SRC_CHAN_ATTR
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£å®ŒæˆæŸä¸€è§£ç æºé€šé“çš„é…ç½®ï¼Œè¿”å›žå‡½æ•°æ‰§è¡Œçš„ç»“æžœã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:è§£ç å™¨æºé€šé“ID
+             pInputAttr:è§£ç å™¨æºé€šé“å‚æ•°ç»“æž„ä½“æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è§£ç æºé€šé“è®¾ç½®æˆåŠŸ
+             SOCP_ERROR:è§£ç æºé€šé“è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_DECODER_SET_SRC_CHAN_ATTR ( BSP_U32 u32SrcChanID,SOCP_DECODER_SRC_CHAN_STRU *pInputAttr)
 {
@@ -83,13 +83,13 @@ BSP_S32 DRV_SOCP_DECODER_SET_SRC_CHAN_ATTR ( BSP_U32 u32SrcChanID,SOCP_DECODER_S
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_DECODER_GET_ERR_CNT
- ¹¦ÄÜÃèÊö  :´Ë½Ó¿Ú¸ø³ö½âÂëÍ¨µÀÖÐËÄÖÖÒì³£Çé¿öµÄ¼ÆÊýÖµ¡£
- ÊäÈë²ÎÊý  : u32ChanID:½âÂëÆ÷Í¨µÀID
-                         pErrCnt:½âÂëÆ÷Òì³£¼ÆÊý½á¹¹ÌåÖ¸Õë
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ      : SOCP_OK:·µ»ØÒì³£¼ÆÊý³É¹¦
-                             SOCP_ERROR:·µ»ØÒì³£¼ÆÊýÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_DECODER_GET_ERR_CNT
+ åŠŸèƒ½æè¿°  :æ­¤æŽ¥å£ç»™å‡ºè§£ç é€šé“ä¸­å››ç§å¼‚å¸¸æƒ…å†µçš„è®¡æ•°å€¼ã€‚
+ è¾“å…¥å‚æ•°  : u32ChanID:è§£ç å™¨é€šé“ID
+                         pErrCnt:è§£ç å™¨å¼‚å¸¸è®¡æ•°ç»“æž„ä½“æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼      : SOCP_OK:è¿”å›žå¼‚å¸¸è®¡æ•°æˆåŠŸ
+                             SOCP_ERROR:è¿”å›žå¼‚å¸¸è®¡æ•°å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_DECODER_GET_ERR_CNT (BSP_U32 u32ChanID, SOCP_DECODER_ERROR_CNT_STRU *pErrCnt)
 {
@@ -97,12 +97,12 @@ BSP_S32 DRV_SOCP_DECODER_GET_ERR_CNT (BSP_U32 u32ChanID, SOCP_DECODER_ERROR_CNT_
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_FREE_CHANNEL
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿Ú¸ù¾ÝÍ¨µÀIDÊÍ·Å·ÖÅäµÄ±à½âÂëÍ¨µÀ¡£
- ÊäÈë²ÎÊý  : u32ChanID:Í¨µÀID¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:Í¨µÀÊÍ·Å³É¹¦¡£
-             SOCP_ERROR:Í¨µÀÊÍ·ÅÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_FREE_CHANNEL
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£æ ¹æ®é€šé“IDé‡Šæ”¾åˆ†é…çš„ç¼–è§£ç é€šé“ã€‚
+ è¾“å…¥å‚æ•°  : u32ChanID:é€šé“IDã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:é€šé“é‡Šæ”¾æˆåŠŸã€‚
+             SOCP_ERROR:é€šé“é‡Šæ”¾å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_FREE_CHANNEL(BSP_U32 u32ChanID)
 {
@@ -110,15 +110,15 @@ BSP_S32 DRV_SOCP_FREE_CHANNEL(BSP_U32 u32ChanID)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_CLEAN_ENCSRC_CHAN
+* å‡½ æ•° å  : DRV_SOCP_CLEAN_ENCSRC_CHAN
 *
-* ¹¦ÄÜÃèÊö  : Çå¿Õ±àÂëÔ´Í¨µÀ£¬Í¬²½V9 SOCP½Ó¿Ú
+* åŠŸèƒ½æè¿°  : æ¸…ç©ºç¼–ç æºé€šé“ï¼ŒåŒæ­¥V9 SOCPæŽ¥å£
 *
-* ÊäÈë²ÎÊý  : enSrcChanID       ±àÂëÍ¨µÀºÅ
+* è¾“å…¥å‚æ•°  : enSrcChanID       ç¼–ç é€šé“å·
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 BSP_U32 DRV_SOCP_CLEAN_ENCSRC_CHAN(SOCP_CODER_SRC_ENUM_U32 enSrcChanID)
 {
@@ -126,13 +126,13 @@ BSP_U32 DRV_SOCP_CLEAN_ENCSRC_CHAN(SOCP_CODER_SRC_ENUM_U32 enSrcChanID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_REGISTER_EVENT_CB
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÎª¸ø¶¨Í¨µÀ×¢²áÊÂ¼þ»Øµ÷º¯Êý¡£
- ÊäÈë²ÎÊý  : u32ChanID:Í¨µÀID¡£
-             EventCB:ÊÂ¼þ»Øµ÷º¯Êý£¬²Î¿¼socp_event_cbº¯Êý¶¨Òå
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:×¢²áÊÂ¼þ»Øµ÷º¯Êý³É¹¦¡£
-             SOCP_ERROR:×¢²áÊÂ¼þ»Øµ÷º¯ÊýÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_REGISTER_EVENT_CB
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ä¸ºç»™å®šé€šé“æ³¨å†Œäº‹ä»¶å›žè°ƒå‡½æ•°ã€‚
+ è¾“å…¥å‚æ•°  : u32ChanID:é€šé“IDã€‚
+             EventCB:äº‹ä»¶å›žè°ƒå‡½æ•°ï¼Œå‚è€ƒsocp_event_cbå‡½æ•°å®šä¹‰
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:æ³¨å†Œäº‹ä»¶å›žè°ƒå‡½æ•°æˆåŠŸã€‚
+             SOCP_ERROR:æ³¨å†Œäº‹ä»¶å›žè°ƒå‡½æ•°å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_REGISTER_EVENT_CB(BSP_U32 u32ChanID, socp_event_cb EventCB)
 {
@@ -140,12 +140,12 @@ BSP_S32 DRV_SOCP_REGISTER_EVENT_CB(BSP_U32 u32ChanID, socp_event_cb EventCB)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_START
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÓÃÓÚÔ´Í¨µÀ£¬Æô¶¯±àÂë»òÕß½âÂë¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:±àÂë»ò½âÂëÆô¶¯³É¹¦¡£
-             SOCP_ERROR:±àÂë»ò½âÂëÆô¶¯Ê§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_START
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ç”¨äºŽæºé€šé“ï¼Œå¯åŠ¨ç¼–ç æˆ–è€…è§£ç ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“IDã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:ç¼–ç æˆ–è§£ç å¯åŠ¨æˆåŠŸã€‚
+             SOCP_ERROR:ç¼–ç æˆ–è§£ç å¯åŠ¨å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_START(BSP_U32 u32SrcChanID)
 {
@@ -153,12 +153,12 @@ BSP_S32 DRV_SOCP_START(BSP_U32 u32SrcChanID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_STOP
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÓÃÓÚÔ´Í¨µÀ£¬Í£Ö¹±àÂë»òÕß½âÂë¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:±àÂë»ò½âÂëÍ£Ö¹³É¹¦¡£
-             SOCP_ERROR:±àÂë»ò½âÂëÍ£Ö¹Ê§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_STOP
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ç”¨äºŽæºé€šé“ï¼Œåœæ­¢ç¼–ç æˆ–è€…è§£ç ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“IDã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:ç¼–ç æˆ–è§£ç åœæ­¢æˆåŠŸã€‚
+             SOCP_ERROR:ç¼–ç æˆ–è§£ç åœæ­¢å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_STOP(BSP_U32 u32SrcChanID)
 {
@@ -166,13 +166,13 @@ BSP_S32 DRV_SOCP_STOP(BSP_U32 u32SrcChanID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_TIMEOUT
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÉèÖÃ³¬Ê±ãÐÖµ¡£
- ÊäÈë²ÎÊý  : u32Timeout:³¬Ê±ãÐÖµ
+ å‡½ æ•° å  : DRV_SOCP_SET_TIMEOUT
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£è®¾ç½®è¶…æ—¶é˜ˆå€¼ã€‚
+ è¾“å…¥å‚æ•°  : u32Timeout:è¶…æ—¶é˜ˆå€¼
 
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:ÉèÖÃ³¬Ê±Ê±¼äãÐÖµ³É¹¦¡£
-             SOCP_ERROR:ÉèÖÃ³¬Ê±Ê±¼äãÐÖµÊ§°Ü
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è®¾ç½®è¶…æ—¶æ—¶é—´é˜ˆå€¼æˆåŠŸã€‚
+             SOCP_ERROR:è®¾ç½®è¶…æ—¶æ—¶é—´é˜ˆå€¼å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_TIMEOUT (SOCP_TIMEOUT_EN_ENUM_UIN32 eTmOutEn, BSP_U32 u32Timeout)
 {
@@ -180,13 +180,13 @@ BSP_S32 DRV_SOCP_SET_TIMEOUT (SOCP_TIMEOUT_EN_ENUM_UIN32 eTmOutEn, BSP_U32 u32Ti
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_DEC_PKT_LGTH
- ¹¦ÄÜÃèÊö  : ÉèÖÃ½âÂë°ü³¤¶È¼«ÏÞÖµ
- ÊäÈë²ÎÊý  : pPktlgth:½âÂë°ü³¤¶È¼«Öµ
+ å‡½ æ•° å  : DRV_SOCP_SET_DEC_PKT_LGTH
+ åŠŸèƒ½æè¿°  : è®¾ç½®è§£ç åŒ…é•¿åº¦æžé™å€¼
+ è¾“å…¥å‚æ•°  : pPktlgth:è§£ç åŒ…é•¿åº¦æžå€¼
 
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:ÉèÖÃ³É¹¦¡£
-             ÆäËûÖµ:ÉèÖÃÊ§°Ü
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è®¾ç½®æˆåŠŸã€‚
+             å…¶ä»–å€¼:è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_DEC_PKT_LGTH(SOCP_DEC_PKTLGTH_STRU *pPktlgth)
 {
@@ -194,13 +194,13 @@ BSP_S32 DRV_SOCP_SET_DEC_PKT_LGTH(SOCP_DEC_PKTLGTH_STRU *pPktlgth)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_DEBUG
- ¹¦ÄÜÃèÊö  : ÉèÖÃ½âÂëÔ´Í¨µÀµÄdebugÄ£Ê½
- ÊäÈë²ÎÊý  : u32ChanID:Í¨µÀID
-             u32DebugEn: debug±êÊ¶
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:ÉèÖÃ³É¹¦¡£
-             ÆäËûÖµ:ÉèÖÃÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_SET_DEBUG
+ åŠŸèƒ½æè¿°  : è®¾ç½®è§£ç æºé€šé“çš„debugæ¨¡å¼
+ è¾“å…¥å‚æ•°  : u32ChanID:é€šé“ID
+             u32DebugEn: debugæ ‡è¯†
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è®¾ç½®æˆåŠŸã€‚
+             å…¶ä»–å€¼:è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_DEBUG(BSP_U32 u32DestChanID, BSP_U32 u32DebugEn)
 {
@@ -208,12 +208,12 @@ BSP_S32 DRV_SOCP_SET_DEBUG(BSP_U32 u32DestChanID, BSP_U32 u32DebugEn)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_CHAN_SOFT_RESET
- ¹¦ÄÜÃèÊö  : Ô´Í¨µÀÈí¸´Î»
- ÊäÈë²ÎÊý  : u32ChanID:Í¨µÀID
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:Éè¸´Î»³É¹¦¡£
-             ÆäËûÖµ:¸´Î»Ê§°Ü
+ å‡½ æ•° å  : DRV_SOCP_CHAN_SOFT_RESET
+ åŠŸèƒ½æè¿°  : æºé€šé“è½¯å¤ä½
+ è¾“å…¥å‚æ•°  : u32ChanID:é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è®¾å¤ä½æˆåŠŸã€‚
+             å…¶ä»–å€¼:å¤ä½å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_CHAN_SOFT_RESET(BSP_U32 u32ChanID)
 {
@@ -221,14 +221,14 @@ BSP_S32 DRV_SOCP_CHAN_SOFT_RESET(BSP_U32 u32ChanID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_GET_WRITE_BUFF
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÓÃÓÚ»ñÈ¡Ð´Êý¾Ýbuffer¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
-             pBuff:           :Ð´Êý¾Ýbuffer
+ å‡½ æ•° å  : DRV_SOCP_GET_WRITE_BUFF
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ç”¨äºŽèŽ·å–å†™æ•°æ®bufferã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
+             pBuff:           :å†™æ•°æ®buffer
 
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:»ñÈ¡Ð´Êý¾Ýbuffer³É¹¦¡£
-             SOCP_ERROR:»ñÈ¡Ð´Êý¾ÝbufferÊ§°Ü
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:èŽ·å–å†™æ•°æ®bufferæˆåŠŸã€‚
+             SOCP_ERROR:èŽ·å–å†™æ•°æ®bufferå¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_GET_WRITE_BUFF( BSP_U32 u32SrcChanID, SOCP_BUFFER_RW_STRU *pBuff)
 {
@@ -236,13 +236,13 @@ BSP_S32 DRV_SOCP_GET_WRITE_BUFF( BSP_U32 u32SrcChanID, SOCP_BUFFER_RW_STRU *pBuf
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_WRITE_DONE
- ¹¦ÄÜÃèÊö  : ¸Ã½Ó¿ÚÓÃÓÚÊý¾ÝµÄÐ´²Ù×÷£¬Ìá¹©Ð´ÈëÊý¾ÝµÄ³¤¶È¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
-             u32WrtSize:   ÒÑÐ´ÈëÊý¾ÝµÄ³¤¶È
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:Ð´ÈëÊý¾Ý³É¹¦¡£
-             SOCP_ERROR:Ð´ÈëÊý¾ÝÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_WRITE_DONE
+ åŠŸèƒ½æè¿°  : è¯¥æŽ¥å£ç”¨äºŽæ•°æ®çš„å†™æ“ä½œï¼Œæä¾›å†™å…¥æ•°æ®çš„é•¿åº¦ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
+             u32WrtSize:   å·²å†™å…¥æ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:å†™å…¥æ•°æ®æˆåŠŸã€‚
+             SOCP_ERROR:å†™å…¥æ•°æ®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_WRITE_DONE(BSP_U32 u32SrcChanID, BSP_U32 u32WrtSize)
 {
@@ -250,13 +250,13 @@ BSP_S32 DRV_SOCP_WRITE_DONE(BSP_U32 u32SrcChanID, BSP_U32 u32WrtSize)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_REGISTER_RD_CB
- ¹¦ÄÜÃèÊö  : ¸Ã½Ó¿ÚÓÃÓÚ×¢²á´ÓRD»º³åÇøÖÐ¶ÁÈ¡Êý¾ÝµÄ»Øµ÷º¯Êý¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
-             RdCB:  ÊÂ¼þ»Øµ÷º¯Êý
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:×¢²áRD»·ÐÎ»º³åÇø¶ÁÊý¾Ý»Øµ÷º¯Êý³É¹¦¡£
-             SOCP_ERROR:×¢²áRD»·ÐÎ»º³åÇø¶ÁÊý¾Ý»Øµ÷º¯ÊýÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_REGISTER_RD_CB
+ åŠŸèƒ½æè¿°  : è¯¥æŽ¥å£ç”¨äºŽæ³¨å†Œä»ŽRDç¼“å†²åŒºä¸­è¯»å–æ•°æ®çš„å›žè°ƒå‡½æ•°ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
+             RdCB:  äº‹ä»¶å›žè°ƒå‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:æ³¨å†ŒRDçŽ¯å½¢ç¼“å†²åŒºè¯»æ•°æ®å›žè°ƒå‡½æ•°æˆåŠŸã€‚
+             SOCP_ERROR:æ³¨å†ŒRDçŽ¯å½¢ç¼“å†²åŒºè¯»æ•°æ®å›žè°ƒå‡½æ•°å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_REGISTER_RD_CB(BSP_U32 u32SrcChanID, socp_rd_cb RdCB)
 {
@@ -264,13 +264,13 @@ BSP_S32 DRV_SOCP_REGISTER_RD_CB(BSP_U32 u32SrcChanID, socp_rd_cb RdCB)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_GET_RD_BUFFER
- ¹¦ÄÜÃèÊö  : ¸Ã´Ë½Ó¿ÚÓÃÓÚ»ñÈ¡RD bufferµÄÊý¾ÝÖ¸Õë¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
+ å‡½ æ•° å  : DRV_SOCP_GET_RD_BUFFER
+ åŠŸèƒ½æè¿°  : è¯¥æ­¤æŽ¥å£ç”¨äºŽèŽ·å–RD bufferçš„æ•°æ®æŒ‡é’ˆã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
              pBuff:  RD buffer
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:»ñÈ¡RD»·ÐÎ»º³åÇø³É¹¦
-             SOCP_ERROR:»ñÈ¡RD»·ÐÎ»º³åÇøÊ§°Ü
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:èŽ·å–RDçŽ¯å½¢ç¼“å†²åŒºæˆåŠŸ
+             SOCP_ERROR:èŽ·å–RDçŽ¯å½¢ç¼“å†²åŒºå¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_GET_RD_BUFFER( BSP_U32 u32SrcChanID,SOCP_BUFFER_RW_STRU *pBuff)
 {
@@ -278,13 +278,13 @@ BSP_S32 DRV_SOCP_GET_RD_BUFFER( BSP_U32 u32SrcChanID,SOCP_BUFFER_RW_STRU *pBuff)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_socp_read_rd_done
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÓÃÓÚÉÏ²ãÍ¨ÖªSOCPÇý¶¯£¬´ÓRD bufferÖÐÊµ¼Ê¶ÁÈ¡µÄÊý¾Ý¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
-             u32RDSize:  ´ÓRD bufferÖÐÊµ¼Ê¶ÁÈ¡µÄÊý¾Ý³¤¶È
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:¶ÁÈ¡RDbufferÖÐµÄÊý¾Ý³É¹¦
-             SOCP_ERROR:¶ÁÈ¡RDbufferÖÐµÄÊý¾ÝÊ§°Ü
+ å‡½ æ•° å  : bsp_socp_read_rd_done
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ç”¨äºŽä¸Šå±‚é€šçŸ¥SOCPé©±åŠ¨ï¼Œä»ŽRD bufferä¸­å®žé™…è¯»å–çš„æ•°æ®ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
+             u32RDSize:  ä»ŽRD bufferä¸­å®žé™…è¯»å–çš„æ•°æ®é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è¯»å–RDbufferä¸­çš„æ•°æ®æˆåŠŸ
+             SOCP_ERROR:è¯»å–RDbufferä¸­çš„æ•°æ®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_READ_RD_DONE(BSP_U32 u32SrcChanID, BSP_U32 u32RDSize)
 {
@@ -292,13 +292,13 @@ BSP_S32 DRV_SOCP_READ_RD_DONE(BSP_U32 u32SrcChanID, BSP_U32 u32RDSize)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_socp_register_read_cb
- ¹¦ÄÜÃèÊö  : ¸Ã½Ó¿ÚÓÃÓÚ×¢²á¶ÁÊý¾ÝµÄ»Øµ÷º¯Êý¡£
- ÊäÈë²ÎÊý  : u32DestChanID:Ä¿±êÍ¨µÀID
-             ReadCB: ÊÂ¼þ»Øµ÷º¯Êý
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:×¢²á¶ÁÊý¾Ý»Øµ÷º¯Êý³É¹¦
-             SOCP_ERROR:×¢²á¶ÁÊý¾Ý»Øµ÷º¯ÊýÊ§°Ü
+ å‡½ æ•° å  : bsp_socp_register_read_cb
+ åŠŸèƒ½æè¿°  : è¯¥æŽ¥å£ç”¨äºŽæ³¨å†Œè¯»æ•°æ®çš„å›žè°ƒå‡½æ•°ã€‚
+ è¾“å…¥å‚æ•°  : u32DestChanID:ç›®æ ‡é€šé“ID
+             ReadCB: äº‹ä»¶å›žè°ƒå‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:æ³¨å†Œè¯»æ•°æ®å›žè°ƒå‡½æ•°æˆåŠŸ
+             SOCP_ERROR:æ³¨å†Œè¯»æ•°æ®å›žè°ƒå‡½æ•°å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_REGISTER_READ_CB( BSP_U32 u32DestChanID, socp_read_cb ReadCB)
 {
@@ -306,13 +306,13 @@ BSP_S32 DRV_SOCP_REGISTER_READ_CB( BSP_U32 u32DestChanID, socp_read_cb ReadCB)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_GET_READ_BUFF
- ¹¦ÄÜÃèÊö  : ¸Ã´Ë½Ó¿ÚÓÃÓÚ»ñÈ¡¶ÁÊý¾Ý»º³åÇøÖ¸Õë¡£
- ÊäÈë²ÎÊý  : u32DestChanID:Ä¿±êÍ¨µÀID
-             ReadCB: ¶ÁÊý¾Ýbuffer
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:»ñÈ¡¶ÁÊý¾Ý»º³åÇø³É¹¦¡£
-             SOCP_ERROR:»ñÈ¡¶ÁÊý¾Ý»º³åÇø³É¹¦¡£
+ å‡½ æ•° å  : DRV_SOCP_GET_READ_BUFF
+ åŠŸèƒ½æè¿°  : è¯¥æ­¤æŽ¥å£ç”¨äºŽèŽ·å–è¯»æ•°æ®ç¼“å†²åŒºæŒ‡é’ˆã€‚
+ è¾“å…¥å‚æ•°  : u32DestChanID:ç›®æ ‡é€šé“ID
+             ReadCB: è¯»æ•°æ®buffer
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:èŽ·å–è¯»æ•°æ®ç¼“å†²åŒºæˆåŠŸã€‚
+             SOCP_ERROR:èŽ·å–è¯»æ•°æ®ç¼“å†²åŒºæˆåŠŸã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_GET_READ_BUFF(BSP_U32 u32DestChanID,SOCP_BUFFER_RW_STRU *pBuffer)
 {
@@ -320,13 +320,13 @@ BSP_S32 DRV_SOCP_GET_READ_BUFF(BSP_U32 u32DestChanID,SOCP_BUFFER_RW_STRU *pBuffe
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_READ_DATA_DONE
- ¹¦ÄÜÃèÊö  : ¸Ã½Ó¿ÚÓÃÓÚÉÏ²ã¸æËßSOCPÇý¶¯£¬´ÓÄ¿±êÍ¨µÀÖÐ¶Á×ßµÄÊµ¼ÊÊý¾Ý¡£
- ÊäÈë²ÎÊý  : u32DestChanID:Ä¿±êÍ¨µÀID
-             u32ReadSize: ÒÑ¶Á³öÊý¾ÝµÄ³¤¶È
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:¶ÁÊý¾Ý³É¹¦¡£
-             SOCP_ERROR:¶ÁÊý¾ÝÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_READ_DATA_DONE
+ åŠŸèƒ½æè¿°  : è¯¥æŽ¥å£ç”¨äºŽä¸Šå±‚å‘Šè¯‰SOCPé©±åŠ¨ï¼Œä»Žç›®æ ‡é€šé“ä¸­è¯»èµ°çš„å®žé™…æ•°æ®ã€‚
+ è¾“å…¥å‚æ•°  : u32DestChanID:ç›®æ ‡é€šé“ID
+             u32ReadSize: å·²è¯»å‡ºæ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è¯»æ•°æ®æˆåŠŸã€‚
+             SOCP_ERROR:è¯»æ•°æ®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_READ_DATA_DONE(BSP_U32 u32DestChanID,BSP_U32 u32ReadSize)
 {
@@ -334,12 +334,12 @@ BSP_S32 DRV_SOCP_READ_DATA_DONE(BSP_U32 u32DestChanID,BSP_U32 u32ReadSize)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_BBP_ENABLE
- ¹¦ÄÜÃèÊö  : Ê¹ÄÜ»òÍ£Ö¹BBPÍ¨µÀ¡£
- ÊäÈë²ÎÊý  : bEnable:Í¨µÀID
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ      : SOCP_OK:ÉèÖÃ³É¹¦¡£
-                   ÆäËûÖµ:ÉèÖÃÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_SET_BBP_ENABLE
+ åŠŸèƒ½æè¿°  : ä½¿èƒ½æˆ–åœæ­¢BBPé€šé“ã€‚
+ è¾“å…¥å‚æ•°  : bEnable:é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼      : SOCP_OK:è®¾ç½®æˆåŠŸã€‚
+                   å…¶ä»–å€¼:è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_BBP_ENABLE(int bEnable)
 {
@@ -347,12 +347,12 @@ BSP_S32 DRV_SOCP_SET_BBP_ENABLE(int bEnable)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_BBP_DS_MODE
- ¹¦ÄÜÃèÊö  : ÉèÖÃBBP DSÍ¨µÀÊý¾ÝÒç³ö´¦ÀíÄ£Ê½¡£
- ÊäÈë²ÎÊý  : eDsMode:DSÍ¨µÀÊý¾ÝÒç³öÊ±´¦ÀíÄ£Ê½ÉèÖÃ
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ      : SOCP_OK:ÉèÖÃ³É¹¦¡£
-                   ÆäËûÖµ:ÉèÖÃÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_SET_BBP_DS_MODE
+ åŠŸèƒ½æè¿°  : è®¾ç½®BBP DSé€šé“æ•°æ®æº¢å‡ºå¤„ç†æ¨¡å¼ã€‚
+ è¾“å…¥å‚æ•°  : eDsMode:DSé€šé“æ•°æ®æº¢å‡ºæ—¶å¤„ç†æ¨¡å¼è®¾ç½®
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼      : SOCP_OK:è®¾ç½®æˆåŠŸã€‚
+                   å…¶ä»–å€¼:è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_BBP_DS_MODE(SOCP_BBP_DS_MODE_ENUM_UIN32 eDsMode)
 {
@@ -360,12 +360,12 @@ BSP_S32 DRV_SOCP_SET_BBP_DS_MODE(SOCP_BBP_DS_MODE_ENUM_UIN32 eDsMode)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_GET_STATE
+* å‡½ æ•° å  : DRV_SOCP_GET_STATE
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡SOCP×´Ì¬
+* åŠŸèƒ½æè¿°  : èŽ·å–SOCPçŠ¶æ€
 *
-* ·µ »Ø Öµ  : SOCP_IDLE    ¿ÕÏÐ
-*             SOCP_BUSY    Ã¦Âµ
+* è¿” å›ž å€¼  : SOCP_IDLE    ç©ºé—²
+*             SOCP_BUSY    å¿™ç¢Œ
 *****************************************************************************/
 SOCP_STATE_ENUM_UINT32 DRV_SOCP_GET_STATE()
 {
@@ -373,11 +373,11 @@ SOCP_STATE_ENUM_UINT32 DRV_SOCP_GET_STATE()
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : bsp_socp_enc_dst_buf_flush
-* ¹¦ÄÜÃèÊö  : SOCP±àÂëÄ¿µÄbuffer»º´æÊý¾ÝÁ¢¼´Êä³ö
-* ÊäÈë²ÎÊý  : ÎÞ
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  :
+* å‡½ æ•° å  : bsp_socp_enc_dst_buf_flush
+* åŠŸèƒ½æè¿°  : SOCPç¼–ç ç›®çš„bufferç¼“å­˜æ•°æ®ç«‹å³è¾“å‡º
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  :
 *****************************************************************************/
 
 BSP_S32 DRV_SOCP_ENC_DST_BUF_FLUSH(void)
@@ -386,11 +386,11 @@ BSP_S32 DRV_SOCP_ENC_DST_BUF_FLUSH(void)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_VOTE
-* ¹¦ÄÜÃèÊö  : SOCPÍ¶Æ±½Ó¿Ú£¬¸ù¾ÝÍ¶Æ±½á¹û¾ö¶¨SOCPÊÇ·ñË¯Ãß£¬¸Ã½Ó¿ÚÖ»ÔÚAºËÌá¹©
-* ÊäÈë²ÎÊý  : id --- Í¶Æ±×é¼þID£¬type --- Í¶Æ±ÀàÐÍ
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : BSP_S32 0 --- Í¶Æ±³É¹¦£¬0xFFFFFFFF --- Í¶Æ±Ê§°Ü
+* å‡½ æ•° å  : DRV_SOCP_VOTE
+* åŠŸèƒ½æè¿°  : SOCPæŠ•ç¥¨æŽ¥å£ï¼Œæ ¹æ®æŠ•ç¥¨ç»“æžœå†³å®šSOCPæ˜¯å¦ç¡çœ ï¼Œè¯¥æŽ¥å£åªåœ¨Aæ ¸æä¾›
+* è¾“å…¥å‚æ•°  : id --- æŠ•ç¥¨ç»„ä»¶IDï¼Œtype --- æŠ•ç¥¨ç±»åž‹
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : BSP_S32 0 --- æŠ•ç¥¨æˆåŠŸï¼Œ0xFFFFFFFF --- æŠ•ç¥¨å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_VOTE(SOCP_VOTE_ID_ENUM_U32 id, SOCP_VOTE_TYPE_ENUM_U32 type)
 {
@@ -399,15 +399,15 @@ BSP_S32 DRV_SOCP_VOTE(SOCP_VOTE_ID_ENUM_U32 id, SOCP_VOTE_TYPE_ENUM_U32 type)
 
 #else
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_INIT
+* å‡½ æ•° å  : DRV_SOCP_INIT
 *
-* ¹¦ÄÜÃèÊö  : Ä£¿é³õÊ¼»¯º¯Êý
+* åŠŸèƒ½æè¿°  : æ¨¡å—åˆå§‹åŒ–å‡½æ•°
 *
-* ÊäÈë²ÎÊý  : ÎÞ
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ³õÊ¼»¯³É¹¦µÄ±êÊ¶Âë
+* è¿” å›ž å€¼  : åˆå§‹åŒ–æˆåŠŸçš„æ ‡è¯†ç 
 *****************************************************************************/
 BSP_S32 DRV_SOCP_INIT()
 {
@@ -415,13 +415,13 @@ BSP_S32 DRV_SOCP_INIT()
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_CORDER_SET_SRC_CHAN
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÍê³ÉSOCP±àÂëÆ÷Ô´Í¨µÀµÄ·ÖÅä£¬¸ù¾Ý±àÂëÆ÷Ô´Í¨µÀ²ÎÊýÉèÖÃÍ¨µÀÊôÐÔ£¬Á¬½ÓÄ¿±êÍ¨µÀ£¬·µ»Øº¯ÊýÖ´ÐÐ½á¹û¡£
- ÊäÈë²ÎÊý  : pSrcAttr:±àÂëÆ÷Ô´Í¨µÀ²ÎÊý½á¹¹ÌåÖ¸Õë¡£
-             pSrcChanID:ÉêÇëµ½µÄÔ´Í¨µÀID¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:±àÂëÔ´Í¨µÀ·ÖÅä³É¹¦¡£
-             SOCP_ERROR:±àÂëÔ´Í¨µÀ·ÖÅäÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_CORDER_SET_SRC_CHAN
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£å®ŒæˆSOCPç¼–ç å™¨æºé€šé“çš„åˆ†é…ï¼Œæ ¹æ®ç¼–ç å™¨æºé€šé“å‚æ•°è®¾ç½®é€šé“å±žæ€§ï¼Œè¿žæŽ¥ç›®æ ‡é€šé“ï¼Œè¿”å›žå‡½æ•°æ‰§è¡Œç»“æžœã€‚
+ è¾“å…¥å‚æ•°  : pSrcAttr:ç¼–ç å™¨æºé€šé“å‚æ•°ç»“æž„ä½“æŒ‡é’ˆã€‚
+             pSrcChanID:ç”³è¯·åˆ°çš„æºé€šé“IDã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:ç¼–ç æºé€šé“åˆ†é…æˆåŠŸã€‚
+             SOCP_ERROR:ç¼–ç æºé€šé“åˆ†é…å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_CORDER_SET_SRC_CHAN(SOCP_CODER_SRC_ENUM_U32 enSrcChanID, SOCP_CODER_SRC_CHAN_STRU *pSrcAttr)
 {
@@ -429,13 +429,13 @@ BSP_S32 DRV_SOCP_CORDER_SET_SRC_CHAN(SOCP_CODER_SRC_ENUM_U32 enSrcChanID, SOCP_C
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_CODER_SET_DEST_CHAN_ATTR
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÍê³ÉÄ³Ò»±àÂëÄ¿±êÍ¨µÀµÄÅäÖÃ£¬·µ»Øº¯ÊýÖ´ÐÐµÄ½á¹û¡£
- ÊäÈë²ÎÊý  : u32DestChanID:SOCP±àÂëÆ÷µÄÄ¿±êÍ¨µÀID¡£
-             pDestAttr:SOCP±àÂëÆ÷Ä¿±êÍ¨µÀ²ÎÊý½á¹¹ÌåÖ¸Õë¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:±àÂëÄ¿µÄÍ¨µÀÉèÖÃ³É¹¦¡£
-             SOCP_ERROR:±àÂëÄ¿µÄÍ¨µÀÉèÖÃÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_CODER_SET_DEST_CHAN_ATTR
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£å®ŒæˆæŸä¸€ç¼–ç ç›®æ ‡é€šé“çš„é…ç½®ï¼Œè¿”å›žå‡½æ•°æ‰§è¡Œçš„ç»“æžœã€‚
+ è¾“å…¥å‚æ•°  : u32DestChanID:SOCPç¼–ç å™¨çš„ç›®æ ‡é€šé“IDã€‚
+             pDestAttr:SOCPç¼–ç å™¨ç›®æ ‡é€šé“å‚æ•°ç»“æž„ä½“æŒ‡é’ˆã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:ç¼–ç ç›®çš„é€šé“è®¾ç½®æˆåŠŸã€‚
+             SOCP_ERROR:ç¼–ç ç›®çš„é€šé“è®¾ç½®å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_CODER_SET_DEST_CHAN_ATTR(BSP_U32 u32DestChanID, SOCP_CODER_DEST_CHAN_STRU *pDestAttr)
 {
@@ -443,15 +443,15 @@ BSP_S32 DRV_SOCP_CODER_SET_DEST_CHAN_ATTR(BSP_U32 u32DestChanID, SOCP_CODER_DEST
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_DECODER_SET_DEST_CHAN
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÍê³ÉSOCP½âÂëÆ÷Ä¿±êÍ¨µÀµÄ·ÖÅä£¬
-             ¸ù¾Ý½âÂëÄ¿±êÍ¨µÀ²ÎÊýÉèÖÃÍ¨µÀÊôÐÔ£¬
-             ²¢Á¬½ÓÔ´Í¨µÀ£¬·µ»Øº¯ÊýÖ´ÐÐ½á¹û¡£
- ÊäÈë²ÎÊý  : pAttr:½âÂëÆ÷Ä¿±êÍ¨µÀ²ÎÊý½á¹¹ÌåÖ¸Õë
-             pDestChanID:ÉêÇëµ½µÄÄ¿±êÍ¨µÀID
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:½âÂëÄ¿µÄÍ¨µÀ·ÖÅä³É¹¦¡£
-             SOCP_ERROR:½âÂëÄ¿µÄÍ¨µÀÉèÖÃÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_DECODER_SET_DEST_CHAN
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£å®ŒæˆSOCPè§£ç å™¨ç›®æ ‡é€šé“çš„åˆ†é…ï¼Œ
+             æ ¹æ®è§£ç ç›®æ ‡é€šé“å‚æ•°è®¾ç½®é€šé“å±žæ€§ï¼Œ
+             å¹¶è¿žæŽ¥æºé€šé“ï¼Œè¿”å›žå‡½æ•°æ‰§è¡Œç»“æžœã€‚
+ è¾“å…¥å‚æ•°  : pAttr:è§£ç å™¨ç›®æ ‡é€šé“å‚æ•°ç»“æž„ä½“æŒ‡é’ˆ
+             pDestChanID:ç”³è¯·åˆ°çš„ç›®æ ‡é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è§£ç ç›®çš„é€šé“åˆ†é…æˆåŠŸã€‚
+             SOCP_ERROR:è§£ç ç›®çš„é€šé“è®¾ç½®å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_DECODER_SET_DEST_CHAN(SOCP_DECODER_DST_ENUM_U32 enDestChanID, SOCP_DECODER_DEST_CHAN_STRU *pAttr)
 {
@@ -459,13 +459,13 @@ BSP_S32 DRV_SOCP_DECODER_SET_DEST_CHAN(SOCP_DECODER_DST_ENUM_U32 enDestChanID, S
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_DECODER_SET_SRC_CHAN_ATTR
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÍê³ÉÄ³Ò»½âÂëÔ´Í¨µÀµÄÅäÖÃ£¬·µ»Øº¯ÊýÖ´ÐÐµÄ½á¹û¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:½âÂëÆ÷Ô´Í¨µÀID
-             pInputAttr:½âÂëÆ÷Ô´Í¨µÀ²ÎÊý½á¹¹ÌåÖ¸Õë
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:½âÂëÔ´Í¨µÀÉèÖÃ³É¹¦
-             SOCP_ERROR:½âÂëÔ´Í¨µÀÉèÖÃÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_DECODER_SET_SRC_CHAN_ATTR
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£å®ŒæˆæŸä¸€è§£ç æºé€šé“çš„é…ç½®ï¼Œè¿”å›žå‡½æ•°æ‰§è¡Œçš„ç»“æžœã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:è§£ç å™¨æºé€šé“ID
+             pInputAttr:è§£ç å™¨æºé€šé“å‚æ•°ç»“æž„ä½“æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è§£ç æºé€šé“è®¾ç½®æˆåŠŸ
+             SOCP_ERROR:è§£ç æºé€šé“è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_DECODER_SET_SRC_CHAN_ATTR ( BSP_U32 u32SrcChanID,SOCP_DECODER_SRC_CHAN_STRU *pInputAttr)
 {
@@ -473,13 +473,13 @@ BSP_S32 DRV_SOCP_DECODER_SET_SRC_CHAN_ATTR ( BSP_U32 u32SrcChanID,SOCP_DECODER_S
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_DECODER_GET_ERR_CNT
- ¹¦ÄÜÃèÊö  :´Ë½Ó¿Ú¸ø³ö½âÂëÍ¨µÀÖÐËÄÖÖÒì³£Çé¿öµÄ¼ÆÊýÖµ¡£
- ÊäÈë²ÎÊý  : u32ChanID:½âÂëÆ÷Í¨µÀID
-                         pErrCnt:½âÂëÆ÷Òì³£¼ÆÊý½á¹¹ÌåÖ¸Õë
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ      : SOCP_OK:·µ»ØÒì³£¼ÆÊý³É¹¦
-                             SOCP_ERROR:·µ»ØÒì³£¼ÆÊýÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_DECODER_GET_ERR_CNT
+ åŠŸèƒ½æè¿°  :æ­¤æŽ¥å£ç»™å‡ºè§£ç é€šé“ä¸­å››ç§å¼‚å¸¸æƒ…å†µçš„è®¡æ•°å€¼ã€‚
+ è¾“å…¥å‚æ•°  : u32ChanID:è§£ç å™¨é€šé“ID
+                         pErrCnt:è§£ç å™¨å¼‚å¸¸è®¡æ•°ç»“æž„ä½“æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼      : SOCP_OK:è¿”å›žå¼‚å¸¸è®¡æ•°æˆåŠŸ
+                             SOCP_ERROR:è¿”å›žå¼‚å¸¸è®¡æ•°å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_DECODER_GET_ERR_CNT (BSP_U32 u32ChanID, SOCP_DECODER_ERROR_CNT_STRU *pErrCnt)
 {
@@ -487,12 +487,12 @@ BSP_S32 DRV_SOCP_DECODER_GET_ERR_CNT (BSP_U32 u32ChanID, SOCP_DECODER_ERROR_CNT_
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_FREE_CHANNEL
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿Ú¸ù¾ÝÍ¨µÀIDÊÍ·Å·ÖÅäµÄ±à½âÂëÍ¨µÀ¡£
- ÊäÈë²ÎÊý  : u32ChanID:Í¨µÀID¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:Í¨µÀÊÍ·Å³É¹¦¡£
-             SOCP_ERROR:Í¨µÀÊÍ·ÅÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_FREE_CHANNEL
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£æ ¹æ®é€šé“IDé‡Šæ”¾åˆ†é…çš„ç¼–è§£ç é€šé“ã€‚
+ è¾“å…¥å‚æ•°  : u32ChanID:é€šé“IDã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:é€šé“é‡Šæ”¾æˆåŠŸã€‚
+             SOCP_ERROR:é€šé“é‡Šæ”¾å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_FREE_CHANNEL(BSP_U32 u32ChanID)
 {
@@ -500,15 +500,15 @@ BSP_S32 DRV_SOCP_FREE_CHANNEL(BSP_U32 u32ChanID)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_CLEAN_ENCSRC_CHAN
+* å‡½ æ•° å  : DRV_SOCP_CLEAN_ENCSRC_CHAN
 *
-* ¹¦ÄÜÃèÊö  : Çå¿Õ±àÂëÔ´Í¨µÀ£¬Í¬²½V9 SOCP½Ó¿Ú
+* åŠŸèƒ½æè¿°  : æ¸…ç©ºç¼–ç æºé€šé“ï¼ŒåŒæ­¥V9 SOCPæŽ¥å£
 *
-* ÊäÈë²ÎÊý  : enSrcChanID       ±àÂëÍ¨µÀºÅ
+* è¾“å…¥å‚æ•°  : enSrcChanID       ç¼–ç é€šé“å·
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å›ž å€¼  : BSP_OK
 *****************************************************************************/
 BSP_U32 DRV_SOCP_CLEAN_ENCSRC_CHAN(SOCP_CODER_SRC_ENUM_U32 enSrcChanID)
 {
@@ -516,13 +516,13 @@ BSP_U32 DRV_SOCP_CLEAN_ENCSRC_CHAN(SOCP_CODER_SRC_ENUM_U32 enSrcChanID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_REGISTER_EVENT_CB
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÎª¸ø¶¨Í¨µÀ×¢²áÊÂ¼þ»Øµ÷º¯Êý¡£
- ÊäÈë²ÎÊý  : u32ChanID:Í¨µÀID¡£
-             EventCB:ÊÂ¼þ»Øµ÷º¯Êý£¬²Î¿¼socp_event_cbº¯Êý¶¨Òå
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:×¢²áÊÂ¼þ»Øµ÷º¯Êý³É¹¦¡£
-             SOCP_ERROR:×¢²áÊÂ¼þ»Øµ÷º¯ÊýÊ§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_REGISTER_EVENT_CB
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ä¸ºç»™å®šé€šé“æ³¨å†Œäº‹ä»¶å›žè°ƒå‡½æ•°ã€‚
+ è¾“å…¥å‚æ•°  : u32ChanID:é€šé“IDã€‚
+             EventCB:äº‹ä»¶å›žè°ƒå‡½æ•°ï¼Œå‚è€ƒsocp_event_cbå‡½æ•°å®šä¹‰
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:æ³¨å†Œäº‹ä»¶å›žè°ƒå‡½æ•°æˆåŠŸã€‚
+             SOCP_ERROR:æ³¨å†Œäº‹ä»¶å›žè°ƒå‡½æ•°å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_REGISTER_EVENT_CB(BSP_U32 u32ChanID, socp_event_cb EventCB)
 {
@@ -530,12 +530,12 @@ BSP_S32 DRV_SOCP_REGISTER_EVENT_CB(BSP_U32 u32ChanID, socp_event_cb EventCB)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_START
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÓÃÓÚÔ´Í¨µÀ£¬Æô¶¯±àÂë»òÕß½âÂë¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:±àÂë»ò½âÂëÆô¶¯³É¹¦¡£
-             SOCP_ERROR:±àÂë»ò½âÂëÆô¶¯Ê§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_START
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ç”¨äºŽæºé€šé“ï¼Œå¯åŠ¨ç¼–ç æˆ–è€…è§£ç ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“IDã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:ç¼–ç æˆ–è§£ç å¯åŠ¨æˆåŠŸã€‚
+             SOCP_ERROR:ç¼–ç æˆ–è§£ç å¯åŠ¨å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_START(BSP_U32 u32SrcChanID)
 {
@@ -543,12 +543,12 @@ BSP_S32 DRV_SOCP_START(BSP_U32 u32SrcChanID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_STOP
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÓÃÓÚÔ´Í¨µÀ£¬Í£Ö¹±àÂë»òÕß½âÂë¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:±àÂë»ò½âÂëÍ£Ö¹³É¹¦¡£
-             SOCP_ERROR:±àÂë»ò½âÂëÍ£Ö¹Ê§°Ü¡£
+ å‡½ æ•° å  : DRV_SOCP_STOP
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ç”¨äºŽæºé€šé“ï¼Œåœæ­¢ç¼–ç æˆ–è€…è§£ç ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“IDã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:ç¼–ç æˆ–è§£ç åœæ­¢æˆåŠŸã€‚
+             SOCP_ERROR:ç¼–ç æˆ–è§£ç åœæ­¢å¤±è´¥ã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_STOP(BSP_U32 u32SrcChanID)
 {
@@ -556,13 +556,13 @@ BSP_S32 DRV_SOCP_STOP(BSP_U32 u32SrcChanID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_TIMEOUT
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÉèÖÃ³¬Ê±ãÐÖµ¡£
- ÊäÈë²ÎÊý  : u32Timeout:³¬Ê±ãÐÖµ
+ å‡½ æ•° å  : DRV_SOCP_SET_TIMEOUT
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£è®¾ç½®è¶…æ—¶é˜ˆå€¼ã€‚
+ è¾“å…¥å‚æ•°  : u32Timeout:è¶…æ—¶é˜ˆå€¼
 
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:ÉèÖÃ³¬Ê±Ê±¼äãÐÖµ³É¹¦¡£
-             SOCP_ERROR:ÉèÖÃ³¬Ê±Ê±¼äãÐÖµÊ§°Ü
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è®¾ç½®è¶…æ—¶æ—¶é—´é˜ˆå€¼æˆåŠŸã€‚
+             SOCP_ERROR:è®¾ç½®è¶…æ—¶æ—¶é—´é˜ˆå€¼å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_TIMEOUT (SOCP_TIMEOUT_EN_ENUM_UIN32 eTmOutEn, BSP_U32 u32Timeout)
 {
@@ -570,13 +570,13 @@ BSP_S32 DRV_SOCP_SET_TIMEOUT (SOCP_TIMEOUT_EN_ENUM_UIN32 eTmOutEn, BSP_U32 u32Ti
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_DEC_PKT_LGTH
- ¹¦ÄÜÃèÊö  : ÉèÖÃ½âÂë°ü³¤¶È¼«ÏÞÖµ
- ÊäÈë²ÎÊý  : pPktlgth:½âÂë°ü³¤¶È¼«Öµ
+ å‡½ æ•° å  : DRV_SOCP_SET_DEC_PKT_LGTH
+ åŠŸèƒ½æè¿°  : è®¾ç½®è§£ç åŒ…é•¿åº¦æžé™å€¼
+ è¾“å…¥å‚æ•°  : pPktlgth:è§£ç åŒ…é•¿åº¦æžå€¼
 
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:ÉèÖÃ³É¹¦¡£
-             ÆäËûÖµ:ÉèÖÃÊ§°Ü
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è®¾ç½®æˆåŠŸã€‚
+             å…¶ä»–å€¼:è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_DEC_PKT_LGTH(SOCP_DEC_PKTLGTH_STRU *pPktlgth)
 {
@@ -584,13 +584,13 @@ BSP_S32 DRV_SOCP_SET_DEC_PKT_LGTH(SOCP_DEC_PKTLGTH_STRU *pPktlgth)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_DEBUG
- ¹¦ÄÜÃèÊö  : ÉèÖÃ½âÂëÔ´Í¨µÀµÄdebugÄ£Ê½
- ÊäÈë²ÎÊý  : u32ChanID:Í¨µÀID
-             u32DebugEn: debug±êÊ¶
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:ÉèÖÃ³É¹¦¡£
-             ÆäËûÖµ:ÉèÖÃÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_SET_DEBUG
+ åŠŸèƒ½æè¿°  : è®¾ç½®è§£ç æºé€šé“çš„debugæ¨¡å¼
+ è¾“å…¥å‚æ•°  : u32ChanID:é€šé“ID
+             u32DebugEn: debugæ ‡è¯†
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è®¾ç½®æˆåŠŸã€‚
+             å…¶ä»–å€¼:è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_DEBUG(BSP_U32 u32DestChanID, BSP_U32 u32DebugEn)
 {
@@ -598,12 +598,12 @@ BSP_S32 DRV_SOCP_SET_DEBUG(BSP_U32 u32DestChanID, BSP_U32 u32DebugEn)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_CHAN_SOFT_RESET
- ¹¦ÄÜÃèÊö  : Ô´Í¨µÀÈí¸´Î»
- ÊäÈë²ÎÊý  : u32ChanID:Í¨µÀID
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:Éè¸´Î»³É¹¦¡£
-             ÆäËûÖµ:¸´Î»Ê§°Ü
+ å‡½ æ•° å  : DRV_SOCP_CHAN_SOFT_RESET
+ åŠŸèƒ½æè¿°  : æºé€šé“è½¯å¤ä½
+ è¾“å…¥å‚æ•°  : u32ChanID:é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è®¾å¤ä½æˆåŠŸã€‚
+             å…¶ä»–å€¼:å¤ä½å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_CHAN_SOFT_RESET(BSP_U32 u32ChanID)
 {
@@ -611,14 +611,14 @@ BSP_S32 DRV_SOCP_CHAN_SOFT_RESET(BSP_U32 u32ChanID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_GET_WRITE_BUFF
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÓÃÓÚ»ñÈ¡Ð´Êý¾Ýbuffer¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
-             pBuff:           :Ð´Êý¾Ýbuffer
+ å‡½ æ•° å  : DRV_SOCP_GET_WRITE_BUFF
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ç”¨äºŽèŽ·å–å†™æ•°æ®bufferã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
+             pBuff:           :å†™æ•°æ®buffer
 
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:»ñÈ¡Ð´Êý¾Ýbuffer³É¹¦¡£
-             SOCP_ERROR:»ñÈ¡Ð´Êý¾ÝbufferÊ§°Ü
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:èŽ·å–å†™æ•°æ®bufferæˆåŠŸã€‚
+             SOCP_ERROR:èŽ·å–å†™æ•°æ®bufferå¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_GET_WRITE_BUFF( BSP_U32 u32SrcChanID, SOCP_BUFFER_RW_STRU *pBuff)
 {
@@ -626,13 +626,13 @@ BSP_S32 DRV_SOCP_GET_WRITE_BUFF( BSP_U32 u32SrcChanID, SOCP_BUFFER_RW_STRU *pBuf
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_WRITE_DONE
- ¹¦ÄÜÃèÊö  : ¸Ã½Ó¿ÚÓÃÓÚÊý¾ÝµÄÐ´²Ù×÷£¬Ìá¹©Ð´ÈëÊý¾ÝµÄ³¤¶È¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
-             u32WrtSize:   ÒÑÐ´ÈëÊý¾ÝµÄ³¤¶È
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:Ð´ÈëÊý¾Ý³É¹¦¡£
-             SOCP_ERROR:Ð´ÈëÊý¾ÝÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_WRITE_DONE
+ åŠŸèƒ½æè¿°  : è¯¥æŽ¥å£ç”¨äºŽæ•°æ®çš„å†™æ“ä½œï¼Œæä¾›å†™å…¥æ•°æ®çš„é•¿åº¦ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
+             u32WrtSize:   å·²å†™å…¥æ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:å†™å…¥æ•°æ®æˆåŠŸã€‚
+             SOCP_ERROR:å†™å…¥æ•°æ®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_WRITE_DONE(BSP_U32 u32SrcChanID, BSP_U32 u32WrtSize)
 {
@@ -640,13 +640,13 @@ BSP_S32 DRV_SOCP_WRITE_DONE(BSP_U32 u32SrcChanID, BSP_U32 u32WrtSize)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_REGISTER_RD_CB
- ¹¦ÄÜÃèÊö  : ¸Ã½Ó¿ÚÓÃÓÚ×¢²á´ÓRD»º³åÇøÖÐ¶ÁÈ¡Êý¾ÝµÄ»Øµ÷º¯Êý¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
-             RdCB:  ÊÂ¼þ»Øµ÷º¯Êý
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:×¢²áRD»·ÐÎ»º³åÇø¶ÁÊý¾Ý»Øµ÷º¯Êý³É¹¦¡£
-             SOCP_ERROR:×¢²áRD»·ÐÎ»º³åÇø¶ÁÊý¾Ý»Øµ÷º¯ÊýÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_REGISTER_RD_CB
+ åŠŸèƒ½æè¿°  : è¯¥æŽ¥å£ç”¨äºŽæ³¨å†Œä»ŽRDç¼“å†²åŒºä¸­è¯»å–æ•°æ®çš„å›žè°ƒå‡½æ•°ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
+             RdCB:  äº‹ä»¶å›žè°ƒå‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:æ³¨å†ŒRDçŽ¯å½¢ç¼“å†²åŒºè¯»æ•°æ®å›žè°ƒå‡½æ•°æˆåŠŸã€‚
+             SOCP_ERROR:æ³¨å†ŒRDçŽ¯å½¢ç¼“å†²åŒºè¯»æ•°æ®å›žè°ƒå‡½æ•°å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_REGISTER_RD_CB(BSP_U32 u32SrcChanID, socp_rd_cb RdCB)
 {
@@ -654,13 +654,13 @@ BSP_S32 DRV_SOCP_REGISTER_RD_CB(BSP_U32 u32SrcChanID, socp_rd_cb RdCB)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_GET_RD_BUFFER
- ¹¦ÄÜÃèÊö  : ¸Ã´Ë½Ó¿ÚÓÃÓÚ»ñÈ¡RD bufferµÄÊý¾ÝÖ¸Õë¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
+ å‡½ æ•° å  : DRV_SOCP_GET_RD_BUFFER
+ åŠŸèƒ½æè¿°  : è¯¥æ­¤æŽ¥å£ç”¨äºŽèŽ·å–RD bufferçš„æ•°æ®æŒ‡é’ˆã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
              pBuff:  RD buffer
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:»ñÈ¡RD»·ÐÎ»º³åÇø³É¹¦
-             SOCP_ERROR:»ñÈ¡RD»·ÐÎ»º³åÇøÊ§°Ü
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:èŽ·å–RDçŽ¯å½¢ç¼“å†²åŒºæˆåŠŸ
+             SOCP_ERROR:èŽ·å–RDçŽ¯å½¢ç¼“å†²åŒºå¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_GET_RD_BUFFER( BSP_U32 u32SrcChanID,SOCP_BUFFER_RW_STRU *pBuff)
 {
@@ -668,13 +668,13 @@ BSP_S32 DRV_SOCP_GET_RD_BUFFER( BSP_U32 u32SrcChanID,SOCP_BUFFER_RW_STRU *pBuff)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_socp_read_rd_done
- ¹¦ÄÜÃèÊö  : ´Ë½Ó¿ÚÓÃÓÚÉÏ²ãÍ¨ÖªSOCPÇý¶¯£¬´ÓRD bufferÖÐÊµ¼Ê¶ÁÈ¡µÄÊý¾Ý¡£
- ÊäÈë²ÎÊý  : u32SrcChanID:Ô´Í¨µÀID
-             u32RDSize:  ´ÓRD bufferÖÐÊµ¼Ê¶ÁÈ¡µÄÊý¾Ý³¤¶È
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:¶ÁÈ¡RDbufferÖÐµÄÊý¾Ý³É¹¦
-             SOCP_ERROR:¶ÁÈ¡RDbufferÖÐµÄÊý¾ÝÊ§°Ü
+ å‡½ æ•° å  : bsp_socp_read_rd_done
+ åŠŸèƒ½æè¿°  : æ­¤æŽ¥å£ç”¨äºŽä¸Šå±‚é€šçŸ¥SOCPé©±åŠ¨ï¼Œä»ŽRD bufferä¸­å®žé™…è¯»å–çš„æ•°æ®ã€‚
+ è¾“å…¥å‚æ•°  : u32SrcChanID:æºé€šé“ID
+             u32RDSize:  ä»ŽRD bufferä¸­å®žé™…è¯»å–çš„æ•°æ®é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è¯»å–RDbufferä¸­çš„æ•°æ®æˆåŠŸ
+             SOCP_ERROR:è¯»å–RDbufferä¸­çš„æ•°æ®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_READ_RD_DONE(BSP_U32 u32SrcChanID, BSP_U32 u32RDSize)
 {
@@ -682,13 +682,13 @@ BSP_S32 DRV_SOCP_READ_RD_DONE(BSP_U32 u32SrcChanID, BSP_U32 u32RDSize)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_socp_register_read_cb
- ¹¦ÄÜÃèÊö  : ¸Ã½Ó¿ÚÓÃÓÚ×¢²á¶ÁÊý¾ÝµÄ»Øµ÷º¯Êý¡£
- ÊäÈë²ÎÊý  : u32DestChanID:Ä¿±êÍ¨µÀID
-             ReadCB: ÊÂ¼þ»Øµ÷º¯Êý
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:×¢²á¶ÁÊý¾Ý»Øµ÷º¯Êý³É¹¦
-             SOCP_ERROR:×¢²á¶ÁÊý¾Ý»Øµ÷º¯ÊýÊ§°Ü
+ å‡½ æ•° å  : bsp_socp_register_read_cb
+ åŠŸèƒ½æè¿°  : è¯¥æŽ¥å£ç”¨äºŽæ³¨å†Œè¯»æ•°æ®çš„å›žè°ƒå‡½æ•°ã€‚
+ è¾“å…¥å‚æ•°  : u32DestChanID:ç›®æ ‡é€šé“ID
+             ReadCB: äº‹ä»¶å›žè°ƒå‡½æ•°
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:æ³¨å†Œè¯»æ•°æ®å›žè°ƒå‡½æ•°æˆåŠŸ
+             SOCP_ERROR:æ³¨å†Œè¯»æ•°æ®å›žè°ƒå‡½æ•°å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_REGISTER_READ_CB( BSP_U32 u32DestChanID, socp_read_cb ReadCB)
 {
@@ -696,13 +696,13 @@ BSP_S32 DRV_SOCP_REGISTER_READ_CB( BSP_U32 u32DestChanID, socp_read_cb ReadCB)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_GET_READ_BUFF
- ¹¦ÄÜÃèÊö  : ¸Ã´Ë½Ó¿ÚÓÃÓÚ»ñÈ¡¶ÁÊý¾Ý»º³åÇøÖ¸Õë¡£
- ÊäÈë²ÎÊý  : u32DestChanID:Ä¿±êÍ¨µÀID
-             ReadCB: ¶ÁÊý¾Ýbuffer
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:»ñÈ¡¶ÁÊý¾Ý»º³åÇø³É¹¦¡£
-             SOCP_ERROR:»ñÈ¡¶ÁÊý¾Ý»º³åÇø³É¹¦¡£
+ å‡½ æ•° å  : DRV_SOCP_GET_READ_BUFF
+ åŠŸèƒ½æè¿°  : è¯¥æ­¤æŽ¥å£ç”¨äºŽèŽ·å–è¯»æ•°æ®ç¼“å†²åŒºæŒ‡é’ˆã€‚
+ è¾“å…¥å‚æ•°  : u32DestChanID:ç›®æ ‡é€šé“ID
+             ReadCB: è¯»æ•°æ®buffer
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:èŽ·å–è¯»æ•°æ®ç¼“å†²åŒºæˆåŠŸã€‚
+             SOCP_ERROR:èŽ·å–è¯»æ•°æ®ç¼“å†²åŒºæˆåŠŸã€‚
 *****************************************************************************/
 BSP_S32 DRV_SOCP_GET_READ_BUFF(BSP_U32 u32DestChanID,SOCP_BUFFER_RW_STRU *pBuffer)
 {
@@ -710,13 +710,13 @@ BSP_S32 DRV_SOCP_GET_READ_BUFF(BSP_U32 u32DestChanID,SOCP_BUFFER_RW_STRU *pBuffe
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_READ_DATA_DONE
- ¹¦ÄÜÃèÊö  : ¸Ã½Ó¿ÚÓÃÓÚÉÏ²ã¸æËßSOCPÇý¶¯£¬´ÓÄ¿±êÍ¨µÀÖÐ¶Á×ßµÄÊµ¼ÊÊý¾Ý¡£
- ÊäÈë²ÎÊý  : u32DestChanID:Ä¿±êÍ¨µÀID
-             u32ReadSize: ÒÑ¶Á³öÊý¾ÝµÄ³¤¶È
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : SOCP_OK:¶ÁÊý¾Ý³É¹¦¡£
-             SOCP_ERROR:¶ÁÊý¾ÝÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_READ_DATA_DONE
+ åŠŸèƒ½æè¿°  : è¯¥æŽ¥å£ç”¨äºŽä¸Šå±‚å‘Šè¯‰SOCPé©±åŠ¨ï¼Œä»Žç›®æ ‡é€šé“ä¸­è¯»èµ°çš„å®žé™…æ•°æ®ã€‚
+ è¾“å…¥å‚æ•°  : u32DestChanID:ç›®æ ‡é€šé“ID
+             u32ReadSize: å·²è¯»å‡ºæ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : SOCP_OK:è¯»æ•°æ®æˆåŠŸã€‚
+             SOCP_ERROR:è¯»æ•°æ®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_READ_DATA_DONE(BSP_U32 u32DestChanID,BSP_U32 u32ReadSize)
 {
@@ -724,12 +724,12 @@ BSP_S32 DRV_SOCP_READ_DATA_DONE(BSP_U32 u32DestChanID,BSP_U32 u32ReadSize)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_BBP_ENABLE
- ¹¦ÄÜÃèÊö  : Ê¹ÄÜ»òÍ£Ö¹BBPÍ¨µÀ¡£
- ÊäÈë²ÎÊý  : bEnable:Í¨µÀID
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ      : SOCP_OK:ÉèÖÃ³É¹¦¡£
-                   ÆäËûÖµ:ÉèÖÃÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_SET_BBP_ENABLE
+ åŠŸèƒ½æè¿°  : ä½¿èƒ½æˆ–åœæ­¢BBPé€šé“ã€‚
+ è¾“å…¥å‚æ•°  : bEnable:é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼      : SOCP_OK:è®¾ç½®æˆåŠŸã€‚
+                   å…¶ä»–å€¼:è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_BBP_ENABLE(int bEnable)
 {
@@ -737,12 +737,12 @@ BSP_S32 DRV_SOCP_SET_BBP_ENABLE(int bEnable)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DRV_SOCP_SET_BBP_DS_MODE
- ¹¦ÄÜÃèÊö  : ÉèÖÃBBP DSÍ¨µÀÊý¾ÝÒç³ö´¦ÀíÄ£Ê½¡£
- ÊäÈë²ÎÊý  : eDsMode:DSÍ¨µÀÊý¾ÝÒç³öÊ±´¦ÀíÄ£Ê½ÉèÖÃ
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ      : SOCP_OK:ÉèÖÃ³É¹¦¡£
-                   ÆäËûÖµ:ÉèÖÃÊ§°Ü
+ å‡½ æ•° å  : DRV_SOCP_SET_BBP_DS_MODE
+ åŠŸèƒ½æè¿°  : è®¾ç½®BBP DSé€šé“æ•°æ®æº¢å‡ºå¤„ç†æ¨¡å¼ã€‚
+ è¾“å…¥å‚æ•°  : eDsMode:DSé€šé“æ•°æ®æº¢å‡ºæ—¶å¤„ç†æ¨¡å¼è®¾ç½®
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼      : SOCP_OK:è®¾ç½®æˆåŠŸã€‚
+                   å…¶ä»–å€¼:è®¾ç½®å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_SET_BBP_DS_MODE(SOCP_BBP_DS_MODE_ENUM_UIN32 eDsMode)
 {
@@ -750,12 +750,12 @@ BSP_S32 DRV_SOCP_SET_BBP_DS_MODE(SOCP_BBP_DS_MODE_ENUM_UIN32 eDsMode)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_GET_STATE
+* å‡½ æ•° å  : DRV_SOCP_GET_STATE
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡SOCP×´Ì¬
+* åŠŸèƒ½æè¿°  : èŽ·å–SOCPçŠ¶æ€
 *
-* ·µ »Ø Öµ  : SOCP_IDLE    ¿ÕÏÐ
-*             SOCP_BUSY    Ã¦Âµ
+* è¿” å›ž å€¼  : SOCP_IDLE    ç©ºé—²
+*             SOCP_BUSY    å¿™ç¢Œ
 *****************************************************************************/
 SOCP_STATE_ENUM_UINT32 DRV_SOCP_GET_STATE()
 {
@@ -763,11 +763,11 @@ SOCP_STATE_ENUM_UINT32 DRV_SOCP_GET_STATE()
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : bsp_socp_enc_dst_buf_flush
-* ¹¦ÄÜÃèÊö  : SOCP±àÂëÄ¿µÄbuffer»º´æÊý¾ÝÁ¢¼´Êä³ö
-* ÊäÈë²ÎÊý  : ÎÞ
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  :
+* å‡½ æ•° å  : bsp_socp_enc_dst_buf_flush
+* åŠŸèƒ½æè¿°  : SOCPç¼–ç ç›®çš„bufferç¼“å­˜æ•°æ®ç«‹å³è¾“å‡º
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  :
 *****************************************************************************/
 
 BSP_S32 DRV_SOCP_ENC_DST_BUF_FLUSH(void)
@@ -776,11 +776,11 @@ BSP_S32 DRV_SOCP_ENC_DST_BUF_FLUSH(void)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_SOCP_VOTE
-* ¹¦ÄÜÃèÊö  : SOCPÍ¶Æ±½Ó¿Ú£¬¸ù¾ÝÍ¶Æ±½á¹û¾ö¶¨SOCPÊÇ·ñË¯Ãß£¬¸Ã½Ó¿ÚÖ»ÔÚAºËÌá¹©
-* ÊäÈë²ÎÊý  : id --- Í¶Æ±×é¼þID£¬type --- Í¶Æ±ÀàÐÍ
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : BSP_S32 0 --- Í¶Æ±³É¹¦£¬0xFFFFFFFF --- Í¶Æ±Ê§°Ü
+* å‡½ æ•° å  : DRV_SOCP_VOTE
+* åŠŸèƒ½æè¿°  : SOCPæŠ•ç¥¨æŽ¥å£ï¼Œæ ¹æ®æŠ•ç¥¨ç»“æžœå†³å®šSOCPæ˜¯å¦ç¡çœ ï¼Œè¯¥æŽ¥å£åªåœ¨Aæ ¸æä¾›
+* è¾“å…¥å‚æ•°  : id --- æŠ•ç¥¨ç»„ä»¶IDï¼Œtype --- æŠ•ç¥¨ç±»åž‹
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : BSP_S32 0 --- æŠ•ç¥¨æˆåŠŸï¼Œ0xFFFFFFFF --- æŠ•ç¥¨å¤±è´¥
 *****************************************************************************/
 BSP_S32 DRV_SOCP_VOTE(SOCP_VOTE_ID_ENUM_U32 id, SOCP_VOTE_TYPE_ENUM_U32 type)
 {

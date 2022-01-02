@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş
+  1 å¤´æ–‡ä»¶
 *****************************************************************************/
 #include "ombufmngr.h"
 #include "DrvInterface.h"
@@ -13,17 +13,17 @@
   #endif
 #endif
 
-/*lint -e767 Log´òÓ¡ */
+/*lint -e767 Logæ‰“å° */
 #define    THIS_FILE_ID        PS_FILE_ID_OM_BUF_MMNGR_C
 /*lint +e767 */
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿ÉùÃ÷
+  2 å…¨å±€å˜é‡å£°æ˜
 *****************************************************************************/
 OM_BUF_RECORD_STRU                      g_stOmBufRecord;
 
 /*****************************************************************************
-  3 º¯ÊıÉêÃ÷
+  3 å‡½æ•°ç”³æ˜
 *****************************************************************************/
 
 
@@ -31,7 +31,7 @@ VOS_UINT32 OM_CreateTraceBuffer(OM_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lBufSize
 {
     VOS_UINT_PTR ulRealAddr;
 
-    /* ²ÎÊı¼ì²â */
+    /* å‚æ•°æ£€æµ‹ */
     if ((VOS_NULL_PTR == pstBufCtrl) || (0 == lBufSize))
     {
         return VOS_ERR;
@@ -42,16 +42,16 @@ VOS_UINT32 OM_CreateTraceBuffer(OM_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lBufSize
     pstBufCtrl->lPadding = 0;
     pstBufCtrl->lBufSize = lBufSize + 1;
 
-    /*ÉêÇëuncacheµÄ¶¯Ì¬ÄÚ´æÇø*/
+    /*ç”³è¯·uncacheçš„åŠ¨æ€å†…å­˜åŒº*/
     pstBufCtrl->pucBuf = (VOS_UINT8*)VOS_UnCacheMemAlloc((VOS_UINT32)pstBufCtrl->lBufSize, &ulRealAddr);
 
-    /* ·ÖÅäÄÚ´æÊ§°Ü */
+    /* åˆ†é…å†…å­˜å¤±è´¥ */
     if (VOS_NULL_PTR == pstBufCtrl->pucBuf)
     {
         return VOS_ERR;
     }
 
-    /* ±£´æbufÊµµØÖ· */
+    /* ä¿å­˜bufå®åœ°å€ */
     pstBufCtrl->pucRealBuf = (VOS_UINT8 *)ulRealAddr;
 
     vos_printf("\r\nOM_CreateTraceBuffer: real addr=0x%p, virt addr==0x%p\n", ulRealAddr, pstBufCtrl->pucBuf);
@@ -69,7 +69,7 @@ VOS_VOID* OM_AllocTraceMem(OM_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lLen)
     VOS_INT32                           lTmpAlloc;
     VOS_INT32                           lTmpPadding;
 
-    /* ÊäÈë²ÎÊı¼ì²â */
+    /* è¾“å…¥å‚æ•°æ£€æµ‹ */
     if ((VOS_NULL_PTR == pstBufCtrl)
         || (lLen >= pstBufCtrl->lBufSize)
         || (0 == lLen))
@@ -82,10 +82,10 @@ VOS_VOID* OM_AllocTraceMem(OM_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lLen)
     lTmpAlloc       = pstBufCtrl->lAlloc;
     lTmpPadding     = pstBufCtrl->lPadding;
 
-    /* Ã»ÓĞ·­×ª */
+    /* æ²¡æœ‰ç¿»è½¬ */
     if (pstBufCtrl->lAlloc >= pstBufCtrl->lRelease)
     {
-        /* »ñÈ¡Ê£ÓàÄÚ´æ´óĞ¡ */
+        /* è·å–å‰©ä½™å†…å­˜å¤§å° */
         if (0 == pstBufCtrl->lRelease)
         {
             lFreeSize = (pstBufCtrl->lBufSize - pstBufCtrl->lAlloc) - 1;
@@ -95,7 +95,7 @@ VOS_VOID* OM_AllocTraceMem(OM_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lLen)
             lFreeSize = pstBufCtrl->lBufSize - pstBufCtrl->lAlloc;
         }
 
-        /* Âú×ãÓÃ»§ÉêÇëÄÚ´æ´óĞ¡Ôò·µ»Ø */
+        /* æ»¡è¶³ç”¨æˆ·ç”³è¯·å†…å­˜å¤§å°åˆ™è¿”å› */
         if (lFreeSize >= lLen)
         {
             pucAddr = pstBufCtrl->pucBuf + pstBufCtrl->lAlloc;
@@ -110,7 +110,7 @@ VOS_VOID* OM_AllocTraceMem(OM_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lLen)
         lTmpAlloc    = 0;
     }
 
-    /* ·­×ª£¬»ñÈ¡Ê£ÓàÄÚ´æ´óĞ¡ */
+    /* ç¿»è½¬ï¼Œè·å–å‰©ä½™å†…å­˜å¤§å° */
     lFreeSize = (pstBufCtrl->lRelease - lTmpAlloc) - 1;
 
     if (lFreeSize >= lLen)
@@ -127,7 +127,7 @@ VOS_VOID* OM_AllocTraceMem(OM_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lLen)
 
     OM_ALLOC_RECORD(VOS_NULL_PTR, lLen);
 
-    /* ·ñÔò·ÖÅäÊ§°Ü£¬·µ»Ø¿ÕÖ¸Õë */
+    /* å¦åˆ™åˆ†é…å¤±è´¥ï¼Œè¿”å›ç©ºæŒ‡é’ˆ */
     return VOS_NULL_PTR;
 }
 
@@ -140,13 +140,13 @@ VOS_UINT32 OM_ReleaseTraceMem(OM_BUF_CTRL_STRU *pstBufCtrl,
 
     OM_RLS_RECORD(pAddr, lLen);
 
-    /* ÊäÈë²ÎÊı¼ì²â */
+    /* è¾“å…¥å‚æ•°æ£€æµ‹ */
     if ((VOS_NULL_PTR == pstBufCtrl) || (lLen >= pstBufCtrl->lBufSize))
     {
         return VOS_ERR;
     }
 
-    /* ÊÍ·ÅÄÚ´æµØÖ·½øĞĞ¼ì²â */
+    /* é‡Šæ”¾å†…å­˜åœ°å€è¿›è¡Œæ£€æµ‹ */
     if ((pAddr != (pstBufCtrl->pucBuf + pstBufCtrl->lRelease))
         && (pAddr != pstBufCtrl->pucBuf))
     {
@@ -154,12 +154,12 @@ VOS_UINT32 OM_ReleaseTraceMem(OM_BUF_CTRL_STRU *pstBufCtrl,
         /*return VOS_ERR;*/
     }
 
-    /* Î´·­×ª */
+    /* æœªç¿»è½¬ */
     if (pstBufCtrl->lAlloc >= pstBufCtrl->lRelease)
     {
         lUsedSize = pstBufCtrl->lAlloc - pstBufCtrl->lRelease;
 
-        /* ³¤¶È´íÎó */
+        /* é•¿åº¦é”™è¯¯ */
         if (lUsedSize < lLen)
         {
             return VOS_ERR;
@@ -179,13 +179,13 @@ VOS_UINT32 OM_ReleaseTraceMem(OM_BUF_CTRL_STRU *pstBufCtrl,
         lTmpRls = ((VOS_UINT8 *)pAddr - pstBufCtrl->pucBuf + lLen) % pstBufCtrl->lBufSize;
     }
 
-    /* ÊäÈëulLen²»ÕıÈ· */
+    /* è¾“å…¥ulLenä¸æ­£ç¡® */
     if ((lTmpRls > pstBufCtrl->lAlloc) && (lTmpRls < pstBufCtrl->lRelease))
     {
         return VOS_ERR;
     }
 
-    /* Èç¹û·¢ÉúÌø×ªÔò½«PaddingÖµ¹é0 */
+    /* å¦‚æœå‘ç”Ÿè·³è½¬åˆ™å°†Paddingå€¼å½’0 */
     if (lTmpRls <= pstBufCtrl->lAlloc)
     {
         pstBufCtrl->lPadding = 0;
@@ -199,7 +199,7 @@ VOS_INT32 OM_TraceMemNBytes(OM_BUF_CTRL_STRU *pstBufCtrl)
 {
     VOS_INT32 lUsedBytes;
 
-    /* ÊäÈë²ÎÊı¼ì²â */
+    /* è¾“å…¥å‚æ•°æ£€æµ‹ */
     if (VOS_NULL_PTR == pstBufCtrl)
     {
         return 0;
@@ -207,7 +207,7 @@ VOS_INT32 OM_TraceMemNBytes(OM_BUF_CTRL_STRU *pstBufCtrl)
 
     lUsedBytes = pstBufCtrl->lAlloc - pstBufCtrl->lRelease;
 
-    /* Ö¸ÕëÓĞ·­×ª */
+    /* æŒ‡é’ˆæœ‰ç¿»è½¬ */
     if (lUsedBytes < 0)
     {
         lUsedBytes += pstBufCtrl->lBufSize;

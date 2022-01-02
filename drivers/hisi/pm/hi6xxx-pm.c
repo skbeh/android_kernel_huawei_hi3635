@@ -377,10 +377,10 @@ static void coherent_slave_port_ctrl(unsigned int id,unsigned int ctrl)
 
     if(0 == id)
     {
-        /*1 ÅäÖÃSnoopºÍDVMÌØĞÔ*/
+        /*1 é…ç½®Snoopå’ŒDVMç‰¹æ€§*/
         writel(ctrl, (unsigned)(g_cci_base + 0x94000));
 
-        /*2 ÂÖÑ¯µÈ´ıStatus RegisterÖµÎª0x0*/
+        /*2 è½®è¯¢ç­‰å¾…Status Registerå€¼ä¸º0x0*/
         reg_val = readl((unsigned)(g_cci_base + 0x9000c));
         while(0x0 != reg_val){
             reg_val = readl((unsigned)(g_cci_base + 0x9000c));
@@ -394,10 +394,10 @@ static void coherent_slave_port_ctrl(unsigned int id,unsigned int ctrl)
     }
     else
     {
-        /*1 ÅäÖÃSnoopºÍDVMÌØĞÔ*/
+        /*1 é…ç½®Snoopå’ŒDVMç‰¹æ€§*/
         writel(ctrl, (unsigned)(g_cci_base + 0x95000));
 
-        /*2 ÂÖÑ¯µÈ´ıStatus RegisterÖµÎª0x0*/
+        /*2 è½®è¯¢ç­‰å¾…Status Registerå€¼ä¸º0x0*/
         reg_val = readl((unsigned)(g_cci_base + 0x9000c));
         while(0x0 != reg_val){
             reg_val = readl((unsigned)(g_cci_base + 0x9000c));
@@ -416,35 +416,35 @@ static void coherent_slave_port_ctrl(unsigned int id,unsigned int ctrl)
 static void coherent_init(void)
 {
     /*CCI init*/
-    /*Ê¹ÄÜ¸÷MasterºÍSlave½Ó¿ÚµÄ speculative fetch¹¦ÄÜ*/
+    /*ä½¿èƒ½å„Masterå’ŒSlaveæ¥å£çš„ speculative fetchåŠŸèƒ½*/
     writel(0x180003, (unsigned)(g_cci_base + 0x90004));
-    /*Ê¹ÄÜsnoop/DVM/speculative fetch/terminate barrier¹¦ÄÜ*/
+    /*ä½¿èƒ½snoop/DVM/speculative fetch/terminate barrieråŠŸèƒ½*/
     writel(0x18, (unsigned)(g_cci_base + 0x90000));
 }
 
-/*fixme:ClusterÉÏµçÍê³É£¬L2 CacheÊ¹ÄÜºó£¬Æô¶¯SMPÇ°*/
+/*fixme:Clusterä¸Šç”µå®Œæˆï¼ŒL2 Cacheä½¿èƒ½åï¼Œå¯åŠ¨SMPå‰*/
 static void coherent_slave_port_config(void)
 {
     /*unsigned int reg_val = 0;*/
 
-    /*CCI slave port config*/ /*S3ºÍS4¶¼ĞèÒªÅäÖÃ*/
-    /*1 ÉèÖÃLatencyÄ¿±êÎª128¸öÖÜÆÚ*/
+    /*CCI slave port config*/ /*S3å’ŒS4éƒ½éœ€è¦é…ç½®*/
+    /*1 è®¾ç½®Latencyç›®æ ‡ä¸º128ä¸ªå‘¨æœŸ*/
     writel(0x500050, (unsigned)(g_cci_base + 0x94130));
     writel(0x500050, (unsigned)(g_cci_base + 0x95130));
 
-    /*2 ÉèÖÃÃ¿256¸öÖÜÆÚQosÔö¼Ó1*/
+    /*2 è®¾ç½®æ¯256ä¸ªå‘¨æœŸQoså¢åŠ 1*/
     writel(0x30003, (unsigned)(g_cci_base + 0x94134));
     writel(0x30003, (unsigned)(g_cci_base + 0x95134));
 
-    /*3 ÉèÖÃACPU×îµÍÓÅÏÈ¼¶Îª1£¬×î¸ßÓÅÏÈ¼¶Îª6*/
+    /*3 è®¾ç½®ACPUæœ€ä½ä¼˜å…ˆçº§ä¸º1ï¼Œæœ€é«˜ä¼˜å…ˆçº§ä¸º6*/
     writel(0x6010601, (unsigned)(g_cci_base + 0x94138));
     writel(0x6010601, (unsigned)(g_cci_base + 0x95138));
 
-    /*4 Ê¹ÄÜQos*/
+    /*4 ä½¿èƒ½Qos*/
     writel(0x3, (unsigned)(g_cci_base + 0x9410c));
     writel(0x3, (unsigned)(g_cci_base + 0x9510c));
 
-    /*5 ²»¸Ä±ä´«ÊäÃüÁîµÄDomainÌØĞÔ S3ºÍS4Ã»ÓĞ£¬²»ĞèÒªÅäÖÃ*/
+    /*5 ä¸æ”¹å˜ä¼ è¾“å‘½ä»¤çš„Domainç‰¹æ€§ S3å’ŒS4æ²¡æœ‰ï¼Œä¸éœ€è¦é…ç½®*/
 #if 0
     writel(0x, (g_cci_base + 0x9));
     writel(0x, (g_cci_base + 0x9));
@@ -530,11 +530,11 @@ void hisi_pm_cci_disable(unsigned int id)
     if(1 == id)
     {
 #if 0
-        /*1)	ÏµÍ³ÅäÖÃÏµÍ³¿ØÖÆÆ÷ÒÔÀ­¸ßL2FLUSHREQ */
+        /*1)	ç³»ç»Ÿé…ç½®ç³»ç»Ÿæ§åˆ¶å™¨ä»¥æ‹‰é«˜L2FLUSHREQ */
         reg_val = readl(SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_ADDR(g_acpu_sc_base_map));
         reg_val |= BIT(SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_l2flushreq1_START);
         writel(reg_val,SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_ADDR(g_acpu_sc_base_map));
-        /*2)	ÏµÍ³µÈ´ıL2FLUSHDONEÓĞĞ§Ö®ºó£¬À­µÍL2FLUSHREQ*/
+        /*2)	ç³»ç»Ÿç­‰å¾…L2FLUSHDONEæœ‰æ•ˆä¹‹åï¼Œæ‹‰ä½L2FLUSHREQ*/
         do{
             reg_val = readl(SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_ADDR(g_acpu_sc_base_map));
         }while(0 == reg_val&BIT(SOC_ACPU_SCTRL_ACPU_SC_CPU_STAT_l2flshudone1_START));
@@ -542,14 +542,14 @@ void hisi_pm_cci_disable(unsigned int id)
         reg_val &= ~ BIT(SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_l2flushreq1_START);
         writel(reg_val,SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_ADDR(g_acpu_sc_base_map));
 
-        /*ÏµÍ³ÅäÖÃ¿ØÖÆ×´Ì¬»ú¹Ø±ÕSnoop½ÓÊÕ´ò¿ª×´Ì¬¼ì²â*/
+        /*ç³»ç»Ÿé…ç½®æ§åˆ¶çŠ¶æ€æœºå…³é—­Snoopæ¥æ”¶æ‰“å¼€çŠ¶æ€æ£€æµ‹*/
         reg_val = readl(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(g_acpu_sc_base_map));
         reg_val |= BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start1_START);
         reg_val |= BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_set_acinactm_high1_START);
         writel(reg_val,SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(g_acpu_sc_base_map));
 #endif
 
-        /*3)	CPU0ÅäÖÃCCI-400 Snoop Control Register£¬¹Ø±Õ¶ÔÓ¦Í¨µÀµÄËùÓĞ·¢ËÍsnoopºÍ½ÓÊÕsnoopµÄÊ¹ÄÜ */
+        /*3)	CPU0é…ç½®CCI-400 Snoop Control Registerï¼Œå…³é—­å¯¹åº”é€šé“çš„æ‰€æœ‰å‘é€snoopå’Œæ¥æ”¶snoopçš„ä½¿èƒ½ */
         writel(0x0, (unsigned)(g_cci_base + 0x95000));/*S4*/
 
         do{
@@ -563,7 +563,7 @@ void hisi_pm_cci_disable(unsigned int id)
 #endif
         dsb();
 #if 0
-        /*5)	ÏµÍ³ÅäÖÃ¿ØÖÆ×´Ì¬»ú¿ªÊ¼Snoop½ÓÊÕ¹Ø±Õ×´Ì¬¼ì²â£¬Power detect start¿ØÖÆÆ÷ bitÏÈĞ´1£¬È»ºóĞ´0Çå³ı¡£*/
+        /*5)	ç³»ç»Ÿé…ç½®æ§åˆ¶çŠ¶æ€æœºå¼€å§‹Snoopæ¥æ”¶å…³é—­çŠ¶æ€æ£€æµ‹ï¼ŒPower detect startæ§åˆ¶å™¨ bitå…ˆå†™1ï¼Œç„¶åå†™0æ¸…é™¤ã€‚*/
         reg_val = readl(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(g_acpu_sc_base_map));
         reg_val |= BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start1_START);
         writel(reg_val,SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(g_acpu_sc_base_map));
@@ -576,11 +576,11 @@ void hisi_pm_cci_disable(unsigned int id)
     else if(0 == id)
     {
 #if 0
-        /*1)	ÏµÍ³ÅäÖÃÏµÍ³¿ØÖÆÆ÷ÒÔÀ­¸ßL2FLUSHREQ */
+        /*1)	ç³»ç»Ÿé…ç½®ç³»ç»Ÿæ§åˆ¶å™¨ä»¥æ‹‰é«˜L2FLUSHREQ */
         reg_val = readl(SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_ADDR(g_acpu_sc_base_map));
         reg_val |= BIT(SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_l2flushreq0_START);
         writel(reg_val,SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_ADDR(g_acpu_sc_base_map));
-        /*2)	ÏµÍ³µÈ´ıL2FLUSHDONEÓĞĞ§Ö®ºó£¬À­µÍL2FLUSHREQ*/
+        /*2)	ç³»ç»Ÿç­‰å¾…L2FLUSHDONEæœ‰æ•ˆä¹‹åï¼Œæ‹‰ä½L2FLUSHREQ*/
         do{
             reg_val = readl(SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_ADDR(g_acpu_sc_base_map));
         }while(0 == reg_val&BIT(SOC_ACPU_SCTRL_ACPU_SC_CPU_STAT_l2flshudone0_START));
@@ -588,13 +588,13 @@ void hisi_pm_cci_disable(unsigned int id)
         reg_val &= ~ BIT(SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_l2flushreq0_START);
         writel(reg_val,SOC_ACPU_SCTRL_ACPU_SC_CPU_CTRL_ADDR(g_acpu_sc_base_map));
 
-        /*ÏµÍ³ÅäÖÃ¿ØÖÆ×´Ì¬»ú¹Ø±ÕSnoop½ÓÊÕ´ò¿ª×´Ì¬¼ì²â*/
+        /*ç³»ç»Ÿé…ç½®æ§åˆ¶çŠ¶æ€æœºå…³é—­Snoopæ¥æ”¶æ‰“å¼€çŠ¶æ€æ£€æµ‹*/
         reg_val = readl(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(g_acpu_sc_base_map));
         reg_val |= BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start0_START);
         reg_val |= BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_set_acinactm_high0_START);
         writel(reg_val,SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(g_acpu_sc_base_map));
 #endif
-        /*3)	CPU0ÅäÖÃCCI-400 Snoop Control Register£¬¹Ø±Õ¶ÔÓ¦Í¨µÀµÄËùÓĞ·¢ËÍsnoopºÍ½ÓÊÕsnoopµÄÊ¹ÄÜ */
+        /*3)	CPU0é…ç½®CCI-400 Snoop Control Registerï¼Œå…³é—­å¯¹åº”é€šé“çš„æ‰€æœ‰å‘é€snoopå’Œæ¥æ”¶snoopçš„ä½¿èƒ½ */
         writel(0x0, (unsigned)(g_cci_base + 0x94000));/*S3*/
         do{
             reg_val = readl((unsigned)(g_cci_base + 0x9000c));
@@ -609,7 +609,7 @@ void hisi_pm_cci_disable(unsigned int id)
 
 	dsb();
 #if 0
-        /*5)	ÏµÍ³ÅäÖÃ¿ØÖÆ×´Ì¬»ú¿ªÊ¼Snoop½ÓÊÕ¹Ø±Õ×´Ì¬¼ì²â£¬Power detect start¿ØÖÆÆ÷ bitÏÈĞ´1£¬È»ºóĞ´0Çå³ı¡£*/
+        /*5)	ç³»ç»Ÿé…ç½®æ§åˆ¶çŠ¶æ€æœºå¼€å§‹Snoopæ¥æ”¶å…³é—­çŠ¶æ€æ£€æµ‹ï¼ŒPower detect startæ§åˆ¶å™¨ bitå…ˆå†™1ï¼Œç„¶åå†™0æ¸…é™¤ã€‚*/
         reg_val = readl(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(g_acpu_sc_base_map));
         reg_val |= BIT(SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_pd_detect_start0_START);
         writel(reg_val,SOC_ACPU_SCTRL_ACPU_SC_SNOOP_PWD_ADDR(g_acpu_sc_base_map));
@@ -749,7 +749,7 @@ static int hi6xxx_pm_enter(suspend_state_t state)
 	debuguart_reinit();
 #endif
     if (get_cpu_type()){
-        /*cciÉÏµçÅäÖÃ*/
+        /*cciä¸Šç”µé…ç½®*/
         coherent_init();
         coherent_slave_port_config();
     }

@@ -8,7 +8,7 @@ extern "C"{
 
 
 /*****************************************************************************
-1 Í·ÎÄ¼ş°üº¬
+1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 /*lint -save -e537*/
 #include "bsp_version.h"
@@ -17,41 +17,41 @@ extern "C"{
 
 
 /*****************************************************************************
-2 È«¾Ö±äÁ¿¶¨Òå
+2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 /*lint -save -e958*/
 /*xml decode info*/
 static XML_DOCODE_INFO xml_ctrl;
 
-/* XML¹Ø¼ü×Ö,²»°üÀ¨0-9,a-z,A-Z */
+/* XMLå…³é”®å­—,ä¸åŒ…æ‹¬0-9,a-z,A-Z */
 static s8   g_stlxmkeywordtbl[] = { '<', '>', '/', '=', '"',
                                    ' ', '!', '?', '_', '-',
                                    ',' };
 
-/* XMLÎÄ¼ş½âÎöÊ±µÄ×´Ì¬                  */
+/* XMLæ–‡ä»¶è§£ææ—¶çš„çŠ¶æ€                  */
 static XML_ANALYSE_STATUS_ENUM_UINT32 g_stlxmlstatus = XML_ANASTT_ORIGINAL;
 
-/* ¹²Í¨½ÚµãÃû³Æ                         */
+/* å…±é€šèŠ‚ç‚¹åç§°                         */
 static s8 g_aclnodelabelcommon[]               = "common_NvInfo";
 
-/* Product½ÚµãÃû³Æ                      */
+/* ProductèŠ‚ç‚¹åç§°                      */
 static s8 g_aclnodelabelproduct[]              = "product";
 
-/* Product_NvInfo½ÚµãÃû³Æ                      */
+/* Product_NvInfoèŠ‚ç‚¹åç§°                      */
 static s8 g_aclnodelabelproductNvInfo[]          = "product_NvInfo";
 
-/* NV½ÚµãÃû³Æ                           */
+/* NVèŠ‚ç‚¹åç§°                           */
 static s8 g_aclnodelabelnv[]                   = "nv";
 
-/* Cust½ÚµãÃû³Æ                         */
+/* CustèŠ‚ç‚¹åç§°                         */
 static s8 g_aclnodelabelcust[]                 = "cust";
 
-/* ½ÚµãÊ®Áù½øÖÆÖµÖ®¼äµÄ·Ö¸ô·û           */
+/* èŠ‚ç‚¹åå…­è¿›åˆ¶å€¼ä¹‹é—´çš„åˆ†éš”ç¬¦           */
 static s8 g_separator                        = ',';
 
 /*****************************************************************************
-3 º¯Êı¶¨Òå
+3 å‡½æ•°å®šä¹‰
 *****************************************************************************/
 #if 0
 #if (VOS_OS_VER == VOS_WIN32)
@@ -78,14 +78,14 @@ XML_RESULT_ENUM_UINT32 xml_checkxmlkeyword(s8 currentchar)
 {
     u32 lcount;
 
-    if ((('0' <= currentchar) && ('9' >= currentchar))   /* ÓĞĞ§×Ö·û£º0-9  */
-        ||(('a' <= currentchar) && ('z' >= currentchar)) /* ÓĞĞ§×Ö·û£ºa-z  */
-        ||(('A' <= currentchar) && ('Z' >= currentchar)))/* ÓĞĞ§×Ö·û£ºA-Z  */
+    if ((('0' <= currentchar) && ('9' >= currentchar))   /* æœ‰æ•ˆå­—ç¬¦ï¼š0-9  */
+        ||(('a' <= currentchar) && ('z' >= currentchar)) /* æœ‰æ•ˆå­—ç¬¦ï¼ša-z  */
+        ||(('A' <= currentchar) && ('Z' >= currentchar)))/* æœ‰æ•ˆå­—ç¬¦ï¼šA-Z  */
     {
         return XML_RESULT_SUCCEED;
     }
 /*lint -save -e958*/
-    /* ³ı 0-9,a-z,A-Z Ö®ÍâµÄ XML¹Ø¼ü×Ö */
+    /* é™¤ 0-9,a-z,A-Z ä¹‹å¤–çš„ XMLå…³é”®å­— */
     for (lcount=0; lcount<sizeof(g_stlxmkeywordtbl); lcount++)
     {
         if (currentchar == g_stlxmkeywordtbl[lcount])
@@ -105,25 +105,25 @@ XML_RESULT_ENUM_UINT32 xml_checkcharvalidity(s8 currentchar)
 {
     XML_RESULT_ENUM_UINT32 returnval;
 
-    if (('\r' == currentchar)       /* ºöÂÔ»Ø³µ   */
-        || ('\t' == currentchar))   /* ºöÂÔÖÆ±í·û */
+    if (('\r' == currentchar)       /* å¿½ç•¥å›è½¦   */
+        || ('\t' == currentchar))   /* å¿½ç•¥åˆ¶è¡¨ç¬¦ */
     {
         return XML_RESULT_SUCCEED_IGNORE_CHAR;
     }
 
-    if ('\n' == currentchar)    /* ºöÂÔ»»ĞĞ   */
+    if ('\n' == currentchar)    /* å¿½ç•¥æ¢è¡Œ   */
     {
         xml_ctrl.g_stlxml_lineno++;
         return XML_RESULT_SUCCEED_IGNORE_CHAR;
     }
 
-    /* ÔÚ×¢ÊÍÖĞµÄ×Ö·û²»×ö¼ì²é */
+    /* åœ¨æ³¨é‡Šä¸­çš„å­—ç¬¦ä¸åšæ£€æŸ¥ */
     if ( XML_ANASTT_IGNORE == g_stlxmlstatus)
     {
         return XML_RESULT_SUCCEED;
     }
 
-    /* ¼ì²éXMLµÄ¹Ø¼ü×Ö */
+    /* æ£€æŸ¥XMLçš„å…³é”®å­— */
     returnval = xml_checkxmlkeyword(currentchar);
     if (XML_RESULT_SUCCEED != returnval)
     {
@@ -140,13 +140,13 @@ XML_RESULT_ENUM_UINT32 xml_checkcharvalidity(s8 currentchar)
 XML_RESULT_ENUM_UINT32 xml_stringtonvid(s8  *pcbuff,
                                             u16 *pusretval)
 {
-    u32 ultemp = 0;  /* ×Ö·û´®×ª³ÉÕûĞÍÊ±µÄÖĞ¼ä±äÁ¿ */
+    u32 ultemp = 0;  /* å­—ç¬¦ä¸²è½¬æˆæ•´å‹æ—¶çš„ä¸­é—´å˜é‡ */
     s8   currentchar;
     s8  *pcsrc;
 
     pcsrc = pcbuff;
 
-    /* Èç¹ûNV IDÊÇ¿ÕµÄ£¬Ôò·µ»Ø´íÎó */
+    /* å¦‚æœNV IDæ˜¯ç©ºçš„ï¼Œåˆ™è¿”å›é”™è¯¯ */
     if (0 == *pcsrc)
     {
         xml_write_error_log(__LINE__, 0, XML_RESULT_FALIED_NV_ID_IS_NULL);
@@ -154,23 +154,23 @@ XML_RESULT_ENUM_UINT32 xml_stringtonvid(s8  *pcbuff,
         return XML_RESULT_FALIED_NV_ID_IS_NULL;
     }
 
-    /* °Ñ×Ö·û´®×ª³ÉÊ®½øÖÆµÄ¸ñÊ½ */
+    /* æŠŠå­—ç¬¦ä¸²è½¬æˆåè¿›åˆ¶çš„æ ¼å¼ */
     while (0 != *pcsrc)
     {
         currentchar = *pcsrc;
 
-        /* ¶Ô²»ÔÚ0£­9Ö®¼äµÄ×Ö·û£¬°´´íÎó´¦Àí */
+        /* å¯¹ä¸åœ¨0ï¼9ä¹‹é—´çš„å­—ç¬¦ï¼ŒæŒ‰é”™è¯¯å¤„ç† */
         if ((currentchar < '0') || (currentchar > '9'))
         {
             xml_write_error_log(__LINE__, 0, XML_RESULT_FALIED_OUT_OF_0_9);
             return XML_RESULT_FALIED_OUT_OF_0_9;
         }
 
-        /* ×ª³ÉÊ®½øÖÆ¸ñÊ½ */
+        /* è½¬æˆåè¿›åˆ¶æ ¼å¼ */
         currentchar -= '0';
         ultemp = (ultemp*10) + (u8)currentchar;
 
-        /* ³¬³öNV IDµÄ×î´óÖµ */
+        /* è¶…å‡ºNV IDçš„æœ€å¤§å€¼ */
         if (EN_NV_ID_END <= ultemp)
         {
             xml_write_error_log(__LINE__, (u16)ultemp, XML_RESULT_FALIED_OUT_OF_MAX_VALUE);
@@ -181,7 +181,7 @@ XML_RESULT_ENUM_UINT32 xml_stringtonvid(s8  *pcbuff,
         pcsrc++;
     }
 
-    /* Êä³ö ×ª»»ºóµÄÖµ */
+    /* è¾“å‡º è½¬æ¢åçš„å€¼ */
     *pusretval = (u16)ultemp;
 
     return XML_RESULT_SUCCEED;
@@ -192,18 +192,18 @@ XML_RESULT_ENUM_UINT32 xml_stringtohex(u8 *pucsrc, u8 *pucdest)
     u8  uctemp  = 0;
     u16 uscount = 0;
 
-    /* pucsrcµÄ³¤¶ÈÒ»¶¨ÊÇÅ¼Êı,ÓÉÊäÈëµÄ²ÎÊı±£Ö¤ */
+    /* pucsrcçš„é•¿åº¦ä¸€å®šæ˜¯å¶æ•°,ç”±è¾“å…¥çš„å‚æ•°ä¿è¯ */
     while (0 != *pucsrc)
     {
         ucurrent = *pucsrc;
 
         if ((ucurrent >= 'a') && (ucurrent <= 'f'))
         {
-            /* ½«Ğ¡Ğ´×Ö·û×ª³É´óĞ´*/
+            /* å°†å°å†™å­—ç¬¦è½¬æˆå¤§å†™*/
             ucurrent -= 'a'-'A';
         }
 
-        /* ×ª³ÉÊ®Áù½øÖÆ¸ñÊ½ */
+        /* è½¬æˆåå…­è¿›åˆ¶æ ¼å¼ */
         if ((ucurrent >= 'A') && (ucurrent <= 'F'))
         {
             uscount++;
@@ -216,13 +216,13 @@ XML_RESULT_ENUM_UINT32 xml_stringtohex(u8 *pucsrc, u8 *pucdest)
         }
         else
         {
-            /* ¶Ô²»ÔÚ0-9,a-f,A-FÖ®¼äµÄ×Ö·û£¬°´´íÎó´¦Àí */
+            /* å¯¹ä¸åœ¨0-9,a-f,A-Fä¹‹é—´çš„å­—ç¬¦ï¼ŒæŒ‰é”™è¯¯å¤„ç† */
             xml_write_error_log(__LINE__, 0, XML_RESULT_FALIED_OUT_OF_0_F);
 
             return XML_RESULT_FALIED_OUT_OF_0_F;
         } /* end of if ((ucurrent >= 'a') && (ucurrent <= 'f')) */
 
-        /* ½«2¸ö×Ö·û×ª»»³ÉÒ»¸öÊ®Áù½øÖÆºó,±£´æµ½Ä¿±ê»º³åÇøÖĞ */
+        /* å°†2ä¸ªå­—ç¬¦è½¬æ¢æˆä¸€ä¸ªåå…­è¿›åˆ¶å,ä¿å­˜åˆ°ç›®æ ‡ç¼“å†²åŒºä¸­ */
         if (2 == uscount)
         {
             *pucdest++ = uctemp;
@@ -233,7 +233,7 @@ XML_RESULT_ENUM_UINT32 xml_stringtohex(u8 *pucsrc, u8 *pucdest)
         pucsrc++;
     }
 
-    /* ¼ÓÉÏ×Ö·û´®½áÊø¸®'\0' */
+    /* åŠ ä¸Šå­—ç¬¦ä¸²ç»“æŸåºœ'\0' */
     *pucdest = 0;
 
     return XML_RESULT_SUCCEED;
@@ -243,13 +243,13 @@ XML_RESULT_ENUM_UINT32 xml_stringtovalue(u8  *pucbuff,
                                                  u32 *pretbufflen)
 {
     XML_RESULT_ENUM_UINT32 returnval = 0;
-    u32 ulcount = 0;    /* ÅĞ¶ÏÊÇ·ñ±£´æµ±Ç°×ª»»ºóµÄÖµ */
+    u32 ulcount = 0;    /* åˆ¤æ–­æ˜¯å¦ä¿å­˜å½“å‰è½¬æ¢åçš„å€¼ */
     u8 *pcsrc;
     u8 *pcdest;
     pcsrc  = pucbuff;
     pcdest = pucbuff;
 
-     /* Èç¹ûNV VALUEÊÇ¿ÕµÄ£¬Ôò·µ»Ø´íÎó */
+     /* å¦‚æœNV VALUEæ˜¯ç©ºçš„ï¼Œåˆ™è¿”å›é”™è¯¯ */
     if (0 == *pcsrc)
     {
         xml_write_error_log(__LINE__, 0, XML_RESULT_FALIED_NV_VALUE_IS_NULL);
@@ -257,13 +257,13 @@ XML_RESULT_ENUM_UINT32 xml_stringtovalue(u8  *pucbuff,
     }
 
 
-    /* ÏÈ°ÑÔ­×Ö·û´®ÖĞµÄ·Ö¸ô·ûÈ¥µô */
+    /* å…ˆæŠŠåŸå­—ç¬¦ä¸²ä¸­çš„åˆ†éš”ç¬¦å»æ‰ */
     while (0 != *pcsrc)
     {
-        /* Èç¹ûµ±Ç°×Ö·ûÊÇ·Ö¸ô·û */
+        /* å¦‚æœå½“å‰å­—ç¬¦æ˜¯åˆ†éš”ç¬¦ */
         if (g_separator == *pcsrc)
         {
-            /* Èç¹ûÔÚ2¸ö·Ö¸ô·ûÖ®¼äÖ»ÓĞÒ»¸ö×Ö·û,ÔòĞèÔÚÇ°Ãæ²åÈëÒ»¸ö'0' */
+            /* å¦‚æœåœ¨2ä¸ªåˆ†éš”ç¬¦ä¹‹é—´åªæœ‰ä¸€ä¸ªå­—ç¬¦,åˆ™éœ€åœ¨å‰é¢æ’å…¥ä¸€ä¸ª'0' */
             if (1 == ulcount)
             {
                 *pcdest = *(pcdest-1);
@@ -277,7 +277,7 @@ XML_RESULT_ENUM_UINT32 xml_stringtovalue(u8  *pucbuff,
             continue;
         }
 
-        /* Èç¹ûÓĞÒ»¸öNVÏî³¬¹ı2¸ö×Ö·û,¼´³ö´í.Àı<nv id="1">A3E</nvs> */
+        /* å¦‚æœæœ‰ä¸€ä¸ªNVé¡¹è¶…è¿‡2ä¸ªå­—ç¬¦,å³å‡ºé”™.ä¾‹<nv id="1">A3E</nvs> */
         if (2 <= ulcount)
         {
             xml_write_error_log(__LINE__, 0, XML_RESULT_FALIED_OUT_OF_2_CHAR);
@@ -285,18 +285,18 @@ XML_RESULT_ENUM_UINT32 xml_stringtovalue(u8  *pucbuff,
         }
 
         *pcdest++ = *pcsrc++;
-        ulcount++;    /* ¼ÇÂ¼·Ö¸ô·ûÖ®¼ä×Ö·ûµÄ¸öÊı */
+        ulcount++;    /* è®°å½•åˆ†éš”ç¬¦ä¹‹é—´å­—ç¬¦çš„ä¸ªæ•° */
     }
 
 
-    /* ¼ÓÉÏ×Ö·û´®½áÊø¸®'\0' */
+    /* åŠ ä¸Šå­—ç¬¦ä¸²ç»“æŸåºœ'\0' */
     *pcdest = '\0';
 
 
-    /* ¼ÇÂ¼×ª»»ºóµÄÊı¾İ³¤¶È */
+    /* è®°å½•è½¬æ¢åçš„æ•°æ®é•¿åº¦ */
     *pretbufflen = (u32)(pcdest - pucbuff)/2;
 
-    /* ×ª³ÉÊ®Áù½øÖÆ¸ñÊ½ */
+    /* è½¬æˆåå…­è¿›åˆ¶æ ¼å¼ */
     pcsrc  = pucbuff;
     pcdest = pucretbuff;
 
@@ -316,13 +316,13 @@ XML_RESULT_ENUM_UINT32 xml_write_nv_data(void)
     struct nv_ref_data_info_stru ref_info = {0};
     struct nv_file_list_info_stru file_info = {0};
 
-    /* Èç¹ûµ±Ç°½Úµã²»ÊÇÓĞĞ§µÄ½Úµã,Ôò²»×öÈÎºÎ´¦Àí */
+    /* å¦‚æœå½“å‰èŠ‚ç‚¹ä¸æ˜¯æœ‰æ•ˆçš„èŠ‚ç‚¹,åˆ™ä¸åšä»»ä½•å¤„ç† */
     if (XML_PRODUCT_NODE_STATUS_INVALID == xml_ctrl.g_stlxmlproductinfo.envalidnode)
     {
         return XML_RESULT_SUCCEED;
     }
 
-    /* Èç¹ûÊôĞÔÖµÎª¿Õ,¶øÇÒ½ÚµãÖµÎª¿Õ,Ôò²»×öÈÎºÎ´¦Àí, Èç<cust/> */
+    /* å¦‚æœå±æ€§å€¼ä¸ºç©º,è€Œä¸”èŠ‚ç‚¹å€¼ä¸ºç©º,åˆ™ä¸åšä»»ä½•å¤„ç†, å¦‚<cust/> */
     xml_ctrl.g_stlxmlcurrentnode.stproperty.pcpropertyvalue[
                         xml_ctrl.g_stlxmlcurrentnode.stproperty.ulvaluelength] = '\0';
 
@@ -334,7 +334,7 @@ XML_RESULT_ENUM_UINT32 xml_write_nv_data(void)
         return XML_RESULT_SUCCEED;
     }
 
-    /* Ö»¶Ônv£¬cust½ÚµãĞ´µ½NVÖĞ */
+    /* åªå¯¹nvï¼ŒcustèŠ‚ç‚¹å†™åˆ°NVä¸­ */
     xml_ctrl.g_stlxmlcurrentnode.pcnodelabel[xml_ctrl.g_stlxmlcurrentnode.ullabelendlength] = '\0';
 
     lisnv = strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabel, g_aclnodelabelnv);
@@ -346,7 +346,7 @@ XML_RESULT_ENUM_UINT32 xml_write_nv_data(void)
         return XML_RESULT_SUCCEED;
     }
 
-    /* °ÑÊôĞÔÖµ×ª³ÉNV ID */
+    /* æŠŠå±æ€§å€¼è½¬æˆNV ID */
     returnval = xml_stringtonvid(xml_ctrl.g_stlxmlcurrentnode.stproperty.pcpropertyvalue,
                                 &usnvitemid);
 
@@ -355,7 +355,7 @@ XML_RESULT_ENUM_UINT32 xml_write_nv_data(void)
         goto out;
     }
 
-    /* °Ñ½ÚµãÖµ×ª³ÉNV Value */
+    /* æŠŠèŠ‚ç‚¹å€¼è½¬æˆNV Value */
     ulnvitemlen = 0;
 
     returnval = xml_stringtovalue((u8 *)xml_ctrl.g_stlxmlcurrentnode.pcnodevalue,
@@ -369,8 +369,8 @@ XML_RESULT_ENUM_UINT32 xml_write_nv_data(void)
     }
 
 
-    /* Ğ´µ½NVÖĞ */
-    /*Èç¹ûxmlÖĞ´æÔÚ²»´æÔÚµÄNVÏî£¬Ôò²»Ğ´Èë£¬¼ÌĞø½âÎö*/
+    /* å†™åˆ°NVä¸­ */
+    /*å¦‚æœxmlä¸­å­˜åœ¨ä¸å­˜åœ¨çš„NVé¡¹ï¼Œåˆ™ä¸å†™å…¥ï¼Œç»§ç»­è§£æ*/
     returnval = nv_search_byid(usnvitemid,((u8*)NV_GLOBAL_CTRL_INFO_ADDR),&ref_info,&file_info);
     if(returnval)
     {
@@ -390,26 +390,26 @@ XML_RESULT_ENUM_UINT32 xml_write_nv_data(void)
 
     return XML_RESULT_SUCCEED;
 out:
-    /* ¼ÇÂ¼³ö´íµÄNV ID */
+    /* è®°å½•å‡ºé”™çš„NV ID */
     return XML_RESULT_FALIED_WRITE_NV;
 }
 
 
 void xml_nodereset(void)
 {
-    /* ½Úµã±êÇ©¸´Î»,ÒÑÊ¹ÓÃµÄ³¤¶ÈÎª0  */
+    /* èŠ‚ç‚¹æ ‡ç­¾å¤ä½,å·²ä½¿ç”¨çš„é•¿åº¦ä¸º0  */
     xml_ctrl.g_stlxmlcurrentnode.ullabellength= 0;
 
-    /* ½ÚµãÖµ¸´Î»,ÒÑÊ¹ÓÃµÄ³¤¶ÈÎª0 */
+    /* èŠ‚ç‚¹å€¼å¤ä½,å·²ä½¿ç”¨çš„é•¿åº¦ä¸º0 */
     xml_ctrl.g_stlxmlcurrentnode.ulvaluelength= 0;
 
-    /* ½Úµã¶ÀÁ¢±êÇ©¸´Î»,ÒÑÊ¹ÓÃµÄ³¤¶ÈÎª0 */
+    /* èŠ‚ç‚¹ç‹¬ç«‹æ ‡ç­¾å¤ä½,å·²ä½¿ç”¨çš„é•¿åº¦ä¸º0 */
     xml_ctrl.g_stlxmlcurrentnode.ullabelendlength= 0;
 
-    /* ½ÚµãÊôĞÔÃû¸´Î»,ÒÑÊ¹ÓÃµÄ³¤¶ÈÎª0 */
+    /* èŠ‚ç‚¹å±æ€§åå¤ä½,å·²ä½¿ç”¨çš„é•¿åº¦ä¸º0 */
     xml_ctrl.g_stlxmlcurrentnode.stproperty.ulnamelength= 0;
 
-    /* ½ÚµãÊôĞÔÖµ¸´Î»,ÒÑÊ¹ÓÃµÄ³¤¶ÈÎª0 */
+    /* èŠ‚ç‚¹å±æ€§å€¼å¤ä½,å·²ä½¿ç”¨çš„é•¿åº¦ä¸º0 */
     xml_ctrl.g_stlxmlcurrentnode.stproperty.ulvaluelength= 0;
 
     /*lint -save -e665*/
@@ -423,13 +423,13 @@ XML_RESULT_ENUM_UINT32 xml_write_char_to_buff(s8   cnowchar,
                                                  u32 *plbufflength,
                                                  bool   ulisnodevalue)
 {
-    /* ºöÂÔ¿Õ¸ñ */
+    /* å¿½ç•¥ç©ºæ ¼ */
     if (' ' == cnowchar)
     {
         return XML_RESULT_SUCCEED;
     }
 /*lint -save -e731*/
-    /* Èç¹û´ïµ½ÁËNode ValueµÄ×î´ó³¤¶È */
+    /* å¦‚æœè¾¾åˆ°äº†Node Valueçš„æœ€å¤§é•¿åº¦ */
     if ((true == ulisnodevalue)
         && (*plbufflength >= XML_NODE_VALUE_BUFF_LENGTH_ORIGINAL))
     {
@@ -439,7 +439,7 @@ XML_RESULT_ENUM_UINT32 xml_write_char_to_buff(s8   cnowchar,
     }
 
 
-    /* Èç¹û´ïµ½ÁËNode LableµÄ×î´ó³¤¶È */
+    /* å¦‚æœè¾¾åˆ°äº†Node Lableçš„æœ€å¤§é•¿åº¦ */
     if ((false == ulisnodevalue)
         && (*plbufflength >= XML_NODE_LABEL_BUFF_LENGTH_ORIGINAL))
     {
@@ -448,29 +448,29 @@ XML_RESULT_ENUM_UINT32 xml_write_char_to_buff(s8   cnowchar,
         return XML_RESULT_FALIED_OUT_OF_BUFF_LEN;
     }
 /*lint -restore +e731*/
-    /* °ÑĞÂ×Ö·û¼Ó½ø»º³åÇø */
+    /* æŠŠæ–°å­—ç¬¦åŠ è¿›ç¼“å†²åŒº */
     *(pcstrbuff + *plbufflength) = cnowchar;
 
-    /* »º³åÇø³¤¶È¼Ó1 */
+    /* ç¼“å†²åŒºé•¿åº¦åŠ 1 */
     (*plbufflength)++;
 
     return XML_RESULT_SUCCEED;
 }
 XML_RESULT_ENUM_UINT32 xml_checknodelabelvalid(void)
 {
-    /* ÅĞ¶Ï¸Ã±êÇ©ÊÇ·ñÓĞĞ§ */
+    /* åˆ¤æ–­è¯¥æ ‡ç­¾æ˜¯å¦æœ‰æ•ˆ */
     xml_ctrl.g_stlxmlcurrentnode.pcnodelabel[xml_ctrl.g_stlxmlcurrentnode.ullabellength] = '\0';
 
-    /* Èç¹ûµ±Ç°½ÚµãÎªÎŞĞ§×´Ì¬,ĞèÒª¼ì²é±êÇ©ÊÇ·ñÎªÓĞĞ§½Úµã */
+    /* å¦‚æœå½“å‰èŠ‚ç‚¹ä¸ºæ— æ•ˆçŠ¶æ€,éœ€è¦æ£€æŸ¥æ ‡ç­¾æ˜¯å¦ä¸ºæœ‰æ•ˆèŠ‚ç‚¹ */
     if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
                         g_aclnodelabelcommon))
     {
-        /* Èç¹ûÊÇ<Common_NvInfo>±êÇ©,ÔòÉèÖÃ½ÚµãÎªÓĞĞ§×´Ì¬ */
+        /* å¦‚æœæ˜¯<Common_NvInfo>æ ‡ç­¾,åˆ™è®¾ç½®èŠ‚ç‚¹ä¸ºæœ‰æ•ˆçŠ¶æ€ */
         xml_ctrl.g_stlxmlproductinfo.envalidnode= XML_PRODUCT_NODE_STATUS_VALID;
 
         return XML_RESULT_SUCCEED;
     }
-    /* Èç¹ûÊÇ<Cust>±êÇ©,ÔòÉèÖÃ½ÚµãÎªÓĞĞ§×´Ì¬ */
+    /* å¦‚æœæ˜¯<Cust>æ ‡ç­¾,åˆ™è®¾ç½®èŠ‚ç‚¹ä¸ºæœ‰æ•ˆçŠ¶æ€ */
     if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
                              g_aclnodelabelcust))
     {
@@ -478,11 +478,11 @@ XML_RESULT_ENUM_UINT32 xml_checknodelabelvalid(void)
 
         return XML_RESULT_SUCCEED;
     }
-    /* Èç¹ûµ±Ç°½ÚµãÎªÎŞĞ§×´Ì¬,ĞèÒª¼ì²é±êÇ©ÊÇ·ñÎªÓĞĞ§½Úµã */
+    /* å¦‚æœå½“å‰èŠ‚ç‚¹ä¸ºæ— æ•ˆçŠ¶æ€,éœ€è¦æ£€æŸ¥æ ‡ç­¾æ˜¯å¦ä¸ºæœ‰æ•ˆèŠ‚ç‚¹ */
     if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
                         g_aclnodelabelproductNvInfo))
     {
-        /* Èç¹ûÊÇ<product_NvInfo>±êÇ©,ÔòÉèÖÃ½ÚµãÎªÓĞĞ§×´Ì¬ */
+        /* å¦‚æœæ˜¯<product_NvInfo>æ ‡ç­¾,åˆ™è®¾ç½®èŠ‚ç‚¹ä¸ºæœ‰æ•ˆçŠ¶æ€ */
         xml_ctrl.g_stlxmlproductinfo.envalidnode= XML_PRODUCT_NODE_STATUS_VALID;
 
         return XML_RESULT_SUCCEED;
@@ -495,8 +495,8 @@ XML_RESULT_ENUM_UINT32 xml_checknodelabelvalid(void)
         xml_ctrl.g_stlxmlcurrentnode.stproperty.pcpropertyvalue[
                       xml_ctrl.g_stlxmlcurrentnode.stproperty.ulvaluelength] = '\0';
 
-        /*µÚÒ»´ÎÅöµ½product½ÚµãÉèÖÃÎªÎŞĞ§½Úµã*/
-        /* Èç¹ûÊÇ<product>±êÇ©ÇÒProduct idÓëµ±Ç°µ¥°åÏàÍ¬,ÔòÉèÖÃ½ÚµãÎªÓĞĞ§×´Ì¬ */
+        /*ç¬¬ä¸€æ¬¡ç¢°åˆ°productèŠ‚ç‚¹è®¾ç½®ä¸ºæ— æ•ˆèŠ‚ç‚¹*/
+        /* å¦‚æœæ˜¯<product>æ ‡ç­¾ä¸”Product idä¸å½“å‰å•æ¿ç›¸åŒ,åˆ™è®¾ç½®èŠ‚ç‚¹ä¸ºæœ‰æ•ˆçŠ¶æ€ */
         xml_ctrl.g_stlxmlproductinfo.envalidnode= XML_PRODUCT_NODE_STATUS_INVALID;
 
         if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.stproperty.pcpropertyvalue,
@@ -505,7 +505,7 @@ XML_RESULT_ENUM_UINT32 xml_checknodelabelvalid(void)
             xml_ctrl.g_stlxmlproductinfo.envalidnode= XML_PRODUCT_NODE_STATUS_VALID;
             xml_ctrl.g_stlxmlproductinfo.ulnodelevel++;
         }
-        else/*product ÊôĞÔ½ÚµãÌø×ª*/
+        else/*product å±æ€§èŠ‚ç‚¹è·³è½¬*/
         {
             xml_ctrl.g_stlxmlproductinfo.envalidnode     = XML_PRODUCT_NODE_STATUS_INVALID;
             xml_ctrl.g_stlxmlproductinfo.enxmldecodejump = XML_DECODE_STATUS_2JUMP;
@@ -515,7 +515,7 @@ XML_RESULT_ENUM_UINT32 xml_checknodelabelvalid(void)
 
     if (XML_PRODUCT_NODE_STATUS_VALID == xml_ctrl.g_stlxmlproductinfo.envalidnode)
     {
-        /* ÔÚ½ÚµãÎªÓĞĞ§×´Ì¬ÏÂ£¬¶ÔProduct½Úµã£¬Òª¼ÇÂ¼<product>½Úµã³öÏÖµÄ´ÎÊı */
+        /* åœ¨èŠ‚ç‚¹ä¸ºæœ‰æ•ˆçŠ¶æ€ä¸‹ï¼Œå¯¹ProductèŠ‚ç‚¹ï¼Œè¦è®°å½•<product>èŠ‚ç‚¹å‡ºç°çš„æ¬¡æ•° */
         if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
                             g_aclnodelabelproduct))
         {
@@ -536,11 +536,11 @@ XML_RESULT_ENUM_UINT32 xml_checknodeendlabelvalid(void)
 
     if (XML_PRODUCT_NODE_STATUS_VALID != xml_ctrl.g_stlxmlproductinfo.envalidnode)
     {
-        /* Èç¹ûµ±Ç°½ÚµãÎªÎŞĞ§×´Ì¬£¬²»×öÈÎºÎ´¦Àí */
+        /* å¦‚æœå½“å‰èŠ‚ç‚¹ä¸ºæ— æ•ˆçŠ¶æ€ï¼Œä¸åšä»»ä½•å¤„ç† */
         return XML_RESULT_SUCCEED;
     }
 
-    /* Ğ´½ÚµãĞÅÏ¢µ½NVÖĞ */
+    /* å†™èŠ‚ç‚¹ä¿¡æ¯åˆ°NVä¸­ */
     returnval = xml_write_nv_data();
 
     if (XML_RESULT_SUCCEED != returnval)
@@ -557,7 +557,7 @@ XML_RESULT_ENUM_UINT32 xml_checknodeendlabelvalid(void)
 
         if (0 == xml_ctrl.g_stlxmlproductinfo.ulnodelevel)
         {
-            /* ×îºóÒ»¸öÓĞĞ§µÄ</product>±êÇ©³öÏÖÊ±£¬½áÊøÕû¸öXMLÎÄ¼şµÄ½âÎö */
+            /* æœ€åä¸€ä¸ªæœ‰æ•ˆçš„</product>æ ‡ç­¾å‡ºç°æ—¶ï¼Œç»“æŸæ•´ä¸ªXMLæ–‡ä»¶çš„è§£æ */
             xml_ctrl.g_stlxmlproductinfo.enxmldecodestate = XML_DECODE_STATUS_FINISHED;
             xml_ctrl.g_stlxmlproductinfo.envalidnode      = XML_PRODUCT_NODE_STATUS_INVALID;
         }
@@ -565,20 +565,20 @@ XML_RESULT_ENUM_UINT32 xml_checknodeendlabelvalid(void)
     else if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabelend,
                              g_aclnodelabelcommon))
     {
-        /* </Common_NvInfo>±êÇ©³öÏÖÊ±,°Ñ½Úµã×´Ì¬Ö»ÎªÎŞĞ§ ,Í¬Ê±ÖÃÎª¿ÉÌø×ª×´Ì¬*/
+        /* </Common_NvInfo>æ ‡ç­¾å‡ºç°æ—¶,æŠŠèŠ‚ç‚¹çŠ¶æ€åªä¸ºæ— æ•ˆ ,åŒæ—¶ç½®ä¸ºå¯è·³è½¬çŠ¶æ€*/
         xml_ctrl.g_stlxmlproductinfo.envalidnode     = XML_PRODUCT_NODE_STATUS_INVALID;
         xml_ctrl.g_stlxmlproductinfo.enxmldecodejump = XML_DECODE_STATUS_JUMP;
     }
     else if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabelend,
                              g_aclnodelabelcust))
     {
-        /* </Cust>±êÇ©³öÏÖÊ±,°Ñ½Úµã×´Ì¬Ö»ÎªÎŞĞ§ */
+        /* </Cust>æ ‡ç­¾å‡ºç°æ—¶,æŠŠèŠ‚ç‚¹çŠ¶æ€åªä¸ºæ— æ•ˆ */
         xml_ctrl.g_stlxmlproductinfo.envalidnode = XML_PRODUCT_NODE_STATUS_INVALID;
     }
     else if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabelend,
                              g_aclnodelabelproductNvInfo))
     {
-        /* µÚÒ»¸ö</product_NvInfo>±êÇ©³öÏÖÊ±,Í¬ÑùĞèÒª½áÊøÕû¸öXMLÎÄ¼şµÄ½âÎö*/
+        /* ç¬¬ä¸€ä¸ª</product_NvInfo>æ ‡ç­¾å‡ºç°æ—¶,åŒæ ·éœ€è¦ç»“æŸæ•´ä¸ªXMLæ–‡ä»¶çš„è§£æ*/
         xml_ctrl.g_stlxmlproductinfo.enxmldecodestate = XML_DECODE_STATUS_FINISHED;
         xml_ctrl.g_stlxmlproductinfo.envalidnode      = XML_PRODUCT_NODE_STATUS_INVALID;
     }
@@ -588,15 +588,15 @@ XML_RESULT_ENUM_UINT32 xml_checknodeendlabelvalid(void)
 
     } /* end of if (0 == VOS_StrCmp(g_stXMLCurrentNode.pcnodelabelend, */
 
-    /* </xx>±êÇ©½áÊøÊ±£¬Çå¿Õ½ÚµãĞÅÏ¢ */
+    /* </xx>æ ‡ç­¾ç»“æŸæ—¶ï¼Œæ¸…ç©ºèŠ‚ç‚¹ä¿¡æ¯ */
     xml_nodereset();
 
     return XML_RESULT_SUCCEED;
 }
 XML_RESULT_ENUM_UINT32 xml_createaproperty( void )
 {
-    /* ·ÖÅäÊôĞÔÃûÄÚ´æ,+1Îª±£Áô×Ö·û´®½áÊø·ûÓÃ */
-    xml_ctrl.g_stlxmlcurrentnode.stproperty.ulnamelength = 0; /* ÒÑÊ¹ÓÃµÄ³¤¶È */
+    /* åˆ†é…å±æ€§åå†…å­˜,+1ä¸ºä¿ç•™å­—ç¬¦ä¸²ç»“æŸç¬¦ç”¨ */
+    xml_ctrl.g_stlxmlcurrentnode.stproperty.ulnamelength = 0; /* å·²ä½¿ç”¨çš„é•¿åº¦ */
 
     xml_ctrl.g_stlxmlcurrentnode.stproperty.pcpropertyname
                                 = (s8*)nv_malloc(
@@ -609,8 +609,8 @@ XML_RESULT_ENUM_UINT32 xml_createaproperty( void )
         return XML_RESULT_FALIED_MALLOC;
     }
 
-    /* ·ÖÅäÊôĞÔÖµÄÚ´æ,+1Îª±£Áô×Ö·û´®½áÊø·ûÓÃ */
-    xml_ctrl.g_stlxmlcurrentnode.stproperty.ulvaluelength = 0; /* ÒÑÊ¹ÓÃµÄ³¤¶È */
+    /* åˆ†é…å±æ€§å€¼å†…å­˜,+1ä¸ºä¿ç•™å­—ç¬¦ä¸²ç»“æŸç¬¦ç”¨ */
+    xml_ctrl.g_stlxmlcurrentnode.stproperty.ulvaluelength = 0; /* å·²ä½¿ç”¨çš„é•¿åº¦ */
 
 
     xml_ctrl.g_stlxmlcurrentnode.stproperty.pcpropertyvalue
@@ -632,7 +632,7 @@ XML_RESULT_ENUM_UINT32 xml_createanode(void)
     XML_RESULT_ENUM_UINT32 returnval = XML_RESULT_SUCCEED;
 
 
-    /* ´´½¨Ò»¸öĞÂÊôĞÔ */
+    /* åˆ›å»ºä¸€ä¸ªæ–°å±æ€§ */
     returnval = xml_createaproperty();
 
     if(XML_RESULT_SUCCEED != returnval)
@@ -640,8 +640,8 @@ XML_RESULT_ENUM_UINT32 xml_createanode(void)
         return returnval;
     }
 
-    /* ·ÖÅä½Úµã±êÇ©ÄÚ´æ,+1Îª±£Áô×Ö·û´®½áÊø·ûÓÃ*/
-    xml_ctrl.g_stlxmlcurrentnode.ullabellength = 0; /* ÒÑÊ¹ÓÃµÄ³¤¶È */
+    /* åˆ†é…èŠ‚ç‚¹æ ‡ç­¾å†…å­˜,+1ä¸ºä¿ç•™å­—ç¬¦ä¸²ç»“æŸç¬¦ç”¨*/
+    xml_ctrl.g_stlxmlcurrentnode.ullabellength = 0; /* å·²ä½¿ç”¨çš„é•¿åº¦ */
 
 
 
@@ -655,8 +655,8 @@ XML_RESULT_ENUM_UINT32 xml_createanode(void)
         return XML_RESULT_FALIED_MALLOC;
     }
 
-    /* ·ÖÅä½Úµã½áÎ²¶ÀÁ¢±êÇ©ÄÚ´æ,+1Îª±£Áô×Ö·û´®½áÊø·ûÓÃ */
-    xml_ctrl.g_stlxmlcurrentnode.ullabelendlength = 0; /* ÒÑÊ¹ÓÃµÄ³¤¶È */
+    /* åˆ†é…èŠ‚ç‚¹ç»“å°¾ç‹¬ç«‹æ ‡ç­¾å†…å­˜,+1ä¸ºä¿ç•™å­—ç¬¦ä¸²ç»“æŸç¬¦ç”¨ */
+    xml_ctrl.g_stlxmlcurrentnode.ullabelendlength = 0; /* å·²ä½¿ç”¨çš„é•¿åº¦ */
 
     xml_ctrl.g_stlxmlcurrentnode.pcnodelabelend = (s8*)nv_malloc(
                                         XML_NODE_LABEL_BUFF_LENGTH_ORIGINAL+1);
@@ -668,8 +668,8 @@ XML_RESULT_ENUM_UINT32 xml_createanode(void)
         return XML_RESULT_FALIED_MALLOC;
     }
 
-    /* ·ÖÅä½ÚµãÖµÄÚ´æ,+1Îª±£Áô×Ö·û´®½áÊø·ûÓÃ */
-    xml_ctrl.g_stlxmlcurrentnode.ulvaluelength = 0; /* ÒÑÊ¹ÓÃµÄ³¤¶È */
+    /* åˆ†é…èŠ‚ç‚¹å€¼å†…å­˜,+1ä¸ºä¿ç•™å­—ç¬¦ä¸²ç»“æŸç¬¦ç”¨ */
+    xml_ctrl.g_stlxmlcurrentnode.ulvaluelength = 0; /* å·²ä½¿ç”¨çš„é•¿åº¦ */
 
     xml_ctrl.g_stlxmlcurrentnode.pcnodevalue = (s8*)nv_malloc(
                                       XML_NODE_VALUE_BUFF_LENGTH_ORIGINAL+1);
@@ -687,14 +687,14 @@ XML_RESULT_ENUM_UINT32 xml_procxmlorginal(s8 cnowchar)
 {
     XML_RESULT_ENUM_UINT32 returnval = XML_RESULT_SUCCEED;
 
-    /* Óöµ½<Ôò¸ü¸Ä×´Ì¬ */
+    /* é‡åˆ°<åˆ™æ›´æ”¹çŠ¶æ€ */
     if ('<' == cnowchar)
     {
         g_stlxmlstatus = XML_ANASTT_ENTER_LABLE;
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½>,/,",=Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°>,/,",=åˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     if (('>' == cnowchar)
          ||('/' == cnowchar)
          ||('"' == cnowchar)
@@ -708,7 +708,7 @@ XML_RESULT_ENUM_UINT32 xml_procxmlorginal(s8 cnowchar)
 /*lint -save -e747*/
     if (XML_PRODUCT_NODE_STATUS_VALID == xml_ctrl.g_stlxmlproductinfo.envalidnode)
     {
-        /* °ÑÕâ¸ö×Ö½Ú·Å½øµ±Ç°½ÚµãÖµµÄ»º³åÇøÄÚ */
+        /* æŠŠè¿™ä¸ªå­—èŠ‚æ”¾è¿›å½“å‰èŠ‚ç‚¹å€¼çš„ç¼“å†²åŒºå†… */
         returnval = xml_write_char_to_buff(cnowchar,
                                      xml_ctrl.g_stlxmlcurrentnode.pcnodevalue,
                                      &(xml_ctrl.g_stlxmlcurrentnode.ulvaluelength),
@@ -721,7 +721,7 @@ XML_RESULT_ENUM_UINT32 xml_procxmlorginal(s8 cnowchar)
 XML_RESULT_ENUM_UINT32 xml_procxmlignore(s8 cnowchar)
 {
 
-    /* Ö±µ½Óöµ½±êÇ©½áÎ²£¬·ñÔòÒ»Ö±ºöÂÔ */
+    /* ç›´åˆ°é‡åˆ°æ ‡ç­¾ç»“å°¾ï¼Œå¦åˆ™ä¸€ç›´å¿½ç•¥ */
     if ('>' == cnowchar)
     {
         g_stlxmlstatus = XML_ANASTT_ORIGINAL;
@@ -734,19 +734,19 @@ XML_RESULT_ENUM_UINT32 xml_proc_xmlsingle_endlabel(s8 cnowchar)
 
     returnval = XML_RESULT_SUCCEED;
 
-    /* Óöµ½<Ôò¸ü¸Ä×´Ì¬ */
+    /* é‡åˆ°<åˆ™æ›´æ”¹çŠ¶æ€ */
     if ('>' == cnowchar)
     {
-        /* ±ä¸ü×´Ì¬ */
+        /* å˜æ›´çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_ORIGINAL;
 
-        /* ¼ì²é¶ÀÁ¢½áÊø±êÇ©ÊÇ·ñÓĞĞ§ */
+        /* æ£€æŸ¥ç‹¬ç«‹ç»“æŸæ ‡ç­¾æ˜¯å¦æœ‰æ•ˆ */
         returnval = xml_checknodeendlabelvalid();
 
         return returnval;
     }
 
-    /* Óöµ½<,/,",=Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°<,/,",=åˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     if (('<' == cnowchar)
          ||('"' == cnowchar)
          ||('/' == cnowchar)
@@ -759,7 +759,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xmlsingle_endlabel(s8 cnowchar)
 /*lint -save -e747*/
     if(XML_PRODUCT_NODE_STATUS_VALID == xml_ctrl.g_stlxmlproductinfo.envalidnode)
     {
-        /* °ÑÕâ¸ö×Ö½Ú·Å½øµ±Ç°½ÚµãÖµµÄ»º³åÇøÄÚ */
+        /* æŠŠè¿™ä¸ªå­—èŠ‚æ”¾è¿›å½“å‰èŠ‚ç‚¹å€¼çš„ç¼“å†²åŒºå†… */
         returnval = xml_write_char_to_buff(cnowchar,
                                       xml_ctrl.g_stlxmlcurrentnode.pcnodelabelend,
                                       &(xml_ctrl.g_stlxmlcurrentnode.ullabelendlength),
@@ -770,7 +770,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xmlsingle_endlabel(s8 cnowchar)
 }
 XML_RESULT_ENUM_UINT32 xml_checknode_rightlabel(void)
 {
-    /* ÅĞ¶Ï¸Ã±êÇ©ÊÇ·ñÓĞĞ§ */
+    /* åˆ¤æ–­è¯¥æ ‡ç­¾æ˜¯å¦æœ‰æ•ˆ */
     xml_ctrl.g_stlxmlcurrentnode.pcnodelabel[xml_ctrl.g_stlxmlcurrentnode.ullabellength] = '\0';
 
     if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
@@ -793,20 +793,20 @@ XML_RESULT_ENUM_UINT32 xml_checknode_rightlabel(void)
     else if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
                              g_aclnodelabelcommon))
     {
-        /* <Common_NvInfo/>±êÇ©³öÏÖÊ±,°Ñ½Úµã×´Ì¬Ö»ÎªÎŞĞ§ ,Í¬Ê±ÖÃÎª¿ÉÌø×ª×´Ì¬*/
+        /* <Common_NvInfo/>æ ‡ç­¾å‡ºç°æ—¶,æŠŠèŠ‚ç‚¹çŠ¶æ€åªä¸ºæ— æ•ˆ ,åŒæ—¶ç½®ä¸ºå¯è·³è½¬çŠ¶æ€*/
         xml_ctrl.g_stlxmlproductinfo.envalidnode     = XML_PRODUCT_NODE_STATUS_INVALID;
         xml_ctrl.g_stlxmlproductinfo.enxmldecodejump = XML_DECODE_STATUS_JUMP;
     }
     else if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
                              g_aclnodelabelcust))
     {
-        /* <Cust/>±êÇ©³öÏÖÊ±,°Ñ½Úµã×´Ì¬Ö»ÎªÎŞĞ§ */
+        /* <Cust/>æ ‡ç­¾å‡ºç°æ—¶,æŠŠèŠ‚ç‚¹çŠ¶æ€åªä¸ºæ— æ•ˆ */
         xml_ctrl.g_stlxmlproductinfo.envalidnode = XML_PRODUCT_NODE_STATUS_INVALID;
     }
     else if (0 == strcmp(xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
                              g_aclnodelabelproductNvInfo))
     {
-        /* <product_NvInfo/>±êÇ©³öÏÖÊ±,Í¬ÑùĞèÒª½áÊøÕû¸öXMLÎÄ¼şµÄ½âÎö*/
+        /* <product_NvInfo/>æ ‡ç­¾å‡ºç°æ—¶,åŒæ ·éœ€è¦ç»“æŸæ•´ä¸ªXMLæ–‡ä»¶çš„è§£æ*/
         xml_ctrl.g_stlxmlproductinfo.enxmldecodestate = XML_DECODE_STATUS_FINISHED;
         xml_ctrl.g_stlxmlproductinfo.envalidnode      = XML_PRODUCT_NODE_STATUS_INVALID;
     }
@@ -816,7 +816,7 @@ XML_RESULT_ENUM_UINT32 xml_checknode_rightlabel(void)
 
     }
 
-    /* <xx/>±êÇ©½áÊøÊ±£¬Çå¿Õ½ÚµãĞÅÏ¢ */
+    /* <xx/>æ ‡ç­¾ç»“æŸæ—¶ï¼Œæ¸…ç©ºèŠ‚ç‚¹ä¿¡æ¯ */
     xml_nodereset();
 
     return XML_RESULT_SUCCEED;
@@ -828,13 +828,13 @@ XML_RESULT_ENUM_UINT32 xml_procxmlend_mustberight(s8 cnowchar)
 {
     XML_RESULT_ENUM_UINT32 returnval;
 
-    /* ºöÂÔ¿Õ¸ñ */
+    /* å¿½ç•¥ç©ºæ ¼ */
     if (' ' == cnowchar)
     {
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½²»ÊÇ>,Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°ä¸æ˜¯>,åˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     if ('>' != cnowchar)
     {
         xml_write_error_log(__LINE__, 0, XML_RESULT_FALIED_BAD_SYNTAX);
@@ -842,7 +842,7 @@ XML_RESULT_ENUM_UINT32 xml_procxmlend_mustberight(s8 cnowchar)
         return XML_RESULT_FALIED_BAD_SYNTAX;
     }
 
-    /* ±ä¸ü×´Ì¬ */
+    /* å˜æ›´çŠ¶æ€ */
     g_stlxmlstatus = XML_ANASTT_ORIGINAL;
 
     /*must be right need to check label*/
@@ -855,7 +855,7 @@ XML_RESULT_ENUM_UINT32 xml_procxmlend_mustberight(s8 cnowchar)
 
     if (XML_PRODUCT_NODE_STATUS_VALID == xml_ctrl.g_stlxmlproductinfo.envalidnode)
     {
-        /* Ğ´½ÚµãĞÅÏ¢µ½NVÖĞ */
+        /* å†™èŠ‚ç‚¹ä¿¡æ¯åˆ°NVä¸­ */
         returnval = xml_write_nv_data();
 
         if (XML_RESULT_SUCCEED != returnval)
@@ -863,7 +863,7 @@ XML_RESULT_ENUM_UINT32 xml_procxmlend_mustberight(s8 cnowchar)
             return returnval;
         }
 
-        /* <xx/>±êÇ©½áÊøÊ±£¬Çå¿Õ½ÚµãĞÅÏ¢ */
+        /* <xx/>æ ‡ç­¾ç»“æŸæ—¶ï¼Œæ¸…ç©ºèŠ‚ç‚¹ä¿¡æ¯ */
         xml_nodereset();
     }
 
@@ -876,37 +876,37 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_node_label(s8 cnowchar)
 {
     XML_RESULT_ENUM_UINT32 returnval;
 
-    /* Óöµ½/»òÕß>»òÕß¿Õ¸ñËµÃ÷NodeµÄÃû×Ö½áÊøÁË */
+    /* é‡åˆ°/æˆ–è€…>æˆ–è€…ç©ºæ ¼è¯´æ˜Nodeçš„åå­—ç»“æŸäº† */
     if ('/' == cnowchar)
     {
-        /* ½áÊø²¢ÊÕÎ²Õû¸ö½Úµã,ÏÂ¸ö×Ö½ÚÒ»¶¨ÊÇ> */
+        /* ç»“æŸå¹¶æ”¶å°¾æ•´ä¸ªèŠ‚ç‚¹,ä¸‹ä¸ªå­—èŠ‚ä¸€å®šæ˜¯> */
         g_stlxmlstatus = XML_ANASTT_LABLE_END_MUST_RIGHT;
 
         return XML_RESULT_SUCCEED;
     }
 
-    /* ±êÇ©½áÊø */
+    /* æ ‡ç­¾ç»“æŸ */
     if ('>' == cnowchar)
     {
-        /* ±ä¸ü×´Ì¬ */
+        /* å˜æ›´çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_ORIGINAL;
 
-        /* ¼ì²éµ±Ç°½ÚµãÊÇÓĞĞ§½Úµã */
+        /* æ£€æŸ¥å½“å‰èŠ‚ç‚¹æ˜¯æœ‰æ•ˆèŠ‚ç‚¹ */
         returnval = xml_checknodelabelvalid();
 
         return returnval;
     }
 
-    /* ±êÇ©Ãû×Ö½áÊø,½øÈëÊôĞÔ½âÎö×´Ì¬ */
+    /* æ ‡ç­¾åå­—ç»“æŸ,è¿›å…¥å±æ€§è§£æçŠ¶æ€ */
     if (' ' == cnowchar)
     {
-        /* ±ä¸ü×´Ì¬ */
+        /* å˜æ›´çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_PROPERTY_START;
 
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½<,",=Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°<,",=åˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     if (('<' == cnowchar)
          ||('"' == cnowchar)
          ||('=' == cnowchar))
@@ -916,7 +916,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_node_label(s8 cnowchar)
         return XML_RESULT_FALIED_BAD_SYNTAX;
     }
 /*lint -save -e747*/
-    /* °ÑÕâ¸ö×Ö½Ú·Å½øµ±Ç°½ÚµãÖµµÄ»º³åÇøÄÚ */
+    /* æŠŠè¿™ä¸ªå­—èŠ‚æ”¾è¿›å½“å‰èŠ‚ç‚¹å€¼çš„ç¼“å†²åŒºå†… */
     returnval = xml_write_char_to_buff(cnowchar,
                                      xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
                                      &(xml_ctrl.g_stlxmlcurrentnode.ullabellength),
@@ -928,7 +928,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_enter_label(s8 cnowchar)
 {
     XML_RESULT_ENUM_UINT32 returnval = XML_RESULT_SUCCEED;
 
-    /* Óöµ½Ê×ĞĞ°æ±¾ĞÅÏ¢ */
+    /* é‡åˆ°é¦–è¡Œç‰ˆæœ¬ä¿¡æ¯ */
     if ('?' == cnowchar)
     {
         g_stlxmlstatus = XML_ANASTT_IGNORE;
@@ -936,7 +936,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_enter_label(s8 cnowchar)
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½ĞòÑÔ */
+    /* é‡åˆ°åºè¨€ */
     if ('!' == cnowchar)
     {
         g_stlxmlstatus = XML_ANASTT_IGNORE;
@@ -944,7 +944,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_enter_label(s8 cnowchar)
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½Î²½Úµã±êÇ© */
+    /* é‡åˆ°å°¾èŠ‚ç‚¹æ ‡ç­¾ */
     if ('/' == cnowchar)
     {
         g_stlxmlstatus = XML_ANASTT_SINGLE_ENDS_LABLE;
@@ -952,7 +952,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_enter_label(s8 cnowchar)
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½±êÇ©½áÊø */
+    /* é‡åˆ°æ ‡ç­¾ç»“æŸ */
     if ('>' == cnowchar)
     {
         g_stlxmlstatus = XML_ANASTT_ORIGINAL;
@@ -960,7 +960,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_enter_label(s8 cnowchar)
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½<,",=Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°<,",=åˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     if (('<' == cnowchar)
          ||('"' == cnowchar)
          ||('=' == cnowchar))
@@ -969,10 +969,10 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_enter_label(s8 cnowchar)
         return XML_RESULT_FALIED_BAD_SYNTAX;
     }
 
-    /* Ìø¹ı¿Õ¸ñ */
+    /* è·³è¿‡ç©ºæ ¼ */
     if (' ' != cnowchar)
     {
-        /* Ğ´½ÚµãĞÅÏ¢µ½NVÖĞ */
+        /* å†™èŠ‚ç‚¹ä¿¡æ¯åˆ°NVä¸­ */
         returnval = xml_write_nv_data();
 
         if (XML_RESULT_SUCCEED != returnval)
@@ -980,13 +980,13 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_enter_label(s8 cnowchar)
             return returnval;
         }
 
-        /* ½øÈëÒ»¸öĞÂ½ÚµãÊ±£¬ÏÈÇå¿Õ½ÚµãĞÅÏ¢ */
+        /* è¿›å…¥ä¸€ä¸ªæ–°èŠ‚ç‚¹æ—¶ï¼Œå…ˆæ¸…ç©ºèŠ‚ç‚¹ä¿¡æ¯ */
         xml_nodereset();
 
-        /* ±ä¸ü×´Ì¬£¬±íÊ¾½øÈëÒ»¸öĞÂ½Úµã */
+        /* å˜æ›´çŠ¶æ€ï¼Œè¡¨ç¤ºè¿›å…¥ä¸€ä¸ªæ–°èŠ‚ç‚¹ */
         g_stlxmlstatus = XML_ANASTT_NODE_LABLE;
 /*lint -save -e747*/
-        /* °ÑÕâ¸ö×Ö½Ú·Å½øµ±Ç°½ÚµãÖµµÄ»º³åÇøÄÚ */
+        /* æŠŠè¿™ä¸ªå­—èŠ‚æ”¾è¿›å½“å‰èŠ‚ç‚¹å€¼çš„ç¼“å†²åŒºå†… */
         returnval = xml_write_char_to_buff(cnowchar,
                                          xml_ctrl.g_stlxmlcurrentnode.pcnodelabel,
                                          &(xml_ctrl.g_stlxmlcurrentnode.ullabellength),
@@ -1003,28 +1003,28 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_propertystart(s8 cnowchar)
 {
     XML_RESULT_ENUM_UINT32 returnval = XML_RESULT_SUCCEED;
 
-    /* Óöµ½Î²½Úµã±êÇ© */
+    /* é‡åˆ°å°¾èŠ‚ç‚¹æ ‡ç­¾ */
     if ('/' == cnowchar)
     {
-        /* ±ä¸ü×´Ì¬ */
+        /* å˜æ›´çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_LABLE_END_MUST_RIGHT;
 
         return XML_RESULT_SUCCEED;
     }
 
-    /* ±êÇ©½áÊø */
+    /* æ ‡ç­¾ç»“æŸ */
     if ('>' == cnowchar)
     {
-        /* ±ä¸ü×´Ì¬ */
+        /* å˜æ›´çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_ORIGINAL;
 
-        /* ¼ì²éµ±Ç°½ÚµãÓĞĞ§ */
+        /* æ£€æŸ¥å½“å‰èŠ‚ç‚¹æœ‰æ•ˆ */
         returnval = xml_checknodelabelvalid();
 
         return returnval;
     }
 
-    /* Óöµ½<,",=Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°<,",=åˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     if (('<' == cnowchar)
          ||('"' == cnowchar)
          ||('=' == cnowchar))
@@ -1034,7 +1034,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_propertystart(s8 cnowchar)
         return XML_RESULT_FALIED_BAD_SYNTAX;
     }
 
-    /* ¸ü¸Ä×´Ì¬ */
+    /* æ›´æ”¹çŠ¶æ€ */
     g_stlxmlstatus = XML_ANASTT_PROPERTY_NAME_START;
 /*lint -save -e747*/
     returnval = xml_write_char_to_buff(cnowchar,
@@ -1049,16 +1049,16 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_propertyname(s8 cnowchar)
 {
     XML_RESULT_ENUM_UINT32 returnval = XML_RESULT_SUCCEED;
 
-    /* µÈ´ı=½øÈëÊôĞÔÖµ½âÎö */
+    /* ç­‰å¾…=è¿›å…¥å±æ€§å€¼è§£æ */
     if ('=' == cnowchar)
     {
-        /* ·­×´Ì¬ */
+        /* ç¿»çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_PROPERTY_NAME_END;
 
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½<,>,/,"Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°<,>,/,"åˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     if (('<' == cnowchar)||('>' == cnowchar)
         ||('/' == cnowchar)||('"' == cnowchar))
     {
@@ -1067,7 +1067,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_propertyname(s8 cnowchar)
         return XML_RESULT_FALIED_BAD_SYNTAX;
     }
 /*lint -save -e747*/
-    /* ÈİĞíÊôĞÔÃûÖĞµÄ¿Õ¸ñ´íÎó, Èç <nv i d="123"> */
+    /* å®¹è®¸å±æ€§åä¸­çš„ç©ºæ ¼é”™è¯¯, å¦‚ <nv i d="123"> */
     returnval = xml_write_char_to_buff(cnowchar,
                   xml_ctrl.g_stlxmlcurrentnode.stproperty.pcpropertyname,
                   &(xml_ctrl.g_stlxmlcurrentnode.stproperty.ulnamelength),
@@ -1082,22 +1082,22 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_propertyname(s8 cnowchar)
 XML_RESULT_ENUM_UINT32 xml_proc_xml_propertyname_tail(s8 cnowchar)
 {
 
-    /* Ìø¹ı¿Õ¸ñ */
+    /* è·³è¿‡ç©ºæ ¼ */
     if ( ' ' == cnowchar)
     {
         return XML_RESULT_SUCCEED;
     }
 
-    /* µÈ´ı" */
+    /* ç­‰å¾…" */
     if ('"' == cnowchar)
     {
-        /* ¸ü¸Ä×´Ì¬ */
+        /* æ›´æ”¹çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_PROPERTY_VALUE_START;
 
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½²»ÊÇ"£¬Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°ä¸æ˜¯"ï¼Œåˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     xml_write_error_log(__LINE__, 0, XML_RESULT_FALIED_BAD_SYNTAX);
 
     return XML_RESULT_FALIED_BAD_SYNTAX;
@@ -1109,16 +1109,16 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_valuestart(s8 cnowchar)
 {
     XML_RESULT_ENUM_UINT32 returnval = XML_RESULT_SUCCEED;
 
-    /* Óöµ½" */
+    /* é‡åˆ°" */
     if ('"' == cnowchar)
     {
-        /* ·­×´Ì¬,·µ»Ø¿ªÊ¼½âÎöÊôĞÔµÄ×´Ì¬ */
+        /* ç¿»çŠ¶æ€,è¿”å›å¼€å§‹è§£æå±æ€§çš„çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_PROPERTY_VALUE_END;
 
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½<,>,/,=Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°<,>,/,=åˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     if (('<' == cnowchar)
          ||('>' == cnowchar)
          ||('/' == cnowchar)
@@ -1129,7 +1129,7 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_valuestart(s8 cnowchar)
         return XML_RESULT_FALIED_BAD_SYNTAX;
     }
 /*lint -save -e747*/
-    /* °Ñµ±Ç°×Ö·û¼Óµ½ÊôĞÔÖµÖĞ */
+    /* æŠŠå½“å‰å­—ç¬¦åŠ åˆ°å±æ€§å€¼ä¸­ */
     returnval = xml_write_char_to_buff(cnowchar,
                   xml_ctrl.g_stlxmlcurrentnode.stproperty.pcpropertyvalue,
                   &(xml_ctrl.g_stlxmlcurrentnode.stproperty.ulvaluelength),
@@ -1144,34 +1144,34 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_valuetail(s8 cnowchar)
 {
     XML_RESULT_ENUM_UINT32 returnval;
 
-    /* ºöÂÔ¿Õ¸ñ */
+    /* å¿½ç•¥ç©ºæ ¼ */
     if (' ' == cnowchar)
     {
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½'/' */
+    /* é‡åˆ°'/' */
     if ('/' == cnowchar)
     {
-        /* ±ä¸ü×´Ì¬ */
+        /* å˜æ›´çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_LABLE_END_MUST_RIGHT;
 
         return XML_RESULT_SUCCEED;
     }
 
-    /* Óöµ½'>' */
+    /* é‡åˆ°'>' */
     if ('>' == cnowchar)
     {
-        /* ±ä¸ü×´Ì¬,·µ»Ø¿ªÊ¼½âÎöÊôĞÔµÄ×´Ì¬ */
+        /* å˜æ›´çŠ¶æ€,è¿”å›å¼€å§‹è§£æå±æ€§çš„çŠ¶æ€ */
         g_stlxmlstatus = XML_ANASTT_ORIGINAL;
 
-        /* ¼ì²éµ±Ç°½ÚµãÓĞĞ§ */
+        /* æ£€æŸ¥å½“å‰èŠ‚ç‚¹æœ‰æ•ˆ */
         returnval = xml_checknodelabelvalid();
 
         return returnval;
     }
 
-    /* Óöµ½²»ÊÇ>,/Ôò±íÊ¾XMLÓï·¨´íÎó */
+    /* é‡åˆ°ä¸æ˜¯>,/åˆ™è¡¨ç¤ºXMLè¯­æ³•é”™è¯¯ */
     xml_write_error_log(__LINE__, 0, XML_RESULT_FALIED_BAD_SYNTAX);
 
     return XML_RESULT_FALIED_BAD_SYNTAX;
@@ -1179,38 +1179,38 @@ XML_RESULT_ENUM_UINT32 xml_proc_xml_valuetail(s8 cnowchar)
 /*Global map table used to find the function according the xml analyse status.*/
 XML_FUN g_uslxmlanalysefuntbl[] =
 {
-    xml_procxmlorginal,         /* ³õÊ¼×´Ì¬ÏÂµÄ´¦Àí                  */
-    xml_proc_xml_enter_label,       /* ½øÈëLableºóµÄ´¦Àí                 */
-    xml_procxmlignore,           /* ĞòÑÔ»ò×¢ÊÍ×´Ì¬ÏÂÖ±µ½Óöµ½">"½áÊø   */
-    xml_proc_xml_node_label,        /* ±êÇ©Ãû×Ö¿ªÊ¼                      */
-    xml_proc_xmlsingle_endlabel,   /* ±ê×¼µÄ½áÎ²±êÇ©</XXX>              */
-    xml_procxmlend_mustberight,   /* ĞÎÈç <XXX/>µÄ±êÇ©,ÔÚ½âÎöÍê/µÄ×´Ì¬ */
-    xml_proc_xml_propertystart,    /* ¿ªÊ¼½âÎöÊôĞÔ                      */
-    xml_proc_xml_propertyname,     /* ¿ªÊ¼½âÎöÊôĞÔÃû×Ö                  */
-    xml_proc_xml_propertyname_tail, /* ÊôĞÔÃû×Ö½áÊø£¬µÈ´ı"¼´ÊôĞÔÖµ¿ªÊ¼   */
-    xml_proc_xml_valuestart,       /* ÊôĞÔÖµ¿ªÊ¼                        */
-    xml_proc_xml_valuetail,        /* ÊôĞÔÖµ½áÊø                        */
+    xml_procxmlorginal,         /* åˆå§‹çŠ¶æ€ä¸‹çš„å¤„ç†                  */
+    xml_proc_xml_enter_label,       /* è¿›å…¥Lableåçš„å¤„ç†                 */
+    xml_procxmlignore,           /* åºè¨€æˆ–æ³¨é‡ŠçŠ¶æ€ä¸‹ç›´åˆ°é‡åˆ°">"ç»“æŸ   */
+    xml_proc_xml_node_label,        /* æ ‡ç­¾åå­—å¼€å§‹                      */
+    xml_proc_xmlsingle_endlabel,   /* æ ‡å‡†çš„ç»“å°¾æ ‡ç­¾</XXX>              */
+    xml_procxmlend_mustberight,   /* å½¢å¦‚ <XXX/>çš„æ ‡ç­¾,åœ¨è§£æå®Œ/çš„çŠ¶æ€ */
+    xml_proc_xml_propertystart,    /* å¼€å§‹è§£æå±æ€§                      */
+    xml_proc_xml_propertyname,     /* å¼€å§‹è§£æå±æ€§åå­—                  */
+    xml_proc_xml_propertyname_tail, /* å±æ€§åå­—ç»“æŸï¼Œç­‰å¾…"å³å±æ€§å€¼å¼€å§‹   */
+    xml_proc_xml_valuestart,       /* å±æ€§å€¼å¼€å§‹                        */
+    xml_proc_xml_valuetail,        /* å±æ€§å€¼ç»“æŸ                        */
 };
 
 XML_RESULT_ENUM_UINT32 xml_analyse(s8 cnowchar)
 {
     XML_RESULT_ENUM_UINT32 returnval;
 
-    /* ¼ì²éµ±Ç°×Ö·ûµÄÓĞĞ§ĞÔ */
+    /* æ£€æŸ¥å½“å‰å­—ç¬¦çš„æœ‰æ•ˆæ€§ */
     returnval = xml_checkcharvalidity(cnowchar);
 
     if (XML_RESULT_SUCCEED_IGNORE_CHAR == returnval)
     {
-        /* Èç¹ûÓöµ½ĞòÑÔ£¬ÔòÌø¹ı¸Ã×Ö·û */
+        /* å¦‚æœé‡åˆ°åºè¨€ï¼Œåˆ™è·³è¿‡è¯¥å­—ç¬¦ */
         return XML_RESULT_SUCCEED;
     }
 
     if (XML_RESULT_FALIED_BAD_CHAR == returnval)
     {
-        /* Èç¹ûÓöµ½·Ç·¨×Ö·û£¬ÔòÍ£Ö¹½âÎö */
+        /* å¦‚æœé‡åˆ°éæ³•å­—ç¬¦ï¼Œåˆ™åœæ­¢è§£æ */
         return XML_RESULT_FALIED_BAD_CHAR;
     }
-    /* µ÷ÓÃXML½âÎöÊ±£¬ÏàÓ¦×´Ì¬µÄ¶ÔÓ¦º¯Êı */
+    /* è°ƒç”¨XMLè§£ææ—¶ï¼Œç›¸åº”çŠ¶æ€çš„å¯¹åº”å‡½æ•° */
     returnval = g_uslxmlanalysefuntbl[g_stlxmlstatus](cnowchar);
 
     return returnval;
@@ -1219,8 +1219,8 @@ XML_RESULT_ENUM_UINT32 xml_analyse(s8 cnowchar)
 
 XML_RESULT_ENUM_UINT32 xml_decode_xml_file(FILE* pfile)
 {
-    s32               lreaded = 0;       /* ¶Á³öµÄ×Ö½ÚÊı */
-    s32               lcount;            /* ±éÀú»º³åÇøÓÃ */
+    s32               lreaded = 0;       /* è¯»å‡ºçš„å­—èŠ‚æ•° */
+    s32               lcount;            /* éå†ç¼“å†²åŒºç”¨ */
     XML_RESULT_ENUM_UINT32  returnval;
 
 
@@ -1241,11 +1241,11 @@ XML_RESULT_ENUM_UINT32 xml_decode_xml_file(FILE* pfile)
             returnval = xml_analyse(*(xml_ctrl.g_pclfilereadbuff + lcount));
             if(XML_RESULT_SUCCEED != returnval)
             {
-                /* Óöµ½½âÎö´íÎó£¬ÔòÍ£Ö¹½âÎö */
+                /* é‡åˆ°è§£æé”™è¯¯ï¼Œåˆ™åœæ­¢è§£æ */
                 return returnval;
             }
 
-            /* ÅĞ¶ÏÊÇ·ñ½âÎöÍê³É */
+            /* åˆ¤æ–­æ˜¯å¦è§£æå®Œæˆ */
             if (XML_DECODE_STATUS_FINISHED
                 == xml_ctrl.g_stlxmlproductinfo.enxmldecodestate)
             {
@@ -1253,7 +1253,7 @@ XML_RESULT_ENUM_UINT32 xml_decode_xml_file(FILE* pfile)
                 return XML_RESULT_SUCCEED;
             }
 
-            /*½âÎöÍêcommon½ÚµãÖ®ºóÅĞ¶ÏÊÇ·ñĞèÒªÌø×ª*/
+            /*è§£æå®ŒcommonèŠ‚ç‚¹ä¹‹ååˆ¤æ–­æ˜¯å¦éœ€è¦è·³è½¬*/
             if((XML_DECODE_STATUS_JUMP == xml_ctrl.g_stlxmlproductinfo.enxmldecodejump) &&
                (XML_DECODE_STATUS_JUMP == xml_ctrl.g_stlxmljumpflag))
             {
@@ -1264,7 +1264,7 @@ XML_RESULT_ENUM_UINT32 xml_decode_xml_file(FILE* pfile)
                 break;
             }
 
-            /*product ½Úµã¶ş´ÎÌø×ª*/
+            /*product èŠ‚ç‚¹äºŒæ¬¡è·³è½¬*/
             if((XML_DECODE_STATUS_2JUMP == xml_ctrl.g_stlxmlproductinfo.enxmldecodejump) &&
                (XML_DECODE_STATUS_JUMP == xml_ctrl.g_stlxmljumpflag))
             {
@@ -1287,7 +1287,7 @@ XML_RESULT_ENUM_UINT32 xml_decode_xml_file(FILE* pfile)
         }
     }
 
-    /* Èç¹ûulnodelevel²»Îª0£¬ËµÃ÷<product>Ã»ÓĞÕı³£½áÊø */
+    /* å¦‚æœulnodelevelä¸ä¸º0ï¼Œè¯´æ˜<product>æ²¡æœ‰æ­£å¸¸ç»“æŸ */
     if (0 != xml_ctrl.g_stlxmlproductinfo.ulnodelevel)
     {
         xml_write_error_log(__LINE__,0,XML_RESULT_FALIED_PRODUCT_MATCH);
@@ -1303,10 +1303,10 @@ XML_RESULT_ENUM_UINT32 xml_getproductid(void)
 {
 	s32    lproductid;
 
-	/* Çå¿ÕÄÚ´æ */
+	/* æ¸…ç©ºå†…å­˜ */
 	memset(xml_ctrl.g_stlxmlproductinfo.acproductid, 0, XML_MAX_HARDWARE_LEN);
 
-	/* È¡µÃµ±Ç°µ¥°åµÄProduct id */
+	/* å–å¾—å½“å‰å•æ¿çš„Product id */
 	lproductid=  bsp_version_get_hwversion_index();/*get hardware version*/
 
 	xml_ctrl.g_stlxmlproductid = lproductid;
@@ -1321,21 +1321,21 @@ XML_RESULT_ENUM_UINT32 xml_getproductid(void)
 
 void xml_initglobal(void)
 {
-    /* ³õÊ¼»¯Product½ÚµãĞÅÏ¢ */
+    /* åˆå§‹åŒ–ProductèŠ‚ç‚¹ä¿¡æ¯ */
     xml_ctrl.g_stlxmlproductinfo.envalidnode      = XML_PRODUCT_NODE_STATUS_INVALID;
     xml_ctrl.g_stlxmlproductinfo.enxmldecodestate = XML_DECODE_STATUS_DECODING;
     xml_ctrl.g_stlxmlproductinfo.enxmldecodejump  = XML_DECODE_STATUS_JUMP_BUTT;
-    xml_ctrl.g_stlxmlproductinfo.ulnodelevel      = 0; /* ¼ÇÂ¼product½Úµã³öÏÖµÄ´ÎÊı */
+    xml_ctrl.g_stlxmlproductinfo.ulnodelevel      = 0; /* è®°å½•productèŠ‚ç‚¹å‡ºç°çš„æ¬¡æ•° */
 
-    /* ³õÊ¼»¯µ±Ç°×´Ì¬ */
+    /* åˆå§‹åŒ–å½“å‰çŠ¶æ€ */
     g_stlxmlstatus = XML_ANASTT_ORIGINAL;
 
-    /* ÓÃÓÚ¼ÇÂ¼¶ÁÈ¡XMLÎÄ¼şµÄĞĞÊı */
+    /* ç”¨äºè®°å½•è¯»å–XMLæ–‡ä»¶çš„è¡Œæ•° */
     xml_ctrl.g_stlxml_lineno    = 1;
 
-    /*ÓÃÓÚ¼ÇÂ¼ÄÜ·ñÌø×ª±êÖ¾*/
+    /*ç”¨äºè®°å½•èƒ½å¦è·³è½¬æ ‡å¿—*/
     xml_ctrl.g_stlxmljumpflag   = XML_DECODE_STATUS_JUMP_BUTT;
-    /*ÓÃÓÚ¼ÇÂ¼Ìø×ªÆ«ÒÆ Ìø×ªÊ±Æ«ÒÆÎª0Ôò±£³Öµ±Ç°Æ«ÒÆ*/
+    /*ç”¨äºè®°å½•è·³è½¬åç§» è·³è½¬æ—¶åç§»ä¸º0åˆ™ä¿æŒå½“å‰åç§»*/
     memset(&xml_ctrl.g_stlxmljumpinfo,0,sizeof(xml_ctrl.g_stlxmljumpinfo));
 
     return ;
@@ -1432,16 +1432,16 @@ XML_RESULT_ENUM_UINT32 xml_procinit(s8* map_path)
 {
     XML_RESULT_ENUM_UINT32 returnval;
 
-    /* ³õÊ¼»¯È«¾Ö±äÁ¿ */
+    /* åˆå§‹åŒ–å…¨å±€å˜é‡ */
     xml_initglobal();
 
-    /* »ñµÃµ±Ç°µ¥°åµÄproduct id*/   /*? UDP*/
+    /* è·å¾—å½“å‰å•æ¿çš„product id*/   /*? UDP*/
     xml_getproductid();
 
-    /*»ñÈ¡µ±Ç°Ìø×ªĞÅÏ¢*/
+    /*è·å–å½“å‰è·³è½¬ä¿¡æ¯*/
     xml_getjumpinfo(map_path);
 
-    /* ´´½¨½ÚµãĞÅÏ¢ */
+    /* åˆ›å»ºèŠ‚ç‚¹ä¿¡æ¯ */
     returnval = xml_createanode();
 
     if (XML_RESULT_SUCCEED != returnval)
@@ -1449,7 +1449,7 @@ XML_RESULT_ENUM_UINT32 xml_procinit(s8* map_path)
         return returnval;
     }
 
-    /* ÉêÇë´æ·ÅNV ItemµÄÖµµÄ»º³åÇø,+1Îª±£Áô×Ö·û´®½áÊø·ûÓÃ */  /*·ÖÅä¹Ì¶¨¿Õ¼ä*/
+    /* ç”³è¯·å­˜æ”¾NV Itemçš„å€¼çš„ç¼“å†²åŒº,+1ä¸ºä¿ç•™å­—ç¬¦ä¸²ç»“æŸç¬¦ç”¨ */  /*åˆ†é…å›ºå®šç©ºé—´*/
     xml_ctrl.g_puclnvitem = (u8 *)nv_malloc(
                                          XML_NODE_VALUE_BUFF_LENGTH_ORIGINAL+1);
     if (NULL == xml_ctrl.g_puclnvitem)
@@ -1459,7 +1459,7 @@ XML_RESULT_ENUM_UINT32 xml_procinit(s8* map_path)
         return XML_RESULT_FALIED_MALLOC;
     }
 
-    /* ÉêÇë¶ÁÈ¡ÎÄ¼şÊı¾İµÄ»º³åÇø,+1Îª±£Áô×Ö·û´®½áÊø·ûÓÃ */ /*ÊÇ·ñ·ÖÅä¿Õ¼ä?*/
+    /* ç”³è¯·è¯»å–æ–‡ä»¶æ•°æ®çš„ç¼“å†²åŒº,+1ä¸ºä¿ç•™å­—ç¬¦ä¸²ç»“æŸç¬¦ç”¨ */ /*æ˜¯å¦åˆ†é…ç©ºé—´?*/
     xml_ctrl.g_pclfilereadbuff = (s8*)nv_malloc(
                                                 XML_FILE_READ_BUFF_SIZE+1);
     if (NULL == xml_ctrl.g_pclfilereadbuff)
@@ -1536,7 +1536,7 @@ u32 xml_decode_main(FILE* fp,s8* map_path,u32 card_type)
 {
     XML_RESULT_ENUM_UINT32 returnval;
 
-    /* ³õÊ±»¯±¾Ä£¿éÈ«²¿±äÁ¿ÄÚÈİ */
+    /* åˆæ—¶åŒ–æœ¬æ¨¡å—å…¨éƒ¨å˜é‡å†…å®¹ */
     returnval = xml_procinit(map_path);
     xml_ctrl.card_type = card_type;
 
@@ -1546,7 +1546,7 @@ u32 xml_decode_main(FILE* fp,s8* map_path,u32 card_type)
         goto out;
     }
 
-    /* ½âÎöxnv.xmlÎÄ¼ş  */
+    /* è§£æxnv.xmlæ–‡ä»¶  */
     returnval = xml_decode_xml_file(fp);
 
     if (XML_RESULT_SUCCEED != returnval)
@@ -1554,9 +1554,9 @@ u32 xml_decode_main(FILE* fp,s8* map_path,u32 card_type)
         printf(" xml_decode_xml_file: returnval = %d!\n",returnval);
         goto out;
     }
-    /* ÊÍ·ÅÒÑ·ÖÅäµÄÄÚ´æ */
+    /* é‡Šæ”¾å·²åˆ†é…çš„å†…å­˜ */
     xml_freemem();
-    /*½âÎöÍê³ÉÖ®ºó½«¿¨ÀàĞÍĞŞ¸ÄÎª¿¨1*/
+    /*è§£æå®Œæˆä¹‹åå°†å¡ç±»å‹ä¿®æ”¹ä¸ºå¡1*/
     xml_ctrl.card_type = NV_USIMM_CARD_1;
     return NV_OK;
 out:

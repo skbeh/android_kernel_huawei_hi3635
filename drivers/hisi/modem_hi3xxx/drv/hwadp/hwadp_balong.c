@@ -22,12 +22,12 @@ typedef struct
 	BSP_U32 size;
 }BSP_MEM_ADDR_SIZE_INFO;
 
-/* È«¾Ö±äÁ¿£¬¼ÇÂ¼IP»ùµØÖ· */
+/* å…¨å±€å˜é‡ï¼Œè®°å½•IPåŸºåœ°å€ */
 BSP_IP_BASE_ADDR_INFO g_ulIPBaseAddr[BSP_IP_TYPE_BUTTOM + 1] = {
     {BSP_IP_TYPE_CICOM0,		(void*)HI_CICOM0_REGBASE_ADDR},
     {BSP_IP_TYPE_CICOM1,		(void*)HI_CICOM1_REGBASE_ADDR},
     {BSP_IP_TYPE_ZSP_DTCM,       (void*)HI_ZSP_DTCM_REG_BASE_ADDR},
-    {BSP_IP_TYPE_AHB,            (void*)ZSP_UP_ADDR},/* GU DSPÉÏÒÆºóµØÖ·Î´¹éÒ»£¬ÐèÒªµÍÈí½«µØÖ·Ö¸ÏòTTFµÄDDR¿Õ¼ä,by sunbing */
+    {BSP_IP_TYPE_AHB,            (void*)ZSP_UP_ADDR},/* GU DSPä¸Šç§»åŽåœ°å€æœªå½’ä¸€ï¼Œéœ€è¦ä½Žè½¯å°†åœ°å€æŒ‡å‘TTFçš„DDRç©ºé—´,by sunbing */
     {BSP_IP_TYPE_GBBP,           (void*)HI_GBBP_REG_BASE_ADDR},
     {BSP_IP_TYPE_GBBP_DRX,       (void*)HI_GBBP_DRX_REG_BASE_ADDR},
     {BSP_IP_TYPE_GBBP1,          (void*)HI_GBBP1_REG_BASE_ADDR},
@@ -37,8 +37,8 @@ BSP_IP_BASE_ADDR_INFO g_ulIPBaseAddr[BSP_IP_TYPE_BUTTOM + 1] = {
     {BSP_IP_TYPE_SYSCTRL,        (void*)HI_SYSCTRL_BASE_ADDR},
     {BSP_IP_TYPE_TDSSYS,         (void*)HI_BBP_TSTU_BASE_ADDR},
     {BSP_IP_TYPE_BBPMASTER,		(void*)HI_BBPMASTER_REG_BASE_ADDR},
-    {BSP_IP_TYPE_HDLC,			(void*)HI_HDLC_REGBASE_ADDR},	/* Ä¿Ç°Ö»ÓÐHDLCÐèÒªÔÚAºËÊ¹ÓÃ,ÉÏ²ã×Ô¼ºÓ³ÉäÐéµØÖ· */
-    {BSP_IP_TYPE_CTU,       	(void*)HI_CTU_BASE_ADDR}, /* Õâ¸öµØÖ·±£Ö¤¶àÄ£Æ½Ì¨¿ÉÕý³£¹¤×÷£¬ÏÖÓÉBSP_CONFIG_V7R2_ASICºê¿ØÖÆ */
+    {BSP_IP_TYPE_HDLC,			(void*)HI_HDLC_REGBASE_ADDR},	/* ç›®å‰åªæœ‰HDLCéœ€è¦åœ¨Aæ ¸ä½¿ç”¨,ä¸Šå±‚è‡ªå·±æ˜ å°„è™šåœ°å€ */
+    {BSP_IP_TYPE_CTU,       	(void*)HI_CTU_BASE_ADDR}, /* è¿™ä¸ªåœ°å€ä¿è¯å¤šæ¨¡å¹³å°å¯æ­£å¸¸å·¥ä½œï¼ŒçŽ°ç”±BSP_CONFIG_V7R2_ASICå®æŽ§åˆ¶ */
     {BSP_IP_TYPE_COMMON,		(void*)HI_BBP_COMM_ON_BASE_ADDR},
 
     {BSP_IP_TYPE_BUTTOM, 0}
@@ -114,7 +114,7 @@ BSP_S32 BSP_GetMemAddrSize(BSP_DDR_TYPE_E enDdrType, void**  addr, BSP_U32 * siz
 
 BSP_S32 BSP_GetIntNO(BSP_INT_TYPE_E enIntType)
 {
-	/* GU HDLCµ¥Ä£´æÔÚÎÊÌâ£¬ÐèÓëÉÏ²ãÌÖÂÛºóÔÙÊÊÅä */
+	/* GU HDLCå•æ¨¡å­˜åœ¨é—®é¢˜ï¼Œéœ€ä¸Žä¸Šå±‚è®¨è®ºåŽå†é€‚é… */
 	return enIntType ;
 }
 
@@ -122,11 +122,11 @@ BSP_S32 BSP_GetIntNO(BSP_INT_TYPE_E enIntType)
 /*lint -save -e437*/
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_CheckModuleSupport
- ¹¦ÄÜÃèÊö  : ²éÑ¯Ä£¿éÊÇ·ñÖ§³Ö
- ÊäÈë²ÎÊý  : enModuleType: ÐèÒª²éÑ¯µÄÄ£¿éÀàÐÍ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ    £ºBSP_MODULE_SUPPORT»òBSP_MODULE_UNSUPPORT
+ å‡½ æ•° å  : BSP_CheckModuleSupport
+ åŠŸèƒ½æè¿°  : æŸ¥è¯¢æ¨¡å—æ˜¯å¦æ”¯æŒ
+ è¾“å…¥å‚æ•°  : enModuleType: éœ€è¦æŸ¥è¯¢çš„æ¨¡å—ç±»åž‹
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼    ï¼šBSP_MODULE_SUPPORTæˆ–BSP_MODULE_UNSUPPORT
 *****************************************************************************/
 BSP_MODULE_SUPPORT_E BSP_CheckModuleSupport(BSP_MODULE_TYPE_E enModuleType)
 {
@@ -186,8 +186,8 @@ BSP_MODULE_SUPPORT_E BSP_CheckModuleSupport(BSP_MODULE_TYPE_E enModuleType)
 			bSupport = 0;
     }
 
-    return bSupport ? BSP_MODULE_SUPPORT : BSP_MODULE_UNSUPPORT;/* [false alarm]:Îó±¨ */
-}/* [false alarm]:Îó±¨ */
+    return bSupport ? BSP_MODULE_SUPPORT : BSP_MODULE_UNSUPPORT;/* [false alarm]:è¯¯æŠ¥ */
+}/* [false alarm]:è¯¯æŠ¥ */
 
 static int hwadp_init(void)
 {

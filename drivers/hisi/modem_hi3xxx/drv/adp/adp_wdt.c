@@ -84,14 +84,14 @@ s32  bsp_wdt_unregister_hook(void)
  
 s32 bsp_wdt_reboot_register_hook(void *hook)
 {
-    /*²ÎÊıÅĞ¶Ï£¬Èç¹ûº¯ÊıÖ¸ÕëÎª¿Õ·µ»Ø´íÎó*/
+    /*å‚æ•°åˆ¤æ–­ï¼Œå¦‚æœå‡½æ•°æŒ‡é’ˆä¸ºç©ºè¿”å›é”™è¯¯*/
     if(WDT_NULL == hook)
     {
 		 wdt_err("hook is NULL\n");
         return WDT_ERROR;
     }
 
-    /*Í¨¹ıÈ«¾Ö±äÁ¿×¢²áÉÏ²ãMSP´¦Àíº¯Êı*/
+    /*é€šè¿‡å…¨å±€å˜é‡æ³¨å†Œä¸Šå±‚MSPå¤„ç†å‡½æ•°*/
 	g_wdt_rebootfunc = hook;
 	
 	return WDT_OK;
@@ -99,7 +99,7 @@ s32 bsp_wdt_reboot_register_hook(void *hook)
 
 s32  bsp_wdt_reboot_unregister_hook(void)
 {
-	/*Ğ¶ÔØÉÏ²ã³¬Ê±´¦Àíº¯Êı*/
+	/*å¸è½½ä¸Šå±‚è¶…æ—¶å¤„ç†å‡½æ•°*/
 	g_wdt_rebootfunc = WDT_NULL;
 	wdt_pinfo("wdt unregister_hook\n");
 	return WDT_OK;

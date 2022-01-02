@@ -14,7 +14,7 @@ extern "C" {
 #include "omnvinterface.h"
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 #define      THIS_FILE_ID     PS_FILE_ID_PBAPI_C
@@ -28,7 +28,7 @@ VOS_UINT32 SI_PB_GetReceiverPid(MN_CLIENT_ID_T  ClientId, VOS_UINT32 *pulReceive
 #if ( FEATURE_MULTI_MODEM == FEATURE_ON )
     MODEM_ID_ENUM_UINT16    enModemID;
 
-    /* µ÷ÓÃ½Ó¿Ú»ñÈ¡Modem ID */
+    /* è°ƒç”¨æ¥å£è·å–Modem ID */
     if(VOS_OK != AT_GetModemIdFromClient(ClientId,&enModemID))
     {
         return VOS_ERR;
@@ -271,7 +271,7 @@ SI_UINT32 SI_PB_Add(    MN_CLIENT_ID_T          ClientId,
     pMsg->ucOpID        = OpId;
 
 #if( FEATURE_MULTI_MODEM == FEATURE_ON )
-    pMsg->ulStorage = SI_PB_STORAGE_FD;     /*Ö»ÄÜ¹»²Ù×÷FDNºÅÂë*/
+    pMsg->ulStorage = SI_PB_STORAGE_FD;     /*åªèƒ½å¤Ÿæ“ä½œFDNå·ç */
 #else
     if(SI_PB_STORAGE_UNSPECIFIED == Storage)
     {
@@ -389,7 +389,7 @@ SI_UINT32 SI_PB_Modify(    MN_CLIENT_ID_T          ClientId,
     pMsg->ucOpID        = OpId;
 
 #if( FEATURE_MULTI_MODEM == FEATURE_ON )
-    pMsg->ulStorage = SI_PB_STORAGE_FD;     /*Ö»ÄÜ¹»²Ù×÷FDNºÅÂë*/
+    pMsg->ulStorage = SI_PB_STORAGE_FD;     /*åªèƒ½å¤Ÿæ“ä½œFDNå·ç */
 #else
     if(SI_PB_STORAGE_UNSPECIFIED == Storage)
     {
@@ -497,7 +497,7 @@ SI_UINT32 SI_PB_Delete(     MN_CLIENT_ID_T             ClientId,
     pMsg->usIndex       = Index;
 
 #if( FEATURE_MULTI_MODEM == FEATURE_ON )
-    pMsg->ulStorage = SI_PB_STORAGE_FD;     /*Ö»ÄÜ¹»²Ù×÷FDNºÅÂë*/
+    pMsg->ulStorage = SI_PB_STORAGE_FD;     /*åªèƒ½å¤Ÿæ“ä½œFDNå·ç */
 #else
     if(SI_PB_STORAGE_UNSPECIFIED == Storage)
     {
@@ -564,7 +564,7 @@ SI_UINT32 SI_PB_Search(    MN_CLIENT_ID_T             ClientId,
 VOS_UINT32 SI_PB_GetStorateType(VOS_VOID)
 {
 #if (( FEATURE_MULTI_MODEM == FEATURE_ON )&&(!defined(DMT)))
-    return SI_PB_STORAGE_UNSPECIFIED;   /*·µ»Øµ±Ç°Î´Ö¸¶¨*/
+    return SI_PB_STORAGE_UNSPECIFIED;   /*è¿”å›å½“å‰æœªæŒ‡å®š*/
 #else
     return (VOS_UINT32)gstPBCtrlInfo.enPBCurType;
 #endif
@@ -572,7 +572,7 @@ VOS_UINT32 SI_PB_GetStorateType(VOS_VOID)
 VOS_UINT32 SI_PB_GetSPBFlag(VOS_VOID)
 {
 #if (( FEATURE_MULTI_MODEM == FEATURE_ON )&&(!defined(DMT)))
-    return VOS_FALSE;   /*·µ»Ø×´Ì¬¹Ø±Õ*/
+    return VOS_FALSE;   /*è¿”å›çŠ¶æ€å…³é—­*/
 #else
     return (VOS_UINT32)gstPBConfigInfo.ucSPBFlag;
 #endif
@@ -594,7 +594,7 @@ VOS_UINT32 SI_PB_GetEccNumber(SI_PB_ECC_DATA_STRU *pstEccData)
 
     ulResult = SI_PB_LocateRecord(PB_ECC, 1, 1, &ucPBOffset);
 
-    if(VOS_OK != ulResult)     /*µ±Ç°µç»°±¾²»´æÔÚ»òÕß³õÊ¼»¯Î´Íê³É*/
+    if(VOS_OK != ulResult)     /*å½“å‰ç”µè¯æœ¬ä¸å­˜åœ¨æˆ–è€…åˆå§‹åŒ–æœªå®Œæˆ*/
     {
         PB_ERROR_LOG("SI_PB_GetEccNumber Error: SI_PB_LocateRecord Return Failed");
 
@@ -610,15 +610,15 @@ VOS_UINT32 SI_PB_GetEccNumber(SI_PB_ECC_DATA_STRU *pstEccData)
 
     ptemp = gastPBContent[ucPBOffset].pContent;
 
-    for(i=0,j=0; i<ulNum; i++)   /*¸ù¾İÊı¾İ½á¹¹×î´ó³¤¶ÈÑ­»·*/
+    for(i=0,j=0; i<ulNum; i++)   /*æ ¹æ®æ•°æ®ç»“æ„æœ€å¤§é•¿åº¦å¾ªç¯*/
     {
         ulResult = SI_PB_CheckEccValidity(ptemp);
 
-        if(VOS_ERR == ulResult)     /*µ±Ç°¼ÇÂ¼ÄÚÈİÎŞĞ§*/
+        if(VOS_ERR == ulResult)     /*å½“å‰è®°å½•å†…å®¹æ— æ•ˆ*/
         {
             PB_INFO_LOG("SI_PB_GetEccNumber Info: The Ecc Number is Empty");
         }
-        else                                /*×ª»»µ±Ç°¼ÇÂ¼ÄÚÈİ*/
+        else                                /*è½¬æ¢å½“å‰è®°å½•å†…å®¹*/
         {
             PB_INFO_LOG("SI_PB_GetEccNumber Info: The Ecc Number is Not Empty");
 
@@ -654,7 +654,7 @@ VOS_UINT32 SI_PB_FdnNumCheck(VOS_UINT32 ulPid, VOS_UINT32 ulContextIndex,VOS_UIN
 {
     SI_PB_FDN_CHECK_REQ_STRU            *pstFDNCheckReq;
 
-    /*²ÎÊı¼ì²é*/
+    /*å‚æ•°æ£€æŸ¥*/
     if (VOS_NULL_PTR == pstFdnInfo)
     {
         PB_ERROR_LOG("SI_PB_FdnNumCheck: fdn num is null.\r\n");
@@ -669,7 +669,7 @@ VOS_UINT32 SI_PB_FdnNumCheck(VOS_UINT32 ulPid, VOS_UINT32 ulContextIndex,VOS_UIN
         return VOS_ERR;
     }
 
-    /*¿½±´ºÅÂë*/
+    /*æ‹·è´å·ç */
     VOS_MemCpy(&pstFDNCheckReq->stFDNNum, pstFdnInfo, sizeof(PS_PB_FDN_NUM_STRU));
 
 

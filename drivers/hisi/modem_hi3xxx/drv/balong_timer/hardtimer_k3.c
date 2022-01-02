@@ -13,17 +13,17 @@
 /*lint -save -e631*/
 struct timer_ctrl
 {
-   timer_func routine;                    /*ÖĞ¶Ï´¦Àíº¯Êı     */
-   void* arg;                               /*ÖĞ¶Ï´¦Àíº¯Êı²ÎÊı */
+   timer_func routine;                    /*ä¸­æ–­å¤„ç†å‡½æ•°     */
+   void* arg;                               /*ä¸­æ–­å¤„ç†å‡½æ•°å‚æ•° */
    void* base_addr;
-   void* load_addr;                         /*timerµÄ³õÖµµØÖ·   */
-   void* value_addr;                        /*timerµÄµ±Ç°ÖµµØÖ·   */
-   void* ctrl_addr;                         /*timerµÄ¿ØÖÆµØÖ·   */
-   void* intclr_addr;                       /*timerµÄÖĞ¶ÏÇå³ıµØÖ·   */
-   void* intris_addr;                       /*timerµÄÔ­Ê¼ÖĞ¶ÏµØÖ·   */
-   void* bgload_addr;                       /*timerµÄÖÜÆÚ³õÖµµØÖ·   */
-   u32 interrupt_num;                     /*timerµÄÖĞ¶ÏºÅ   */
-   u32 clk;                               /*timerµÄÊ±ÖÓÆµÂÊ */
+   void* load_addr;                         /*timerçš„åˆå€¼åœ°å€   */
+   void* value_addr;                        /*timerçš„å½“å‰å€¼åœ°å€   */
+   void* ctrl_addr;                         /*timerçš„æ§åˆ¶åœ°å€   */
+   void* intclr_addr;                       /*timerçš„ä¸­æ–­æ¸…é™¤åœ°å€   */
+   void* intris_addr;                       /*timerçš„åŸå§‹ä¸­æ–­åœ°å€   */
+   void* bgload_addr;                       /*timerçš„å‘¨æœŸåˆå€¼åœ°å€   */
+   u32 interrupt_num;                     /*timerçš„ä¸­æ–­å·   */
+   u32 clk;                               /*timerçš„æ—¶é’Ÿé¢‘ç‡ */
    u32 init_timeout;
    spinlock_t lock;
 };
@@ -87,7 +87,7 @@ void bsp_hardtimer_int_clear(u32 timer_id)
 }
 static s32 bsp_hardtimer_disable_noirq(u32 timer_id)
 {
-	/*×îºó1bitĞ´0,¹Ø±ÕÖ®Ç°ÏÈÇåÖĞ¶Ï*/
+	/*æœ€å1bitå†™0,å…³é—­ä¹‹å‰å…ˆæ¸…ä¸­æ–­*/
 	u32 ret = 0;
 	ret = readl((const volatile void *)hard_timer_control[timer_id].ctrl_addr);
 	writel(ret&(~0xA0),(volatile void *)hard_timer_control[timer_id].ctrl_addr);
@@ -188,7 +188,7 @@ static int k3_timer_probe(struct platform_device *dev)
 	/*lint -save -e64*/
 	hard_timer_control[0].base_addr = ioremap_nocache(HI_TIMER_00_REGBASE_ADDR, TIMER_ADDR_SIZE);
 	hard_timer_control[1].base_addr = hard_timer_control[0].base_addr;
-	/*timer 2\3£¬¼´timer10\11ÊôĞÔÎª°²È«£¬AP²à²»¿É·ÃÎÊ*/
+	/*timer 2\3ï¼Œå³timer10\11å±æ€§ä¸ºå®‰å…¨ï¼ŒAPä¾§ä¸å¯è®¿é—®*/
 	/*
 	hard_timer_control[2].base_addr = ioremap_nocache(HI_TIMER_02_REGBASE_ADDR,TIMER_ADDR_SIZE);
 	hard_timer_control[3].base_addr = hard_timer_control[2].base_addr;
@@ -208,7 +208,7 @@ static int k3_timer_probe(struct platform_device *dev)
 	/*lint -restore +e64*/
 	for(i = 0;i < TIMER_NUM-8;i+=2)
 	{
-		/*timer 2\3£¬¼´timer10\11ÊôĞÔÎª°²È«£¬AP²à²»¿É·ÃÎÊ*/
+		/*timer 2\3ï¼Œå³timer10\11å±æ€§ä¸ºå®‰å…¨ï¼ŒAPä¾§ä¸å¯è®¿é—®*/
 		if(i==2)
 			continue;
 		hard_timer_control[i].bgload_addr = hard_timer_control[i].base_addr + 0x18;
@@ -226,7 +226,7 @@ static int k3_timer_probe(struct platform_device *dev)
 		spin_lock_init(&hard_timer_control[i].lock);
 		spin_lock_init(&hard_timer_control[i+1].lock);
 	}
-	/*µÚ8±ÈÌØÖÃÒ»£¬timer²Å¿É×÷Îª»½ĞÑÔ´*/
+	/*ç¬¬8æ¯”ç‰¹ç½®ä¸€ï¼Œtimeræ‰å¯ä½œä¸ºå”¤é†’æº*/
 	ret = readl((const volatile void *)HI_AP_SYSCTRL_BASE_ADDR_VIRT);
 	writel(ret|0x100,(volatile void *)HI_AP_SYSCTRL_BASE_ADDR_VIRT);
 	return 0;
@@ -273,7 +273,7 @@ static void set_timer_32bit_count(void)
 static s32 hardtimer_resume_noirq(struct device *dev)
 {
 	dpm_timer_disable();
-	/*ÔÚloadÖµÖ®Ç°£¬ÏÈÍ³Ò»ÅäÎª32bit¼ÆÊ±£¬loadÖµÖ®ºó£¬ÔÙ»Ö¸´±£´æµÄ¿ØÖÆ¼Ä´æÆ÷µÄÖµ*/
+	/*åœ¨loadå€¼ä¹‹å‰ï¼Œå…ˆç»Ÿä¸€é…ä¸º32bitè®¡æ—¶ï¼Œloadå€¼ä¹‹åï¼Œå†æ¢å¤ä¿å­˜çš„æ§åˆ¶å¯„å­˜å™¨çš„å€¼*/
 	set_timer_32bit_count();
 	bsp_hardtimer_load_value((u32)ACORE_SOFTTIMER_NOWAKE_ID,timer_dpm_ctrl.lp_timer_valuereg[0]);
 	bsp_hardtimer_load_value((u32)TIMER_ACPU_CPUVIEW_ID,timer_dpm_ctrl.lp_timer_valuereg[1]);

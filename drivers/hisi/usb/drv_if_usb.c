@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include  <linux/slab.h>
 #include  <linux/kernel.h>
@@ -17,7 +17,7 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 PNP_CALLBACK_STACK* pEnableStack = NULL;
 PNP_CALLBACK_STACK* pDisableStack = NULL;
@@ -30,11 +30,11 @@ int g_usb_enum_complete = 0;
 
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 /*****************************************************************************
-   ÓëNASµÄ½Ó¿ÚÊµÏÖ£¬°üº¬´ò×®ÊµÏÖ
+   ä¸NASçš„æ¥å£å®ç°ï¼ŒåŒ…å«æ‰“æ¡©å®ç°
 *****************************************************************************/
 
 void BSP_USB_Dump_EnableCBStack(void)
@@ -135,7 +135,7 @@ void BSP_USB_UdiEnableNotify (void)
     PNP_CALLBACK_STACK* pEnableFunc = NULL;
     USB_API_DBG("BSP_USB_UdiEnableNotify enter:\n");
 
-    /* Ä£ÄâUSB²åÈëÍ¨Öª */
+    /* æ¨¡æ‹ŸUSBæ’å…¥é€šçŸ¥ */
     spin_lock(&enable_lock);
     g_usb_enum_complete = 1;
     pEnableFunc = pEnableStack;
@@ -154,7 +154,7 @@ void BSP_USB_UdiDisableNotify (void)
 {
     PNP_CALLBACK_STACK* pDisableFunc = NULL;
     USB_API_DBG("BSP_USB_UdiDisableNotify enter:\n");
-    /* Ä£ÄâUSB²åÈëÍ¨Öª */
+    /* æ¨¡æ‹ŸUSBæ’å…¥é€šçŸ¥ */
     spin_lock(&disable_lock);
     pDisableFunc = pDisableStack;
     while (pDisableFunc)
@@ -170,14 +170,14 @@ void BSP_USB_UdiDisableNotify (void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : BSP_USB_RegUdiEnableCB
- ¹¦ÄÜÃèÊö  : ÓÃÓÚ×¢²áacm¿ØÖÆÍ¨µÀÃüÁî´¦Àí½Ó¿Ú£¬×¢²á½Ó¿ÚÔÚgser_request_complete
-             ÖĞ±±µ÷ÓÃ
- ÊäÈë²ÎÊı  : ACM_HANDLE_COMMAND_CB_T pFunc  : acm¿ØÖÆÍ¨µÀÃüÁî´¦Àí»Øµ÷º¯ÊıÖ¸Õë
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : unsigned int: 0±íÊ¾³É¹¦ 1±íÊ¾Ê§°Ü,ÓëVOS¶¨ÒåµÄ·µ»ØÖµÀàĞÍÒ»ÖÂ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : BSP_USB_RegUdiEnableCB
+ åŠŸèƒ½æè¿°  : ç”¨äºæ³¨å†Œacmæ§åˆ¶é€šé“å‘½ä»¤å¤„ç†æ¥å£ï¼Œæ³¨å†Œæ¥å£åœ¨gser_request_complete
+             ä¸­åŒ—è°ƒç”¨
+ è¾“å…¥å‚æ•°  : ACM_HANDLE_COMMAND_CB_T pFunc  : acmæ§åˆ¶é€šé“å‘½ä»¤å¤„ç†å›è°ƒå‡½æ•°æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : unsigned int: 0è¡¨ç¤ºæˆåŠŸ 1è¡¨ç¤ºå¤±è´¥,ä¸VOSå®šä¹‰çš„è¿”å›å€¼ç±»å‹ä¸€è‡´
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 unsigned int BSP_ACM_RegCmdHandle(ACM_HANDLE_COMMAND_CB_T pFunc)
 {
@@ -193,17 +193,17 @@ unsigned int BSP_ACM_RegCmdHandle(ACM_HANDLE_COMMAND_CB_T pFunc)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : BSP_ACM_CmdHandle
- ¹¦ÄÜÃèÊö  : Ö´ĞĞacm¿ØÖÆÍ¨µÀÃüÁî´¦Àí»Øµ÷½Ó¿Ú
- ÊäÈë²ÎÊı  : cmd        ¿ØÖÆÍ¨µÀÃüÁî
-             interface  ´¦ÀíÃüÁîµÄ½Ó¿ÚºÅ
-             buf        ´ı´¦ÀíÊı¾İ
-             size       ´ı´¦ÀíÊı¾İ´óĞ¡
+ å‡½ æ•° å  : BSP_ACM_CmdHandle
+ åŠŸèƒ½æè¿°  : æ‰§è¡Œacmæ§åˆ¶é€šé“å‘½ä»¤å¤„ç†å›è°ƒæ¥å£
+ è¾“å…¥å‚æ•°  : cmd        æ§åˆ¶é€šé“å‘½ä»¤
+             interface  å¤„ç†å‘½ä»¤çš„æ¥å£å·
+             buf        å¾…å¤„ç†æ•°æ®
+             size       å¾…å¤„ç†æ•°æ®å¤§å°
 
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :gser_request_complete
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :gser_request_complete
 *****************************************************************************/
 int BSP_ACM_CmdHandle(int cmd, int tty_idx, char *buf, int size)
 {
@@ -220,7 +220,7 @@ int BSP_ACM_CmdHandle(int cmd, int tty_idx, char *buf, int size)
 
 
 
-/*Ìá¹©¸øNASµÄ½Ó¿Ú*/
+/*æä¾›ç»™NASçš„æ¥å£*/
 EXPORT_SYMBOL(BSP_USB_RegUdiEnableCB);
 EXPORT_SYMBOL(BSP_USB_RegUdiDisableCB);
 EXPORT_SYMBOL(BSP_USB_UdiEnableNotify);

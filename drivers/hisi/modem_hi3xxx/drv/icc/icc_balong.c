@@ -21,10 +21,10 @@ extern "C"
 
 #include <bsp_reset.h>
 #include "icc_balong.h"
-/* È«¾Ö±äÁ¿¶¨Òåstart */
+/* å…¨å±€å˜é‡å®šä¹‰start */
 struct icc_control g_icc_ctrl = {0};
 
-/* real_channel_id, send_addr, fifo_size, recv_addr, func_size, ipc_irq_id ËµÃ÷: Í¨µÀ±àºÅ±íÃ÷¸ÃÍ¨µÀµÄÓÅÏÈ¼¶ */
+/* real_channel_id, send_addr, fifo_size, recv_addr, func_size, ipc_irq_id è¯´æ˜: é€šé“ç¼–å·è¡¨æ˜è¯¥é€šé“çš„ä¼˜å…ˆçº§ */
 struct icc_init_info g_icc_init_info[] = {
 #ifdef __KERNEL__
   {ICC_CHN_IFC,         SHARED_MODE, ICC_IFC_SIZE,    0,                0,                IPC_ACPU_INT_SRC_ICC, IPC_CCPU_INT_SRC_ICC, IFC_RECV_FUNC_ID_MAX,   "IFC"   },
@@ -55,7 +55,7 @@ struct icc_init_info g_icc_init_info[] = {
   {ICC_CHN_MCORE_ACORE, SHARED_MODE, ICC_MACORE_SIZE, ADDR_MACORE_SEND, ADDR_MACORE_RECV, IPC_ACPU_INT_SRC_ICC, IPC_MCU_INT_SRC_ICC,  MCORE_ACORE_FUNC_ID_MAX, "M-A"   }
 #endif
 };
-/* È«¾Ö±äÁ¿¶¨Òåend */
+/* å…¨å±€å˜é‡å®šä¹‰end */
 
 #ifdef CONFIG_BALONG_MODEM_RESET
 u32 icc_reset_print = 0;
@@ -93,7 +93,7 @@ osSemaphoreDef(shared_task_sem);
 /*lint --e{133 } */
 osThreadDef(icc_task_shared_func, ICC_TASK_SHARED_PRI, 1, ICC_TASK_STK_SIZE);
 
-/* todo: ĞèÒªÉÏÒÆµ½osl²ã */
+/* todo: éœ€è¦ä¸Šç§»åˆ°oslå±‚ */
 #define spin_lock_init(lock)    \
 do{ 	\
 	*lock = *lock; \
@@ -130,7 +130,7 @@ u32 fifo_put_with_header(struct icc_channel_fifo *fifo, u8 *head_buf, u32 head_l
 	void* base_addr     = (void*)fifo + sizeof(struct icc_channel_fifo);
 	u32 buf_len         = fifo->size;
 
-	/*¿ÕÏĞ»º³åÇø´óĞ¡*/
+	/*ç©ºé—²ç¼“å†²åŒºå¤§å°*/
 	if (read > write)
 	{
 		tail_idle_size = (s32)(read - write);
@@ -140,7 +140,7 @@ u32 fifo_put_with_header(struct icc_channel_fifo *fifo, u8 *head_buf, u32 head_l
 		tail_idle_size = (s32)(buf_len - write);
 	}
 
-	/*ÏÈÌî³äÍ·²¿*/
+	/*å…ˆå¡«å……å¤´éƒ¨*/
 	if (tail_idle_size < (s32)head_len)
 	{
 		memcpy(base_addr + write, (void *)head_buf, (u32)tail_idle_size);
@@ -155,7 +155,7 @@ u32 fifo_put_with_header(struct icc_channel_fifo *fifo, u8 *head_buf, u32 head_l
 		write          = (tail_idle_size == 0) ? 0 : (write + head_len);
 	}
 
-	/*ÔÙÌî³ä¸ºÔØ*/
+	/*å†å¡«å……è´Ÿè½½*/
 	if ( (0 == tail_idle_size) || (tail_idle_size > (s32)data_len) )
 	{
 		memcpy(base_addr + write, (void *)data_buf, data_len);
@@ -168,10 +168,10 @@ u32 fifo_put_with_header(struct icc_channel_fifo *fifo, u8 *head_buf, u32 head_l
 		write = data_len - (u32)tail_idle_size;
 	}
 
-	/*È·±£×îºóĞ´Íê²»Í£ÔÚ»º³åÇø½áÊøÎ»ÖÃ*/
+	/*ç¡®ä¿æœ€åå†™å®Œä¸åœåœ¨ç¼“å†²åŒºç»“æŸä½ç½®*/
 	write = (write == buf_len) ? 0 : write;
 
-	/*¸üĞÂĞ´Ö¸Õë*/
+	/*æ›´æ–°å†™æŒ‡é’ˆ*/
 	fifo->write = write;
 	cache_sync();
 
@@ -187,7 +187,7 @@ u32 fifo_get(struct icc_channel_fifo *fifo, u8 *data_buf, u32 data_len, u32 *rea
 	u32 buf_len         = fifo->size;
 	u32 readed_len      = 0;
 
-	/*¿ÕÏĞ»º³åÇø´óĞ¡*/
+	/*ç©ºé—²ç¼“å†²åŒºå¤§å°*/
 	if (*read > write)
 	{
 		total_idle_size = (s32)(buf_len + write - *read);
@@ -223,7 +223,7 @@ u32 fifo_get(struct icc_channel_fifo *fifo, u8 *data_buf, u32 data_len, u32 *rea
 		*read = readed_len - (unsigned int)tail_idle_size;
 	}
 
-	/*È·±£×îºó¶ÁÍê²»Í£ÔÚ»º³åÇø½áÊøÎ»ÖÃ*/
+	/*ç¡®ä¿æœ€åè¯»å®Œä¸åœåœ¨ç¼“å†²åŒºç»“æŸä½ç½®*/
 	*read = (*read >= buf_len) ? (*read - buf_len) : (*read);
 
 	return readed_len;
@@ -240,7 +240,7 @@ u32 fifo_get_with_header(struct icc_channel_fifo *fifo, u8 *data_buf, u32 data_b
 	data_buf_len = ICC_MIN(data_buf_len, packet.len);
 	read_len = fifo_get(fifo, data_buf, data_buf_len, &read);
 
-	/*¸üĞÂ¶ÁÖ¸Õë*/
+	/*æ›´æ–°è¯»æŒ‡é’ˆ*/
 	fifo->read = read;
 
 	return read_len;
@@ -252,7 +252,7 @@ static u32 fifo_write_space_get(struct icc_channel_fifo* fifo)
     u32 read    = fifo->read;
     u32 buf_len = fifo->size;
 
-    /*¿ÕÏĞ»º³åÇø´óĞ¡*/
+    /*ç©ºé—²ç¼“å†²åŒºå¤§å°*/
     if (read > write)
     {
         return (read - write);
@@ -269,7 +269,7 @@ static u32 fifo_read_space_get(struct icc_channel_fifo* fifo)
     u32 read    = fifo->read;
     u32 buf_len = fifo->size;
 
-	/*¿ÕÏĞ»º³åÇø´óĞ¡*/
+	/*ç©ºé—²ç¼“å†²åŒºå¤§å°*/
     if (read > write)
     {
 		return (buf_len + write - read);
@@ -315,7 +315,7 @@ s32 data_send(u32 cpuid, u32 channel_id, u8* data, u32 data_len, struct icc_chan
 #ifdef ICC_HAS_DEBUG_FEATURE
 	msg.channel_id = channel_id;
 	msg.pos = channel->fifo_send->write;
-	msg.recv_task_id = 0; /* ´Ó·¢ËÍÏûÏ¢Î¬¶ÈÍ³¼ÆµÄÏûÏ¢²»¹ØĞÄ½ÓÊÕÈÎÎñ */
+	msg.recv_task_id = 0; /* ä»å‘é€æ¶ˆæ¯ç»´åº¦ç»Ÿè®¡çš„æ¶ˆæ¯ä¸å…³å¿ƒæ¥æ”¶ä»»åŠ¡ */
 	msg.send_task_id = icc_taskid_get();
 	msg.duration_prev = bsp_get_slice_value();
 	packet->task_id = msg.send_task_id;
@@ -352,7 +352,7 @@ s32 data_send(u32 cpuid, u32 channel_id, u8* data, u32 data_len, struct icc_chan
 	return (s32)len;
 err_read:
 #ifdef ICC_HAS_DEBUG_FEATURE
-	/* ÒÑ¾­¶Á³öÀ´µÄÏûÏ¢Ò²Òª¼ÇÂ¼ */
+	/* å·²ç»è¯»å‡ºæ¥çš„æ¶ˆæ¯ä¹Ÿè¦è®°å½• */
 	msg.len = len;
 	msg.duration_post = bsp_get_slice_value();
 	icc_msg_queue_in(&(g_icc_dbg.msg_stat.send), &msg);
@@ -416,26 +416,26 @@ void handle_channel_recv_data(struct icc_channel *channel)
 
 	rector = &channel->rector[GET_FUNC_ID(packet.channel_id)];
 
-	if(!packet.len) /* packet.len = 0£¬Ìø¹ıpacket */
+	if(!packet.len) /* packet.len = 0ï¼Œè·³è¿‡packet */
 	{
 		channel->fifo_recv->read = read;
 	}
 
 	spin_unlock_irqrestore(&(channel->read_lock), flags); /*lint !e123 */
 
-	if(packet.is_responsed) /* ¶Ô·½»Ø¸´¸ø×Ô¼ºµÄ°ü */
+	if(packet.is_responsed) /* å¯¹æ–¹å›å¤ç»™è‡ªå·±çš„åŒ… */
 	{
 		rector->return_data = packet.data;
 		channel->seq_num_recv = packet.seq_num;
 		wake_up(&channel->sen_sync_wq); /*lint !e529 */
 	}
-	else /* ¶Ô·½·¢¹ıÀ´µÄ°ü */
+	else /* å¯¹æ–¹å‘è¿‡æ¥çš„åŒ… */
 	{
 		if (rector->read_cb)
 		{
 			icc_print_debug("invoke callback func[0x%p]\n", rector->read_cb);
 			rector->return_data = rector->read_cb(packet.channel_id, packet.len, rector->read_context);
-			if(packet.need_responsed) /* ĞèÒª»Ø¸´ */
+			if(packet.need_responsed) /* éœ€è¦å›å¤ */
 			{
 				icc_send_ex(packet.src_cpu_id, packet.channel_id, NULL, 0, 1, packet.seq_num,(u32)rector->return_data);
 			}
@@ -445,7 +445,7 @@ void handle_channel_recv_data(struct icc_channel *channel)
 	return;
 
 invalid_packet:
-	/* ÎŞĞ§°ü»ò¿Õ°ü£¬Ìø¹ı */
+	/* æ— æ•ˆåŒ…æˆ–ç©ºåŒ…ï¼Œè·³è¿‡ */
 	if( (read_ptr == fifo_read_ptr(channel->fifo_recv)) && (packet.len > 0) )
 	{
 		icc_print_error("fifo read skip!\n");
@@ -462,7 +462,7 @@ s32 icc_task_private_func(void *obj)
 
 	for( ; ;)
 	{
-		/* ·ÀÖ¹¿ìËÙµôµçÄÚ´æÖĞÄÚÈİ²»¶ªÊ§£¬Ôì³ÉµÄ¶ÔfifoµÄÅĞ¶Ï´íÎó */
+		/* é˜²æ­¢å¿«é€Ÿæ‰ç”µå†…å­˜ä¸­å†…å®¹ä¸ä¸¢å¤±ï¼Œé€ æˆçš„å¯¹fifoçš„åˆ¤æ–­é”™è¯¯ */
 		if(ICC_CHN_MAGIC_SIGN == channel->fifo_recv->magic)
 		{
 			channel->fifo_recv->magic = ICC_CHN_MAGIC_UNSIGN;
@@ -470,13 +470,13 @@ s32 icc_task_private_func(void *obj)
 		}
 		if (channel->ready_recv)
 		{
-			/* °ÑfifoÖĞÏûÏ¢È«²¿¶Á×ß(ĞèÒªµÈ¶Ô·½³õÊ¼»¯ºó²ÅÄÜÊ¹ÓÃ) */
+			/* æŠŠfifoä¸­æ¶ˆæ¯å…¨éƒ¨è¯»èµ°(éœ€è¦ç­‰å¯¹æ–¹åˆå§‹åŒ–åæ‰èƒ½ä½¿ç”¨) */
 			while(fifo_read_space_get(channel->fifo_recv) >= sizeof(struct icc_channel_packet))
 			{
 				handle_channel_recv_data(channel);
 			}
 
-			/*Ğ´»Øµ÷Ä¬ÈÏÊ¹ÓÃ×ÓÍ¨µÀ0 */
+			/*å†™å›è°ƒé»˜è®¤ä½¿ç”¨å­é€šé“0 */
 			if(fifo_write_space_get(channel->fifo_send) == channel->fifo_send->size && channel->rector->write_cb)
 			{
 				(void)channel->rector->write_cb(channel->id, NULL);
@@ -518,7 +518,7 @@ void icc_task_shared_func(void const *obj)
 				}
 				if (channel->ready_recv)
 				{
-					/* °ÑfifoÖĞÏûÏ¢È«²¿¶Á×ß */
+					/* æŠŠfifoä¸­æ¶ˆæ¯å…¨éƒ¨è¯»èµ° */
 					while(fifo_read_space_get(channel->fifo_recv) >= sizeof(struct icc_channel_packet))
 					{
 						read = channel->fifo_recv->read;
@@ -529,7 +529,7 @@ void icc_task_shared_func(void const *obj)
 						}
 					}
 
-					/*Ğ´»Øµ÷Ä¬ÈÏÊ¹ÓÃ×ÓÍ¨µÀ0 */
+					/*å†™å›è°ƒé»˜è®¤ä½¿ç”¨å­é€šé“0 */
 					if(fifo_write_space_get(channel->fifo_send) == channel->fifo_send->size && channel->rector->write_cb)
 					{
 						(void)channel->rector->write_cb(channel->id, NULL);
@@ -642,20 +642,20 @@ struct icc_channel *icc_channel_init(struct icc_init_info *info, s32 *ret)
 	}
 	memset(channel, 0, sizeof(struct icc_channel));
 
-	channel->id       = info->real_channel_id; /* Ö±½ÓÊ¹ÓÃreal channel id */
+	channel->id       = info->real_channel_id; /* ç›´æ¥ä½¿ç”¨real channel id */
 	channel->name     = info->name;
 	channel->mode.val = info->mode;
 
-	/* ·¢ËÍfifo±¾²à³õÊ¼»¯£¬½ÓÊÕfifo¶Ô²à³õÊ¼»¯ */
+	/* å‘é€fifoæœ¬ä¾§åˆå§‹åŒ–ï¼Œæ¥æ”¶fifoå¯¹ä¾§åˆå§‹åŒ– */
 	channel->fifo_send = (struct icc_channel_fifo*)(info->send_addr);
 	channel->fifo_recv = (struct icc_channel_fifo*)(info->recv_addr);
 	icc_restore_recv_channel_flag(channel->fifo_recv);
 
 	memset(channel->fifo_send, 0, sizeof(struct icc_channel_fifo));
 	channel->fifo_send->size  = info->fifo_size;
-	channel->fifo_send->magic = ICC_CHN_MAGIC_SIGN; /* Í¨Öª¶Ô·½±¾ºËµÄ¸ÃfifoÊÇ·ñ³õÊ¼»¯Íê³É */
+	channel->fifo_send->magic = ICC_CHN_MAGIC_SIGN; /* é€šçŸ¥å¯¹æ–¹æœ¬æ ¸çš„è¯¥fifoæ˜¯å¦åˆå§‹åŒ–å®Œæˆ */
 
-	/* ½ÓÊÕÏòÁ¿³õÊ¼»¯ */
+	/* æ¥æ”¶å‘é‡åˆå§‹åŒ– */
 	channel->func_size = info->func_size;
 	channel->rector = (struct icc_channel_vector*)osl_malloc(sizeof(struct icc_channel_vector) * channel->func_size);
 	if (!channel->rector)
@@ -666,7 +666,7 @@ struct icc_channel *icc_channel_init(struct icc_init_info *info, s32 *ret)
 	memset(channel->rector, 0, sizeof(struct icc_channel_vector) * channel->func_size); /*lint !e665 */
 
 #ifdef ICC_HAS_SYNC_SEND_FEATURE
-	/* Í¬²½·¢ËÍÏà¹Ø×ÊÔ´³õÊ¼»¯ */
+	/* åŒæ­¥å‘é€ç›¸å…³èµ„æºåˆå§‹åŒ– */
 	init_waitqueue_head(&(channel->sen_sync_wq));
 
 	channel->seq_num_send = 0;
@@ -679,7 +679,7 @@ struct icc_channel *icc_channel_init(struct icc_init_info *info, s32 *ret)
 	spin_lock_init(&channel->read_lock);  /*lint !e123 */
 
 #ifdef ICC_HAS_INDEPENDENT_CHN_FEATURE
-	/* ÎªÍ¨µÀ×¨ÃÅÆôµÄÈÎÎñ */
+	/* ä¸ºé€šé“ä¸“é—¨å¯çš„ä»»åŠ¡ */
 	if(!channel->mode.union_stru.task_shared)
 	{
 		osl_sem_init(ICC_SEM_FULL, &channel->private_task_sem);
@@ -693,7 +693,7 @@ struct icc_channel *icc_channel_init(struct icc_init_info *info, s32 *ret)
 		}
 	}
 
-	/* ×¨ÃÅµÄIPCÖĞ¶ÏÔ´ */
+	/* ä¸“é—¨çš„IPCä¸­æ–­æº */
 	if(!channel->mode.union_stru.ipc_shared)
 	{
 		if(ICC_ERR == bsp_ipc_int_connect((IPC_INT_LEV_E)channel->ipc_recv_irq_id, (voidfuncptr)icc_ipc_isr, channel->id))
@@ -709,7 +709,7 @@ struct icc_channel *icc_channel_init(struct icc_init_info *info, s32 *ret)
 	}
 #endif
 
-	/* ¹«ÓÃÈÎÎñµÄÊ±ºòÒ²ÒªÊ¹ÓÃchannel->ipc_send_irq_id */
+	/* å…¬ç”¨ä»»åŠ¡çš„æ—¶å€™ä¹Ÿè¦ä½¿ç”¨channel->ipc_send_irq_id */
 	channel->ipc_send_irq_id = info->ipc_send_irq_id;
 	channel->ipc_recv_irq_id = info->ipc_recv_irq_id;
 
@@ -843,7 +843,7 @@ s32 bsp_icc_init(void)
 	memset(&g_icc_ctrl, 0, sizeof(struct icc_control));
 	g_icc_ctrl.cpu_id = ICC_SRC_CPU;
 
-	/* ²»ÓÃÍ¨µÀÖ¸ÕëÖÃ¿Õ£¬Ö¸ÕëÊı×éÈ«²¿ */
+	/* ä¸ç”¨é€šé“æŒ‡é’ˆç½®ç©ºï¼ŒæŒ‡é’ˆæ•°ç»„å…¨éƒ¨ */
 	memset(g_icc_ctrl.channels, 0, (u32)ICC_CHN_ID_MAX * sizeof(struct icc_channel *)); /*lint !e665 */
 	g_icc_ctrl.channel_size = ICC_CHN_ID_MAX;
 
@@ -863,7 +863,7 @@ s32 bsp_icc_init(void)
 	wake_lock_init(&g_icc_ctrl.wake_lock, WAKE_LOCK_SUSPEND, "icc_wake");
 
 #ifdef ICC_HAS_DEBUG_FEATURE
-	/* ¿ÉÎ¬¿É²â³õÊ¼»¯ */
+	/* å¯ç»´å¯æµ‹åˆå§‹åŒ– */
 	ret = icc_debug_init(sizeof(g_icc_init_info) / sizeof(g_icc_init_info[0]));
 	if(ICC_OK != ret)
 	{
@@ -1157,7 +1157,7 @@ s32 bsp_icc_send_sync(u32 cpuid, u32 channel_id, u8* data, u32 data_len, long ti
 	wait_data.packet_seq_num = packet.seq_num;
 	wait_data.channel_id = channel_id;
 
-	/* ÓĞ¿ÉÄÜµ÷ÓÃÊ§°Ü,ÎŞ·¨ÅĞ¶Ï·µ»ØÖµ,¸Ãº¯ÊıÎŞ·¨×÷ÎªÓÒÖµ */
+	/* æœ‰å¯èƒ½è°ƒç”¨å¤±è´¥,æ— æ³•åˆ¤æ–­è¿”å›å€¼,è¯¥å‡½æ•°æ— æ³•ä½œä¸ºå³å€¼ */
 	wait_event_timeout_func(channel->sen_sync_wq, timeout, check_state, (void*)(&wait_data));
 
 	ret_data = channel->rector[GET_FUNC_ID(channel_id)].return_data;
@@ -1202,7 +1202,7 @@ s32 bsp_icc_read(u32 channel_id, u8 *buf, u32 buf_len)
 	msg.channel_id = channel_id;
 	msg.pos = g_icc_ctrl.channels[real_channel_id]->fifo_recv->read;
 	msg.recv_task_id = icc_taskid_get();
-	msg.send_task_id = g_icc_dbg.recv_task_id; /* ¶Ô·½ºËµÄ·¢ËÍtask */
+	msg.send_task_id = g_icc_dbg.recv_task_id; /* å¯¹æ–¹æ ¸çš„å‘é€task */
 	msg.duration_prev = g_icc_dbg.timestamp;
 #endif
 

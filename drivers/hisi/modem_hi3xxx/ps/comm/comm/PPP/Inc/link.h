@@ -48,15 +48,15 @@
 #define    PHASE_AUTHENTICATE      2    /* Being authenticated */
 #define    PHASE_NETWORK           3    /* We're alive ! */
 #define    PHASE_TERMINATE         4    /* Terminating link */
-#define    PHASE_PDP_ACT_PENDING   5    /* µÈ´ıPDP±»¼¤»î*/
-#define    PHASE_TERMINATE_PENDING 6    /* µÈ´ıPCºÍUEÍê³ÉPPP¶ÏÁ´*/
+#define    PHASE_PDP_ACT_PENDING   5    /* ç­‰å¾…PDPè¢«æ¿€æ´»*/
+#define    PHASE_TERMINATE_PENDING 6    /* ç­‰å¾…PCå’ŒUEå®ŒæˆPPPæ–­é“¾*/
 
 
 #define PHYSICAL_LINK    1
 #define LOGICAL_LINK     2
 
-#define PPP_HDLC_BY_SOFTWARE                            (0)         /* Ê¹ÓÃÈí¼şÊµÏÖPPP·â×° ½â·â×° */
-#define PPP_HDLC_BY_HARDWARE                            (1)         /* Ê¹ÓÃÓ²¼şÊµÏÖPPP·â×° ½â·â×° */
+#define PPP_HDLC_BY_SOFTWARE                            (0)         /* ä½¿ç”¨è½¯ä»¶å®ç°PPPå°è£… è§£å°è£… */
+#define PPP_HDLC_BY_HARDWARE                            (1)         /* ä½¿ç”¨ç¡¬ä»¶å®ç°PPPå°è£… è§£å°è£… */
 
 extern struct  fsm_parent           parent;
 

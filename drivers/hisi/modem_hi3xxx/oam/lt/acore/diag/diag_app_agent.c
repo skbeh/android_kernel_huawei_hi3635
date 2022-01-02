@@ -26,7 +26,7 @@ extern "C" {
 #include "DrvInterface.h"
 #include "NVIM_Interface.h"
 /*lint -restore*/
-/*lint -save -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -save -e767 åŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID          MSP_FILE_ID_DIAG_APP_AGENT_C
 /*lint -restore +e767*/
 /*****************************************************************************
@@ -60,7 +60,7 @@ VOS_UINT32 diag_PsProcEntry (VOS_UINT8* pstReq , VOS_UINT32 ulCmdId)
 
 	stCnf.ulRet = ret;
 
-	/*×é°ü¸øFW»Ø¸´*/
+	/*ç»„åŒ…ç»™FWå›å¤*/
 	ret = diag_AgentCnfFun((VOS_UINT8*)&stCnf,ulCmdId,sizeof(DIAG_CMD_REPLAY_SET_CNF_STRU));
     return ret;
 }
@@ -94,7 +94,7 @@ VOS_UINT32 diag_NvRdProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     pstNVQryReq = (DIAG_CMD_NV_QRY_REQ_STRU*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
-     /*¸ù¾İÇëÇóID»ñÈ¡NVÏî³¤¶È*/
+     /*æ ¹æ®è¯·æ±‚IDè·å–NVé¡¹é•¿åº¦*/
      ret = NV_GetLength((BSP_U16)(pstNVQryReq->ulNVId), (BSP_U32*)&ulNVLen);
      if(ERR_MSP_SUCCESS != ret)
      {
@@ -121,7 +121,7 @@ VOS_UINT32 diag_NvRdProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
      pstNVQryCnf->ulRc   = ulSetRet;
      pstNVQryCnf->ulDataSize = ulNVLen;
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)pstNVQryCnf,ulCmdId,sizeof(DIAG_CMD_NV_QRY_CNF_STRU) + ulNVLen);
 
     VOS_MemFree(MSP_PID_DIAG_APP_AGENT, pstNVQryCnf);
@@ -139,7 +139,7 @@ VOS_UINT32 diag_NvWrProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     pstNVWRReq = (DIAG_CMD_NV_WR_REQ_STRU*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
-    /*Èë²ÎÅĞ¶Ï*/
+    /*å…¥å‚åˆ¤æ–­*/
     if((NULL == pstNVWRReq) ||(pstNVWRReq->ulDataSize > NV_ITEM_MAXSIZE)||
       (sizeof(DIAG_CMD_NV_WR_REQ_STRU) > ((MSP_DIAG_HEAD_STRU *)((VOS_UINT8*)pstReq+ \
        sizeof(MSP_SOCP_HEAD_STRU)))->ulDataSize-sizeof(MSP_DIAG_DATA_REQ_STRU)))
@@ -148,7 +148,7 @@ VOS_UINT32 diag_NvWrProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
         return ERR_MSP_INVALID_PARAMETER;
     }
 
-    /*Ğ´ÈëNVÏî*/
+    /*å†™å…¥NVé¡¹*/
     ulSetRet = NVM_Write(pstNVWRReq->ulNVId, pstNVWRReq->aucData, pstNVWRReq->ulDataSize);
     if(ulSetRet != ERR_MSP_SUCCESS)
     {
@@ -159,7 +159,7 @@ VOS_UINT32 diag_NvWrProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     stNVWRCnf.ulNVId = pstNVWRReq->ulNVId;
     stNVWRCnf.ulRc   = ulSetRet;
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stNVWRCnf,ulCmdId,sizeof(DIAG_CMD_NV_WR_CNF_STRU));
 
 
@@ -187,7 +187,7 @@ VOS_UINT32 diag_LogSaveProc (VOS_UINT8* pstReq , VOS_UINT32 ulCmdId)
 
     stLdpCnf.ulRc = ulSetRet;
 
-    /*×é°ü¸øFW»Ø¸´*/
+    /*ç»„åŒ…ç»™FWå›å¤*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stLdpCnf,ulCmdId,sizeof(DIAG_CMD_SET_LPD_MODE_CNF_STRU));
 
     return ret;
@@ -233,7 +233,7 @@ VOS_UINT32 diag_PsTransProcEntry(VOS_UINT8* pstReq)
 
     g_ulCmdId = ulCmdId;
 
-     /* ´ò°üÍ¸´«Êı¾İ*/
+     /* æ‰“åŒ…é€ä¼ æ•°æ®*/
     pstSendReq = (DIAG_PS_MSG_STRU*)((MSP_DIAG_DATA_REQ_STRU*)DIAG_OFFSET_SOCP_DIAG_GET_DIAG_DATA(pstReq))->ucData;
 
 	DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_PS_TRANS_REQ,0,0,0);
@@ -259,11 +259,11 @@ VOS_UINT32 diag_AppAgentDispatchCmd(VOS_UINT8* pstReq )
     {
         switch (MSP_STRU_ID_16_23_CMD_TYPE(ulCmdId))
         {
-            /*¸ù¾İ¶ş¼¶×Ö¶ÎÇø·ÖÊÇ¸øpsµÄÍ¸´«ÃüÁî»¹ÊÇmspÄÚ²¿ÃüÁî»òÕßPMUµÄÃüÁî*/
+            /*æ ¹æ®äºŒçº§å­—æ®µåŒºåˆ†æ˜¯ç»™psçš„é€ä¼ å‘½ä»¤è¿˜æ˜¯mspå†…éƒ¨å‘½ä»¤æˆ–è€…PMUçš„å‘½ä»¤*/
             case MSP_STRU_ID_16_23_MSP_CMD:
                 switch(MSP_STRU_ID_8_11_CMD_CATEGORY(ulCmdId))
                 {
-                    /*¸ù¾İÃüÁîID·¶Î§Çø·ÖÊÇÄÄÖÖmspÄÚ²¿ÃüÁî*/
+                    /*æ ¹æ®å‘½ä»¤IDèŒƒå›´åŒºåˆ†æ˜¯å“ªç§mspå†…éƒ¨å‘½ä»¤*/
 					case DIAG_CATEGORY_PS:
 						ret = diag_PsProcEntry(pstReq,ulCmdId);
                         break;
@@ -518,7 +518,7 @@ VOS_UINT32 diag_BspSysviewProcEntry(VOS_UINT8* pstReq , VOS_UINT32 ulCmdId)
 VOS_UINT32 diag_AppAgentMsgProcInit(enum VOS_INIT_PHASE_DEFINE ip)
 {
     VOS_UINT32 ret = ERR_MSP_SUCCESS;
-    VOS_CHAR * resetName = "DIAG";  /*CºËµ¥¶À¸´Î»µÄÃû×Ö*/
+    VOS_CHAR * resetName = "DIAG";  /*Cæ ¸å•ç‹¬å¤ä½çš„åå­—*/
     VOS_INT    resetLevel = 49;
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
     if (ip == VOS_IP_RESTART)
@@ -543,7 +543,7 @@ VOS_UINT32 diag_AppAgentMsgProcInit(enum VOS_INIT_PHASE_DEFINE ip)
 }
 
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
-/*SOCPÊÇ·ñ¿ÉÓÃ*/
+/*SOCPæ˜¯å¦å¯ç”¨*/
 VOS_UINT32 g_diagSocpIsEnable = FALSE;
 DIAG_SOCP_VOTE_INFO_STRU g_stDiagVoteInfo[SOCP_VOTE_ID_BUTT];
 
@@ -586,7 +586,7 @@ VOS_VOID diag_SocpVoteMsgProc(MsgBlock* pMsgBlock)
         diag_printf("%s: 0x%x DRV_SOCP_VOTE ERR\n", __FUNCTION__, voteReq->ulVoteId);
     }
 
-    /* ·´¶ÔÆ±²Å»Ø¸´ */
+    /* åå¯¹ç¥¨æ‰å›å¤ */
     if(voteReq->ulVoteType == SOCP_VOTE_FOR_SLEEP)
     {
         return;
@@ -628,7 +628,7 @@ VOS_VOID diag_AppAgentConnectCmdProc(DIAG_CONNECT_CMD_ENUM_U32 connCmd)
         g_diagSocpIsEnable = TRUE;
     }
 
-    /*¶Ï¿ªÇé¿öÓÉfwÍ¶Æ±socpÏÂµç*/
+    /*æ–­å¼€æƒ…å†µç”±fwæŠ•ç¥¨socpä¸‹ç”µ*/
     if(DIAG_DISCONNECT_CMD == connCmd)
     {
 #if (FEATURE_ON == FEATURE_MERGE_OM_CHAN)	
@@ -679,23 +679,23 @@ VOS_VOID diag_AppAgentMsgProc(MsgBlock* pMsgBlock)
 {
     DIAG_DATA_MSG_STRU* pMsgTmp =NULL;
     /*lint --e{740, 142} */
-    /*Èë²ÎÅĞ¶Ï*/
+    /*å…¥å‚åˆ¤æ–­*/
     if (NULL == pMsgBlock)
     {
         return;
     }
 
-    /*ÈÎÎñ¿ªÊ¼´¦Àí£¬²»ÔÊĞíË¯Ãß*/
+    /*ä»»åŠ¡å¼€å§‹å¤„ç†ï¼Œä¸å…è®¸ç¡çœ */
 	drx_msp_fid_vote_lock(DRX_DIAG_APP_AGENT_VOTE);
      /*lint -save -e30*/
-    /*¸ù¾İ·¢ËÍPID£¬Ö´ĞĞ²»Í¬´¦Àí*/
+    /*æ ¹æ®å‘é€PIDï¼Œæ‰§è¡Œä¸åŒå¤„ç†*/
     switch(pMsgBlock->ulSenderPid)
     {
-            /*´¦ÀíHDLC½âÂëºóÊı¾İ */
+            /*å¤„ç†HDLCè§£ç åæ•°æ® */
         case MSP_PID_DIAG_FW:
             pMsgTmp = (DIAG_DATA_MSG_STRU*)pMsgBlock;
 
-            /*¸ù¾İÃüÁîID·Ö·¢´¦Àí*/
+            /*æ ¹æ®å‘½ä»¤IDåˆ†å‘å¤„ç†*/
             diag_AppAgentDispatchCmd(pMsgTmp->pContext);
             break;
 
@@ -708,7 +708,7 @@ VOS_VOID diag_AppAgentMsgProc(MsgBlock* pMsgBlock)
             break;
 
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
-        /*Í¶Æ±ÏûÏ¢*/
+        /*æŠ•ç¥¨æ¶ˆæ¯*/
         case MSP_PID_DIAG_AGENT:
         case WUEPS_PID_OM:
         case ACPU_PID_OM:
@@ -716,7 +716,7 @@ VOS_VOID diag_AppAgentMsgProc(MsgBlock* pMsgBlock)
             diag_SocpVoteMsgProc(pMsgBlock);
             break;
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
-        /*¶Ë¿ÚÊı¾İ´¦ÀíÏûÏ¢*/
+        /*ç«¯å£æ•°æ®å¤„ç†æ¶ˆæ¯*/
         case MSP_PID_DIAG_APP_AGENT:
             diag_PortDataProc(pMsgBlock);
             break;
@@ -727,7 +727,7 @@ VOS_VOID diag_AppAgentMsgProc(MsgBlock* pMsgBlock)
 
    }
     /*lint -restore*/
-   /*ÈÎÎñ¿ªÊ¼½áÊø£¬ÔÊĞíË¯Ãß*/
+   /*ä»»åŠ¡å¼€å§‹ç»“æŸï¼Œå…è®¸ç¡çœ */
    drx_msp_fid_vote_unlock(DRX_DIAG_APP_AGENT_VOTE);
 
    return ;
@@ -735,7 +735,7 @@ VOS_VOID diag_AppAgentMsgProc(MsgBlock* pMsgBlock)
 
 /*****************************************************************************
  Function Name   : diag_ResetCcoreCB
- Description     : Õï¶Ïmodemµ¥¶À¸´Î»»Øµ÷º¯Êı
+ Description     : è¯Šæ–­modemå•ç‹¬å¤ä½å›è°ƒå‡½æ•°
  Input           : enParam
  Output          : None
  Return          : VOS_VOID

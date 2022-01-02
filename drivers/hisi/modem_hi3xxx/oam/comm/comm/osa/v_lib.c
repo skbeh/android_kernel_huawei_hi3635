@@ -38,7 +38,7 @@ extern "C" {
 #include "v_timer.h"
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_V_LIB_C
 
@@ -120,7 +120,7 @@ typedef enum _bit64CompareResult
 /* the seed of radom */
 static VOS_UINT32 g_ulVosRadomSeed = 0;
 
-VOS_UINT32        g_ulErrorNo = 0;					/* ´æ·Å´íÎóÂë */
+VOS_UINT32        g_ulErrorNo = 0;					/* å­˜æ”¾é”™è¯¯ç  */
 
 #if (VOS_VXWORKS == VOS_OS_VER)
 extern int errnoSet(int errorValue);
@@ -707,7 +707,7 @@ VOS_VOID * V_MemCpy( VOS_VOID * Dest, const VOS_VOID * Src, VOS_SIZE_T Count,
         return(VOS_NULL_PTR);
     }
 
-    return memcpy (Dest,Src,Count); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    return memcpy (Dest,Src,Count); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 }
 
 /*****************************************************************************
@@ -728,7 +728,7 @@ VOS_VOID * V_MemMove( VOS_VOID * Dest, const VOS_VOID * Src, VOS_SIZE_T Count,
         return VOS_NULL_PTR;
     }
 
-    /* Èç¹ûÄ¿µÄÎª¿Õ£¬Ö±½Ó·µ»ØNULL */
+    /* å¦‚æžœç›®çš„ä¸ºç©ºï¼Œç›´æŽ¥è¿”å›žNULL */
     if (VOS_NULL_PTR == Src)
     {
         return VOS_NULL_PTR;
@@ -1099,7 +1099,7 @@ VOS_UINT32 VOS_Rand( VOS_UINT32 ulRange )
     register VOS_UINT32 ulGenTempHigh, ulRangeHigh, ulRangeLow;
     register VOS_UINT32 ulRandomNumber;
 
-    /* ÉèÖÃÁËÖÖ×ÓÓÃÉèÖÃµÄÖÖ×Ó£¬·ñÔòÓÃÏµÍ³Ê±¼ä×öÖÖ×Ó */
+    /* è®¾ç½®äº†ç§å­ç”¨è®¾ç½®çš„ç§å­ï¼Œå¦åˆ™ç”¨ç³»ç»Ÿæ—¶é—´åšç§å­ */
     if (0 == g_ulVosRadomSeed )
     {
         ulGenTemp = VOS_GetSlice();
@@ -1109,12 +1109,12 @@ VOS_UINT32 VOS_Rand( VOS_UINT32 ulRange )
 		ulGenTemp = g_ulVosRadomSeed;
     }
 
-	/* ÍøÂçËÑË÷Ëã·¨Éú³ÉÎ±Ëæ»úÊý */
+	/* ç½‘ç»œæœç´¢ç®—æ³•ç”Ÿæˆä¼ªéšæœºæ•° */
 	ulGenTemp = (ulGenTemp * 1664525L + 1013904223L) ;
 
 	g_ulVosRadomSeed = ulGenTemp;
 
-    /* ½«Î±Ëæ»úÆ¥Åäµ½·¶Î§ÄÚ */
+    /* å°†ä¼ªéšæœºåŒ¹é…åˆ°èŒƒå›´å†… */
     ulGenTempHigh = ulGenTemp >> 16;
     ulGenTemp &= 0xffff;
 

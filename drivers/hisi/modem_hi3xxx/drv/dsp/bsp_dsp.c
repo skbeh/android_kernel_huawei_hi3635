@@ -95,7 +95,7 @@ int bsp_hifi_load_sections(void *hifi_image)
 
         if (DRV_HIFI_IMAGE_SEC_LOAD_STATIC == hifi_head->sections[i].load_attib)
         {
-        	/* ¾²Ì¬¼ÓÔØ */
+        	/* é™æ€åŠ è½½ */
             if ((hifi_head->sections[i].des_addr < DDR_HIFI_ADDR) ||
                 ((hifi_head->sections[i].des_addr + hifi_head->sections[i].size) > (DDR_HIFI_ADDR + DDR_HIFI_SIZE)))
             {
@@ -103,7 +103,7 @@ int bsp_hifi_load_sections(void *hifi_image)
                     "error hifi address, %x \r\n", hifi_head->sections[i].des_addr);
                 return -1;
             }
-			/* Ö¸Ïò¾µÏñ´æ·ÅµÄddr   µØÖ· */
+			/* æŒ‡å‘é•œåƒå­˜æ”¾çš„ddr   åœ°å€ */
             section_virtual_addr = (void*)ioremap_nocache(hifi_head->sections[i].des_addr,
                 hifi_head->sections[i].size);
             if (NULL == section_virtual_addr)
@@ -111,7 +111,7 @@ int bsp_hifi_load_sections(void *hifi_image)
                 bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_DSP, "fail to io remap, %d \r\n", __LINE__);
                 return -ENOMEM;
             }
-			/* ¾µÏñ¿½±´(Ô´->   Ä¿µÄ) */
+			/* é•œåƒæ‹·è´(æº->   ç›®çš„) */
             memcpy(section_virtual_addr,
                    (void*)((char*)hifi_head + hifi_head->sections[i].src_offset),
                    hifi_head->sections[i].size);
@@ -119,7 +119,7 @@ int bsp_hifi_load_sections(void *hifi_image)
         }
         else if (DRV_HIFI_IMAGE_SEC_LOAD_DYNAMIC == hifi_head->sections[i].load_attib)
         {
-        	/* ¶¯Ì¬¼ÓÔØ */
+        	/* åŠ¨æ€åŠ è½½ */
             if (dynamic_section_data_offset + hifi_head->sections[i].size > HIFI_SEC_DATA_LENGTH)
             {
                 bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_DSP,
@@ -127,19 +127,19 @@ int bsp_hifi_load_sections(void *hifi_image)
                 return -1;
             }
             /* copy data to share addr */
-			/* ½«¾µÏñ¿½±´µ½¶ÎĞÅÏ¢½á¹¹Ìå£¬¹©ÆäËû»úÖÆ¼ÓÔØ */
+			/* å°†é•œåƒæ‹·è´åˆ°æ®µä¿¡æ¯ç»“æ„ä½“ï¼Œä¾›å…¶ä»–æœºåˆ¶åŠ è½½ */
             memcpy((void*)&(section_info->sec_data[dynamic_section_data_offset]),
                    (void*)((char*)hifi_head + hifi_head->sections[i].src_offset),
                    hifi_head->sections[i].size);
 
             /* update section info */
-			/* ¸üĞÂ¶ÎµØÖ· */
+			/* æ›´æ–°æ®µåœ°å€ */
             section_info->sec_addr_info[dynamic_section_num].sec_source_addr
                 = SHD_DDR_V2P((u32)&(section_info->sec_data[dynamic_section_data_offset]));
-			/* ¸üĞÂ¶Î³¤¶È */
+			/* æ›´æ–°æ®µé•¿åº¦ */
             section_info->sec_addr_info[dynamic_section_num].sec_length
                 = hifi_head->sections[i].size;
-			/* ¸üĞÂ¶ÎÄ¿µÄµØÖ· £¬DDR   µØÖ·*/
+			/* æ›´æ–°æ®µç›®çš„åœ°å€ ï¼ŒDDR   åœ°å€*/
             section_info->sec_addr_info[dynamic_section_num].sec_dest_addr
                 = hifi_head->sections[i].des_addr;
 
@@ -148,7 +148,7 @@ int bsp_hifi_load_sections(void *hifi_image)
         }
         else if (DRV_HIFI_IMAGE_SEC_UNLOAD == hifi_head->sections[i].load_attib)
         {
-        	/* ÎŞĞëµ×Èí¼ÓÔØ */
+        	/* æ— é¡»åº•è½¯åŠ è½½ */
 
             section_virtual_addr = (void*)ioremap_nocache(hifi_head->sections[i].des_addr,
                 hifi_head->sections[i].size);
@@ -157,13 +157,13 @@ int bsp_hifi_load_sections(void *hifi_image)
                 bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_DSP, "fail to io remap, %d \r\n", __LINE__);
                 return -ENOMEM;
             }
-			/* ½«ĞÅÏ¢·ÅÈëÓÊÏäÖĞ */
+			/* å°†ä¿¡æ¯æ”¾å…¥é‚®ç®±ä¸­ */
             drv_hifi_fill_mb_info((unsigned int*)section_virtual_addr);
             iounmap(section_virtual_addr);
         }
         else
         {
-        	/* ¼ÓÔØ·½Ê½ÓĞÎó */
+        	/* åŠ è½½æ–¹å¼æœ‰è¯¯ */
             bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_DSP,
                 "unknown section attribute %d\r\n", hifi_head->sections[i].load_attib);
             ret = -1;
@@ -205,7 +205,7 @@ static int bsp_dsp_load_image(char* part_name)
 
     /* clean ok flag */
     writel(0, (void*)SHM_MEM_DSP_FLAG_ADDR);
-	/* Ö¸ÏòÒ»¿éDDR   ¿Õ¼äÓÃÓÚ´æ·Å¾µÏñºÍÅäÖÃÊı¾İ */
+	/* æŒ‡å‘ä¸€å—DDR   ç©ºé—´ç”¨äºå­˜æ”¾é•œåƒå’Œé…ç½®æ•°æ® */
     bbe_ddr_addr = (void*)ioremap_nocache(DDR_TLPHY_IMAGE_ADDR, DDR_TLPHY_IMAGE_SIZE);
 	
     tds_data_addr = (void*)ioremap_nocache(DDR_LPHY_SDR_ADDR + 0x1C0000, 0x40000);
@@ -215,7 +215,7 @@ static int bsp_dsp_load_image(char* part_name)
         ret = -ENOMEM;
         goto err_unmap;
     }
-	/* »ñµÃÔÚnand   ÖĞµÄbbe   ¾µÏñÍ· */
+	/* è·å¾—åœ¨nand   ä¸­çš„bbe   é•œåƒå¤´ */
     if (NAND_OK != bsp_nand_read(part_name,  0, (char*)&head, sizeof(struct image_head), &skip_len))
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_DSP, "fail to load dsp image head\r\n");
@@ -224,7 +224,7 @@ static int bsp_dsp_load_image(char* part_name)
     }
 
     /*coverity[uninit_use_in_call] */
-	/* ÅĞ¶ÏÊÇ·ñÕÒµ½dsp   ¾µÏñ */
+	/* åˆ¤æ–­æ˜¯å¦æ‰¾åˆ°dsp   é•œåƒ */
     if (memcmp(head.image_name, DSP_IMAGE_NAME, sizeof(DSP_IMAGE_NAME)))
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_DSP, "dsp image not found\r\n");
@@ -241,7 +241,7 @@ static int bsp_dsp_load_image(char* part_name)
 #endif
 
     offset += LPHY_BBE16_MUTI_IMAGE_OFFSET + sizeof(struct image_head) + skip_len;
-	/* ½«¾µÏñ´Ónand   ¶ÁÈëÉêÇëµÄddr   ÖĞ */
+	/* å°†é•œåƒä»nand   è¯»å…¥ç”³è¯·çš„ddr   ä¸­ */
     if (NAND_OK == bsp_nand_read(part_name, offset, (char*)bbe_ddr_addr, LPHY_BBE16_MUTI_IMAGE_SIZE, &skip_len))
     {
         printk(KERN_INFO"succeed to load dsp image, address: 0x%x, size: 0x%x\r\n",
@@ -255,7 +255,7 @@ static int bsp_dsp_load_image(char* part_name)
     }
 
     offset += LPHY_BBE16_MUTI_IMAGE_SIZE + skip_len;
-	/* ½«td   ÅäÖÃĞÅÏ¢´Ónand   ¶ÁÈëÉêÇëµÄddr   ÖĞ */
+	/* å°†td   é…ç½®ä¿¡æ¯ä»nand   è¯»å…¥ç”³è¯·çš„ddr   ä¸­ */
     if (NAND_OK == bsp_nand_read(part_name, offset, (char*)tds_data_addr, TPHY_BBE16_CFG_DATA_SIZE, &skip_len))
     {
         printk(KERN_INFO"succeed to load TD config data, address: 0x%x, size: 0x%x\n",
@@ -271,7 +271,7 @@ static int bsp_dsp_load_image(char* part_name)
 #ifdef CONFIG_HIFI
     if (bsp_dsp_is_hifi_exist())
     {
-    	/* Ö¸Ïòhifi   ¾µÏñÍ· */
+    	/* æŒ‡å‘hifi   é•œåƒå¤´ */
         hifi_head = (struct drv_hifi_image_head *)kmalloc(sizeof(struct drv_hifi_image_head), GFP_KERNEL);
         if (NULL == (void *)hifi_head)
         {
@@ -281,7 +281,7 @@ static int bsp_dsp_load_image(char* part_name)
         }
 
         offset += TPHY_BBE16_CFG_DATA_SIZE + skip_len;
-		/* ´Ónand   ÖĞ¶ÁÈ¡hifi_head    */
+		/* ä»nand   ä¸­è¯»å–hifi_head    */
         if (NAND_OK != bsp_nand_read(part_name, offset, (char*)hifi_head,
             sizeof(struct drv_hifi_image_head), &skip_len))
         {
@@ -306,7 +306,7 @@ static int bsp_dsp_load_image(char* part_name)
             ret = -1;
             goto err_hifi;
         }
-		/* ´Ónand   ÖĞ¶ÁÈ¡hifi   ¾µÏñµ½hifi_image    */
+		/* ä»nand   ä¸­è¯»å–hifi   é•œåƒåˆ°hifi_image    */
         if (NAND_OK != bsp_nand_read(part_name, offset, (char*)hifi_image, hifi_head->image_size, &skip_len))
         {
             bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_DSP, "fail to load hifi image\n");
@@ -315,7 +315,7 @@ static int bsp_dsp_load_image(char* part_name)
             ret = NAND_ERROR;
             goto err_hifi;
         }
-		/* ÊÍ·Å */
+		/* é‡Šæ”¾ */
         kfree(hifi_head);
 
         if (bsp_hifi_load_sections(hifi_image))
@@ -364,7 +364,7 @@ int __init bsp_dsp_probe(struct platform_device *pdev)
 
 #ifndef HI_ONOFF_PHONE
     struct ST_PART_TBL* dsp_part = NULL;
-	/* Í¨¹ıÄ£¿éÃûÀ´²éÕÒÏàÓ¦Ä£¿éµÄ¾µÏñ */
+	/* é€šè¿‡æ¨¡å—åæ¥æŸ¥æ‰¾ç›¸åº”æ¨¡å—çš„é•œåƒ */
     dsp_part = find_partition_by_name(PTABLE_DSP_NM);
     if(NULL == dsp_part)
     {
@@ -372,7 +372,7 @@ int __init bsp_dsp_probe(struct platform_device *pdev)
         ret = -EAGAIN;
         goto err_no_part;
     }
-	/* Í¨¹ı¾µÏñÃûÀ´¼ÓÔØdsp  ¾µÏñ */
+	/* é€šè¿‡é•œåƒåæ¥åŠ è½½dsp  é•œåƒ */
     ret = bsp_dsp_load_image(dsp_part->name);
 
 err_no_part:

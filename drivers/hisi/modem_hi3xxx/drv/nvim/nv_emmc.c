@@ -183,7 +183,7 @@ u32 nv_dload_file_info_init(void)
 }
 
 /*
- * 读nand接口
+ * 璇籲and鎺ュ彛
  * mtd      :   mtd device
  * off      :   loggic offset in this file,need
  * len      :   data len write to flash ,len <= mtd->erasesize
@@ -192,7 +192,7 @@ u32 nv_dload_file_info_init(void)
 u32 nv_mtd_read(struct nv_emmc_file_header_stru* fd,FSZ off,u32 len,u8* ptr)
 {
     u32 ret;
-    u32 offset = 0;    /*传进来的偏移相对于文件头的逻辑偏移*/
+    u32 offset = 0;    /*浼犺繘鏉ョ殑鍋忕Щ鐩稿浜庢枃浠跺ご鐨勯�昏緫鍋忕Щ*/
     struct mtd_info* mtd = fd->mtd;
 
     ret = nv_sec_off_count(fd,off,&offset);
@@ -207,7 +207,7 @@ u32 nv_mtd_read(struct nv_emmc_file_header_stru* fd,FSZ off,u32 len,u8* ptr)
 
 
 /*
- * 写nand接口
+ * 鍐檔and鎺ュ彛
  * mtd      :   mtd device
  * off      :   loggic offset in this file,need
  * len      :   data len write to flash ,len <= mtd->erasesize
@@ -216,7 +216,7 @@ u32 nv_mtd_read(struct nv_emmc_file_header_stru* fd,FSZ off,u32 len,u8* ptr)
 u32 nv_mtd_write(struct nv_emmc_file_header_stru* fd,FSZ off,u32 len,u8* ptr)
 {
     u32 ret;
-    u32 offset = 0;    /*传进来的偏移相对于文件头的逻辑偏移*/
+    u32 offset = 0;    /*浼犺繘鏉ョ殑鍋忕Щ鐩稿浜庢枃浠跺ご鐨勯�昏緫鍋忕Щ*/
     struct mtd_info* mtd = fd->mtd;
 
     ret = nv_sec_off_count(fd,off,&offset);
@@ -516,7 +516,7 @@ s32 nv_emmc_read(u8* ptr, u32 size, u32 count, FILE* fp)
 
     real_size = ((fd->seek+len) < fd->length)? len: (fd->length - fd->seek );
 
-    ret = nv_mtd_read(fd,(fd->off+fd->seek),real_size,ptr);/*读取注意文件seek位置*/
+    ret = nv_mtd_read(fd,(fd->off+fd->seek),real_size,ptr);/*璇诲彇娉ㄦ剰鏂囦欢seek浣嶇疆*/
     if(ret != NAND_OK)
     {
         nv_file_debug(NV_FILE_READ_API,2,(u32)ret,real_size,fd->emmc_type);

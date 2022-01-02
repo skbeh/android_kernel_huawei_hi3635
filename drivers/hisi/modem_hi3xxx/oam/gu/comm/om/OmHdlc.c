@@ -1,19 +1,19 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : OM_Hdlc.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : zengfei 57034
-  Éú³ÉÈÕÆÚ   : 2008Äê6ÔÂ4ÈÕ
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   :
-  º¯ÊýÁÐ±í   :
-  ÐÞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2008Äê6ÔÂ4ÈÕ
-    ×÷    Õß   : zengfei 57034
-    ÐÞ¸ÄÄÚÈÝ   : ´´½¨ÎÄ¼þ
+  æ–‡ ä»¶ å   : OM_Hdlc.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : zengfei 57034
+  ç”Ÿæˆæ—¥æœŸ   : 2008å¹´6æœˆ4æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   :
+  å‡½æ•°åˆ—è¡¨   :
+  ä¿®æ”¹åŽ†å²   :
+  1.æ—¥    æœŸ   : 2008å¹´6æœˆ4æ—¥
+    ä½œ    è€…   : zengfei 57034
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
@@ -25,24 +25,24 @@
 
 
 /******************************************************************************
-   1 Í·ÎÄ¼þ°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "OmHdlcInterface.h"
 
 /******************************************************************************
-   2 Íâ²¿º¯Êý±äÁ¿ÉùÃ÷
+   2 å¤–éƒ¨å‡½æ•°å˜é‡å£°æ˜Ž
 ******************************************************************************/
 
 
 /******************************************************************************
-   3 Ë½ÓÐ¶¨Òå
+   3 ç§æœ‰å®šä¹‰
 ******************************************************************************/
 
 
 /******************************************************************************
-   4 È«¾Ö±äÁ¿¶¨Òå
+   4 å…¨å±€å˜é‡å®šä¹‰
 ******************************************************************************/
-/* ¸ÃÈ«¾ÖÊý×éÎªFCS²éÕÒ±í£¬ÓÃÓÚ¼ÆËã16Î»FCS¡£
+/* è¯¥å…¨å±€æ•°ç»„ä¸ºFCSæŸ¥æ‰¾è¡¨ï¼Œç”¨äºŽè®¡ç®—16ä½FCSã€‚
     rfc1662: the lookup table used to calculate the FCS-16. */
 VOS_UINT16 const g_ausOmHdlcFcsTab[256] = {
    /* 00 */ 0x0000, 0x1189, 0x2312, 0x329b, 0x4624, 0x57ad, 0x6536, 0x74bf,
@@ -82,28 +82,28 @@ VOS_UINT16 const g_ausOmHdlcFcsTab[256] = {
 
 
 /******************************************************************************
-   5 º¯ÊýÊµÏÖ
+   5 å‡½æ•°å®žçŽ°
 ******************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  : Om_HdlcEncap
- ¹¦ÄÜÃèÊö  : ½«ÊäÈëµÄÔ­Ê¼Êý¾Ý·â×°³ÉHDLCÖ¡
- ÊäÈë²ÎÊý  : VOS_UINT8 *pucSrc
+ å‡½ æ•° å  : Om_HdlcEncap
+ åŠŸèƒ½æè¿°  : å°†è¾“å…¥çš„åŽŸå§‹æ•°æ®å°è£…æˆHDLCå¸§
+ è¾“å…¥å‚æ•°  : VOS_UINT8 *pucSrc
              VOS_UINT16 usSrcLen
              VOS_UINT8 *pucDest
              VOS_UINT16 usDestBuffLen
- Êä³ö²ÎÊý  : VOS_UINT16* pusDestLen
- ·µ »Ø Öµ  : VOS_UINT32
-             PS_SUCC: ³É¹¦
-             PS_FAIL: Ê§°Ü
+ è¾“å‡ºå‚æ•°  : VOS_UINT16* pusDestLen
+ è¿” å›ž å€¼  : VOS_UINT32
+             PS_SUCC: æˆåŠŸ
+             PS_FAIL: å¤±è´¥
 
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê6ÔÂ3ÈÕ
-    ×÷    Õß   : zengfei 57034
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´6æœˆ3æ—¥
+    ä½œ    è€…   : zengfei 57034
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 Om_HdlcEncap(
@@ -130,17 +130,17 @@ VOS_UINT32 Om_HdlcEncap(
         return VOS_ERR;
     }
 
-    if (usDestBuffLen <= 4)             /* ÐÅÏ¢Óò³¤¶È²»Îª0µÄHDLCÖ¡³¤¶ÈÖÁÉÙÎª5 */
+    if (usDestBuffLen <= 4)             /* ä¿¡æ¯åŸŸé•¿åº¦ä¸ä¸º0çš„HDLCå¸§é•¿åº¦è‡³å°‘ä¸º5 */
     {
         *pusDestLen = 0;
         vos_printf("\n\rWARNING, Om_HdlcEncap, Dst Buf is not Enough #1:BufLen:%d !\n\r", usDestBuffLen);
         return VOS_ERR;
     }
 
-    /* ÌîÖ¡Í· */
+    /* å¡«å¸§å¤´ */
     *pucDestPos++   = OM_HDLC_FRAME_FLAG;
 
-    /* ±éÀúÊäÈëÊý¾Ý£¬¼ÆËãFCS²¢×ªÒå */
+    /* éåŽ†è¾“å…¥æ•°æ®ï¼Œè®¡ç®—FCSå¹¶è½¬ä¹‰ */
     while (usSrcLen-- && ((pucDestPos - pucDest) <= (usDestBuffLen - 3)))
     {
         usFcs = (usFcs >> 8) ^ g_ausOmHdlcFcsTab[(usFcs ^ *pucSrc) & 0xff];
@@ -156,7 +156,7 @@ VOS_UINT32 Om_HdlcEncap(
         }
     }
 
-    /* ÅÐ¶ÏÄ¿µÄBUFFERÊÇ·ñ¹»Ìí¼ÓFCSºÍÖ¡Î² */
+    /* åˆ¤æ–­ç›®çš„BUFFERæ˜¯å¦å¤Ÿæ·»åŠ FCSå’Œå¸§å°¾ */
     if ((pucDestPos - pucDest) > (usDestBuffLen - 3))
     {
         *pusDestLen = 0;
@@ -166,7 +166,7 @@ VOS_UINT32 Om_HdlcEncap(
 
     usFcs       = ~usFcs;
 
-    /* ×ªÒå²¢Ìí¼ÓFCSµÚÒ»¸ö×Ö½Ú */
+    /* è½¬ä¹‰å¹¶æ·»åŠ FCSç¬¬ä¸€ä¸ªå­—èŠ‚ */
     ucFcsChar   = usFcs & 0xFF;
     if ((OM_HDLC_FRAME_FLAG == ucFcsChar) || (OM_HDLC_ESC == ucFcsChar))
     {
@@ -178,7 +178,7 @@ VOS_UINT32 Om_HdlcEncap(
         *pucDestPos++ = ucFcsChar;
     }
 
-    /* ÅÐ¶ÏÄ¿µÄBUFFERÊÇ·ñ¹»Ìí¼ÓFCSºÍÖ¡Î² */
+    /* åˆ¤æ–­ç›®çš„BUFFERæ˜¯å¦å¤Ÿæ·»åŠ FCSå’Œå¸§å°¾ */
     if ((pucDestPos - pucDest) > (usDestBuffLen - 2))
     {
         *pusDestLen = 0;
@@ -186,7 +186,7 @@ VOS_UINT32 Om_HdlcEncap(
         return VOS_ERR;
     }
 
-    /* ×ªÒå²¢Ìí¼ÓFCSµÚ¶þ¸ö×Ö½Ú */
+    /* è½¬ä¹‰å¹¶æ·»åŠ FCSç¬¬äºŒä¸ªå­—èŠ‚ */
     ucFcsChar       = (usFcs >> 8) & 0xFF;
     if ((OM_HDLC_FRAME_FLAG == ucFcsChar) || (OM_HDLC_ESC == ucFcsChar))
     {
@@ -198,7 +198,7 @@ VOS_UINT32 Om_HdlcEncap(
         *pucDestPos++ = ucFcsChar;
     }
 
-    /* ÅÐ¶ÏÄ¿µÄBUFFERÊÇ·ñ¹»Ìí¼ÓÖ¡Î² */
+    /* åˆ¤æ–­ç›®çš„BUFFERæ˜¯å¦å¤Ÿæ·»åŠ å¸§å°¾ */
     if ((pucDestPos - pucDest) > (usDestBuffLen - 1))
     {
         *pusDestLen = 0;
@@ -213,19 +213,19 @@ VOS_UINT32 Om_HdlcEncap(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Om_HdlcInit
- ¹¦ÄÜÃèÊö  : ¸Ã½Ó¿Ú³õÊ¼»¯HDLCÊµÌåµÄÄÚ²¿±äÁ¿, Ã¿¸öÓ¦ÓÃÔÚµÚÒ»´ÎÊ¹ÓÃ½â·â×°¹¦ÄÜ
-             Om_HdlcDecapÇ°ÐèÒªµ÷ÓÃÒ»´Î¸Ãº¯Êý
- ÊäÈë²ÎÊý  : OM_HDLC_STRU *pstHdlc
- Êä³ö²ÎÊý  : OM_HDLC_STRU *pstHdlc
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : Om_HdlcInit
+ åŠŸèƒ½æè¿°  : è¯¥æŽ¥å£åˆå§‹åŒ–HDLCå®žä½“çš„å†…éƒ¨å˜é‡, æ¯ä¸ªåº”ç”¨åœ¨ç¬¬ä¸€æ¬¡ä½¿ç”¨è§£å°è£…åŠŸèƒ½
+             Om_HdlcDecapå‰éœ€è¦è°ƒç”¨ä¸€æ¬¡è¯¥å‡½æ•°
+ è¾“å…¥å‚æ•°  : OM_HDLC_STRU *pstHdlc
+ è¾“å‡ºå‚æ•°  : OM_HDLC_STRU *pstHdlc
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê6ÔÂ4ÈÕ
-    ×÷    Õß   : zengfei 57034
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´6æœˆ4æ—¥
+    ä½œ    è€…   : zengfei 57034
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID Om_HdlcInit( OM_HDLC_STRU *pstHdlc )
@@ -242,19 +242,19 @@ VOS_VOID Om_HdlcInit( OM_HDLC_STRU *pstHdlc )
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_HdlcFcs
- ¹¦ÄÜÃèÊö  : ¼ÆËãFCS. ¼ûRFC 1662 Appendix C and CCITT X.25 section 2.27.
- ÊäÈë²ÎÊý  : VOS_UINT8 *pucData
+ å‡½ æ•° å  : OM_HdlcFcs
+ åŠŸèƒ½æè¿°  : è®¡ç®—FCS. è§RFC 1662 Appendix C and CCITT X.25 section 2.27.
+ è¾“å…¥å‚æ•°  : VOS_UINT8 *pucData
              VOS_UINT32 ulDataLen
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT16
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT16
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê6ÔÂ3ÈÕ
-    ×÷    Õß   : zengfei 57034
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´6æœˆ3æ—¥
+    ä½œ    è€…   : zengfei 57034
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT16 OM_HdlcFcs( VOS_UINT8 *pucData, VOS_UINT32 ulDataLen )
@@ -270,19 +270,19 @@ VOS_UINT16 OM_HdlcFcs( VOS_UINT8 *pucData, VOS_UINT32 ulDataLen )
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Om_HdlcDecap
- ¹¦ÄÜÃèÊö  : ´ÓÊäÈëµÄHDLCÖ¡×Ö·ûÁ÷ÖÐ½âÎö³öÊý¾ÝÄÚÈÝ
- ÊäÈë²ÎÊý  : OM_HDLC_STRU *pstHdlc
+ å‡½ æ•° å  : Om_HdlcDecap
+ åŠŸèƒ½æè¿°  : ä»Žè¾“å…¥çš„HDLCå¸§å­—ç¬¦æµä¸­è§£æžå‡ºæ•°æ®å†…å®¹
+ è¾“å…¥å‚æ•°  : OM_HDLC_STRU *pstHdlc
              VOS_UINT8 ucChar
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê6ÔÂ3ÈÕ
-    ×÷    Õß   : zengfei 57034
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´6æœˆ3æ—¥
+    ä½œ    è€…   : zengfei 57034
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 OM_HDLC_RESULT_ENUM_UINT32 Om_HdlcDecap( OM_HDLC_STRU *pstHdlc, VOS_UINT8 ucChar )
@@ -301,20 +301,20 @@ OM_HDLC_RESULT_ENUM_UINT32 Om_HdlcDecap( OM_HDLC_STRU *pstHdlc, VOS_UINT8 ucChar
         return HDLC_PARA_ERROR;
     }
 
-    /* Î´ÕÒµ½Ö¡Í·Ê±£¬¶ªÆú·ÇOM_HDLC_FRAME_FLAG×Ö·û */
+    /* æœªæ‰¾åˆ°å¸§å¤´æ—¶ï¼Œä¸¢å¼ƒéžOM_HDLC_FRAME_FLAGå­—ç¬¦ */
     if ((pstHdlc->ulMode & OM_HDLC_MODE_HUNT) && (OM_HDLC_FRAME_FLAG != ucChar))
     {
-        pstHdlc->ulLength   = 0;        /* Èç¹ûÓÃ»§Ê×´Îµ÷ÓÃOm_HdlcDecapÇ°½øÐÐÁË³õÊ¼»¯Om_HdlcInit£¬Ôò´Ë´¦pstHdlc->ulLength¿ÉÒÔ²»Çå0 */
+        pstHdlc->ulLength   = 0;        /* å¦‚æžœç”¨æˆ·é¦–æ¬¡è°ƒç”¨Om_HdlcDecapå‰è¿›è¡Œäº†åˆå§‹åŒ–Om_HdlcInitï¼Œåˆ™æ­¤å¤„pstHdlc->ulLengthå¯ä»¥ä¸æ¸…0 */
         return HDLC_NOT_HDLC_FRAME;
     }
 
     switch (ucChar)
     {
         case OM_HDLC_FRAME_FLAG:
-            pstHdlc->ulMode &= ~OM_HDLC_MODE_HUNT;          /* Çå±ê¼Ç */
+            pstHdlc->ulMode &= ~OM_HDLC_MODE_HUNT;          /* æ¸…æ ‡è®° */
 
             if (pstHdlc->ulLength > OM_HDLC_FCS_LEN)
-            {                           /* ¸Ã·ÖÖ§±íÊ¾½âÎöµ½(ÐÅÏ¢Óò+FCS)³¤¶È´óÓÚ2 BYTEµÄÖ¡ */
+            {                           /* è¯¥åˆ†æ”¯è¡¨ç¤ºè§£æžåˆ°(ä¿¡æ¯åŸŸ+FCS)é•¿åº¦å¤§äºŽ2 BYTEçš„å¸§ */
                 usFcs = OM_HdlcFcs(pstHdlc->pucDecapBuff, pstHdlc->ulLength);
                 if (OM_HDLC_GOOD_FCS != usFcs)
                 {
@@ -327,30 +327,30 @@ OM_HDLC_RESULT_ENUM_UINT32 Om_HdlcDecap( OM_HDLC_STRU *pstHdlc, VOS_UINT8 ucChar
                 return HDLC_SUCC;
             }
             else
-            {                           /* ¸Ã·ÖÖ§ÈôpstHdlc->ulLengthÎª0£¬ÈÏÎªÊÇÕý³£Çé¿ö£ºÁ¬ÐøµÄOM_HDLC_FRAME_FLAG */
-                                        /* ¸Ã·ÖÖ§ÈôpstHdlc->ulLength²»Îª0£¬ÈÏÎªÓÐHDLCÖ¡£¬µ«(ÐÅÏ¢Óò+FCS)³¤¶ÈÐ¡ÓÚ3£¬¹Ê¶ªÆú */
+            {                           /* è¯¥åˆ†æ”¯è‹¥pstHdlc->ulLengthä¸º0ï¼Œè®¤ä¸ºæ˜¯æ­£å¸¸æƒ…å†µï¼šè¿žç»­çš„OM_HDLC_FRAME_FLAG */
+                                        /* è¯¥åˆ†æ”¯è‹¥pstHdlc->ulLengthä¸ä¸º0ï¼Œè®¤ä¸ºæœ‰HDLCå¸§ï¼Œä½†(ä¿¡æ¯åŸŸ+FCS)é•¿åº¦å°äºŽ3ï¼Œæ•…ä¸¢å¼ƒ */
                 pstHdlc->ulLength   = 0;
                 break;
             }
         case OM_HDLC_ESC:
             if (!(pstHdlc->ulMode & OM_HDLC_MODE_ESC))
             {
-                pstHdlc->ulMode |= OM_HDLC_MODE_ESC;        /* ÖÃ±ê¼Ç */
+                pstHdlc->ulMode |= OM_HDLC_MODE_ESC;        /* ç½®æ ‡è®° */
             }
             else
-            {                           /* Òì³£Çé¿ö: Á¬ÐøÁ½¸öOM_HDLC_ESC */
-                pstHdlc->ulMode &= ~OM_HDLC_MODE_ESC;       /* Çå±ê¼Ç */
-                pstHdlc->ulMode |= OM_HDLC_MODE_HUNT;       /* ÖÃ±ê¼Ç */
+            {                           /* å¼‚å¸¸æƒ…å†µ: è¿žç»­ä¸¤ä¸ªOM_HDLC_ESC */
+                pstHdlc->ulMode &= ~OM_HDLC_MODE_ESC;       /* æ¸…æ ‡è®° */
+                pstHdlc->ulMode |= OM_HDLC_MODE_HUNT;       /* ç½®æ ‡è®° */
                 pstHdlc->ulLength = 0;
                 vos_printf("\n\rERROR, Om_HdlcDecap, Esc Char Error:0x%x !\n\r", ucChar);
                 return HDLC_FRAME_DISCARD;
             }
             break;
         default:
-            /* ÅÐ¶ÏÄ¿µÄBUFFERÊÇ·ñÒÑÂú */
+            /* åˆ¤æ–­ç›®çš„BUFFERæ˜¯å¦å·²æ»¡ */
             if (pstHdlc->ulLength >= pstHdlc->ulDecapBuffSize)
-            {                           /* Òì³£Çé¿ö: ½â·â×°BUFFER²»×ã */
-                pstHdlc->ulMode |= OM_HDLC_MODE_HUNT;        /* ÖÃ±ê¼Ç */
+            {                           /* å¼‚å¸¸æƒ…å†µ: è§£å°è£…BUFFERä¸è¶³ */
+                pstHdlc->ulMode |= OM_HDLC_MODE_HUNT;        /* ç½®æ ‡è®° */
                 pstHdlc->ulLength = 0;
                 vos_printf("\n\rWARNING, Om_HdlcDecap, Dst Buf is full #1:BufLen:%d !\n\r", (VOS_INT32)pstHdlc->ulDecapBuffSize);
                 return HDLC_BUFF_FULL;
@@ -358,15 +358,15 @@ OM_HDLC_RESULT_ENUM_UINT32 Om_HdlcDecap( OM_HDLC_STRU *pstHdlc, VOS_UINT8 ucChar
 
             if (pstHdlc->ulMode & OM_HDLC_MODE_ESC)
             {
-                pstHdlc->ulMode &= ~OM_HDLC_MODE_ESC;          /* Çå±ê¼Ç */
+                pstHdlc->ulMode &= ~OM_HDLC_MODE_ESC;          /* æ¸…æ ‡è®° */
                 if (((OM_HDLC_FRAME_FLAG^OM_HDLC_ESC_MASK) == ucChar)
                     || ((OM_HDLC_ESC^OM_HDLC_ESC_MASK) == ucChar))
                 {
                     ucChar ^= OM_HDLC_ESC_MASK;
                 }
                 else
-                {                           /* Òì³£Çé¿ö: OM_HDLC_ESCºóÃæµÄ×Ö·û²»ÕýÈ· */
-                    pstHdlc->ulMode |= OM_HDLC_MODE_HUNT;        /* ÖÃ±ê¼Ç */
+                {                           /* å¼‚å¸¸æƒ…å†µ: OM_HDLC_ESCåŽé¢çš„å­—ç¬¦ä¸æ­£ç¡® */
+                    pstHdlc->ulMode |= OM_HDLC_MODE_HUNT;        /* ç½®æ ‡è®° */
                     pstHdlc->ulLength = 0;
                     vos_printf("\n\rERROR, Om_HdlcDecap, Esc Char Error:0x%x !\n\r", ucChar);
                     return HDLC_FRAME_DISCARD;

@@ -1,24 +1,24 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓĞ (C), 2001-2011, »ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼ş Ãû   : CsdDebug.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   :
-  Éú³ÉÈÕÆÚ   : 2012Äê1ÔÂ29ÈÕ
-  ×î½üĞŞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : CSDµ÷ÊÔĞÅÏ¢
-  º¯ÊıÁĞ±í   :
-  ĞŞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2012Äê1ÔÂ29ÈÕ
-    ×÷    Õß   :
-    ĞŞ¸ÄÄÚÈİ   : ´´½¨ÎÄ¼ş
+  æ–‡ ä»¶ å   : CsdDebug.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   :
+  ç”Ÿæˆæ—¥æœŸ   : 2012å¹´1æœˆ29æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : CSDè°ƒè¯•ä¿¡æ¯
+  å‡½æ•°åˆ—è¡¨   :
+  ä¿®æ”¹å†å²   :
+  1.æ—¥    æœŸ   : 2012å¹´1æœˆ29æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include  "CsdDebug.h"
 
@@ -32,23 +32,23 @@ extern "C" {
 #if( FEATURE_ON == FEATURE_CSD )
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 CSD_UL_STATUS_INFO_STRU                 g_stCsdStatusInfo = {0};
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 VOS_VOID CSD_ShowULStatus(VOS_VOID)
 {
-    vos_printf("CSDÊÕµ½ÉÏĞĞÊı¾İµÄ¸öÊı                             %d\n",g_stCsdStatusInfo.ulULRecvPktNum);
-    vos_printf("CSDÉÏĞĞ»º´æÖĞÊı¾İ°üµÄ¸öÊı                         %d\n",g_stCsdStatusInfo.ulULSaveBuffPktNum);
-    vos_printf("CSDÉÏĞĞÈë¶ÓÊ§°ÜµÄ´ÎÊı                             %d\n",g_stCsdStatusInfo.ulULEnQueFail);
-    vos_printf("CSD·¢ËÍÉÏĞĞ»º´æ°üÊıÁ¿                             %d\n",g_stCsdStatusInfo.ulULSendPktNum);
-    vos_printf("CSD·¢ËÍÉÏĞĞÊı¾İÊ±´Ó¶ÓÁĞÖĞ»ñÈ¡µ½¿ÕÖ¸Õë°üÊıÄ¿       %d\n",g_stCsdStatusInfo.ulULQueNullNum);
-    vos_printf("CSD·¢ËÍÉÏĞĞÊı¾İsk_bufferÍ·×ª»»µ½IMMÍ·Ê§°ÜµÄ°üÊıÄ¿ %d\n",g_stCsdStatusInfo.ulULZcToImmFailNum);
-    vos_printf("CSD·¢ËÍÉÏĞĞÊı¾İ²åÈëDICCÍ¨µÀÊ§°ÜµÄ°üÊıÄ¿           %d\n",g_stCsdStatusInfo.ulULInsertDiccFailNum);
+    vos_printf("CSDæ”¶åˆ°ä¸Šè¡Œæ•°æ®çš„ä¸ªæ•°                             %d\n",g_stCsdStatusInfo.ulULRecvPktNum);
+    vos_printf("CSDä¸Šè¡Œç¼“å­˜ä¸­æ•°æ®åŒ…çš„ä¸ªæ•°                         %d\n",g_stCsdStatusInfo.ulULSaveBuffPktNum);
+    vos_printf("CSDä¸Šè¡Œå…¥é˜Ÿå¤±è´¥çš„æ¬¡æ•°                             %d\n",g_stCsdStatusInfo.ulULEnQueFail);
+    vos_printf("CSDå‘é€ä¸Šè¡Œç¼“å­˜åŒ…æ•°é‡                             %d\n",g_stCsdStatusInfo.ulULSendPktNum);
+    vos_printf("CSDå‘é€ä¸Šè¡Œæ•°æ®æ—¶ä»é˜Ÿåˆ—ä¸­è·å–åˆ°ç©ºæŒ‡é’ˆåŒ…æ•°ç›®       %d\n",g_stCsdStatusInfo.ulULQueNullNum);
+    vos_printf("CSDå‘é€ä¸Šè¡Œæ•°æ®sk_bufferå¤´è½¬æ¢åˆ°IMMå¤´å¤±è´¥çš„åŒ…æ•°ç›® %d\n",g_stCsdStatusInfo.ulULZcToImmFailNum);
+    vos_printf("CSDå‘é€ä¸Šè¡Œæ•°æ®æ’å…¥DICCé€šé“å¤±è´¥çš„åŒ…æ•°ç›®           %d\n",g_stCsdStatusInfo.ulULInsertDiccFailNum);
     vos_printf("\r\n");
 
     return;
@@ -56,9 +56,9 @@ VOS_VOID CSD_ShowULStatus(VOS_VOID)
 
 VOS_VOID CSD_ShowDLStatus(VOS_VOID)
 {
-    vos_printf("CSDÊÕµ½ÏÂĞĞÊı¾İµÄ¸öÊı                             %d\n",g_stCsdStatusInfo.ulDLRecvPktNum);
-    vos_printf("CSD·¢ËÍÏÂĞĞ»º´æ°üÊıÁ¿                             %d\n",g_stCsdStatusInfo.ulDLSendPktNum);
-    vos_printf("CSDÏÂĞĞ·¢ËÍÊ§°Ü°üµÄÊıÄ¿                           %d\n",g_stCsdStatusInfo.ulDLSendFailNum);
+    vos_printf("CSDæ”¶åˆ°ä¸‹è¡Œæ•°æ®çš„ä¸ªæ•°                             %d\n",g_stCsdStatusInfo.ulDLRecvPktNum);
+    vos_printf("CSDå‘é€ä¸‹è¡Œç¼“å­˜åŒ…æ•°é‡                             %d\n",g_stCsdStatusInfo.ulDLSendPktNum);
+    vos_printf("CSDä¸‹è¡Œå‘é€å¤±è´¥åŒ…çš„æ•°ç›®                           %d\n",g_stCsdStatusInfo.ulDLSendFailNum);
     vos_printf("\r\n");
 
     return;
@@ -66,9 +66,9 @@ VOS_VOID CSD_ShowDLStatus(VOS_VOID)
 
 VOS_VOID CSD_Help(VOS_VOID)
 {
-    vos_printf("********************CSDÈíµ÷ĞÅÏ¢************************\n");
-    vos_printf("CSD_ShowULStatus                         ÏÔÊ¾CSDÉÏĞĞÍ³¼ÆĞÅÏ¢\n");
-    vos_printf("CSD_ShowDLStatus                         ÏÔÊ¾CSDÏÂĞĞÍ³¼ÆĞÅÏ¢\n");
+    vos_printf("********************CSDè½¯è°ƒä¿¡æ¯************************\n");
+    vos_printf("CSD_ShowULStatus                         æ˜¾ç¤ºCSDä¸Šè¡Œç»Ÿè®¡ä¿¡æ¯\n");
+    vos_printf("CSD_ShowDLStatus                         æ˜¾ç¤ºCSDä¸‹è¡Œç»Ÿè®¡ä¿¡æ¯\n");
 
     return;
 }

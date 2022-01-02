@@ -1,19 +1,19 @@
 /******************************************************************************
  *//*
- *//*                  °æÈ¨ËùÓÐ (C), 1998-2010, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+ *//*                  ç‰ˆæƒæ‰€æœ‰ (C), 1998-2010, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
  *//*
  *//******************************************************************************
- *//*  ÎÄ ¼þ Ãû   : at_cmd_upgrade.c
- *//*  °æ ±¾ ºÅ   : V1.0
+ *//*  æ–‡ ä»¶ å   : at_cmd_upgrade.c
+ *//*  ç‰ˆ æœ¬ å·   : V1.0
  *
- *//*  Éú³ÉÈÕÆÚ   : 2010-11-29
- *//*  ¹¦ÄÜÃèÊö   : TODO: ...
+ *//*  ç”Ÿæˆæ—¥æœŸ   : 2010-11-29
+ *//*  åŠŸèƒ½æè¿°   : TODO: ...
  *//*
- *//*  º¯ÊýÁÐ±í   : TODO: ...
- *//*  ÐÞ¸ÄÀúÊ·   :
- *//*  1.ÈÕ    ÆÚ : 2010-11-29
+ *//*  å‡½æ•°åˆ—è¡¨   : TODO: ...
+ *//*  ä¿®æ”¹åŽ†å²   :
+ *//*  1.æ—¥    æœŸ : 2010-11-29
  *
- *//*    ÐÞ¸ÄÄÚÈÝ : ´´½¨ÎÄ¼þ
+ *//*    ä¿®æ”¹å†…å®¹ : åˆ›å»ºæ–‡ä»¶
  *//*
  *//******************************************************************************
  */
@@ -29,12 +29,12 @@
 #include "at_lte_common.h"
 #include "ATCmdProc.h"
 #include "DrvInterface.h"
-/*lint -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -e767 åŽŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_AT_LTE_UPGRADE_PROC_C
 /*lint +e767 */
 VOS_UINT32 g_atNvBackupFlag = 0;
 
-/*bootromµÄ°æ±¾²éÑ¯*/
+/*bootromçš„ç‰ˆæœ¬æŸ¥è¯¢*/
 VOS_UINT32 atQryBootRomVer(VOS_UINT8 ucClientId)
 {
 #if 0
@@ -150,7 +150,7 @@ VOS_UINT32 At_GetImei(VOS_CHAR szimei [ 16 ])
 
         for (subscript = 0; subscript < uslen; subscript++)
         {
-            *(szimei + subscript) = *(auctemp + subscript) + 0x30; /*×Ö·û×ª»»*/
+            *(szimei + subscript) = *(auctemp + subscript) + 0x30; /*å­—ç¬¦è½¬æ¢*/
         }
 
         szimei[AT_NV_IMEI_LEN - 1] = checkdata + 0x30;
@@ -194,7 +194,7 @@ VOS_UINT32 atQryDLoadVer(VOS_UINT8 ucClientId)
     return AT_OK;
 }
 
-/*±¾ÃüÁîÓÃ»§²éÑ¯µ¥°åÐÅÏ¢£¬ÓÃÓÚ·µ»Øµ¥°åºÍºóÌ¨°æ±¾ºÅ¡¢²úÆ·ÐÍºÅÃû³Æ¡¢ÏÂÔØÀàÐÍÐÅÏ¢*/
+/*æœ¬å‘½ä»¤ç”¨æˆ·æŸ¥è¯¢å•æ¿ä¿¡æ¯ï¼Œç”¨äºŽè¿”å›žå•æ¿å’ŒåŽå°ç‰ˆæœ¬å·ã€äº§å“åž‹å·åç§°ã€ä¸‹è½½ç±»åž‹ä¿¡æ¯*/
 VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
 {
     VOS_UINT32 ulRst = AT_OK;
@@ -209,7 +209,7 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
         return AT_ERROR;
     }
 
-    /*»ñÈ¡Èí¼þ°æ±¾ºÅ×Ö·û´®*/
+    /*èŽ·å–è½¯ä»¶ç‰ˆæœ¬å·å­—ç¬¦ä¸²*/
     MSP_MEMSET(pData,0, UPGRADE_STR_BUF_SIZE);
     ulRst = BSP_DLOAD_GetSoftwareVer((BSP_CHAR *)pData,UPGRADE_STR_BUF_SIZE);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -224,7 +224,7 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
                                             "\rswver:%s\r\n",
                                             pData
                                           );
-    /*ºóÌ¨°æ±¾ºÅ×Ö·û´® */
+    /*åŽå°ç‰ˆæœ¬å·å­—ç¬¦ä¸² */
     MSP_MEMSET(pData,0, UPGRADE_STR_BUF_SIZE);
     ulRst = BSP_DLOAD_GetISOVer((BSP_CHAR *)pData,UPGRADE_STR_BUF_SIZE);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -240,7 +240,7 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
                                             "\r\nisover:%s\r\n",
                                             pData
                                           );
-    /*²úÆ·Ãû³Æ×Ö·û´®*/
+    /*äº§å“åç§°å­—ç¬¦ä¸²*/
     MSP_MEMSET(pData,0, UPGRADE_STR_BUF_SIZE);
     ulRst = BSP_GetProductName((char *)pData,UPGRADE_STR_BUF_SIZE);
     if(ulRst != ERR_MSP_SUCCESS)
@@ -255,7 +255,7 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
                                             "\r\nproduct name:%s\r\n",
                                             pData
                                           );
-    /*»ñÈ¡ÏÂÔØÀàÐÍ*/
+    /*èŽ·å–ä¸‹è½½ç±»åž‹*/
     MSP_MEMSET(pData,0, UPGRADE_STR_BUF_SIZE);
     ulRst = BSP_DLOAD_GetDloadType();
     if((ulRst != 0)&&(ulRst != 1))
@@ -277,7 +277,7 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
     return AT_OK;
 }
 
-/*NV±¸·ÝÃüÁî*/
+/*NVå¤‡ä»½å‘½ä»¤*/
 VOS_UINT32 atSetNVBackup(VOS_UINT8 ucClientId)
 {
     VOS_UINT32 ulRst = AT_OK;
@@ -301,7 +301,7 @@ VOS_UINT32 atSetNVBackup(VOS_UINT8 ucClientId)
     return AT_OK;
 }
 
-/*NV»Ö¸´ÃüÁî*/
+/*NVæ¢å¤å‘½ä»¤*/
 VOS_UINT32 atSetNVRestore(VOS_UINT8 ucClientId)
 {
     VOS_UINT32 ulRst = AT_OK;
@@ -378,7 +378,7 @@ VOS_UINT32 atQryAuthorityID(VOS_UINT8 ucClientId)
     return AT_OK;
 }
 
-//ÇÐ»»µ½ÏÂÔØÄ£Ê½ÃüÁîµ¥°åÖØÆôºó½«½øÈëÏÂÔØÄ£Ê½
+//åˆ‡æ¢åˆ°ä¸‹è½½æ¨¡å¼å‘½ä»¤å•æ¿é‡å¯åŽå°†è¿›å…¥ä¸‹è½½æ¨¡å¼
 VOS_UINT32 atSetGodLoad(VOS_UINT8 ucClientId)
 {
     gstAtSendData.usBufLen = 0;
@@ -400,17 +400,17 @@ VOS_UINT32 atSetGodLoad(VOS_UINT8 ucClientId)
 }
 
 //*****************************************************************************
-// º¯ÊýÃû³Æ: atSetReset
-// ¹¦ÄÜÃèÊö: µ¥°åÖØÆôÃüÁî "^RESET"
+// å‡½æ•°åç§°: atSetReset
+// åŠŸèƒ½æè¿°: å•æ¿é‡å¯å‘½ä»¤ "^RESET"
 //
-// ²ÎÊýËµÃ÷:
-//   ulIndex [in] ÓÃ»§Ë÷Òý
+// å‚æ•°è¯´æ˜Ž:
+//   ulIndex [in] ç”¨æˆ·ç´¢å¼•
 //
-// ·µ »Ø Öµ:
+// è¿” å›ž å€¼:
 //    TODO: ...
 //
-// µ÷ÓÃÒªÇó: TODO: ...
-// µ÷ÓÃ¾ÙÀý: TODO: ...
+// è°ƒç”¨è¦æ±‚: TODO: ...
+// è°ƒç”¨ä¸¾ä¾‹: TODO: ...
 //*****************************************************************************
 VOS_UINT32 atSetReset(VOS_UINT8 ucClientId)
 {
@@ -430,7 +430,7 @@ VOS_UINT32 atSetReset(VOS_UINT8 ucClientId)
 
 }
 
-//×Ô¶¯»Ö¸´×´Ì¬²éÑ¯
+//è‡ªåŠ¨æ¢å¤çŠ¶æ€æŸ¥è¯¢
 VOS_UINT32 atSetNVRstSTTS(VOS_UINT8 ucClientId)
 {
     VOS_UINT32 ulRst = AT_OK;
@@ -481,7 +481,7 @@ VOS_UINT32 atSetNVFactoryRestore(VOS_UINT8 ucClientId)
 {
     VOS_UINT32 ulRst = AT_OK;
 
-    /*ÒòÎªMODEN²¦ºÅ»áÏÂ·¢¸ÃÃüÁî£¬ËùÒÔÔÚmoden¿Ú²»½øÐÐNV»Ö¸´£¬Ö±½Ó·µ»ØOK*/
+    /*å› ä¸ºMODENæ‹¨å·ä¼šä¸‹å‘è¯¥å‘½ä»¤ï¼Œæ‰€ä»¥åœ¨modenå£ä¸è¿›è¡ŒNVæ¢å¤ï¼Œç›´æŽ¥è¿”å›žOK*/
     if ( AT_MODEM_USER == gastAtClientTab[ucClientId].UserType )
     {
         return AT_OK;
@@ -836,17 +836,17 @@ VOS_UINT32 atSetSdloadCnf(VOS_UINT8 ucClientId,VOS_VOID *pMsgBlock)
 /* END: To_Be_Deleted_V7R2 */
 #if 0
 //*****************************************************************************
-// º¯ÊýÃû³Æ: atQryBootRomVer
-// ¹¦ÄÜÃèÊö: ²éÑ¯ÏÂÔØÐ­Òé°æ±¾ÃüÁî "^BOOTROMVER"
+// å‡½æ•°åç§°: atQryBootRomVer
+// åŠŸèƒ½æè¿°: æŸ¥è¯¢ä¸‹è½½åè®®ç‰ˆæœ¬å‘½ä»¤ "^BOOTROMVER"
 //
-// ²ÎÊýËµÃ÷:
-//   ulIndex [in] ÓÃ»§Ë÷Òý
+// å‚æ•°è¯´æ˜Ž:
+//   ulIndex [in] ç”¨æˆ·ç´¢å¼•
 //
-// ·µ »Ø Öµ:
+// è¿” å›ž å€¼:
 //    TODO: ...
 //
-// µ÷ÓÃÒªÇó: TODO: ...
-// µ÷ÓÃ¾ÙÀý: TODO: ...
+// è°ƒç”¨è¦æ±‚: TODO: ...
+// è°ƒç”¨ä¸¾ä¾‹: TODO: ...
 //*****************************************************************************
 /*
 VOS_UINT32 atQryBootRomVer(VOS_UINT8 ucClientId)
@@ -856,14 +856,14 @@ VOS_UINT32 atQryBootRomVer(VOS_UINT8 ucClientId)
     VOS_CHAR szSendStr[MSP_UPGRADE_DLOAD_VER_LEN +1] = {0,};
     VOS_UINT32 i = 0;
     gstLAtSendData.usBufLen = 0;
-    //ÉêÇëÓÃÓÚ»ñÈ¡ÏÂÔØÐ­Òé°æ±¾ºÅµÄÄÚ´æ
+    //ç”³è¯·ç”¨äºŽèŽ·å–ä¸‹è½½åè®®ç‰ˆæœ¬å·çš„å†…å­˜
     pcStr = (VOS_CHAR*)MSP_MALLOC(UPGRADE_STR_BUF_SIZE);
     if( NULL == pcStr )
     {
         return AT_CME_MEMORY_FAILURE;
     }
     MSP_MEMSET(pcStr,0,UPGRADE_STR_BUF_SIZE);
-    //µ÷ÓÃµ×Èí½Ó¿Ú£¬»ñÈ¡ÏÂÔØÐ­Òé°æ±¾ºÅ
+    //è°ƒç”¨åº•è½¯æŽ¥å£ï¼ŒèŽ·å–ä¸‹è½½åè®®ç‰ˆæœ¬å·
     ret = sda_GetBootRomVer((S8_T*)pcStr,(S32_T)UPGRADE_STR_BUF_SIZE);
     if( (ERR_MSP_FAILURE == ret)
         || (ERR_MSP_INVALID_PARAMETER == ret)
@@ -900,19 +900,19 @@ VOS_UINT32 atQryBootRomVer(VOS_UINT8 ucClientId)
 
 
 //*****************************************************************************
-// º¯ÊýÃû³Æ: atSetDLoadVer
-// ¹¦ÄÜÃèÊö: ²éÑ¯ÏÂÔØÐ­Òé°æ±¾ÃüÁî "^DLOADVER"
+// å‡½æ•°åç§°: atSetDLoadVer
+// åŠŸèƒ½æè¿°: æŸ¥è¯¢ä¸‹è½½åè®®ç‰ˆæœ¬å‘½ä»¤ "^DLOADVER"
 //
-// ²ÎÊýËµÃ÷:
-//   ulIndex [in] ÓÃ»§Ë÷Òý
+// å‚æ•°è¯´æ˜Ž:
+//   ulIndex [in] ç”¨æˆ·ç´¢å¼•
 //
-// ·µ »Ø Öµ:
+// è¿” å›ž å€¼:
 //    TODO: ...
 //
-// µ÷ÓÃÒªÇó: TODO: ...
-// µ÷ÓÃ¾ÙÀý: TODO: ...
+// è°ƒç”¨è¦æ±‚: TODO: ...
+// è°ƒç”¨ä¸¾ä¾‹: TODO: ...
 //*****************************************************************************
-/* Ô­°æ±¸·Ý
+/* åŽŸç‰ˆå¤‡ä»½
 VOS_UINT32 atQryDLoadVer(VOS_UINT8 ucClientId)
 {
     S32_T ret = 0;
@@ -923,7 +923,7 @@ VOS_UINT32 atQryDLoadVer(VOS_UINT8 ucClientId)
     VOS_UINT32 i = 0;
     gstLAtSendData.usBufLen = 0;
 
-    //ÉêÇëÓÃÓÚ»ñÈ¡ÏÂÔØÐ­Òé°æ±¾ºÅµÄÄÚ´æ
+    //ç”³è¯·ç”¨äºŽèŽ·å–ä¸‹è½½åè®®ç‰ˆæœ¬å·çš„å†…å­˜
     pcStr = (VOS_CHAR*)MSP_MALLOC(UPGRADE_STR_BUF_SIZE);
     if( NULL == pcStr )
     {
@@ -931,7 +931,7 @@ VOS_UINT32 atQryDLoadVer(VOS_UINT8 ucClientId)
     }
     MSP_MEMSET(pcStr,0,UPGRADE_STR_BUF_SIZE);
 
-    //µ÷ÓÃµ×Èí½Ó¿Ú£¬»ñÈ¡ÏÂÔØÐ­Òé°æ±¾ºÅ
+    //è°ƒç”¨åº•è½¯æŽ¥å£ï¼ŒèŽ·å–ä¸‹è½½åè®®ç‰ˆæœ¬å·
     ret = sda_GetDLoadVer((S8_T*)pcStr,(S32_T)UPGRADE_STR_BUF_SIZE);
     if( (ERR_MSP_FAILURE == ret)
         || (ERR_MSP_INVALID_PARAMETER == ret)
@@ -966,38 +966,38 @@ VOS_UINT32 atQryDLoadVer(VOS_UINT8 ucClientId)
 #endif
 #if 0
 //*****************************************************************************
-// º¯ÊýÃû³Æ: atSetDLoadInfo
-// ¹¦ÄÜÃèÊö: »ñÈ¡µ¥°åÐÅÏ¢ÃüÁî "^DLOADINFO"
+// å‡½æ•°åç§°: atSetDLoadInfo
+// åŠŸèƒ½æè¿°: èŽ·å–å•æ¿ä¿¡æ¯å‘½ä»¤ "^DLOADINFO"
 //
-// ²ÎÊýËµÃ÷:
-//   ulIndex [in] ÓÃ»§Ë÷Òý
+// å‚æ•°è¯´æ˜Ž:
+//   ulIndex [in] ç”¨æˆ·ç´¢å¼•
 //
-// ·µ »Ø Öµ:
+// è¿” å›ž å€¼:
 //    TODO: ...
 //
-// µ÷ÓÃÒªÇó: TODO: ...
-// µ÷ÓÃ¾ÙÀý: TODO: ...
+// è°ƒç”¨è¦æ±‚: TODO: ...
+// è°ƒç”¨ä¸¾ä¾‹: TODO: ...
 //*****************************************************************************
 
-//Ô­×÷±¸·Ý
+//åŽŸä½œå¤‡ä»½
 VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
 {
     S32_T len = 0;
     S32_T ret = 0;
 
-    //Èí¼þ°æ±¾ºÅ
+    //è½¯ä»¶ç‰ˆæœ¬å·
     VOS_CHAR *pcStrSoftWare  = NULL;
     VOS_CHAR szSendSW[MSP_UPGRADE_DLOAD_SOFTWARE_LEN +1] = {0,};
 
-    //ºóÌ¨°æ±¾ºÅ
+    //åŽå°ç‰ˆæœ¬å·
     VOS_CHAR *pcStrIsoVer    = NULL;
     VOS_CHAR szSendISO[MSP_UPGRADE_DLOAD_ISO_LEN+1]={0,};
 
-    //²úÆ·Ãû³Æ
+    //äº§å“åç§°
     VOS_CHAR *pcStrProductID = NULL;
     VOS_CHAR szSendProductID[MSP_UPGRADE_DLOAD_PRODUCTID_LEN+1]={0,};
 
-    //ÏÂÔØÀàÐÍ
+    //ä¸‹è½½ç±»åž‹
     VOS_CHAR *pcStrDLoadType = NULL;
     VOS_CHAR szSendDloadType[4]={0,};
 
@@ -1005,7 +1005,7 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
 
     gstLAtSendData.usBufLen = 0;
 
-    //»ñÈ¡Èí¼þ°æ±¾ºÅ×Ö·û´®
+    //èŽ·å–è½¯ä»¶ç‰ˆæœ¬å·å­—ç¬¦ä¸²
     {
         pcStrSoftWare = (VOS_CHAR*)MSP_MALLOC(UPGRADE_STR_BUF_SIZE);
         if( NULL == pcStrSoftWare )
@@ -1034,7 +1034,7 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
         pcStrSoftWare = NULL;
     }
 
-    //ºóÌ¨°æ±¾ºÅ×Ö·û´®
+    //åŽå°ç‰ˆæœ¬å·å­—ç¬¦ä¸²
     {
         pcStrIsoVer = (VOS_CHAR*)MSP_MALLOC(UPGRADE_STR_BUF_SIZE);
         if( NULL == pcStrIsoVer )
@@ -1063,7 +1063,7 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
         pcStrIsoVer = NULL;
     }
 
-    //²úÆ·Ãû³Æ×Ö·û´®
+    //äº§å“åç§°å­—ç¬¦ä¸²
     {
         pcStrProductID = (VOS_CHAR*)MSP_MALLOC(UPGRADE_STR_BUF_SIZE);
         if( NULL == pcStrProductID )
@@ -1094,7 +1094,7 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
 
     }
 
-    //»ñÈ¡ÏÂÔØÀàÐÍ
+    //èŽ·å–ä¸‹è½½ç±»åž‹
     {
         ret = sda_GetDloadType();
         if((ret != 0) && (ret != 1))
@@ -1146,26 +1146,26 @@ VOS_UINT32 atQryDLoadInfo(VOS_UINT8 ucClientId)
 #endif
 #if 0
 //*****************************************************************************
-// º¯ÊýÃû³Æ: atSetNVBackup
-// ¹¦ÄÜÃèÊö: NV±¸·ÝÃüÁî "^NVBACKUP"
+// å‡½æ•°åç§°: atSetNVBackup
+// åŠŸèƒ½æè¿°: NVå¤‡ä»½å‘½ä»¤ "^NVBACKUP"
 //
-// ²ÎÊýËµÃ÷:
-//   ulIndex [in] ÓÃ»§Ë÷Òý
+// å‚æ•°è¯´æ˜Ž:
+//   ulIndex [in] ç”¨æˆ·ç´¢å¼•
 //
-// ·µ »Ø Öµ:
+// è¿” å›ž å€¼:
 //    TODO: ...
 //
-// µ÷ÓÃÒªÇó: TODO: ...
-// µ÷ÓÃ¾ÙÀý: TODO: ...
+// è°ƒç”¨è¦æ±‚: TODO: ...
+// è°ƒç”¨ä¸¾ä¾‹: TODO: ...
 //*****************************************************************************
 /*
-//Ô­×÷±¸·Ý
+//åŽŸä½œå¤‡ä»½
 VOS_UINT32 atSetNVBackup(VOS_UINT8 ucClientId)
 {
 
     VOS_UINT32 ret = AT_OK;
 
-    //¼ÇÂ¼Ò»´ÎNVÉý¼¶µÄ±¸·Ý
+    //è®°å½•ä¸€æ¬¡NVå‡çº§çš„å¤‡ä»½
     g_atNvBackupFlag++;
 
     ret = LNVM_UpgradeBackup(2);
@@ -1189,17 +1189,17 @@ VOS_UINT32 atSetNVBackup(VOS_UINT8 ucClientId)
 
 
 //*****************************************************************************
-// º¯ÊýÃû³Æ: atSetNVRestore
-// ¹¦ÄÜÃèÊö: NV»Ö¸´ÃüÁî "^NVRESTORE"
+// å‡½æ•°åç§°: atSetNVRestore
+// åŠŸèƒ½æè¿°: NVæ¢å¤å‘½ä»¤ "^NVRESTORE"
 //
-// ²ÎÊýËµÃ÷:
-//   ulIndex [in] ÓÃ»§Ë÷Òý
+// å‚æ•°è¯´æ˜Ž:
+//   ulIndex [in] ç”¨æˆ·ç´¢å¼•
 //
-// ·µ »Ø Öµ:
+// è¿” å›ž å€¼:
 //    TODO: ...
 //
-// µ÷ÓÃÒªÇó: TODO: ...
-// µ÷ÓÃ¾ÙÀý: TODO: ...
+// è°ƒç”¨è¦æ±‚: TODO: ...
+// è°ƒç”¨ä¸¾ä¾‹: TODO: ...
 //*****************************************************************************
 /*
 VOS_UINT32 atSetNVRestore(VOS_UINT8 ucClientId)
@@ -1226,20 +1226,20 @@ VOS_UINT32 atSetNVRestore(VOS_UINT8 ucClientId)
 
 
 //*****************************************************************************
-// º¯ÊýÃû³Æ: atSetAuthorityVer
-// ¹¦ÄÜÃèÊö: ²éÑ¯¼øÈ¨Ð­Òé°æ±¾ºÅ "^AUTHORITYVER"
+// å‡½æ•°åç§°: atSetAuthorityVer
+// åŠŸèƒ½æè¿°: æŸ¥è¯¢é‰´æƒåè®®ç‰ˆæœ¬å· "^AUTHORITYVER"
 //
-// ²ÎÊýËµÃ÷:
-//   ulIndex [in] ÓÃ»§Ë÷Òý
+// å‚æ•°è¯´æ˜Ž:
+//   ulIndex [in] ç”¨æˆ·ç´¢å¼•
 //
-// ·µ »Ø Öµ:
+// è¿” å›ž å€¼:
 //    TODO: ...
 //
-// µ÷ÓÃÒªÇó: TODO: ...
-// µ÷ÓÃ¾ÙÀý: TODO: ...
+// è°ƒç”¨è¦æ±‚: TODO: ...
+// è°ƒç”¨ä¸¾ä¾‹: TODO: ...
 //*****************************************************************************
 /*
-//Ô­×÷±¸·Ý
+//åŽŸä½œå¤‡ä»½
 VOS_UINT32 atQryAuthorityVer(VOS_UINT8 ucClientId)
 {
     S32_T ret = 0;
@@ -1247,7 +1247,7 @@ VOS_UINT32 atQryAuthorityVer(VOS_UINT8 ucClientId)
     VOS_CHAR szAuthorityVer[MSP_UPGRADE_DLOAD_VER_LEN +1] = {0,};
     VOS_UINT32 i = 0;
 
-    //Îª»ñÈ¡¼øÈ¨Ð­Òé°æ±¾ÉêÇëÄÚ´æ
+    //ä¸ºèŽ·å–é‰´æƒåè®®ç‰ˆæœ¬ç”³è¯·å†…å­˜
     pcStr = (VOS_CHAR*)MSP_MALLOC(UPGRADE_STR_BUF_SIZE);
     if( NULL == pcStr )
     {
@@ -1255,7 +1255,7 @@ VOS_UINT32 atQryAuthorityVer(VOS_UINT8 ucClientId)
     }
     MSP_MEMSET(pcStr,0,UPGRADE_STR_BUF_SIZE);
 
-    //»ñÈ¡¼øÈ¨Ð­Òé°æ±¾
+    //èŽ·å–é‰´æƒåè®®ç‰ˆæœ¬
     ret = sda_GetAuthorityVer((S8_T *)pcStr, (S32_T)UPGRADE_STR_BUF_SIZE);
 
     if( (ERR_MSP_FAILURE == ret) || (ret > MSP_UPGRADE_DLOAD_VER_LEN))
@@ -1291,20 +1291,20 @@ VOS_UINT32 atQryAuthorityVer(VOS_UINT8 ucClientId)
 
 
 //*****************************************************************************
-// º¯ÊýÃû³Æ: atSetAuthorityID
-// ¹¦ÄÜÃèÊö: ²éÑ¯¼øÈ¨±êÊ¶ "^AUTHORITYID"
+// å‡½æ•°åç§°: atSetAuthorityID
+// åŠŸèƒ½æè¿°: æŸ¥è¯¢é‰´æƒæ ‡è¯† "^AUTHORITYID"
 //
-// ²ÎÊýËµÃ÷:
-//   ulIndex [in] ÓÃ»§Ë÷Òý
+// å‚æ•°è¯´æ˜Ž:
+//   ulIndex [in] ç”¨æˆ·ç´¢å¼•
 //
-// ·µ »Ø Öµ:
+// è¿” å›ž å€¼:
 //    TODO: ...
 //
-// µ÷ÓÃÒªÇó: TODO: ...
-// µ÷ÓÃ¾ÙÀý: TODO: ...
+// è°ƒç”¨è¦æ±‚: TODO: ...
+// è°ƒç”¨ä¸¾ä¾‹: TODO: ...
 //*****************************************************************************
 /*
-//Ô­×÷±¸·Ý
+//åŽŸä½œå¤‡ä»½
 VOS_UINT32 atQryAuthorityID(VOS_UINT8 ucClientId)
 {
     VOS_UINT32 ret = AT_OK;
@@ -1321,7 +1321,7 @@ VOS_UINT32 atQryAuthorityID(VOS_UINT8 ucClientId)
     }
     MSP_MEMSET(pcStr,0,UPGRADE_STR_BUF_SIZE);
 
-    //»ñÈ¡¼øÈ¨Ð­Òé±êÊ¶£¬IMEIºÅ
+    //èŽ·å–é‰´æƒåè®®æ ‡è¯†ï¼ŒIMEIå·
     ret = sda_GetAuthorityId((S8_T*)pcStr, (S32_T)UPGRADE_STR_BUF_SIZE);
     if( (ERR_MSP_FAILURE == ret) || (ret > MSP_UPGRADE_DLOAD_VER_LEN))
     {
@@ -1340,7 +1340,7 @@ VOS_UINT32 atQryAuthorityID(VOS_UINT8 ucClientId)
     MSP_FREE(pcStr);
     pcStr = NULL;
 
-    //»ñÈ¡¼øÈ¨Ð­ÒéÀàÐÍ
+    //èŽ·å–é‰´æƒåè®®ç±»åž‹
     ret = sda_GetAuthorityType();
     if(ret == 0)
     {
@@ -1362,20 +1362,20 @@ VOS_UINT32 atQryAuthorityID(VOS_UINT8 ucClientId)
     return AT_OK;
 }
 */
-// ²éÑ¯¼øÈ¨±êÊ¶
+// æŸ¥è¯¢é‰´æƒæ ‡è¯†
 
 //*****************************************************************************
-// º¯ÊýÃû³Æ: atSetGodLoad
-// ¹¦ÄÜÃèÊö: ÇÐ»»µ½ÏÂÔØÃüÁîÄ£Ê½ "^GODLOAD"
+// å‡½æ•°åç§°: atSetGodLoad
+// åŠŸèƒ½æè¿°: åˆ‡æ¢åˆ°ä¸‹è½½å‘½ä»¤æ¨¡å¼ "^GODLOAD"
 //
-// ²ÎÊýËµÃ÷:
-//   ulIndex [in] ÓÃ»§Ë÷Òý
+// å‚æ•°è¯´æ˜Ž:
+//   ulIndex [in] ç”¨æˆ·ç´¢å¼•
 //
-// ·µ »Ø Öµ:
+// è¿” å›ž å€¼:
 //    TODO: ...
 //
-// µ÷ÓÃÒªÇó: TODO: ...
-// µ÷ÓÃ¾ÙÀý: TODO: ...
+// è°ƒç”¨è¦æ±‚: TODO: ...
+// è°ƒç”¨ä¸¾ä¾‹: TODO: ...
 //*****************************************************************************
 /*
 HTIMER g_hTimerDload = 0;
@@ -1387,11 +1387,11 @@ VOS_UINT32 atSetGodLoad(VOS_UINT8 ucClientId)
     sda_SetCurMode(DLOAD_MODE_DOWNLOAD);
 	//atStartTimer(ucClientId, 1);
 
-    //Èç¹ûÔÚÖØÆôÖ®Ç°NVÃ»ÓÐ±¸·Ý
+    //å¦‚æžœåœ¨é‡å¯ä¹‹å‰NVæ²¡æœ‰å¤‡ä»½
     if(g_atNvBackupFlag == 0)
     {
-        //Èç¹û³öÏÖIMEI²»´æÔÚ»òÕßIMEIÒì³£µÄÊ±ºò£¬PC²»»áÏÂ·¢NV±¸·Ý£¬µ«ÊÇ»¹ÊÇ»áÏÂÔØNVÎÄ¼þ
-        //ËùÒÔ´Ë´¦ÐèÒªÔö¼ÓÒ»´Î±¸·Ý
+        //å¦‚æžœå‡ºçŽ°IMEIä¸å­˜åœ¨æˆ–è€…IMEIå¼‚å¸¸çš„æ—¶å€™ï¼ŒPCä¸ä¼šä¸‹å‘NVå¤‡ä»½ï¼Œä½†æ˜¯è¿˜æ˜¯ä¼šä¸‹è½½NVæ–‡ä»¶
+        //æ‰€ä»¥æ­¤å¤„éœ€è¦å¢žåŠ ä¸€æ¬¡å¤‡ä»½
         LNVM_UpgradeBackup(1);
     }
 

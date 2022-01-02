@@ -16,7 +16,7 @@ extern struct icc_init_info g_icc_init_info[];
 
 struct icc_test_case g_icc_test;
 
-/* mcore²âÊÔÓÃÀı */
+/* mcoreæµ‹è¯•ç”¨ä¾‹ */
 #define SINGLE_MSG_LEN   (20)
 #define CCORE_MSG_POS    (0)
 #define ACORE_MSG_POS    (CCORE_MSG_POS + SINGLE_MSG_LEN)
@@ -65,7 +65,7 @@ s32 icc_task_delay(s32 msecs)
 
 #endif
 
-/* ²âÊÔ·¢ËÍº¯Êı */
+/* æµ‹è¯•å‘é€å‡½æ•° */
 static s32 icc_send_test(enum CPU_ID send_cpu_id, u32 channel_id, u8 *buf, u32 data_len, u32 start, u32 timeout)
 {
 	u32 i = 0;
@@ -93,8 +93,8 @@ static s32 icc_send_test(enum CPU_ID send_cpu_id, u32 channel_id, u8 *buf, u32 d
 }
 
 
-/* 1. ±È½Ï·¢¹ıÀ´µÄĞÅÏ¢ÊÇ·ñÊÇÕıÈ·µÄ(ÊÂÏÈÔ¼¶¨);
- * 2. Íù¶Ô·½ºË·¢È·ÈÏĞÅÏ¢£¬È·ÈÏ·¢¹ıÀ´µÄĞÅÏ¢ÕıÈ·Óë·ñ
+/* 1. æ¯”è¾ƒå‘è¿‡æ¥çš„ä¿¡æ¯æ˜¯å¦æ˜¯æ­£ç¡®çš„(äº‹å…ˆçº¦å®š);
+ * 2. å¾€å¯¹æ–¹æ ¸å‘ç¡®è®¤ä¿¡æ¯ï¼Œç¡®è®¤å‘è¿‡æ¥çš„ä¿¡æ¯æ­£ç¡®ä¸å¦
  */
 static s32 icc_send_test_001_cb0(u32 channel_id , u32 len, void* context)
 {
@@ -131,7 +131,7 @@ out:
 	
 }
 
-/* »Ø¸´È·ÈÏĞÅÏ¢»òÕßºË¼äº¯Êıµ÷ÓÃ½á¹û·µ»Ø */
+/* å›å¤ç¡®è®¤ä¿¡æ¯æˆ–è€…æ ¸é—´å‡½æ•°è°ƒç”¨ç»“æœè¿”å› */
 static s32 icc_send_test_001_cb1(u32 channel_id , u32 len, void* context)
 {
 	s32 confirm = ICC_RECV_OK;
@@ -163,7 +163,7 @@ static s32 icc_send_test_001_cb1(u32 channel_id , u32 len, void* context)
 }
 
 
-/* ¸Ã»Øµ÷ÓÃÓÚ½ÓÊÕºË²»¶ÁÊı¾İ,Ö±½Ó»ØÈ·ÈÏĞÅÏ¢¸ø·¢ËÍºË */
+/* è¯¥å›è°ƒç”¨äºæ¥æ”¶æ ¸ä¸è¯»æ•°æ®,ç›´æ¥å›ç¡®è®¤ä¿¡æ¯ç»™å‘é€æ ¸ */
 s32 icc_send_test_cb0_new(u32 channel_id , u32 len, void* context)
 {
 	u8  confirm     = ICC_CONF_MSG_TYPE1;
@@ -181,7 +181,7 @@ s32 icc_send_test_cb0_new(u32 channel_id , u32 len, void* context)
 	return ICC_OK;
 }
 
-/* ÊÕ¶Ô·½ºË»Ø¹ıÀ´µÄÈ·ÈÏĞÅÏ¢: Èç¹ûĞÅÏ¢ÊÇICC_CONF_MSG_TYPE1 */
+/* æ”¶å¯¹æ–¹æ ¸å›è¿‡æ¥çš„ç¡®è®¤ä¿¡æ¯: å¦‚æœä¿¡æ¯æ˜¯ICC_CONF_MSG_TYPE1 */
 s32 icc_send_test_cb1_new(u32 channel_id , u32 len, void* context)
 {
 	u8  confirm = (u8)ICC_RECV_OK;
@@ -217,7 +217,7 @@ s32 icc_send_test_cb1_new(u32 channel_id , u32 len, void* context)
 	return ICC_OK;
 }
 
-/* ¸Ã»Øµ÷ÓÃÓÚ»½ĞÑ×Ô¼º´¦Àíbsp_icc_readÈÎÎñ */
+/* è¯¥å›è°ƒç”¨äºå”¤é†’è‡ªå·±å¤„ç†bsp_icc_readä»»åŠ¡ */
 s32 icc_send_test_cb2_new(u32 channel_id , u32 len, void* context)
 {
 	icc_print_debug("enter\n");
@@ -225,7 +225,7 @@ s32 icc_send_test_cb2_new(u32 channel_id , u32 len, void* context)
 	return ICC_SEND_SYNC_RET;
 }
 
-/* ÈÎÎñ´¦Àíº¯Êı,¶ÁÈ¡Í¨µÀÀïµÄÊı¾İ */
+/* ä»»åŠ¡å¤„ç†å‡½æ•°,è¯»å–é€šé“é‡Œçš„æ•°æ® */
 s32 icc_read_task_entry(void *obj)
 {
 	u32* channel_id  = (u32*)obj;
@@ -273,17 +273,17 @@ s32 icc_read_task_entry(void *obj)
 }
 
 
-/* ×ÓÍ¨µÀÖØĞÂ·ÖÅä, Ã¿¸öÍ¨µÀ·ÖÅä64¸ö×ÓÍ¨µÀ, 0-31ÎªÊµ¼ÊÊ¹ÓÃ×ÓÍ¨µÀ, 32-64Îª²âÊÔÓÃ×ÓÍ¨µÀ */
+/* å­é€šé“é‡æ–°åˆ†é…, æ¯ä¸ªé€šé“åˆ†é…64ä¸ªå­é€šé“, 0-31ä¸ºå®é™…ä½¿ç”¨å­é€šé“, 32-64ä¸ºæµ‹è¯•ç”¨å­é€šé“ */
 static s32 icc_test_channel_reinit(u32 channel_idx, u32 new_sub_chn_size)
 {
 	struct icc_channel *channel = g_icc_ctrl.channels[channel_idx];
 	struct icc_channel_vector *buf = NULL;
 	
-	/* ±¸·İÔ­Í¨µÀµÄ×ÓÍ¨µÀ */
+	/* å¤‡ä»½åŸé€šé“çš„å­é€šé“ */
 	g_icc_test.channels[channel_idx].vec_bak = channel->rector;
 	g_icc_test.channels[channel_idx].func_size_bak = channel->func_size;
 
-	/* ·ÖÅä64¸ö×ÓÍ¨µÀ */
+	/* åˆ†é…64ä¸ªå­é€šé“ */
 	buf = (struct icc_channel_vector *)osl_malloc(sizeof(struct icc_channel_vector) * new_sub_chn_size);
 	if (!buf)
 	{
@@ -292,22 +292,22 @@ static s32 icc_test_channel_reinit(u32 channel_idx, u32 new_sub_chn_size)
 	}
 	memset(buf, 0, sizeof(struct icc_channel_vector) * new_sub_chn_size); /*lint !e665 */
 
-	/* Êµ¼ÊÊ¹ÓÃÍ¨µÀ±£Áô£¬Êµ¼Ê×ÓÍ¨µÀ²»³¬¹ı32¸ö */
+	/* å®é™…ä½¿ç”¨é€šé“ä¿ç•™ï¼Œå®é™…å­é€šé“ä¸è¶…è¿‡32ä¸ª */
 	memcpy(buf, channel->rector, sizeof(struct icc_channel_vector) * channel->func_size);/*lint !e516 */
 
-	/* Êµ¼ÊÍ¨µÀ+²âÊÔÓÃÍ¨µÀ */
+	/* å®é™…é€šé“+æµ‹è¯•ç”¨é€šé“ */
 	channel->rector = buf;
 	channel->func_size = new_sub_chn_size;
 	channel->fifo_send->read = channel->fifo_send->write= 0;
 
-	/* fifo³¤¶È¼õĞ¡£¬ÒÔ±ã½øĞĞÑ¹Á¦²âÊÔ */
+	/* fifoé•¿åº¦å‡å°ï¼Œä»¥ä¾¿è¿›è¡Œå‹åŠ›æµ‹è¯• */
 	g_icc_test.channels[channel_idx].fifo_size_bak = channel->fifo_send->size;
 	channel->fifo_recv->size = channel->fifo_send->size = ICC_TEST_FIFO_SIZE;
 
 	return ICC_OK;
 }
 
-/* ×ÓÍ¨µÀ³õÊ¼»¯ */
+/* å­é€šé“åˆå§‹åŒ– */
 static s32 icc_test_sub_chn_init(u32 channel_idx, u32 test_sub_chn_size, u32 start)
 {
 	u32 i = 0;
@@ -316,7 +316,7 @@ static s32 icc_test_sub_chn_init(u32 channel_idx, u32 test_sub_chn_size, u32 sta
 	u32 sub_chn_idx = 0;
 	struct icc_test_sub_channel *sub_channel = NULL;
 
-	/* ¶ÁĞ´bufferÒ»Æğ·ÖÅä */
+	/* è¯»å†™bufferä¸€èµ·åˆ†é… */
 	buf = (u8 *)osl_malloc(ICC_TEST_FIFO_SIZE * test_sub_chn_size * 2); /*lint !e516 */
 	if(NULL == buf)
 	{
@@ -327,7 +327,7 @@ static s32 icc_test_sub_chn_init(u32 channel_idx, u32 test_sub_chn_size, u32 sta
 
 	for(i = 0; i < test_sub_chn_size; i++)
 	{
-		/* 32-64Îª²âÊÔÓÃ×ÓÍ¨µÀ */
+		/* 32-64ä¸ºæµ‹è¯•ç”¨å­é€šé“ */
 		sub_chn_idx = i + start;
 		sub_channel = &(g_icc_test.channels[channel_idx].sub_channels[sub_chn_idx]);
 		sub_channel->wr_buf = buf + i * ICC_TEST_FIFO_SIZE;
@@ -335,7 +335,7 @@ static s32 icc_test_sub_chn_init(u32 channel_idx, u32 test_sub_chn_size, u32 sta
 #if defined(__KERNEL__) || defined(__VXWORKS__)
 		osl_sem_init(ICC_SEM_EMPTY, &(sub_channel->confirm_sem)); /*lint !e40 */
 #endif
-		/* ×ÓÍ¨µÀ½»Ìæ×¢²ácb0ºÍcb1 */
+		/* å­é€šé“äº¤æ›¿æ³¨å†Œcb0å’Œcb1 */
 		read_cb = ((i & 0x01)? icc_send_test_001_cb1: icc_send_test_001_cb0);
 		g_icc_ctrl.channels[channel_idx]->rector[sub_chn_idx].read_cb = read_cb;
 		g_icc_ctrl.channels[channel_idx]->rector[sub_chn_idx].read_context = (void *)(u64)sub_chn_idx;
@@ -353,7 +353,7 @@ static s32 icc_test_sub_chn_init(u32 channel_idx, u32 test_sub_chn_size, u32 sta
 	return ICC_OK;
 }
 
-/* Ô­acore/ccore´úÂë¿ªÊ¼ */
+/* åŸacore/ccoreä»£ç å¼€å§‹ */
 #if defined(__KERNEL__) || defined(__VXWORKS__)
 static s32 icc_test_multi_send_func(void *obj)
 {
@@ -421,7 +421,7 @@ static s32 icc_test_recv_check(u32 channel_idx, u32 sub_chn_idx, u32 *cnt, u32 t
 	return ICC_ERR;
 }
 
-/* Îª¶àÍ¨µÀ»ò×ÓÍ¨µÀ·¢ËÍ½ÓÊÕ,´´½¨µÄÈÎÎñºÍĞÅºÅÁ¿, ÒÔÍ¬²½ÓÃÀıÖ´ĞĞ*/
+/* ä¸ºå¤šé€šé“æˆ–å­é€šé“å‘é€æ¥æ”¶,åˆ›å»ºçš„ä»»åŠ¡å’Œä¿¡å·é‡, ä»¥åŒæ­¥ç”¨ä¾‹æ‰§è¡Œ*/
 static s32 icc_test_wait(void *obj)
 {
 	u32 flag = (u32)(unsigned long)obj;
@@ -434,7 +434,7 @@ static s32 icc_test_wait(void *obj)
 
 	for(;;)
 	{
-		/* ¶à×ÓÍ¨µÀÒì²½·¢ËÍ */
+		/* å¤šå­é€šé“å¼‚æ­¥å‘é€ */
 		if(ICC_TEST_MUL_SUB_CHN_SEND_FLAG == flag)
 		{
 			channel_idx = ICC_CHN_IFC;
@@ -447,7 +447,7 @@ static s32 icc_test_wait(void *obj)
 				}
 			}
 		}
-		/* ¶à×ÓÍ¨µÀÍ¬²½·¢ËÍ */
+		/* å¤šå­é€šé“åŒæ­¥å‘é€ */
 		if(ICC_TEST_MUL_SUB_CHN_SEND_SYNC_FLAG == flag)
 		{
 			channel_idx = ICC_CHN_IFC;
@@ -460,7 +460,7 @@ static s32 icc_test_wait(void *obj)
 				}
 			}
 		}
-		/* ¶àÍ¨µÀÒì²½·¢ËÍ */
+		/* å¤šé€šé“å¼‚æ­¥å‘é€ */
 		else if(ICC_TEST_MUL_CHN_SEND_FLAG ==flag)
 		{
 			sub_chn_idx = ICC_TEST_DEFAULT_ASYN_SUBCHN_NUM;
@@ -473,7 +473,7 @@ static s32 icc_test_wait(void *obj)
 				}
 			}
 		}
-		/* ¶àÍ¨µÀÍ¬²½·¢ËÍ */
+		/* å¤šé€šé“åŒæ­¥å‘é€ */
 		else if(ICC_TEST_MULTI_CHN_SEND_SYNC_FLAG == flag)
 		{
 			sub_chn_idx = ICC_TEST_DEFAULT_SYNC_SUBCHN_NUM;
@@ -587,7 +587,7 @@ s32 bsp_icc_test_init(void)
 	}
 
 #ifdef ICC_HAS_DEBUG_FEATURE
-	/* ²âÊÔ´ò¿ª´òÓ¡¿ª¹Ø */
+	/* æµ‹è¯•æ‰“å¼€æ‰“å°å¼€å…³ */
 	icc_dbg_print_sw(0);
 #endif
 
@@ -625,16 +625,16 @@ s32 bsp_icc_test_init(void)
 
 	icc_debug_init(bsp_icc_channel_size_get());
 
-	/* ×´Ì¬×îºó¸üĞÂ */
+	/* çŠ¶æ€æœ€åæ›´æ–° */
 	g_icc_test.state = ICC_TEST_CASE_INITILIZED;
 
 	return ICC_OK;
 }
 
-/* iccÒì²½·¢ËÍ»ù±¾²âÊÔ */
+/* iccå¼‚æ­¥å‘é€åŸºæœ¬æµ‹è¯• */
 s32 icc_send_test_001(void)
 {
-	/* Òì²½·¢ËÍ, Ä¬ÈÏÒªÓÃ²âÊÔ×¨ÓÃµÄ×ÓÍ¨µÀ, ¼´32 */
+	/* å¼‚æ­¥å‘é€, é»˜è®¤è¦ç”¨æµ‹è¯•ä¸“ç”¨çš„å­é€šé“, å³32 */
 	u32 channel_idx = ICC_CHN_RFILE;
 	u32 sub_chn_idx = ICC_TEST_DEFAULT_ASYN_SUBCHN_NUM;
 	u32 channel_id = (channel_idx << 16 | sub_chn_idx);
@@ -650,11 +650,11 @@ s32 icc_send_test_001(void)
 	return ICC_TEST_PASS;	
 }
 
-/* iccÍ¬²½·¢ËÍ»ù±¾²âÊÔ */
+/* iccåŒæ­¥å‘é€åŸºæœ¬æµ‹è¯• */
 #ifdef ICC_HAS_SYNC_SEND_FEATURE
 s32 icc_send_test_002(void)
 {
-	/* Í¬²½·¢ËÍ, Ä¬ÈÏÒªÓÃ²âÊÔ×¨ÓÃµÄ×ÓÍ¨µÀ, ¼´33 */
+	/* åŒæ­¥å‘é€, é»˜è®¤è¦ç”¨æµ‹è¯•ä¸“ç”¨çš„å­é€šé“, å³33 */
 	u32 channel_id = (ICC_CHN_RFILE << 16 | ICC_TEST_DEFAULT_SYNC_SUBCHN_NUM);
 	u32 send_data=0x10305070;
 
@@ -668,7 +668,7 @@ s32 icc_send_test_002(void)
 }
 #endif
 
-/* ¶à×ÓÍ¨µÀÒì²½²¢ĞĞ·¢ËÍ²âÊÔ */
+/* å¤šå­é€šé“å¼‚æ­¥å¹¶è¡Œå‘é€æµ‹è¯• */
 s32 icc_send_test_003(void)
 {
 	u32 i = 0;
@@ -680,7 +680,7 @@ s32 icc_send_test_003(void)
 		return ICC_TEST_FAIL;
 	}
 
-	/* ±àºÅÎªÅ¼ÊıµÄÍ¨µÀÓÃÀ´·¢ËÍÊı¾İ, ±àºÅÎªÆæÊıµÄÍ¨µÀÓÃÀ´¸ø¶Ô·½»ØÈ·ÈÏÏûÏ¢ */
+	/* ç¼–å·ä¸ºå¶æ•°çš„é€šé“ç”¨æ¥å‘é€æ•°æ®, ç¼–å·ä¸ºå¥‡æ•°çš„é€šé“ç”¨æ¥ç»™å¯¹æ–¹å›ç¡®è®¤æ¶ˆæ¯ */
 	for(i = ICC_TEST_CHANNEL_SIZE / 2; i < ICC_TEST_CHANNEL_SIZE / 2 + ICC_TEST_MULTI_SEND_CHN_SIZE; i++)
 	{
 		sub_chn_idx = i * 2 - 32;
@@ -703,7 +703,7 @@ s32 icc_send_test_003(void)
 }
 
 #ifdef ICC_HAS_SYNC_SEND_FEATURE
-/* ¶à×ÓÍ¨µÀÍ¬²½²¢ĞĞ·¢ËÍ²âÊÔ */
+/* å¤šå­é€šé“åŒæ­¥å¹¶è¡Œå‘é€æµ‹è¯• */
 s32 icc_send_test_004(void)
 {
 	u32 i = 0;
@@ -715,7 +715,7 @@ s32 icc_send_test_004(void)
 		return ICC_TEST_FAIL;
 	}
 	
-	/* ±àºÅÎªÅ¼ÊıµÄÍ¨µÀÓÃÀ´·¢ËÍÊı¾İ, ±àºÅÎªÆæÊıµÄÍ¨µÀÓÃÀ´¸ø¶Ô·½»ØÈ·ÈÏÏûÏ¢ */
+	/* ç¼–å·ä¸ºå¶æ•°çš„é€šé“ç”¨æ¥å‘é€æ•°æ®, ç¼–å·ä¸ºå¥‡æ•°çš„é€šé“ç”¨æ¥ç»™å¯¹æ–¹å›ç¡®è®¤æ¶ˆæ¯ */
 	for(i = ICC_TEST_CHANNEL_SIZE / 2; i < ICC_TEST_CHANNEL_SIZE / 2 + ICC_TEST_MULTI_SEND_CHN_SIZE; i++)
 	{
 		sub_chn_idx = i * 2 - 31;
@@ -736,7 +736,7 @@ s32 icc_send_test_004(void)
 }
 #endif
 
-/* ¶àÍ¨µÀÒì²½²¢ĞĞ·¢ËÍ²âÊÔ, ×ÓÍ¨µÀ32ÓÃÀ´×öÒì²½·¢ËÍÓÃ */
+/* å¤šé€šé“å¼‚æ­¥å¹¶è¡Œå‘é€æµ‹è¯•, å­é€šé“32ç”¨æ¥åšå¼‚æ­¥å‘é€ç”¨ */
 s32 icc_send_test_005(void)
 {
 	u32 i = 0;
@@ -769,7 +769,7 @@ s32 icc_send_test_005(void)
 }
 
 #ifdef ICC_HAS_SYNC_SEND_FEATURE
-/* ¶àÍ¨µÀÍ¬²½²¢ĞĞ·¢ËÍ²âÊÔ, ×ÓÍ¨µÀ33ÓÃÓÚÍ¬²½·¢ËÍÓÃ */
+/* å¤šé€šé“åŒæ­¥å¹¶è¡Œå‘é€æµ‹è¯•, å­é€šé“33ç”¨äºåŒæ­¥å‘é€ç”¨ */
 s32 icc_send_test_006(void)
 {
 	u32 i = 0;
@@ -802,7 +802,7 @@ s32 icc_send_test_006(void)
 }
 #endif
 
-/* ±ß½ç²âÊÔ: iccÊı¾İ°ü´Ó1µ½fifo´óĞ¡µÄ·¢ËÍ²âÊÔ */
+/* è¾¹ç•Œæµ‹è¯•: iccæ•°æ®åŒ…ä»1åˆ°fifoå¤§å°çš„å‘é€æµ‹è¯• */
 s32 icc_send_test_007(void)
 {
 	u32 i = 0;
@@ -831,10 +831,10 @@ s32 icc_send_test_007(void)
 	return ICC_TEST_PASS;	
 }
 
-/* iccÒì²½·¢ËÍ»ù±¾²âÊÔ, ·¢¿ÕÊı¾İ */
+/* iccå¼‚æ­¥å‘é€åŸºæœ¬æµ‹è¯•, å‘ç©ºæ•°æ® */
 s32 icc_send_test_008(void)
 {
-	/* Òì²½·¢ËÍ, Ä¬ÈÏÒªÓÃ²âÊÔ×¨ÓÃµÄ×ÓÍ¨µÀ, ¼´32 */
+	/* å¼‚æ­¥å‘é€, é»˜è®¤è¦ç”¨æµ‹è¯•ä¸“ç”¨çš„å­é€šé“, å³32 */
 	u32 channel_idx = ICC_CHN_CSHELL;
 	u32 sub_chn_idx = 0;
 	u32 channel_id = (channel_idx << 16 | sub_chn_idx);
@@ -850,7 +850,7 @@ s32 icc_send_test_008(void)
 	return ICC_TEST_PASS;	
 }
 
-/* iccÍ¬²½·¢ËÍ»ù±¾²âÊÔ£¬·¢¿ÕÊı¾İ */
+/* iccåŒæ­¥å‘é€åŸºæœ¬æµ‹è¯•ï¼Œå‘ç©ºæ•°æ® */
 #ifdef ICC_HAS_SYNC_SEND_FEATURE
 s32 icc_send_test_009(void)
 {
@@ -867,10 +867,10 @@ s32 icc_send_test_009(void)
 }
 #endif
 
-/* iccÒì²½·¢ËÍ»ù±¾²âÊÔ, ·¢·Ç¿ÕÊı¾İ,²»ÔÚiccÈÎÎñ¶øÔÚ×Ô¼ºµÄÈÎÎñÖĞµ÷ÓÃ */
+/* iccå¼‚æ­¥å‘é€åŸºæœ¬æµ‹è¯•, å‘éç©ºæ•°æ®,ä¸åœ¨iccä»»åŠ¡è€Œåœ¨è‡ªå·±çš„ä»»åŠ¡ä¸­è°ƒç”¨ */
 s32 icc_send_test_010(void)
 {
-	/* Òì²½·¢ËÍ, Ä¬ÈÏÒªÓÃ²âÊÔ×¨ÓÃµÄ×ÓÍ¨µÀ, ¼´32 */
+	/* å¼‚æ­¥å‘é€, é»˜è®¤è¦ç”¨æµ‹è¯•ä¸“ç”¨çš„å­é€šé“, å³32 */
 	u32 channel_idx = ICC_CHN_CSHELL;
 	u32 sub_chn_idx = 2;
 	u32 channel_id = (channel_idx << 16 | sub_chn_idx);
@@ -886,7 +886,7 @@ s32 icc_send_test_010(void)
 	return ICC_TEST_PASS;	
 }
 
-/* Í¨µÀÈ¥³õÊ¼»¯ */
+/* é€šé“å»åˆå§‹åŒ– */
 s32 bsp_icc_test_uninit(void)
 {
 	u32 i = 0;
@@ -905,7 +905,7 @@ s32 bsp_icc_test_uninit(void)
 		channel->rector = g_icc_test.channels[i].vec_bak;
 		channel->fifo_recv->size = channel->fifo_send->size = g_icc_test.channels[i].fifo_size_bak;
 
-		/* ·ÖÅäµÄÊ±ºò£¬×ÓÍ¨µÀ0µÄÎªbufferµÄÆğÊ¼µØÖ· */
+		/* åˆ†é…çš„æ—¶å€™ï¼Œå­é€šé“0çš„ä¸ºbufferçš„èµ·å§‹åœ°å€ */
 		icc_safe_free(sub_channel->wr_buf);
 	}
 
@@ -954,9 +954,9 @@ void icc_packet_dump_test(void)
 }
 
 
-#endif /* Ô­acore/core²âÊÔ´úÂë½áÊø */
+#endif /* åŸacore/coreæµ‹è¯•ä»£ç ç»“æŸ */
 
-/* ĞÂÔömcoreºó, ÈıºË¹²ÓÃµÄ²âÊÔ´úÂë¿ªÊ¼ 2012/06/13*/
+/* æ–°å¢mcoreå, ä¸‰æ ¸å…±ç”¨çš„æµ‹è¯•ä»£ç å¼€å§‹ 2012/06/13*/
 s32 bsp_icc_mcore_test_init(void)
 {
 	u32 mcoore_test_channel_size = 0;
@@ -986,7 +986,7 @@ s32 bsp_icc_mcore_test_init(void)
 
 	for(i = 0; i < mcoore_test_channel_size; i++)
 	{
-		/* 20¸ö×ÓÍ¨µÀ, ÏÖÓĞ16¸ö×ÓÍ¨µÀµÄ»ù´¡ÉÏÔÙ·ÖÅä4¸ö */
+		/* 20ä¸ªå­é€šé“, ç°æœ‰16ä¸ªå­é€šé“çš„åŸºç¡€ä¸Šå†åˆ†é…4ä¸ª */
 		ret = icc_test_channel_reinit(channel_idx[i], ICC_TEST_MCORE_CHN_SIZE);
 		if(ICC_OK != ret)
 		{
@@ -994,7 +994,7 @@ s32 bsp_icc_mcore_test_init(void)
 			return ICC_ERR;
 		}
 
-		/* Ê¹ÓÃºó4¸ö×ÓÍ¨µÀ½øĞĞ²âÊÔ */
+		/* ä½¿ç”¨å4ä¸ªå­é€šé“è¿›è¡Œæµ‹è¯• */
 		ret = icc_test_sub_chn_init(channel_idx[i], ICC_TEST_USE_CHN_SIZE, ICC_TEST_MCORE_START_CHN);
 		if(ICC_OK != ret)
 		{
@@ -1016,20 +1016,20 @@ s32 bsp_icc_mcore_test_init(void)
 #endif
 
 #ifdef ICC_HAS_DEBUG_FEATURE
-	/* ²âÊÔ´ò¿ª´òÓ¡¿ª¹Ø */
+	/* æµ‹è¯•æ‰“å¼€æ‰“å°å¼€å…³ */
 	icc_dbg_print_sw(0);
 #endif
 
-	/* ×´Ì¬×îºó¸üĞÂ */
+	/* çŠ¶æ€æœ€åæ›´æ–° */
 	g_icc_test.mcore_test_state = ICC_TEST_CASE_INITILIZED;
 
 	return ICC_OK;
 }
 
-/* acoreÓëmcoreÏûÏ¢Òì²½»¥·¢*/
+/* acoreä¸mcoreæ¶ˆæ¯å¼‚æ­¥äº’å‘*/
 s32 icc_mcore_send_test_001(void)
 {
-	/* Òì²½·¢ËÍ, Ä¬ÈÏÒªÓÃ²âÊÔ×¨ÓÃµÄ×ÓÍ¨µÀ, ¼´16 */
+	/* å¼‚æ­¥å‘é€, é»˜è®¤è¦ç”¨æµ‹è¯•ä¸“ç”¨çš„å­é€šé“, å³16 */
 #if defined(__KERNEL__) || defined(__CMSIS_RTOS)
 	u32 channel_idx = ICC_CHN_MCORE_ACORE;
 	u32 sub_chn_idx = ICC_TEST_DEFAULT_ASYN_SUBCHN_NUM / 2;
@@ -1037,7 +1037,7 @@ s32 icc_mcore_send_test_001(void)
 	u8 *wr_buff =  g_icc_test.channels[channel_idx].sub_channels[sub_chn_idx].wr_buf;/*lint !e416 !e831*/
 #endif
 
-/* acore·¢¸ømcore */
+/* acoreå‘ç»™mcore */
 #if defined(__KERNEL__)
 	if(ICC_OK != icc_send_test(ICC_CPU_MCU, channel_id, wr_buff , 10, sub_chn_idx, ICC_TAKE_SEM_TIMEOUT_JIFFIES))
 	{
@@ -1045,7 +1045,7 @@ s32 icc_mcore_send_test_001(void)
 		return ICC_TEST_FAIL;
 	}
 
-/* mcore·¢¸øacore */
+/* mcoreå‘ç»™acore */
 #elif defined(__CMSIS_RTOS)
 	if(ICC_OK != icc_send_test(ICC_CPU_APP, channel_id, wr_buff , 10, sub_chn_idx, ICC_TAKE_SEM_TIMEOUT_MS))
 	{
@@ -1057,10 +1057,10 @@ s32 icc_mcore_send_test_001(void)
 	return ICC_TEST_PASS;	
 }
 
-/* ccoreÓëmcoreÏûÏ¢Òì²½»¥·¢*/
+/* ccoreä¸mcoreæ¶ˆæ¯å¼‚æ­¥äº’å‘*/
 s32 icc_mcore_send_test_002(void)
 {
-	/* Òì²½·¢ËÍ, Ä¬ÈÏÒªÓÃ²âÊÔ×¨ÓÃµÄ×ÓÍ¨µÀ, ¼´16 */
+	/* å¼‚æ­¥å‘é€, é»˜è®¤è¦ç”¨æµ‹è¯•ä¸“ç”¨çš„å­é€šé“, å³16 */
 #if defined(__VXWORKS__) || defined(__CMSIS_RTOS)
 	u32 channel_idx = ICC_CHN_MCORE_CCORE;
 	u32 sub_chn_idx = ICC_TEST_DEFAULT_ASYN_SUBCHN_NUM / 2;
@@ -1068,7 +1068,7 @@ s32 icc_mcore_send_test_002(void)
 	u8 *wr_buff = g_icc_test.channels[channel_idx].sub_channels[sub_chn_idx].wr_buf; /*lint !e416 !e831*/
 #endif
 
-/* ccore·¢¸ømcore */
+/* ccoreå‘ç»™mcore */
 #if defined(__VXWORKS__)
 	if(ICC_OK != icc_send_test(ICC_CPU_MCU, channel_id, wr_buff , 10, sub_chn_idx, ICC_TAKE_SEM_TIMEOUT_JIFFIES))
 	{
@@ -1076,7 +1076,7 @@ s32 icc_mcore_send_test_002(void)
 		return ICC_TEST_FAIL;
 	}
 
-/* mcore·¢¸øccore */
+/* mcoreå‘ç»™ccore */
 #elif defined(__CMSIS_RTOS)
 	if(ICC_OK != icc_send_test(ICC_CPU_MODEM, channel_id, wr_buff , 10, sub_chn_idx, ICC_TAKE_SEM_TIMEOUT_MS))
 	{

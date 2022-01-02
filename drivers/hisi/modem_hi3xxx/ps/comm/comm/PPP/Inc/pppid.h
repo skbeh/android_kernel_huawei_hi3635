@@ -16,10 +16,10 @@ extern "C" {
 typedef VOS_UINT16 PPP_ID;
 #endif
 
-/*ĳPPP ID�������ȥ�ı�־*/
+/*某PPP ID被分配出去的标志*/
 #define PPP_ID_ALLO_fLAG 0xffff
 
-/*���һ������PPP ID�ı�־*/
+/*最后一个空闲PPP ID的标志*/
 #define PPP_ID_TAIL_FLAG 0
 
 extern PPP_ID*    pgPppId;

@@ -21,7 +21,7 @@ extern "C" {
 #include  "diag_cmd_param_plugin.h"
 /*lint -restore*/
 
-/*lint -save -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -save -e767 åŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_DIAG_FS_PROC_C
 /*lint -restore +e767*/
 /*lint -save -e718 -e746 */
@@ -30,7 +30,7 @@ extern "C" {
 *****************************************************************************/
 #if(VOS_OS_VER == VOS_LINUX)
 const VOS_CHAR g_acDiagRootPath[] = "/";
-const VOS_CHAR g_acDiagLockedRootPath[] = "/modem_log"; /* Ëø¶¨×´Ì¬ÏÂµÄ¸ùÄ¿Â¼ */
+const VOS_CHAR g_acDiagLockedRootPath[] = "/modem_log"; /* é”å®šçŠ¶æ€ä¸‹çš„æ ¹ç›®å½• */
 const VOS_CHAR g_acDiagDumpDir[] = "/modem_log";
 const VOS_CHAR g_acDiagLogDir[] = "/modem_log";
 #else
@@ -54,7 +54,7 @@ extern VOS_BOOL g_bAtDataLocked;
 #else
 #define diag_fs_log()
 #endif
-/*lint -save -e40 -e63*/ /* ÄÚºË²Ù×÷½Ó¿Ú²»Ê¶±ğ*/
+/*lint -save -e40 -e63*/ /* å†…æ ¸æ“ä½œæ¥å£ä¸è¯†åˆ«*/
 
 VOS_VOID diag_FsClose(VOS_VOID)
 {
@@ -96,7 +96,7 @@ VOS_UINT32  diag_FsGetDirInfo(VOS_CHAR *pDirName, VOS_UINT32 *pulTotalNum)
     old_fs = get_fs();
     set_fs(KERNEL_DS);
 
-    /*´ò¿ªÄ¿Â¼*/
+    /*æ‰“å¼€ç›®å½•*/
     if((dir_handle = DIAG_FS_OPENDIR((VOS_CHAR*)pDirName,DIAG_FS_RDONLY|DIAG_FS_DIRECTORY,0))< 0)
     {
         set_fs(old_fs);
@@ -158,7 +158,7 @@ VOS_UINT32  diag_FsGetDirInfo(VOS_CHAR *pDirName, VOS_UINT32 *pulTotalNum)
 
 	*pulTotalNum = nCount;
 
-     /*¹Ø±ÕÄ¿Â¼*/
+     /*å…³é—­ç›®å½•*/
     if (DIAG_FS_ERROR == DIAG_FS_CLOSEDIR(dir_handle))
     {
         VOS_MemFree(diag_GetAgentPid(), buf);
@@ -188,7 +188,7 @@ VOS_UINT32 diag_FsGetItemInfo(VOS_CHAR *pDirectory,DIAG_DIR_FILE_INFO_STRU *pstD
     old_fs = get_fs();
     set_fs(KERNEL_DS);
 
-    /*ÔÙ´Î´ò¿ªÄ¿Â¼*/
+    /*å†æ¬¡æ‰“å¼€ç›®å½•*/
     if((dir_handle = DIAG_FS_OPENDIR(pDirectory,DIAG_FS_RDONLY|DIAG_FS_DIRECTORY,0))< 0)
     {
     	printk( "[%s]DIAG_FS_OPENDIR error!",__FUNCTION__);
@@ -215,7 +215,7 @@ VOS_UINT32 diag_FsGetItemInfo(VOS_CHAR *pDirectory,DIAG_DIR_FILE_INFO_STRU *pstD
 		return VOS_ERR;
 	}
 
-	/*ÂÖÑ¯ÎÄ¼ş¼Ğ½«ËùÓĞÎÄ¼şÃû±£´æÖÁÈ«¾Ö±äÁ¿*/
+	/*è½®è¯¢æ–‡ä»¶å¤¹å°†æ‰€æœ‰æ–‡ä»¶åä¿å­˜è‡³å…¨å±€å˜é‡*/
 	for(i=0; i<nRead; )
 	{
 		pstTmpDirent = (DIAG_DIRENT_STRU*)(buf + i);
@@ -232,7 +232,7 @@ VOS_UINT32 diag_FsGetItemInfo(VOS_CHAR *pDirectory,DIAG_DIR_FILE_INFO_STRU *pstD
 		strncat((VOS_CHAR *)ucDirName, "/",sizeof(VOS_CHAR));
         strncat((VOS_CHAR *)ucDirName, pstTmpDirent->d_name,strlen(pstTmpDirent->d_name));
 
-        /*Í¨¹ıstat»ñÈ¡ÎÄ¼ş»òÎÄ¼ş¼ĞµÄĞÅÏ¢*/
+        /*é€šè¿‡statè·å–æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„ä¿¡æ¯*/
         if (DIAG_FS_ERROR == DIAG_FS_STAT((VOS_CHAR *)ucDirName, &stStat))
         {
         	printk("DIAG_FS_STAT: error!\n");
@@ -245,26 +245,26 @@ VOS_UINT32 diag_FsGetItemInfo(VOS_CHAR *pDirectory,DIAG_DIR_FILE_INFO_STRU *pstD
         }
         else
         {
-            /*Ä¿Â¼*/
+            /*ç›®å½•*/
 
             if (0 != (DIAG_IF_DIR&stStat.mode))
             {
 
                 pstDirFileInfo->ulItemType = DIAG_FS_ITEM_FOLDER;
             }
-            /*ÎÄ¼ş*/
+            /*æ–‡ä»¶*/
             else
             {
                 pstDirFileInfo->ulItemType = DIAG_FS_ITEM_FILE;
             }
-            pstDirFileInfo->st_size   = (stStat.size & 0xFFFFFFFF);/* Ä¿Ç°ÎÄ¼ş´óĞ¡²»»á³¬¹ı32Î»´óĞ¡ */
+            pstDirFileInfo->st_size   = (stStat.size & 0xFFFFFFFF);/* ç›®å‰æ–‡ä»¶å¤§å°ä¸ä¼šè¶…è¿‡32ä½å¤§å° */
             pstDirFileInfo->st_atime  = stStat.atime.tv_sec;
             pstDirFileInfo->st_mtime  = stStat.mtime.tv_sec;
             pstDirFileInfo->st_ctime  = stStat.ctime.tv_sec;
             pstDirFileInfo->st_mode   = stStat.mode;
         }
 
-        /*ÎÄ¼ş»òÎÄ¼ş¼ĞÃû*/
+        /*æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹å*/
         VOS_MemSet(pstDirFileInfo->aucDirName, 0,DIAG_CMD_FILE_NAME_LEN);
         VOS_StrCpy(pstDirFileInfo->aucDirName, pstTmpDirent->d_name);
 
@@ -285,9 +285,9 @@ VOS_UINT32  diag_FsGetDirInfo(VOS_CHAR *pDirName, VOS_UINT32 *pulTotalNum)
     DIAG_DIRENT_STRU	*pstTmpDirent = NULL;
     VOS_UINT32           ulTotalNum = 0;
     VOS_INT32 			 dir_handle =0;
-    /*´ò¿ªÄ¿Â¼*/
+    /*æ‰“å¼€ç›®å½•*/
     /*lint -save -e628*/
-    dir_handle = (VOS_INT32)DIAG_FS_OPENDIR((VOS_CHAR*)pDirName,DIAG_FS_RDONLY|DIAG_FS_DIRECTORY,0);  /* [false alarm]:ÆÁ±ÎFortify *//*lint !e628*/
+    dir_handle = (VOS_INT32)DIAG_FS_OPENDIR((VOS_CHAR*)pDirName,DIAG_FS_RDONLY|DIAG_FS_DIRECTORY,0);  /* [false alarm]:å±è”½Fortify *//*lint !e628*/
     /*lint -restore*/
     if(dir_handle < 0)
     {
@@ -299,16 +299,16 @@ VOS_UINT32  diag_FsGetDirInfo(VOS_CHAR *pDirName, VOS_UINT32 *pulTotalNum)
         /*lint -save -e628*/
         pstTmpDirent = (DIAG_DIRENT_STRU *)DIAG_FS_READDIR(dir_handle);/*lint !e628*/
         /*lint -restore*/
-        /*readdirµÄ·µ»ØÖµÎª¿Õ£¬±íÃ÷Ä¿Â¼ä¯ÀÀÍê±Ï*/
+        /*readdirçš„è¿”å›å€¼ä¸ºç©ºï¼Œè¡¨æ˜ç›®å½•æµè§ˆå®Œæ¯•*/
         if (VOS_NULL_PTR != pstTmpDirent)
         {
             ulTotalNum++;
         }
     }while (VOS_NULL_PTR != pstTmpDirent);
 
-    *pulTotalNum = ulTotalNum;/* [false alarm]: ÆÁ±ÎFortify ´íÎó */
+    *pulTotalNum = ulTotalNum;/* [false alarm]: å±è”½Fortify é”™è¯¯ */
 
-    /*¹Ø±ÕÄ¿Â¼*/
+    /*å…³é—­ç›®å½•*/
     /*lint -save -e628*/
     if (DIAG_FS_ERROR == DIAG_FS_CLOSEDIR(dir_handle))/*lint !e628*/
     /*lint -restore*/
@@ -329,14 +329,14 @@ VOS_UINT32 diag_FsGetItemInfo(VOS_CHAR *pDirectory,DIAG_DIR_FILE_INFO_STRU *pstD
     VOS_UINT32              ultemp_len = 0;
     VOS_INT32 				dir_handle =0;
     /*lint -restore*/
-    /*ÔÙ´Î´ò¿ªÄ¿Â¼*/
-    dir_handle = (VOS_INT32)DIAG_FS_OPENDIR(pDirectory,DIAG_FS_RDONLY|DIAG_FS_DIRECTORY,0);  /* [false alarm]:ÆÁ±ÎFortify */
+    /*å†æ¬¡æ‰“å¼€ç›®å½•*/
+    dir_handle = (VOS_INT32)DIAG_FS_OPENDIR(pDirectory,DIAG_FS_RDONLY|DIAG_FS_DIRECTORY,0);  /* [false alarm]:å±è”½Fortify */
     if(dir_handle < 0)
     {
         return VOS_ERR;
     }
 
-    /*·ÖÅä¿Õ¼äÓÃÀ´´æ·ÅÎÄ¼ş»òÎÄ¼ş¼ĞµÄÂ·¾¶£¬¼Ó1ÊÇÒòÎªºóÃæĞèÒªÌí¼ÓĞ±¸Ü*/
+    /*åˆ†é…ç©ºé—´ç”¨æ¥å­˜æ”¾æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„è·¯å¾„ï¼ŒåŠ 1æ˜¯å› ä¸ºåé¢éœ€è¦æ·»åŠ æ–œæ */
     pDirName = (VOS_UINT8*)VOS_MemAlloc(diag_GetAgentPid(), DYNAMIC_MEM_PT,MSP_DF_DIR_MAX_LEN);
     if (VOS_NULL_PTR == pDirName)
     {
@@ -345,31 +345,31 @@ VOS_UINT32 diag_FsGetItemInfo(VOS_CHAR *pDirectory,DIAG_DIR_FILE_INFO_STRU *pstD
 
     }
 
-    /*½«Ä¿Â¼Â·¾¶¿½±´½øÎÄ¼şÂ·¾¶ÖĞ*/
+    /*å°†ç›®å½•è·¯å¾„æ‹·è´è¿›æ–‡ä»¶è·¯å¾„ä¸­*/
     usDirLen = (VOS_UINT16)VOS_StrLen((VOS_CHAR*)pDirectory);
     VOS_MemCpy(pDirName, pDirectory, usDirLen);
 
-    /*ÓÉÓÚÄ¿Â¼Â·¾¶ÊÇ²»ÒÔĞ±¸Ü½áÊø£¬ÔÚÓëÎÄ¼şÃû½áºÏÊ±£¬ĞèÒªÌí¼ÓĞ±¸Ü*/
+    /*ç”±äºç›®å½•è·¯å¾„æ˜¯ä¸ä»¥æ–œæ ç»“æŸï¼Œåœ¨ä¸æ–‡ä»¶åç»“åˆæ—¶ï¼Œéœ€è¦æ·»åŠ æ–œæ */
     pDirName[usDirLen] = '/';
     usDirLen++;
 
     do
     {
-        /*±éÀúÕû¸öpstDirÖ¸ÏòÂ·¾¶ÖĞµÄËùÓĞÎÄ¼şºÍÎÄ¼ş¼Ğ*/
+        /*éå†æ•´ä¸ªpstDiræŒ‡å‘è·¯å¾„ä¸­çš„æ‰€æœ‰æ–‡ä»¶å’Œæ–‡ä»¶å¤¹*/
         pstTmpDirent = (DIAG_DIRENT_STRU *)DIAG_FS_READDIR(dir_handle);
 
-        /*readdirµÄ·µ»ØÖµÎª¿Õ£¬±íÃ÷Ä¿Â¼ä¯ÀÀÍê±Ï*/
+        /*readdirçš„è¿”å›å€¼ä¸ºç©ºï¼Œè¡¨æ˜ç›®å½•æµè§ˆå®Œæ¯•*/
         /*lint -save -e830*/
         if (VOS_NULL_PTR != pstTmpDirent)
         /*lint -restore*/
         {
-            /*µÃµ½ÎÄ¼ş»òÎÄ¼ş¼ĞÃûµÄ³¤¶È*/
-            ultemp_len = (VOS_UINT16)VOS_StrLen(pstTmpDirent->d_name);  /* [false alarm]:ÆÁ±ÎFortify */
+            /*å¾—åˆ°æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹åçš„é•¿åº¦*/
+            ultemp_len = (VOS_UINT16)VOS_StrLen(pstTmpDirent->d_name);  /* [false alarm]:å±è”½Fortify */
 
-            /*ÓÉÓÚÎÄ¼ş»òÎÄ¼ş¼ĞÂ·¾¶ĞèÒªÒÔ'\0'×÷Îª½áÊø£¬ËùÒÔÔÚCopyÊ±£¬³¤¶È¼Ó1*/
+            /*ç”±äºæ–‡ä»¶æˆ–æ–‡ä»¶å¤¹è·¯å¾„éœ€è¦ä»¥'\0'ä½œä¸ºç»“æŸï¼Œæ‰€ä»¥åœ¨Copyæ—¶ï¼Œé•¿åº¦åŠ 1*/
             VOS_MemCpy(pDirName + usDirLen,pstTmpDirent->d_name, ultemp_len + 1);
 
-            /*Í¨¹ıstat»ñÈ¡ÎÄ¼ş»òÎÄ¼ş¼ĞµÄĞÅÏ¢*/
+            /*é€šè¿‡statè·å–æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„ä¿¡æ¯*/
             /*lint -save -e628*/
             if (DIAG_FS_ERROR == DIAG_FS_STAT((VOS_CHAR*)pDirName, &stStat))/*lint !e628*/
             {
@@ -383,25 +383,25 @@ VOS_UINT32 diag_FsGetItemInfo(VOS_CHAR *pDirectory,DIAG_DIR_FILE_INFO_STRU *pstD
             }
             else
             {
-                /*Ä¿Â¼*/
+                /*ç›®å½•*/
                 if (0 != (DIAG_IF_DIR&stStat.st_mode))
                 {
 
                     pstDirFileInfo->ulItemType = DIAG_FS_ITEM_FOLDER;
                 }
-                /*ÎÄ¼ş*/
+                /*æ–‡ä»¶*/
                 else
                 {
                     pstDirFileInfo->ulItemType = DIAG_FS_ITEM_FILE;
                 }
-                pstDirFileInfo->st_size   = (stStat.st_size & 0xFFFFFFFF);/* Ä¿Ç°ÎÄ¼ş´óĞ¡²»»á³¬¹ı32Î»´óĞ¡ */
+                pstDirFileInfo->st_size   = (stStat.st_size & 0xFFFFFFFF);/* ç›®å‰æ–‡ä»¶å¤§å°ä¸ä¼šè¶…è¿‡32ä½å¤§å° */
                 pstDirFileInfo->st_atime  = (VOS_INT32)(stStat.st_atime);
                 pstDirFileInfo->st_mtime  = (VOS_INT32)(stStat.st_mtime);
                 pstDirFileInfo->st_ctime  = (VOS_INT32)(stStat.st_ctime);
                 pstDirFileInfo->st_mode   = stStat.st_mode;
             }
 
-            /*ÎÄ¼ş»òÎÄ¼ş¼ĞÃû*/
+            /*æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹å*/
             VOS_MemCpy(pstDirFileInfo->aucDirName, pstTmpDirent->d_name, ultemp_len +1);
             /* coverity[suspicious_pointer_arithmetic] */
             pstDirFileInfo = pstDirFileInfo + sizeof(DIAG_DIR_FILE_INFO_STRU );
@@ -485,7 +485,7 @@ VOS_UINT32 diag_FsQueryProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     if (DIAG_FS_ROOT_FOLDER == pstFsReq->ulFolderType)
     {
 #if(VOS_OS_VER == VOS_LINUX)
-        /* Ëø¶¨×´Ì¬ÏÂ£¬¸ùÄ¿Â¼ÊÜÏŞÖÆ */
+        /* é”å®šçŠ¶æ€ä¸‹ï¼Œæ ¹ç›®å½•å—é™åˆ¶ */
         if(g_bAtDataLocked)
         {
             stFsCnf.ulLength = VOS_StrLen((VOS_CHAR*)g_acDiagLockedRootPath);
@@ -509,7 +509,7 @@ VOS_UINT32 diag_FsQueryProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
         VOS_MemCpy(stFsCnf.aucDirPath,g_acDiagLogDir, stFsCnf.ulLength);
         g_stDiagFileInfo.ulFileType = DIAG_FS_LOG_FOLDER;
     }
-    /*ÁÙÖÕÒÅÑÔÎÄ¼şËùÔÚµÄÂ·¾¶*/
+    /*ä¸´ç»ˆé—è¨€æ–‡ä»¶æ‰€åœ¨çš„è·¯å¾„*/
     else if (DIAG_FS_DUMP_FOLDER == pstFsReq->ulFolderType)
     {
         stFsCnf.ulLength = VOS_StrLen((VOS_CHAR*)g_acDiagDumpDir);
@@ -522,7 +522,7 @@ VOS_UINT32 diag_FsQueryProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     }
     stFsCnf.ulRet = ret;
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stFsCnf,ulCmdId,sizeof(DIAG_CMD_FS_QUERY_CNF));
     return ret;
 
@@ -537,13 +537,13 @@ VOS_UINT32 diag_FsScanProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     pstFsReq = (DIAG_CMD_FS_SCAN_DIR_REQ*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
-   /*µÃµ½Ä¿Â¼ÄÚ£¬ÎÄ¼şºÍÎÄ¼ş¼ĞµÄ×Ü¸öÊı¡¢×ÜµÄÃû×Ö³¤¶È*/
+   /*å¾—åˆ°ç›®å½•å†…ï¼Œæ–‡ä»¶å’Œæ–‡ä»¶å¤¹çš„æ€»ä¸ªæ•°ã€æ€»çš„åå­—é•¿åº¦*/
     if(VOS_OK != diag_FsGetDirInfo(pstFsReq->szDirectory,&ulTotalNum))
     {
         return VOS_ERR;
     }
 
-    /*¼ÆËã·µ»Ø¸ø¹¤¾ß²àÏûÏ¢°üµÄ³¤¶È*/
+    /*è®¡ç®—è¿”å›ç»™å·¥å…·ä¾§æ¶ˆæ¯åŒ…çš„é•¿åº¦*/
     ulTotalSize = (ulTotalNum* sizeof(DIAG_DIR_FILE_INFO_STRU)+ sizeof(DIAG_CMD_FS_SCAN_DIR_CNF));
 
     pstFsCnf = (DIAG_CMD_FS_SCAN_DIR_CNF*)VOS_MemAlloc(diag_GetAgentPid(), DYNAMIC_MEM_PT, ulTotalSize);
@@ -553,7 +553,7 @@ VOS_UINT32 diag_FsScanProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
         return VOS_ERR;
     }
     /*lint -restore*/
-    /*»ñÈ¡Ã¿¸öÎÄ¼şºÍÎÄ¼ş¼ĞµÄĞÅÏ¢*/
+    /*è·å–æ¯ä¸ªæ–‡ä»¶å’Œæ–‡ä»¶å¤¹çš„ä¿¡æ¯*/
     if(ulTotalNum>0)
     {
         ret = diag_FsGetItemInfo(pstFsReq->szDirectory,pstFsCnf->stDirInfo);
@@ -563,7 +563,7 @@ VOS_UINT32 diag_FsScanProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     pstFsCnf->ulDirNum= ulTotalNum;
     pstFsCnf->ulDirInfoLen= ulTotalNum * sizeof(DIAG_DIR_FILE_INFO_STRU);
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)pstFsCnf,ulCmdId,ulTotalSize);
     VOS_MemFree(diag_GetAgentPid(), pstFsCnf);
 
@@ -593,7 +593,7 @@ VOS_UINT32 diag_FsMkdirProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     set_fs(old_fs);
 #endif
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stFsCnf,ulCmdId,sizeof(DIAG_CMD_FS_MAKE_DIR_CNF));
 
     return ret;
@@ -609,7 +609,7 @@ VOS_UINT32 diag_FsOpenProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     pstFsReq = (DIAG_CMD_FS_OPEN_REQ*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
-    /*²»Ö§³Ö²Ù×÷ÎÄ¼şµÄÖØÈë²Ù×÷*/
+    /*ä¸æ”¯æŒæ“ä½œæ–‡ä»¶çš„é‡å…¥æ“ä½œ*/
     /*lint -save -e830 -e539*/
     if (DIAG_FILE_NULL != g_stDiagFileInfo.lFile)
     {
@@ -626,7 +626,7 @@ VOS_UINT32 diag_FsOpenProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     }
 	else
 	{
-	    /*Æô¶¯¶¨Ê±Æ÷*/
+	    /*å¯åŠ¨å®šæ—¶å™¨*/
 	    g_stDiagFileInfo.hTimer = VOS_NULL_PTR;
 
 	    ret = VOS_StartRelTimer(&g_stDiagFileInfo.hTimer, diag_GetAgentPid(), DIAG_CMD_FILE_OPS_TIME_OUT_LEN, 0, DIAG_TMR_FILE_OP_TIMEOUT_PARAM,VOS_RELTIMER_NOLOOP, VOS_TIMER_NO_PRECISION);
@@ -638,7 +638,7 @@ VOS_UINT32 diag_FsOpenProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 	}
     stFsCnf.ulRet = ret;
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stFsCnf,ulCmdId,sizeof(DIAG_CMD_FS_OPEN_CNF));
 	diag_fs_log();
 
@@ -663,16 +663,16 @@ VOS_UINT32 diag_FsImportProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     }
     diag_fs_log();
 
-    /*Í£Ö¹¶¨Ê±Æ÷*/
+    /*åœæ­¢å®šæ—¶å™¨*/
     VOS_StopRelTimer(&g_stDiagFileInfo.hTimer);
 
-    /*Ğ´ÎÄ¼şÍê±Ï£¬¹Ø±ÕÎÄ¼ş*/
+    /*å†™æ–‡ä»¶å®Œæ¯•ï¼Œå…³é—­æ–‡ä»¶*/
     if (0 == pstFsReq->ulSize)
     {
 
 		diag_fs_log();
         diag_FsClose();
-        /*´ò°ü»Ø¸´¸øFW*/
+        /*æ‰“åŒ…å›å¤ç»™FW*/
         stFsCnf.ulRet = ERR_MSP_SUCCESS;
         ret = diag_AgentCnfFun((VOS_UINT8*)&stFsCnf,ulCmdId,sizeof(DIAG_CMD_FS_IMPORT_CNF));
         return ret;
@@ -695,7 +695,7 @@ VOS_UINT32 diag_FsImportProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     set_fs(old_fs);
 #endif
 
-    /*Ğ´ÎÄ¼ş²Ù×÷Ê§°Ü»òÕßĞ´Èë³¤¶È²»ÕıÈ·*/
+    /*å†™æ–‡ä»¶æ“ä½œå¤±è´¥æˆ–è€…å†™å…¥é•¿åº¦ä¸æ­£ç¡®*/
     if ((DIAG_FS_ERROR == lResult)||(lResult != (VOS_INT32)(pstFsReq->ulSize)))
     {
 		diag_fs_log();
@@ -704,7 +704,7 @@ VOS_UINT32 diag_FsImportProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
         return VOS_ERR;
     }
 
-    /*Æô¶¯¶¨Ê±Æ÷*/
+    /*å¯åŠ¨å®šæ—¶å™¨*/
     ret = VOS_StartRelTimer(&g_stDiagFileInfo.hTimer, diag_GetAgentPid(),DIAG_CMD_FILE_OPS_TIME_OUT_LEN,0,DIAG_TMR_FILE_OP_TIMEOUT_PARAM,VOS_RELTIMER_NOLOOP, VOS_TIMER_NO_PRECISION);
     if(ret != ERR_MSP_SUCCESS)
     {
@@ -713,7 +713,7 @@ VOS_UINT32 diag_FsImportProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     stFsCnf.ulRet = ret;
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stFsCnf,ulCmdId,sizeof(DIAG_CMD_FS_IMPORT_CNF));
     return ret;
 
@@ -738,7 +738,7 @@ VOS_UINT32 diag_FsExportProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
          return ERR_MSP_FAILURE;
     }
 
-    /*Í£Ö¹¶¨Ê±Æ÷*/
+    /*åœæ­¢å®šæ—¶å™¨*/
     VOS_StopRelTimer(&g_stDiagFileInfo.hTimer);
 	diag_fs_log();
 
@@ -769,7 +769,7 @@ VOS_UINT32 diag_FsExportProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     set_fs(old_fs);
 #endif
 
-    /*¶ÁÈ¡ÎÄ¼ş³öÏÖ´íÎó*/
+    /*è¯»å–æ–‡ä»¶å‡ºç°é”™è¯¯*/
     if (DIAG_FS_ERROR == (VOS_INT32)ulReadSize)
     {
 
@@ -780,7 +780,7 @@ VOS_UINT32 diag_FsExportProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     }
 
-    /*±íÃ÷ÒÑ¾­Ã»ÓĞÄÚÈİ¿ÉÒÔ¶ÁÈ¡£¬ÎÄ¼şÄÚÈİÈ«²¿¶ÁÍê*/
+    /*è¡¨æ˜å·²ç»æ²¡æœ‰å†…å®¹å¯ä»¥è¯»å–ï¼Œæ–‡ä»¶å†…å®¹å…¨éƒ¨è¯»å®Œ*/
     if (0 == ulReadSize)
     {
 
@@ -791,7 +791,7 @@ VOS_UINT32 diag_FsExportProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     {
 
 		diag_fs_log();
-        /*Æô¶¯¶¨Ê±Æ÷*/
+        /*å¯åŠ¨å®šæ—¶å™¨*/
         g_stDiagFileInfo.hTimer = VOS_NULL_PTR;
         ret = VOS_StartRelTimer(&g_stDiagFileInfo.hTimer, diag_GetAgentPid(), DIAG_CMD_FILE_OPS_TIME_OUT_LEN, 0, DIAG_TMR_FILE_OP_TIMEOUT_PARAM, VOS_RELTIMER_NOLOOP, VOS_TIMER_NO_PRECISION);
         if(ret != ERR_MSP_SUCCESS)
@@ -804,7 +804,7 @@ VOS_UINT32 diag_FsExportProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     pstFsCnf->ulRet = ret;
     pstFsCnf->ulSize = ulReadSize;
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)pstFsCnf,ulCmdId,sizeof(DIAG_CMD_FS_EXPORT_CNF)+ulReadSize);
     VOS_MemFree(diag_GetAgentPid(),pstFsCnf);
 
@@ -843,7 +843,7 @@ VOS_UINT32 diag_FsDeleteProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     stFsCnf.ulRet = ret;
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stFsCnf,ulCmdId,sizeof(DIAG_CMD_FS_DELETE_CNF));
 
 
@@ -871,7 +871,7 @@ VOS_UINT32 diag_FsSpaceProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     set_fs(old_fs);
 #endif
 
-    /*´ò°ü»Ø¸´¸øFW*/
+    /*æ‰“åŒ…å›å¤ç»™FW*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stFsCnf,ulCmdId,sizeof(DIAG_CMD_FS_SPACE_CNF));
 
 

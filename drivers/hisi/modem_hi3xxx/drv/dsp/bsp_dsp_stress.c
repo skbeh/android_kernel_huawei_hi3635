@@ -204,7 +204,7 @@ s32 bbe16_stress_test_start(void)
         return -ENOMEM;
     }
 #if 0
-    /* BBE16 DMEM1 ∆´“∆0x40000(256KB) */
+    /* BBE16 DMEM1 ÂÅèÁßª0x40000(256KB) */
 	writel(DDR_TLPHY_IMAGE_ADDR, bbe16_tcm_addr + 0x40000);
     writel(1024/4, bbe16_tcm_addr+0x40004);
     writel(AXI_MEM_64_SRC_FOR_BBE16_PHY, bbe16_tcm_addr+0x40008);
@@ -328,7 +328,7 @@ s32 hifi2_stress_test_start(void)
 
 #if 0
 #ifdef BSP_DSP_BBE16
-    /* HiFi2 DMEM1∆´“∆0x4000(16KB) */
+    /* HiFi2 DMEM1ÂÅèÁßª0x4000(16KB) */
     writel(DDR_TLPHY_IMAGE_ADDR, hifi2_tcm_addr+0x4000);
     writel(1024/4, hifi2_tcm_addr+0x4004);
     writel(AXI_MEM_64_SRC_FOR_HIFI_PHY, hifi2_tcm_addr+0x4008);
@@ -337,7 +337,7 @@ s32 hifi2_stress_test_start(void)
     writel(AXI_MEM_FOR_MEMCPY_SIZE*2/4, hifi2_tcm_addr+0x4014);
     writel(0, hifi2_tcm_addr+0x401C);
 #else
-    /* HiFi2 DMEM1∆´“∆0x8000(32KB) */
+    /* HiFi2 DMEM1ÂÅèÁßª0x8000(32KB) */
     writel(DDR_TLPHY_IMAGE_ADDR, hifi2_tcm_addr+0x8000);
     writel(1024/4, hifi2_tcm_addr+0x8004);
     writel(AXI_MEM_64_SRC_FOR_HIFI_PHY, hifi2_tcm_addr+0x8008);
@@ -348,7 +348,7 @@ s32 hifi2_stress_test_start(void)
     set_hi_sc_ctrl12_hifi_runstall(0);
 #endif
 #endif
-    /* HiFi2 DMEM1∆´“∆0x8000(32KB) */
+    /* HiFi2 DMEM1ÂÅèÁßª0x8000(32KB) */
     writel(SHD_DDR_V2P(HIFI_DDR_BASEADDR), hifi2_tcm_addr+0x8000);
     writel(HIFI_DDR_SIZE/4, hifi2_tcm_addr+0x8004);
     writel(AXI_MEM_64_SRC_FOR_HIFI_PHY, hifi2_tcm_addr+0x8008);

@@ -76,7 +76,7 @@ VOS_UINT32 Diag_AirMessageTest( VOS_UINT32 ulSize)
 
 	if(g_HsoConn)
 	{
-		diag_CfgResetAllSwt();/* [false alarm]:ÆÁ±ÎFortify */
+		diag_CfgResetAllSwt();/* [false alarm]:å±è”½Fortify */
 
 		diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_INIT_BIT,DIAG_CFG_SWT_OPEN);
 
@@ -102,7 +102,7 @@ VOS_UINT32 Diag_GuAirMessageTest( VOS_UINT32 ulSize)
 		return ERR_MSP_FAILURE;
 	}
 
-	pRptMessage = (VOS_UINT8*) diag_HeapAllocD(sizeof(DIAG_GU_AIR_MSG_LOG_STRU)+100);   /* [false alarm]:ÆÁ±ÎFortify */
+	pRptMessage = (VOS_UINT8*) diag_HeapAllocD(sizeof(DIAG_GU_AIR_MSG_LOG_STRU)+100);   /* [false alarm]:å±è”½Fortify */
     /*lint -save -e830 -e539*/
     if(NULL == pRptMessage)
     {
@@ -125,8 +125,8 @@ VOS_UINT32 Diag_GuAirMessageTest( VOS_UINT32 ulSize)
 	}
 	diag_printf("DIAG_ReportGUAirMessageLog !g_ulDiagCfgInfo =%d\n",g_ulDiagCfgInfo);
 
-	ret = DIAG_ReportGUAirMessageLog(pRptMessage,ulMsgLen);/* [false alarm]:ÆÁ±ÎFortify */
-	return ret;/* [false alarm]:ÆÁ±ÎFortify */
+	ret = DIAG_ReportGUAirMessageLog(pRptMessage,ulMsgLen);/* [false alarm]:å±è”½Fortify */
+	return ret;/* [false alarm]:å±è”½Fortify */
 }
 VOS_UINT32 Diag_LayerMessageTest( VOS_UINT32 ulSize);
 VOS_UINT32 Diag_LayerMessageTest( VOS_UINT32 ulSize)
@@ -151,7 +151,7 @@ VOS_UINT32 Diag_LayerMessageTest( VOS_UINT32 ulSize)
 
 	if(g_HsoConn)
 	{
-		diag_CfgResetAllSwt();/* [false alarm]:ÆÁ±ÎFortify */
+		diag_CfgResetAllSwt();/* [false alarm]:å±è”½Fortify */
 
 		diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_INIT_BIT,DIAG_CFG_SWT_OPEN);
 
@@ -198,7 +198,7 @@ VOS_UINT32 Diag_VoLTEMessageTest( VOS_UINT32 ulSize)
 
 	if(g_HsoConn)
 	{
-		diag_CfgResetAllSwt();/* [false alarm]:ÆÁ±ÎFortify */
+		diag_CfgResetAllSwt();/* [false alarm]:å±è”½Fortify */
 
 		diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_INIT_BIT,DIAG_CFG_SWT_OPEN);
 
@@ -225,14 +225,14 @@ VOS_UINT32 Diag_PrintMessageTest( VOS_UINT32 ulLevelFilter)
 
 	if(g_HsoConn)
 	{
-		diag_CfgResetAllSwt();/* [false alarm]:ÆÁ±ÎFortify */
+		diag_CfgResetAllSwt();/* [false alarm]:å±è”½Fortify */
 
 		ret = diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_INIT_BIT,DIAG_CFG_SWT_OPEN);
 		if(ret != ERR_MSP_SUCCESS)
 		{
 			diag_printf("DIAG_PrintfV 111 !\n");
 		}
-		ret = diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_CONN_BIT,DIAG_CFG_SWT_OPEN);/* [false alarm]:ÆÁ±ÎFortify */
+		ret = diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_CONN_BIT,DIAG_CFG_SWT_OPEN);/* [false alarm]:å±è”½Fortify */
 		if(ret != ERR_MSP_SUCCESS)
 		{
 			diag_printf("DIAG_PrintfV! 222 \n");
@@ -240,7 +240,7 @@ VOS_UINT32 Diag_PrintMessageTest( VOS_UINT32 ulLevelFilter)
 
 		diag_printf("DIAG_PrintfV !g_ulDiagCfgInfo =%d\n",g_ulDiagCfgInfo);
 
-		pstPrintSwtReq = (DIAG_CMD_LOG_CAT_PRINT_REQ_STRU*)diag_HeapAllocD(sizeof(DIAG_CMD_LOG_CAT_PRINT_REQ_STRU));   /* [false alarm]:ÆÁ±ÎFortify */
+		pstPrintSwtReq = (DIAG_CMD_LOG_CAT_PRINT_REQ_STRU*)diag_HeapAllocD(sizeof(DIAG_CMD_LOG_CAT_PRINT_REQ_STRU));   /* [false alarm]:å±è”½Fortify */
         /*lint -save -e830*/
         if(NULL == pstPrintSwtReq)
         {
@@ -274,7 +274,7 @@ VOS_UINT32 Diag_UserPlaneMessageTest( VOS_UINT32 ulMsgId,VOS_UINT32 ulSwitch)
 
 	if(g_HsoConn)
 	{
-		diag_CfgResetAllSwt();/* [false alarm]:ÆÁ±ÎFortify */
+		diag_CfgResetAllSwt();/* [false alarm]:å±è”½Fortify */
 
 		diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_INIT_BIT,DIAG_CFG_SWT_OPEN);
 
@@ -301,7 +301,7 @@ VOS_UINT32 Diag_EventMessageTest( VOS_UINT32 id,VOS_UINT32 ulEventID)
 
 	if(g_HsoConn)
 	{
-		diag_CfgResetAllSwt();/* [false alarm]:ÆÁ±ÎFortify */
+		diag_CfgResetAllSwt();/* [false alarm]:å±è”½Fortify */
 
 		diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_INIT_BIT,DIAG_CFG_SWT_OPEN);
 
@@ -345,7 +345,7 @@ VOS_UINT32 Diag_CmdMessageTest( VOS_UINT32 id,VOS_UINT32 ulSize)
 
 	if(g_HsoConn)
 	{
-		diag_CfgResetAllSwt();/* [false alarm]:ÆÁ±ÎFortify */
+		diag_CfgResetAllSwt();/* [false alarm]:å±è”½Fortify */
 
 		diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_INIT_BIT,DIAG_CFG_SWT_OPEN);
 
@@ -595,7 +595,7 @@ VOS_VOID Test_Diag_Mntn_Drx(DIAG_ENUM_TYPE_E eDiagEnumType)
     pDiagReqHeadStru->ulAuid = 0;
 	pDiagReqHeadStru->ulSn= 0;
 
-    /*²ÎÊý¼ì²é£¬È·ÈÏHSOÏÂ·¢Êý¾ÝÊÇ·ñÕýÈ·*/
+    /*å‚æ•°æ£€æŸ¥ï¼Œç¡®è®¤HSOä¸‹å‘æ•°æ®æ˜¯å¦æ­£ç¡®*/
     ret = diag_FwDecodeDataCheck(pHsoMsg);
     if(ret != ERR_MSP_SUCCESS)
     {
@@ -603,7 +603,7 @@ VOS_VOID Test_Diag_Mntn_Drx(DIAG_ENUM_TYPE_E eDiagEnumType)
         return;
     }
 
-    /*·¢ËÍ¸øDIAG FW½øÐÐ´¦Àí*/
+    /*å‘é€ç»™DIAG FWè¿›è¡Œå¤„ç†*/
 
 	ret = diag_SendMsg(MSP_PID_DIAG_FW, MSP_PID_DIAG_AGENT, ID_MSG_DIAG_CMD_REQ_FW_TO_AGENT, pHsoMsg, u32HsoMsgLg);
 
@@ -619,7 +619,7 @@ VOS_VOID Test_Diag_Mntn_Drx(DIAG_ENUM_TYPE_E eDiagEnumType)
 }
 
 
-/* ÒÔÏÂ²âÊÔµÍ¹¦ºÄÊý²É*/
+/* ä»¥ä¸‹æµ‹è¯•ä½ŽåŠŸè€—æ•°é‡‡*/
 /*drx sample test*/
 VOS_UINT32 Test_Diag_Sample_Drx_Common(DIAG_ENUM_TYPE_E eDiagEnumCore,
 VOS_UINT32 ulSerId, VOS_UINT32 ulStrId, VOS_UINT32 ulMailboxId, VOS_UINT32 ulOmSamPleId)
@@ -664,7 +664,7 @@ VOS_UINT32 ulSerId, VOS_UINT32 ulStrId, VOS_UINT32 ulMailboxId, VOS_UINT32 ulOmS
 	psDrxSample->usOpid = 0; /*start */
 	psDrxSample->usPowrDomainBitmap = 0;
 
-    /*²ÎÊý¼ì²é£¬È·ÈÏHSOÏÂ·¢Êý¾ÝÊÇ·ñÕýÈ·*/
+    /*å‚æ•°æ£€æŸ¥ï¼Œç¡®è®¤HSOä¸‹å‘æ•°æ®æ˜¯å¦æ­£ç¡®*/
     ret = diag_FwDecodeDataCheck(pHsoMsg);
     if(ret != ERR_MSP_SUCCESS)
     {
@@ -672,7 +672,7 @@ VOS_UINT32 ulSerId, VOS_UINT32 ulStrId, VOS_UINT32 ulMailboxId, VOS_UINT32 ulOmS
         return ret;
     }
 
-    /*·¢ËÍ¸øDIAG FW½øÐÐ´¦Àí*/
+    /*å‘é€ç»™DIAG FWè¿›è¡Œå¤„ç†*/
 
 	ret = diag_SendMsg(MSP_PID_DIAG_FW, MSP_PID_DIAG_AGENT, ID_MSG_DIAG_CMD_REQ_FW_TO_AGENT, pHsoMsg, u32HsoMsgLg);
 

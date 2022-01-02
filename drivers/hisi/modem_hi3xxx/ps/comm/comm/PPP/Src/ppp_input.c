@@ -8,7 +8,7 @@
 #include "product_config.h"
 #if(FEATURE_ON == FEATURE_PPP)
 /******************************************************************************
-   1 Í·ÎÄ¼þ°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "ppp_public.h"
 #include "layer.h"
@@ -27,24 +27,24 @@
 #include "AdsDeviceInterface.h"
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_PPP_INPUT_C
 
 /******************************************************************************
-   2 Íâ²¿º¯Êý±äÁ¿ÉùÃ÷
+   2 å¤–éƒ¨å‡½æ•°å˜é‡å£°æ˜Ž
 ******************************************************************************/
 extern VOS_VOID   PPP_ClearDataQ(VOS_VOID);
 extern VOS_VOID   Ppp_ProcConfigInfoInd(VOS_UINT16 usPppId);
 
 /******************************************************************************
-   3 Ë½ÓÐ¶¨Òå
+   3 ç§æœ‰å®šä¹‰
 ******************************************************************************/
 #define PPP_ASYNC(PppId)  (PPP_LINK(PppId)->async)
 
 /******************************************
-ÏòÖ¸ÕëÖ¸ÏòÄÚ´æÖÐ·ÅÖÃ£¬²¢¸üÐÂ¸ÃÖ¸ÕëµØÖ·
-×¢Òâ:¸ÃÖ¸Õë±ØÐëÊÇ(u)char *ÐÍ
+å‘æŒ‡é’ˆæŒ‡å‘å†…å­˜ä¸­æ”¾ç½®ï¼Œå¹¶æ›´æ–°è¯¥æŒ‡é’ˆåœ°å€
+æ³¨æ„:è¯¥æŒ‡é’ˆå¿…é¡»æ˜¯(u)char *åž‹
 *******************************************/
 #define PPP_PUTCHAR(c, cp) {     \
 	*(cp) = (VOS_UINT8)(c);     \
@@ -65,14 +65,14 @@ extern VOS_VOID   Ppp_ProcConfigInfoInd(VOS_UINT16 usPppId);
 }
 
 /******************************************************************************
-   4 È«¾Ö±äÁ¿¶¨Òå
+   4 å…¨å±€å˜é‡å®šä¹‰
 ******************************************************************************/
-/*PPPµÄÊý¾Ý¶ÓÁÐ½á¹¹Ìå,ÉÏÏÂÐÐÊý¾Ý¶¼ÔÚÍ¬Ò»¸ö¶ÓÁÐÖÐ*/
+/*PPPçš„æ•°æ®é˜Ÿåˆ—ç»“æž„ä½“,ä¸Šä¸‹è¡Œæ•°æ®éƒ½åœ¨åŒä¸€ä¸ªé˜Ÿåˆ—ä¸­*/
 PPP_DATA_Q_CTRL_ST     g_PppDataQCtrl;
 
 
 /******************************************************************************
-   5 º¯ÊýÊµÏÖ
+   5 å‡½æ•°å®žçŽ°
 ******************************************************************************/
 
 VOS_VOID PPP_INPUT_ResetStatInfo(VOS_VOID)
@@ -84,7 +84,7 @@ VOS_VOID PPP_INPUT_ResetStatInfo(VOS_VOID)
 
 /******************************************************************************
  Function:       PPP_GetDataCnt
- Description:    »ñÈ¡Êý¾Ý¶ÓÁÐµÄÊý¾Ý°ü¸öÊý
+ Description:    èŽ·å–æ•°æ®é˜Ÿåˆ—çš„æ•°æ®åŒ…ä¸ªæ•°
  Calls:
  Data Accessed:
  Data Updated:
@@ -108,26 +108,26 @@ VOS_VOID    PPP_INPUT_ShowStatInfo(VOS_VOID)
 {
     vos_printf("\n================PPP STAT INFO Begin==========================\n");
 
-    vos_printf("¶ÓÁÐÖÐµ±Ç°½áµã¸öÊý         = %d\n", PPP_INPUT_GetDataCnt());
-    vos_printf("DataNotifyÏûÏ¢·¢ËÍ´ÎÊý     = %d\n", g_PppDataQCtrl.stStat.ulSndMsgCnt);
-    vos_printf("DataNotifyÏûÏ¢´¦Àí´ÎÊý     = %d\n", g_PppDataQCtrl.stStat.ulProcMsgCnt);
-    vos_printf("¶ÓÁÐÖÐ³öÏÖ¹ýµÄ×î´ó½Úµã¸öÊý = %d\n", g_PppDataQCtrl.stStat.ulQMaxCnt);
-    vos_printf("Ò»´Î×î¶àÔÊÐí´¦ÀíµÄ½Úµã¸öÊý = %d\n", PPP_ONCE_DEAL_MAX_CNT);
+    vos_printf("é˜Ÿåˆ—ä¸­å½“å‰ç»“ç‚¹ä¸ªæ•°         = %d\n", PPP_INPUT_GetDataCnt());
+    vos_printf("DataNotifyæ¶ˆæ¯å‘é€æ¬¡æ•°     = %d\n", g_PppDataQCtrl.stStat.ulSndMsgCnt);
+    vos_printf("DataNotifyæ¶ˆæ¯å¤„ç†æ¬¡æ•°     = %d\n", g_PppDataQCtrl.stStat.ulProcMsgCnt);
+    vos_printf("é˜Ÿåˆ—ä¸­å‡ºçŽ°è¿‡çš„æœ€å¤§èŠ‚ç‚¹ä¸ªæ•° = %d\n", g_PppDataQCtrl.stStat.ulQMaxCnt);
+    vos_printf("ä¸€æ¬¡æœ€å¤šå…è®¸å¤„ç†çš„èŠ‚ç‚¹ä¸ªæ•° = %d\n", PPP_ONCE_DEAL_MAX_CNT);
 
-    vos_printf("ÉÏÐÐÄÚ´æÉêÇë³É¹¦´ÎÊý       = %d\n", g_PppDataQCtrl.stStat.ulMemAllocUplinkCnt);
-    vos_printf("ÉÏÐÐÄÚ´æÉêÇëÊ§°Ü´ÎÊý       = %d\n", g_PppDataQCtrl.stStat.ulMemAllocUplinkFailCnt);
+    vos_printf("ä¸Šè¡Œå†…å­˜ç”³è¯·æˆåŠŸæ¬¡æ•°       = %d\n", g_PppDataQCtrl.stStat.ulMemAllocUplinkCnt);
+    vos_printf("ä¸Šè¡Œå†…å­˜ç”³è¯·å¤±è´¥æ¬¡æ•°       = %d\n", g_PppDataQCtrl.stStat.ulMemAllocUplinkFailCnt);
 
-    vos_printf("ÏÂÐÐÄÚ´æÉêÇë³É¹¦´ÎÊý       = %d\n", g_PppDataQCtrl.stStat.ulMemAllocDownlinkCnt);
-    vos_printf("ÏÂÐÐÄÚ´æÉêÇëÊ§°Ü´ÎÊý       = %d\n", g_PppDataQCtrl.stStat.ulMemAllocDownlinkFailCnt);
-    vos_printf("ÄÚ´æÊÍ·Å´ÎÊý               = %d\n", g_PppDataQCtrl.stStat.ulMemFreeCnt);
+    vos_printf("ä¸‹è¡Œå†…å­˜ç”³è¯·æˆåŠŸæ¬¡æ•°       = %d\n", g_PppDataQCtrl.stStat.ulMemAllocDownlinkCnt);
+    vos_printf("ä¸‹è¡Œå†…å­˜ç”³è¯·å¤±è´¥æ¬¡æ•°       = %d\n", g_PppDataQCtrl.stStat.ulMemAllocDownlinkFailCnt);
+    vos_printf("å†…å­˜é‡Šæ”¾æ¬¡æ•°               = %d\n", g_PppDataQCtrl.stStat.ulMemFreeCnt);
 
-    vos_printf("ÉÏÐÐÊý¾Ý°ü×Ü¸öÊý           = %d\n", g_PppDataQCtrl.stStat.ulUplinkCnt);
-    vos_printf("ÉÏÐÐ¶ª°üÊý                 = %d\n", g_PppDataQCtrl.stStat.ulUplinkDropCnt);
-    vos_printf("ÉÏÐÐ·¢°üÊý                 = %d\n", g_PppDataQCtrl.stStat.ulUplinkSndDataCnt);
+    vos_printf("ä¸Šè¡Œæ•°æ®åŒ…æ€»ä¸ªæ•°           = %d\n", g_PppDataQCtrl.stStat.ulUplinkCnt);
+    vos_printf("ä¸Šè¡Œä¸¢åŒ…æ•°                 = %d\n", g_PppDataQCtrl.stStat.ulUplinkDropCnt);
+    vos_printf("ä¸Šè¡Œå‘åŒ…æ•°                 = %d\n", g_PppDataQCtrl.stStat.ulUplinkSndDataCnt);
 
-    vos_printf("ÏÂÐÐÊý¾Ý°ü×Ü¸öÊý           = %d\n", g_PppDataQCtrl.stStat.ulDownlinkCnt);
-    vos_printf("ÏÂÐÐ¶ª°üÊý                 = %d\n", g_PppDataQCtrl.stStat.ulDownlinkDropCnt);
-    vos_printf("ÏÂÐÐ·¢°üÊý                 = %d\n", g_PppDataQCtrl.stStat.ulDownlinkSndDataCnt);
+    vos_printf("ä¸‹è¡Œæ•°æ®åŒ…æ€»ä¸ªæ•°           = %d\n", g_PppDataQCtrl.stStat.ulDownlinkCnt);
+    vos_printf("ä¸‹è¡Œä¸¢åŒ…æ•°                 = %d\n", g_PppDataQCtrl.stStat.ulDownlinkDropCnt);
+    vos_printf("ä¸‹è¡Œå‘åŒ…æ•°                 = %d\n", g_PppDataQCtrl.stStat.ulDownlinkSndDataCnt);
     vos_printf("ulNotifyMsgCnt             = %d\n", g_PppDataQCtrl.ulNotifyMsgCnt);
 
     vos_printf("================PPP STAT INFO End==========================\n");
@@ -140,19 +140,19 @@ VOS_UINT32  PPP_Snd1stDataNotify(VOS_VOID)
     VOS_INT32                    lLockKey;
 
 
-    /*ÉêÇëÏûÏ¢ÄÚ´æ:*/
+    /*ç”³è¯·æ¶ˆæ¯å†…å­˜:*/
     pMsg = (PPP_DATA_PROC_NOTIFY_MSG *) PS_ALLOC_MSG( PS_PID_APP_PPP,
         sizeof(PPP_DATA_PROC_NOTIFY_MSG) - VOS_MSG_HEAD_LENGTH );
 
     if (VOS_NULL_PTR == pMsg)
     {
-        /*´òÓ¡³ö´íÐÅÏ¢---ÉêÇëÏûÏ¢°üÊ§°Ü:*/
+        /*æ‰“å°å‡ºé”™ä¿¡æ¯---ç”³è¯·æ¶ˆæ¯åŒ…å¤±è´¥:*/
         PPP_MNTN_LOG( PS_PID_APP_PPP, 0, PS_PRINT_WARNING,
                       "PPP_Snd1stDataNotify:WARNING:Allocates message for PPP_DATA_PROC_NOTIFY FAIL!\r\n" );
         return PS_FAIL;
     }
 
-    /*ÌîÐ´ÏûÏ¢ÄÚÈÝ:*/
+    /*å¡«å†™æ¶ˆæ¯å†…å®¹:*/
     pMsg->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pMsg->ulReceiverPid   = PS_PID_APP_PPP;
     pMsg->ulMsgType       = PPP_DATA_PROC_NOTIFY;
@@ -161,10 +161,10 @@ VOS_UINT32  PPP_Snd1stDataNotify(VOS_VOID)
     g_PppDataQCtrl.ulNotifyMsgCnt++;
     VOS_Splx(lLockKey);
 
-    /*·¢ËÍÏûÏ¢:*/
+    /*å‘é€æ¶ˆæ¯:*/
     if (VOS_OK != PS_SEND_MSG(PS_PID_APP_PPP, pMsg))
     {
-        /*´òÓ¡¾¯¸æÐÅÏ¢---·¢ËÍÏûÏ¢Ê§°Ü:*/
+        /*æ‰“å°è­¦å‘Šä¿¡æ¯---å‘é€æ¶ˆæ¯å¤±è´¥:*/
         PPP_MNTN_LOG( PS_PID_APP_PPP, 0, PS_PRINT_WARNING, "SEND PPP_DATA_PROC_NOTIFY msg FAIL!\r\n" );
         return PS_FAIL;
     }
@@ -176,16 +176,16 @@ VOS_UINT32  PPP_Snd1stDataNotify(VOS_VOID)
 
 VOS_UINT32  PPP_EnqueueData(PPP_ZC_STRU *pstImmZc)
 {
-    VOS_UINT32                          ulNonEmptyEvent = PS_FALSE;    /* ¼ÇÂ¼¶ÓÁÐÊÇ·ñ·¢ÉúÁËÓÉ¿Õµ½·Ç¿ÕµÄ×ª±ä */
+    VOS_UINT32                          ulNonEmptyEvent = PS_FALSE;    /* è®°å½•é˜Ÿåˆ—æ˜¯å¦å‘ç”Ÿäº†ç”±ç©ºåˆ°éžç©ºçš„è½¬å˜ */
     PPP_ZC_QUEUE_STRU                   *pstDataQ;
     VOS_INT32                           lLockKey;
 
 
     pstDataQ   = &g_PppDataQCtrl.stDataQ;
 
-    /* AºËÈÎÎñµ÷ÊÔ²»¹»ÊµÊ±£¬Ö®Ç°»ñÈ¡³¤¶ÈºÍÈëÁÐ·Ö¿ªËøÖÐ¶Ï£¬»á³öÏÖÉÏÐÐÊý¾ÝÈë¶ÓÊ±
-       ÅÐ¶Ï¶ÓÁÐ²»Îª¿Õ£¬µ«½ô½Ó×ÅPPPÈÎÎñµÃµ½µ÷¶È£¬°Ñ¶ÓÁÐÈ¡¿ÕºóÔÙ½Ó×ÅÈë¶ÓµÄÇé¿ö¡£
-       ÒòÎª½«»ñÈ¡¶ÓÁÐÊý¾Ý¸öÊýºÍÈë¶Ó°üº¬ÔÚÒ»¸öËøÖÐ¶ÏÖÐ */
+    /* Aæ ¸ä»»åŠ¡è°ƒè¯•ä¸å¤Ÿå®žæ—¶ï¼Œä¹‹å‰èŽ·å–é•¿åº¦å’Œå…¥åˆ—åˆ†å¼€é”ä¸­æ–­ï¼Œä¼šå‡ºçŽ°ä¸Šè¡Œæ•°æ®å…¥é˜Ÿæ—¶
+       åˆ¤æ–­é˜Ÿåˆ—ä¸ä¸ºç©ºï¼Œä½†ç´§æŽ¥ç€PPPä»»åŠ¡å¾—åˆ°è°ƒåº¦ï¼ŒæŠŠé˜Ÿåˆ—å–ç©ºåŽå†æŽ¥ç€å…¥é˜Ÿçš„æƒ…å†µã€‚
+       å› ä¸ºå°†èŽ·å–é˜Ÿåˆ—æ•°æ®ä¸ªæ•°å’Œå…¥é˜ŸåŒ…å«åœ¨ä¸€ä¸ªé”ä¸­æ–­ä¸­ */
     lLockKey = VOS_SplIMP();
 
     if ( (0 == PPP_ZC_GET_QUEUE_LEN(pstDataQ)) && (0 == g_PppDataQCtrl.ulNotifyMsgCnt))
@@ -193,7 +193,7 @@ VOS_UINT32  PPP_EnqueueData(PPP_ZC_STRU *pstImmZc)
         ulNonEmptyEvent = PS_TRUE;
     }
 
-    /*½«Êý¾Ý½áµã²åÈë¶ÓÁÐÎ²²¿*/
+    /*å°†æ•°æ®ç»“ç‚¹æ’å…¥é˜Ÿåˆ—å°¾éƒ¨*/
     PPP_ZC_ENQUEUE_TAIL(pstDataQ, pstImmZc);
     VOS_Splx(lLockKey);
 
@@ -204,10 +204,10 @@ VOS_UINT32  PPP_EnqueueData(PPP_ZC_STRU *pstImmZc)
 
     if (PS_TRUE == ulNonEmptyEvent)
     {
-        /*ÏòPPP·¢ËÍÊý¾Ý´¦ÀíÖ¸Ê¾*/
+        /*å‘PPPå‘é€æ•°æ®å¤„ç†æŒ‡ç¤º*/
        if (PS_SUCC != PPP_Snd1stDataNotify())
        {
-            /* ·¢ËÍÏûÏ¢Í¨ÖªÊ§°Ü£¬ÐèÒªÇå¿ÕÕû¸ö¶ÓÁÐ */
+            /* å‘é€æ¶ˆæ¯é€šçŸ¥å¤±è´¥ï¼Œéœ€è¦æ¸…ç©ºæ•´ä¸ªé˜Ÿåˆ— */
             PPP_ClearDataQ();
             return PS_FAIL;
        }
@@ -230,8 +230,8 @@ VOS_UINT32 PPP_PullPacketEvent(VOS_UINT16 usPppId, PPP_ZC_STRU *pstImmZc)
         return PS_FAIL;
     }
 
-    /* ²Î¿¼V3R1ÊµÏÖ£¬Èë¿Ú´¦²»¼ì²éPPP ID¶ÔÓ¦ÊµÌåÊÇ·ñ´æÔÚ£¬ÕâÑùÔÚÍø²à¶Ï¿ª(´ËÊ±PPP IDÒÑ¾­ÊÍ·Å)£¬
-    ¡¡¡¡Ò²ÄÜ½ÓÊÕPC·¢À´µÄIPCPÐ­ÉÌ°ü */
+    /* å‚è€ƒV3R1å®žçŽ°ï¼Œå…¥å£å¤„ä¸æ£€æŸ¥PPP IDå¯¹åº”å®žä½“æ˜¯å¦å­˜åœ¨ï¼Œè¿™æ ·åœ¨ç½‘ä¾§æ–­å¼€(æ­¤æ—¶PPP IDå·²ç»é‡Šæ”¾)ï¼Œ
+    ã€€ã€€ä¹Ÿèƒ½æŽ¥æ”¶PCå‘æ¥çš„IPCPåå•†åŒ… */
     if((PPP_MAX_ID_NUM < usPppId)
         || (0 == usPppId))
     {
@@ -243,7 +243,7 @@ VOS_UINT32 PPP_PullPacketEvent(VOS_UINT16 usPppId, PPP_ZC_STRU *pstImmZc)
         return PS_FAIL;
     }
 
-    /*Ìî³äpstDataµÄusApp×Ö¶Î:¸ß8Î»·ÅusPppId,µÍ8Î»·ÅPPP±¨ÎÄÀàÐÍ*/
+    /*å¡«å……pstDataçš„usAppå­—æ®µ:é«˜8ä½æ”¾usPppId,ä½Ž8ä½æ”¾PPPæŠ¥æ–‡ç±»åž‹*/
     PPP_ZC_SET_DATA_APP(pstImmZc, (VOS_UINT16)(usPppId << 8) | (VOS_UINT16)PPP_PULL_PACKET_TYPE);
 
     if ( PS_SUCC != PPP_EnqueueData(pstImmZc) )
@@ -272,7 +272,7 @@ VOS_UINT32 PPP_PushPacketEvent(VOS_UINT8 ucRabId, PPP_ZC_STRU *pstImmZc, ADS_PKT
         return PS_FAIL;
     }
 
-    /* Í¨¹ýRabId£¬Ñ°ÕÒµ½PPP IDºÍÏàÓ¦µÄÊµÌå */
+    /* é€šè¿‡RabIdï¼Œå¯»æ‰¾åˆ°PPP IDå’Œç›¸åº”çš„å®žä½“ */
 #ifndef WTTF_PS_FUSION_PC_ST
     if ( !PPP_RAB_TO_PPPID(&usPppId, ucRabId) )
     {
@@ -284,12 +284,12 @@ VOS_UINT32 PPP_PushPacketEvent(VOS_UINT8 ucRabId, PPP_ZC_STRU *pstImmZc, ADS_PKT
         return PS_FAIL;
     }
 
-    /*Èç¹û¸ÃÁ´½Ó»¹Ã»½¨Á¢ÆðÀ´*/
+    /*å¦‚æžœè¯¥é“¾æŽ¥è¿˜æ²¡å»ºç«‹èµ·æ¥*/
     if((VOS_OK != PppIsIdValid(usPppId))
         || (PPP_LINK(usPppId)->phase != PHASE_NETWORK)
         || (PPP_LINK(usPppId)->ipcp.fsm.state != ST_OPENED))
     {
-        /*¸Ã±äÁ¿ÐèÒª±»³õÊ¼»¯Îª0*/
+        /*è¯¥å˜é‡éœ€è¦è¢«åˆå§‹åŒ–ä¸º0*/
         g_PppDataQCtrl.stStat.ulDownlinkDropCnt++;
         PPP_MNTN_LOG1(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL,
                       "PPP, PPP_PushPacket, WARNING, packet from GGSN droped, packet num = <1>\r\n",
@@ -302,10 +302,10 @@ VOS_UINT32 PPP_PushPacketEvent(VOS_UINT8 ucRabId, PPP_ZC_STRU *pstImmZc, ADS_PKT
 #endif
 
 #ifdef WTTF_PS_FUSION_PC_ST
-    usPppId = 1;/*PCÉÏÃ»ÓÐÊ¹ÓÃPPP²¦ºÅ£¬´ò×®
+    usPppId = 1;/*PCä¸Šæ²¡æœ‰ä½¿ç”¨PPPæ‹¨å·ï¼Œæ‰“æ¡©
  */
 #endif
-    /*Ìî³äpstDataµÄusApp×Ö¶Î:¸ß8Î»·ÅusPppId,µÍ8Î»·ÅPPP±¨ÎÄÀàÐÍ*/
+    /*å¡«å……pstDataçš„usAppå­—æ®µ:é«˜8ä½æ”¾usPppId,ä½Ž8ä½æ”¾PPPæŠ¥æ–‡ç±»åž‹*/
     PPP_ZC_SET_DATA_APP(pstImmZc, (VOS_UINT16)(usPppId << 8) | (VOS_UINT16)PPP_PUSH_PACKET_TYPE);
 
     if ( PS_SUCC != PPP_EnqueueData(pstImmZc) )
@@ -340,7 +340,7 @@ VOS_UINT32 PPP_PullRawDataEvent(VOS_UINT16 usPppId, PPP_ZC_STRU *pstImmZc)
         return PS_FAIL;
     }
 
-    /*Ìî³äpstDataµÄusApp×Ö¶Î:¸ß8Î»·ÅusPppId,µÍ8Î»·ÅPPP±¨ÎÄÀàÐÍ*/
+    /*å¡«å……pstDataçš„usAppå­—æ®µ:é«˜8ä½æ”¾usPppId,ä½Ž8ä½æ”¾PPPæŠ¥æ–‡ç±»åž‹*/
     PPP_ZC_SET_DATA_APP(pstImmZc, (VOS_UINT16)(usPppId << 8) | (VOS_UINT16)PPP_PULL_RAW_DATA_TYPE);
 
     if ( PS_SUCC != PPP_EnqueueData(pstImmZc) )
@@ -369,7 +369,7 @@ VOS_UINT32 PPP_PushRawDataEvent(VOS_UINT8 ucRabId, PPP_ZC_STRU *pstImmZc, ADS_PK
         return PS_FAIL;
     }
 
-    /* Í¨¹ýRabId£¬Ñ°ÕÒµ½PPP IDºÍÏàÓ¦µÄÊµÌå */
+    /* é€šè¿‡RabIdï¼Œå¯»æ‰¾åˆ°PPP IDå’Œç›¸åº”çš„å®žä½“ */
     if ( !PPP_RAB_TO_PPPID(&usPppId, ucRabId) )
     {
         PPP_MemFree(pstImmZc);
@@ -388,7 +388,7 @@ VOS_UINT32 PPP_PushRawDataEvent(VOS_UINT8 ucRabId, PPP_ZC_STRU *pstImmZc, ADS_PK
         return PS_FAIL;
     }
 
-    /*Ìî³äpstDataµÄusApp×Ö¶Î:¸ß8Î»·ÅusPppId,µÍ8Î»·ÅPPP±¨ÎÄÀàÐÍ*/
+    /*å¡«å……pstDataçš„usAppå­—æ®µ:é«˜8ä½æ”¾usPppId,ä½Ž8ä½æ”¾PPPæŠ¥æ–‡ç±»åž‹*/
     PPP_ZC_SET_DATA_APP(pstImmZc, (VOS_UINT16)(usPppId << 8) | (VOS_UINT16)PPP_PUSH_RAW_DATA_TYPE);
 
     if ( PS_SUCC != PPP_EnqueueData(pstImmZc) )
@@ -421,7 +421,7 @@ VOS_VOID  PPP_ProcDataNotify(VOS_VOID)
 
     pstMem  = (PPP_ZC_STRU *)PPP_ZC_PEEK_QUEUE_HEAD(&g_PppDataQCtrl.stDataQ);
 
-    /* ¶ÓÁÐÎª¿ÕµÄÊ±ºò·µ»Ø¿ÕÖ¸Õë */
+    /* é˜Ÿåˆ—ä¸ºç©ºçš„æ—¶å€™è¿”å›žç©ºæŒ‡é’ˆ */
     if ( VOS_NULL_PTR == pstMem )
     {
         PPP_MNTN_LOG(PS_PID_APP_PPP, 0, LOG_LEVEL_NORMAL,
@@ -429,7 +429,7 @@ VOS_VOID  PPP_ProcDataNotify(VOS_VOID)
         return;
     }
 
-    /* ´¦Àí¸Ã½áµã(½áµãµÄÊÍ·Å¶¯×÷ÒÑ¾­ÔÚ¸÷´¦Àíº¯ÊýÄÚ²¿Íê³É£¬ÎÞÐèÔÙÊÍ·Å½áµã) */
+    /* å¤„ç†è¯¥ç»“ç‚¹(ç»“ç‚¹çš„é‡Šæ”¾åŠ¨ä½œå·²ç»åœ¨å„å¤„ç†å‡½æ•°å†…éƒ¨å®Œæˆï¼Œæ— éœ€å†é‡Šæ”¾ç»“ç‚¹) */
     usPppId = (PPP_ZC_GET_DATA_APP(pstMem) & 0xFF00) >> 8;
 
     if ((usPppId == 0) || (PPP_MAX_ID_NUM < usPppId))
@@ -492,9 +492,9 @@ VOS_VOID PPP_ProcAsFrmDataInd(struct MsgCB * pMsg)
 
 /*****************************************************************************
  Prototype      : PPP_ProcHdlcDisable
- Description    : ´¦ÀíHDLCÈ¥Ê¹ÄÜÇëÇó
+ Description    : å¤„ç†HDLCåŽ»ä½¿èƒ½è¯·æ±‚
 
- Input          : ---PPPÁ´Â·¶ÔÓ¦µÄPPP ID
+ Input          : ---PPPé“¾è·¯å¯¹åº”çš„PPP ID
  Output         : ---
  Return Value   : ---VOS_UINT32
  Calls          : ---
@@ -564,7 +564,7 @@ VOS_UINT32 PPP_ProcAtCtrlOper(struct MsgCB * pMsg)
 
 
 /*****************************************************************************
-    PPP¹´°üÔ­Ê¼ÄÚ´æÖÐÊý¾ÝµÄ½á¹¹
+    PPPå‹¾åŒ…åŽŸå§‹å†…å­˜ä¸­æ•°æ®çš„ç»“æž„
     -PPP_Frame_MNTN_Info_STRU    struct
     -PPP_Proto                   2 byte NetWork Order
     -PPP_Frame                   (without PPP Proto)
@@ -582,7 +582,7 @@ VOS_VOID Ppp_MBufFrameMntnInfo
     VOS_INT32                 ulRet             = VOS_ERR;
 
 
-    /* PPP Ö¡³¤¶È*/
+    /* PPP å¸§é•¿åº¦*/
     ulFrameLen = (VOS_UINT16)ppp_m_length(bp);
 
     ptrPppFrameMntnSt = (PPP_FRAME_MNTN_INFO_STRU *)PS_MEM_ALLOC(PS_PID_APP_PPP,
@@ -594,11 +594,11 @@ VOS_VOID Ppp_MBufFrameMntnInfo
         return;
     }
 
-    /* ÌîÈëPPPÖ¡Ð­ÒéÀàÐÍ,Ê¹ÓÃÍøÂç×Ö½ÚÐò*/
+    /* å¡«å…¥PPPå¸§åè®®ç±»åž‹,ä½¿ç”¨ç½‘ç»œå­—èŠ‚åº*/
     pucBuff = (VOS_UINT8 *)(ptrPppFrameMntnSt + 1);
     PPP_PUTSHORT(VOS_HTONS(usProto), pucBuff);
 
-    /* ÌîÈëÖ¡ÄÚÈÝ,Ô­Ê¼¸´ÖÆ¼´¿É*/
+    /* å¡«å…¥å¸§å†…å®¹,åŽŸå§‹å¤åˆ¶å³å¯*/
     ulRet = ppp_mbuf_View(bp, pucBuff, ulFrameLen);
     if (ulFrameLen != ulRet)
     {
@@ -609,13 +609,13 @@ VOS_VOID Ppp_MBufFrameMntnInfo
     }
 
     /****************************************************************
-       ·¢ËÍ¿ÉÎ¬¿É²âÐÅÏ¢
-       ³¤¶È: ³ý¿ÉÎ¬¿É²âÐÅÏ¢Í·²¿ÍâÊý¾Ý²¿·ÖÔØºÉ
-             º­¸ÇÖ¡³¤ + 2byte protocol×Ö¶Î
+       å‘é€å¯ç»´å¯æµ‹ä¿¡æ¯
+       é•¿åº¦: é™¤å¯ç»´å¯æµ‹ä¿¡æ¯å¤´éƒ¨å¤–æ•°æ®éƒ¨åˆ†è½½è·
+             æ¶µç›–å¸§é•¿ + 2byte protocolå­—æ®µ
     *****************************************************************/
     Ppp_FrameMntnInfo(ptrPppFrameMntnSt, ulDir, ulFrameLen + sizeof(usProto));
 
-    /* ÊÍ·ÅÄÚ´æ*/
+    /* é‡Šæ”¾å†…å­˜*/
     PS_MEM_FREE(PS_PID_APP_PPP, ptrPppFrameMntnSt);
     return;
 }
@@ -631,7 +631,7 @@ VOS_VOID Ppp_TtfMemFrameMntnInfo
     VOS_UINT8                *pucBuff           = VOS_NULL;
     VOS_UINT32                ulRet             = PS_FAIL;
 
-    /* PPP Ö¡³¤¶È*/
+    /* PPP å¸§é•¿åº¦*/
     ulFrameLen = (VOS_UINT16)PPP_ZC_GET_DATA_LEN(pstMem);
 
     ptrPppFrameMntnSt = (PPP_FRAME_MNTN_INFO_STRU *)PS_MEM_ALLOC(PS_PID_APP_PPP,
@@ -643,11 +643,11 @@ VOS_VOID Ppp_TtfMemFrameMntnInfo
         return;
     }
 
-    /* ÌîÈëPPPÖ¡Ð­ÒéÀàÐÍ,ÍøÂç×Ö½ÚÐò*/
+    /* å¡«å…¥PPPå¸§åè®®ç±»åž‹,ç½‘ç»œå­—èŠ‚åº*/
     pucBuff = (VOS_UINT8 *)(ptrPppFrameMntnSt + 1);
     PPP_PUTSHORT(VOS_HTONS(usProto), pucBuff);
 
-    /* ÌîÈëÖ¡ÄÚÈÝ,Ô­Ê¼¸´ÖÆ¼´¿É*/
+    /* å¡«å…¥å¸§å†…å®¹,åŽŸå§‹å¤åˆ¶å³å¯*/
     ulRet = PPP_MemGet(pstMem, 0, pucBuff, ulFrameLen);
     if (PS_SUCC != ulRet)
     {
@@ -659,13 +659,13 @@ VOS_VOID Ppp_TtfMemFrameMntnInfo
     }
 
     /****************************************************************
-       ·¢ËÍ¿ÉÎ¬¿É²âÐÅÏ¢
-       ³¤¶È: ³ý¿ÉÎ¬¿É²âÐÅÏ¢Í·²¿ÍâÊý¾Ý²¿·ÖÔØºÉ
-             º­¸ÇÖ¡³¤ + 2byte protocol×Ö¶Î
+       å‘é€å¯ç»´å¯æµ‹ä¿¡æ¯
+       é•¿åº¦: é™¤å¯ç»´å¯æµ‹ä¿¡æ¯å¤´éƒ¨å¤–æ•°æ®éƒ¨åˆ†è½½è·
+             æ¶µç›–å¸§é•¿ + 2byte protocolå­—æ®µ
     *****************************************************************/
     Ppp_FrameMntnInfo(ptrPppFrameMntnSt, ulDir, ulFrameLen + sizeof(usProto));
 
-    /* ÊÍ·ÅÄÚ´æ*/
+    /* é‡Šæ”¾å†…å­˜*/
     PS_MEM_FREE(PS_PID_APP_PPP, ptrPppFrameMntnSt);
 
     return;
@@ -683,7 +683,7 @@ VOS_VOID Ppp_FrameMntnInfo
     ptrPppMntnSt->ulSenderPid     = PS_PID_APP_PPP;
     ptrPppMntnSt->ulLength        = (ulDataLen + sizeof(PPP_FRAME_MNTN_INFO_STRU))
                                         - VOS_MSG_HEAD_LENGTH;
-    /* PPP Ö¡·½Ïò*/
+    /* PPP å¸§æ–¹å‘*/
     if (PPP_RECV_IN_PROTOCOL_FRAME == ulDir)
     {
         ptrPppMntnSt->ulMsgname = PPP_RECV_PROTO_PACKET_TYPE;
@@ -734,7 +734,7 @@ VOS_VOID Ppp_EventMntnInfo
 {
     PPP_EVENT_MNTN_INFO_STRU    stPppEveMntnSt;
 
-    /*ÌîÈë¹«¹²ÐÅÏ¢×Ö¶Î*/
+    /*å¡«å…¥å…¬å…±ä¿¡æ¯å­—æ®µ*/
     Ppp_FillEventMntnInfo(&stPppEveMntnSt, usPppID, ulEvent, sizeof(PPP_EVENT_MNTN_INFO_STRU));
 
     PPP_MNTN_TRACE_MSG(&stPppEveMntnSt);
@@ -742,8 +742,8 @@ VOS_VOID Ppp_EventMntnInfo
     return;
 }
 /*****************************************************************************
- PPP_ind_config_info¿ÉÎ¬¿É²âÐÅÏ¢¹´°üÔ­Ê¼ÄÚ´æÖÐµÄÊý¾Ý½á¹¹
- ÐèÒªÈ·±£LENÔÚ2BYTE¶ÔÆë
+ PPP_ind_config_infoå¯ç»´å¯æµ‹ä¿¡æ¯å‹¾åŒ…åŽŸå§‹å†…å­˜ä¸­çš„æ•°æ®ç»“æž„
+ éœ€è¦ç¡®ä¿LENåœ¨2BYTEå¯¹é½
 -PPP_Event_MNTN_Info_STRU   struct
 -LEN   IP_ADDR_LEN             2 byte
 -IP_ADDR                      16 byte(PPP_MAX_IPV4_ADDR_LEN + 1)
@@ -763,12 +763,12 @@ VOS_VOID Ppp_RcvConfigInfoIndMntnInfo
     VOS_UINT8                          *pucBuff;
 
     /*************************************************************
-    CONFIG info ²¿·ÖÊý¾Ý³¤¶È
-    ×Ü³¤¶È = aucIpAddr + aucPriDns + aucSecDns + aucGateWay + aucPriNbns + aucSecNbns + 6¸ö³¤¶È×Ö¶Î
+    CONFIG info éƒ¨åˆ†æ•°æ®é•¿åº¦
+    æ€»é•¿åº¦ = aucIpAddr + aucPriDns + aucSecDns + aucGateWay + aucPriNbns + aucSecNbns + 6ä¸ªé•¿åº¦å­—æ®µ
     **************************************************************/
     ulDataLen = (IPV4_ADDR_LEN * 6) + (sizeof(VOS_UINT16) * 6) + sizeof(PPP_EVENT_MNTN_INFO_STRU);
 
-    /* ÉêÇëÄÚ´æ,Êý¾Ý³¤¶È+ÊÂ¼þÏûÏ¢ÉÏ±¨Í·²¿³¤¶È*/
+    /* ç”³è¯·å†…å­˜,æ•°æ®é•¿åº¦+äº‹ä»¶æ¶ˆæ¯ä¸ŠæŠ¥å¤´éƒ¨é•¿åº¦*/
     ptrPppFrameMntnSt = (PPP_EVENT_MNTN_INFO_STRU *)PS_MEM_ALLOC(PS_PID_APP_PPP, ulDataLen);
 
     if (VOS_NULL_PTR == ptrPppFrameMntnSt)
@@ -778,7 +778,7 @@ VOS_VOID Ppp_RcvConfigInfoIndMntnInfo
         return;
     }
 
-    /* Æ«ÒÆsizeof(PPP_EVENT_MNTN_INFO_STRU) */
+    /* åç§»sizeof(PPP_EVENT_MNTN_INFO_STRU) */
     pucBuff = (VOS_UINT8 *)(ptrPppFrameMntnSt + 1);
 
     /*lint -e661 -e662 -e669*/
@@ -786,33 +786,33 @@ VOS_VOID Ppp_RcvConfigInfoIndMntnInfo
     PS_MEM_CPY(pucBuff, ptrIndConfigInfo->aucIpAddr, IPV4_ADDR_LEN);
     PPP_INCPTR(IPV4_ADDR_LEN, pucBuff);
 
-    /* ÌîÈë aucPriDns ³¤¶ÈºÍÄÚÈÝ*/
+    /* å¡«å…¥ aucPriDns é•¿åº¦å’Œå†…å®¹*/
     PPP_PUTSHORT(IPV4_ADDR_LEN, pucBuff);
     PS_MEM_CPY(pucBuff, ptrIndConfigInfo->stPcoIpv4Item.aucPriDns, IPV4_ADDR_LEN);
     PPP_INCPTR(IPV4_ADDR_LEN, pucBuff);
 
-    /* ÌîÈë aucSecDns ³¤¶ÈºÍÄÚÈÝ*/
+    /* å¡«å…¥ aucSecDns é•¿åº¦å’Œå†…å®¹*/
     PPP_PUTSHORT(IPV4_ADDR_LEN, pucBuff);
     PS_MEM_CPY(pucBuff, ptrIndConfigInfo->stPcoIpv4Item.aucSecDns, IPV4_ADDR_LEN);
     PPP_INCPTR(IPV4_ADDR_LEN, pucBuff);
 
-    /* ÌîÈë aucGateWay ³¤¶ÈºÍÄÚÈÝ*/
+    /* å¡«å…¥ aucGateWay é•¿åº¦å’Œå†…å®¹*/
     PPP_PUTSHORT(IPV4_ADDR_LEN, pucBuff);
     PS_MEM_CPY(pucBuff, ptrIndConfigInfo->stPcoIpv4Item.aucGateWay, IPV4_ADDR_LEN);
     PPP_INCPTR(IPV4_ADDR_LEN, pucBuff);
 
-    /* ÌîÈë aucPriNbns ³¤¶ÈºÍÄÚÈÝ*/
+    /* å¡«å…¥ aucPriNbns é•¿åº¦å’Œå†…å®¹*/
     PPP_PUTSHORT(IPV4_ADDR_LEN, pucBuff);
     PS_MEM_CPY(pucBuff, ptrIndConfigInfo->stPcoIpv4Item.aucPriNbns, IPV4_ADDR_LEN);
     PPP_INCPTR(IPV4_ADDR_LEN, pucBuff);
 
-    /* ÌîÈë aucSecNbns ³¤¶ÈºÍÄÚÈÝ*/
+    /* å¡«å…¥ aucSecNbns é•¿åº¦å’Œå†…å®¹*/
     PPP_PUTSHORT(IPV4_ADDR_LEN, pucBuff);
     PS_MEM_CPY(pucBuff, ptrIndConfigInfo->stPcoIpv4Item.aucSecNbns, IPV4_ADDR_LEN);
     PPP_INCPTR(IPV4_ADDR_LEN, pucBuff);
     /*lint +e661 +e662 +e669*/
 
-    /* ÌîÈë¹«¹²ÐÅÏ¢×Ö¶Î*/
+    /* å¡«å…¥å…¬å…±ä¿¡æ¯å­—æ®µ*/
     Ppp_FillEventMntnInfo(ptrPppFrameMntnSt, usPppID, AT_PPP_RECV_CONFIG_INFO_IND, ulDataLen);
 
     PPP_MNTN_TRACE_MSG(ptrPppFrameMntnSt);
@@ -824,11 +824,11 @@ VOS_VOID Ppp_RcvConfigInfoIndMntnInfo
 
 
 /*****************************************************************************
- PPP_ind_config_info¿ÉÎ¬¿É²âÐÅÏ¢¹´°üÔ­Ê¼ÄÚ´æÖÐµÄÊý¾Ý½á¹¹
+ PPP_ind_config_infoå¯ç»´å¯æµ‹ä¿¡æ¯å‹¾åŒ…åŽŸå§‹å†…å­˜ä¸­çš„æ•°æ®ç»“æž„
 
 -PPP_Event_MNTN_Info_STRU   struct
 -AUTH_TYPE                     1 byte
--Empty Aligned                 1 byte (1 byteÌî³ä£¬È·±£LENÔÚ2byte¶ÔÆë)
+-Empty Aligned                 1 byte (1 byteå¡«å……ï¼Œç¡®ä¿LENåœ¨2byteå¯¹é½)
    (AUTH_TYPE == PAP)
      -LEN      PAP             2 byte
      -VALUE    ...          0..x byte
@@ -860,10 +860,10 @@ VOS_VOID Ppp_RcvConfigInfoReqMntnInfo(VOS_UINT16  usPppID, PPP_REQ_CONFIG_INFO_S
     VOS_UINT16 usIpcpLen                        = 0;
     VOS_UINT16 usIpcpLenAligned                 = 0;
 
-    /* ÊÂ¼þÏûÏ¢ÄÚÈÝ³¤¶È¼ÆËã + 1byte ÑéÖ¤ÀàÐÍ + 1byte Ìî³ä*/
+    /* äº‹ä»¶æ¶ˆæ¯å†…å®¹é•¿åº¦è®¡ç®— + 1byte éªŒè¯ç±»åž‹ + 1byte å¡«å……*/
     ulDataLen += (sizeof(VOS_UINT8)*2);
 
-    /* ²ÎÊý¼ì²é*/
+    /* å‚æ•°æ£€æŸ¥*/
     if (PPP_PAP_AUTH_TYPE == ptrReqConfigInfo->stAuth.ucAuthType)
     {
         if ((0 != ptrReqConfigInfo->stAuth.AuthContent.PapContent.usPapReqLen)
@@ -876,7 +876,7 @@ VOS_VOID Ppp_RcvConfigInfoReqMntnInfo(VOS_UINT16  usPppID, PPP_REQ_CONFIG_INFO_S
         usPapLen = ptrReqConfigInfo->stAuth.AuthContent.PapContent.usPapReqLen;
         PPP_LENALIGNTO2BYTE(usPapLenAligned, usPapLen);
 
-        /* ÊÂ¼þÏûÏ¢ÄÚÈÝ³¤¶È¼ÆËã + 2byte PAP³¤¶È×Ö¶Î + PAP³¤¶È*/
+        /* äº‹ä»¶æ¶ˆæ¯å†…å®¹é•¿åº¦è®¡ç®— + 2byte PAPé•¿åº¦å­—æ®µ + PAPé•¿åº¦*/
         ulDataLen += (usPapLenAligned + sizeof(VOS_UINT16));
     }
     if (PPP_CHAP_AUTH_TYPE == ptrReqConfigInfo->stAuth.ucAuthType)
@@ -901,7 +901,7 @@ VOS_VOID Ppp_RcvConfigInfoReqMntnInfo(VOS_UINT16  usPppID, PPP_REQ_CONFIG_INFO_S
         usChapResponseLen  = ptrReqConfigInfo->stAuth.AuthContent.ChapContent.usChapResponseLen;
         PPP_LENALIGNTO2BYTE(usChapResponseLenAligned, usChapResponseLen);
 
-        /* ÊÂ¼þÏûÏ¢ÄÚÈÝ³¤¶È¼ÆËã + 2byte challenge³¤¶È×Ö¶Î + challenge³¤¶È + 2byte response ³¤¶È×Ö¶Î + response³¤¶È*/
+        /* äº‹ä»¶æ¶ˆæ¯å†…å®¹é•¿åº¦è®¡ç®— + 2byte challengeé•¿åº¦å­—æ®µ + challengeé•¿åº¦ + 2byte response é•¿åº¦å­—æ®µ + responseé•¿åº¦*/
         ulDataLen += (usChapChallengeLenAligned + usChapResponseLenAligned + (sizeof(VOS_UINT16)*2));
     }
 
@@ -914,7 +914,7 @@ VOS_VOID Ppp_RcvConfigInfoReqMntnInfo(VOS_UINT16  usPppID, PPP_REQ_CONFIG_INFO_S
     usIpcpLen = ptrReqConfigInfo->stIPCP.usIpcpLen;
     PPP_LENALIGNTO2BYTE(usIpcpLenAligned, usIpcpLen);
 
-    /* ÊÂ¼þÏûÏ¢ÄÚÈÝ³¤¶È¼ÆËã + 2byte IPCP³¤¶È×Ö¶Î + IPCP³¤¶È*/
+    /* äº‹ä»¶æ¶ˆæ¯å†…å®¹é•¿åº¦è®¡ç®— + 2byte IPCPé•¿åº¦å­—æ®µ + IPCPé•¿åº¦*/
     ulDataLen += (usIpcpLenAligned + sizeof(VOS_UINT16));
 
     ptrPppFrameMntnSt = (PPP_EVENT_MNTN_INFO_STRU *)PS_MEM_ALLOC(PS_PID_APP_PPP,
@@ -926,12 +926,12 @@ VOS_VOID Ppp_RcvConfigInfoReqMntnInfo(VOS_UINT16  usPppID, PPP_REQ_CONFIG_INFO_S
         return;
     }
 
-    /* ÌîÈë ÑéÖ¤ÀàÐÍ + padding*/
+    /* å¡«å…¥ éªŒè¯ç±»åž‹ + padding*/
     pucBuff = (VOS_UINT8 *)(ptrPppFrameMntnSt + 1);
     PPP_PUTCHAR(ptrReqConfigInfo->stAuth.ucAuthType, pucBuff);
     PPP_PUTCHAR(0, pucBuff);
 
-    /* ÌîÈë pap ³¤¶È papÄÚÈÝ*/
+    /* å¡«å…¥ pap é•¿åº¦ papå†…å®¹*/
     if(PPP_PAP_AUTH_TYPE == ptrReqConfigInfo->stAuth.ucAuthType)
     {
         PPP_PUTSHORT(usPapLenAligned, pucBuff);
@@ -941,7 +941,7 @@ VOS_VOID Ppp_RcvConfigInfoReqMntnInfo(VOS_UINT16  usPppID, PPP_REQ_CONFIG_INFO_S
             PPP_INCPTR(usPapLenAligned, pucBuff);
         }
     }
-    /* ÌîÈë chap ³¤¶È chapÄÚÈÝ*/
+    /* å¡«å…¥ chap é•¿åº¦ chapå†…å®¹*/
     if(PPP_CHAP_AUTH_TYPE == ptrReqConfigInfo->stAuth.ucAuthType)
     {
         PPP_PUTSHORT(usChapChallengeLenAligned, pucBuff);
@@ -959,7 +959,7 @@ VOS_VOID Ppp_RcvConfigInfoReqMntnInfo(VOS_UINT16  usPppID, PPP_REQ_CONFIG_INFO_S
         }
     }
 
-    /*ÌîÈëIPCP³¤¶È,ÄÚÈÝ*/
+    /*å¡«å…¥IPCPé•¿åº¦,å†…å®¹*/
     PPP_PUTSHORT(usIpcpLenAligned, pucBuff);
     if (0 != usIpcpLenAligned)
     {
@@ -967,7 +967,7 @@ VOS_VOID Ppp_RcvConfigInfoReqMntnInfo(VOS_UINT16  usPppID, PPP_REQ_CONFIG_INFO_S
        PPP_INCPTR(usIpcpLenAligned, pucBuff);
     }
 
-    /*ÌîÈë¹«¹²ÐÅÏ¢×Ö¶Î*/
+    /*å¡«å…¥å…¬å…±ä¿¡æ¯å­—æ®µ*/
     Ppp_FillEventMntnInfo(ptrPppFrameMntnSt, usPppID, PPP_AT_RECV_CONFIG_INFO_REQ,
                                 (ulDataLen + sizeof(PPP_EVENT_MNTN_INFO_STRU)));
 
@@ -981,12 +981,12 @@ VOS_VOID Ppp_RcvConfigInfoReqMntnInfo(VOS_UINT16  usPppID, PPP_REQ_CONFIG_INFO_S
 #else
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "ppp_public.h"
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 

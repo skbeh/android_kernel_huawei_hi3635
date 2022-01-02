@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-   1 Í·ÎÄ¼ş°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "ATCmdProc.h"
 #include "AtCheckFunc.h"
@@ -17,49 +17,49 @@
 
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_AT_PARSECMD_C
 
 /*****************************************************************************
-   2 È«¾Ö±äÁ¿¶¨Òå
+   2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-   3 º¯Êı¡¢±äÁ¿ÉùÃ÷
+   3 å‡½æ•°ã€å˜é‡å£°æ˜
 *****************************************************************************/
 
 /*****************************************************************************
-   4 º¯ÊıÊµÏÖ
+   4 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
 AT_STATE_TYPE_ENUM atFindNextSubState( AT_SUB_STATE_STRU *pSubStateTab,VOS_UINT8 ucInputChar)
 {
-    VOS_UINT16 usTabIndex = 0;                            /* ×Ó×´Ì¬±íË÷Òı */
+    VOS_UINT16 usTabIndex = 0;                            /* å­çŠ¶æ€è¡¨ç´¢å¼• */
 
-    /* ÒÀ´Î±È½Ï×Ó×´Ì¬µÄÃ¿Ò»ÏîÖ±ÖÁ½áÊø */
+    /* ä¾æ¬¡æ¯”è¾ƒå­çŠ¶æ€çš„æ¯ä¸€é¡¹ç›´è‡³ç»“æŸ */
     while(AT_BUTT_STATE != pSubStateTab[usTabIndex].next_state)
     {
-        if( AT_SUCCESS == pSubStateTab[usTabIndex].pFuncName(ucInputChar))    /* ÅĞ¶ÏÊäÈë×Ö·ûÊÇ·ñÆ¥Åä */
+        if( AT_SUCCESS == pSubStateTab[usTabIndex].pFuncName(ucInputChar))    /* åˆ¤æ–­è¾“å…¥å­—ç¬¦æ˜¯å¦åŒ¹é… */
         {
-            return pSubStateTab[usTabIndex].next_state;     /* ·µ»ØÆ¥ÅäµÄ×Ó×´Ì¬ */
+            return pSubStateTab[usTabIndex].next_state;     /* è¿”å›åŒ¹é…çš„å­çŠ¶æ€ */
         }
-        usTabIndex++;                                               /* ×Ó×´Ì¬±íË÷ÒıµİÔö */
+        usTabIndex++;                                               /* å­çŠ¶æ€è¡¨ç´¢å¼•é€’å¢ */
     }
     return AT_BUTT_STATE;
 }
 AT_STATE_TYPE_ENUM atFindNextMainState(AT_MAIN_STATE_STRU *pMainStateTab,
     VOS_UINT8 ucInputChar,  AT_STATE_TYPE_ENUM InputState)
 {
-    VOS_UINT16 usTabIndex = 0;                            /* ×Ó×´Ì¬±íË÷Òı */
+    VOS_UINT16 usTabIndex = 0;                            /* å­çŠ¶æ€è¡¨ç´¢å¼• */
 
-    /* ÒÀ´Î±È½ÏÖ÷×´Ì¬µÄÃ¿Ò»ÏîÖ±ÖÁ½áÊø */
+    /* ä¾æ¬¡æ¯”è¾ƒä¸»çŠ¶æ€çš„æ¯ä¸€é¡¹ç›´è‡³ç»“æŸ */
     while(AT_BUTT_STATE != pMainStateTab[usTabIndex].curr_state)
     {
-        if( InputState == pMainStateTab[usTabIndex].curr_state)    /* ÅĞ¶ÏÊäÈë×´Ì¬ÊÇ·ñÆ¥Åä */
+        if( InputState == pMainStateTab[usTabIndex].curr_state)    /* åˆ¤æ–­è¾“å…¥çŠ¶æ€æ˜¯å¦åŒ¹é… */
         {
-            /* Èç¹û×´Ì¬Æ¥Åä,Ôò¸ù¾İÊäÈë×Ö·ûÑ°ÕÒÏÂÒ»¸ö×Ó×´Ì¬ */
+            /* å¦‚æœçŠ¶æ€åŒ¹é…,åˆ™æ ¹æ®è¾“å…¥å­—ç¬¦å¯»æ‰¾ä¸‹ä¸€ä¸ªå­çŠ¶æ€ */
             return atFindNextSubState(pMainStateTab[usTabIndex].pSubStateTab,ucInputChar);
         }
         usTabIndex++;
@@ -79,7 +79,7 @@ TAF_UINT32 At_Auc2ul(TAF_UINT8 *nptr,TAF_UINT16 usLen,TAF_UINT32 *pRtn)
 
     while(Length++ < usLen)
     {
-        if((c >= '0') && (c <= '9'))                /* ×Ö·û¼ì²é */
+        if((c >= '0') && (c <= '9'))                /* å­—ç¬¦æ£€æŸ¥ */
         {
             /* 0xFFFFFFFF = 4294967295 */
             if(((total == 429496729) && (c > '5')) || (total > 429496729))
@@ -126,7 +126,7 @@ TAF_UINT32 At_String2Hex(TAF_UINT8 *nptr,TAF_UINT16 usLen,TAF_UINT32 *pRtn)
             return AT_FAILURE;
         }
 
-        if(total > 0x0FFFFFFF)              /* ·¢Éú·´×ª */
+        if(total > 0x0FFFFFFF)              /* å‘ç”Ÿåè½¬ */
         {
             return AT_FAILURE;
         }
@@ -145,23 +145,23 @@ TAF_UINT32 At_RangeToU32(TAF_UINT8 * pucBegain, TAF_UINT8 * pucEnd)
     TAF_UINT32 c;                                   /* current Char */
     TAF_UINT32 total = 0;                           /* current total */
 
-    /* ÊäÈë²ÎÊı¼ì²é */
+    /* è¾“å…¥å‚æ•°æ£€æŸ¥ */
     if(pucBegain >= pucEnd)
     {
         return total;
     }
 
-    /* ´ÓµÚÒ»¸ö×Ö·û¿ªÊ¼ */
+    /* ä»ç¬¬ä¸€ä¸ªå­—ç¬¦å¼€å§‹ */
     c = (TAF_UINT32)*pucBegain;
 
-    /* ÒÀ´ÎÀÛ¼Ó*10½á¹û,Ö±ÖÁ½áÊø */
+    /* ä¾æ¬¡ç´¯åŠ *10ç»“æœ,ç›´è‡³ç»“æŸ */
     while( (pucBegain != pucEnd) && ( (c >= '0') && (c <= '9') ))
     {
         total = (10 * total) + (c - '0');             /* accumulate digit */
-        pucBegain++;                                /* ×¢Òâ£¬±ØĞëÔÚ¸³ÖµÖ®Ç°ÒÆÎ»£¬·ñÔò£¬±»¸³ÖµÁ½±é */
+        pucBegain++;                                /* æ³¨æ„ï¼Œå¿…é¡»åœ¨èµ‹å€¼ä¹‹å‰ç§»ä½ï¼Œå¦åˆ™ï¼Œè¢«èµ‹å€¼ä¸¤é */
         c = (TAF_UINT32)(TAF_UINT8)*pucBegain;      /* get next Char */
 
-        if(total >= 0x19999998)                     /* Èç¹û´óÓÚ0x19999998£¬Ö±½Ó·µ»Ø£¬·ñÔò·´×ª */
+        if(total >= 0x19999998)                     /* å¦‚æœå¤§äº0x19999998ï¼Œç›´æ¥è¿”å›ï¼Œå¦åˆ™åè½¬ */
         {
             return total;
         }
@@ -171,11 +171,11 @@ TAF_UINT32 At_RangeToU32(TAF_UINT8 * pucBegain, TAF_UINT8 * pucEnd)
 }
 /*****************************************************************************
  Prototype      : At_RangeCopy
- Description    : °Ñ×Ö·û´®ÖĞµÄÄ³Ò»¶Î¿½±´µ½Ö¸¶¨µØÖ·,pDstÖ¸Ê¾Ä¿µÄµØÖ·,pucBegain
-                  Ö¸Ê¾¿ªÊ¼µØÖ·,pEndÖ¸Ê¾½áÊøµØÖ·
- Input          : pucDst    --- Ä¿µÄµØÖ·
-                  pucBegain --- ±»×ª»»×Ö´®µÄ¿ªÊ¼µØÖ·
-                  pucEnd    --- ±»×ª»»×Ö´®µÄ½áÊøµØÖ·
+ Description    : æŠŠå­—ç¬¦ä¸²ä¸­çš„æŸä¸€æ®µæ‹·è´åˆ°æŒ‡å®šåœ°å€,pDstæŒ‡ç¤ºç›®çš„åœ°å€,pucBegain
+                  æŒ‡ç¤ºå¼€å§‹åœ°å€,pEndæŒ‡ç¤ºç»“æŸåœ°å€
+ Input          : pucDst    --- ç›®çš„åœ°å€
+                  pucBegain --- è¢«è½¬æ¢å­—ä¸²çš„å¼€å§‹åœ°å€
+                  pucEnd    --- è¢«è½¬æ¢å­—ä¸²çš„ç»“æŸåœ°å€
  Output         : ---
  Return Value   : ---
  Calls          : ---
@@ -188,7 +188,7 @@ TAF_UINT32 At_RangeToU32(TAF_UINT8 * pucBegain, TAF_UINT8 * pucEnd)
 *****************************************************************************/
 TAF_VOID At_RangeCopy(TAF_UINT8 *pucDst,TAF_UINT8 * pucBegain, TAF_UINT8 * pucEnd)
 {
-    /* ÒÀ´Î¿½±´µ½Ä¿µÄµØÖ·,Ö±ÖÁ½áÊø */
+    /* ä¾æ¬¡æ‹·è´åˆ°ç›®çš„åœ°å€,ç›´è‡³ç»“æŸ */
     while(pucBegain < pucEnd)
     {
         *pucDst++ = *pucBegain++;
@@ -219,7 +219,7 @@ VOS_UINT32 atRangeToU32( VOS_UINT8 *pucBegain, VOS_UINT8 *pucEnd)
     VOS_UINT32 total = 0;                           /* current total */
     VOS_UINT32 ulRst;
 
-    /* ÊäÈë²ÎÊı¼ì²é */
+    /* è¾“å…¥å‚æ•°æ£€æŸ¥ */
     if(pucBegain >= pucEnd)
     {
         return total;
@@ -238,7 +238,7 @@ VOS_UINT32 atRangeToU32( VOS_UINT8 *pucBegain, VOS_UINT8 *pucEnd)
 
 VOS_VOID atRangeCopy( VOS_UINT8 *pucDst, VOS_UINT8 * pucBegain, VOS_UINT8 * pucEnd)
 {
-    /* ÒÀ´Î¿½±´µ½Ä¿µÄµØÖ·,Ö±ÖÁ½áÊø */
+    /* ä¾æ¬¡æ‹·è´åˆ°ç›®çš„åœ°å€,ç›´è‡³ç»“æŸ */
     while(pucBegain < pucEnd)
     {
         *pucDst++ = *pucBegain++;
@@ -246,25 +246,25 @@ VOS_VOID atRangeCopy( VOS_UINT8 *pucDst, VOS_UINT8 * pucBegain, VOS_UINT8 * pucE
 }
 
 /******************************************************************************
- ¹¦ÄÜÃèÊö: °ÑÊ®Áù½øÖÆ×Ö·û´®×ª³ÉÎŞ·ûºÅÕûĞÍÖµ
+ åŠŸèƒ½æè¿°: æŠŠåå…­è¿›åˆ¶å­—ç¬¦ä¸²è½¬æˆæ— ç¬¦å·æ•´å‹å€¼
 
- ²ÎÊıËµÃ÷:
-   nptr [in/out] ÊäÈëµÄ×Ö·û´®ÄÚÈİÖ¸Õë
-   usLen [in] ÊäÈëµÄ×Ö·û´®³¤¶È
-   pRtn [in/out] ÓÉ×Ö·û´®×ª»»ËùµÃÕûĞÍÖµ
+ å‚æ•°è¯´æ˜:
+   nptr [in/out] è¾“å…¥çš„å­—ç¬¦ä¸²å†…å®¹æŒ‡é’ˆ
+   usLen [in] è¾“å…¥çš„å­—ç¬¦ä¸²é•¿åº¦
+   pRtn [in/out] ç”±å­—ç¬¦ä¸²è½¬æ¢æ‰€å¾—æ•´å‹å€¼
 
- ·µ »Ø Öµ:
-    AT_FAILURE: ÊäÈë×Ö·û´®ÖĞÓĞ·ÇÊı×Ö×Ö·û£¬»òÊıÖµÒç³ö
-    AT_SUCCESS: ³É¹¦
+ è¿” å› å€¼:
+    AT_FAILURE: è¾“å…¥å­—ç¬¦ä¸²ä¸­æœ‰éæ•°å­—å­—ç¬¦ï¼Œæˆ–æ•°å€¼æº¢å‡º
+    AT_SUCCESS: æˆåŠŸ
 ******************************************************************************/
 static VOS_UINT32 auc2ulHex( VOS_UINT8 *nptr, VOS_UINT16 usLen,  VOS_UINT32 *pRtn)
 {
     VOS_UINT8 c         = 0;         /* current Char */
     VOS_UINT32 total    = 0;         /* current total */
     VOS_UINT16 usLength = 2;         /* current Length */
-    VOS_UINT8 *pcTmp    = nptr + 2;  /* ´Ó0xºó¿ªÊ¼±È½Ï */
+    VOS_UINT8 *pcTmp    = nptr + 2;  /* ä»0xåå¼€å§‹æ¯”è¾ƒ */
 
-    /* ²ÎÊıÖ¸ÕëÓÉµ÷ÓÃÕß±£Ö¤²»ÎªNULL, ¸Ã´¦²»×öÅĞ¶Ï */
+    /* å‚æ•°æŒ‡é’ˆç”±è°ƒç”¨è€…ä¿è¯ä¸ä¸ºNULL, è¯¥å¤„ä¸åšåˆ¤æ–­ */
 
     c = *pcTmp++;
 
@@ -276,7 +276,7 @@ static VOS_UINT32 auc2ulHex( VOS_UINT8 *nptr, VOS_UINT16 usLen,  VOS_UINT32 *pRt
             return AT_FAILURE;
         }
 
-        /* ×Ö·û¼ì²é */
+        /* å­—ç¬¦æ£€æŸ¥ */
         if(isdigit(c))
         {
             total = AT_CHECK_BASE_HEX * total + (c - '0');        /* accumulate digit */
@@ -305,31 +305,31 @@ static VOS_UINT32 auc2ulHex( VOS_UINT8 *nptr, VOS_UINT16 usLen,  VOS_UINT32 *pRt
 
 #if 0
 /******************************************************************************
- ¹¦ÄÜÃèÊö: °Ñ°Ë½øÖÆ×Ö·û´®×ª³ÉÎŞ·ûºÅÕûĞÍÖµ
+ åŠŸèƒ½æè¿°: æŠŠå…«è¿›åˆ¶å­—ç¬¦ä¸²è½¬æˆæ— ç¬¦å·æ•´å‹å€¼
 
- ²ÎÊıËµÃ÷:
-   nptr [in/out] ÊäÈëµÄ×Ö·û´®ÄÚÈİÖ¸Õë
-   usLen [in] ÊäÈëµÄ×Ö·û´®³¤¶È
-   pRtn [in/out] ÓÉ×Ö·û´®×ª»»ËùµÃÕûĞÍÖµ
+ å‚æ•°è¯´æ˜:
+   nptr [in/out] è¾“å…¥çš„å­—ç¬¦ä¸²å†…å®¹æŒ‡é’ˆ
+   usLen [in] è¾“å…¥çš„å­—ç¬¦ä¸²é•¿åº¦
+   pRtn [in/out] ç”±å­—ç¬¦ä¸²è½¬æ¢æ‰€å¾—æ•´å‹å€¼
 
- ·µ »Ø Öµ:
-    AT_FAILURE: ÊäÈë×Ö·û´®ÖĞÓĞ·ÇÊı×Ö×Ö·û£¬»òÊıÖµÒç³ö
-    AT_SUCCESS: ³É¹¦
+ è¿” å› å€¼:
+    AT_FAILURE: è¾“å…¥å­—ç¬¦ä¸²ä¸­æœ‰éæ•°å­—å­—ç¬¦ï¼Œæˆ–æ•°å€¼æº¢å‡º
+    AT_SUCCESS: æˆåŠŸ
 ******************************************************************************/
 static VOS_UINT32 auc2ulOct( VOS_UINT8 *nptr, VOS_UINT16 usLen,  VOS_UINT32 *pRtn)
 {
     VOS_UINT8 c         = 0;         /* current Char */
     VOS_UINT32 total    = 0;         /* current total */
     VOS_UINT16 usLength = 1;         /* current Length */
-    VOS_UINT8 *pcTmp    = nptr + 1;  /* ´Ó0xºó¿ªÊ¼±È½Ï */
+    VOS_UINT8 *pcTmp    = nptr + 1;  /* ä»0xåå¼€å§‹æ¯”è¾ƒ */
 
-    /* ²ÎÊıÖ¸ÕëÓÉµ÷ÓÃÕß±£Ö¤²»ÎªNULL, ¸Ã´¦²»×öÅĞ¶Ï */
+    /* å‚æ•°æŒ‡é’ˆç”±è°ƒç”¨è€…ä¿è¯ä¸ä¸ºNULL, è¯¥å¤„ä¸åšåˆ¤æ–­ */
 
     c = *pcTmp++;
 
     while(usLength++ < usLen)
     {
-        /* ×Ö·û¼ì²é */
+        /* å­—ç¬¦æ£€æŸ¥ */
         if('0' <= c && '7' >= c)
         {
             /* 0xFFFFFFFF = 037777777777 */
@@ -354,31 +354,31 @@ static VOS_UINT32 auc2ulOct( VOS_UINT8 *nptr, VOS_UINT16 usLen,  VOS_UINT32 *pRt
 }
 #endif
 /******************************************************************************
- ¹¦ÄÜÃèÊö: °ÑÊ®½øÖÆ×Ö·û´®×ª³ÉÎŞ·ûºÅÕûĞÍÖµ
+ åŠŸèƒ½æè¿°: æŠŠåè¿›åˆ¶å­—ç¬¦ä¸²è½¬æˆæ— ç¬¦å·æ•´å‹å€¼
 
- ²ÎÊıËµÃ÷:
-   nptr [in/out] ÊäÈëµÄ×Ö·û´®ÄÚÈİÖ¸Õë
-   usLen [in] ÊäÈëµÄ×Ö·û´®³¤¶È
-   pRtn [in/out] ÓÉ×Ö·û´®×ª»»ËùµÃÕûĞÍÖµ
+ å‚æ•°è¯´æ˜:
+   nptr [in/out] è¾“å…¥çš„å­—ç¬¦ä¸²å†…å®¹æŒ‡é’ˆ
+   usLen [in] è¾“å…¥çš„å­—ç¬¦ä¸²é•¿åº¦
+   pRtn [in/out] ç”±å­—ç¬¦ä¸²è½¬æ¢æ‰€å¾—æ•´å‹å€¼
 
- ·µ »Ø Öµ:
-    AT_FAILURE: ÊäÈë×Ö·û´®ÖĞÓĞ·ÇÊı×Ö×Ö·û£¬»òÊıÖµÒç³ö
-    AT_SUCCESS: ³É¹¦
+ è¿” å› å€¼:
+    AT_FAILURE: è¾“å…¥å­—ç¬¦ä¸²ä¸­æœ‰éæ•°å­—å­—ç¬¦ï¼Œæˆ–æ•°å€¼æº¢å‡º
+    AT_SUCCESS: æˆåŠŸ
 ******************************************************************************/
 static VOS_UINT32 auc2ulDec( VOS_UINT8 *nptr, VOS_UINT16 usLen,  VOS_UINT32 *pRtn)
 {
     VOS_UINT32 c        = 0;         /* current Char */
     VOS_UINT32 total    = 0;         /* current total */
     VOS_UINT16 usLength = 0;         /* current Length */
-    VOS_UINT8 *pcTmp    = nptr;      /* ´Ó0xºó¿ªÊ¼±È½Ï */
+    VOS_UINT8 *pcTmp    = nptr;      /* ä»0xåå¼€å§‹æ¯”è¾ƒ */
 
-    /* ²ÎÊıÖ¸ÕëÓÉµ÷ÓÃÕß±£Ö¤²»ÎªNULL, ¸Ã´¦²»×öÅĞ¶Ï */
+    /* å‚æ•°æŒ‡é’ˆç”±è°ƒç”¨è€…ä¿è¯ä¸ä¸ºNULL, è¯¥å¤„ä¸åšåˆ¤æ–­ */
 
     c = (VOS_UINT32)*pcTmp++;
 
     while(usLength++ < usLen)
     {
-        /* ×Ö·û¼ì²é */
+        /* å­—ç¬¦æ£€æŸ¥ */
         if(isdigit(c))
         {
             /* 0xFFFFFFFF = 4294967295 */
@@ -402,20 +402,20 @@ static VOS_UINT32 auc2ulDec( VOS_UINT8 *nptr, VOS_UINT16 usLen,  VOS_UINT32 *pRt
 }
 
 /******************************************************************************
- ¹¦ÄÜÃèÊö: °Ñ×Ö·û´®×ª³ÉÎŞ·ûºÅÕûĞÍÖµ
+ åŠŸèƒ½æè¿°: æŠŠå­—ç¬¦ä¸²è½¬æˆæ— ç¬¦å·æ•´å‹å€¼
 
- ²ÎÊıËµÃ÷:
-   nptr [in/out] ÊäÈëµÄ×Ö·û´®ÄÚÈİÖ¸Õë
-   usLen [in] ÊäÈëµÄ×Ö·û´®³¤¶È
-   pRtn [in/out] ÓÉ×Ö·û´®×ª»»ËùµÃÕûĞÍÖµ
+ å‚æ•°è¯´æ˜:
+   nptr [in/out] è¾“å…¥çš„å­—ç¬¦ä¸²å†…å®¹æŒ‡é’ˆ
+   usLen [in] è¾“å…¥çš„å­—ç¬¦ä¸²é•¿åº¦
+   pRtn [in/out] ç”±å­—ç¬¦ä¸²è½¬æ¢æ‰€å¾—æ•´å‹å€¼
 
- ·µ »Ø Öµ:
-    AT_FAILURE: ÊäÈë×Ö·û´®ÖĞÓĞ·ÇÊı×Ö×Ö·û£¬»òÊıÖµÒç³ö
-    AT_SUCCESS: ³É¹¦
+ è¿” å› å€¼:
+    AT_FAILURE: è¾“å…¥å­—ç¬¦ä¸²ä¸­æœ‰éæ•°å­—å­—ç¬¦ï¼Œæˆ–æ•°å€¼æº¢å‡º
+    AT_SUCCESS: æˆåŠŸ
 ******************************************************************************/
 VOS_UINT32 atAuc2ul( VOS_UINT8 *nptr,VOS_UINT16 usLen, VOS_UINT32 *pRtn)
 {
-    /* ½øÈë¸Ãº¯ÊıÇ°£¬ËùÓĞ²ÎÊıÒÑ½øĞĞ¼ì²é£¬±£Ö¤²»ÎªNULL */
+    /* è¿›å…¥è¯¥å‡½æ•°å‰ï¼Œæ‰€æœ‰å‚æ•°å·²è¿›è¡Œæ£€æŸ¥ï¼Œä¿è¯ä¸ä¸ºNULL */
 
     if(NULL == nptr || 0 == usLen || NULL == pRtn)
     {

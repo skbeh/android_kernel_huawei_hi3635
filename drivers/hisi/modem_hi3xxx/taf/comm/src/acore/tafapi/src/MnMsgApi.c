@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include  "product_config.h"
 #include  "vos.h"
@@ -18,14 +18,14 @@
 
 
 /*****************************************************************************
-  2 ³£Á¿¶¨Òå
+  2 å¸¸é‡å®šä¹‰
 *****************************************************************************/
 #define THIS_FILE_ID                PS_FILE_ID_MNMSG_API_C
 
 /*****************************************************************************
-  3 ÀàÐÍ¶¨Òå
+  3 ç±»åž‹å®šä¹‰
 *****************************************************************************/
-/*API·¢ËÍµÄÏûÏ¢ÀàÐÍºÍ³¤¶ÈÓÃÒ»¸ö¶þÎ¬Êý×é¶ÔÓ¦ÆðÀ´*/
+/*APIå‘é€çš„æ¶ˆæ¯ç±»åž‹å’Œé•¿åº¦ç”¨ä¸€ä¸ªäºŒç»´æ•°ç»„å¯¹åº”èµ·æ¥*/
 typedef struct
 {
     MN_MSG_MSGTYPE_ENUM_U16             enMsgType;
@@ -33,7 +33,7 @@ typedef struct
 }MSG_MSGTYPE_LEN_STRU;
 
 /*****************************************************************************
-  4 ±äÁ¿¶¨Òå
+  4 å˜é‡å®šä¹‰
 *****************************************************************************/
 LOCAL MSG_MSGTYPE_LEN_STRU             f_astMsgTypeLen[] = {
     {MN_MSG_MSGTYPE_SEND_RPDATA_DIRECT ,sizeof(MN_MSG_SEND_PARM_STRU)},
@@ -70,7 +70,7 @@ LOCAL MSG_MSGTYPE_LEN_STRU             f_astMsgTypeLen[] = {
 LOCAL MN_MSG_TS_DATA_INFO_STRU         f_stMsgDataInfo;
 
 /*****************************************************************************
-  5 º¯ÊýÊµÏÖ
+  5 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 VOS_UINT32 MSG_SendAppReq(
@@ -87,7 +87,7 @@ VOS_UINT32 MSG_SendAppReq(
     VOS_UINT32                          ulLoop;
     VOS_UINT32                          ulMaxLoop;
 
-    /* ÏûÏ¢ÀàÐÍÓÐÐ§ÐÔÅÐ¶Ï */
+    /* æ¶ˆæ¯ç±»åž‹æœ‰æ•ˆæ€§åˆ¤æ–­ */
     if ((enMsgType >= MN_MSG_MSGTYPE_MAX)
      || (enMsgType <= MN_APP_MSG_CLASS_MSG))
     {
@@ -95,7 +95,7 @@ VOS_UINT32 MSG_SendAppReq(
         return MN_ERR_INVALIDPARM;
     }
 
-    /* »ñÈ¡ÏûÏ¢ÐÅÏ¢×Ö¶Î³¤¶È */
+    /* èŽ·å–æ¶ˆæ¯ä¿¡æ¯å­—æ®µé•¿åº¦ */
     ulMaxLoop    = sizeof(f_astMsgTypeLen)/sizeof(MSG_MSGTYPE_LEN_STRU);
     for (ulLoop = 0; ulLoop < ulMaxLoop; ulLoop++)
     {
@@ -114,7 +114,7 @@ VOS_UINT32 MSG_SendAppReq(
 
     ulSendLen = (ulLen + sizeof(MN_APP_REQ_MSG_STRU)) - (sizeof(VOS_UINT8)*4);
 
-    /* ÌîÐ´²¢·¢ËÍÏûÏ¢ */
+    /* å¡«å†™å¹¶å‘é€æ¶ˆæ¯ */
     pstAppReq = (MN_APP_REQ_MSG_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(WUEPS_PID_AT,ulSendLen);
 
     if (VOS_NULL_PTR == pstAppReq)
@@ -155,7 +155,7 @@ VOS_UINT32 MN_MSG_ReqStub(
 {
     VOS_UINT32                          ulRet;
 
-    /*ÅÐ¶ÏÊäÈë²ÎÊýµÄºÏ·¨ÐÔ*/
+    /*åˆ¤æ–­è¾“å…¥å‚æ•°çš„åˆæ³•æ€§*/
     if (VOS_NULL_PTR == pstStubParam)
     {
         AT_WARN_LOG("MN_MSG_ReqStub: pstSetParam is Null ");
@@ -177,7 +177,7 @@ VOS_UINT32   MN_MSG_SetLinkCtrl(
 {
     VOS_UINT32                          ulRet;
 
-    /*ÅÐ¶ÏÊäÈë²ÎÊýµÄºÏ·¨ÐÔ*/
+    /*åˆ¤æ–­è¾“å…¥å‚æ•°çš„åˆæ³•æ€§*/
     if (VOS_NULL_PTR == pstSetParam)
     {
         AT_WARN_LOG("MN_MSG_SetLinkCtrl:pstSetParam is Null ");
@@ -222,7 +222,7 @@ VOS_UINT32   MN_MSG_Send(
 {
     VOS_UINT32                          ulRet;
 
-    /*ÅÐ¶ÏÊäÈë²ÎÊýµÄºÏ·¨ÐÔ*/
+    /*åˆ¤æ–­è¾“å…¥å‚æ•°çš„åˆæ³•æ€§*/
     if (VOS_NULL_PTR == pstSendParm)
     {
         AT_WARN_LOG("MN_MSG_Send:pstSendDirectParm is Null ");
@@ -245,7 +245,7 @@ VOS_UINT32   MN_MSG_Send(
         return MN_ERR_INVALIDPARM;
     }
 
-    /*Èç¹û´øÓÐSCADDR,24011Ð­Òé¹æ¶¨,BCD±àÂë×îÉÙ³¤¶ÈÊÇ2,×î´ó³¤¶ÈÊÇ11*/
+    /*å¦‚æžœå¸¦æœ‰SCADDR,24011åè®®è§„å®š,BCDç¼–ç æœ€å°‘é•¿åº¦æ˜¯2,æœ€å¤§é•¿åº¦æ˜¯11*/
     if (pstSendParm->stMsgInfo.stScAddr.ucBcdLen > 0)
     {
         if ((pstSendParm->stMsgInfo.stScAddr.ucBcdLen < MN_MSG_MIN_BCD_NUM_LEN)
@@ -256,7 +256,7 @@ VOS_UINT32   MN_MSG_Send(
         }
     }
 
-    /*ÅÐ¶ÏÊäÈëTPDU¸ñÊ½µÄºÏ·¨ÐÔ,¼´½âÂëÊÇ·ñ³É¹¦*/
+    /*åˆ¤æ–­è¾“å…¥TPDUæ ¼å¼çš„åˆæ³•æ€§,å³è§£ç æ˜¯å¦æˆåŠŸ*/
     if ((MN_MSG_TPDU_COMMAND != pstSendParm->stMsgInfo.stTsRawData.enTpduType)
      && (MN_MSG_TPDU_SUBMIT != pstSendParm->stMsgInfo.stTsRawData.enTpduType))
     {
@@ -310,7 +310,7 @@ VOS_UINT32   MN_MSG_SendFromMem(
 {
     VOS_UINT32                          ulRet;
 
-    /*ÅÐ¶ÏÊäÈë²ÎÊýµÄºÏ·¨ÐÔ*/
+    /*åˆ¤æ–­è¾“å…¥å‚æ•°çš„åˆæ³•æ€§*/
     if (VOS_NULL_PTR == pstSendFromMemParm)
     {
         AT_WARN_LOG("MN_MSG_SendFromMem:pstSendFromMemParm is Null");
@@ -357,20 +357,20 @@ VOS_UINT32   MN_MSG_SendAck(
 {
     VOS_UINT32                          ulRet;
 
-    /*ÅÐ¶ÏÊäÈë²ÎÊýµÄºÏ·¨ÐÔ*/
+    /*åˆ¤æ–­è¾“å…¥å‚æ•°çš„åˆæ³•æ€§*/
     if (VOS_NULL_PTR == pstAckParm)
     {
         AT_WARN_LOG("MN_MSG_SendAck:pstAckParm is Null");
         return MN_ERR_NULLPTR;
     }
-    /*±ØÐëÊÇDeliver Ack »òDeliver Err*/
+    /*å¿…é¡»æ˜¯Deliver Ack æˆ–Deliver Err*/
     if ((MN_MSG_TPDU_DELIVER_RPT_ACK != pstAckParm->stTsRawData.enTpduType)
      && (MN_MSG_TPDU_DELIVER_RPT_ERR != pstAckParm->stTsRawData.enTpduType))
     {
         AT_WARN_LOG("MN_MSG_SendAck:Invalid Tpdu Type");
         return MN_ERR_CLASS_SMS_INVALID_TPDUTYPE;
     }
-    /*ÅÐ¶ÏÊäÈëTPDU¸ñÊ½µÄºÏ·¨ÐÔ,¼´½âÂëÊÇ·ñ³É¹¦*/
+    /*åˆ¤æ–­è¾“å…¥TPDUæ ¼å¼çš„åˆæ³•æ€§,å³è§£ç æ˜¯å¦æˆåŠŸ*/
     PS_MEM_SET(&f_stMsgDataInfo,0X00,sizeof(f_stMsgDataInfo));
     ulRet = MN_MSG_Decode(&pstAckParm->stTsRawData,&f_stMsgDataInfo);
     if (MN_ERR_NO_ERROR != ulRet)
@@ -394,7 +394,7 @@ VOS_UINT32   MN_MSG_Write(
 {
     VOS_UINT32                          ulRet;
 
-    /*ÅÐ¶ÏÊäÈë²ÎÊýµÄºÏ·¨ÐÔ*/
+    /*åˆ¤æ–­è¾“å…¥å‚æ•°çš„åˆæ³•æ€§*/
     if (VOS_NULL_PTR == pstWriteParm)
     {
         AT_WARN_LOG("MN_MSG_Write:pstWriteParm is Null");
@@ -425,7 +425,7 @@ VOS_UINT32   MN_MSG_Write(
         return MN_ERR_INVALIDPARM;
     }
 
-    /*Èç¹ûÓÐSC ADDR,ÅÐ¶ÏSC ADDRÊÇ·ñºÏÀí*/
+    /*å¦‚æžœæœ‰SC ADDR,åˆ¤æ–­SC ADDRæ˜¯å¦åˆç†*/
     if (pstWriteParm->stMsgInfo.stScAddr.ucBcdLen > 0)
     {
         if ((pstWriteParm->stMsgInfo.stScAddr.ucBcdLen < MN_MSG_MIN_BCD_NUM_LEN)
@@ -436,7 +436,7 @@ VOS_UINT32   MN_MSG_Write(
         }
     }
 
-    /*ÅÐ¶ÏÊäÈëTPDU¸ñÊ½µÄºÏ·¨ÐÔ,¼´½âÂëÊÇ·ñ³É¹¦*/
+    /*åˆ¤æ–­è¾“å…¥TPDUæ ¼å¼çš„åˆæ³•æ€§,å³è§£ç æ˜¯å¦æˆåŠŸ*/
     PS_MEM_SET(&f_stMsgDataInfo,0X00,sizeof(f_stMsgDataInfo));
     ulRet = MN_MSG_Decode(&pstWriteParm->stMsgInfo.stTsRawData,&f_stMsgDataInfo);
     if (MN_ERR_NO_ERROR != ulRet)
@@ -716,14 +716,14 @@ VOS_UINT32   MN_MSG_WriteSrvParam(
         return MN_ERR_INVALIDPARM;
     }
 
-    /*Èç¹ûÉèÖÃµÄÖµÃ»ÓÐÒ»¸öÓÐÐ§,Ôò·µ»Ø*/
+    /*å¦‚æžœè®¾ç½®çš„å€¼æ²¡æœ‰ä¸€ä¸ªæœ‰æ•ˆ,åˆ™è¿”å›ž*/
     if (MN_MSG_SRV_PARM_TOTALABSENT == (pstSrvParam->stSrvParm.ucParmInd & MN_MSG_SRV_PARM_TOTALABSENT))
     {
         AT_WARN_LOG("MN_MSG_WriteSrvParam:Invalid Parm,No Valid Data");
         return MN_ERR_INVALIDPARM;
     }
 
-    /*ÅÐ¶ÏSC AddrºÍDest AddrµÄÓÐÐ§ÐÔ*/
+    /*åˆ¤æ–­SC Addrå’ŒDest Addrçš„æœ‰æ•ˆæ€§*/
     if (MN_MSG_SRV_PARM_PRESENT ==
         ((pstSrvParam->stSrvParm.ucParmInd & MN_MSG_SRV_PARM_MASK_SC_ADDR) >> 1))
     {

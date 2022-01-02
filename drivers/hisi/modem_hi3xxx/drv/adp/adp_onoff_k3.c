@@ -27,7 +27,7 @@ void drv_shut_down( DRV_SHUTDOWN_REASON_ENUM enReason )
 *         None
 *  Return:
 *         None
-*  Note  : ÷±Ω”÷ÿ∆Ù
+*  Note  : Áõ¥Êé•ÈáçÂêØ
 ********************************************************************************/
 void bsp_drv_power_reboot_direct( void )
 {

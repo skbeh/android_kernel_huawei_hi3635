@@ -35,7 +35,7 @@ void om_trace(char *buffer, char *fmt,...)
     va_list arglist;
     /*lint -restore +e40 +e522 */
 	va_start(arglist, fmt);
-	vsnprintf(buffer, 256, fmt, arglist); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+	vsnprintf(buffer, 256, fmt, arglist); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 	va_end(arglist);
 
     return;
@@ -45,8 +45,8 @@ int om_create_dir(char *path)
 {
     int fd;
 
-    /* Èç¹ûÎÄ¼ş¼Ğ²»´æÔÚ£¬´´½¨ĞÂÎÄ¼ş¼Ğ*/
-    fd = sys_access(path, 0); //F_OK, ¼ì²éÎÄ¼şÊÇ·ñ´æÔÚ
+    /* å¦‚æœæ–‡ä»¶å¤¹ä¸å­˜åœ¨ï¼Œåˆ›å»ºæ–°æ–‡ä»¶å¤¹*/
+    fd = sys_access(path, 0); //F_OK, æ£€æŸ¥æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if(0 != fd)
     {
         fd  = sys_mkdir(path, 0660);
@@ -102,7 +102,7 @@ int om_clear_old_file(int fd, char * header)
     read_bytes = sys_getdents(fd, (struct linux_dirent *)buf, 1024);
     if(-1 == read_bytes)
     {
-        /* ¶ÁÈ¡ÎÄ¼ş¼Ğ´íÎó */
+        /* è¯»å–æ–‡ä»¶å¤¹é”™è¯¯ */
         om_error("<om_clear_old_file>, dents error!\n");
         ret = BSP_ERROR;
         goto out;
@@ -110,26 +110,26 @@ int om_clear_old_file(int fd, char * header)
 
     if(0 == read_bytes)
     {
-        /* ÎÄ¼ş¼ĞÊÇ¿ÕµÄ£¬Ö±½Ó·µ»ØOK */
+        /* æ–‡ä»¶å¤¹æ˜¯ç©ºçš„ï¼Œç›´æ¥è¿”å›OK */
         ret = BSP_OK;
         goto out;
     }
 
-    /*ÂÖÑ¯ÎÄ¼ş¼Ğ*/
+    /*è½®è¯¢æ–‡ä»¶å¤¹*/
     head_len = strlen(header);
     for(i=0; i<read_bytes; )
     {
         dir = (struct linux_dirent *)(buf + i);
         i += (int)dir->d_reclen;
 
-        /* É¾³ı¾ÉµÄºÍ´íÎóµÄÎÄ¼ş */
+        /* åˆ é™¤æ—§çš„å’Œé”™è¯¯çš„æ–‡ä»¶ */
         if(0 == strncmp ((char *)dir->d_name, header, head_len))
         {
             strncpy(temp, OM_ROOT_PATH, OM_DUMP_FILE_NAME_LENGTH-1);
             strncat(temp, dir->d_name, OM_DUMP_FILE_NAME_LENGTH-strlen(OM_ROOT_PATH)-1);
 
             index = simple_strtol(dir->d_name + head_len, NULL, 0);
-            // Èç¹ûË÷ÒıºÅ³¬¹ı×î´óÖµ£¬»òÕßÓĞÖØ¸´£¬Ö±½ÓÉ¾³ıÎÄ¼ş
+            // å¦‚æœç´¢å¼•å·è¶…è¿‡æœ€å¤§å€¼ï¼Œæˆ–è€…æœ‰é‡å¤ï¼Œç›´æ¥åˆ é™¤æ–‡ä»¶
             if((index >= OM_DUMP_FILE_MAX_NUM - 1) || (0 != filename[index][0]))
             {
                 sys_unlink(temp);
@@ -141,7 +141,7 @@ int om_clear_old_file(int fd, char * header)
         }
     }
 
-    /* ÎÄ¼şÖØÃüÃû */
+    /* æ–‡ä»¶é‡å‘½å */
     for(i=OM_DUMP_FILE_MAX_NUM-2; i>=0; i--)
     {
         if(filename[i][0])
@@ -168,7 +168,7 @@ bool bsp_om_fs_check(void)
     old_fs = get_fs();
     set_fs(KERNEL_DS);
 
-    fd = sys_access(OM_ROOT_PATH, 0); //F_OK, ¼ì²éÎÄ¼şÊÇ·ñ´æÔÚ
+    fd = sys_access(OM_ROOT_PATH, 0); //F_OK, æ£€æŸ¥æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if(0 != fd)
     {
         /*bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_OM, "[BSP_OM]:bsp_om_fs_check file system is invalid\n");*/
@@ -191,7 +191,7 @@ int bsp_om_save_loop_file(char * dirName, char *fileHeader, void * address, u32 
     mm_segment_t old_fs;
     char newFileName[OM_DUMP_FILE_NAME_LENGTH] = {0};
 
-    /* ½øÈëÄ¿Â¼ */
+    /* è¿›å…¥ç›®å½• */
     if (NULL == dirName || NULL == fileHeader)
     {
         om_error("<bsp_om_save_loop_file>, file name NULL!\n");
@@ -224,7 +224,7 @@ int bsp_om_save_loop_file(char * dirName, char *fileHeader, void * address, u32 
 
     om_close_dir(fd);
 
-    //ĞÂÎÄ¼şÃû:0
+    //æ–°æ–‡ä»¶å:0
     memset(newFileName, 0, sizeof(newFileName));
     snprintf(newFileName, sizeof(newFileName), "%s%s%02d.bin", dirName, fileHeader, 0);
     fd = sys_creat(newFileName, 0755);
@@ -369,7 +369,7 @@ int bsp_om_append_file(char *filename, void * address, u32 length, u32 max_size)
 	        goto out;
         }
 
-        /*ÖØĞÂ½¨Á¢resetÎÄ¼ş*/
+        /*é‡æ–°å»ºç«‹resetæ–‡ä»¶*/
         fd = sys_open(filename, O_CREAT|O_RDWR, 0755);
         if(fd < 0)
         {
@@ -431,7 +431,7 @@ void bsp_om_record_resetlog(void)
         || (DUMP_START_REBOOT == g_dump_global_info->internal_info.comm_internal.start_flag)
         || (DUMP_START_REBOOT == g_dump_global_info->internal_info.m3_internal.start_flag))
     {
-        /* ÏÈ¼ì²éACORE */
+        /* å…ˆæ£€æŸ¥ACORE */
         if(DUMP_REASON_NORMAL == g_dump_global_info->reboot_reason)
         {
             reason = NORMAL_EXCH;
@@ -491,7 +491,7 @@ void bsp_om_record_resetlog(void)
     }
     else
     {
-        // Õı³£ÉÏµç¡£
+        // æ­£å¸¸ä¸Šç”µã€‚
         reason = NORMAL_POWER_ON;
         core = NULL;
         base_info = NULL;
@@ -547,7 +547,7 @@ void print2file(char* filename, char *fmt,...)
     va_list arglist;
     /*lint -restore +e40 +e522 */
 	va_start(arglist, fmt);
-	vsnprintf(g_OmLogBuffer, 256, fmt, arglist); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+	vsnprintf(g_OmLogBuffer, 256, fmt, arglist); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 	va_end(arglist);
 
     bsp_om_append_file(filename, (void*)g_OmLogBuffer, strlen(g_OmLogBuffer), OM_PRINT_LOG_MAX);

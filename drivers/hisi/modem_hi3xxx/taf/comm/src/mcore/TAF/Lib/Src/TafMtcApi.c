@@ -2,7 +2,7 @@
 
 
 /*****************************************************************************
-   1 Í·ÎÄ¼ş°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "PsCommonDef.h"
 #include "pslog.h"
@@ -18,13 +18,13 @@
 #endif
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_TAF_MTC_API_C
 
 
 /*****************************************************************************
-   2 È«¾Ö±äÁ¿¶¨Òå
+   2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
     extern VOS_UINT32 AT_GetDestPid(
@@ -34,7 +34,7 @@
 #endif
 
 /*****************************************************************************
-   3 º¯ÊıÊµÏÖ
+   3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 VOS_UINT32 TAF_MTC_SndMsg(
@@ -49,7 +49,7 @@ VOS_UINT32 TAF_MTC_SndMsg(
 
     ulResult = VOS_OK;
 
-    /* ¹¹ÔìÏûÏ¢ */
+    /* æ„é€ æ¶ˆæ¯ */
     pstMsg = (TAF_PS_MSG_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                 UEPS_PID_MTC,
                                 sizeof(MSG_HEADER_STRU) + ulLength);
@@ -61,10 +61,10 @@ VOS_UINT32 TAF_MTC_SndMsg(
     pstMsg->stHeader.ulReceiverPid      = UEPS_PID_MTC;
     pstMsg->stHeader.ulMsgName          = ulMsgId;
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     PS_MEM_CPY(pstMsg->aucContent, pData, ulLength);
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     ulResult = PS_SEND_MSG(UEPS_PID_MTC, pstMsg);
     if (VOS_OK != ulResult)
     {
@@ -81,17 +81,17 @@ VOS_UINT32 TAF_MTC_SetCdmaServiceConnStateInfo(
     TAF_MTC_CDMA_STATE_IND_STRU         stSetCdmaConnSt;
     VOS_UINT32                          ulResult;
 
-    /* ³õÊ¼»¯ */
+    /* åˆå§‹åŒ– */
     ulResult = VOS_OK;
     PS_MEM_SET(&stSetCdmaConnSt, 0x00, sizeof(TAF_MTC_CDMA_STATE_IND_STRU));
 
-    /* ¹¹ÔìID_MSG_MTC_CDMA_CONN_STATUSÏûÏ¢ */
+    /* æ„é€ ID_MSG_MTC_CDMA_CONN_STATUSæ¶ˆæ¯ */
     TAF_API_CTRL_HEADER(&stSetCdmaConnSt.stCtrl, pstCtrl->ulModuleId,
                         pstCtrl->usClientId, pstCtrl->ucOpId);
 
     PS_MEM_CPY(&stSetCdmaConnSt.stCdmaState, pstCdmaState, sizeof(TAF_MTC_CDMA_STATE_INFO_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     ulResult = TAF_MTC_SndMsg(UEPS_PID_MTC,
                              ID_MSG_MTC_CDMA_CONN_STATE_IND,
                              &stSetCdmaConnSt,
@@ -107,16 +107,16 @@ VOS_UINT32 TAF_MTC_SetModemServiceConnState(
     TAF_MTC_MODEM_CONN_STATUS_IND_STRU  stModemConnSt;
     VOS_UINT32                          ulResult;
 
-    /* ³õÊ¼»¯ */
+    /* åˆå§‹åŒ– */
     ulResult = VOS_OK;
     PS_MEM_SET(&stModemConnSt, 0x00, sizeof(TAF_MTC_MODEM_CONN_STATUS_IND_STRU));
 
-    /* ¹¹ÔìID_MSG_MTC_CDMA_CONN_STATUSÏûÏ¢ */
+    /* æ„é€ ID_MSG_MTC_CDMA_CONN_STATUSæ¶ˆæ¯ */
     TAF_API_CTRL_HEADER(&(stModemConnSt.stCtrl), pstCtrl->ulModuleId, pstCtrl->usClientId, pstCtrl->ucOpId);
 
     PS_MEM_CPY(&stModemConnSt.stModemConnStateInfo, pstModemConnSt, sizeof(TAF_MTC_SRV_CONN_STATE_INFO_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     ulResult = TAF_MTC_SndMsg(UEPS_PID_MTC,
                              ID_MSG_MTC_MODEM_SERVICE_CONN_STATE_IND,
                              &stModemConnSt,
@@ -132,16 +132,16 @@ VOS_UINT32 TAF_MTC_SetModemUsimmState(
     TAF_MTC_USIMM_STATUS_IND_STRU       stUsimmState;
     VOS_UINT32                          ulResult;
 
-    /* ³õÊ¼»¯ */
+    /* åˆå§‹åŒ– */
     ulResult = VOS_OK;
     PS_MEM_SET(&stUsimmState, 0x00, sizeof(TAF_MTC_USIMM_STATUS_IND_STRU));
 
-    /* ¹¹ÔìID_MSG_MTC_CDMA_CONN_STATUSÏûÏ¢ */
+    /* æ„é€ ID_MSG_MTC_CDMA_CONN_STATUSæ¶ˆæ¯ */
     TAF_API_CTRL_HEADER(&(stUsimmState.stCtrl), pstCtrl->ulModuleId, pstCtrl->usClientId, pstCtrl->ucOpId);
 
     stUsimmState.enUsimmState = enUsimState;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     ulResult = TAF_MTC_SndMsg(UEPS_PID_MTC,
                              ID_MSG_MTC_USIMM_STATE_IND,
                              &stUsimmState,

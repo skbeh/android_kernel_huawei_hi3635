@@ -44,7 +44,7 @@
 #include "NVIM_Interface.h"
 #include "DrvInterface.h"
 
-/* LINUX ²»Ö§³Ö */
+/* LINUX ä¸æ”¯æŒ */
 #if (VOS_VXWORKS== VOS_OS_VER)
 #include "stdio.h"
 #endif
@@ -57,7 +57,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_VOS_MAIN_C
 
@@ -294,7 +294,7 @@ VOS_UINT32 VOS_Startup( enum VOS_STARTUP_PHASE ph )
             g_ulVosStartStep = 0x0010;
 
 #if 0
-            /* ´´½¨VOS¸÷FIDÈÎÎñÖ®Ç°£¬ËøÈÎÎñ */
+            /* åˆ›å»ºVOSå„FIDä»»åŠ¡ä¹‹å‰ï¼Œé”ä»»åŠ¡ */
             if ( VOS_OK != VOS_TaskLock() )
             {
                 ulStartUpFailStage |= 0x0010;
@@ -320,7 +320,7 @@ VOS_UINT32 VOS_Startup( enum VOS_STARTUP_PHASE ph )
 
             g_ulVosStartStep = 0x0080;
 #if 0
-            /* ´´½¨VOS¸÷FIDÈÎÎñÍê³Éºó½âËø */
+            /* åˆ›å»ºVOSå„FIDä»»åŠ¡å®Œæˆåè§£é” */
             if ( VOS_OK != VOS_TaskUnlock() )
             {
                 ulStartUpFailStage |= 0x0080;
@@ -339,7 +339,7 @@ VOS_UINT32 VOS_Startup( enum VOS_STARTUP_PHASE ph )
 
             g_ulVosStartStep = 0x0001;
 
-            /* ResumeÈÎÎñÖ®Ç°£¬ËøÈÎÎñ */
+            /* Resumeä»»åŠ¡ä¹‹å‰ï¼Œé”ä»»åŠ¡ */
             if ( VOS_OK != VOS_TaskLock() )
             {
                 ulStartUpFailStage |= 0x0001;
@@ -358,7 +358,7 @@ VOS_UINT32 VOS_Startup( enum VOS_STARTUP_PHASE ph )
 
             g_ulVosStartStep = 0x0004;
 
-            /* ResumeÈÎÎñÖ®ºó½âËø */
+            /* Resumeä»»åŠ¡ä¹‹åè§£é” */
             if ( VOS_OK != VOS_TaskUnlock() )
             {
                 ulStartUpFailStage |= 0x0004;
@@ -370,7 +370,7 @@ VOS_UINT32 VOS_Startup( enum VOS_STARTUP_PHASE ph )
             VOS_StopRelTimer(&g_VosProtectInitTimer);
 
  #if (OSA_CPU_CCPU == VOS_OSA_CPU)
-            /* OSA³õÊ¼»¯Íê³É£¬ĞèÒªµ÷ÓÃDRVº¯ÊıÍ¨ÖªDRV OSAÆô¶¯Íê³É */
+            /* OSAåˆå§‹åŒ–å®Œæˆï¼Œéœ€è¦è°ƒç”¨DRVå‡½æ•°é€šçŸ¥DRV OSAå¯åŠ¨å®Œæˆ */
             if ( VOS_OK != DRV_CCPU_RESET_OVER() )
             {
                 ulStartUpFailStage |= 0x0008;
@@ -426,7 +426,7 @@ extern unsigned int is_load_modem(void);
 VOS_INT VOS_ModuleInit(VOS_VOID)
 {
 #ifdef BSP_CONFIG_HI3630
-    /* Èç¹ûÊÇÉı¼¶Ä£Ê½£¬Ôò²»Æô¶¯VOS */
+    /* å¦‚æœæ˜¯å‡çº§æ¨¡å¼ï¼Œåˆ™ä¸å¯åŠ¨VOS */
     if(!is_load_modem())
 
     {

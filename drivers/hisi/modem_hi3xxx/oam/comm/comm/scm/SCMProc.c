@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 **************************************************************************** */
 #include "SCMProc.h"
 #if (FEATURE_ON == FEATURE_MERGE_OM_CHAN)
@@ -26,10 +26,10 @@ extern "C" {
 /* lint +e767  */
 
 /* ****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 **************************************************************************** */
 #if (VOS_OS_VER == VOS_WIN32)       /* PC Stub */
-/* ½âÂëÄ¿µÄÍ¨µÀ»Øµ÷º¯Êý */
+/* è§£ç ç›®çš„é€šé“å›žè°ƒå‡½æ•° */
 SCM_DECODERDESTFUCN         g_astSCMDecoderCbFunc[SOCP_DECODER_DST_CB_BUTT]={VOS_NULL_PTR, VOS_NULL_PTR, VOS_NULL_PTR};
 
 SCM_CODER_SRC_CFG_STRU      g_astSCMCoderSrcCfg[SCM_CODER_SRC_NUM]=
@@ -63,7 +63,7 @@ OM_HDLC_STRU                            g_astSnCheckHdlcEntity[2];
 VOS_UINT32                              g_ulSnErrCount         = 0;
 SCM_SN_CHECK_STRU                       g_stSnCheck;
 VOS_UINT16                              g_usSnCheckFlag;
-VOS_SPINLOCK                            g_stSnCheckSpinLock;       /* ×ÔÐýËø£¬ÓÃÀ´×÷SN checkÁÙ½ç×ÊÔ´±£»¤ */
+VOS_SPINLOCK                            g_stSnCheckSpinLock;       /* è‡ªæ—‹é”ï¼Œç”¨æ¥ä½œSN checkä¸´ç•Œèµ„æºä¿æŠ¤ */
 #endif
 
 #else
@@ -96,10 +96,10 @@ OM_HDLC_STRU                            g_astSnCheckHdlcEntity[2];
 VOS_UINT32                              g_ulSnErrCount         = 0;
 SCM_SN_CHECK_STRU                       g_stSnCheck;
 VOS_UINT16                              g_usSnCheckFlag;
-VOS_SPINLOCK                            g_stSnCheckSpinLock;       /* ×ÔÐýËø£¬ÓÃÀ´×÷SN checkÁÙ½ç×ÊÔ´±£»¤ */
+VOS_SPINLOCK                            g_stSnCheckSpinLock;       /* è‡ªæ—‹é”ï¼Œç”¨æ¥ä½œSN checkä¸´ç•Œèµ„æºä¿æŠ¤ */
 #endif
 
-/* ½âÂëÄ¿µÄÍ¨µÀ»Øµ÷º¯Êý */
+/* è§£ç ç›®çš„é€šé“å›žè°ƒå‡½æ•° */
 SCM_DECODERDESTFUCN         g_astSCMDecoderCbFunc[SOCP_DECODER_DST_CB_BUTT]={VOS_NULL_PTR, VOS_NULL_PTR, VOS_NULL_PTR};
 
 #if (RAT_MODE != RAT_GU)    /* Mutil Mode */
@@ -144,54 +144,54 @@ SCM_CODER_DEST_CFG_STRU     g_astSCMCoderDstCfg[SCM_CODER_DST_NUM]=
 
 #endif /* (VOS_OS_VER == VOS_WIN32) */
 
-SCM_INFODATA_STRU           g_stSCMInfoData;    /* ÓÃÓÚ±£´ælogÐÅÏ¢ */
+SCM_INFODATA_STRU           g_stSCMInfoData;    /* ç”¨äºŽä¿å­˜logä¿¡æ¯ */
 
 
-/* cºËµ¥¶À¸´Î»»Øµ÷º¯ÊýÖÐÐèÒª¹Ø±ÕµÄ±àÒëÔ´Í¨µÀ */
+/* cæ ¸å•ç‹¬å¤ä½å›žè°ƒå‡½æ•°ä¸­éœ€è¦å…³é—­çš„ç¼–è¯‘æºé€šé“ */
 #if (FEATURE_ON == FEATURE_SOCP_CHANNEL_REDUCE)
 SOCP_CODER_SRC_ENUM_U32     g_ulCloseSrcNum[] =
 {
-    SOCP_CODER_SRC_GU_CNF2,         /* GU OMÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GU_IND2,         /* GU OMÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUBBP1,          /* GUBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUBBP2,          /* GUBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUDSP1,          /* GUDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUDSP2,          /* GUDSPÕï¶ÏÏûÏ¢ */
+    SOCP_CODER_SRC_GU_CNF2,         /* GU OMè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GU_IND2,         /* GU OMè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUBBP1,          /* GUBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUBBP2,          /* GUBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUDSP1,          /* GUDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUDSP2,          /* GUDSPè¯Šæ–­æ¶ˆæ¯ */
 };
 
 #else
 SOCP_CODER_SRC_ENUM_U32     g_ulCloseSrcNum[] =
 {
-    SOCP_CODER_SRC_GU_CNF2,         /* GU OMÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GU_IND2,         /* GU OMÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_RFU,             /* ±£Áô */
-    SOCP_CODER_SRC_HIFI,            /* GU HIFIÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_MCU1,            /* MCUÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_MCU2,            /* MCUÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LDSP1,           /* LDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LDSP2,           /* LDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP1,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP2,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP3,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP4,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP5,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP6,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP7,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP8,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP9,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUBBP1,          /* GUBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUBBP2,          /* GUBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUDSP1,          /* GUDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUDSP2,          /* GUDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_TDDSP1,          /* TDDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_TDBBP1,          /* TDBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_TDBBP2,          /* TDBBPÕï¶ÏÏûÏ¢ */
+    SOCP_CODER_SRC_GU_CNF2,         /* GU OMè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GU_IND2,         /* GU OMè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_RFU,             /* ä¿ç•™ */
+    SOCP_CODER_SRC_HIFI,            /* GU HIFIè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_MCU1,            /* MCUè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_MCU2,            /* MCUè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LDSP1,           /* LDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LDSP2,           /* LDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP1,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP2,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP3,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP4,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP5,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP6,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP7,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP8,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP9,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUBBP1,          /* GUBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUBBP2,          /* GUBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUDSP1,          /* GUDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUDSP2,          /* GUDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_TDDSP1,          /* TDDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_TDBBP1,          /* TDBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_TDBBP2,          /* TDBBPè¯Šæ–­æ¶ˆæ¯ */
 };
 #endif
 
 unsigned long long g_astScmDmaMask = 0xffffffffULL;
 /*****************************************************************************
-  3 Íâ²¿ÒýÓÃÉùÃ÷
+  3 å¤–éƒ¨å¼•ç”¨å£°æ˜Ž
 *****************************************************************************/
 #ifdef SCM_CCORE
 extern VOS_VOID Om_BbpDbgChanInit(VOS_VOID);
@@ -200,23 +200,23 @@ extern VOS_VOID Om_BbpDbgChanInit(VOS_VOID);
 extern VOS_VOID SOCP_Stop1SrcChan(VOS_UINT32 ulSrcChanID);
 
 /*****************************************************************************
-  4 º¯ÊýÊµÏÖ
+  4 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 /*****************************************************************************
-* º¯ Êý Ãû  : OM_Inner_Log
+* å‡½ æ•° å  : OM_Inner_Log
 *
-* ¹¦ÄÜÃèÊö  : ¼ÇÂ¼OMµÄÄÚ²¿logÊý¾Ý
+* åŠŸèƒ½æè¿°  : è®°å½•OMçš„å†…éƒ¨logæ•°æ®
 *
-* ÊäÈë²ÎÊý  :  pucStr       OMµÄÊä³ö×Ö·û´®ÐÅÏ¢
-               ulP1         ±£´æ²ÎÊý1
-               ulP2         ±£´æ²ÎÊý2
-               pstLogData   ±£´æÊý¾ÝµÄLog»º³åÇø
-               ulFileID     ±£´æÊý¾Ý²úÉúµÄÎÄ¼þ
-               lLineNo      ±£´æÊý¾Ý²úÉúµÄÐÐºÅ
+* è¾“å…¥å‚æ•°  :  pucStr       OMçš„è¾“å‡ºå­—ç¬¦ä¸²ä¿¡æ¯
+               ulP1         ä¿å­˜å‚æ•°1
+               ulP2         ä¿å­˜å‚æ•°2
+               pstLogData   ä¿å­˜æ•°æ®çš„Logç¼“å†²åŒº
+               ulFileID     ä¿å­˜æ•°æ®äº§ç”Ÿçš„æ–‡ä»¶
+               lLineNo      ä¿å­˜æ•°æ®äº§ç”Ÿçš„è¡Œå·
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  :  ÎÞ
+* è¿” å›ž å€¼  :  æ— 
 *****************************************************************************/
 VOS_VOID OM_Inner_Log(VOS_CHAR *pucStr, VOS_UINT32 ulP1, VOS_UINT32 ulP2,
                           INNER_LOG_DATA_STRU *pstLogData ,VOS_UINT32 ulFileID, VOS_INT32 lLineNo)
@@ -247,19 +247,19 @@ VOS_VOID OM_Inner_Log(VOS_CHAR *pucStr, VOS_UINT32 ulP1, VOS_UINT32 ulP2,
     return;
 }
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_FindChannelCfg
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÍ¨µÀID²éÑ¯Í¨µÀÅäÖÃ±íµÄÎ»ÖÃ
- ÊäÈë²ÎÊý  : ulChannelID: ÐèÒª²éÑ¯µÄÍ¨µÀID
-             ulChNax:     Í¨µÀÅäÖÃ±í×î´óÖµ
-             pstCfg:      Í¨µÀÅäÖÃ±í
- Êä³ö²ÎÊý  : pulNum:      Í¨µÀÅäÖÃ±íµÄÎ»ÖÃ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_FindChannelCfg
+ åŠŸèƒ½æè¿°  : æ ¹æ®é€šé“IDæŸ¥è¯¢é€šé“é…ç½®è¡¨çš„ä½ç½®
+ è¾“å…¥å‚æ•°  : ulChannelID: éœ€è¦æŸ¥è¯¢çš„é€šé“ID
+             ulChNax:     é€šé“é…ç½®è¡¨æœ€å¤§å€¼
+             pstCfg:      é€šé“é…ç½®è¡¨
+ è¾“å‡ºå‚æ•°  : pulNum:      é€šé“é…ç½®è¡¨çš„ä½ç½®
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32  SCM_FindChannelCfg(VOS_UINT32           ulChannelID,
                                     VOS_UINT32              ulChMax,
@@ -277,72 +277,72 @@ VOS_UINT32  SCM_FindChannelCfg(VOS_UINT32           ulChannelID,
         {
             *pulNum = i;
 
-            return VOS_OK;/* ·µ»Ø³É¹¦ */
+            return VOS_OK;/* è¿”å›žæˆåŠŸ */
         }
 
         pstTmpCfg = (SCM_CHANNEL_CFG_HEAD *)((VOS_UINT8 *)pstTmpCfg + ulStruLen);
     }
 
-    return VOS_ERR;/* ·µ»ØÊ§°Ü */
+    return VOS_ERR;/* è¿”å›žå¤±è´¥ */
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_CoderSrcChannelCfg
- ¹¦ÄÜÃèÊö  : ½«ACPU/CCPUµÄ±àÂëÔ´Í¨µÀµÄÅäÖÃµ÷ÓÃSOCP½Ó¿ÚÅäÖÃµ½IP
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderSrcChannelCfg
+ åŠŸèƒ½æè¿°  : å°†ACPU/CCPUçš„ç¼–ç æºé€šé“çš„é…ç½®è°ƒç”¨SOCPæŽ¥å£é…ç½®åˆ°IP
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 SCM_CoderSrcChannelCfg(SCM_CODER_SRC_CFG_STRU *pstCfg)
 {
-    SOCP_CODER_SRC_CHAN_STRU               stChannle;      /* µ±Ç°Í¨µÀµÄÊôÐÔÐÅÏ¢ */
+    SOCP_CODER_SRC_CHAN_STRU               stChannle;      /* å½“å‰é€šé“çš„å±žæ€§ä¿¡æ¯ */
 
-    stChannle.u32DestChanID = (VOS_UINT32)pstCfg->enDstCHID;   /*  Ä¿±êÍ¨µÀID */
-    stChannle.eDataType     = pstCfg->enDataType;           /*  Êý¾ÝÀàÐÍ£¬Ö¸Ã÷Êý¾Ý·â×°Ð­Òé£¬ÓÃÓÚ¸´ÓÃ¶àÆ½Ì¨ */
-    stChannle.eMode         = pstCfg->enCHMode;             /*  Í¨µÀÊý¾ÝÄ£Ê½ */
-    stChannle.ePriority     = pstCfg->enCHLevel;            /*  Í¨µÀÓÅÏÈ¼¶ */
-    stChannle.u32BypassEn   = SOCP_HDLC_ENABLE;             /*  Í¨µÀbypassÊ¹ÄÜ */
-    stChannle.eDataTypeEn   = SOCP_DATA_TYPE_EN;            /*  Êý¾ÝÀàÐÍÊ¹ÄÜÎ» */
-    stChannle.eDebugEn      = SOCP_ENC_DEBUG_DIS;           /*  µ÷ÊÔÎ»Ê¹ÄÜ */
+    stChannle.u32DestChanID = (VOS_UINT32)pstCfg->enDstCHID;   /*  ç›®æ ‡é€šé“ID */
+    stChannle.eDataType     = pstCfg->enDataType;           /*  æ•°æ®ç±»åž‹ï¼ŒæŒ‡æ˜Žæ•°æ®å°è£…åè®®ï¼Œç”¨äºŽå¤ç”¨å¤šå¹³å° */
+    stChannle.eMode         = pstCfg->enCHMode;             /*  é€šé“æ•°æ®æ¨¡å¼ */
+    stChannle.ePriority     = pstCfg->enCHLevel;            /*  é€šé“ä¼˜å…ˆçº§ */
+    stChannle.u32BypassEn   = SOCP_HDLC_ENABLE;             /*  é€šé“bypassä½¿èƒ½ */
+    stChannle.eDataTypeEn   = SOCP_DATA_TYPE_EN;            /*  æ•°æ®ç±»åž‹ä½¿èƒ½ä½ */
+    stChannle.eDebugEn      = SOCP_ENC_DEBUG_DIS;           /*  è°ƒè¯•ä½ä½¿èƒ½ */
 
-    stChannle.sCoderSetSrcBuf.u32InputStart  = (VOS_UINT32)pstCfg->pucSrcPHY;                             /*  ÊäÈëÍ¨µÀÆðÊ¼µØÖ· */
-    stChannle.sCoderSetSrcBuf.u32InputEnd    = (VOS_UINT32)(pstCfg->pucSrcPHY + pstCfg->ulSrcBufLen)-1;   /*  ÊäÈëÍ¨µÀ½áÊøµØÖ· */
-    stChannle.sCoderSetSrcBuf.u32RDStart     = (VOS_UINT32)pstCfg->pucRDPHY;                              /* RD bufferÆðÊ¼µØÖ· */
-    stChannle.sCoderSetSrcBuf.u32RDEnd       = (VOS_UINT32)(pstCfg->pucRDPHY + pstCfg->ulRDBufLen)-1;     /*  RD buffer½áÊøµØÖ· */
-    stChannle.sCoderSetSrcBuf.u32RDThreshold = SCM_CODER_SRC_RD_THRESHOLD;                    /* RD bufferÊý¾ÝÉÏ±¨ãÐÖµ */
+    stChannle.sCoderSetSrcBuf.u32InputStart  = (VOS_UINT32)pstCfg->pucSrcPHY;                             /*  è¾“å…¥é€šé“èµ·å§‹åœ°å€ */
+    stChannle.sCoderSetSrcBuf.u32InputEnd    = (VOS_UINT32)(pstCfg->pucSrcPHY + pstCfg->ulSrcBufLen)-1;   /*  è¾“å…¥é€šé“ç»“æŸåœ°å€ */
+    stChannle.sCoderSetSrcBuf.u32RDStart     = (VOS_UINT32)pstCfg->pucRDPHY;                              /* RD bufferèµ·å§‹åœ°å€ */
+    stChannle.sCoderSetSrcBuf.u32RDEnd       = (VOS_UINT32)(pstCfg->pucRDPHY + pstCfg->ulRDBufLen)-1;     /*  RD bufferç»“æŸåœ°å€ */
+    stChannle.sCoderSetSrcBuf.u32RDThreshold = SCM_CODER_SRC_RD_THRESHOLD;                    /* RD bufferæ•°æ®ä¸ŠæŠ¥é˜ˆå€¼ */
 
     if (VOS_OK != BSP_SOCP_CoderSetSrcChan(pstCfg->enChannelID, &stChannle))
     {
-        SCM_CODER_SRC_ERR("SCM_CoderSrcChannelCfg: Search Channel ID Error", pstCfg->enChannelID, 0);/* ´òÓ¡Ê§°Ü */
+        SCM_CODER_SRC_ERR("SCM_CoderSrcChannelCfg: Search Channel ID Error", pstCfg->enChannelID, 0);/* æ‰“å°å¤±è´¥ */
 
         vos_printf("%s %d %s\n",__FILE__,__LINE__,__FUNCTION__);
 
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
-    pstCfg->enInitState = SCM_CHANNEL_INIT_SUCC; /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+    pstCfg->enInitState = SCM_CHANNEL_INIT_SUCC; /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-    return VOS_OK;/* ·µ»Ø³É¹¦ */
+    return VOS_OK;/* è¿”å›žæˆåŠŸ */
 }
 #if 0
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_ResetCoderSrcChan
- ¹¦ÄÜÃèÊö  : ½«ACPU/CCPUµÄ±àÂëÔ´Í¨µÀµÄÅäÖÃÖØÖÃ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_ResetCoderSrcChan
+ åŠŸèƒ½æè¿°  : å°†ACPU/CCPUçš„ç¼–ç æºé€šé“çš„é…ç½®é‡ç½®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_ResetCoderSrcChan(SOCP_CODER_SRC_ENUM_U32 enChID)
 {
@@ -354,18 +354,18 @@ VOS_UINT32 SCM_ResetCoderSrcChan(SOCP_CODER_SRC_ENUM_U32 enChID)
                                 sizeof(SCM_CODER_SRC_CFG_STRU),
                                 &ulCfgNum))
     {
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ¼ÇÂ¼Í¨µÀ¸´Î»log */
+    /* è®°å½•é€šé“å¤ä½log */
     SCM_CODER_SRCRESET_LOG("SCM_ResetCoderSrcChan: Reset Channel", enChID, 0);
 
-    if(VOS_OK != SOCP_CleanEncSrcChan(enChID))    /* Çå¿ÕÍ¨µÀÅäÖÃ */
+    if(VOS_OK != SOCP_CleanEncSrcChan(enChID))    /* æ¸…ç©ºé€šé“é…ç½® */
     {
         return VOS_ERR;
     }
 
-    if(VOS_OK != SCM_CoderSrcChannelCfg(&g_astSCMCoderSrcCfg[ulCfgNum]))  /* ÖØÐÂÅäÖÃÍ¨µÀ */
+    if(VOS_OK != SCM_CoderSrcChannelCfg(&g_astSCMCoderSrcCfg[ulCfgNum]))  /* é‡æ–°é…ç½®é€šé“ */
     {
         return VOS_ERR;
     }
@@ -379,17 +379,17 @@ VOS_UINT32 SCM_ResetCoderSrcChan(SOCP_CODER_SRC_ENUM_U32 enChID)
 }
 #endif
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_CoderSrcChannelInit
- ¹¦ÄÜÃèÊö  : ½«ACPU/CCPUµÄ±àÂëÔ´Í¨µÀµÄÅäÖÃ³õÊ¼»¯
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderSrcChannelInit
+ åŠŸèƒ½æè¿°  : å°†ACPU/CCPUçš„ç¼–ç æºé€šé“çš„é…ç½®åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_CoderSrcChannelInit(VOS_VOID)
 {
@@ -399,37 +399,37 @@ VOS_UINT32 SCM_CoderSrcChannelInit(VOS_VOID)
     {
         if (VOS_OK != SCM_CoderSrcChannelCfg(&g_astSCMCoderSrcCfg[i]))
         {
-            g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+            g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
         if(VOS_OK != BSP_SOCP_Start(g_astSCMCoderSrcCfg[i].enChannelID))
         {
-            g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_START_FAIL;  /* ¼ÇÂ¼Í¨µÀ¿ªÆôÅäÖÃ´íÎó */
+            g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_START_FAIL;  /* è®°å½•é€šé“å¼€å¯é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
-        g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+        g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
     }
 
-    return VOS_OK;/* ·µ»Ø³É¹¦ */
+    return VOS_OK;/* è¿”å›žæˆåŠŸ */
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_RlsSrcRDAll
- ¹¦ÄÜÃèÊö  : ½«±àÂëÔ´Í¨µÀµÄËùÓÐRDÄÚ´æ½øÐÐÊÍ·Å
- ÊäÈë²ÎÊý  : enChanlID: ±àÂëÔ´Í¨µÀID
- Êä³ö²ÎÊý  : pulDataPhyAddr: ±àÂëÔ´Í¨µÀ´ýÊÍ·ÅÊý¾ÝÊµµØÖ·Öµ
-             pulDataLen: ±àÂëÔ´Í¨µÀ´ýÊÍ·ÅÊý¾Ý³¤¶È
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_RlsSrcRDAll
+ åŠŸèƒ½æè¿°  : å°†ç¼–ç æºé€šé“çš„æ‰€æœ‰RDå†…å­˜è¿›è¡Œé‡Šæ”¾
+ è¾“å…¥å‚æ•°  : enChanlID: ç¼–ç æºé€šé“ID
+ è¾“å‡ºå‚æ•°  : pulDataPhyAddr: ç¼–ç æºé€šé“å¾…é‡Šæ”¾æ•°æ®å®žåœ°å€å€¼
+             pulDataLen: ç¼–ç æºé€šé“å¾…é‡Šæ”¾æ•°æ®é•¿åº¦
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDataPhyAddr, VOS_UINT32 *pulDataLen)
 {
@@ -448,44 +448,44 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
                                         SCM_CODER_SRC_NUM,
                                         (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderSrcCfg,
                                         sizeof(SCM_CODER_SRC_CFG_STRU),
-                                        &ulCfgNum))/* ÅÐ¶ÏÍ¨µÀ²ÎÊý */
+                                        &ulCfgNum))/* åˆ¤æ–­é€šé“å‚æ•° */
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Find Channel Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Find Channel Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     SCM_CODER_SRC_LOG("SCM_RlsSrcRDAll: Release Channel Data", enChanlID, 0);
 
     if (VOS_OK != BSP_SOCP_GetRDBuffer(enChanlID, &stSrcChanRD))
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Get RD Info Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Get RD Info Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    if (VOS_NULL_PTR == stSrcChanRD.pBuffer)        /* ²ÎÊý´íÎó */
+    if (VOS_NULL_PTR == stSrcChanRD.pBuffer)        /* å‚æ•°é”™è¯¯ */
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: RD Info is Error", enChanlID, (VOS_UINT32)stSrcChanRD.pBuffer);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: RD Info is Error", enChanlID, (VOS_UINT32)stSrcChanRD.pBuffer);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    if ((0 == stSrcChanRD.u32Size) && (0 == stSrcChanRD.u32RbSize)) /* ÎÞÊý¾ÝÐèÒªÊÍ·Å */
+    if ((0 == stSrcChanRD.u32Size) && (0 == stSrcChanRD.u32RbSize)) /* æ— æ•°æ®éœ€è¦é‡Šæ”¾ */
     {
         *pDataPhyAddr   = 0;
         *pulDataLen     = 0;
 
-        return VOS_OK;/* ·µ»Ø³É¹¦ */
+        return VOS_OK;/* è¿”å›žæˆåŠŸ */
     }
 
-    /* RD¸öÊý»ñÈ¡·Ç·¨ */
+    /* RDä¸ªæ•°èŽ·å–éžæ³• */
     if(((stSrcChanRD.u32Size + stSrcChanRD.u32RbSize) / sizeof(SOCP_RD_DATA_STRU)) > SCM_CODE_SRC_RD_NUM)
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDFirst: Get RD Data Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDFirst: Get RD PTR Error", stSrcChanRD.u32Size, stSrcChanRD.u32RbSize);/* ¼ÇÂ¼Log */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDFirst: Get RD Data Error", enChanlID, 0);/* è®°å½•Log */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDFirst: Get RD PTR Error", stSrcChanRD.u32Size, stSrcChanRD.u32RbSize);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ¼ÆËãRD¸öÊý */
+    /* è®¡ç®—RDä¸ªæ•° */
     ulRDNum = stSrcChanRD.u32Size / sizeof(SOCP_RD_DATA_STRU);
 
     if (0 != ulRDNum)
@@ -497,22 +497,22 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
 
         ulRDTotalNum = ulRDNum;
 
-        /* »ñÈ¡RDÊý¾ÝµÄµØÖ·ºÍ³¤¶È */
+        /* èŽ·å–RDæ•°æ®çš„åœ°å€å’Œé•¿åº¦ */
         pstRDData   = (SOCP_RD_DATA_STRU*)stSrcChanRD.pBuffer;
 
-        /* ¼ÇÂ¼µ±Ç°µÚÒ»¸öÊÍ·ÅµÄÊý¾ÝµØÖ·,ºóÃæÐèÒª·µ»Ø¸øÉÏ²ã */
+        /* è®°å½•å½“å‰ç¬¬ä¸€ä¸ªé‡Šæ”¾çš„æ•°æ®åœ°å€,åŽé¢éœ€è¦è¿”å›žç»™ä¸Šå±‚ */
         ulFirstAddr = (VOS_UINT32)pstRDData->pucData;
 
         for (i = 0; i < ulRDNum; i++)
         {
-            /* ÀÛ¼ÆRDÊý¾Ý³¤¶È */
+            /* ç´¯è®¡RDæ•°æ®é•¿åº¦ */
             ulTotalLen += pstRDData->usMsgLen;
 
             pstRDData++;
         }
     }
 
-    /* ¼ÆËã»Ø¾íRD¸öÊý */
+    /* è®¡ç®—å›žå·RDä¸ªæ•° */
     ulRDNum = stSrcChanRD.u32RbSize / sizeof(SOCP_RD_DATA_STRU);
 
     if (0 != ulRDNum)
@@ -524,17 +524,17 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
 
         ulRDTotalNum += ulRDNum;
 
-        /* »ñÈ¡RDÊý¾Ý»Ø¾íµÄµØÖ·ºÍ³¤¶È */
+        /* èŽ·å–RDæ•°æ®å›žå·çš„åœ°å€å’Œé•¿åº¦ */
         pstRDData   = (SOCP_RD_DATA_STRU*)stSrcChanRD.pRbBuffer;
 
-        if (0 == ulFirstAddr)/* ¼ÇÂ¼µ±Ç°µÚÒ»¸öÊÍ·ÅµÄÊý¾ÝµØÖ·,ºóÃæÐèÒª·µ»Ø¸øÉÏ²ã */
+        if (0 == ulFirstAddr)/* è®°å½•å½“å‰ç¬¬ä¸€ä¸ªé‡Šæ”¾çš„æ•°æ®åœ°å€,åŽé¢éœ€è¦è¿”å›žç»™ä¸Šå±‚ */
         {
             ulFirstAddr = (VOS_UINT32)pstRDData->pucData;
         }
 
         for (i = 0; i < ulRDNum; i++)
         {
-            /* ÀÛ¼ÆRDÊý¾Ý³¤¶È */
+            /* ç´¯è®¡RDæ•°æ®é•¿åº¦ */
             ulTotalLen += pstRDData->usMsgLen;
 
             pstRDData++;
@@ -543,11 +543,11 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
 
     if (VOS_OK != BSP_SOCP_ReadRDDone(enChanlID, (stSrcChanRD.u32Size+stSrcChanRD.u32RbSize)))
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Write RD Done is Error", enChanlID, (stSrcChanRD.u32Size+stSrcChanRD.u32RbSize));/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Write RD Done is Error", enChanlID, (stSrcChanRD.u32Size+stSrcChanRD.u32RbSize));/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
-    /* »ñÈ¡µÄRD×î´óÖµ¼ÇÂ¼µ½È«¾Ö±äÁ¿ÖÐ */
+    /* èŽ·å–çš„RDæœ€å¤§å€¼è®°å½•åˆ°å…¨å±€å˜é‡ä¸­ */
     if (ulRDTotalNum > g_stSCMInfoData.aulRDUsedMax[ulCfgNum])
     {
         g_stSCMInfoData.aulRDUsedMax[ulCfgNum] = ulRDTotalNum;
@@ -557,21 +557,21 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
 
     *pulDataLen     = ulTotalLen;
 
-    return VOS_OK;/* ·µ»Ø½á¹ûOK */
+    return VOS_OK;/* è¿”å›žç»“æžœOK */
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_GetBDFreeNum
- ¹¦ÄÜÃèÊö  : ²éÑ¯BDÊ£Óà¿Õ¼ä
- ÊäÈë²ÎÊý  : enChanlID: Í¨µÀID
- Êä³ö²ÎÊý  : pulBDNum:BDÊ£Óà¸öÊý
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_GetBDFreeNum
+ åŠŸèƒ½æè¿°  : æŸ¥è¯¢BDå‰©ä½™ç©ºé—´
+ è¾“å…¥å‚æ•°  : enChanlID: é€šé“ID
+ è¾“å‡ºå‚æ•°  : pulBDNum:BDå‰©ä½™ä¸ªæ•°
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_GetBDFreeNum(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT32 *pulBDNum)
 {
@@ -580,40 +580,40 @@ VOS_UINT32 SCM_GetBDFreeNum(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT32 *pulBD
     VOS_UINT32                          ulBDTotal;
     VOS_UINT32                          ulCfgNum;
 
-    /* ÅÐ¶ÏÖ¸ÕëµÄÕýÈ· */
+    /* åˆ¤æ–­æŒ‡é’ˆçš„æ­£ç¡® */
     if (VOS_NULL_PTR == pulBDNum)
     {
         return VOS_ERR;
     }
 
     if (VOS_OK != SCM_FindChannelCfg(enChanlID, SCM_CODER_SRC_NUM,
-                                (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderSrcCfg, sizeof(SCM_CODER_SRC_CFG_STRU), &ulCfgNum))/* ÅÐ¶ÏÍ¨µÀ²ÎÊý */
+                                (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderSrcCfg, sizeof(SCM_CODER_SRC_CFG_STRU), &ulCfgNum))/* åˆ¤æ–­é€šé“å‚æ•° */
     {
-        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Find Channel Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Find Channel Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     SCM_CODER_SRC_LOG("SCM_GetBDFreeNum: Get BD Number", enChanlID, 0);
 
     if (VOS_OK != BSP_SOCP_GetWriteBuff(enChanlID, &stRwBuf))
     {
-        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get Write Buffer Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get Write Buffer Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ¼ÆËãBDµÄÖµ */
+    /* è®¡ç®—BDçš„å€¼ */
     ulBDNum = (stRwBuf.u32Size + stRwBuf.u32RbSize) / sizeof(SOCP_BD_DATA_STRU);
 
-    /* BD¸öÊý»ñÈ¡·Ç·¨ */
+    /* BDä¸ªæ•°èŽ·å–éžæ³• */
     if(ulBDNum > SCM_CODE_SRC_BD_NUM)
     {
-        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get BD Data Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get BD PTR Error", stRwBuf.u32Size, stRwBuf.u32RbSize);/* ¼ÇÂ¼Log */
+        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get BD Data Error", enChanlID, 0);/* è®°å½•Log */
+        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get BD PTR Error", stRwBuf.u32Size, stRwBuf.u32RbSize);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ÖÁÉÙÒª±£ÁôÒ»¸ö¿ÕÏÐBD£¬±£Ö¤Í¨µÀ²»»á±»Ð´Âú¶øÒì³£ */
+    /* è‡³å°‘è¦ä¿ç•™ä¸€ä¸ªç©ºé—²BDï¼Œä¿è¯é€šé“ä¸ä¼šè¢«å†™æ»¡è€Œå¼‚å¸¸ */
     if (ulBDNum <= 1)
     {
         *pulBDNum = 0;
@@ -623,10 +623,10 @@ VOS_UINT32 SCM_GetBDFreeNum(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT32 *pulBD
         *pulBDNum = (ulBDNum - 1);
     }
 
-    /* ¼ÆËãÍ¨µÀÈ«²¿BDµÄ¸öÊý */
+    /* è®¡ç®—é€šé“å…¨éƒ¨BDçš„ä¸ªæ•° */
     ulBDTotal = g_astSCMCoderSrcCfg[ulCfgNum].ulSrcBufLen / sizeof(SOCP_BD_DATA_STRU);
 
-    /* ºÍÈ«¾Ö±äÁ¿ÖÐ±È½Ï¼ÇÂ¼×î´óÖµ */
+    /* å’Œå…¨å±€å˜é‡ä¸­æ¯”è¾ƒè®°å½•æœ€å¤§å€¼ */
     if ((ulBDTotal- ulBDNum) > g_stSCMInfoData.aulBDUsedMax[ulCfgNum])
     {
         g_stSCMInfoData.aulBDUsedMax[ulCfgNum] = (ulBDTotal- ulBDNum);
@@ -636,19 +636,19 @@ VOS_UINT32 SCM_GetBDFreeNum(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT32 *pulBD
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_SendCoderSrc
- ¹¦ÄÜÃèÊö  : Í¨¹ýSOCPµÄ±àÂëÔ´Í¨µÀ·¢ËÍÊý¾Ý
- ÊäÈë²ÎÊý  : enChanlID: Í¨µÀID
-             pucSendDataPhy:·¢ËÍÊý¾ÝÊµµØÖ·
-             ulSendLen: ·¢ËÍÊý¾Ý³¤¶È
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_SendCoderSrc
+ åŠŸèƒ½æè¿°  : é€šè¿‡SOCPçš„ç¼–ç æºé€šé“å‘é€æ•°æ®
+ è¾“å…¥å‚æ•°  : enChanlID: é€šé“ID
+             pucSendDataPhy:å‘é€æ•°æ®å®žåœ°å€
+             ulSendLen: å‘é€æ•°æ®é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSendDataPhy, VOS_UINT32 ulSendLen)
 {
@@ -657,7 +657,7 @@ VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSen
     VOS_UINT32                          ulCfgNum;
     SOCP_BD_DATA_STRU                   stBDData;
 
-    /* ÅÐ¶ÏÊý¾ÝÖ¸ÕëºÍ³¤¶ÈµÄÕýÈ·£¬³¤¶È²»ÄÜ´óÓÚ16K */
+    /* åˆ¤æ–­æ•°æ®æŒ‡é’ˆå’Œé•¿åº¦çš„æ­£ç¡®ï¼Œé•¿åº¦ä¸èƒ½å¤§äºŽ16K */
     if ((VOS_NULL_PTR == pucSendDataPhy)
         ||(0 == ulSendLen)
         ||(SCM_CODER_SRC_MAX_LEN < ulSendLen))
@@ -667,27 +667,27 @@ VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSen
 
     if (VOS_OK != SCM_FindChannelCfg(enChanlID, SCM_CODER_SRC_NUM,
                                      (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderSrcCfg,
-                                     sizeof(SCM_CODER_SRC_CFG_STRU), &ulCfgNum))/* ÅÐ¶ÏÍ¨µÀ²ÎÊý */
+                                     sizeof(SCM_CODER_SRC_CFG_STRU), &ulCfgNum))/* åˆ¤æ–­é€šé“å‚æ•° */
     {
-        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Find Channel Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Find Channel Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     SCM_CODER_SRC_LOG("SCM_SendCoderSrc: Get BD Number", enChanlID, 0);
 
     if (VOS_OK != BSP_SOCP_GetWriteBuff(g_astSCMCoderSrcCfg[ulCfgNum].enChannelID, &stRwBuf))
     {
-        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Get Write Buffer Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Get Write Buffer Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ¼ÆËã¿ÕÏÐBDµÄÖµ */
+    /* è®¡ç®—ç©ºé—²BDçš„å€¼ */
     ulBDNum = (stRwBuf.u32Size + stRwBuf.u32RbSize) / sizeof(SOCP_BD_DATA_STRU);
 
-    /* ÅÐ¶ÏÊÇ·ñ»¹ÓÐ¿Õ¼ä */
+    /* åˆ¤æ–­æ˜¯å¦è¿˜æœ‰ç©ºé—´ */
     if (1 >= ulBDNum)
     {
-        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Buffer is Full", enChanlID, ulBDNum);/* ¼ÇÂ¼Log */
+        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Buffer is Full", enChanlID, ulBDNum);/* è®°å½•Log */
         return VOS_ERR;
     }
 
@@ -700,14 +700,14 @@ VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSen
     stBDData.usMsgLen   = (VOS_UINT16)ulSendLen;
     stBDData.enDataType = SOCP_BD_DATA;
 
-    VOS_MemCpy(stRwBuf.pBuffer, &stBDData, sizeof(stBDData));    /* ¸´ÖÆÊý¾Ýµ½Ö¸¶¨µÄµØÖ· */
+    VOS_MemCpy(stRwBuf.pBuffer, &stBDData, sizeof(stBDData));    /* å¤åˆ¶æ•°æ®åˆ°æŒ‡å®šçš„åœ°å€ */
 
     VOS_FlushCpuWriteBuf();
 
-    if (VOS_OK != BSP_SOCP_WriteDone(enChanlID, sizeof(stBDData)))   /* µ±Ç°Êý¾ÝÐ´ÈëÍê±Ï */
+    if (VOS_OK != BSP_SOCP_WriteDone(enChanlID, sizeof(stBDData)))   /* å½“å‰æ•°æ®å†™å…¥å®Œæ¯• */
     {
-        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Write Buffer is Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Write Buffer is Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     return VOS_OK;
@@ -715,17 +715,17 @@ VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSen
 
 #ifdef SCM_ACORE
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_CoderDstChanMemAlloc
- ¹¦ÄÜÃèÊö  : ±àÂëÄ¿µÄÍ¨µÀmemoryÉêÇë
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2013Äê8ÔÂ20ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderDstChanMemAlloc
+ åŠŸèƒ½æè¿°  : ç¼–ç ç›®çš„é€šé“memoryç”³è¯·
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2013å¹´8æœˆ20æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_CoderDstChanMemAlloc(VOS_VOID)
 {
@@ -734,16 +734,16 @@ VOS_UINT32 SCM_CoderDstChanMemAlloc(VOS_VOID)
 
     for (i = 0; i < SCM_CODER_DST_NUM; i++)
     {
-        /* ÉêÇë±àÂëÄ¿µÄ¿Õ¼ä */
+        /* ç”³è¯·ç¼–ç ç›®çš„ç©ºé—´ */
         g_astSCMCoderDstCfg[i].pucBuf = (VOS_UINT8*)VOS_UnCacheMemAlloc(g_astSCMCoderDstCfg[i].ulBufLen, &ulPHYAddr);
 
-        /* ÉêÇë¿Õ¼ä´íÎó */
+        /* ç”³è¯·ç©ºé—´é”™è¯¯ */
         if (VOS_NULL_PTR == g_astSCMCoderDstCfg[i].pucBuf)
         {
-            /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+            /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
             g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-            return VOS_ERR;/* ·µ»Ø´íÎó */
+            return VOS_ERR;/* è¿”å›žé”™è¯¯ */
         }
 
         g_astSCMCoderDstCfg[i].pucBufPHY = (VOS_UINT8*)ulPHYAddr;
@@ -753,17 +753,17 @@ VOS_UINT32 SCM_CoderDstChanMemAlloc(VOS_VOID)
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_CoderDstChanMemInit
- ¹¦ÄÜÃèÊö  : ±àÂëÄ¿µÄÍ¨µÀmemory³õÊ¼»¯
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2013Äê8ÔÂ20ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderDstChanMemInit
+ åŠŸèƒ½æè¿°  : ç¼–ç ç›®çš„é€šé“memoryåˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2013å¹´8æœˆ20æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_CoderDstChanMemInit(VOS_VOID)
 {
@@ -798,7 +798,7 @@ VOS_UINT32 SCM_CoderDstChanMemInit(VOS_VOID)
 
         g_astSCMCoderDstCfg[i].pucBuf = (VOS_UINT8*)VOS_UnCacheMemAlloc(ulBufLen, &ulPHYAddr);
 
-        /* ÉêÇë¿Õ¼ä´íÎó */
+        /* ç”³è¯·ç©ºé—´é”™è¯¯ */
         if (VOS_NULL_PTR == g_astSCMCoderDstCfg[i].pucBuf)
         {
             bAllocMem = VOS_FALSE;
@@ -810,7 +810,7 @@ VOS_UINT32 SCM_CoderDstChanMemInit(VOS_VOID)
 
     if (VOS_TRUE == bAllocMem)
     {
-        /* ÉêÇë1.2M¿Õ¼ä³É¹¦ */
+        /* ç”³è¯·1.2Mç©ºé—´æˆåŠŸ */
         for (i = 0; i < SCM_CODER_DST_NUM; i++)
         {
             if(SOCP_CODER_DST_OM_IND == g_astSCMCoderDstCfg[i].enChannelID)
@@ -825,8 +825,8 @@ VOS_UINT32 SCM_CoderDstChanMemInit(VOS_VOID)
         return VOS_OK;
     }
 
-    /* ÉêÇë1.2M¿Õ¼äÊ§°Ü */
-    /* ÊÍ·ÅÒÑÉêÇë¿Õ¼ä */
+    /* ç”³è¯·1.2Mç©ºé—´å¤±è´¥ */
+    /* é‡Šæ”¾å·²ç”³è¯·ç©ºé—´ */
     for (i = 0; i < SCM_CODER_DST_NUM; i++)
     {
         ulBufLen = g_astSCMCoderDstCfg[i].ulBufLen;
@@ -846,7 +846,7 @@ VOS_UINT32 SCM_CoderDstChanMemInit(VOS_VOID)
         }
     }
 #if 0
-    /* ½«ÄÚ´æÖÐen_NV_ID_SOCP_SDLOG_CFGµÄÖµ¸ÄÐ´Îªfalse */
+    /* å°†å†…å­˜ä¸­en_NV_ID_SOCP_SDLOG_CFGçš„å€¼æ”¹å†™ä¸ºfalse */
     stSocpCfg.ulSocpDelayWriteFlg = VOS_FALSE;
 
     if(NV_OK != NV_WriteExMemory(MODEM_ID_0, en_NV_ID_SOCP_SDLOG_CFG, &stSocpCfg, sizeof(NV_SOCP_SDLOG_CFG_STRU)))
@@ -860,29 +860,29 @@ VOS_UINT32 SCM_CoderDstChanMemInit(VOS_VOID)
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_RlsDestBuf
- ¹¦ÄÜÃèÊö  : ´¦ÀíÄ¿µÄÍ¨µÀµÄÊý¾ÝÊÍ·Å
- ÊäÈë²ÎÊý  : ulChanlID Ä¿µÄÍ¨µÀID
-             ulReadSize Êý¾Ý´óÐ¡
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_RlsDestBuf
+ åŠŸèƒ½æè¿°  : å¤„ç†ç›®çš„é€šé“çš„æ•°æ®é‡Šæ”¾
+ è¾“å…¥å‚æ•°  : ulChanlID ç›®çš„é€šé“ID
+             ulReadSize æ•°æ®å¤§å°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_RlsDestBuf(VOS_UINT32 ulChanlID, VOS_UINT32 ulReadSize)
 {
     VOS_UINT32                          ulDataLen;
     SOCP_BUFFER_RW_STRU                 stBuffer;
 
-    if(0 == ulReadSize) /*ÊÍ·ÅÍ¨µÀËùÓÐÊý¾Ý*/
+    if(0 == ulReadSize) /*é‡Šæ”¾é€šé“æ‰€æœ‰æ•°æ®*/
     {
         if (VOS_OK != DRV_SOCP_GET_READ_BUFF(ulChanlID, &stBuffer))
         {
-            SCM_CODER_DST_ERR("SCM_RlsDestBuf: Get Read Buffer is Error", ulChanlID, 0);/* ¼ÇÂ¼Log */
+            SCM_CODER_DST_ERR("SCM_RlsDestBuf: Get Read Buffer is Error", ulChanlID, 0);/* è®°å½•Log */
             return VOS_ERR;
         }
 
@@ -892,7 +892,7 @@ VOS_UINT32 SCM_RlsDestBuf(VOS_UINT32 ulChanlID, VOS_UINT32 ulReadSize)
     }
     else
     {
-        /* ¼ÇÂ¼µ÷ÓÃÊ±¼ä */
+        /* è®°å½•è°ƒç”¨æ—¶é—´ */
         SCM_CODER_DST_LOG("SCM_RlsDestBuf: Relese Read Data", ulChanlID, ulReadSize);
 
         ulDataLen = ulReadSize;
@@ -900,7 +900,7 @@ VOS_UINT32 SCM_RlsDestBuf(VOS_UINT32 ulChanlID, VOS_UINT32 ulReadSize)
 
     if (VOS_OK != DRV_SOCP_READ_DATA_DONE(ulChanlID, ulDataLen))
     {
-        SCM_CODER_DST_ERR("SCM_RlsDestBuf: Read Data Done is Error", ulChanlID, ulDataLen);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_RlsDestBuf: Read Data Done is Error", ulChanlID, ulDataLen);/* è®°å½•Log */
 
         return VOS_ERR;
     }
@@ -909,19 +909,19 @@ VOS_UINT32 SCM_RlsDestBuf(VOS_UINT32 ulChanlID, VOS_UINT32 ulReadSize)
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_CoderDestMemVirtToPhy
- ¹¦ÄÜÃèÊö  : ÐéµØÖ·×ª»»³ÉÊµµØÖ·
- ÊäÈë²ÎÊý  : ulDstChID    Ä¿µÄÍ¨µÀID
-             pucVirtAddr  ´«ÈëÐéµØÖ·
+ å‡½ æ•° å  : SCM_CoderDestMemVirtToPhy
+ åŠŸèƒ½æè¿°  : è™šåœ°å€è½¬æ¢æˆå®žåœ°å€
+ è¾“å…¥å‚æ•°  : ulDstChID    ç›®çš„é€šé“ID
+             pucVirtAddr  ä¼ å…¥è™šåœ°å€
 
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÊµµØÖ·
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : å®žåœ°å€
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT8* SCM_CoderDestMemVirtToPhy(VOS_UINT32 ulDstChID, VOS_UINT8 *pucVirtAddr)
 {
@@ -933,14 +933,14 @@ VOS_UINT8* SCM_CoderDestMemVirtToPhy(VOS_UINT32 ulDstChID, VOS_UINT8 *pucVirtAdd
 
     if (SOCP_CODER_DEST_CHAN != ulChType)
     {
-        SCM_CODER_DST_ERR("SCM_CoderDestMemVirtToPhy: Channel Type is Error", ulDstChID, ulChType);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_CoderDestMemVirtToPhy: Channel Type is Error", ulDstChID, ulChType);/* è®°å½•Log */
         return VOS_NULL_PTR;
     }
 
     if (VOS_OK != SCM_FindChannelCfg(ulDstChID, SCM_CODER_DST_NUM,
                                 (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderDstCfg, sizeof(SCM_CODER_DEST_CFG_STRU), &ulCfgNum))
     {
-        SCM_CODER_DST_ERR("SCM_CoderDestMemVirtToPhy: Find Channel is Error", ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_CoderDestMemVirtToPhy: Find Channel is Error", ulDstChID, 0);/* è®°å½•Log */
 
         return VOS_NULL_PTR;
     }
@@ -959,17 +959,17 @@ VOS_UINT8* SCM_CoderDestMemVirtToPhy(VOS_UINT32 ulDstChID, VOS_UINT8 *pucVirtAdd
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_CoderDestReadCB
- ¹¦ÄÜÃèÊö  : ´¦Àí±àÂëÄ¿µÄÍ¨µÀµÄÊý¾Ý
- ÊäÈë²ÎÊý  : ulDstChID Ä¿µÄÍ¨µÀID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderDestReadCB
+ åŠŸèƒ½æè¿°  : å¤„ç†ç¼–ç ç›®çš„é€šé“çš„æ•°æ®
+ è¾“å…¥å‚æ•°  : ulDstChID ç›®çš„é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
 {
@@ -984,22 +984,22 @@ VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
 
     if (SOCP_CODER_DEST_CHAN != ulChType)
     {
-        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Channel Type is Error", ulDstChID, ulChType);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Channel Type is Error", ulDstChID, ulChType);/* è®°å½•Log */
         return;
     }
 
     if (VOS_OK != DRV_SOCP_GET_READ_BUFF(ulDstChID, &stBuffer))
     {
-        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Get Read Buffer is Error", ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Get Read Buffer is Error", ulDstChID, 0);/* è®°å½•Log */
         return;
     }
 
     if (VOS_OK != SCM_FindChannelCfg(ulDstChID, SCM_CODER_DST_NUM,
                                 (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderDstCfg, sizeof(SCM_CODER_DEST_CFG_STRU), &ulCfgNum))
     {
-        DRV_SOCP_READ_DATA_DONE(ulDstChID, stBuffer.u32Size + stBuffer.u32RbSize);  /* Çå¿ÕÊý¾Ý */
+        DRV_SOCP_READ_DATA_DONE(ulDstChID, stBuffer.u32Size + stBuffer.u32RbSize);  /* æ¸…ç©ºæ•°æ® */
 
-        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Find Channel is Error", ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Find Channel is Error", ulDstChID, 0);/* è®°å½•Log */
 
         return;
     }
@@ -1007,14 +1007,14 @@ VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
     if ((VOS_NULL_PTR == g_astSCMCoderDstCfg[ulCfgNum].pfunc)
         || (0 == (stBuffer.u32Size + stBuffer.u32RbSize)))
     {
-        DRV_SOCP_READ_DATA_DONE(ulDstChID, stBuffer.u32Size + stBuffer.u32RbSize);  /* Çå¿ÕÊý¾Ý */
+        DRV_SOCP_READ_DATA_DONE(ulDstChID, stBuffer.u32Size + stBuffer.u32RbSize);  /* æ¸…ç©ºæ•°æ® */
 
-        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Channel Callback Fucn or Data is NULL", ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Channel Callback Fucn or Data is NULL", ulDstChID, 0);/* è®°å½•Log */
 
         return;
     }
 
-    if (0 != stBuffer.u32Size)   /* ·¢ËÍÊý¾Ý */
+    if (0 != stBuffer.u32Size)   /* å‘é€æ•°æ® */
     {
         ulVirtAddr = VOS_UncacheMemPhyToVirt(stBuffer.pBuffer,
                                     g_astSCMCoderDstCfg[ulCfgNum].pucBufPHY,
@@ -1027,7 +1027,7 @@ VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
 
         ulTimerOut = OM_GetSlice();
 
-        /* ¼ÇÂ¼»Øµ÷º¯ÊýµÄÖ´ÐÐÊ±¼ä */
+        /* è®°å½•å›žè°ƒå‡½æ•°çš„æ‰§è¡Œæ—¶é—´ */
         SCM_CODER_DST_LOG("SCM_CoderDestReadCB: Call channel Func Proc time", ulDstChID, (ulTimerOut-ulTimerIn));
     }
 
@@ -1035,17 +1035,17 @@ VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_CoderDstChannelInit
- ¹¦ÄÜÃèÊö  : ½«ACPUµÄ±àÂëÄ¿µÄÍ¨µÀµÄÅäÖÃÖØÖÃ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderDstChannelInit
+ åŠŸèƒ½æè¿°  : å°†ACPUçš„ç¼–ç ç›®çš„é€šé“çš„é…ç½®é‡ç½®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 SCM_CoderDstChannelInit(VOS_VOID)
 {
@@ -1060,7 +1060,7 @@ VOS_UINT32 SCM_CoderDstChannelInit(VOS_VOID)
         }
         else
         {
-            /* À©´ó±àÂëÄ¿µÄÍ¨µÀ1ãÐÖµÃÅÏÞ */
+            /* æ‰©å¤§ç¼–ç ç›®çš„é€šé“1é˜ˆå€¼é—¨é™ */
             stChannel.u32EncDstThrh = 2 * SCM_CODER_DST_GTHRESHOLD;
         }
         stChannel.sCoderSetDstBuf.u32OutputStart    = (VOS_UINT32)g_astSCMCoderDstCfg[i].pucBufPHY;
@@ -1072,12 +1072,12 @@ VOS_UINT32 SCM_CoderDstChannelInit(VOS_VOID)
 
         if (VOS_OK != DRV_SOCP_CODER_SET_DEST_CHAN_ATTR(g_astSCMCoderDstCfg[i].enChannelID, &stChannel))
         {
-            g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+            g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
-        g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+        g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
         DRV_SOCP_REGISTER_READ_CB((BSP_U32)g_astSCMCoderDstCfg[i].enChannelID, (socp_read_cb)SCM_CoderDestReadCB);
     }
@@ -1087,18 +1087,18 @@ VOS_UINT32 SCM_CoderDstChannelInit(VOS_VOID)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_RegCoderDestProc
- ¹¦ÄÜÃèÊö  : ACPUµÄ±àÂëÄ¿µÄÍ¨µÀµÄ»Øµ÷º¯Êý×¢²á½Ó¿Ú
- ÊäÈë²ÎÊý  : enChanlID: ½âÂëÄ¿µÄÍ¨µÀID
-             func: »Øµ÷º¯ÊýÖ¸Õë
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_RegCoderDestProc
+ åŠŸèƒ½æè¿°  : ACPUçš„ç¼–ç ç›®çš„é€šé“çš„å›žè°ƒå‡½æ•°æ³¨å†ŒæŽ¥å£
+ è¾“å…¥å‚æ•°  : enChanlID: è§£ç ç›®çš„é€šé“ID
+             func: å›žè°ƒå‡½æ•°æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_UINT32 SCM_RegCoderDestProc(SOCP_CODER_DST_ENUM_U32 enChanlID, SCM_CODERDESTFUCN func)
@@ -1113,27 +1113,27 @@ VOS_UINT32 SCM_RegCoderDestProc(SOCP_CODER_DST_ENUM_U32 enChanlID, SCM_CODERDEST
     {
         SCM_CODER_DST_ERR("SCM_RegCoderDestProc: Find Channeld is Error", enChanlID, (VOS_UINT32)func);
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     g_astSCMCoderDstCfg[ulCgfNum].pfunc = func;
 
-    return VOS_OK;/* ·µ»Ø³É¹¦ */
+    return VOS_OK;/* è¿”å›žæˆåŠŸ */
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_RegDecoderDestProc
- ¹¦ÄÜÃèÊö  : ACPUµÄ½âÂëÄ¿µÄÍ¨µÀµÄ»Øµ÷º¯Êý×¢²á½Ó¿Ú
- ÊäÈë²ÎÊý  : enChanlID: ½âÂëÄ¿µÄÍ¨µÀID
-             func: »Øµ÷º¯ÊýÖ¸Õë
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_RegDecoderDestProc
+ åŠŸèƒ½æè¿°  : ACPUçš„è§£ç ç›®çš„é€šé“çš„å›žè°ƒå‡½æ•°æ³¨å†ŒæŽ¥å£
+ è¾“å…¥å‚æ•°  : enChanlID: è§£ç ç›®çš„é€šé“ID
+             func: å›žè°ƒå‡½æ•°æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 
 VOS_UINT32 SCM_RegDecoderDestProc(SOCP_DECODER_DST_ENUM_U32 enChanlID, SCM_DECODERDESTFUCN func)
@@ -1175,17 +1175,17 @@ VOS_UINT32 SCM_RegDecoderDestProc(SOCP_DECODER_DST_ENUM_U32 enChanlID, SCM_DECOD
 #if (RAT_MODE != RAT_GU)                /* Mutil Mode */
 #if 0
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_DecoderDestReadCB
- ¹¦ÄÜÃèÊö  : ´¦Àí½âÂëÄ¿µÄÍ¨µÀµÄÊý¾Ý
- ÊäÈë²ÎÊý  : ulDstChID Ä¿µÄÍ¨µÀID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_DecoderDestReadCB
+ åŠŸèƒ½æè¿°  : å¤„ç†è§£ç ç›®çš„é€šé“çš„æ•°æ®
+ è¾“å…¥å‚æ•°  : ulDstChID ç›®çš„é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 
 VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
@@ -1202,22 +1202,22 @@ VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
 
     if (SOCP_DECODER_DEST_CHAN != ulChType)
     {
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Type is Error", ulDstChID, ulChType);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Type is Error", ulDstChID, ulChType);/* è®°å½•Log */
         return;
     }
 
     if (VOS_OK != BSP_SOCP_GetReadBuff(ulDstChID, &stBuffer))
     {
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Get Read Buffer is Error", ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Get Read Buffer is Error", ulDstChID, 0);/* è®°å½•Log */
         return;
     }
 
     if (VOS_OK != SCM_FindChannelCfg(ulDstChID, SCM_DECODER_DST_NUM,
                                 (SCM_CHANNEL_CFG_HEAD *)g_astSCMDecoderDstCfg, sizeof(SCM_DECODER_DEST_CFG_STRU), &ulCfgNum))
     {
-        BSP_SOCP_ReadDataDone(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize));  /* Çå¿ÕÊý¾Ý */
+        BSP_SOCP_ReadDataDone(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize));  /* æ¸…ç©ºæ•°æ® */
 
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Find Channel is Error", ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Find Channel is Error", ulDstChID, 0);/* è®°å½•Log */
 
         return;
     }
@@ -1225,9 +1225,9 @@ VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
     if ((VOS_NULL_PTR == g_astSCMDecoderDstCfg[ulCfgNum].pfunc)
         || (0 == (stBuffer.u32Size + stBuffer.u32RbSize)))
     {
-        BSP_SOCP_ReadDataDone(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize));  /* Çå¿ÕÊý¾Ý */
+        BSP_SOCP_ReadDataDone(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize));  /* æ¸…ç©ºæ•°æ® */
 
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Callback Func or Data is NULL", ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Callback Func or Data is NULL", ulDstChID, 0);/* è®°å½•Log */
 
         return;
     }
@@ -1259,12 +1259,12 @@ VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
 
     ulTimerOut = OM_GetSlice();
 
-    /* ¼ÇÂ¼»Øµ÷º¯ÊýµÄÖ´ÐÐÊ±¼ä */
+    /* è®°å½•å›žè°ƒå‡½æ•°çš„æ‰§è¡Œæ—¶é—´ */
     SCM_DECODER_DST_LOG("SCM_DecoderDestReadCB: Call channel Func Proc time", ulDstChID, (ulTimerOut-ulTimerIn));
 
-    if (VOS_OK != BSP_SOCP_ReadDataDone(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize)))  /* Çå¿ÕÊý¾Ý */
+    if (VOS_OK != BSP_SOCP_ReadDataDone(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize)))  /* æ¸…ç©ºæ•°æ® */
     {
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Read Done is Error", ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Read Done is Error", ulDstChID, 0);/* è®°å½•Log */
     }
 
     /* make pclint happy */
@@ -1276,17 +1276,17 @@ VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
 
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_DecoderDstChannelInit
- ¹¦ÄÜÃèÊö  : ½«ACPUµÄ½âÂëÄ¿µÄÍ¨µÀµÄÅäÖÃ³õÊ¼»¯
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_DecoderDstChannelInit
+ åŠŸèƒ½æè¿°  : å°†ACPUçš„è§£ç ç›®çš„é€šé“çš„é…ç½®åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_DecoderDstChannelInit(VOS_VOID)
 {
@@ -1308,12 +1308,12 @@ VOS_UINT32 SCM_DecoderDstChannelInit(VOS_VOID)
 
         if (VOS_OK != BSP_SOCP_DecoderSetDestChan(g_astSCMDecoderDstCfg[i].enChannelID, &stChannel))
         {
-            g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+            g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
-        g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+        g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
         BSP_SOCP_RegisterReadCB((BSP_U32)g_astSCMDecoderDstCfg[i].enChannelID,(socp_read_cb)SCM_DecoderDestReadCB);
     }
@@ -1323,17 +1323,17 @@ VOS_UINT32 SCM_DecoderDstChannelInit(VOS_VOID)
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_DecoderSrcChannelInit
- ¹¦ÄÜÃèÊö  : ½«ACPU/CCPUµÄ±àÂëÔ´Í¨µÀµÄÅäÖÃÖØÖÃ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_DecoderSrcChannelInit
+ åŠŸèƒ½æè¿°  : å°†ACPU/CCPUçš„ç¼–ç æºé€šé“çš„é…ç½®é‡ç½®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_DecoderSrcChannelInit(VOS_VOID)
 {
@@ -1356,19 +1356,19 @@ VOS_UINT32 SCM_DecoderSrcChannelInit(VOS_VOID)
 
         if (VOS_OK != BSP_SOCP_DecoderSetSrcChanAttr(g_astSCMDecoderSrcCfg[i].enChannelID, &stChannel))
         {
-            g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+            g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
         if(VOS_OK != BSP_SOCP_Start(g_astSCMDecoderSrcCfg[i].enChannelID))
         {
-            g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_START_FAIL;  /* ¼ÇÂ¼Í¨µÀ¿ªÆôÅäÖÃ´íÎó */
+            g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_START_FAIL;  /* è®°å½•é€šé“å¼€å¯é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
-        g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+        g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
     }
 
     return VOS_OK;
@@ -1379,19 +1379,19 @@ VOS_UINT32 SCM_DecoderSrcChannelInit(VOS_VOID)
 
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_SendDecoderSrc
- ¹¦ÄÜÃèÊö  : ACPUµÄ½âÂëÔ´Í¨µÀµÄÊý¾Ý·¢ËÍº¯Êý
- ÊäÈë²ÎÊý  : enChanlID: ½âÂëÄ¿µÄÍ¨µÀID
-             pucSendDataVirt: ·¢ËÍÊý¾ÝµÄÐéµØÖ·
-             ulSendLen:       ·¢ËÍÊý¾ÝµÄ³¤¶È
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_SendDecoderSrc
+ åŠŸèƒ½æè¿°  : ACPUçš„è§£ç æºé€šé“çš„æ•°æ®å‘é€å‡½æ•°
+ è¾“å…¥å‚æ•°  : enChanlID: è§£ç ç›®çš„é€šé“ID
+             pucSendDataVirt: å‘é€æ•°æ®çš„è™šåœ°å€
+             ulSendLen:       å‘é€æ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 
 VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSendDataVirt, VOS_UINT32 ulSendLen)
@@ -1400,7 +1400,7 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
     VOS_UINT32                          ulCfgNum;
     VOS_UINT32                          ulResult;
 
-    /* ÅÐ¶ÏÊý¾ÝÖ¸ÕëºÍ³¤¶ÈµÄÕýÈ· */
+    /* åˆ¤æ–­æ•°æ®æŒ‡é’ˆå’Œé•¿åº¦çš„æ­£ç¡® */
     if ((VOS_NULL_PTR == pucSendDataVirt)||(0 == ulSendLen))
     {
         SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Input Para is Error", enChanlID, (VOS_UINT32)pucSendDataVirt);
@@ -1409,28 +1409,28 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
     }
 
     if (VOS_OK != SCM_FindChannelCfg(enChanlID, SCM_DECODER_SRC_NUM,
-                                (SCM_CHANNEL_CFG_HEAD *)g_astSCMDecoderSrcCfg, sizeof(SCM_DECODER_SRC_CFG_STRU), &ulCfgNum))/* ÅÐ¶ÏÍ¨µÀ²ÎÊý */
+                                (SCM_CHANNEL_CFG_HEAD *)g_astSCMDecoderSrcCfg, sizeof(SCM_DECODER_SRC_CFG_STRU), &ulCfgNum))/* åˆ¤æ–­é€šé“å‚æ•° */
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Find Channel is Error", enChanlID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Find Channel is Error", enChanlID, 0);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     SCM_DECODER_SRC_LOG("SCM_SendDecoderSrc: Send Decoder Data", enChanlID, ulSendLen);
 
     if (VOS_OK != BSP_SOCP_GetWriteBuff(enChanlID, &stRwBuf))
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Get Write Buffer is Error", enChanlID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Get Write Buffer is Error", enChanlID, 0);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ÅÐ¶ÏÊÇ·ñ»¹ÓÐ¿Õ¼ä */
+    /* åˆ¤æ–­æ˜¯å¦è¿˜æœ‰ç©ºé—´ */
     if (ulSendLen > (stRwBuf.u32Size + stRwBuf.u32RbSize))
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Buffer is Full", enChanlID, ulSendLen);/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Buffer is Full", enChanlID, ulSendLen);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     stRwBuf.pBuffer = (VOS_UINT8 *)VOS_UncacheMemPhyToVirt(stRwBuf.pBuffer,
@@ -1454,7 +1454,7 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
 
        ulResult = BSP_SOCP_WriteDone(enChanlID, ulSendLen);
     }
-    else if ((stRwBuf.pRbBuffer != VOS_NULL_PTR)&& (stRwBuf.u32RbSize != 0))    /* ¿Õ¼ä²»×ã£¬ÔòÐ´Èë»Ø¾íµØÖ· */
+    else if ((stRwBuf.pRbBuffer != VOS_NULL_PTR)&& (stRwBuf.u32RbSize != 0))    /* ç©ºé—´ä¸è¶³ï¼Œåˆ™å†™å…¥å›žå·åœ°å€ */
     {
         VOS_MemCpy(stRwBuf.pBuffer, pucSendDataVirt, stRwBuf.u32Size);
 
@@ -1466,13 +1466,13 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
     }
     else
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Buffer Info is Full", enChanlID, stRwBuf.u32RbSize);/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Buffer Info is Full", enChanlID, stRwBuf.u32RbSize);/* è®°å½•Log */
         ulResult = VOS_ERR;
     }
 
     if (VOS_OK != ulResult)
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Write Done is Error", enChanlID, stRwBuf.u32Size);/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Write Done is Error", enChanlID, stRwBuf.u32Size);/* è®°å½•Log */
         return VOS_ERR;
     }
 
@@ -1484,18 +1484,18 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
 #endif  /* SCM_ACORE */
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_AcpuChannelMemInit
- ¹¦ÄÜÃèÊö  : ½«ACPUµÄ±àÂëÔ´¡¢±àÂëÄ¿µÄ¡¢½âÂëÔ´¡¢½âÂëÄ¿µÄÍ¨µÀµÄÄÚ´æ³õÊ¼»¯£¬
-             º¯ÊýÊ§°Ü»á¸´Î»µ¥°å£¬²»ÐèÒªÊÍ·ÅÄÚ´æ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_AcpuChannelMemInit
+ åŠŸèƒ½æè¿°  : å°†ACPUçš„ç¼–ç æºã€ç¼–ç ç›®çš„ã€è§£ç æºã€è§£ç ç›®çš„é€šé“çš„å†…å­˜åˆå§‹åŒ–ï¼Œ
+             å‡½æ•°å¤±è´¥ä¼šå¤ä½å•æ¿ï¼Œä¸éœ€è¦é‡Šæ”¾å†…å­˜
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
 {
@@ -1503,24 +1503,24 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
     VOS_UINT_PTR                         ulPHYAddr;
 
 #ifdef SCM_ACORE
-    if (VOS_OK != SCM_CoderDstChanMemInit())/* ±àÂëÄ¿µÄÍ¨µÀÄÚ´æ³õÊ¼»¯ */
+    if (VOS_OK != SCM_CoderDstChanMemInit())/* ç¼–ç ç›®çš„é€šé“å†…å­˜åˆå§‹åŒ– */
     {
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 #if 0
 #if (RAT_MODE != RAT_GU)                /* Mutil Mode */
     for (i=0; i<SCM_DECODER_DST_NUM; i++)
     {
-        /* ÉêÇë½âÂëÄ¿µÄ¿Õ¼ä */
+        /* ç”³è¯·è§£ç ç›®çš„ç©ºé—´ */
         g_astSCMDecoderDstCfg[i].pucBuf = (VOS_UINT8*)VOS_UnCacheMemAlloc(g_astSCMDecoderDstCfg[i].ulBufLen, &ulPHYAddr);
 
-        /* ÉêÇë¿Õ¼ä´íÎó */
+        /* ç”³è¯·ç©ºé—´é”™è¯¯ */
         if (VOS_NULL_PTR == g_astSCMDecoderDstCfg[i].pucBuf)
         {
-            /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+            /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
             g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-            return VOS_ERR;   /* ·µ»Ø´íÎó */
+            return VOS_ERR;   /* è¿”å›žé”™è¯¯ */
         }
 
         g_astSCMDecoderDstCfg[i].pucBufPHY = (VOS_UINT8*)ulPHYAddr;
@@ -1528,16 +1528,16 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
 
     for(i=0; i<SCM_DECODER_SRC_NUM; i++)
     {
-        /* ÉêÇë½âÂëÔ´¿Õ¼ä */
+        /* ç”³è¯·è§£ç æºç©ºé—´ */
         g_astSCMDecoderSrcCfg[i].pucSrcBuf = (VOS_UINT8*)VOS_UnCacheMemAlloc(g_astSCMDecoderSrcCfg[i].ulSrcBufLen, &ulPHYAddr);
 
-        /* ÉêÇë¿Õ¼ä´íÎó */
+        /* ç”³è¯·ç©ºé—´é”™è¯¯ */
         if(VOS_NULL_PTR == g_astSCMDecoderSrcCfg[i].pucSrcBuf)
         {
-            /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+            /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
             g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-            return VOS_ERR; /* ·µ»Ø´íÎó */
+            return VOS_ERR; /* è¿”å›žé”™è¯¯ */
         }
 
         g_astSCMDecoderSrcCfg[i].pucSrcPHY = (VOS_UINT8*)ulPHYAddr;
@@ -1549,31 +1549,31 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
 
     for (i=0; i<SCM_CODER_SRC_NUM; i++)
     {
-        /* ÉêÇëBD¿Õ¼ä */
+        /* ç”³è¯·BDç©ºé—´ */
         g_astSCMCoderSrcCfg[i].pucSrcBuf = (VOS_UINT8*)VOS_UnCacheMemAlloc(g_astSCMCoderSrcCfg[i].ulSrcBufLen, &ulPHYAddr);
 
-        if (VOS_NULL_PTR == g_astSCMCoderSrcCfg[i].pucSrcBuf)/* ÉêÇëBD¿Õ¼ä´íÎó */
+        if (VOS_NULL_PTR == g_astSCMCoderSrcCfg[i].pucSrcBuf)/* ç”³è¯·BDç©ºé—´é”™è¯¯ */
         {
-            /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+            /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
             g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-            return VOS_ERR;/* ·µ»Ø´íÎó */
+            return VOS_ERR;/* è¿”å›žé”™è¯¯ */
         }
 
         g_astSCMCoderSrcCfg[i].pucSrcPHY = (VOS_UINT8*)ulPHYAddr;
 
         if (SOCP_ENCSRC_CHNMODE_LIST == g_astSCMCoderSrcCfg[i].enCHMode)
         {
-            /* ÉêÇëRD¿Õ¼ä */
+            /* ç”³è¯·RDç©ºé—´ */
             g_astSCMCoderSrcCfg[i].pucRDBuf = (VOS_UINT8*)VOS_UnCacheMemAlloc(g_astSCMCoderSrcCfg[i].ulRDBufLen, &ulPHYAddr);
 
-            /* ÉêÇëRD¿Õ¼ä´íÎó */
+            /* ç”³è¯·RDç©ºé—´é”™è¯¯ */
             if(VOS_NULL_PTR == g_astSCMCoderSrcCfg[i].pucRDBuf)
             {
-                /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+                /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
                 g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-                return VOS_ERR; /* ·µ»Ø´íÎó */
+                return VOS_ERR; /* è¿”å›žé”™è¯¯ */
             }
 
             g_astSCMCoderSrcCfg[i].pucRDPHY = (VOS_UINT8*)ulPHYAddr;
@@ -1584,26 +1584,26 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_ErrorChInfoSave
- ¹¦ÄÜÃèÊö  : ½«SOCPÍ¨µÀµÄÍ¨µÀÅäÖÃÊý¾Ý±£´æµ½ExcÎÄ¼þÖÐ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : pstData : ±£´æÊý¾ÝµÄÐÅÏ¢
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_ErrorChInfoSave
+ åŠŸèƒ½æè¿°  : å°†SOCPé€šé“çš„é€šé“é…ç½®æ•°æ®ä¿å­˜åˆ°Excæ–‡ä»¶ä¸­
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : pstData : ä¿å­˜æ•°æ®çš„ä¿¡æ¯
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 {
     VOS_UINT32                          ulDataLen;
     VOS_UINT8                          *pucData;
 
-    /* ¼ÆËãÐèÒª±£´æµÄÍ¨µÀÅäÖÃÐÅÏ¢´óÐ¡ */
+    /* è®¡ç®—éœ€è¦ä¿å­˜çš„é€šé“é…ç½®ä¿¡æ¯å¤§å° */
 #ifdef SCM_CCORE
-    /* ÐèÒª¶àÉêÇë4¸ö±êÖ¾Î» */
+    /* éœ€è¦å¤šç”³è¯·4ä¸ªæ ‡å¿—ä½ */
     ulDataLen = sizeof(g_astSCMCoderSrcCfg)+ sizeof(g_stSCMInfoData) + (2*sizeof(VOS_UINT32));
 #endif
 
@@ -1616,26 +1616,26 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
                 + sizeof(g_astSCMDecoderDstCfg)
                 + sizeof(g_astSCMDecoderSrcCfg)
                 + sizeof(g_stSCMInfoData)
-                + (5*sizeof(VOS_UINT32));        /* ÐèÒª¶àÉêÇë5¸ö±êÖ¾Î» */
+                + (5*sizeof(VOS_UINT32));        /* éœ€è¦å¤šç”³è¯·5ä¸ªæ ‡å¿—ä½ */
 #else                                       /* GU Single Mode */
     ulDataLen = sizeof(g_astSCMCoderDstCfg)
                 + sizeof(g_astSCMCoderSrcCfg)
                 + sizeof(g_stSCMInfoData)
-                + (3*sizeof(VOS_UINT32));        /* ÐèÒª¶àÉêÇë5¸ö±êÖ¾Î» */;
+                + (3*sizeof(VOS_UINT32));        /* éœ€è¦å¤šç”³è¯·5ä¸ªæ ‡å¿—ä½ */;
 #endif  /* (RAT_MODE != RAT_GU) */
 
 #endif  /* SCM_ACORE */
 
-    /* ÌîÐ´Êý¾ÝÐÅÏ¢ */
+    /* å¡«å†™æ•°æ®ä¿¡æ¯ */
     VOS_StrNCpy(pstData->aucName, "SCM CHCfg Info", EXCH_CB_NAME_SIZE);
 
-    /* ÉêÇëÄÚ´æ */
-    /*lint -e438 ÆÁ±ÎpucDataÃ»ÓÐÊ¹ÓÃµÄ´íÎó*/
+    /* ç”³è¯·å†…å­˜ */
+    /*lint -e438 å±è”½pucDataæ²¡æœ‰ä½¿ç”¨çš„é”™è¯¯*/
     pucData = (VOS_UINT8 *)VOS_CacheMemAlloc(ulDataLen);
 
     if (VOS_NULL_PTR == pucData)
     {
-        /* ÄÚ´æÉêÇëÊ§°Ü£¬Ö»±£Áô²¿·ÖÐÅÏ¢ */
+        /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œåªä¿ç•™éƒ¨åˆ†ä¿¡æ¯ */
         pstData->pucData    = (VOS_UINT8 *)g_astSCMCoderSrcCfg;
 
         pstData->ulDataLen  = sizeof(g_astSCMCoderSrcCfg);
@@ -1646,7 +1646,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 
         pstData->ulDataLen = ulDataLen;
 
-        /* ±£´æÍ¨µÀµÄLOGÐÅÏ¢ */
+        /* ä¿å­˜é€šé“çš„LOGä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -1655,7 +1655,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 
         pucData += sizeof(g_stSCMInfoData);
 
-        /* ±£´æ±àÂëÔ´Í¨µÀµÄÅäÖÃÐÅÏ¢ */
+        /* ä¿å­˜ç¼–ç æºé€šé“çš„é…ç½®ä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -1665,7 +1665,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
         pucData += sizeof(g_astSCMCoderSrcCfg);
 
 #ifdef SCM_ACORE
-        /* ±£´æ±àÂëÄ¿µÄÍ¨µÀµÄÅäÖÃÐÅÏ¢ */
+        /* ä¿å­˜ç¼–ç ç›®çš„é€šé“çš„é…ç½®ä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -1675,7 +1675,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
         pucData += sizeof(g_astSCMCoderDstCfg);
 
 #if (RAT_MODE != RAT_GU)                /* Mutil Mode */
-        /* ±£´æ½âÂëÄ¿µÄÍ¨µÀµÄÅäÖÃÐÅÏ¢ */
+        /* ä¿å­˜è§£ç ç›®çš„é€šé“çš„é…ç½®ä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -1684,7 +1684,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 
         pucData += sizeof(g_astSCMDecoderDstCfg);
 
-        /* ±£´æ½âÂë½âÂëÔ´Í¨µÀµÄÅäÖÃÐÅÏ¢ */
+        /* ä¿å­˜è§£ç è§£ç æºé€šé“çš„é…ç½®ä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -1694,24 +1694,24 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 
 #endif  /* SCM_ACORE */
     }
-    /*lint -e438 ÆÁ±ÎpucDataÃ»ÓÐÊ¹ÓÃµÄ´íÎó*/
+    /*lint -e438 å±è”½pucDataæ²¡æœ‰ä½¿ç”¨çš„é”™è¯¯*/
 
-    return;    /* ·µ»Ø£¬µ¥°åÂíÉÏÖØÆô²»ÐèÒªÊÍ·ÅÄÚ´æ */
+    return;    /* è¿”å›žï¼Œå•æ¿é©¬ä¸Šé‡å¯ä¸éœ€è¦é‡Šæ”¾å†…å­˜ */
 }
 
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_ChannelInit
- ¹¦ÄÜÃèÊö  : ½«SOCPÍ¨µÀµÄ³õÊ¼»¯
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_ChannelInit
+ åŠŸèƒ½æè¿°  : å°†SOCPé€šé“çš„åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_ChannelInit(VOS_VOID)
 {
@@ -1723,34 +1723,34 @@ VOS_UINT32 SCM_ChannelInit(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ×¢²áÒì³£ÐÅÏ¢±£´æ»Øµ÷ */
+    /* æ³¨å†Œå¼‚å¸¸ä¿¡æ¯ä¿å­˜å›žè°ƒ */
     DRV_EXCH_CUST_FUNC_REG((exchCBReg)SCM_ErrorChInfoSave);
 
 #ifdef SCM_ACORE
     if (VOS_OK != SCM_CoderDstChannelInit())
     {
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
 #if 0
 #if (RAT_MODE != RAT_GU)                /* Mutil Mode */
     if (VOS_OK != SCM_DecoderDstChannelInit())
     {
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
     if (VOS_OK != SCM_DecoderSrcChannelInit())
     {
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 #endif  /* (RAT_MODE != RAT_GU) */
 #endif
 
 #endif  /* SCM_ACORE */
 
-    if (VOS_OK != SCM_CoderSrcChannelInit()) /* ±àÂëÔ´Í¨µÀ³õÊ¼»¯ */
+    if (VOS_OK != SCM_CoderSrcChannelInit()) /* ç¼–ç æºé€šé“åˆå§‹åŒ– */
     {
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
 #ifdef SCM_CCORE
@@ -1761,17 +1761,17 @@ VOS_UINT32 SCM_ChannelInit(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_ChannelInfoShow
- ¹¦ÄÜÃèÊö  : ½«SOCPÍ¨µÀµÄÐÅÏ¢´òÓ¡µ½´®¿Ú
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_ChannelInfoShow
+ åŠŸèƒ½æè¿°  : å°†SOCPé€šé“çš„ä¿¡æ¯æ‰“å°åˆ°ä¸²å£
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID SCM_ChannelInfoShow(VOS_VOID)
 {
@@ -1790,17 +1790,17 @@ VOS_VOID SCM_ChannelInfoShow(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_CoderSrcCHShow
- ¹¦ÄÜÃèÊö  : ½«SOCP ±àÂëÔ´Í¨µÀµÄÐÅÏ¢´òÓ¡µ½´®¿Ú
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderSrcCHShow
+ åŠŸèƒ½æè¿°  : å°†SOCP ç¼–ç æºé€šé“çš„ä¿¡æ¯æ‰“å°åˆ°ä¸²å£
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID SCM_CoderSrcCHShow(VOS_UINT32 ulCfgNum)
 {
@@ -1823,17 +1823,17 @@ VOS_VOID SCM_CoderSrcCHShow(VOS_UINT32 ulCfgNum)
 #ifdef SCM_ACORE
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_CoderDstCHShow
- ¹¦ÄÜÃèÊö  : ½«SOCP ±àÂëÔ´Í¨µÀµÄÐÅÏ¢´òÓ¡µ½´®¿Ú
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderDstCHShow
+ åŠŸèƒ½æè¿°  : å°†SOCP ç¼–ç æºé€šé“çš„ä¿¡æ¯æ‰“å°åˆ°ä¸²å£
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID SCM_CoderDstCHShow(VOS_UINT32 ulCfgNum)
 {
@@ -1850,21 +1850,21 @@ VOS_VOID SCM_CoderDstCHShow(VOS_UINT32 ulCfgNum)
 #endif
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_StopAllSrcChan
- ¹¦ÄÜÃèÊö  : disable ËùÓÐCºË£¬HIFIÊ¹ÓÃµÄ±àÂëÔ´Í¨µÀ
- ÊäÈë²ÎÊý  : ulSrcChanID Í¨µÀID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2013Äê5ÔÂ2ÈÕ
-     ×÷    Õß  : j0174725s
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_StopAllSrcChan
+ åŠŸèƒ½æè¿°  : disable æ‰€æœ‰Cæ ¸ï¼ŒHIFIä½¿ç”¨çš„ç¼–ç æºé€šé“
+ è¾“å…¥å‚æ•°  : ulSrcChanID é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2013å¹´5æœˆ2æ—¥
+     ä½œ    è€…  : j0174725s
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID SCM_StopAllSrcChan(VOS_VOID)
 {
-    /* K3V3ÉÏ£¬Í¨µÀÈ¥Ê¹ÄÜÔÚM3Íê³É */
+    /* K3V3ä¸Šï¼Œé€šé“åŽ»ä½¿èƒ½åœ¨M3å®Œæˆ */
 #ifndef BSP_CONFIG_HI3630
     VOS_UINT32                          ulSrcChanID;
     VOS_UINT32                          ulNum;
@@ -1972,10 +1972,10 @@ VOS_VOID SCM_CheckSn(VOS_VOID)
     VOS_UINT32                          i;
     VOS_UINT8                           *pucData;
 
-    /* Ã°ÅÝÅÅÐò·¨ÏÈ½øÐÐÅÅÐò */
+    /* å†’æ³¡æŽ’åºæ³•å…ˆè¿›è¡ŒæŽ’åº */
     SCM_MaoPao(g_stSnCheck.aulSnBuf, g_stSnCheck.ulCount);
 
-    /* ¼ì²éÐòºÅÁ¬ÐøÐÔ */
+    /* æ£€æŸ¥åºå·è¿žç»­æ€§ */
     for(i = 0; i < SCM_SN_CHECK_THRESHOLD_VALUE; i++)
     {
         if (g_stSnCheck.aulSnBuf[i+1] != (g_stSnCheck.aulSnBuf[i] + 1))
@@ -1990,7 +1990,7 @@ VOS_VOID SCM_CheckSn(VOS_VOID)
         }
     }
 
-    /* ½«Ê£ÓàÊý¾ÝÒÆµ½bufferÇ°Ãæ */
+    /* å°†å‰©ä½™æ•°æ®ç§»åˆ°bufferå‰é¢ */
     VOS_MemCpy(g_stSnCheck.aulSnBuf, &g_stSnCheck.aulSnBuf[SCM_SN_CHECK_THRESHOLD_VALUE],
                    (SCM_SN_RECORD_BUF_SIZE-SCM_SN_CHECK_THRESHOLD_VALUE)*sizeof(VOS_UINT32));
 
@@ -2027,7 +2027,7 @@ VOS_VOID SCM_MsgSnRecord(SOCP_CODER_DST_ENUM_U32 enChanID, VOS_UINT8 *pucData, V
         pstHdlcEntity = &g_astSnCheckHdlcEntity[1];
     }
 
-    /* ¿ª¹Ø¿ª×Å£¬ÇÒNVÏî¼¤»î²Å×ö¼ÇÂ¼ */
+    /* å¼€å…³å¼€ç€ï¼Œä¸”NVé¡¹æ¿€æ´»æ‰åšè®°å½• */
     for ( i = 0; i < ulLen; i++ )
     {
         ucChar = (VOS_UINT8)pucData[i];
@@ -2036,13 +2036,13 @@ VOS_VOID SCM_MsgSnRecord(SOCP_CODER_DST_ENUM_U32 enChanID, VOS_UINT8 *pucData, V
 
         if ( HDLC_SUCC == ulResult )
         {
-            /* ÅÐ¶ÏÂëÁ÷ */
+            /* åˆ¤æ–­ç æµ */
             pucTem = (VOS_UINT8*)pstHdlcEntity->pucDecapBuff;
             ucSegSn = *(pucTem + OM_RL_DATATYPE_LEN + offsetof(OM_APP_MSG_SEG_EX_STRU, stMsgSeg.ucSegSn));
             ucCpuId = *(pucTem + OM_RL_DATATYPE_LEN + offsetof(OM_APP_MSG_SEG_EX_STRU, stSocpHdr.ucCPUID));
             pstOmAppHeader = (OM_APP_HEADER_STRU*)(pucTem + OM_RL_DATATYPE_LEN + sizeof(OM_APP_MSG_SEG_EX_STRU));
 
-            /* snºÅÖ»´æÔÚÓÚµÚÒ»Ö¡Êý¾ÝÖÐ */
+            /* snå·åªå­˜åœ¨äºŽç¬¬ä¸€å¸§æ•°æ®ä¸­ */
             if ((1 != ucSegSn ) || (OM_TOOL_CCPU_ID != ucCpuId))
             {
                 continue;
@@ -2050,7 +2050,7 @@ VOS_VOID SCM_MsgSnRecord(SOCP_CODER_DST_ENUM_U32 enChanID, VOS_UINT8 *pucData, V
 
             ucFuncType= (pstOmAppHeader->ucFuncType) & OM_FUNCID_VALUE_BITS;
 
-            /* funcType 45, 50 Îªµ×ÈíÏûÏ¢ */
+            /* funcType 45, 50 ä¸ºåº•è½¯æ¶ˆæ¯ */
             if ((OM_TRACE_FUNC != ucFuncType)
                 && (OM_AIR_FUNC != ucFuncType)
                 && (OM_TRANS_FUNC != ucFuncType)
@@ -2065,7 +2065,7 @@ VOS_VOID SCM_MsgSnRecord(SOCP_CODER_DST_ENUM_U32 enChanID, VOS_UINT8 *pucData, V
             }
             else
             {
-                /* °ÑsnÎª0¹ýÂËµô,´ÓSDTÉÏ¿´µ½trans ÓÐsnÎª0µÄ */
+                /* æŠŠsnä¸º0è¿‡æ»¤æŽ‰,ä»ŽSDTä¸Šçœ‹åˆ°trans æœ‰snä¸º0çš„ */
                 if(0 == pstOmAppHeader->ulSn)
                 {
                     continue;
@@ -2085,7 +2085,7 @@ VOS_VOID SCM_MsgSnRecord(SOCP_CODER_DST_ENUM_U32 enChanID, VOS_UINT8 *pucData, V
         }
         else if (HDLC_NOT_HDLC_FRAME == ulResult)
         {
-            /*²»ÊÇÍêÕû·ÖÖ¡,¼ÌÐøHDLC½â·â×°*/
+            /*ä¸æ˜¯å®Œæ•´åˆ†å¸§,ç»§ç»­HDLCè§£å°è£…*/
         }
         else
         {
@@ -2122,7 +2122,7 @@ VOS_VOID SCM_SocpSendDataToUDI(SOCP_CODER_DST_ENUM_U32 enChanID, VOS_UINT8 *pucV
         return;
     }
 
-    /*²ÎÊý¼ì²é*/
+    /*å‚æ•°æ£€æŸ¥*/
     SOCP_SEND_DATA_PARA_CHECK(pstDebugInfo, ulDataLen, pucVirData);
 
     PPM_GetSendDataLen(enChanID, ulDataLen, &ulSendDataLen, &enPhyport);
@@ -2133,20 +2133,20 @@ VOS_VOID SCM_SocpSendDataToUDI(SOCP_CODER_DST_ENUM_U32 enChanID, VOS_UINT8 *pucV
 
     ulResult = CPM_ComSend(enLogicPort, pucVirData, pucPHYData, ulSendDataLen);
 
-    /* Êý¾Ý½â·â×°£¬¼ì²éSNºÅÊÇ·ñÁ¬Ðø */
+    /* æ•°æ®è§£å°è£…ï¼Œæ£€æŸ¥SNå·æ˜¯å¦è¿žç»­ */
     SCM_MsgSnRecord(enChanID, pucVirData, ulSendDataLen);
 
-    if(CPM_SEND_ERR == ulResult)  /*µ±Ç°Í¨µÀÒÑ¾­·¢ËÍÊ§°Ü£¬µ÷ÓÃSOCPÍ¨µÀÎÞÊý¾Ý°áÔË*/
+    if(CPM_SEND_ERR == ulResult)  /*å½“å‰é€šé“å·²ç»å‘é€å¤±è´¥ï¼Œè°ƒç”¨SOCPé€šé“æ— æ•°æ®æ¬è¿*/
     {
         pstDebugInfo->ulUSBSendErrNum++;
         pstDebugInfo->ulUSBSendErrLen += ulSendDataLen;
     }
-    else if(CPM_SEND_FUNC_NULL == ulResult)   /*µ±Ç°Í¨µÀÒì³££¬ÈÓµôËùÓÐÊý¾Ý*/
+    else if(CPM_SEND_FUNC_NULL == ulResult)   /*å½“å‰é€šé“å¼‚å¸¸ï¼Œæ‰”æŽ‰æ‰€æœ‰æ•°æ®*/
     {
         pstDebugInfo->ulOmDiscardNum++;
         pstDebugInfo->ulOmDiscardLen += ulDataLen;
     }
-    else if(CPM_SEND_PARA_ERR == ulResult)   /* ·¢ËÍÊý¾Ý»ñÈ¡ÊµµØÖ·Òì³£ */
+    else if(CPM_SEND_PARA_ERR == ulResult)   /* å‘é€æ•°æ®èŽ·å–å®žåœ°å€å¼‚å¸¸ */
     {
         pstDebugInfo->ulOmGetVirtErr++;
         pstDebugInfo->ulOmGetVirtSendLen += ulDataLen;
@@ -2198,7 +2198,7 @@ VOS_UINT32 SCM_Init(VOS_VOID)
 #ifdef SCM_SNCHECK
     OM_TTL_STRU                         stMntnFlag;
 
-    /*¶ÁÈ¡SD LogÔÚNVÖÐµÄÅäÖÃ*/
+    /*è¯»å–SD Logåœ¨NVä¸­çš„é…ç½®*/
     if (NV_OK != NV_Read(en_NV_Ttl_ID, &stMntnFlag, sizeof(OM_TTL_STRU)))
     {
         LogPrint("\r\nSCM_Init:Read EncDst MNTN Flag Failed!\r\n");
@@ -2246,7 +2246,7 @@ VOS_UINT32 SCM_Init(VOS_VOID)
     }
 #endif
 
-    /* ½«OM SOCPÄ¿µÄÍ¨µÀ´¦Àíº¯Êý×¢²á¸øSCM */
+    /* å°†OM SOCPç›®çš„é€šé“å¤„ç†å‡½æ•°æ³¨å†Œç»™SCM */
     if (VOS_OK != SCM_RegCoderDestProc(SOCP_CODER_DST_OM_CNF, (SCM_CODERDESTFUCN)SCM_SocpSendDataToUDI))
     {
         LogPrint("SCM_Init:SCM_RegCoderDestProc Reg OM CNF Fail.\n");
@@ -2254,7 +2254,7 @@ VOS_UINT32 SCM_Init(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ½«OM SOCPÄ¿µÄÍ¨µÀ´¦Àíº¯Êý×¢²á¸øSCM */
+    /* å°†OM SOCPç›®çš„é€šé“å¤„ç†å‡½æ•°æ³¨å†Œç»™SCM */
     if (VOS_OK != SCM_RegCoderDestProc(SOCP_CODER_DST_OM_IND, (SCM_CODERDESTFUCN)SCM_SocpSendDataToUDI))
     {
         LogPrint("SCM_Init:SCM_RegCoderDestProc Reg OM IND Fail.\n");
@@ -2262,7 +2262,7 @@ VOS_UINT32 SCM_Init(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ×¢²á¸øSCMµÄÈí½âÂëÄ¿µÄ»Øµ÷£¬´¦ÀíOMÊý¾Ý */
+    /* æ³¨å†Œç»™SCMçš„è½¯è§£ç ç›®çš„å›žè°ƒï¼Œå¤„ç†OMæ•°æ® */
     if (VOS_OK != SCM_RegDecoderDestProc(SOCP_DECODER_DST_GUOM,(SCM_DECODERDESTFUCN)OMRL_RcvCnfChannel))
     {
         LogPrint("SCM_Init:SCM_RegDecoderDestProc Reg OMRL_RcvCnfChannel Fail.\n");
@@ -2270,7 +2270,7 @@ VOS_UINT32 SCM_Init(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ×¢²á¸øSCMµÄÈí½âÂëÄ¿µÄ»Øµ÷£¬´¦ÀíCBTÊý¾Ý */
+    /* æ³¨å†Œç»™SCMçš„è½¯è§£ç ç›®çš„å›žè°ƒï¼Œå¤„ç†CBTæ•°æ® */
     if (VOS_OK != SCM_RegDecoderDestProc(SOCP_DECODER_CBT,(SCM_DECODERDESTFUCN)OMRL_RcvCbtChannel))
     {
         LogPrint("SCM_Init:SCM_RegDecoderDestProc Reg OMRL_RcvCbtChannel Fail.\n");
@@ -2289,7 +2289,7 @@ VOS_UINT32 COMM_Init(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ³õÊ¼»¯ÎïÀíÍ¨µÀ */
+    /* åˆå§‹åŒ–ç‰©ç†é€šé“ */
     if (VOS_OK != PPM_InitPhyPort())
     {
         return VOS_ERR;
@@ -2304,7 +2304,7 @@ VOS_UINT32 COMM_Init(VOS_VOID)
 }
 #endif
 
-/*ÊÊÅäV9´úÂë¿ÉÎ¬¿É²â´ò×®£¬Òª±£Áô*/
+/*é€‚é…V9ä»£ç å¯ç»´å¯æµ‹æ‰“æ¡©ï¼Œè¦ä¿ç•™*/
 
 VOS_VOID SOCP_LogToFile(FILE *fp)
 {
@@ -2325,14 +2325,14 @@ VOS_UINT32 SOCP_GetDebugLogInfoLen(VOS_UINT32  ulType)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû   : BSP_SOCP_GetSrcChannelReg
+* å‡½ æ•° å   : BSP_SOCP_GetSrcChannelReg
 *
-* ¹¦ÄÜÃèÊö  : ¶ÁÈ¡Ö¸¶¨±àÂëÔ´Í¨µÀµÄ¼Ä´æÆ÷
-* ÊäÈë²ÎÊý  : ÎÞ
+* åŠŸèƒ½æè¿°  : è¯»å–æŒ‡å®šç¼–ç æºé€šé“çš„å¯„å­˜å™¨
+* è¾“å…¥å‚æ•°  : æ— 
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ   : ÎÞ
+* è¿” å›ž å€¼   : æ— 
 *****************************************************************************/
 VOS_VOID BSP_SOCP_GetEncSrcReg(VOS_UINT32 *pulData, VOS_UINT32 ulDataMax)
 {
@@ -2365,7 +2365,7 @@ extern "C" {
 /* lint +e767  */
 
 /* ****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 **************************************************************************** */
 #if (VOS_OS_VER == VOS_WIN32)       /* PC Stub */
 SCM_CODER_SRC_CFG_STRU      g_astSCMCoderSrcCfg[SCM_CODER_SRC_NUM]=
@@ -2455,52 +2455,52 @@ SCM_CODER_DEST_CFG_STRU     g_astSCMCoderDstCfg[SCM_CODER_DST_NUM]=
 
 #endif /* (VOS_OS_VER == VOS_WIN32) */
 
-SCM_INFODATA_STRU           g_stSCMInfoData;    /* ÓÃÓÚ±£´ælogÐÅÏ¢ */
+SCM_INFODATA_STRU           g_stSCMInfoData;    /* ç”¨äºŽä¿å­˜logä¿¡æ¯ */
 
-/* cºËµ¥¶À¸´Î»»Øµ÷º¯ÊýÖÐÐèÒª¹Ø±ÕµÄ±àÒëÔ´Í¨µÀ */
+/* cæ ¸å•ç‹¬å¤ä½å›žè°ƒå‡½æ•°ä¸­éœ€è¦å…³é—­çš„ç¼–è¯‘æºé€šé“ */
 #if (FEATURE_ON == FEATURE_SOCP_CHANNEL_REDUCE)
 SOCP_CODER_SRC_ENUM_U32     g_ulCloseSrcNum[] =
 {
-    SOCP_CODER_SRC_GU_OM2,          /* GU OMÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUBBP1,          /* GUBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUBBP2,          /* GUBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUDSP1,          /* GUDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUDSP2,          /* GUDSPÕï¶ÏÏûÏ¢ */
+    SOCP_CODER_SRC_GU_OM2,          /* GU OMè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUBBP1,          /* GUBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUBBP2,          /* GUBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUDSP1,          /* GUDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUDSP2,          /* GUDSPè¯Šæ–­æ¶ˆæ¯ */
 };
 
 #else
 SOCP_CODER_SRC_ENUM_U32     g_ulCloseSrcNum[] =
 {
-    SOCP_CODER_SRC_GU_OM2,          /* GU OMÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_RFU,             /* ±£Áô */
-    SOCP_CODER_SRC_HIFI,            /* GU HIFIÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_MUTIL_MEDIA1,    /* Ã½ÌåÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_MUTIL_MEDIA2,    /* Ã½ÌåÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_MCU1,            /* MCUÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_MCU2,            /* MCUÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LDSP1,           /* LDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LDSP2,           /* LDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP1,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP2,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP3,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP4,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP5,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP6,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP7,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP8,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_LBBP9,           /* LBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUBBP1,          /* GUBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUBBP2,          /* GUBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUDSP1,          /* GUDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_GUDSP2,          /* GUDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_TDDSP1,          /* TDDSPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_TDBBP1,          /* TDBBPÕï¶ÏÏûÏ¢ */
-    SOCP_CODER_SRC_TDBBP2,          /* TDBBPÕï¶ÏÏûÏ¢ */
+    SOCP_CODER_SRC_GU_OM2,          /* GU OMè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_RFU,             /* ä¿ç•™ */
+    SOCP_CODER_SRC_HIFI,            /* GU HIFIè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_MUTIL_MEDIA1,    /* åª’ä½“è¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_MUTIL_MEDIA2,    /* åª’ä½“è¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_MCU1,            /* MCUè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_MCU2,            /* MCUè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LDSP1,           /* LDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LDSP2,           /* LDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP1,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP2,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP3,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP4,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP5,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP6,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP7,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP8,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_LBBP9,           /* LBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUBBP1,          /* GUBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUBBP2,          /* GUBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUDSP1,          /* GUDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_GUDSP2,          /* GUDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_TDDSP1,          /* TDDSPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_TDBBP1,          /* TDBBPè¯Šæ–­æ¶ˆæ¯ */
+    SOCP_CODER_SRC_TDBBP2,          /* TDBBPè¯Šæ–­æ¶ˆæ¯ */
 };
 #endif
 unsigned long long g_astScmDmaMask = 0xffffffffULL;
 /*****************************************************************************
-  3 Íâ²¿ÒýÓÃÉùÃ÷
+  3 å¤–éƒ¨å¼•ç”¨å£°æ˜Ž
 *****************************************************************************/
 #ifdef SCM_CCORE
 	extern VOS_VOID Om_BbpDbgChanInit(VOS_VOID);
@@ -2509,24 +2509,24 @@ unsigned long long g_astScmDmaMask = 0xffffffffULL;
 extern VOS_VOID SOCP_Stop1SrcChan(VOS_UINT32 ulSrcChanID);
 
 /*****************************************************************************
-  4 º¯ÊýÊµÏÖ
+  4 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
-* º¯ Êý Ãû  : OM_Inner_Log
+* å‡½ æ•° å  : OM_Inner_Log
 *
-* ¹¦ÄÜÃèÊö  : ¼ÇÂ¼OMµÄÄÚ²¿logÊý¾Ý
+* åŠŸèƒ½æè¿°  : è®°å½•OMçš„å†…éƒ¨logæ•°æ®
 *
-* ÊäÈë²ÎÊý  :  pucStr       OMµÄÊä³ö×Ö·û´®ÐÅÏ¢
-               ulP1         ±£´æ²ÎÊý1
-               ulP2         ±£´æ²ÎÊý2
-               pstLogData   ±£´æÊý¾ÝµÄLog»º³åÇø
-               ulFileID     ±£´æÊý¾Ý²úÉúµÄÎÄ¼þ
-               lLineNo      ±£´æÊý¾Ý²úÉúµÄÐÐºÅ
+* è¾“å…¥å‚æ•°  :  pucStr       OMçš„è¾“å‡ºå­—ç¬¦ä¸²ä¿¡æ¯
+               ulP1         ä¿å­˜å‚æ•°1
+               ulP2         ä¿å­˜å‚æ•°2
+               pstLogData   ä¿å­˜æ•°æ®çš„Logç¼“å†²åŒº
+               ulFileID     ä¿å­˜æ•°æ®äº§ç”Ÿçš„æ–‡ä»¶
+               lLineNo      ä¿å­˜æ•°æ®äº§ç”Ÿçš„è¡Œå·
 *
-* Êä³ö²ÎÊý  : ÎÞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  :  ÎÞ
+* è¿” å›ž å€¼  :  æ— 
 *****************************************************************************/
 VOS_VOID OM_Inner_Log(VOS_CHAR *pucStr, VOS_UINT32 ulP1, VOS_UINT32 ulP2,
                           INNER_LOG_DATA_STRU *pstLogData ,VOS_UINT32 ulFileID, VOS_INT32 lLineNo)
@@ -2600,20 +2600,20 @@ VOS_UINT_PTR SCM_MemPhyToVirt(VOS_UINT8 *pucCurPhyAddr, VOS_UINT8 *pucPhyStart, 
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_MemVirtToPhy
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÊäÈëµÄÐéµØÖ·£¬¼ÆËã¶ÔÓ¦µÄÊµµØÖ·
- ÊäÈë²ÎÊý  : pucCurVirtAddr:  µ±Ç°ÐéµØÖ·
-             pucPhyStart: Í¨µÀÅäÖÃÄÚ´æÆðÊ¼µÄÊµµØÖ·
-             pucVirtStart:Í¨µÀÅäÖÃÄÚ´æÆðÊ¼µÄÐéµØÖ·
-             ulBufLen:    Í¨µÀÄÚ´æ¿Õ¼ä´óÐ¡
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_NULL: ×ª»»Ê§°Ü/other: ÐéµØÖ·µÄÖµ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_MemVirtToPhy
+ åŠŸèƒ½æè¿°  : æ ¹æ®è¾“å…¥çš„è™šåœ°å€ï¼Œè®¡ç®—å¯¹åº”çš„å®žåœ°å€
+ è¾“å…¥å‚æ•°  : pucCurVirtAddr:  å½“å‰è™šåœ°å€
+             pucPhyStart: é€šé“é…ç½®å†…å­˜èµ·å§‹çš„å®žåœ°å€
+             pucVirtStart:é€šé“é…ç½®å†…å­˜èµ·å§‹çš„è™šåœ°å€
+             ulBufLen:    é€šé“å†…å­˜ç©ºé—´å¤§å°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_NULL: è½¬æ¢å¤±è´¥/other: è™šåœ°å€çš„å€¼
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT_PTR SCM_MemVirtToPhy(VOS_UINT8 *pucCurVirtAddr, VOS_UINT8 *pucPhyStart, VOS_UINT8 *pucVirtStart, VOS_UINT32 ulBufLen)
 {
@@ -2625,19 +2625,19 @@ VOS_UINT_PTR SCM_MemVirtToPhy(VOS_UINT8 *pucCurVirtAddr, VOS_UINT8 *pucPhyStart,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_FindChannelCfg
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÍ¨µÀID²éÑ¯Í¨µÀÅäÖÃ±íµÄÎ»ÖÃ
- ÊäÈë²ÎÊý  : ulChannelID: ÐèÒª²éÑ¯µÄÍ¨µÀID
-             ulChNax:     Í¨µÀÅäÖÃ±í×î´óÖµ
-             pstCfg:      Í¨µÀÅäÖÃ±í
- Êä³ö²ÎÊý  : pulNum:      Í¨µÀÅäÖÃ±íµÄÎ»ÖÃ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_FindChannelCfg
+ åŠŸèƒ½æè¿°  : æ ¹æ®é€šé“IDæŸ¥è¯¢é€šé“é…ç½®è¡¨çš„ä½ç½®
+ è¾“å…¥å‚æ•°  : ulChannelID: éœ€è¦æŸ¥è¯¢çš„é€šé“ID
+             ulChNax:     é€šé“é…ç½®è¡¨æœ€å¤§å€¼
+             pstCfg:      é€šé“é…ç½®è¡¨
+ è¾“å‡ºå‚æ•°  : pulNum:      é€šé“é…ç½®è¡¨çš„ä½ç½®
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32  SCM_FindChannelCfg(VOS_UINT32           ulChannelID,
                                     VOS_UINT32              ulChMax,
@@ -2655,70 +2655,70 @@ VOS_UINT32  SCM_FindChannelCfg(VOS_UINT32           ulChannelID,
         {
             *pulNum = i;
 
-            return VOS_OK;/* ·µ»Ø³É¹¦ */
+            return VOS_OK;/* è¿”å›žæˆåŠŸ */
         }
 
         pstTmpCfg = (SCM_CHANNEL_CFG_HEAD *)((VOS_UINT8 *)pstTmpCfg + ulStruLen);
     }
 
-    return VOS_ERR;/* ·µ»ØÊ§°Ü */
+    return VOS_ERR;/* è¿”å›žå¤±è´¥ */
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_CoderSrcChannelCfg
- ¹¦ÄÜÃèÊö  : ½«ACPU/CCPUµÄ±àÂëÔ´Í¨µÀµÄÅäÖÃµ÷ÓÃSOCP½Ó¿ÚÅäÖÃµ½IP
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderSrcChannelCfg
+ åŠŸèƒ½æè¿°  : å°†ACPU/CCPUçš„ç¼–ç æºé€šé“çš„é…ç½®è°ƒç”¨SOCPæŽ¥å£é…ç½®åˆ°IP
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 SCM_CoderSrcChannelCfg(SCM_CODER_SRC_CFG_STRU *pstCfg)
 {
-    SOCP_CODER_SRC_CHAN_STRU               stChannle;      /* µ±Ç°Í¨µÀµÄÊôÐÔÐÅÏ¢ */
+    SOCP_CODER_SRC_CHAN_STRU               stChannle;      /* å½“å‰é€šé“çš„å±žæ€§ä¿¡æ¯ */
 
-    stChannle.u32DestChanID = (BSP_U32)pstCfg->enDstCHID;   /*  Ä¿±êÍ¨µÀID */
-    stChannle.eDataType     = pstCfg->enDataType;           /*  Êý¾ÝÀàÐÍ£¬Ö¸Ã÷Êý¾Ý·â×°Ð­Òé£¬ÓÃÓÚ¸´ÓÃ¶àÆ½Ì¨ */
-    stChannle.eMode         = pstCfg->enCHMode;             /*  Í¨µÀÊý¾ÝÄ£Ê½ */
-    stChannle.ePriority     = pstCfg->enCHLevel;            /*  Í¨µÀÓÅÏÈ¼¶ */
-    stChannle.u32BypassEn   = SOCP_HDLC_ENABLE;             /*  Í¨µÀbypassÊ¹ÄÜ */
-    stChannle.eDataTypeEn   = SOCP_DATA_TYPE_EN;            /*  Êý¾ÝÀàÐÍÊ¹ÄÜÎ» */
-    stChannle.eDebugEn      = SOCP_ENC_DEBUG_DIS;           /*  µ÷ÊÔÎ»Ê¹ÄÜ */
+    stChannle.u32DestChanID = (BSP_U32)pstCfg->enDstCHID;   /*  ç›®æ ‡é€šé“ID */
+    stChannle.eDataType     = pstCfg->enDataType;           /*  æ•°æ®ç±»åž‹ï¼ŒæŒ‡æ˜Žæ•°æ®å°è£…åè®®ï¼Œç”¨äºŽå¤ç”¨å¤šå¹³å° */
+    stChannle.eMode         = pstCfg->enCHMode;             /*  é€šé“æ•°æ®æ¨¡å¼ */
+    stChannle.ePriority     = pstCfg->enCHLevel;            /*  é€šé“ä¼˜å…ˆçº§ */
+    stChannle.u32BypassEn   = SOCP_HDLC_ENABLE;             /*  é€šé“bypassä½¿èƒ½ */
+    stChannle.eDataTypeEn   = SOCP_DATA_TYPE_EN;            /*  æ•°æ®ç±»åž‹ä½¿èƒ½ä½ */
+    stChannle.eDebugEn      = SOCP_ENC_DEBUG_DIS;           /*  è°ƒè¯•ä½ä½¿èƒ½ */
 
-    stChannle.sCoderSetSrcBuf.u32InputStart  = (VOS_UINT32)pstCfg->pucSrcPHY;                               /*  ÊäÈëÍ¨µÀÆðÊ¼µØÖ· */
-    stChannle.sCoderSetSrcBuf.u32InputEnd    = (VOS_UINT32)((pstCfg->pucSrcPHY + pstCfg->ulSrcBufLen)-1);   /*  ÊäÈëÍ¨µÀ½áÊøµØÖ· */
-    stChannle.sCoderSetSrcBuf.u32RDStart     = (VOS_UINT32)(pstCfg->pucRDPHY);                              /* RD bufferÆðÊ¼µØÖ· */
-    stChannle.sCoderSetSrcBuf.u32RDEnd       = (VOS_UINT32)((pstCfg->pucRDPHY + pstCfg->ulRDBufLen)-1);     /*  RD buffer½áÊøµØÖ· */
-    stChannle.sCoderSetSrcBuf.u32RDThreshold = SCM_CODER_SRC_RD_THRESHOLD;                                  /* RD bufferÊý¾ÝÉÏ±¨ãÐÖµ */
+    stChannle.sCoderSetSrcBuf.u32InputStart  = (VOS_UINT32)pstCfg->pucSrcPHY;                               /*  è¾“å…¥é€šé“èµ·å§‹åœ°å€ */
+    stChannle.sCoderSetSrcBuf.u32InputEnd    = (VOS_UINT32)((pstCfg->pucSrcPHY + pstCfg->ulSrcBufLen)-1);   /*  è¾“å…¥é€šé“ç»“æŸåœ°å€ */
+    stChannle.sCoderSetSrcBuf.u32RDStart     = (VOS_UINT32)(pstCfg->pucRDPHY);                              /* RD bufferèµ·å§‹åœ°å€ */
+    stChannle.sCoderSetSrcBuf.u32RDEnd       = (VOS_UINT32)((pstCfg->pucRDPHY + pstCfg->ulRDBufLen)-1);     /*  RD bufferç»“æŸåœ°å€ */
+    stChannle.sCoderSetSrcBuf.u32RDThreshold = SCM_CODER_SRC_RD_THRESHOLD;                                  /* RD bufferæ•°æ®ä¸ŠæŠ¥é˜ˆå€¼ */
 
     if (VOS_OK != DRV_SOCP_CORDER_SET_SRC_CHAN(pstCfg->enChannelID, &stChannle))
     {
-        SCM_CODER_SRC_ERR("SCM_CoderSrcChannelCfg: Search Channel ID Error", pstCfg->enChannelID, 0);/* ´òÓ¡Ê§°Ü */
+        SCM_CODER_SRC_ERR("SCM_CoderSrcChannelCfg: Search Channel ID Error", pstCfg->enChannelID, 0);/* æ‰“å°å¤±è´¥ */
 
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
-    pstCfg->enInitState = SCM_CHANNEL_INIT_SUCC; /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+    pstCfg->enInitState = SCM_CHANNEL_INIT_SUCC; /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-    return VOS_OK;/* ·µ»Ø³É¹¦ */
+    return VOS_OK;/* è¿”å›žæˆåŠŸ */
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_ResetCoderSrcChan
- ¹¦ÄÜÃèÊö  : ½«ACPU/CCPUµÄ±àÂëÔ´Í¨µÀµÄÅäÖÃÖØÖÃ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_ResetCoderSrcChan
+ åŠŸèƒ½æè¿°  : å°†ACPU/CCPUçš„ç¼–ç æºé€šé“çš„é…ç½®é‡ç½®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_ResetCoderSrcChan(SOCP_CODER_SRC_ENUM_U32 enChID)
 {
@@ -2727,17 +2727,17 @@ VOS_UINT32 SCM_ResetCoderSrcChan(SOCP_CODER_SRC_ENUM_U32 enChID)
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_CoderSrcChannelInit
- ¹¦ÄÜÃèÊö  : ½«ACPU/CCPUµÄ±àÂëÔ´Í¨µÀµÄÅäÖÃ³õÊ¼»¯
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderSrcChannelInit
+ åŠŸèƒ½æè¿°  : å°†ACPU/CCPUçš„ç¼–ç æºé€šé“çš„é…ç½®åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_CoderSrcChannelInit(VOS_VOID)
 {
@@ -2747,37 +2747,37 @@ VOS_UINT32 SCM_CoderSrcChannelInit(VOS_VOID)
     {
         if (VOS_OK != SCM_CoderSrcChannelCfg(&g_astSCMCoderSrcCfg[i]))
         {
-            g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+            g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
         if(VOS_OK != DRV_SOCP_START(g_astSCMCoderSrcCfg[i].enChannelID))
         {
-            g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_START_FAIL;  /* ¼ÇÂ¼Í¨µÀ¿ªÆôÅäÖÃ´íÎó */
+            g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_START_FAIL;  /* è®°å½•é€šé“å¼€å¯é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
-        g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+        g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
     }
 
-    return VOS_OK;/* ·µ»Ø³É¹¦ */
+    return VOS_OK;/* è¿”å›žæˆåŠŸ */
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_RlsSrcRDAll
- ¹¦ÄÜÃèÊö  : ½«±àÂëÔ´Í¨µÀµÄËùÓÐRDÄÚ´æ½øÐÐÊÍ·Å
- ÊäÈë²ÎÊý  : enChanlID: ±àÂëÔ´Í¨µÀID
- Êä³ö²ÎÊý  : pulDataPhyAddr: ±àÂëÔ´Í¨µÀ´ýÊÍ·ÅÊý¾ÝÊµµØÖ·Öµ
-             pulDataLen: ±àÂëÔ´Í¨µÀ´ýÊÍ·ÅÊý¾Ý³¤¶È
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_RlsSrcRDAll
+ åŠŸèƒ½æè¿°  : å°†ç¼–ç æºé€šé“çš„æ‰€æœ‰RDå†…å­˜è¿›è¡Œé‡Šæ”¾
+ è¾“å…¥å‚æ•°  : enChanlID: ç¼–ç æºé€šé“ID
+ è¾“å‡ºå‚æ•°  : pulDataPhyAddr: ç¼–ç æºé€šé“å¾…é‡Šæ”¾æ•°æ®å®žåœ°å€å€¼
+             pulDataLen: ç¼–ç æºé€šé“å¾…é‡Šæ”¾æ•°æ®é•¿åº¦
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDataPhyAddr, VOS_UINT32 *pulDataLen)
 {
@@ -2796,44 +2796,44 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
                                         SCM_CODER_SRC_NUM,
                                         (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderSrcCfg,
                                         sizeof(SCM_CODER_SRC_CFG_STRU),
-                                        &ulCfgNum))/* ÅÐ¶ÏÍ¨µÀ²ÎÊý */
+                                        &ulCfgNum))/* åˆ¤æ–­é€šé“å‚æ•° */
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Find Channel Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Find Channel Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     SCM_CODER_SRC_LOG("SCM_RlsSrcRDAll: Release Channel Data", enChanlID, 0);
 
     if (VOS_OK != DRV_SOCP_GET_RD_BUFFER(enChanlID, &stSrcChanRD))
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Get RD Info Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Get RD Info Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    if (VOS_NULL_PTR == stSrcChanRD.pBuffer)        /* ²ÎÊý´íÎó */
+    if (VOS_NULL_PTR == stSrcChanRD.pBuffer)        /* å‚æ•°é”™è¯¯ */
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: RD Info is Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: RD Info is Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    if ((0 == stSrcChanRD.u32Size) && (0 == stSrcChanRD.u32RbSize)) /* ÎÞÊý¾ÝÐèÒªÊÍ·Å */
+    if ((0 == stSrcChanRD.u32Size) && (0 == stSrcChanRD.u32RbSize)) /* æ— æ•°æ®éœ€è¦é‡Šæ”¾ */
     {
         *pDataPhyAddr   = 0;
         *pulDataLen     = 0;
 
-        return VOS_OK;/* ·µ»Ø³É¹¦ */
+        return VOS_OK;/* è¿”å›žæˆåŠŸ */
     }
 
-    /* RD¸öÊý»ñÈ¡·Ç·¨ */
+    /* RDä¸ªæ•°èŽ·å–éžæ³• */
     if(((stSrcChanRD.u32Size + stSrcChanRD.u32RbSize) / sizeof(SOCP_RD_DATA_STRU)) > SCM_CODE_SRC_RD_NUM)
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDFirst: Get RD Data Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDFirst: Get RD PTR Error", stSrcChanRD.u32Size, stSrcChanRD.u32RbSize);/* ¼ÇÂ¼Log */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDFirst: Get RD Data Error", enChanlID, 0);/* è®°å½•Log */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDFirst: Get RD PTR Error", stSrcChanRD.u32Size, stSrcChanRD.u32RbSize);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ¼ÆËãRD¸öÊý */
+    /* è®¡ç®—RDä¸ªæ•° */
     ulRDNum = stSrcChanRD.u32Size / sizeof(SOCP_RD_DATA_STRU);
 
     if (0 != ulRDNum)
@@ -2847,15 +2847,15 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
 #endif
         ulRDTotalNum = ulRDNum;
 
-        /* »ñÈ¡RDÊý¾ÝµÄµØÖ·ºÍ³¤¶È */
+        /* èŽ·å–RDæ•°æ®çš„åœ°å€å’Œé•¿åº¦ */
         pstRDData   = (SOCP_RD_DATA_STRU*)stSrcChanRD.pBuffer;
 
-        /* ¼ÇÂ¼µ±Ç°µÚÒ»¸öÊÍ·ÅµÄÊý¾ÝµØÖ·,ºóÃæÐèÒª·µ»Ø¸øÉÏ²ã */
+        /* è®°å½•å½“å‰ç¬¬ä¸€ä¸ªé‡Šæ”¾çš„æ•°æ®åœ°å€,åŽé¢éœ€è¦è¿”å›žç»™ä¸Šå±‚ */
         ulFirstAddr = pstRDData->pucData;
 
         for (i = 0; i < ulRDNum; i++)
         {
-            /* ÀÛ¼ÆRDÊý¾Ý³¤¶È */
+            /* ç´¯è®¡RDæ•°æ®é•¿åº¦ */
             ulTotalLen += pstRDData->usMsgLen;
 
             //pstRDData->usMsgLen = 0xffff;
@@ -2866,7 +2866,7 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
         }
     }
 
-    /* ¼ÆËã»Ø¾íRD¸öÊý */
+    /* è®¡ç®—å›žå·RDä¸ªæ•° */
     ulRDNum = stSrcChanRD.u32RbSize / sizeof(SOCP_RD_DATA_STRU);
 
     if (0 != ulRDNum)
@@ -2880,17 +2880,17 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
 #endif
         ulRDTotalNum += ulRDNum;
 
-        /* »ñÈ¡RDÊý¾Ý»Ø¾íµÄµØÖ·ºÍ³¤¶È */
+        /* èŽ·å–RDæ•°æ®å›žå·çš„åœ°å€å’Œé•¿åº¦ */
         pstRDData   = (SOCP_RD_DATA_STRU*)stSrcChanRD.pRbBuffer;
 
-        if (0 == ulFirstAddr)/* ¼ÇÂ¼µ±Ç°µÚÒ»¸öÊÍ·ÅµÄÊý¾ÝµØÖ·,ºóÃæÐèÒª·µ»Ø¸øÉÏ²ã */
+        if (0 == ulFirstAddr)/* è®°å½•å½“å‰ç¬¬ä¸€ä¸ªé‡Šæ”¾çš„æ•°æ®åœ°å€,åŽé¢éœ€è¦è¿”å›žç»™ä¸Šå±‚ */
         {
             ulFirstAddr = (VOS_UINT32)pstRDData->pucData;
         }
 
         for (i = 0; i < ulRDNum; i++)
         {
-            /* ÀÛ¼ÆRDÊý¾Ý³¤¶È */
+            /* ç´¯è®¡RDæ•°æ®é•¿åº¦ */
             ulTotalLen += pstRDData->usMsgLen;
 
 //            pstRDData->usMsgLen = 0;
@@ -2901,11 +2901,11 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
 
     if (VOS_OK != DRV_SOCP_READ_RD_DONE(enChanlID, (stSrcChanRD.u32Size+stSrcChanRD.u32RbSize)))
     {
-        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Write RD Done is Error", enChanlID, (stSrcChanRD.u32Size+stSrcChanRD.u32RbSize));/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        SCM_CODER_SRC_ERR("SCM_RlsSrcRDAll: Write RD Done is Error", enChanlID, (stSrcChanRD.u32Size+stSrcChanRD.u32RbSize));/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
-    /* »ñÈ¡µÄRD×î´óÖµ¼ÇÂ¼µ½È«¾Ö±äÁ¿ÖÐ */
+    /* èŽ·å–çš„RDæœ€å¤§å€¼è®°å½•åˆ°å…¨å±€å˜é‡ä¸­ */
     if (ulRDTotalNum > g_stSCMInfoData.aulRDUsedMax[ulCfgNum])
     {
         g_stSCMInfoData.aulRDUsedMax[ulCfgNum] = ulRDTotalNum;
@@ -2915,22 +2915,22 @@ VOS_UINT32 SCM_RlsSrcRDAll(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT_PTR *pDat
 
     *pulDataLen     = ulTotalLen;
 
-    return VOS_OK;/* ·µ»Ø³É¹¦ */
+    return VOS_OK;/* è¿”å›žæˆåŠŸ */
 }
 
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_GetBDFreeNum
- ¹¦ÄÜÃèÊö  : ²éÑ¯BDÊ£Óà¿Õ¼ä
- ÊäÈë²ÎÊý  : enChanlID: Í¨µÀID
- Êä³ö²ÎÊý  : pulBDNum:BDÊ£Óà¸öÊý
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_GetBDFreeNum
+ åŠŸèƒ½æè¿°  : æŸ¥è¯¢BDå‰©ä½™ç©ºé—´
+ è¾“å…¥å‚æ•°  : enChanlID: é€šé“ID
+ è¾“å‡ºå‚æ•°  : pulBDNum:BDå‰©ä½™ä¸ªæ•°
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_GetBDFreeNum(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT32 *pulBDNum)
 {
@@ -2939,40 +2939,40 @@ VOS_UINT32 SCM_GetBDFreeNum(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT32 *pulBD
     VOS_UINT32                          ulBDTotal;
     VOS_UINT32                          ulCfgNum;
 
-    /* ÅÐ¶ÏÖ¸ÕëµÄÕýÈ· */
+    /* åˆ¤æ–­æŒ‡é’ˆçš„æ­£ç¡® */
     if (VOS_NULL_PTR == pulBDNum)
     {
         return VOS_ERR;
     }
 
     if (VOS_OK != SCM_FindChannelCfg(enChanlID, SCM_CODER_SRC_NUM,
-                                (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderSrcCfg, sizeof(SCM_CODER_SRC_CFG_STRU), &ulCfgNum))/* ÅÐ¶ÏÍ¨µÀ²ÎÊý */
+                                (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderSrcCfg, sizeof(SCM_CODER_SRC_CFG_STRU), &ulCfgNum))/* åˆ¤æ–­é€šé“å‚æ•° */
     {
-        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Find Channel Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Find Channel Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     SCM_CODER_SRC_LOG("SCM_GetBDFreeNum: Get BD Number", enChanlID, 0);
 
     if (VOS_OK != DRV_SOCP_GET_WRITE_BUFF(enChanlID, &stRwBuf))
     {
-        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get Write Buffer Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get Write Buffer Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ¼ÆËãBDµÄÖµ */
+    /* è®¡ç®—BDçš„å€¼ */
     ulBDNum = (stRwBuf.u32Size + stRwBuf.u32RbSize) / sizeof(SOCP_BD_DATA_STRU);
 
-    /* BD¸öÊý»ñÈ¡·Ç·¨ */
+    /* BDä¸ªæ•°èŽ·å–éžæ³• */
     if(ulBDNum > SCM_CODE_SRC_BD_NUM)
     {
-        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get BD Data Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get BD PTR Error", stRwBuf.u32Size, stRwBuf.u32RbSize);/* ¼ÇÂ¼Log */
+        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get BD Data Error", enChanlID, 0);/* è®°å½•Log */
+        SCM_CODER_SRC_ERR("SCM_GetBDFreeNum: Get BD PTR Error", stRwBuf.u32Size, stRwBuf.u32RbSize);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ÖÁÉÙÒª±£ÁôÒ»¸ö¿ÕÏÐBD£¬±£Ö¤Í¨µÀ²»»á±»Ð´Âú¶øÒì³£ */
+    /* è‡³å°‘è¦ä¿ç•™ä¸€ä¸ªç©ºé—²BDï¼Œä¿è¯é€šé“ä¸ä¼šè¢«å†™æ»¡è€Œå¼‚å¸¸ */
     if (ulBDNum <= 1)
     {
         *pulBDNum = 0;
@@ -2982,10 +2982,10 @@ VOS_UINT32 SCM_GetBDFreeNum(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT32 *pulBD
         *pulBDNum = (ulBDNum - 1);
     }
 
-    /* ¼ÆËãÍ¨µÀÈ«²¿BDµÄ¸öÊý */
+    /* è®¡ç®—é€šé“å…¨éƒ¨BDçš„ä¸ªæ•° */
     ulBDTotal = g_astSCMCoderSrcCfg[ulCfgNum].ulSrcBufLen / sizeof(SOCP_BD_DATA_STRU);
 
-    /* ºÍÈ«¾Ö±äÁ¿ÖÐ±È½Ï¼ÇÂ¼×î´óÖµ */
+    /* å’Œå…¨å±€å˜é‡ä¸­æ¯”è¾ƒè®°å½•æœ€å¤§å€¼ */
     if ((ulBDTotal- ulBDNum) > g_stSCMInfoData.aulBDUsedMax[ulCfgNum])
     {
         g_stSCMInfoData.aulBDUsedMax[ulCfgNum] = (ulBDTotal- ulBDNum);
@@ -2995,19 +2995,19 @@ VOS_UINT32 SCM_GetBDFreeNum(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT32 *pulBD
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_SendCoderSrc
- ¹¦ÄÜÃèÊö  : Í¨¹ýSOCPµÄ±àÂëÔ´Í¨µÀ·¢ËÍÊý¾Ý
- ÊäÈë²ÎÊý  : enChanlID: Í¨µÀID
-             pucSendDataPhy:·¢ËÍÊý¾ÝÊµµØÖ·
-             ulSendLen: ·¢ËÍÊý¾Ý³¤¶È
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_SendCoderSrc
+ åŠŸèƒ½æè¿°  : é€šè¿‡SOCPçš„ç¼–ç æºé€šé“å‘é€æ•°æ®
+ è¾“å…¥å‚æ•°  : enChanlID: é€šé“ID
+             pucSendDataPhy:å‘é€æ•°æ®å®žåœ°å€
+             ulSendLen: å‘é€æ•°æ®é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSendDataPhy, VOS_UINT32 ulSendLen)
 {
@@ -3016,7 +3016,7 @@ VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSen
     VOS_UINT32                          ulCfgNum;
     SOCP_BD_DATA_STRU                   stBDData;
 
-    /* ÅÐ¶ÏÊý¾ÝÖ¸ÕëºÍ³¤¶ÈµÄÕýÈ·£¬³¤¶È²»ÄÜ´óÓÚ16K */
+    /* åˆ¤æ–­æ•°æ®æŒ‡é’ˆå’Œé•¿åº¦çš„æ­£ç¡®ï¼Œé•¿åº¦ä¸èƒ½å¤§äºŽ16K */
     if ((VOS_NULL_PTR == pucSendDataPhy)
         ||(0 == ulSendLen)
         ||(SCM_CODER_SRC_MAX_LEN < ulSendLen))
@@ -3026,27 +3026,27 @@ VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSen
 
     if (VOS_OK != SCM_FindChannelCfg(enChanlID, SCM_CODER_SRC_NUM,
                                      (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderSrcCfg,
-                                     sizeof(SCM_CODER_SRC_CFG_STRU), &ulCfgNum))/* ÅÐ¶ÏÍ¨µÀ²ÎÊý */
+                                     sizeof(SCM_CODER_SRC_CFG_STRU), &ulCfgNum))/* åˆ¤æ–­é€šé“å‚æ•° */
     {
-        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Find Channel Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Find Channel Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     SCM_CODER_SRC_LOG("SCM_SendCoderSrc: Get BD Number", enChanlID, 0);
 
     if (VOS_OK != DRV_SOCP_GET_WRITE_BUFF(g_astSCMCoderSrcCfg[ulCfgNum].enChannelID, &stRwBuf))
     {
-        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Get Write Buffer Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Get Write Buffer Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ¼ÆËã¿ÕÏÐBDµÄÖµ */
+    /* è®¡ç®—ç©ºé—²BDçš„å€¼ */
     ulBDNum = (stRwBuf.u32Size + stRwBuf.u32RbSize) / sizeof(SOCP_BD_DATA_STRU);
 
-    /* ÅÐ¶ÏÊÇ·ñ»¹ÓÐ¿Õ¼ä */
+    /* åˆ¤æ–­æ˜¯å¦è¿˜æœ‰ç©ºé—´ */
     if (1 >= ulBDNum)
     {
-        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Buffer is Full", enChanlID, ulBDNum);/* ¼ÇÂ¼Log */
+        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Buffer is Full", enChanlID, ulBDNum);/* è®°å½•Log */
         return VOS_ERR;
     }
 
@@ -3059,17 +3059,17 @@ VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSen
     stBDData.usMsgLen   = (VOS_UINT16)ulSendLen;
     stBDData.enDataType = SOCP_BD_DATA;
 
-    VOS_MemCpy(stRwBuf.pBuffer, &stBDData, sizeof(stBDData));    /* ¸´ÖÆÊý¾Ýµ½Ö¸¶¨µÄµØÖ· */
+    VOS_MemCpy(stRwBuf.pBuffer, &stBDData, sizeof(stBDData));    /* å¤åˆ¶æ•°æ®åˆ°æŒ‡å®šçš„åœ°å€ */
 
 #ifdef SCM_CCORE
 	SCM_FLUSH_CACHE(stRwBuf.pBuffer,sizeof(stBDData));
 #endif
 	//SCM_FLUSH_CACHE(pucSendData,ulSendLen);
 
-    if (VOS_OK != DRV_SOCP_WRITE_DONE(enChanlID, sizeof(stBDData)))   /* µ±Ç°Êý¾ÝÐ´ÈëÍê±Ï */
+    if (VOS_OK != DRV_SOCP_WRITE_DONE(enChanlID, sizeof(stBDData)))   /* å½“å‰æ•°æ®å†™å…¥å®Œæ¯• */
     {
-        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Write Buffer is Error", enChanlID, 0);/* ¼ÇÂ¼Log */
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        SCM_CODER_SRC_ERR("SCM_SendCoderSrc: Write Buffer is Error", enChanlID, 0);/* è®°å½•Log */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     return VOS_OK;
@@ -3078,17 +3078,17 @@ VOS_UINT32 SCM_SendCoderSrc(SOCP_CODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSen
 #ifdef SCM_ACORE
 /* log2.0 2014-03-19 Begin:*/
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_ChangeCoderDstChanCfg
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝSD¿¨±£´æLogµÄNVÅäÖÃ£¬¸üÐÂ±àÂëÄ¿µÄÍ¨µÀµÄÅäÖÃ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2013Äê8ÔÂ20ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_ChangeCoderDstChanCfg
+ åŠŸèƒ½æè¿°  : æ ¹æ®SDå¡ä¿å­˜Logçš„NVé…ç½®ï¼Œæ›´æ–°ç¼–ç ç›®çš„é€šé“çš„é…ç½®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2013å¹´8æœˆ20æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_VOID SCM_ChangeCoderDstChanCfg(VOS_VOID)
 {
@@ -3127,29 +3127,29 @@ VOS_VOID SCM_ChangeCoderDstChanCfg(VOS_VOID)
 /* log2.0 2014-03-19 End:*/
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_RlsDestBuf
- ¹¦ÄÜÃèÊö  : ´¦ÀíÄ¿µÄÍ¨µÀµÄÊý¾ÝÊÍ·Å
- ÊäÈë²ÎÊý  : ulChanlID Ä¿µÄÍ¨µÀID
-             ulReadSize Êý¾Ý´óÐ¡
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_RlsDestBuf
+ åŠŸèƒ½æè¿°  : å¤„ç†ç›®çš„é€šé“çš„æ•°æ®é‡Šæ”¾
+ è¾“å…¥å‚æ•°  : ulChanlID ç›®çš„é€šé“ID
+             ulReadSize æ•°æ®å¤§å°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_RlsDestBuf(VOS_UINT32 ulChanlID, VOS_UINT32 ulReadSize)
 {
     VOS_UINT32                          ulDataLen;
     SOCP_BUFFER_RW_STRU                    stBuffer;
 
-    if(0 == ulReadSize) /*ÊÍ·ÅÍ¨µÀËùÓÐÊý¾Ý*/
+    if(0 == ulReadSize) /*é‡Šæ”¾é€šé“æ‰€æœ‰æ•°æ®*/
     {
         if (VOS_OK != DRV_SOCP_GET_READ_BUFF(ulChanlID, &stBuffer))
         {
-            SCM_CODER_DST_ERR("SCM_RlsDestBuf: Get Read Buffer is Error", (VOS_UINT)ulChanlID, (VOS_UINT)0);/* ¼ÇÂ¼Log */
+            SCM_CODER_DST_ERR("SCM_RlsDestBuf: Get Read Buffer is Error", (VOS_UINT)ulChanlID, (VOS_UINT)0);/* è®°å½•Log */
             return VOS_ERR;
         }
 
@@ -3159,7 +3159,7 @@ VOS_UINT32 SCM_RlsDestBuf(VOS_UINT32 ulChanlID, VOS_UINT32 ulReadSize)
     }
     else
     {
-        /* ¼ÇÂ¼µ÷ÓÃÊ±¼ä */
+        /* è®°å½•è°ƒç”¨æ—¶é—´ */
         SCM_CODER_DST_LOG("SCM_RlsDestBuf: Relese Read Data", (VOS_UINT)ulChanlID, (VOS_UINT)ulReadSize);
 
         ulDataLen = ulReadSize;
@@ -3167,7 +3167,7 @@ VOS_UINT32 SCM_RlsDestBuf(VOS_UINT32 ulChanlID, VOS_UINT32 ulReadSize)
 
     if (VOS_OK != DRV_SOCP_READ_DATA_DONE(ulChanlID, ulDataLen))
     {
-        SCM_CODER_DST_ERR("SCM_RlsDestBuf: Read Data Done is Error", (VOS_UINT)ulChanlID, (VOS_UINT)ulDataLen);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_RlsDestBuf: Read Data Done is Error", (VOS_UINT)ulChanlID, (VOS_UINT)ulDataLen);/* è®°å½•Log */
 
         return VOS_ERR;
     }
@@ -3176,17 +3176,17 @@ VOS_UINT32 SCM_RlsDestBuf(VOS_UINT32 ulChanlID, VOS_UINT32 ulReadSize)
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_CoderDestReadCB
- ¹¦ÄÜÃèÊö  : ´¦Àí±àÂëÄ¿µÄÍ¨µÀµÄÊý¾Ý
- ÊäÈë²ÎÊý  : ulDstChID Ä¿µÄÍ¨µÀID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderDestReadCB
+ åŠŸèƒ½æè¿°  : å¤„ç†ç¼–ç ç›®çš„é€šé“çš„æ•°æ®
+ è¾“å…¥å‚æ•°  : ulDstChID ç›®çš„é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
 {
@@ -3200,22 +3200,22 @@ VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
 
     if (SOCP_CODER_DEST_CHAN != ulChType)
     {
-        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Channel Type is Error", (VOS_UINT)ulDstChID, (VOS_UINT)ulChType);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Channel Type is Error", (VOS_UINT)ulDstChID, (VOS_UINT)ulChType);/* è®°å½•Log */
         return;
     }
 
     if (VOS_OK != DRV_SOCP_GET_READ_BUFF(ulDstChID, &stBuffer))
     {
-        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Get Read Buffer is Error", (VOS_UINT)ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Get Read Buffer is Error", (VOS_UINT)ulDstChID, 0);/* è®°å½•Log */
         return;
     }
 
     if (VOS_OK != SCM_FindChannelCfg(ulDstChID, SCM_CODER_DST_NUM,
                                 (SCM_CHANNEL_CFG_HEAD *)g_astSCMCoderDstCfg, sizeof(SCM_CODER_DEST_CFG_STRU), &ulCfgNum))
     {
-        DRV_SOCP_READ_DATA_DONE(ulDstChID, stBuffer.u32Size + stBuffer.u32RbSize);  /* Çå¿ÕÊý¾Ý */
+        DRV_SOCP_READ_DATA_DONE(ulDstChID, stBuffer.u32Size + stBuffer.u32RbSize);  /* æ¸…ç©ºæ•°æ® */
 
-        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Find Channel is Error", (VOS_UINT)ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Find Channel is Error", (VOS_UINT)ulDstChID, 0);/* è®°å½•Log */
 
         return;
     }
@@ -3223,17 +3223,17 @@ VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
     if ((VOS_NULL_PTR == g_astSCMCoderDstCfg[ulCfgNum].pfunc)
         || (0 == (stBuffer.u32Size + stBuffer.u32RbSize)))
     {
-        DRV_SOCP_READ_DATA_DONE(ulDstChID, stBuffer.u32Size + stBuffer.u32RbSize);  /* Çå¿ÕÊý¾Ý */
+        DRV_SOCP_READ_DATA_DONE(ulDstChID, stBuffer.u32Size + stBuffer.u32RbSize);  /* æ¸…ç©ºæ•°æ® */
 
         if(VOS_NULL_PTR == g_astSCMCoderDstCfg[ulCfgNum].pfunc)
         {
-            SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Channel Callback Fucn is NULL", (VOS_UINT)ulDstChID,(VOS_UINT)0);/* ¼ÇÂ¼Log */
+            SCM_CODER_DST_ERR("SCM_CoderDestReadCB: Channel Callback Fucn is NULL", (VOS_UINT)ulDstChID,(VOS_UINT)0);/* è®°å½•Log */
         }
 
         return;
     }
 
-    if (0 != stBuffer.u32Size)   /* ·¢ËÍÊý¾Ý */
+    if (0 != stBuffer.u32Size)   /* å‘é€æ•°æ® */
     {
         ulTimerIn = OM_GetSlice();
 
@@ -3251,7 +3251,7 @@ VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
 
         ulTimerOut = OM_GetSlice();
 
-        /* ¼ÇÂ¼»Øµ÷º¯ÊýµÄÖ´ÐÐÊ±¼ä */
+        /* è®°å½•å›žè°ƒå‡½æ•°çš„æ‰§è¡Œæ—¶é—´ */
         SCM_CODER_DST_LOG("SCM_CoderDestReadCB: Call channel Func Proc time", (VOS_UINT)ulDstChID, (VOS_UINT)(ulTimerIn-ulTimerOut));
     }
 
@@ -3259,17 +3259,17 @@ VOS_VOID SCM_CoderDestReadCB(VOS_UINT32 ulDstChID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_CoderDstChannelInit
- ¹¦ÄÜÃèÊö  : ½«ACPUµÄ±àÂëÄ¿µÄÍ¨µÀµÄÅäÖÃÖØÖÃ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderDstChannelInit
+ åŠŸèƒ½æè¿°  : å°†ACPUçš„ç¼–ç ç›®çš„é€šé“çš„é…ç½®é‡ç½®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 SCM_CoderDstChannelInit(VOS_VOID)
 {
@@ -3289,12 +3289,12 @@ VOS_UINT32 SCM_CoderDstChannelInit(VOS_VOID)
 
         if (VOS_OK != DRV_SOCP_CODER_SET_DEST_CHAN_ATTR(g_astSCMCoderDstCfg[i].enChannelID, &stChannel))
         {
-            g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+            g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
-        g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+        g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
         DRV_SOCP_REGISTER_READ_CB((BSP_U32)g_astSCMCoderDstCfg[i].enChannelID, (socp_read_cb)SCM_CoderDestReadCB);
     }
@@ -3304,18 +3304,18 @@ VOS_UINT32 SCM_CoderDstChannelInit(VOS_VOID)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_RegCoderDestProc
- ¹¦ÄÜÃèÊö  : ACPUµÄ±àÂëÄ¿µÄÍ¨µÀµÄ»Øµ÷º¯Êý×¢²á½Ó¿Ú
- ÊäÈë²ÎÊý  : enChanlID: ½âÂëÄ¿µÄÍ¨µÀID
-             func: »Øµ÷º¯ÊýÖ¸Õë
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_RegCoderDestProc
+ åŠŸèƒ½æè¿°  : ACPUçš„ç¼–ç ç›®çš„é€šé“çš„å›žè°ƒå‡½æ•°æ³¨å†ŒæŽ¥å£
+ è¾“å…¥å‚æ•°  : enChanlID: è§£ç ç›®çš„é€šé“ID
+             func: å›žè°ƒå‡½æ•°æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
 VOS_UINT32 SCM_RegCoderDestProc(SOCP_CODER_DST_ENUM_U32 enChanlID, SCM_CODERDESTFUCN func)
@@ -3330,27 +3330,27 @@ VOS_UINT32 SCM_RegCoderDestProc(SOCP_CODER_DST_ENUM_U32 enChanlID, SCM_CODERDEST
     {
         SCM_CODER_DST_ERR("SCM_RegCoderDestProc: Find Channeld is Error", (VOS_UINT)enChanlID, 0);
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     g_astSCMCoderDstCfg[ulCgfNum].pfunc = func;
 
-    return VOS_OK;/* ·µ»Ø³É¹¦ */
+    return VOS_OK;/* è¿”å›žæˆåŠŸ */
 }
 
 #if (RAT_MODE != RAT_GU)                /* Mutil Mode */
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_DecoderDestReadCB
- ¹¦ÄÜÃèÊö  : ´¦Àí½âÂëÄ¿µÄÍ¨µÀµÄÊý¾Ý
- ÊäÈë²ÎÊý  : ulDstChID Ä¿µÄÍ¨µÀID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_DecoderDestReadCB
+ åŠŸèƒ½æè¿°  : å¤„ç†è§£ç ç›®çš„é€šé“çš„æ•°æ®
+ è¾“å…¥å‚æ•°  : ulDstChID ç›®çš„é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 
 VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
@@ -3365,22 +3365,22 @@ VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
 
     if (SOCP_DECODER_DEST_CHAN != ulChType)
     {
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Type is Error", (VOS_UINT)ulDstChID, (VOS_UINT)ulChType);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Type is Error", (VOS_UINT)ulDstChID, (VOS_UINT)ulChType);/* è®°å½•Log */
         return;
     }
 
     if (VOS_OK != DRV_SOCP_GET_READ_BUFF(ulDstChID, &stBuffer))
     {
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Get Read Buffer is Error", (VOS_UINT)ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Get Read Buffer is Error", (VOS_UINT)ulDstChID, 0);/* è®°å½•Log */
         return;
     }
 
     if (VOS_OK != SCM_FindChannelCfg(ulDstChID, SCM_DECODER_DST_NUM,
                                 (SCM_CHANNEL_CFG_HEAD *)g_astSCMDecoderDstCfg, sizeof(SCM_DECODER_DEST_CFG_STRU), &ulCfgNum))
     {
-        DRV_SOCP_READ_DATA_DONE(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize));  /* Çå¿ÕÊý¾Ý */
+        DRV_SOCP_READ_DATA_DONE(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize));  /* æ¸…ç©ºæ•°æ® */
 
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Find Channel is Error", (VOS_UINT)ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Find Channel is Error", (VOS_UINT)ulDstChID, 0);/* è®°å½•Log */
 
         return;
     }
@@ -3388,9 +3388,9 @@ VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
     if ((VOS_NULL_PTR == g_astSCMDecoderDstCfg[ulCfgNum].pfunc)
         || (0 == (stBuffer.u32Size + stBuffer.u32RbSize)))
     {
-        DRV_SOCP_READ_DATA_DONE(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize));  /* Çå¿ÕÊý¾Ý */
+        DRV_SOCP_READ_DATA_DONE(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize));  /* æ¸…ç©ºæ•°æ® */
 
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Callback Func or Data is NULL", (VOS_UINT)ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Callback Func or Data is NULL", (VOS_UINT)ulDstChID, 0);/* è®°å½•Log */
 
         return;
     }
@@ -3414,7 +3414,7 @@ VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
 	{
 		SCM_INVALID_CACHE(stBuffer.pRbBuffer, stBuffer.u32RbSize);
 	}
-    ulTimerIn = OM_GetSlice();/* [false alarm]:ÆÁ±ÎFortify */
+    ulTimerIn = OM_GetSlice();/* [false alarm]:å±è”½Fortify */
 
     g_astSCMDecoderDstCfg[ulCfgNum].pfunc(ulDstChID,
                                           (VOS_UINT8*)stBuffer.pBuffer,
@@ -3422,31 +3422,31 @@ VOS_VOID SCM_DecoderDestReadCB(VOS_UINT32 ulDstChID)
                                           (VOS_UINT8*)stBuffer.pRbBuffer,
                                           stBuffer.u32RbSize);
 
-    ulTimerOut = OM_GetSlice();/* [false alarm]:ÆÁ±ÎFortify */
+    ulTimerOut = OM_GetSlice();/* [false alarm]:å±è”½Fortify */
 
-    /* ¼ÇÂ¼»Øµ÷º¯ÊýµÄÖ´ÐÐÊ±¼ä */
+    /* è®°å½•å›žè°ƒå‡½æ•°çš„æ‰§è¡Œæ—¶é—´ */
     SCM_DECODER_DST_LOG("SCM_DecoderDestReadCB: Call channel Func Proc time", (VOS_UINT)ulDstChID, (ulTimerIn-ulTimerOut));
 
-    if (VOS_OK != DRV_SOCP_READ_DATA_DONE(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize)))  /* Çå¿ÕÊý¾Ý */
+    if (VOS_OK != DRV_SOCP_READ_DATA_DONE(ulDstChID, (stBuffer.u32Size + stBuffer.u32RbSize)))  /* æ¸…ç©ºæ•°æ® */
     {
-        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Read Done is Error", (VOS_UINT)ulDstChID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_DST_ERR("SCM_DecoderDestReadCB: Channel Read Done is Error", (VOS_UINT)ulDstChID, 0);/* è®°å½•Log */
     }
 
     return;
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_DecoderDstChannelInit
- ¹¦ÄÜÃèÊö  : ½«ACPUµÄ½âÂëÄ¿µÄÍ¨µÀµÄÅäÖÃ³õÊ¼»¯
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_DecoderDstChannelInit
+ åŠŸèƒ½æè¿°  : å°†ACPUçš„è§£ç ç›®çš„é€šé“çš„é…ç½®åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_DecoderDstChannelInit(VOS_VOID)
 {
@@ -3468,12 +3468,12 @@ VOS_UINT32 SCM_DecoderDstChannelInit(VOS_VOID)
 
         if (VOS_OK != DRV_SOCP_DECODER_SET_DEST_CHAN(g_astSCMDecoderDstCfg[i].enChannelID, &stChannel))
         {
-            g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+            g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
-        g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+        g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
         DRV_SOCP_REGISTER_READ_CB((BSP_U32)g_astSCMDecoderDstCfg[i].enChannelID,(socp_read_cb)SCM_DecoderDestReadCB);
     }
@@ -3483,17 +3483,17 @@ VOS_UINT32 SCM_DecoderDstChannelInit(VOS_VOID)
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_CoderSrcChannelReset
- ¹¦ÄÜÃèÊö  : ½«ACPU/CCPUµÄ±àÂëÔ´Í¨µÀµÄÅäÖÃÖØÖÃ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderSrcChannelReset
+ åŠŸèƒ½æè¿°  : å°†ACPU/CCPUçš„ç¼–ç æºé€šé“çš„é…ç½®é‡ç½®
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_DecoderSrcChannelInit(VOS_VOID)
 {
@@ -3516,19 +3516,19 @@ VOS_UINT32 SCM_DecoderSrcChannelInit(VOS_VOID)
 
         if (VOS_OK != DRV_SOCP_DECODER_SET_SRC_CHAN_ATTR(g_astSCMDecoderSrcCfg[i].enChannelID, &stChannel))
         {
-            g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+            g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_CFG_FAIL;  /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
         if(VOS_OK != DRV_SOCP_START(g_astSCMDecoderSrcCfg[i].enChannelID))
         {
-            g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_START_FAIL;  /* ¼ÇÂ¼Í¨µÀ¿ªÆôÅäÖÃ´íÎó */
+            g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_START_FAIL;  /* è®°å½•é€šé“å¼€å¯é…ç½®é”™è¯¯ */
 
-            return VOS_ERR;/* ·µ»ØÊ§°Ü */
+            return VOS_ERR;/* è¿”å›žå¤±è´¥ */
         }
 
-        g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯ÅäÖÃ´íÎó */
+        g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_INIT_SUCC;     /* è®°å½•é€šé“åˆå§‹åŒ–é…ç½®é”™è¯¯ */
     }
 
     return VOS_OK;
@@ -3536,18 +3536,18 @@ VOS_UINT32 SCM_DecoderSrcChannelInit(VOS_VOID)
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_RegDecoderDestProc
- ¹¦ÄÜÃèÊö  : ACPUµÄ½âÂëÄ¿µÄÍ¨µÀµÄ»Øµ÷º¯Êý×¢²á½Ó¿Ú
- ÊäÈë²ÎÊý  : enChanlID: ½âÂëÄ¿µÄÍ¨µÀID
-             func: »Øµ÷º¯ÊýÖ¸Õë
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_RegDecoderDestProc
+ åŠŸèƒ½æè¿°  : ACPUçš„è§£ç ç›®çš„é€šé“çš„å›žè°ƒå‡½æ•°æ³¨å†ŒæŽ¥å£
+ è¾“å…¥å‚æ•°  : enChanlID: è§£ç ç›®çš„é€šé“ID
+             func: å›žè°ƒå‡½æ•°æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 
 VOS_UINT32 SCM_RegDecoderDestProc(SOCP_DECODER_DST_ENUM_U32 enChanlID, SCM_DECODERDESTFUCN func)
@@ -3562,28 +3562,28 @@ VOS_UINT32 SCM_RegDecoderDestProc(SOCP_DECODER_DST_ENUM_U32 enChanlID, SCM_DECOD
     {
         SCM_DECODER_DST_ERR("SCM_RegDecoderDestProc: Find Channeld is Error", (VOS_UINT)enChanlID,0);
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     g_astSCMDecoderDstCfg[ulCgfNum].pfunc = func;
 
-    return VOS_OK;/* ·µ»Ø³É¹¦ */
+    return VOS_OK;/* è¿”å›žæˆåŠŸ */
 }
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_SendDecoderSrc
- ¹¦ÄÜÃèÊö  : ACPUµÄ½âÂëÔ´Í¨µÀµÄÊý¾Ý·¢ËÍº¯Êý
- ÊäÈë²ÎÊý  : enChanlID: ½âÂëÄ¿µÄÍ¨µÀID
-             pucSendDataVirt: ·¢ËÍÊý¾ÝµÄÐéµØÖ·
-             ulSendLen:       ·¢ËÍÊý¾ÝµÄ³¤¶È
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_SendDecoderSrc
+ åŠŸèƒ½æè¿°  : ACPUçš„è§£ç æºé€šé“çš„æ•°æ®å‘é€å‡½æ•°
+ è¾“å…¥å‚æ•°  : enChanlID: è§£ç ç›®çš„é€šé“ID
+             pucSendDataVirt: å‘é€æ•°æ®çš„è™šåœ°å€
+             ulSendLen:       å‘é€æ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 
 VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pucSendDataVirt, VOS_UINT32 ulSendLen)
@@ -3592,7 +3592,7 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
     VOS_UINT32                          ulCfgNum;
     VOS_UINT32                          ulResult;
 
-    /* ÅÐ¶ÏÊý¾ÝÖ¸ÕëºÍ³¤¶ÈµÄÕýÈ· */
+    /* åˆ¤æ–­æ•°æ®æŒ‡é’ˆå’Œé•¿åº¦çš„æ­£ç¡® */
     if ((VOS_NULL_PTR == pucSendDataVirt)||(0 == ulSendLen))
     {
         SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Input Para is Error", (VOS_UINT)enChanlID, (VOS_UINT)ulSendLen);
@@ -3601,28 +3601,28 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
     }
 
     if (VOS_OK != SCM_FindChannelCfg(enChanlID, SCM_DECODER_SRC_NUM,
-                                (SCM_CHANNEL_CFG_HEAD *)g_astSCMDecoderSrcCfg, sizeof(SCM_DECODER_SRC_CFG_STRU), &ulCfgNum))/* ÅÐ¶ÏÍ¨µÀ²ÎÊý */
+                                (SCM_CHANNEL_CFG_HEAD *)g_astSCMDecoderSrcCfg, sizeof(SCM_DECODER_SRC_CFG_STRU), &ulCfgNum))/* åˆ¤æ–­é€šé“å‚æ•° */
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Find Channel is Error", (VOS_UINT)enChanlID, (VOS_UINT)0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Find Channel is Error", (VOS_UINT)enChanlID, (VOS_UINT)0);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
     SCM_DECODER_SRC_LOG("SCM_SendDecoderSrc: Send Decoder Data", (VOS_UINT)enChanlID, (VOS_UINT)ulSendLen);
 
     if (VOS_OK != DRV_SOCP_GET_WRITE_BUFF(enChanlID, &stRwBuf))
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Get Write Buffer is Error", (VOS_UINT)enChanlID, 0);/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Get Write Buffer is Error", (VOS_UINT)enChanlID, 0);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
-    /* ÅÐ¶ÏÊÇ·ñ»¹ÓÐ¿Õ¼ä */
+    /* åˆ¤æ–­æ˜¯å¦è¿˜æœ‰ç©ºé—´ */
     if (ulSendLen > (stRwBuf.u32Size + stRwBuf.u32RbSize))
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Buffer is Full", (VOS_UINT)enChanlID, (VOS_UINT)ulSendLen);/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Buffer is Full", (VOS_UINT)enChanlID, (VOS_UINT)ulSendLen);/* è®°å½•Log */
 
-        return VOS_ERR;/* ·µ»ØÊ§°Ü */
+        return VOS_ERR;/* è¿”å›žå¤±è´¥ */
     }
 
 	stRwBuf.pBuffer = (BSP_CHAR *)SCM_MemPhyToVirt((VOS_UINT8 *)stRwBuf.pBuffer,
@@ -3633,8 +3633,8 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
     if(VOS_NULL_PTR == stRwBuf.pBuffer)
     {
 
-        SCM_DECODER_SRC_ERR("SCM_MemPhyToVirt: Buffer alloc error", (VOS_UINT)enChanlID,(VOS_UINT)(stRwBuf.u32Size));/* ¼ÇÂ¼Log */
-        ulResult = VOS_ERR;/* [false alarm]:ÆÁ±ÎFortify */
+        SCM_DECODER_SRC_ERR("SCM_MemPhyToVirt: Buffer alloc error", (VOS_UINT)enChanlID,(VOS_UINT)(stRwBuf.u32Size));/* è®°å½•Log */
+        ulResult = VOS_ERR;/* [false alarm]:å±è”½Fortify */
     }
 
     stRwBuf.pRbBuffer = (BSP_CHAR *)SCM_MemPhyToVirt((VOS_UINT8 *)stRwBuf.pRbBuffer,
@@ -3649,7 +3649,7 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
 
        ulResult = DRV_SOCP_WRITE_DONE(enChanlID, ulSendLen);
     }
-    else if ((stRwBuf.pRbBuffer != VOS_NULL_PTR)&& (stRwBuf.u32RbSize != 0))    /* ¿Õ¼ä²»×ã£¬ÔòÐ´Èë»Ø¾íµØÖ· */
+    else if ((stRwBuf.pRbBuffer != VOS_NULL_PTR)&& (stRwBuf.u32RbSize != 0))    /* ç©ºé—´ä¸è¶³ï¼Œåˆ™å†™å…¥å›žå·åœ°å€ */
     {
         VOS_MemCpy(stRwBuf.pBuffer, pucSendDataVirt, stRwBuf.u32Size);
 		SCM_FLUSH_CACHE(stRwBuf.pBuffer,stRwBuf.u32Size);
@@ -3661,13 +3661,13 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
     }
     else
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Buffer Info is Full", (VOS_UINT)enChanlID,(VOS_UINT)(stRwBuf.u32RbSize));/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Buffer Info is Full", (VOS_UINT)enChanlID,(VOS_UINT)(stRwBuf.u32RbSize));/* è®°å½•Log */
         ulResult = VOS_ERR;
     }
 
     if (VOS_OK != ulResult)
     {
-        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Write Done is Error", (VOS_UINT)enChanlID, (VOS_UINT)(stRwBuf.u32Size));/* ¼ÇÂ¼Log */
+        SCM_DECODER_SRC_ERR("SCM_SendDecoderSrc: Write Done is Error", (VOS_UINT)enChanlID, (VOS_UINT)(stRwBuf.u32Size));/* è®°å½•Log */
         return VOS_ERR;
     }
 
@@ -3679,18 +3679,18 @@ VOS_UINT32 SCM_SendDecoderSrc(SOCP_DECODER_SRC_ENUM_U32 enChanlID, VOS_UINT8 *pu
 #endif  /* SCM_ACORE */
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_AcpuChannelMemInit
- ¹¦ÄÜÃèÊö  : ½«ACPUµÄ±àÂëÔ´¡¢±àÂëÄ¿µÄ¡¢½âÂëÔ´¡¢½âÂëÄ¿µÄÍ¨µÀµÄÄÚ´æ³õÊ¼»¯£¬
-             º¯ÊýÊ§°Ü»á¸´Î»µ¥°å£¬²»ÐèÒªÊÍ·ÅÄÚ´æ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_AcpuChannelMemInit
+ åŠŸèƒ½æè¿°  : å°†ACPUçš„ç¼–ç æºã€ç¼–ç ç›®çš„ã€è§£ç æºã€è§£ç ç›®çš„é€šé“çš„å†…å­˜åˆå§‹åŒ–ï¼Œ
+             å‡½æ•°å¤±è´¥ä¼šå¤ä½å•æ¿ï¼Œä¸éœ€è¦é‡Šæ”¾å†…å­˜
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
 {
@@ -3703,16 +3703,16 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
 #ifdef SCM_ACORE
     for (i=0; i<SCM_CODER_DST_NUM; i++)
     {
-        /* ÉêÇë±àÂëÄ¿µÄ¿Õ¼ä */
+        /* ç”³è¯·ç¼–ç ç›®çš„ç©ºé—´ */
         g_astSCMCoderDstCfg[i].pucBuf = (VOS_UINT8*)SCM_VirtMemAlloc(g_astSCMCoderDstCfg[i].ulBufLen, &ulPHYAddr);
 
-        /* ÉêÇë¿Õ¼ä´íÎó */
+        /* ç”³è¯·ç©ºé—´é”™è¯¯ */
         if (VOS_NULL_PTR == g_astSCMCoderDstCfg[i].pucBuf)
         {
-            /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+            /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
             g_astSCMCoderDstCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-            return VOS_ERR;/* ·µ»Ø´íÎó */
+            return VOS_ERR;/* è¿”å›žé”™è¯¯ */
         }
 
         g_astSCMCoderDstCfg[i].pucBufPHY = (VOS_UINT8*)ulPHYAddr;
@@ -3721,16 +3721,16 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
 #if (RAT_MODE != RAT_GU)                /* Mutil Mode */
     for (i=0; i<SCM_DECODER_DST_NUM; i++)
     {
-        /* ÉêÇë½âÂëÄ¿µÄ¿Õ¼ä */
+        /* ç”³è¯·è§£ç ç›®çš„ç©ºé—´ */
         g_astSCMDecoderDstCfg[i].pucBuf = (VOS_UINT8*)SCM_VirtMemAlloc(g_astSCMDecoderDstCfg[i].ulBufLen, &ulPHYAddr);
 
-        /* ÉêÇë¿Õ¼ä´íÎó */
+        /* ç”³è¯·ç©ºé—´é”™è¯¯ */
         if (VOS_NULL_PTR == g_astSCMDecoderDstCfg[i].pucBuf)
         {
-            /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+            /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
             g_astSCMDecoderDstCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-            return VOS_ERR;   /* ·µ»Ø´íÎó */
+            return VOS_ERR;   /* è¿”å›žé”™è¯¯ */
         }
 
         g_astSCMDecoderDstCfg[i].pucBufPHY = (VOS_UINT8*)ulPHYAddr;
@@ -3738,16 +3738,16 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
 
     for(i=0; i<SCM_DECODER_SRC_NUM; i++)
     {
-        /* ÉêÇë½âÂëÔ´¿Õ¼ä */
+        /* ç”³è¯·è§£ç æºç©ºé—´ */
         g_astSCMDecoderSrcCfg[i].pucSrcBuf = (VOS_UINT8*)SCM_VirtMemAlloc(g_astSCMDecoderSrcCfg[i].ulSrcBufLen, &ulPHYAddr);
 
-        /* ÉêÇë¿Õ¼ä´íÎó */
+        /* ç”³è¯·ç©ºé—´é”™è¯¯ */
         if(VOS_NULL_PTR == g_astSCMDecoderSrcCfg[i].pucSrcBuf)
         {
-            /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+            /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
             g_astSCMDecoderSrcCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-            return VOS_ERR; /* ·µ»Ø´íÎó */
+            return VOS_ERR; /* è¿”å›žé”™è¯¯ */
         }
 
         g_astSCMDecoderSrcCfg[i].pucSrcPHY = (VOS_UINT8*)ulPHYAddr;
@@ -3758,7 +3758,7 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
 
     for (i=0; i<SCM_CODER_SRC_NUM; i++)
     {
-        /* ÉêÇëBD¿Õ¼ä */
+        /* ç”³è¯·BDç©ºé—´ */
         #ifdef SCM_ACORE
         g_astSCMCoderSrcCfg[i].pucSrcBuf = (VOS_UINT8*)VOS_UnCacheMemAlloc(g_astSCMCoderSrcCfg[i].ulSrcBufLen, &ulPHYAddr);
         #else
@@ -3769,19 +3769,19 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
         g_astSCMCoderSrcCfg[i].pucSrcBuf = (VOS_UINT8*)pData;
         #endif
 
-        if (VOS_NULL_PTR == g_astSCMCoderSrcCfg[i].pucSrcBuf)/* ÉêÇëBD¿Õ¼ä´íÎó */
+        if (VOS_NULL_PTR == g_astSCMCoderSrcCfg[i].pucSrcBuf)/* ç”³è¯·BDç©ºé—´é”™è¯¯ */
         {
-            /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+            /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
             g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-            return VOS_ERR;/* ·µ»Ø´íÎó */
+            return VOS_ERR;/* è¿”å›žé”™è¯¯ */
         }
 
         g_astSCMCoderSrcCfg[i].pucSrcPHY = (VOS_UINT8*)ulPHYAddr;
 
         if (SOCP_ENCSRC_CHNMODE_LIST == g_astSCMCoderSrcCfg[i].enCHMode)
         {
-            /* ÉêÇëRD¿Õ¼ä */
+            /* ç”³è¯·RDç©ºé—´ */
             #ifdef SCM_ACORE
             g_astSCMCoderSrcCfg[i].pucRDBuf = (VOS_UINT8*)VOS_UnCacheMemAlloc(g_astSCMCoderSrcCfg[i].ulRDBufLen, &ulPHYAddr);
             #else
@@ -3792,13 +3792,13 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
             g_astSCMCoderSrcCfg[i].pucRDBuf = (VOS_UINT8*)pData;
             #endif
 
-            /* ÉêÇëRD¿Õ¼ä´íÎó */
+            /* ç”³è¯·RDç©ºé—´é”™è¯¯ */
             if(VOS_NULL_PTR == g_astSCMCoderSrcCfg[i].pucRDBuf)
             {
-                /* ¼ÇÂ¼Í¨µÀ³õÊ¼»¯±ê¼ÇÎªÄÚ´æÉêÇëÒì³£ */
+                /* è®°å½•é€šé“åˆå§‹åŒ–æ ‡è®°ä¸ºå†…å­˜ç”³è¯·å¼‚å¸¸ */
                 g_astSCMCoderSrcCfg[i].enInitState = SCM_CHANNEL_MEM_FAIL;
 
-                return VOS_ERR; /* ·µ»Ø´íÎó */
+                return VOS_ERR; /* è¿”å›žé”™è¯¯ */
             }
 
             g_astSCMCoderSrcCfg[i].pucRDPHY = (VOS_UINT8*)ulPHYAddr;
@@ -3808,28 +3808,28 @@ VOS_UINT32 SCM_ChannelMemInit(VOS_VOID)
     return VOS_OK;
 }
 
-#if 1   /* µÈ´ýµ×ÈíÌá¹©½Ó¿Ú */
+#if 1   /* ç­‰å¾…åº•è½¯æä¾›æŽ¥å£ */
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_ErrorChInfoSave
- ¹¦ÄÜÃèÊö  : ½«SOCPÍ¨µÀµÄÍ¨µÀÅäÖÃÊý¾Ý±£´æµ½ExcÎÄ¼þÖÐ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : pstData : ±£´æÊý¾ÝµÄÐÅÏ¢
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_ErrorChInfoSave
+ åŠŸèƒ½æè¿°  : å°†SOCPé€šé“çš„é€šé“é…ç½®æ•°æ®ä¿å­˜åˆ°Excæ–‡ä»¶ä¸­
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : pstData : ä¿å­˜æ•°æ®çš„ä¿¡æ¯
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 {
     VOS_UINT32                          ulDataLen;
     VOS_UINT8                          *pucData;
 
-    /* ¼ÆËãÐèÒª±£´æµÄÍ¨µÀÅäÖÃÐÅÏ¢´óÐ¡ */
+    /* è®¡ç®—éœ€è¦ä¿å­˜çš„é€šé“é…ç½®ä¿¡æ¯å¤§å° */
 #ifdef SCM_CCORE
-    /* ÐèÒª¶àÉêÇë4¸ö±êÖ¾Î» */
+    /* éœ€è¦å¤šç”³è¯·4ä¸ªæ ‡å¿—ä½ */
     ulDataLen = sizeof(g_astSCMCoderSrcCfg)+ sizeof(g_stSCMInfoData) + (2*sizeof(VOS_UINT32));
 #endif
 
@@ -3842,25 +3842,25 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
                 + sizeof(g_astSCMDecoderDstCfg)
                 + sizeof(g_astSCMDecoderSrcCfg)
                 + sizeof(g_stSCMInfoData)
-                + (5*sizeof(VOS_UINT32));        /* ÐèÒª¶àÉêÇë5¸ö±êÖ¾Î» */
+                + (5*sizeof(VOS_UINT32));        /* éœ€è¦å¤šç”³è¯·5ä¸ªæ ‡å¿—ä½ */
 #else                                       /* GU Single Mode */
     ulDataLen = sizeof(g_astSCMCoderDstCfg)
                 + sizeof(g_astSCMCoderSrcCfg)
                 + sizeof(g_stSCMInfoData)
-                + (3*sizeof(VOS_UINT32));        /* ÐèÒª¶àÉêÇë5¸ö±êÖ¾Î» */;
+                + (3*sizeof(VOS_UINT32));        /* éœ€è¦å¤šç”³è¯·5ä¸ªæ ‡å¿—ä½ */;
 #endif  /* (RAT_MODE != RAT_GU) */
 
 #endif  /* SCM_ACORE */
 
-    /* ÌîÐ´Êý¾ÝÐÅÏ¢ */
+    /* å¡«å†™æ•°æ®ä¿¡æ¯ */
     VOS_StrNCpy(pstData->aucName, "SCM CHCfg Info", EXCH_CB_NAME_SIZE);
 
-    /* ÉêÇëÄÚ´æ */
+    /* ç”³è¯·å†…å­˜ */
     pucData = (VOS_UINT8 *)VOS_CacheMemAlloc(ulDataLen);
 
     if (VOS_NULL_PTR == pucData)
     {
-        /* ÄÚ´æÉêÇëÊ§°Ü£¬Ö»±£Áô²¿·ÖÐÅÏ¢ */
+        /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œåªä¿ç•™éƒ¨åˆ†ä¿¡æ¯ */
         pstData->pucData    = (VOS_UINT8 *)g_astSCMCoderSrcCfg;
 
         pstData->ulDataLen  = sizeof(g_astSCMCoderSrcCfg);
@@ -3871,7 +3871,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 
         pstData->ulDataLen = ulDataLen;
 
-        /* ±£´æÍ¨µÀµÄLOGÐÅÏ¢ */
+        /* ä¿å­˜é€šé“çš„LOGä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -3880,7 +3880,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 
         pucData += sizeof(g_stSCMInfoData);
 
-        /* ±£´æ±àÂëÔ´Í¨µÀµÄÅäÖÃÐÅÏ¢ */
+        /* ä¿å­˜ç¼–ç æºé€šé“çš„é…ç½®ä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -3890,7 +3890,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
         pucData += sizeof(g_astSCMCoderSrcCfg);
 
 #ifdef SCM_ACORE
-        /* ±£´æ±àÂëÄ¿µÄÍ¨µÀµÄÅäÖÃÐÅÏ¢ */
+        /* ä¿å­˜ç¼–ç ç›®çš„é€šé“çš„é…ç½®ä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -3900,7 +3900,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
         pucData += sizeof(g_astSCMCoderDstCfg);
 
 #if (RAT_MODE != RAT_GU)                /* Mutil Mode */
-        /* ±£´æ½âÂëÄ¿µÄÍ¨µÀµÄÅäÖÃÐÅÏ¢ */
+        /* ä¿å­˜è§£ç ç›®çš„é€šé“çš„é…ç½®ä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -3909,7 +3909,7 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 
         pucData += sizeof(g_astSCMDecoderDstCfg);
 
-        /* ±£´æ½âÂë½âÂëÔ´Í¨µÀµÄÅäÖÃÐÅÏ¢ */
+        /* ä¿å­˜è§£ç è§£ç æºé€šé“çš„é…ç½®ä¿¡æ¯ */
         VOS_MemSet(pucData, SCM_DATA_SAVE_TAG, sizeof(VOS_UINT32));
 
         pucData += sizeof(VOS_UINT32);
@@ -3920,23 +3920,23 @@ VOS_VOID SCM_ErrorChInfoSave(cb_buf_t *pstData)
 #endif  /* SCM_ACORE */
     }
 
-    return;    /* ·µ»Ø£¬µ¥°åÂíÉÏÖØÆô²»ÐèÒªÊÍ·ÅÄÚ´æ */
+    return;    /* è¿”å›žï¼Œå•æ¿é©¬ä¸Šé‡å¯ä¸éœ€è¦é‡Šæ”¾å†…å­˜ */
 }
 
 #endif
 
 /* ****************************************************************************
- º¯ Êý Ãû  : SCM_ChannelInit
- ¹¦ÄÜÃèÊö  : ½«SOCPÍ¨µÀµÄ³õÊ¼»¯
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_ERR/VOS_OK
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_ChannelInit
+ åŠŸèƒ½æè¿°  : å°†SOCPé€šé“çš„åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_ERR/VOS_OK
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT32 SCM_ChannelInit(VOS_VOID)
 {
@@ -3948,64 +3948,64 @@ VOS_UINT32 SCM_ChannelInit(VOS_VOID)
 #endif
 /* log2.0 2014-03-19 End:*/
 
-    if (VOS_OK != SCM_ChannelMemInit())/* Í¨µÀÄÚ´æ³õÊ¼»¯ */
+    if (VOS_OK != SCM_ChannelMemInit())/* é€šé“å†…å­˜åˆå§‹åŒ– */
     {
         vos_printf("111 SCM_ChannelMemInit!\n");
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
 #ifdef SCM_ACORE
     if (VOS_OK != SCM_CoderDstChannelInit())
     {
         vos_printf("222 SCM_CoderDstChannelInit!\n");
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 #if (RAT_MODE != RAT_GU)                /* Mutil Mode */
     if (VOS_OK != SCM_DecoderDstChannelInit())
     {
         vos_printf("333 SCM_DecoderDstChannelInit!\n");
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
     if (VOS_OK != SCM_DecoderSrcChannelInit())
     {
         vos_printf("444 SCM_DecoderSrcChannelInit!\n");
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 #endif  /* (RAT_MODE != RAT_GU) */
 #endif  /* SCM_ACORE */
 
-    if (VOS_OK != SCM_CoderSrcChannelInit()) /* ±àÂëÔ´Í¨µÀ³õÊ¼»¯ */
+    if (VOS_OK != SCM_CoderSrcChannelInit()) /* ç¼–ç æºé€šé“åˆå§‹åŒ– */
     {
         vos_printf("555 SCM_CoderSrcChannelInit!\n");
-        return VOS_ERR;/* ·µ»Ø´íÎó */
+        return VOS_ERR;/* è¿”å›žé”™è¯¯ */
     }
 
-    /* ×¢²áÒì³£ÐÅÏ¢±£´æ»Øµ÷ */
+    /* æ³¨å†Œå¼‚å¸¸ä¿¡æ¯ä¿å­˜å›žè°ƒ */
     DRV_EXCH_CUST_FUNC_REG((exchCBReg)SCM_ErrorChInfoSave);
 
 #ifdef SCM_CCORE
     Om_BbpDbgChanInit();
 #endif
 
-    /*V7R2 µ×ÈíSOCPÍ¨µÀÊ¹ÄÜ½Ó¿Ú*/
+    /*V7R2 åº•è½¯SOCPé€šé“ä½¿èƒ½æŽ¥å£*/
     DRV_SOCP_CHAN_ENABLE();
 
     return VOS_OK;
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_ChannelInfoShow
- ¹¦ÄÜÃèÊö  : ½«SOCPÍ¨µÀµÄÐÅÏ¢´òÓ¡µ½´®¿Ú
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_ChannelInfoShow
+ åŠŸèƒ½æè¿°  : å°†SOCPé€šé“çš„ä¿¡æ¯æ‰“å°åˆ°ä¸²å£
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID SCM_ChannelInfoShow(VOS_VOID)
 {
@@ -4024,17 +4024,17 @@ VOS_VOID SCM_ChannelInfoShow(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_CoderSrcCHShow
- ¹¦ÄÜÃèÊö  : ½«SOCP ±àÂëÔ´Í¨µÀµÄÐÅÏ¢´òÓ¡µ½´®¿Ú
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderSrcCHShow
+ åŠŸèƒ½æè¿°  : å°†SOCP ç¼–ç æºé€šé“çš„ä¿¡æ¯æ‰“å°åˆ°ä¸²å£
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID SCM_CoderSrcCHShow(VOS_UINT32 ulCfgNum)
 {
@@ -4057,17 +4057,17 @@ VOS_VOID SCM_CoderSrcCHShow(VOS_UINT32 ulCfgNum)
 #ifdef SCM_ACORE
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_CoderDstCHShow
- ¹¦ÄÜÃèÊö  : ½«SOCP ±àÂëÔ´Í¨µÀµÄÐÅÏ¢´òÓ¡µ½´®¿Ú
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_CoderDstCHShow
+ åŠŸèƒ½æè¿°  : å°†SOCP ç¼–ç æºé€šé“çš„ä¿¡æ¯æ‰“å°åˆ°ä¸²å£
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID SCM_CoderDstCHShow(VOS_UINT32 ulCfgNum)
 {
@@ -4084,21 +4084,21 @@ VOS_VOID SCM_CoderDstCHShow(VOS_UINT32 ulCfgNum)
 #endif
 
 /*****************************************************************************
- º¯ Êý Ãû  : SCM_StopAllSrcChan
- ¹¦ÄÜÃèÊö  : disable ËùÓÐCºË£¬HIFIÊ¹ÓÃµÄ±àÂëÔ´Í¨µÀ
- ÊäÈë²ÎÊý  : ulSrcChanID Í¨µÀID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2013Äê5ÔÂ2ÈÕ
-     ×÷    Õß  : j0174725s
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : SCM_StopAllSrcChan
+ åŠŸèƒ½æè¿°  : disable æ‰€æœ‰Cæ ¸ï¼ŒHIFIä½¿ç”¨çš„ç¼–ç æºé€šé“
+ è¾“å…¥å‚æ•°  : ulSrcChanID é€šé“ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2013å¹´5æœˆ2æ—¥
+     ä½œ    è€…  : j0174725s
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID SCM_StopAllSrcChan(VOS_VOID)
 {
-    /* K3V3ÉÏ£¬Í¨µÀÈ¥Ê¹ÄÜÔÚM3Íê³É */
+    /* K3V3ä¸Šï¼Œé€šé“åŽ»ä½¿èƒ½åœ¨M3å®Œæˆ */
 #ifndef BSP_CONFIG_HI3630
     VOS_UINT32                          ulSrcChanID;
     VOS_UINT32                          ulNum;
@@ -4117,7 +4117,7 @@ VOS_VOID SCM_StopAllSrcChan(VOS_VOID)
 }
 
 
-/*ÊÊÅäV9´úÂë¿ÉÎ¬¿É²â´ò×®£¬Òª±£Áô*/
+/*é€‚é…V9ä»£ç å¯ç»´å¯æµ‹æ‰“æ¡©ï¼Œè¦ä¿ç•™*/
 VOS_VOID SCM_LogToFile(FILE *fp)
 {
     return;

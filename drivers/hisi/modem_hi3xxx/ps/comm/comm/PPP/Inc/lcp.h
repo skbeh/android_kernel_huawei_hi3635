@@ -99,7 +99,7 @@ struct lcp {
   VOS_UINT16 auth_ineed;        /* I require that the peer authenticates */
 
   VOS_INT32 LcpFailedMagic;        /* Number of `magic is same' errors */
-  HTIMER    hLcpCloseTimer;        /*PPPÎÕÊÖ½áÊø¶¨Ê±Æ÷*/
+  HTIMER    hLcpCloseTimer;        /*PPPæ¡æ‰‹ç»“æŸå®šæ—¶å™¨*/
 
   struct {
     VOS_UINT16 mru;        /* Preferred MRU value */

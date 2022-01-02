@@ -50,19 +50,19 @@ static int modem_power_off_flag = 0;
 #endif
 
 /*****************************************************************************
- º¯ Êı Ãû  : modem_state_set
- ¹¦ÄÜÃèÊö  : Ìá¹©ttfÉèÖÃmodem×´Ì¬µÄAPI
- ÊäÈë²ÎÊı  : unsigned int state
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : <0     failed,invalid state
+ å‡½ æ•° å  : modem_state_set
+ åŠŸèƒ½æè¿°  : æä¾›ttfè®¾ç½®modemçŠ¶æ€çš„API
+ è¾“å…¥å‚æ•°  : unsigned int state
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : <0     failed,invalid state
              =0     success
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ25ÈÕ
-    ×÷    Õß   : ³ÂÒ×³¬
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ25æ—¥
+    ä½œ    è€…   : é™ˆæ˜“è¶…
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 int modem_state_set(unsigned int state)
@@ -136,7 +136,7 @@ ssize_t modem_reset_set(struct device *dev, struct device_attribute *attr, const
 		modem_power_off_flag = 1;
 		return count;
 	}
-	else if(state == BALONG_MODEM_ON) /* TODO: ÊÇ·ñĞèÒªÉÏµç£¬¸ùHIFIÊ²Ã´¹ØÏµ */
+	else if(state == BALONG_MODEM_ON) /* TODO: æ˜¯å¦éœ€è¦ä¸Šç”µï¼Œæ ¹HIFIä»€ä¹ˆå…³ç³» */
 	{
 		bsp_modem_power_on();
 		pr_err("modem power on %d\n", BALONG_MODEM_ON);

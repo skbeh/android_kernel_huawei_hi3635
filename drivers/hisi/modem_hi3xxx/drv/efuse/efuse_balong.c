@@ -37,27 +37,27 @@
 
 /*lint -restore*/
 
-#define TIMEMAXDELAY   (0x1000000)       /*×î´óÑÓ³ÙÊ±¼ä*/
+#define TIMEMAXDELAY   (0x1000000)       /*æœ€å¤§å»¶è¿Ÿæ—¶é—´*/
 
 static struct spinlock efuse_lock;
 
 typedef unsigned int (*punptr)(void);
 /*********************************************************************************************  
 Function:           test_bit_value
-Description:        ²âÊÔ¼Ä´æÆ÷ÖĞµÄÄ³Î»£¬ÊÇ·ñµÈÓÚÖ¸¶¨µÄÖµ
-Calls:              ÎŞ
-Data Accessed:      ÎŞ
-Data Updated:       ÎŞ
-Input:              addr£º  ¼Ä´æÆ÷µØÖ·
-                    bitMask£ºĞèÒª¼ì²âµÄÎ»ÖÃ
-                    bitValue£ºÖ¸¶¨µÄÖµ
-Output:             ÎŞ
-Return:             ³É¹¦Ôò·µ»ØTRUE£¬ Ê§°ÜÔò·µ»ØFALSE
-Others:             ÎŞ
+Description:        æµ‹è¯•å¯„å­˜å™¨ä¸­çš„æŸä½ï¼Œæ˜¯å¦ç­‰äºæŒ‡å®šçš„å€¼
+Calls:              æ— 
+Data Accessed:      æ— 
+Data Updated:       æ— 
+Input:              addrï¼š  å¯„å­˜å™¨åœ°å€
+                    bitMaskï¼šéœ€è¦æ£€æµ‹çš„ä½ç½®
+                    bitValueï¼šæŒ‡å®šçš„å€¼
+Output:             æ— 
+Return:             æˆåŠŸåˆ™è¿”å›TRUEï¼Œ å¤±è´¥åˆ™è¿”å›FALSE
+Others:             æ— 
 *********************************************************************************************/
 int test_bit_value(punptr pfun,  u32 bitValue)
 {
-    u32 time;                       /*ÑÓÊ±Ê±¼ä*/
+    u32 time;                       /*å»¶æ—¶æ—¶é—´*/
     
     for(time = 0; time < TIMEMAXDELAY; time++)
     {
@@ -72,17 +72,17 @@ int test_bit_value(punptr pfun,  u32 bitValue)
 
 /*lint -save -e718 -e746*/
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_efuse_read
+* å‡½ æ•° å  : bsp_efuse_read
 *
-* ¹¦ÄÜÃèÊö  : °´×é¶ÁÈ¡EFUSEÖĞµÄÊı¾İ
+* åŠŸèƒ½æè¿°  : æŒ‰ç»„è¯»å–EFUSEä¸­çš„æ•°æ®
 *
-* ÊäÈë²ÎÊı  : group  ÆğÊ¼group
-*                   num  Êı×é³¤¶È(wordÊı,²»³¬¹ı16)
-* Êä³ö²ÎÊı  : pBuf £ºEFUSEÖĞµÄÊı¾İ
+* è¾“å…¥å‚æ•°  : group  èµ·å§‹group
+*                   num  æ•°ç»„é•¿åº¦(wordæ•°,ä¸è¶…è¿‡16)
+* è¾“å‡ºå‚æ•°  : pBuf ï¼šEFUSEä¸­çš„æ•°æ®
 *
-* ·µ »Ø Öµ  : 
+* è¿” å› å€¼  : 
 *
-* ÆäËüËµÃ÷  : 
+* å…¶å®ƒè¯´æ˜  : 
 *
 *****************************************************************************/
 int bsp_efuse_read(u32* pBuf, const u32 group, const u32 num)
@@ -114,13 +114,13 @@ int bsp_efuse_read(u32* pBuf, const u32 group, const u32 num)
 		goto clk_enable_error;
     }
     
-    /*ÅĞ¶ÏÊÇ·ñ´¦ÔÚpower_down×´Ì¬*/
+    /*åˆ¤æ–­æ˜¯å¦å¤„åœ¨power_downçŠ¶æ€*/
     if(get_hi_efusec_status_pd_status())
     {
-       /*ÍË³öpowerd_down×´Ì¬*/
+       /*é€€å‡ºpowerd_downçŠ¶æ€*/
         set_hi_efusec_cfg_pd_en(0);
        
-        /* µÈ´ıpowerd_downÍË³ö±êÖ¾ÉèÖÃ³É¹¦£¬·ñÔò³¬Ê±·µ»Ø´íÎó */
+        /* ç­‰å¾…powerd_downé€€å‡ºæ ‡å¿—è®¾ç½®æˆåŠŸï¼Œå¦åˆ™è¶…æ—¶è¿”å›é”™è¯¯ */
         if(EFUSE_OK != test_bit_value(get_hi_efusec_status_pd_status, 0))
         {
             efuse_print_error(" powerd_down disable is fail .\n");
@@ -129,31 +129,31 @@ int bsp_efuse_read(u32* pBuf, const u32 group, const u32 num)
     }
 
 #ifdef HI_RF_STATUS_OFFSET
-    /*ÉèÖÃefuse½Ó¿ÚÊ±ĞòÎªÄÚ²¿²úÉú*/
+    /*è®¾ç½®efuseæ¥å£æ—¶åºä¸ºå†…éƒ¨äº§ç”Ÿ*/
     set_hi_efusec_cfg_signal_sel(1);
 #else
-    /*Ñ¡ÔñĞÅºÅÎªapb²Ù×÷efuse*/
+    /*é€‰æ‹©ä¿¡å·ä¸ºapbæ“ä½œefuse*/
     set_hi_efusec_cfg_aib_sel(1);
 #endif
 
     pSh = pBuf;
     
-    /* Ñ­»·¶ÁÈ¡efuseÖµ */
+    /* å¾ªç¯è¯»å–efuseå€¼ */
     for(cnt = 0; cnt < num; cnt++)
     {
-        /* ÉèÖÃ¶ÁÈ¡µØÖ· */
+        /* è®¾ç½®è¯»å–åœ°å€ */
         set_hi_efuse_group_efuse_group( group+cnt);
         
-        /* Ê¹ÄÜ¶Á */
+        /* ä½¿èƒ½è¯» */
         set_hi_efusec_cfg_rden(1);
         
-        /* µÈ´ı¶ÁÍê³É */
+        /* ç­‰å¾…è¯»å®Œæˆ */
         if(EFUSE_OK != test_bit_value(get_hi_efusec_status_rd_status, 1))
         {
             efuse_print_error(" read finish is fail .\n");
             goto efuse_rd_error;
         }
-        /* ¶ÁÈ¡Êı¾İ */
+        /* è¯»å–æ•°æ® */
         *pSh = get_hi_efusec_data_efusec_data();
         pSh++;
         
@@ -177,18 +177,18 @@ clk_enable_error:
 /*lint -restore*/
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_efuse_write
+* å‡½ æ•° å  : bsp_efuse_write
 *
-* ¹¦ÄÜÃèÊö  : ÉÕĞ´Efsue
+* åŠŸèƒ½æè¿°  : çƒ§å†™Efsue
 *
-* ÊäÈë²ÎÊı  : pBuf:´ıÉÕĞ´µÄEFUSEÖµ
-*                 group,EfuseµØÖ·Æ«ÒÆ
-*                 len,ÉÕĞ´³¤¶È
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : pBuf:å¾…çƒ§å†™çš„EFUSEå€¼
+*                 group,Efuseåœ°å€åç§»
+*                 len,çƒ§å†™é•¿åº¦
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  :
+* è¿” å› å€¼  :
 *
-* ÆäËüËµÃ÷  :
+* å…¶å®ƒè¯´æ˜  :
 *
 *****************************************************************************/
 int bsp_efuse_write( u32 *pBuf, const u32 group, const u32 len )
@@ -240,12 +240,12 @@ int bsp_efuse_write( u32 *pBuf, const u32 group, const u32 len )
     
     udelay(1000);/*lint !e737*/
     
-    /*ÅĞ¶ÏÊÇ·ñ´¦ÔÚpower_down×´Ì¬*/
+    /*åˆ¤æ–­æ˜¯å¦å¤„åœ¨power_downçŠ¶æ€*/
     if(get_hi_efusec_status_pd_status())
     {
-       /*ÍË³öpowerd_down×´Ì¬*/
+       /*é€€å‡ºpowerd_downçŠ¶æ€*/
         set_hi_efusec_cfg_pd_en(0);
-        /* µÈ´ıpowerd_downÍË³ö±êÖ¾ÉèÖÃ³É¹¦£¬·ñÔò³¬Ê±·µ»Ø´íÎó */
+        /* ç­‰å¾…powerd_downé€€å‡ºæ ‡å¿—è®¾ç½®æˆåŠŸï¼Œå¦åˆ™è¶…æ—¶è¿”å›é”™è¯¯ */
         if(EFUSE_OK != test_bit_value(get_hi_efusec_status_pd_status, 0))
         {
             efuse_print_error(" power_down disable is fail .\n");
@@ -253,7 +253,7 @@ int bsp_efuse_write( u32 *pBuf, const u32 group, const u32 len )
         }
     }
     
-    /* ÅĞ¶ÏÊÇ·ñÔÊĞíÉÕĞ´,Îª1½ûÖ¹ÉÕĞ´,Ö±½ÓÍË³ö */
+    /* åˆ¤æ–­æ˜¯å¦å…è®¸çƒ§å†™,ä¸º1ç¦æ­¢çƒ§å†™,ç›´æ¥é€€å‡º */
     if(get_hi_hw_cfg_hw_cfg() & 0x1)
     {
         efuse_print_error(" burn write is disable .\n");
@@ -261,54 +261,54 @@ int bsp_efuse_write( u32 *pBuf, const u32 group, const u32 len )
     }
 
 #ifdef HI_RF_STATUS_OFFSET
-    /*ÉèÖÃefuse½Ó¿ÚÊ±ĞòÎªÄÚ²¿²úÉú*/
+    /*è®¾ç½®efuseæ¥å£æ—¶åºä¸ºå†…éƒ¨äº§ç”Ÿ*/
     set_hi_efusec_cfg_signal_sel(1);
 #else
-    /*Ñ¡ÔñĞÅºÅÎªapb²Ù×÷efuse*/
+    /*é€‰æ‹©ä¿¡å·ä¸ºapbæ“ä½œefuse*/
     set_hi_efusec_cfg_aib_sel(1);
 #endif
 
-    /* ÅäÖÃÊ±ĞòÒªÇó */
+    /* é…ç½®æ—¶åºè¦æ±‚ */
     set_hi_efusec_count_efusec_count(EFUSE_COUNT_CFG);
     set_hi_pgm_count_pgm_count(PGM_COUNT_CFG);
     
-    /* Ê¹ÄÜÔ¤ÉÕĞ´ */
+    /* ä½¿èƒ½é¢„çƒ§å†™ */
     set_hi_efusec_cfg_pre_pg(1);
     
-    /*²éÑ¯ÊÇ·ñÊ¹ÄÜÖÃÎ» */
+    /*æŸ¥è¯¢æ˜¯å¦ä½¿èƒ½ç½®ä½ */
     if(EFUSE_OK != test_bit_value(get_hi_efusec_status_pgenb_status, 1))
     {
         efuse_print_error(" pre write enable is fail .\n");
         goto efuse_wt_error;
     }
     
-    /* Ñ­»·ÉÕĞ´ */
+    /* å¾ªç¯çƒ§å†™ */
     u32Grp = group;
     pu32Value = pBuf;
     for (i = 0; i < len; i++)
     {
-        /* ÉèÖÃgroup */
+        /* è®¾ç½®group */
         set_hi_efuse_group_efuse_group(u32Grp);
         
-        /* ÉèÖÃvalue */
+        /* è®¾ç½®value */
         set_hi_pg_value_pg_value(*pu32Value);
         
-        /* Ê¹ÄÜÉÕĞ´ */
+        /* ä½¿èƒ½çƒ§å†™ */
         set_hi_efusec_cfg_pgen(1);
         
-        /* ²éÑ¯ÉÕĞ´Íê³É */
+        /* æŸ¥è¯¢çƒ§å†™å®Œæˆ */
         if(EFUSE_OK != test_bit_value(get_hi_efusec_status_pg_status, 1))
         {
             efuse_print_error(" burn write finish is fail .\n");
             goto efuse_wt_error;
         }
         
-        /* ÉÕĞ´ÏÂÒ»×é */
+        /* çƒ§å†™ä¸‹ä¸€ç»„ */
         u32Grp++;
         pu32Value++;
     }
 
-    /*È¥Ê¹ÄÜÔ¤ÉÕĞ´*/
+    /*å»ä½¿èƒ½é¢„çƒ§å†™*/
     set_hi_efusec_cfg_pre_pg(0);
     
     clk_disable(efuse_clk);

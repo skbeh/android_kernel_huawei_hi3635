@@ -5,11 +5,11 @@
 #include "ATCmdProc.h"
 
 /***************************************************************************** 
- º¯ Êý Ãû  : atSetTmodePara
- ¹¦ÄÜÃèÊö  : ·¢ËÍTMODEÄ£Ê½µ½TL CºË 
- ÊäÈë²ÎÊý  : ucClientId Client ID
-             ulTmode Ä£Ê½ Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³É¹¦·µ»ØAT_OK£¬Ê§°Ü·µ»ØAT_ERROR*****************************************************************************/VOS_UINT32 atSetTmodePara(VOS_UINT8 ucClientId, VOS_UINT32 ulTmode)
+ å‡½ æ•° å  : atSetTmodePara
+ åŠŸèƒ½æè¿°  : å‘é€TMODEæ¨¡å¼åˆ°TL Cæ ¸ 
+ è¾“å…¥å‚æ•°  : ucClientId Client ID
+             ulTmode æ¨¡å¼ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æˆåŠŸè¿”å›žAT_OKï¼Œå¤±è´¥è¿”å›žAT_ERROR*****************************************************************************/VOS_UINT32 atSetTmodePara(VOS_UINT8 ucClientId, VOS_UINT32 ulTmode)
 {
     SYM_SET_TMODE_REQ_STRU stTmode ;
     stTmode.enTmodeMode = (SYM_TMODE_ENUM)ulTmode;
@@ -26,18 +26,18 @@
 }
 
 /***************************************************************************** 
- º¯ Êý Ãû  : atSetTmodeParaCnfProc
- ¹¦ÄÜÃèÊö  : TL CºËÄ£Ê½ÉèÖÃ·µ»Ø´¦Àíº¯Êý ÊäÈë²ÎÊý  : ucClientId Client ID
-             pMsgBlock  ÏûÏ¢ÄÚÈÝ             
- Êä³ö²ÎÊý  : ÎÞ 
- ·µ »Ø Öµ  : ·µ»ØAT_FW_CLIENT_STATUS_READY
+ å‡½ æ•° å  : atSetTmodeParaCnfProc
+ åŠŸèƒ½æè¿°  : TL Cæ ¸æ¨¡å¼è®¾ç½®è¿”å›žå¤„ç†å‡½æ•° è¾“å…¥å‚æ•°  : ucClientId Client ID
+             pMsgBlock  æ¶ˆæ¯å†…å®¹             
+ è¾“å‡ºå‚æ•°  : æ—  
+ è¿” å›ž å€¼  : è¿”å›žAT_FW_CLIENT_STATUS_READY
 *****************************************************************************/
 VOS_UINT32 atSetTmodeParaCnfProc(VOS_UINT8 ucClientId, VOS_VOID *pMsgBlock)
 {
     OS_MSG_STRU* pEvent = NULL;
     SYM_SET_TMODE_CNF_STRU * pTmodeCnf = NULL;
 
-    /* pMsgBlock ÔÚÉÏ²ãµ÷ÓÃÖÐÒÑÅÐ¶ÏÊÇ·ñÎª¿Õ */
+    /* pMsgBlock åœ¨ä¸Šå±‚è°ƒç”¨ä¸­å·²åˆ¤æ–­æ˜¯å¦ä¸ºç©º */
     pEvent = (OS_MSG_STRU*)(((MsgBlock*)pMsgBlock)->aucValue);
     pTmodeCnf = (SYM_SET_TMODE_CNF_STRU *)pEvent->ulParam1;
     

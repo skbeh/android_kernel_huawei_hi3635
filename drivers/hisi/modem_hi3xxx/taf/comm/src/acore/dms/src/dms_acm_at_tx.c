@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 
 #include <product_config.h>
@@ -20,7 +20,7 @@
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 /*lint -e767 -e960*/
@@ -29,7 +29,7 @@
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 DMS_STATIC_BUF_STRU                     stDmsStaticBufInfo ;
@@ -41,23 +41,23 @@ VOS_UINT8                              *g_aucStaticBuf = NULL;
 
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  : DMS_WriteData
- ¹¦ÄÜÃèÊö  : ATÐ´Êý¾Ý×ÜÈë¿Ú
- ÊäÈë²ÎÊý  : ucPortNo: Í¨µÀID
-             pData: ·¢ËÍÊý¾ÝÖ¸Õë
-             uslength:·¢ËÍ³¤¶È
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : ERR_MSP_FAILURE/ERR_MSP_SUCCESS
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : DMS_WriteData
+ åŠŸèƒ½æè¿°  : ATå†™æ•°æ®æ€»å…¥å£
+ è¾“å…¥å‚æ•°  : ucPortNo: é€šé“ID
+             pData: å‘é€æ•°æ®æŒ‡é’ˆ
+             uslength:å‘é€é•¿åº¦
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : ERR_MSP_FAILURE/ERR_MSP_SUCCESS
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_INT32 DMS_WriteData(DMS_PHY_BEAR_ENUM enPhyBear, VOS_UINT8 *pucData, VOS_UINT16 usLen)
 {
@@ -118,18 +118,18 @@ VOS_INT32 DMS_WriteData(DMS_PHY_BEAR_ENUM enPhyBear, VOS_UINT8 *pucData, VOS_UIN
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Dms_StaticBufInit
- ¹¦ÄÜÃèÊö  : AT·¢ËÍ¾²Ì¬buf³õÊ¼»¯
- ÊäÈë²ÎÊý  :
+ å‡½ æ•° å  : Dms_StaticBufInit
+ åŠŸèƒ½æè¿°  : ATå‘é€é™æ€bufåˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  :
 
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID Dms_StaticBufInit(VOS_VOID)
 {
@@ -152,12 +152,12 @@ VOS_VOID Dms_StaticBufInit(VOS_VOID)
     g_aucStaticBuf = aucStaticBuf;
 #endif
 
-    /*È¡32×Ö½Ú¶ÔÆëµÄµØÖ·*/
+    /*å–32å­—èŠ‚å¯¹é½çš„åœ°å€*/
     pTemp = g_aucStaticBuf + (32 - ((VOS_ULONG )g_aucStaticBuf%32));
 
     stDmsStaticBufInfo.enBufType      = DMS_BUF_TYP_DYMIC;
 
-    /* ³õÊ¼»¯»º³åÐÅÏ¢*/
+    /* åˆå§‹åŒ–ç¼“å†²ä¿¡æ¯*/
     for (i = 0; i < DMS_LOG_STATIC_BUF_NUM; i++)
     {
         stDmsStaticBufInfo.stBufSta[i].pcuBuf = (VOS_UINT8 *)((VOS_ULONG)i * DMS_LOG_STATIC_ONE_BUF_SIZE + pTemp);
@@ -168,25 +168,25 @@ VOS_VOID Dms_StaticBufInit(VOS_VOID)
 
 }
 /*****************************************************************************
-º¯ Êý Ãû  : Dms_GetStaticBuf
-¹¦ÄÜÃèÊö  : AT·¢ËÍ»ñÈ¡¾²Ì¬buf
-ÊäÈë²ÎÊý  : ulLen :ÐèÒªbufµÄ³¤¶È
+å‡½ æ•° å  : Dms_GetStaticBuf
+åŠŸèƒ½æè¿°  : ATå‘é€èŽ·å–é™æ€buf
+è¾“å…¥å‚æ•°  : ulLen :éœ€è¦bufçš„é•¿åº¦
 
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  : VOS_NULL/addr
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-ÐÞ¸ÄÀúÊ·  :
- 1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-   ×÷    Õß  : heliping
-   ÐÞ¸ÄÄÚÈÝ  : Creat Function
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  : VOS_NULL/addr
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®æ”¹åŽ†å²  :
+ 1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+   ä½œ    è€…  : heliping
+   ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT8* Dms_GetStaticBuf(VOS_UINT32 ulLen)
 {
     VOS_UINT32 i = 0;
     VOS_UINT32 *buf = NULL;
 
-    /*Êý¾Ý³¤¶È³¬¹ý¾²Ì¬buf×î´ósize£¬¶¯Ì¬ÉêÇëbuf*/
+    /*æ•°æ®é•¿åº¦è¶…è¿‡é™æ€bufæœ€å¤§sizeï¼ŒåŠ¨æ€ç”³è¯·buf*/
     if(ulLen >DMS_LOG_STATIC_ONE_BUF_SIZE )
     {
 
@@ -208,7 +208,7 @@ VOS_UINT8* Dms_GetStaticBuf(VOS_UINT32 ulLen)
         }
     }
 
-    /*¼«ÏÞ³¡¾°ÏÂ Èç¹û¾²Ì¬bufÓÃÍê£¬ÉêÇë¶¯Ì¬ÄÚ´æÊ¹ÓÃ*/
+    /*æžé™åœºæ™¯ä¸‹ å¦‚æžœé™æ€bufç”¨å®Œï¼Œç”³è¯·åŠ¨æ€å†…å­˜ä½¿ç”¨*/
 #if (VOS_LINUX== VOS_OS_VER)
     buf = kmalloc(ulLen, GFP_KERNEL|__GFP_DMA);
 #else
@@ -220,18 +220,18 @@ VOS_UINT8* Dms_GetStaticBuf(VOS_UINT32 ulLen)
 }
 
 /*****************************************************************************
-º¯ Êý Ãû  : Dms_IsStaticBuf
-¹¦ÄÜÃèÊö  : ÅÐ¶ÏÊÇ·ñÊÇ¾²Ì¬µØÖ·
-ÊäÈë²ÎÊý  : buf: bufµØÖ·
+å‡½ æ•° å  : Dms_IsStaticBuf
+åŠŸèƒ½æè¿°  : åˆ¤æ–­æ˜¯å¦æ˜¯é™æ€åœ°å€
+è¾“å…¥å‚æ•°  : buf: bufåœ°å€
 
-Êä³ö²ÎÊý  :
-·µ »Ø Öµ  : TRUE/FALSE
-µ÷ÓÃº¯Êý  :
-±»µ÷º¯Êý  :
-ÐÞ¸ÄÀúÊ·  :
-1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-  ×÷    Õß  : heliping
-  ÐÞ¸ÄÄÚÈÝ  : Creat Function
+è¾“å‡ºå‚æ•°  :
+è¿” å›ž å€¼  : TRUE/FALSE
+è°ƒç”¨å‡½æ•°  :
+è¢«è°ƒå‡½æ•°  :
+ä¿®æ”¹åŽ†å²  :
+1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+  ä½œ    è€…  : heliping
+  ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 
  VOS_BOOL Dms_IsStaticBuf(VOS_UINT8 *buf)
@@ -250,18 +250,18 @@ VOS_UINT8* Dms_GetStaticBuf(VOS_UINT32 ulLen)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Dms_FreeStaticBuf
- ¹¦ÄÜÃèÊö  : ÊÍ·Å¾²Ì¬¿Õ¼ä
- ÊäÈë²ÎÊý  : buf: ±»ÊÍ·ÅµÄbufµØÖ·
+ å‡½ æ•° å  : Dms_FreeStaticBuf
+ åŠŸèƒ½æè¿°  : é‡Šæ”¾é™æ€ç©ºé—´
+ è¾“å…¥å‚æ•°  : buf: è¢«é‡Šæ”¾çš„bufåœ°å€
 
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID Dms_FreeStaticBuf( VOS_UINT8 * buf)
 {
@@ -272,7 +272,7 @@ VOS_VOID Dms_FreeStaticBuf( VOS_UINT8 * buf)
         return ;
     }
 
-    /*¾²Ì¬bufÊÍ·Å*/
+    /*é™æ€bufé‡Šæ”¾*/
     for (i = 0; i < DMS_LOG_STATIC_BUF_NUM; i++)
     {
         if (stDmsStaticBufInfo.stBufSta[i].pcuBuf == buf)
@@ -282,7 +282,7 @@ VOS_VOID Dms_FreeStaticBuf( VOS_UINT8 * buf)
         }
     }
 
-    /*¶¯Ì¬bufÊÍ·Å*/
+    /*åŠ¨æ€bufé‡Šæ”¾*/
     if(i == DMS_LOG_STATIC_BUF_NUM)
     {
 #if (VOS_LINUX== VOS_OS_VER)
@@ -294,19 +294,19 @@ VOS_VOID Dms_FreeStaticBuf( VOS_UINT8 * buf)
     return ;
 }
 /*****************************************************************************
- º¯ Êý Ãû  : DMS_VcomWriteAsync
- ¹¦ÄÜÃèÊö  : USBÒì²½Ð´½Ó¿Ú
- ÊäÈë²ÎÊý  : VcomId: Í¨µÀID
-             pucDataBuf: ·¢ËÍÖ¸Õë
-             slLen:·¢ËÍ³¤¶È
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : ERR_MSP_FAILURE/ERR_MSP_SUCCESS
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : DMS_VcomWriteAsync
+ åŠŸèƒ½æè¿°  : USBå¼‚æ­¥å†™æŽ¥å£
+ è¾“å…¥å‚æ•°  : VcomId: é€šé“ID
+             pucDataBuf: å‘é€æŒ‡é’ˆ
+             slLen:å‘é€é•¿åº¦
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : ERR_MSP_FAILURE/ERR_MSP_SUCCESS
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 DMS_VcomWriteAsync(
     DMS_PHY_BEAR_ENUM                   enPhyBear,

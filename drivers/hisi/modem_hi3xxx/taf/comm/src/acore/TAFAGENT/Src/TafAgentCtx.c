@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include  "TafAgentCtx.h"
 #include  "TafAgentLog.h"
@@ -15,7 +15,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
     /*lint -e767 */
@@ -23,14 +23,14 @@ extern "C" {
     /*lint -e767 */
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 TAFAGENT_CTX_STRU                       g_stTafAgentCtx = {0};
 TAF_AGENT_STATS_INFO_STRU               g_stTafAgentStats = {0};
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -38,7 +38,7 @@ VOS_UINT32 Taf_Agent_InitCtx(VOS_VOID)
 {
     g_stTafAgentCtx.pucTafAcpuCnfMsg = VOS_NULL_PTR;
 
-    /* ·ÖÅä»¥³âĞÅºÅÁ¿ */
+    /* åˆ†é…äº’æ–¥ä¿¡å·é‡ */
     if (VOS_OK != VOS_SmMCreate("SYNC", VOS_SEMA4_FIFO, &g_stTafAgentCtx.hTafAcpuSyncSem))
     {
         TAFAGENT_ERROR_LOG(ACPU_PID_TAFAGENT, "Create aps acpu sycn sem failed!");
@@ -51,7 +51,7 @@ VOS_UINT32 Taf_Agent_InitCtx(VOS_VOID)
         TAF_AGENT_DBG_SAVE_MUTEX_SEM_ID(g_stTafAgentCtx.hTafAcpuSyncSem);
     }
 
-    /* ·ÖÅä¶ş½øÖÆĞÅºÅÁ¿ */
+    /* åˆ†é…äºŒè¿›åˆ¶ä¿¡å·é‡ */
     if (VOS_OK != VOS_SmBCreate( "CNF", 0, VOS_SEMA4_FIFO, &g_stTafAgentCtx.hTafAcpuCnfSem))
     {
         TAFAGENT_ERROR_LOG(ACPU_PID_TAFAGENT, "Create aps acpu cnf sem failed!");
@@ -111,7 +111,7 @@ VOS_UINT8* TAF_AGENT_SaveMsg(
 {
     if ((TAFAGENT_APS_MAX_MSG_LEN - VOS_MSG_HEAD_LENGTH) >= ulLen)
     {
-        /* ±¸·İ»Ø¸´ÏûÏ¢ */
+        /* å¤‡ä»½å›å¤æ¶ˆæ¯ */
         PS_MEM_CPY(g_stTafAgentCtx.aucMsg, pucMsg, ulLen + VOS_MSG_HEAD_LENGTH);
 
         return &(g_stTafAgentCtx.aucMsg[0]);
@@ -124,20 +124,20 @@ VOS_UINT8* TAF_AGENT_SaveMsg(
 }
 VOS_VOID TAF_AGENT_ShowStats(VOS_VOID)
 {
-    vos_printf("********************TAF AGENTÍ³¼ÆĞÅÏ¢*******************\n");
-    vos_printf("Ä£¿é³õÊ¼»¯±êÊ¶                              %d\n", g_stTafAgentCtx.ulInitFlg);
-    vos_printf("µ±Ç°µÄ»¥³âĞÅºÅÁ¿                            %x\n", g_stTafAgentCtx.hTafAcpuSyncSem);
-    vos_printf("µ±Ç°µÄ»¥³âĞÅºÅÁ¿                            %x\n", g_stTafAgentCtx.hTafAcpuCnfSem);
-    vos_printf("´´½¨µÄ»¥³âĞÅºÅÁ¿                            %p\n", g_stTafAgentStats.ulMutexSemId);
-    vos_printf("´´½¨µÄ¶ş½øÖÆĞÅºÅÁ¿                          %p\n", g_stTafAgentStats.ulBinarySemId);
-    vos_printf("´´½¨»¥³âĞÅºÅÁ¿Ê§°Ü´ÎÊı                      %d\n", g_stTafAgentStats.ulCreateMutexSemFailNum);
-    vos_printf("´´½¨¶ş½øÖÆĞÅºÅÁ¿Ê§°Ü´ÎÊı                    %d\n", g_stTafAgentStats.ulCreateBinarySemFailNum);
-    vos_printf("Ëø»¥³âĞÅºÅÁ¿Ê§°Ü´ÎÊı                        %d\n", g_stTafAgentStats.ulLockMutexSemFailNum);
-    vos_printf("Ëø¶ş½øÖÆĞÅºÅÁ¿Ê§°Ü´ÎÊı                      %d\n", g_stTafAgentStats.ulLockBinarySemFailNum);
-    vos_printf("×îºóÒ»´ÎËø»¥³âĞÅºÅÁ¿Ê§°ÜÔ­Òò                %x\n", g_stTafAgentStats.ulLastMutexSemErrRslt);
-    vos_printf("×îºóÒ»´ÎËø¶ş½øÖÆĞÅºÅÁ¿Ê§°ÜÔ­Òò              %x\n", g_stTafAgentStats.ulLastBinarySemErrRslt);
-    vos_printf("Í¬²½ÏûÏ¢Îª¿Õ´ÎÊı                            %d\n", g_stTafAgentStats.ulSyncMsgIsNullNum);
-    vos_printf("Í¬²½ÏûÏ¢²»Æ¥Åä´ÎÊı                          %d\n", g_stTafAgentStats.ulSyncMsgNotMatchNum);
+    vos_printf("********************TAF AGENTç»Ÿè®¡ä¿¡æ¯*******************\n");
+    vos_printf("æ¨¡å—åˆå§‹åŒ–æ ‡è¯†                              %d\n", g_stTafAgentCtx.ulInitFlg);
+    vos_printf("å½“å‰çš„äº’æ–¥ä¿¡å·é‡                            %x\n", g_stTafAgentCtx.hTafAcpuSyncSem);
+    vos_printf("å½“å‰çš„äº’æ–¥ä¿¡å·é‡                            %x\n", g_stTafAgentCtx.hTafAcpuCnfSem);
+    vos_printf("åˆ›å»ºçš„äº’æ–¥ä¿¡å·é‡                            %p\n", g_stTafAgentStats.ulMutexSemId);
+    vos_printf("åˆ›å»ºçš„äºŒè¿›åˆ¶ä¿¡å·é‡                          %p\n", g_stTafAgentStats.ulBinarySemId);
+    vos_printf("åˆ›å»ºäº’æ–¥ä¿¡å·é‡å¤±è´¥æ¬¡æ•°                      %d\n", g_stTafAgentStats.ulCreateMutexSemFailNum);
+    vos_printf("åˆ›å»ºäºŒè¿›åˆ¶ä¿¡å·é‡å¤±è´¥æ¬¡æ•°                    %d\n", g_stTafAgentStats.ulCreateBinarySemFailNum);
+    vos_printf("é”äº’æ–¥ä¿¡å·é‡å¤±è´¥æ¬¡æ•°                        %d\n", g_stTafAgentStats.ulLockMutexSemFailNum);
+    vos_printf("é”äºŒè¿›åˆ¶ä¿¡å·é‡å¤±è´¥æ¬¡æ•°                      %d\n", g_stTafAgentStats.ulLockBinarySemFailNum);
+    vos_printf("æœ€åä¸€æ¬¡é”äº’æ–¥ä¿¡å·é‡å¤±è´¥åŸå›                 %x\n", g_stTafAgentStats.ulLastMutexSemErrRslt);
+    vos_printf("æœ€åä¸€æ¬¡é”äºŒè¿›åˆ¶ä¿¡å·é‡å¤±è´¥åŸå›               %x\n", g_stTafAgentStats.ulLastBinarySemErrRslt);
+    vos_printf("åŒæ­¥æ¶ˆæ¯ä¸ºç©ºæ¬¡æ•°                            %d\n", g_stTafAgentStats.ulSyncMsgIsNullNum);
+    vos_printf("åŒæ­¥æ¶ˆæ¯ä¸åŒ¹é…æ¬¡æ•°                          %d\n", g_stTafAgentStats.ulSyncMsgNotMatchNum);
 
     vos_printf("\r\n");
 

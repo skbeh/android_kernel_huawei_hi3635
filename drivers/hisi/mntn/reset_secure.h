@@ -23,22 +23,22 @@ extern "C" {
  /*tmp, need to make sure*/
 #define DX_SB_HASH_LENGTH_IN_WORDS      (4)
 
-/* ∏¯√ø∏ˆptable”≥œÒ‘§¡Ùµƒ◊Ó¥Ûµƒø’º‰ */
+/* ÁªôÊØè‰∏™ptableÊò†ÂÉèÈ¢ÑÁïôÁöÑÊúÄÂ§ßÁöÑÁ©∫Èó¥ */
 #define PTABLE_MAX_SIZE         (1024*32)
 
-/* VRL«¯µƒptable«¯÷–µƒ∆´“∆ */
+/* VRLÂå∫ÁöÑptableÂå∫‰∏≠ÁöÑÂÅèÁßª */
 #define VRL_AREA1_OFFSET        (1024*256)
 
-/* VRL±∏∑›«¯µƒptable«¯÷–µƒ∆´“∆ */
+/* VRLÂ§á‰ªΩÂå∫ÁöÑptableÂå∫‰∏≠ÁöÑÂÅèÁßª */
 #define VRL_AREA2_OFFSET        (1024*256 + 1024*128)
 
-/* ∏¯√ø∏ˆVRL‘§¡Ùµƒ◊Ó¥Ûø’º‰ */
+/* ÁªôÊØè‰∏™VRLÈ¢ÑÁïôÁöÑÊúÄÂ§ßÁ©∫Èó¥ */
 #define VRL_SIZE                (1024*2)
 
-/* ∏¯workspace‘§¡Ùµƒø’º‰,VRL¥Û–°º”2MB(»ÁC∫ÀµƒNV) */
+/* ÁªôworkspaceÈ¢ÑÁïôÁöÑÁ©∫Èó¥,VRLÂ§ßÂ∞èÂä†2MB(Â¶ÇCÊ†∏ÁöÑNV) */
 #define WORKSPACE_SIZE          (VRL_SIZE + 1024*1024*2)
 
-/* VRL÷–µƒ«¯”Ú≥§∂»∂®“Â */
+/* VRL‰∏≠ÁöÑÂå∫ÂüüÈïøÂ∫¶ÂÆö‰πâ */
 #define ADDITIONAL_DATA_SIZE    (128)
 #define RSA_KEY_SIZE            (2048/8)
 #define BARRETT_SIZE            (5*4)
@@ -50,12 +50,12 @@ extern "C" {
 #define IMG_INFO_SIZE           (8)
 
 #ifndef CONFIG_ARM64
-/* efuse≤Ÿ◊˜œ‡πÿµƒ∫Í∂®“Â */
-/* ∫Û–¯–Ë“™∏˘æ› µº µƒAPB ±÷”∏¸–¬ */
+/* efuseÊìç‰ΩúÁõ∏ÂÖ≥ÁöÑÂÆèÂÆö‰πâ */
+/* ÂêéÁª≠ÈúÄË¶ÅÊ†πÊçÆÂÆûÈôÖÁöÑAPBÊó∂ÈíüÊõ¥Êñ∞ */
 #define APB_CLK             30000000
-/* …’–¥ ±–Ú“™«Û:
-*  1.EFUSE_COUNT*Trefclk > 120ns,EFUSE_COUNT>=3. Trefclk = 1/APB_CLK,π EFUSE_COUNT»°3
-*  11us < (EFUSE_COUNT + PGM_COUNT) * Trefclk < 13us,»°12us
+/* ÁÉßÂÜôÊó∂Â∫èË¶ÅÊ±Ç:
+*  1.EFUSE_COUNT*Trefclk > 120ns,EFUSE_COUNT>=3. Trefclk = 1/APB_CLK,ÊïÖEFUSE_COUNTÂèñ3
+*  11us < (EFUSE_COUNT + PGM_COUNT) * Trefclk < 13us,Âèñ12us
 */
 #define EFUSE_COUNT_CFG     3
 #define PGM_COUNT_CFG       ((APB_CLK / 1000000) * 12 - EFUSE_COUNT_CFG)
@@ -71,29 +71,29 @@ extern "C" {
 #define EFUSEC_PG_FIN (1<<0)
 #define EFUSEC_RD_FIN (1<<1)
 
-/* …’–¥øÿ÷∆ */
+/* ÁÉßÂÜôÊéßÂà∂ */
 #define EFUSEC_PG_CTRL_POS      0
 #define EFUSEC_PG_CTRL_WIDTH    1
 #define EFUSEC_PG_CTRL_MASK     (((1<<EFUSEC_PG_CTRL_WIDTH)-1)<<EFUSEC_PG_CTRL_POS)
 #define EFUSEC_PG_CTRL_DIS      (1<<EFUSEC_PG_CTRL_POS)
-/* ∞≤»´–£—È πƒ‹±Í÷æ */
+/* ÂÆâÂÖ®Ê†°È™å‰ΩøËÉΩÊ†áÂøó */
 #define EFUSEC_SEC_EN_POS       1
 #define EFUSEC_SEC_EN_WIDTH     1
 #define EFUSEC_SEC_EN_MASK      (((1<<EFUSEC_SEC_EN_WIDTH)-1)<<EFUSEC_SEC_EN_POS)
 #define EFUSEC_SEC_EN           (1<<EFUSEC_SEC_EN_POS)
-/* JTAG∑√Œ øÿ÷∆ */
+/* JTAGËÆøÈóÆÊéßÂà∂ */
 #define EFUSEC_JTAG_CTRL_POS     2
 #define EFUSEC_JTAG_CTRL_WIDTH   1
 #define EFUSEC_JTAG_CTRL_MASK    (((1<<EFUSEC_JTAG_CTRL_WIDTH)-1)<<EFUSEC_JTAG_CTRL_POS)
 #define EFUSEC_JTAG_CTRL_EN      (0<<EFUSEC_JTAG_CTRL_POS)
 
-#define EFUSE_MAX_SIZE  512     /* Efuse¥Û–° */
-#define EFUSE_HAD_WRITED 1      /*Efuse “—æ≠…’–¥*/
-#define EFUSE_NOT_WRITED 0      /*Efuse √ª”–…’–¥*/
+#define EFUSE_MAX_SIZE  512     /* EfuseÂ§ßÂ∞è */
+#define EFUSE_HAD_WRITED 1      /*Efuse Â∑≤ÁªèÁÉßÂÜô*/
+#define EFUSE_NOT_WRITED 0      /*Efuse Ê≤°ÊúâÁÉßÂÜô*/
 
 #define EFUSE_GRP_CFG			(EFUSE_MAX_SIZE/4 - 1)
 
-#define EFUSE_OP_TIMEOUT_TIME   0x100000    /* Efuse≤Ÿ◊˜≥¨ ±◊Ó¥Û—” ± ±º‰ */
+#define EFUSE_OP_TIMEOUT_TIME   0x100000    /* EfuseÊìç‰ΩúË∂ÖÊó∂ÊúÄÂ§ßÂª∂Êó∂Êó∂Èó¥ */
 
 
 #define EFUSEC_CFG(BASE_ADDR)              ((BASE_ADDR)+0x0)
@@ -121,10 +121,10 @@ extern "C" {
 #define EFUSEC_DATA(BASE_ADDR)             ((BASE_ADDR)+0x18)
 
 #define EFUSEC_HW_CFG(BASE_ADDR)           ((BASE_ADDR)+0x1C)
-/* …’–¥øÿ÷∆ */
+/* ÁÉßÂÜôÊéßÂà∂ */
 #define EFUSEC_PG_DIS           0x1
 
-/* ∆Ù∂Ø…Ë±∏—°‘Ò */
+/* ÂêØÂä®ËÆæÂ§áÈÄâÊã© */
 #define EFUSEC_BOOTMODE_WIDTH   3
 #define EFUSEC_BOOTMODE_POS     3
 #define EFUSEC_BOOTMODE_MASK     (((1<<EFUSEC_BOOTMODE_WIDTH)-1)<<EFUSEC_BOOTMODE_POS)
@@ -179,7 +179,7 @@ extern "C" {
  *****************************************************************************
  */
 
-/* ∏˜∏ˆ”≥œÒµƒVRL id∂®“Â£¨”√”⁄‘⁄VRL«¯÷–À˜“˝∏˜∏ˆ”≥œÒµƒVRL */
+/* ÂêÑ‰∏™Êò†ÂÉèÁöÑVRL idÂÆö‰πâÔºåÁî®‰∫éÂú®VRLÂå∫‰∏≠Á¥¢ÂºïÂêÑ‰∏™Êò†ÂÉèÁöÑVRL */
 typedef enum _vrl_id
 {
     ID_NONE         = -3,
@@ -214,14 +214,14 @@ extern unsigned int g_image_load_addr;
  *****************************************************************************
  */
 
-/* ∑¿÷π¥ÆªıµƒΩ·ππÃÂ */
+/* Èò≤Ê≠¢‰∏≤Ë¥ßÁöÑÁªìÊûÑ‰Ωì */
 struct oem_stru {
     unsigned int flag;
     unsigned int carrier_id;
     unsigned int hw_id;
 };
 
-/* ¥”VRLΩ‚Œˆ≥ˆ¿¥µƒVRL≥§∂»“‘º∞”≥œÒ≥§∂» */
+/* ‰ªéVRLËß£ÊûêÂá∫Êù•ÁöÑVRLÈïøÂ∫¶‰ª•ÂèäÊò†ÂÉèÈïøÂ∫¶ */
 struct vrl_parse_stru {
     unsigned int vrl1_size;
     unsigned int vrl2_size;

@@ -51,7 +51,7 @@ void print_count(void)
    return;
 }
 
-/*测试函数接口操作timer0*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer0*/
 s32 k3_hardtimer_test_case01(void)
 {
    unsigned long i=0; 
@@ -80,7 +80,7 @@ s32 k3_hardtimer_test_case01(void)
    osl_sema_delete(&sem);
    return OK;
 }
-/*测试函数接口操作timer0*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer0*/
 s32 k3_hardtimer_test_case02(void)
 {
    unsigned long i=4; 
@@ -109,7 +109,7 @@ s32 k3_hardtimer_test_case02(void)
    osl_sema_delete(&sem);
    return OK;
 }
-/*测试函数接口操作timer0*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer0*/
 s32 k3_hardtimer_test_case03(void)
 {
    unsigned long i=5; 

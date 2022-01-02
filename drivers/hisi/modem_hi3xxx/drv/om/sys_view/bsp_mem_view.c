@@ -1,5 +1,5 @@
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 /*lint -save -e537*/
 #include "bsp_om_api.h"
@@ -25,16 +25,16 @@ BSP_SYS_MEM_INFO_CTRL_STRU      mem_info_stru = {{(softtimer_func)NULL,0,0,SOFTT
 /*lint +e156*/
 
 /*****************************************************************************
-* º¯ Êı Ãû  : mem_alloc_trace
+* å‡½ æ•° å  : mem_alloc_trace
 *
-* ¹¦ÄÜÃèÊö  :malloc²Ù×÷trace¼ÇÂ¼
+* åŠŸèƒ½æè¿°  :mallocæ“ä½œtraceè®°å½•
 *
-* ÊäÈë²ÎÊı  :modu_id :Ä£¿éID
-*                        size :ÉêÇëµÄÄÚ´æ³¤¶È
-*                        addr :ÉêÇëµÄÄÚ´æµØÖ·
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :modu_id :æ¨¡å—ID
+*                        size :ç”³è¯·çš„å†…å­˜é•¿åº¦
+*                        addr :ç”³è¯·çš„å†…å­˜åœ°å€
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å› å€¼  : BSP_OK
 *****************************************************************************/
 
 static u32 mem_alloc_trace(bsp_module_e modu_id,u32 size,void* addr)
@@ -56,7 +56,7 @@ static u32 mem_alloc_trace(bsp_module_e modu_id,u32 size,void* addr)
         return BSP_ERR_SYSVIEW_MALLOC_FAIL;
     }
 
-    /* BSP_MODU_SYSVIEW Ä£¿éÉêÇëµÄÄÚ´æÖ»¼ÇÂ¼×Ü´óĞ¡ºÍ´ÎÊı*/
+    /* BSP_MODU_SYSVIEW æ¨¡å—ç”³è¯·çš„å†…å­˜åªè®°å½•æ€»å¤§å°å’Œæ¬¡æ•°*/
     g_om_mem_trace.module_trace[BSP_MODU_SYSVIEW].alloc_times++;
     g_om_mem_trace.module_trace[BSP_MODU_SYSVIEW].alloc_size += sizeof(BSP_MEM_ALLOC_TRACE_STRU);
     g_om_mem_trace.module_trace[BSP_MODU_SYSVIEW].use_mem_size += sizeof(BSP_MEM_ALLOC_TRACE_STRU);
@@ -74,15 +74,15 @@ static u32 mem_alloc_trace(bsp_module_e modu_id,u32 size,void* addr)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : mem_free_trace_node
+* å‡½ æ•° å  : mem_free_trace_node
 *
-* ¹¦ÄÜÃèÊö  :É¾³ımalloc traceÁ´±íÖĞµÄ½Úµã
+* åŠŸèƒ½æè¿°  :åˆ é™¤malloc traceé“¾è¡¨ä¸­çš„èŠ‚ç‚¹
 *
-* ÊäÈë²ÎÊı  :modu_id :Ä£¿éID
-*                        addr :freeµÄÄÚ´æµØÖ·
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :modu_id :æ¨¡å—ID
+*                        addr :freeçš„å†…å­˜åœ°å€
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å› å€¼  : BSP_OK
 *****************************************************************************/
 
 u32 mem_free_trace_node(bsp_module_e modu_id,void* addr)
@@ -120,15 +120,15 @@ u32 mem_free_trace_node(bsp_module_e modu_id,void* addr)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : mem_free_trace
+* å‡½ æ•° å  : mem_free_trace
 *
-* ¹¦ÄÜÃèÊö  :free²Ù×÷trace¼ÇÂ¼
+* åŠŸèƒ½æè¿°  :freeæ“ä½œtraceè®°å½•
 *
-* ÊäÈë²ÎÊı  :modu_id :Ä£¿éID
-*                        addr :freeµÄÄÚ´æµØÖ·
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :modu_id :æ¨¡å—ID
+*                        addr :freeçš„å†…å­˜åœ°å€
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å› å€¼  : BSP_OK
 *****************************************************************************/
 
 u32 mem_free_trace(bsp_module_e modu_id,void* addr)
@@ -140,13 +140,13 @@ u32 mem_free_trace(bsp_module_e modu_id,void* addr)
         return BSP_ERR_SYSVIEW_INVALID_MODULE;
     }
 
-    /* ÓÅÏÈÔÚ modu_id Ä£¿é¶ÔÓ¦µÄÁĞ±íÖĞ²éÕÒ*/
+    /* ä¼˜å…ˆåœ¨ modu_id æ¨¡å—å¯¹åº”çš„åˆ—è¡¨ä¸­æŸ¥æ‰¾*/
     if(BSP_OK == mem_free_trace_node(modu_id,addr))
     {
         return BSP_OK;
     }
 
-    /* Èç¹ûÔÚµ±Ç°µÄmodÁĞ±íÖĞÃ»ÓĞÕÒµ½¶ÔÓ¦µÄµØÖ·£¬ĞèÒª±éÀúËùÓĞµÄmodÁĞ±í£¬²éÕÒ*/
+    /* å¦‚æœåœ¨å½“å‰çš„modåˆ—è¡¨ä¸­æ²¡æœ‰æ‰¾åˆ°å¯¹åº”çš„åœ°å€ï¼Œéœ€è¦éå†æ‰€æœ‰çš„modåˆ—è¡¨ï¼ŒæŸ¥æ‰¾*/
     for(mod = 0; mod < BSP_MODU_MAX; mod++)
     {
         if(BSP_MODU_SYSVIEW == mod)
@@ -160,20 +160,20 @@ u32 mem_free_trace(bsp_module_e modu_id,void* addr)
         }
     }
 
-    /* ¼ÇÂ¼´íÎó´òÓ¡*/
+    /* è®°å½•é”™è¯¯æ‰“å°*/
     return BSP_ERR_SYSVIEW_FREE_BUF_ERR;
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : report_mem_trace
+* å‡½ æ•° å  : report_mem_trace
 *
-* ¹¦ÄÜÃèÊö  :ÄÚ´æ traceÉÏ±¨´¦Àí½Ó¿Ú
+* åŠŸèƒ½æè¿°  :å†…å­˜ traceä¸ŠæŠ¥å¤„ç†æ¥å£
 *
-* ÊäÈë²ÎÊı  :ÎŞ
+* è¾“å…¥å‚æ•°  :æ— 
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : BSP_OK
+* è¿” å› å€¼  : BSP_OK
 *****************************************************************************/
 
 u32 report_mem_trace(void)
@@ -219,16 +219,16 @@ u32 report_mem_trace(void)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_mem_alloc
+* å‡½ æ•° å  : bsp_om_mem_alloc
 *
-* ¹¦ÄÜÃèÊö  :ÄÚ´æ ÉêÇë½Ó¿Ú·â×°
+* åŠŸèƒ½æè¿°  :å†…å­˜ ç”³è¯·æ¥å£å°è£…
 *
-* ÊäÈë²ÎÊı  :modu_id :Ä£¿éID
-*                        size  :ÉêÇëµÄÄÚ´æ´óĞ¡
-*                        flag :ÄÚ´æÊôĞÔ
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :modu_id :æ¨¡å—ID
+*                        size  :ç”³è¯·çš„å†…å­˜å¤§å°
+*                        flag :å†…å­˜å±æ€§
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÄÚ´æµØÖ·
+* è¿” å› å€¼  : å†…å­˜åœ°å€
 *****************************************************************************/
 
 void* bsp_om_mem_alloc(bsp_module_e modu_id,u32 size,u32 flag)
@@ -246,16 +246,16 @@ void* bsp_om_mem_alloc(bsp_module_e modu_id,u32 size,u32 flag)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_mem_free
+* å‡½ æ•° å  : bsp_om_mem_free
 *
-* ¹¦ÄÜÃèÊö  :ÄÚ´æ ÊÍ·Å½Ó¿Ú·â×°
+* åŠŸèƒ½æè¿°  :å†…å­˜ é‡Šæ”¾æ¥å£å°è£…
 *
-* ÊäÈë²ÎÊı  :modu_id :Ä£¿éID
-*                        addr  : ĞèÒªÊÍ·ÅµÄÄÚ´æ
+* è¾“å…¥å‚æ•°  :modu_id :æ¨¡å—ID
+*                        addr  : éœ€è¦é‡Šæ”¾çš„å†…å­˜
 *
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 
 void bsp_om_mem_free(bsp_module_e modu_id,void* addr)

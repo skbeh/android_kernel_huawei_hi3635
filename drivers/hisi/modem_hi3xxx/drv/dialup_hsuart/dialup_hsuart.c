@@ -65,14 +65,14 @@ STATIC INLINE void hsuart_hex_dump(bsp_log_level_e level, unsigned char *buf, un
 #endif
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_get_dma_info
+* å‡½ æ•° å  : hsuart_get_dma_info
 *
-* ¹¦ÄÜÃèÊö  : uart »ñÈ¡DMAĞÅÏ¢
+* åŠŸèƒ½æè¿°  : uart è·å–DMAä¿¡æ¯
 *
-* ÊäÈë²ÎÊı  : uart_ctx:uartÉÏÏÂÎÄ
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : uart_ctx:uartä¸Šä¸‹æ–‡
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void hsuart_get_dma_info(hsuart_ctx *uart_ctx)
@@ -103,15 +103,15 @@ void hsuart_get_dma_info(hsuart_ctx *uart_ctx)
 		uart_ctx->dma_info.burst_delay, uart_ctx->dma_info.single_delay, uart_ctx->dma_info.single_loop);
 }
 /*******************************************************************************
-* º¯ Êı Ãû  : hsuart_enable
+* å‡½ æ•° å  : hsuart_enable
 *
-* ¹¦ÄÜÃèÊö  : Ê¹ÄÜUART
+* åŠŸèƒ½æè¿°  : ä½¿èƒ½UART
 *
-* ÊäÈë²ÎÊı  : uart_dev Éè±¸Ö¸Õë
+* è¾“å…¥å‚æ•°  : uart_dev è®¾å¤‡æŒ‡é’ˆ
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 static inline void hsuart_enable(hsuart_dev *uart_dev)
@@ -125,15 +125,15 @@ static inline void hsuart_enable(hsuart_dev *uart_dev)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû  : hsuart_disable
+* å‡½ æ•° å  : hsuart_disable
 *
-* ¹¦ÄÜÃèÊö  : ½ûÄÜUART
+* åŠŸèƒ½æè¿°  : ç¦èƒ½UART
 *
-* ÊäÈë²ÎÊı  : uart_dev Éè±¸Ö¸Õë
+* è¾“å…¥å‚æ•°  : uart_dev è®¾å¤‡æŒ‡é’ˆ
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 static inline void hsuart_disable(hsuart_dev *uart_dev)
@@ -146,15 +146,15 @@ static inline void hsuart_disable(hsuart_dev *uart_dev)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû  : hsuart_set_rts
+* å‡½ æ•° å  : hsuart_set_rts
 *
-* ¹¦ÄÜÃèÊö  : ÉèÖÃÁ÷¿Ø
+* åŠŸèƒ½æè¿°  : è®¾ç½®æµæ§
 *
-* ÊäÈë²ÎÊı  : uart_dev Éè±¸Ö¸Õë
+* è¾“å…¥å‚æ•°  : uart_dev è®¾å¤‡æŒ‡é’ˆ
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 #if 0
@@ -175,15 +175,15 @@ static inline void hsuart_set_rts(hsuart_dev *uart_dev)
 }
 #endif
 /*******************************************************************************
-* º¯ Êı Ãû  : hsuart_disable
+* å‡½ æ•° å  : hsuart_disable
 *
-* ¹¦ÄÜÃèÊö  : ½ûÄÜUART
+* åŠŸèƒ½æè¿°  : ç¦èƒ½UART
 *
-* ÊäÈë²ÎÊı  : uart_dev Éè±¸Ö¸Õë
+* è¾“å…¥å‚æ•°  : uart_dev è®¾å¤‡æŒ‡é’ˆ
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 #if 0
@@ -205,15 +205,15 @@ static inline void hsuart_clear_rts(hsuart_dev *uart_dev)
 #endif
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_set_baud
+* å‡½ æ•° å  : hsuart_set_baud
 *
-* ¹¦ÄÜÃèÊö  : UART ÉèÖÃ²¨ÌØÂÊº¯Êı
+* åŠŸèƒ½æè¿°  : UART è®¾ç½®æ³¢ç‰¹ç‡å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_dev: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             baud: ²¨ÌØÂÊÖµ
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_dev: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             baud: æ³¢ç‰¹ç‡å€¼
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 int hsuart_set_baud(hsuart_dev *uart_dev, int baud)
@@ -252,14 +252,14 @@ int hsuart_set_baud(hsuart_dev *uart_dev, int baud)
 	divisor_dll = divisor & 0xFF;
 	divisor_dlh = (divisor & 0xFF00) >> 8;
 	
-	/* ´ò¿ª DLL/DHL */
+	/* æ‰“å¼€ DLL/DHL */
     writel(UART_LCR_DLAB, uart_dev->vir_addr_base + UART_REGOFF_LCR);
 
-    /* ÅäÖÃDLH ºÍDLL ¼Ä´æÆ÷£¬ÉèÖÃ´®ĞĞÍ¨Ñ¶µÄ²¨ÌØÂÊ*/
+    /* é…ç½®DLH å’ŒDLL å¯„å­˜å™¨ï¼Œè®¾ç½®ä¸²è¡Œé€šè®¯çš„æ³¢ç‰¹ç‡*/
     writel(divisor_dll, uart_dev->vir_addr_base + UART_REGOFF_DLL);
     writel(divisor_dlh, uart_dev->vir_addr_base + UART_REGOFF_DLH);
  
-    /*½ûÖ¹ DLL&DLH */
+    /*ç¦æ­¢ DLL&DLH */
 //	val &= ~UART_LCR_DLAB;
 //    writel(val, uart_dev->vir_addr_base + UART_REGOFF_LCR);
  
@@ -269,15 +269,15 @@ int hsuart_set_baud(hsuart_dev *uart_dev, int baud)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_set_wlen
+* å‡½ æ•° å  : hsuart_set_wlen
 *
-* ¹¦ÄÜÃèÊö  : UART ÉèÖÃÊı¾İÎ»³¤º¯Êı
+* åŠŸèƒ½æè¿°  : UART è®¾ç½®æ•°æ®ä½é•¿å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_dev: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             w_len: Êı¾İÎ»³¤
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_dev: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             w_len: æ•°æ®ä½é•¿
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 int hsuart_set_wlen(hsuart_dev *uart_dev, int w_len)
@@ -327,15 +327,15 @@ int hsuart_set_wlen(hsuart_dev *uart_dev, int w_len)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_set_stp2
+* å‡½ æ•° å  : hsuart_set_stp2
 *
-* ¹¦ÄÜÃèÊö  : UART ÉèÖÃÍ£Ö¹Î»³¤º¯Êı
+* åŠŸèƒ½æè¿°  : UART è®¾ç½®åœæ­¢ä½é•¿å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_dev: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             stp2: Á½¸öÍ£Ö¹Î»¿ª¹Ø
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_dev: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             stp2: ä¸¤ä¸ªåœæ­¢ä½å¼€å…³
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 int hsuart_set_stp2(hsuart_dev *uart_dev, int stp2)
@@ -372,15 +372,15 @@ int hsuart_set_stp2(hsuart_dev *uart_dev, int stp2)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_set_eps
+* å‡½ æ•° å  : hsuart_set_eps
 *
-* ¹¦ÄÜÃèÊö  : UART ÉèÖÃĞ£Ñé·½Ê½º¯Êı
+* åŠŸèƒ½æè¿°  : UART è®¾ç½®æ ¡éªŒæ–¹å¼å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_dev: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             eps: Ğ£Ñé·½Ê½
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_dev: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             eps: æ ¡éªŒæ–¹å¼
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 int hsuart_set_eps(hsuart_dev *uart_dev, int eps)
@@ -397,20 +397,20 @@ int hsuart_set_eps(hsuart_dev *uart_dev, int eps)
 
     switch(eps)
     {
-		/*ÎŞĞ£ÑéÎ»*/
+		/*æ— æ ¡éªŒä½*/
 		case PARITY_NO_CHECK:
             val = readl(uart_dev->vir_addr_base + UART_REGOFF_LCR);
             val &= ~UART_LCR_PEN;
             (void)writel(val, uart_dev->vir_addr_base + UART_REGOFF_LCR);
             break;
-		/*ÆæĞ£Ñé*/
+		/*å¥‡æ ¡éªŒ*/
         case PARITY_CHECK_ODD:
             val = readl(uart_dev->vir_addr_base + UART_REGOFF_LCR);
             val |= UART_LCR_PEN;
 			val &= ~UART_LCR_EPS ;
             (void)writel(val, uart_dev->vir_addr_base + UART_REGOFF_LCR);
             break;
-		/*Å¼Ğ£Ñé*/
+		/*å¶æ ¡éªŒ*/
         case PARITY_CHECK_EVEN:
             val = readl(uart_dev->vir_addr_base + UART_REGOFF_LCR);
             val |= (UART_LCR_PEN | UART_LCR_EPS);
@@ -425,14 +425,14 @@ int hsuart_set_eps(hsuart_dev *uart_dev, int eps)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_alloc_skb
+* å‡½ æ•° å  : hsuart_alloc_skb
 *
-* ¹¦ÄÜÃèÊö  :·ÖÅäSKB
+* åŠŸèƒ½æè¿°  :åˆ†é…SKB
 *
-* ÊäÈë²ÎÊı  : pMemNode Êı¾İ½Úµãsize »º´æ´óĞ¡
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : pMemNode æ•°æ®èŠ‚ç‚¹size ç¼“å­˜å¤§å°
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : Ê§°Ü/³É¹¦
+* è¿” å› å€¼  : å¤±è´¥/æˆåŠŸ
 *
 *****************************************************************************/
 s32 hsuart_alloc_skb(uart_mem_node* pMemNode, u32 size)
@@ -457,15 +457,15 @@ s32 hsuart_alloc_skb(uart_mem_node* pMemNode, u32 size)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : add_mem_to_freelist
+* å‡½ æ•° å  : add_mem_to_freelist
 *
-* ¹¦ÄÜÃèÊö  : UART UDI Ìí¼Ó½Úµãµ½ FreeList ÖĞ
+* åŠŸèƒ½æè¿°  : UART UDI æ·»åŠ èŠ‚ç‚¹åˆ° FreeList ä¸­
 *
-* ÊäÈë²ÎÊı  : trans_info: ¶ÁĞ´½á¹¹Ìå
-*             pMemNode: ´ıÌí¼ÓµÄ½Úµã
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : trans_info: è¯»å†™ç»“æ„ä½“
+*             pMemNode: å¾…æ·»åŠ çš„èŠ‚ç‚¹
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void add_mem_to_freelist(hsuart_trans_info *trans_info, uart_mem_node* pMemNode)
@@ -476,7 +476,7 @@ void add_mem_to_freelist(hsuart_trans_info *trans_info, uart_mem_node* pMemNode)
     spin_lock_irqsave(&trans_info->list_lock, flags);
     
     list_add_tail(&pMemNode->list_node, &(trans_info->free_list));
-    /*È¥³õÊ¼»¯pMemNode³ÉÔ±*/
+    /*å»åˆå§‹åŒ–pMemNodeæˆå‘˜*/
     pMemNode->state = UART_MEM_IN_FREELIST;
     pMemNode->valid_size = 0;
     pMemNode->pSkb = NULL;
@@ -487,14 +487,14 @@ void add_mem_to_freelist(hsuart_trans_info *trans_info, uart_mem_node* pMemNode)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : get_mem_from_freelist
+* å‡½ æ•° å  : get_mem_from_freelist
 *
-* ¹¦ÄÜÃèÊö  : UART UDI ´ÓFreeList Í·È¡³öÒ»¸ö½Úµã
+* åŠŸèƒ½æè¿°  : UART UDI ä»FreeList å¤´å–å‡ºä¸€ä¸ªèŠ‚ç‚¹
 *
-* ÊäÈë²ÎÊı  : trans_info: ¶ÁĞ´½á¹¹Ìå
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : trans_info: è¯»å†™ç»“æ„ä½“
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ·µ»ØµÄ½ÚµãÖ¸Õë
+* è¿” å› å€¼  : è¿”å›çš„èŠ‚ç‚¹æŒ‡é’ˆ
 *
 *****************************************************************************/
 uart_mem_node* get_mem_from_freelist(hsuart_trans_info *trans_info)
@@ -525,15 +525,15 @@ uart_mem_node* get_mem_from_freelist(hsuart_trans_info *trans_info)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : add_mem_to_donelist
+* å‡½ æ•° å  : add_mem_to_donelist
 *
-* ¹¦ÄÜÃèÊö  : UART UDI Ìí¼Ó½Úµãµ½ Íê³ÉÁ´±í ÖĞ
+* åŠŸèƒ½æè¿°  : UART UDI æ·»åŠ èŠ‚ç‚¹åˆ° å®Œæˆé“¾è¡¨ ä¸­
 *
-* ÊäÈë²ÎÊı  : trans_info: uart ¶ÁĞ´½á¹¹ÌåÖ¸Õë
-*             pMemNode: ´ıÌí¼ÓµÄ½Úµã
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : trans_info: uart è¯»å†™ç»“æ„ä½“æŒ‡é’ˆ
+*             pMemNode: å¾…æ·»åŠ çš„èŠ‚ç‚¹
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void add_mem_to_donelist(hsuart_trans_info *trans_info, uart_mem_node* pMemNode)
@@ -541,7 +541,7 @@ void add_mem_to_donelist(hsuart_trans_info *trans_info, uart_mem_node* pMemNode)
 
 	unsigned long flags;
 
-    /*Èë²ÎºÏ·¨ĞÔ¼ì²é*/
+    /*å…¥å‚åˆæ³•æ€§æ£€æŸ¥*/
     spin_lock_irqsave(&trans_info->list_lock, flags);
 
     list_add_tail(&pMemNode->list_node, &(trans_info->done_list));
@@ -552,13 +552,13 @@ void add_mem_to_donelist(hsuart_trans_info *trans_info, uart_mem_node* pMemNode)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : get_mem_from_donelist
+* å‡½ æ•° å  : get_mem_from_donelist
 *
-* ¹¦ÄÜÃèÊö  : UART UDI ´ÓDoneList Í·È¡³öÒ»¸ö½Úµã
+* åŠŸèƒ½æè¿°  : UART UDI ä»DoneList å¤´å–å‡ºä¸€ä¸ªèŠ‚ç‚¹
 *
-* ÊäÈë²ÎÊı  : trans_info: ¶ÁĞ´½á¹¹Ìå
-* Êä³ö²ÎÊı  : NA
-* ·µ »Ø Öµ  : ·µ»ØµÄ½ÚµãÖ¸Õë
+* è¾“å…¥å‚æ•°  : trans_info: è¯»å†™ç»“æ„ä½“
+* è¾“å‡ºå‚æ•°  : NA
+* è¿” å› å€¼  : è¿”å›çš„èŠ‚ç‚¹æŒ‡é’ˆ
 *
 *****************************************************************************/
 uart_mem_node* get_mem_from_donelist(hsuart_trans_info *trans_info)
@@ -591,14 +591,14 @@ uart_mem_node* get_mem_from_donelist(hsuart_trans_info *trans_info)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : find_mem_from_list
+* å‡½ æ•° å  : find_mem_from_list
 *
-* ¹¦ÄÜÃèÊö  : ´ÓÁ´±íÖĞ²éÕÒÄÚ´æ¶ÔÓ¦½Úµã
+* åŠŸèƒ½æè¿°  : ä»é“¾è¡¨ä¸­æŸ¥æ‰¾å†…å­˜å¯¹åº”èŠ‚ç‚¹
 *
-* ÊäÈë²ÎÊı  : trans_info ¶ÁĞ´½á¹¹Ìå pBuffer ÄÚ´æµØÖ·
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : trans_info è¯»å†™ç»“æ„ä½“ pBuffer å†…å­˜åœ°å€
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ½ÚµãÖ¸Õë
+* è¿” å› å€¼  : èŠ‚ç‚¹æŒ‡é’ˆ
 *
 *****************************************************************************/
 uart_mem_node* find_mem_from_list(hsuart_trans_info *trans_info, BSP_U8* pBuffer)
@@ -618,14 +618,14 @@ uart_mem_node* find_mem_from_list(hsuart_trans_info *trans_info, BSP_U8* pBuffer
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : get_list_node_num
+* å‡½ æ•° å  : get_list_node_num
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡Á´±íÖĞµÄ½Úµã¸öÊı
+* åŠŸèƒ½æè¿°  : è·å–é“¾è¡¨ä¸­çš„èŠ‚ç‚¹ä¸ªæ•°
 *
-* ÊäÈë²ÎÊı  : pFreeHeader: Free ListÍ·½Úµã
-* Êä³ö²ÎÊı  : ·µ»ØµÄ½Úµã¸öÊı
+* è¾“å…¥å‚æ•°  : pFreeHeader: Free Listå¤´èŠ‚ç‚¹
+* è¾“å‡ºå‚æ•°  : è¿”å›çš„èŠ‚ç‚¹ä¸ªæ•°
 *
-* ·µ »Ø Öµ  : ½Úµã¸öÊı
+* è¿” å› å€¼  : èŠ‚ç‚¹ä¸ªæ•°
 *
 *****************************************************************************/
 BSP_S32 get_list_node_num(struct list_head *pHeader)
@@ -643,15 +643,15 @@ BSP_S32 get_list_node_num(struct list_head *pHeader)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_uninit_list
+* å‡½ æ•° å  : hsuart_uninit_list
 *
-* ¹¦ÄÜÃèÊö  : È¥³õÊ¼»¯¶ÁĞ´Á´±í
+* åŠŸèƒ½æè¿°  : å»åˆå§‹åŒ–è¯»å†™é“¾è¡¨
 *
-* ÊäÈë²ÎÊı  : trans_info: ¶ÁĞ´½á¹¹Ìå
+* è¾“å…¥å‚æ•°  : trans_info: è¯»å†™ç»“æ„ä½“
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void hsuart_uninit_list(hsuart_trans_info *trans_info)
@@ -665,13 +665,13 @@ void hsuart_uninit_list(hsuart_trans_info *trans_info)
 	   return;
 	}
     spin_lock_irqsave(&trans_info->list_lock, flags);
-    /* È¥³õÊ¼»¯Á´±í */
+    /* å»åˆå§‹åŒ–é“¾è¡¨ */
     INIT_LIST_HEAD(&(trans_info->free_list));
     INIT_LIST_HEAD(&(trans_info->done_list));
   
     if (trans_info->pmem_start)
     {
-        /* È¥³õÊ¼»¯ËùÓĞ½Úµã */
+        /* å»åˆå§‹åŒ–æ‰€æœ‰èŠ‚ç‚¹ */
         for (idx = 0; idx < trans_info->node_num; idx++)
         {
             INIT_LIST_HEAD(&(trans_info->pmem_start[idx].list_node));
@@ -679,13 +679,13 @@ void hsuart_uninit_list(hsuart_trans_info *trans_info)
             trans_info->pmem_start[idx].mem.vaddr = (void*)NULL;
             trans_info->pmem_start[idx].mem.paddr = (phys_addr)NULL;
             trans_info->pmem_start[idx].valid_size = 0;
-            /* ¶Á½ÚµãÎŞĞèÊÍ·ÅSKB?*/
+            /* è¯»èŠ‚ç‚¹æ— éœ€é‡Šæ”¾SKB?*/
             if (trans_info->pmem_start[idx].pSkb)
             {
                 kfree_skb(trans_info->pmem_start[idx].pSkb);
                 trans_info->pmem_start[idx].pSkb = NULL;
             }
-            /*ÆäËû³ÉÔ±È¥³õÊ¼»¯*/
+            /*å…¶ä»–æˆå‘˜å»åˆå§‹åŒ–*/
         }
 
         kfree(trans_info->pmem_start);
@@ -702,15 +702,15 @@ void hsuart_uninit_list(hsuart_trans_info *trans_info)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_init_list
+* å‡½ æ•° å  : hsuart_init_list
 *
-* ¹¦ÄÜÃèÊö  : ³õÊ¼»¯¶ÁĞ´Á´±í
+* åŠŸèƒ½æè¿°  : åˆå§‹åŒ–è¯»å†™é“¾è¡¨
 *
-* ÊäÈë²ÎÊı  : trans_info: ¶ÁĞ´½á¹¹Ìå
+* è¾“å…¥å‚æ•°  : trans_info: è¯»å†™ç»“æ„ä½“
 *             
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 s32 hsuart_init_list(hsuart_trans_info *trans_info)
@@ -728,12 +728,12 @@ s32 hsuart_init_list(hsuart_trans_info *trans_info)
        hsuart_error("trans_info is NULL\n");
 	   return ERROR;
 	}
-    spin_lock_irqsave(&trans_info->list_lock, flags);//×èÈûĞÅºÅÁ¿
-    /* ³õÊ¼»¯Á´±í */
+    spin_lock_irqsave(&trans_info->list_lock, flags);//é˜»å¡ä¿¡å·é‡
+    /* åˆå§‹åŒ–é“¾è¡¨ */
     INIT_LIST_HEAD(&(trans_info->free_list));
     INIT_LIST_HEAD(&(trans_info->done_list));
     
-    /* ³õÊ¼»¯¶ÁĞÅÏ¢ */
+    /* åˆå§‹åŒ–è¯»ä¿¡æ¯ */
     pMemHead = osl_malloc(trans_info->node_num*sizeof(uart_mem_node));
     if (pMemHead)
     {
@@ -744,7 +744,7 @@ s32 hsuart_init_list(hsuart_trans_info *trans_info)
         trans_info->done_cnt = 0;
         trans_info->total_bytes = 0;
 
-        /* ³õÊ¼»¯Ê±,ËùÓĞ½Úµã¶¼ÔÚFreeList */
+        /* åˆå§‹åŒ–æ—¶,æ‰€æœ‰èŠ‚ç‚¹éƒ½åœ¨FreeList */
         for (idx = 0; idx < trans_info->node_num; idx++)
         {
             pListNode = &(trans_info->pmem_start[idx].list_node);
@@ -753,7 +753,7 @@ s32 hsuart_init_list(hsuart_trans_info *trans_info)
             trans_info->pmem_start[idx].valid_size = 0;
             (void)memset(&(trans_info->pmem_start[idx].mem), 0, sizeof(mem_desc_t));
             trans_info->pmem_start[idx].pSkb = NULL;
-            /*ÆäËû³ÉÔ±³õÊ¼»¯*/
+            /*å…¶ä»–æˆå‘˜åˆå§‹åŒ–*/
         }
     }
     else
@@ -766,14 +766,14 @@ s32 hsuart_init_list(hsuart_trans_info *trans_info)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_buf_init
+* å‡½ æ•° å  : hsuart_buf_init
 *
-* ¹¦ÄÜÃèÊö  :³õÊ¼»¯¶ÁĞ´»º´æ¶ÓÁĞ
+* åŠŸèƒ½æè¿°  :åˆå§‹åŒ–è¯»å†™ç¼“å­˜é˜Ÿåˆ—
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄ
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 s32 hsuart_buf_init(hsuart_ctx *uart_ctx)
@@ -786,18 +786,18 @@ s32 hsuart_buf_init(hsuart_ctx *uart_ctx)
        hsuart_error("uart_ctx is NULL\n");
 	   return ERROR;
 	}
-    /* ³õÊ¼»¯¶ÁĞ´³õÊ¼Öµ */
+    /* åˆå§‹åŒ–è¯»å†™åˆå§‹å€¼ */
     memset(&(uart_ctx->read_info), 0, sizeof(hsuart_trans_info));
     memset(&(uart_ctx->write_info), 0, sizeof(hsuart_trans_info));
     
     spin_lock_init(&(uart_ctx->read_info.list_lock));
     spin_lock_init(&(uart_ctx->write_info.list_lock));
 
-    uart_ctx->read_info.node_num = UART_READ_BUF_NUM;   //¶Á½ÚµãÊıÁ¿16
-    uart_ctx->read_info.node_size = UART_READ_BUF_SIZE; //Ã¿¸ö½Úµã´óĞ¡1536×Ö½Ú
-    uart_ctx->write_info.node_num = UART_WRITE_BUF_NUM; //Ğ´½ÚµãÊıÁ¿64
-    uart_ctx->write_info.node_size = 0;					//Ã¿¸öĞ´½Úµã´óĞ¡0
-	/*³õÊ¼»¯¶ÁĞ´Á´±í£¬½«½Úµã¹Òµ½freelist*/
+    uart_ctx->read_info.node_num = UART_READ_BUF_NUM;   //è¯»èŠ‚ç‚¹æ•°é‡16
+    uart_ctx->read_info.node_size = UART_READ_BUF_SIZE; //æ¯ä¸ªèŠ‚ç‚¹å¤§å°1536å­—èŠ‚
+    uart_ctx->write_info.node_num = UART_WRITE_BUF_NUM; //å†™èŠ‚ç‚¹æ•°é‡64
+    uart_ctx->write_info.node_size = 0;					//æ¯ä¸ªå†™èŠ‚ç‚¹å¤§å°0
+	/*åˆå§‹åŒ–è¯»å†™é“¾è¡¨ï¼Œå°†èŠ‚ç‚¹æŒ‚åˆ°freelist*/
 	if (hsuart_init_list(&(uart_ctx->read_info)) || hsuart_init_list(&(uart_ctx->write_info)))
     {
         hsuart_error("hsuart_init_list error.\n");
@@ -808,14 +808,14 @@ s32 hsuart_buf_init(hsuart_ctx *uart_ctx)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : gpio_dtr_irq
+* å‡½ æ•° å  : gpio_dtr_irq
 *
-* ¹¦ÄÜÃèÊö  : GPIO ÖĞ¶Ï´¦Àí
+* åŠŸèƒ½æè¿°  : GPIO ä¸­æ–­å¤„ç†
 *
-* ÊäÈë²ÎÊı  : irq ÖĞ¶ÏºÅ dev_id ´«²Î
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : irq ä¸­æ–­å· dev_id ä¼ å‚
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Übcmsdh_register_oob_intr
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥bcmsdh_register_oob_intr
 *
 *****************************************************************************/
 static irqreturn_t gpio_dtr_irq(int irq, void *dev_id)
@@ -845,14 +845,14 @@ static irqreturn_t gpio_dtr_irq(int irq, void *dev_id)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_gpio_init
+* å‡½ æ•° å  : hsuart_gpio_init
 *
-* ¹¦ÄÜÃèÊö  : uart gpio Ä£Äâ¹Ü½Å³õÊ¼»¯º¯Êı
+* åŠŸèƒ½æè¿°  : uart gpio æ¨¡æ‹Ÿç®¡è„šåˆå§‹åŒ–å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄ
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Übcmsdh_register_oob_intr
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥bcmsdh_register_oob_intr
 *
 *****************************************************************************/
 int hsuart_gpio_init(hsuart_ctx *uart_ctx)
@@ -912,16 +912,16 @@ int hsuart_gpio_init(hsuart_ctx *uart_ctx)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_tx_poll
+* å‡½ æ•° å  : hsuart_tx_poll
 *
-* ¹¦ÄÜÃèÊö  : UART CPU Ä£Ê½·¢ËÍÊı¾İº¯Êı
+* åŠŸèƒ½æè¿°  : UART CPU æ¨¡å¼å‘é€æ•°æ®å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_dev: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             uart_tx_buf: ·¢ËÍÊı¾İ»º´æµØÖ·
-*             length: ·¢ËÍÊı¾İ³¤¶È
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_dev: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             uart_tx_buf: å‘é€æ•°æ®ç¼“å­˜åœ°å€
+*             length: å‘é€æ•°æ®é•¿åº¦
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ·¢ËÍÊı¾İ³¤¶È
+* è¿” å› å€¼  : å‘é€æ•°æ®é•¿åº¦
 *
 *****************************************************************************/
 int hsuart_tx_poll(hsuart_dev *uart_dev, unsigned char *uart_tx_buf,unsigned int length)
@@ -955,15 +955,15 @@ int hsuart_tx_poll(hsuart_dev *uart_dev, unsigned char *uart_tx_buf,unsigned int
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_dma_tx_complete
+* å‡½ æ•° å  : hsuart_dma_tx_complete
 *
-* ¹¦ÄÜÃèÊö  : UART DMA Ä£Ê½·¢ËÍÍê³Éº¯Êı
+* åŠŸèƒ½æè¿°  : UART DMA æ¨¡å¼å‘é€å®Œæˆå‡½æ•°
 *
-* ÊäÈë²ÎÊı  : arg: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             int_status: ÖĞ¶Ï×´Ì¬
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : arg: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             int_status: ä¸­æ–­çŠ¶æ€
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void hsuart_dma_tx_complete(u32 arg, u32 int_status)
@@ -975,16 +975,16 @@ void hsuart_dma_tx_complete(u32 arg, u32 int_status)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_tx_dma
+* å‡½ æ•° å  : hsuart_tx_dma
 *
-* ¹¦ÄÜÃèÊö  : UART DMA Ä£Ê½·¢ËÍÊı¾İº¯Êı
+* åŠŸèƒ½æè¿°  : UART DMA æ¨¡å¼å‘é€æ•°æ®å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_dev: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             dma_handle: ·¢ËÍÊı¾İ»º´æµØÖ·
-*             length: ·¢ËÍÊı¾İ³¤¶È
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_dev: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             dma_handle: å‘é€æ•°æ®ç¼“å­˜åœ°å€
+*             length: å‘é€æ•°æ®é•¿åº¦
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ·¢ËÍÊı¾İ³¤¶È
+* è¿” å› å€¼  : å‘é€æ•°æ®é•¿åº¦
 *
 *****************************************************************************/
 int hsuart_tx_dma(hsuart_dev *uart_dev, u32 dma_handle, u32 length)
@@ -1001,14 +1001,14 @@ int hsuart_tx_dma(hsuart_dev *uart_dev, u32 dma_handle, u32 length)
         return ERROR;
     }
 
-    /* ÅäÖÃconfig ¼Ä´æÆ÷ */
+    /* é…ç½®config å¯„å­˜å™¨ */
     if (bsp_edma_channel_set_config(ret_id, BALONG_DMA_M2P, EDMA_TRANS_WIDTH_32, EDMA_BUR_LEN_16))
     {
         hsuart_error("balong_dma_channel_set_config failed! ret_id = %d\n", ret_id);
         return ERROR;
     }
 
-    /* Æô¶¯Ò»´ÎEDMA Òì²½Êı¾İ°áÔË*/
+    /* å¯åŠ¨ä¸€æ¬¡EDMA å¼‚æ­¥æ•°æ®æ¬è¿*/
     if (bsp_edma_channel_async_start(ret_id, dma_handle, (u32)(uart_dev->phy_addr_base + UART_REGOFF_THR), length))
     {
         hsuart_error("balong_dma_channel_async_start transfer failed! ret_id = %d\n", ret_id);
@@ -1040,15 +1040,15 @@ u32 hsuart_dma_rx_length(u32 channel_id, u32 start_addr)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_dma_tx_complete
+* å‡½ æ•° å  : hsuart_dma_tx_complete
 *
-* ¹¦ÄÜÃèÊö  : UART DMA Ä£Ê½·¢ËÍÍê³Éº¯Êı
+* åŠŸèƒ½æè¿°  : UART DMA æ¨¡å¼å‘é€å®Œæˆå‡½æ•°
 *
-* ÊäÈë²ÎÊı  : arg: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             int_status: ÖĞ¶Ï×´Ì¬
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : arg: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             int_status: ä¸­æ–­çŠ¶æ€
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void hsuart_dma_rx_complete(u32 arg, u32 int_status)
@@ -1064,16 +1064,16 @@ void hsuart_dma_rx_complete(u32 arg, u32 int_status)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_rx_dma
+* å‡½ æ•° å  : hsuart_rx_dma
 *
-* ¹¦ÄÜÃèÊö  : UART DMA Ä£Ê½½ÓÊÕÊı¾İº¯Êı
+* åŠŸèƒ½æè¿°  : UART DMA æ¨¡å¼æ¥æ”¶æ•°æ®å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_dev: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             dma_handle: ½ÓÊÕÊı¾İ»º´æµØÖ·
-*             length: ½ÓÊÕÊı¾İ³¤¶È
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_dev: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             dma_handle: æ¥æ”¶æ•°æ®ç¼“å­˜åœ°å€
+*             length: æ¥æ”¶æ•°æ®é•¿åº¦
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : DMA channel id
+* è¿” å› å€¼  : DMA channel id
 *
 *****************************************************************************/
 BSP_S32 hsuart_rx_dma(hsuart_dev *uart_dev, u32 dma_handle, u32 length)
@@ -1090,14 +1090,14 @@ BSP_S32 hsuart_rx_dma(hsuart_dev *uart_dev, u32 dma_handle, u32 length)
         return ERROR;
     }
 
-    /* ÅäÖÃconfig ¼Ä´æÆ÷ */
+    /* é…ç½®config å¯„å­˜å™¨ */
     if (bsp_edma_channel_set_config(ret_id, BALONG_DMA_P2M, EDMA_TRANS_WIDTH_32, EDMA_BUR_LEN_16))
     {
         hsuart_error("balong_dma_channel_set_config failed! ret_id = %d\n", ret_id);
         return ERROR;
     }
     
-    /* Æô¶¯Ò»´ÎEDMA Òì²½Êı¾İ°áÔË*/
+    /* å¯åŠ¨ä¸€æ¬¡EDMA å¼‚æ­¥æ•°æ®æ¬è¿*/
     if (bsp_edma_channel_async_start(ret_id, (u32)(uart_dev->phy_addr_base + UART_REGOFF_RBR), dma_handle, length))
     {
         hsuart_error("balong_dma_channel_async_start transfer failed! ret_id = %d\n", ret_id);
@@ -1108,16 +1108,16 @@ BSP_S32 hsuart_rx_dma(hsuart_dev *uart_dev, u32 dma_handle, u32 length)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_send
+* å‡½ æ•° å  : hsuart_send
 *
-* ¹¦ÄÜÃèÊö  : uart ·¢ËÍº¯Êı
+* åŠŸèƒ½æè¿°  : uart å‘é€å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_ctx: ÉÏÏÂÎÄ
-*             buffer: ·¢ËÍÊı¾İ»º´æµØÖ·
-*             length: ·¢ËÍÊı¾İ³¤¶È
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_ctx: ä¸Šä¸‹æ–‡
+*             buffer: å‘é€æ•°æ®ç¼“å­˜åœ°å€
+*             length: å‘é€æ•°æ®é•¿åº¦
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ·¢ËÍÊı¾İ³¤¶È
+* è¿” å› å€¼  : å‘é€æ•°æ®é•¿åº¦
 *
 *****************************************************************************/
 int hsuart_send(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
@@ -1140,15 +1140,15 @@ int hsuart_send(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû  : switch_stage_two
+* å‡½ æ•° å  : switch_stage_two
 *
-* ¹¦ÄÜÃèÊö  : Ä£Ê½ÇĞ»»µÚ¶ş½×¶Î
+* åŠŸèƒ½æè¿°  : æ¨¡å¼åˆ‡æ¢ç¬¬äºŒé˜¶æ®µ
 *
-* ÊäÈë²ÎÊı  : arg ´«²Î
+* è¾“å…¥å‚æ•°  : arg ä¼ å‚
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 void switch_stage_two(u32 arg)
@@ -1169,15 +1169,15 @@ void switch_stage_one(u32 arg)
     hsuart_error("enter switch stage two...\n");
 }
 /*******************************************************************************
-* º¯ Êı Ãû  : switch_stage_three
+* å‡½ æ•° å  : switch_stage_three
 *
-* ¹¦ÄÜÃèÊö  : Ä£Ê½ÇĞ»»µÚÈı½×¶Î
+* åŠŸèƒ½æè¿°  : æ¨¡å¼åˆ‡æ¢ç¬¬ä¸‰é˜¶æ®µ
 *
-* ÊäÈë²ÎÊı  : arg ´«²Î
+* è¾“å…¥å‚æ•°  : arg ä¼ å‚
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 void switch_stage_three(u32 arg)
@@ -1205,22 +1205,22 @@ void switch_stage_three(u32 arg)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû  : set_next_adapt
+* å‡½ æ•° å  : set_next_adapt
 *
-* ¹¦ÄÜÃèÊö  : ²¨ÌØÂÊ×ÔÊÊÓ¦³¬Ê±
+* åŠŸèƒ½æè¿°  : æ³¢ç‰¹ç‡è‡ªé€‚åº”è¶…æ—¶
 *
-* ÊäÈë²ÎÊı  : arg ´«²Î
+* è¾“å…¥å‚æ•°  : arg ä¼ å‚
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 void set_next_adapt(u32 arg)
 {
     hsuart_ctx *uart_ctx = (hsuart_ctx *)arg;
     
-    /*ÖØĞÂÉèÖÃ²¨ÌØÂÊ*/
+    /*é‡æ–°è®¾ç½®æ³¢ç‰¹ç‡*/
     hsuart_disable(&uart_ctx->dev);
     hsuart_set_baud(&uart_ctx->dev, 0);
     hsuart_enable(&uart_ctx->dev);
@@ -1228,24 +1228,24 @@ void set_next_adapt(u32 arg)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : switch_mode_cmd_detect
+* å‡½ æ•° å  : switch_mode_cmd_detect
 *
-* ¹¦ÄÜÃèÊö  : Ä£Ê½ÇĞ»»ÃüÁî¼ì²âº¯Êı
+* åŠŸèƒ½æè¿°  : æ¨¡å¼åˆ‡æ¢å‘½ä»¤æ£€æµ‹å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄ pMemNode Êı¾İ½ÚµãÖ¸Õë
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡ pMemNode æ•°æ®èŠ‚ç‚¹æŒ‡é’ˆ
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 int switch_mode_cmd_detect(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
 {
     int result = 0;
     
-    /*Èë²ÎºÏ·¨ĞÔ¼ì²é*/
+    /*å…¥å‚åˆæ³•æ€§æ£€æŸ¥*/
     if (DETECT_STAGE_2 == uart_ctx->stage)
     {
-        /*¸ÃÊı¾İ½ÚµãÄÚÊı¾İÎª"+++"*/
+        /*è¯¥æ•°æ®èŠ‚ç‚¹å†…æ•°æ®ä¸º"+++"*/
         if (pMemNode)
         {
             result = !memcmp((void*)switch_cmd, (void*)pMemNode->mem.vaddr, strlen(switch_cmd));
@@ -1254,14 +1254,14 @@ int switch_mode_cmd_detect(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
         
         if (result)
         {
-            /*Æğ1SÖÓµÄ³¬Ê±SoftTimer£¬£¨ÔÚUART½ÓÊÕÊı¾İÖĞ¶ÏÖĞ£¬ÅĞ¶ÏÉ¾³ı¸ÃSoftTimer£¬Èô¸ÃSoftTimerÄÜ´¥·¢³¬Ê±ÖĞ¶Ï´¦Àí£¬Ôò±íÊ¾ºó1SÎŞÊı¾İÏÂ·¢£©*/
-            /*ÉèÖÃµ±Ç°´¦ÓÚÃüÁîÄ£Ê½ÇĞ»»µÚÈı½×¶Î*/
+            /*èµ·1Sé’Ÿçš„è¶…æ—¶SoftTimerï¼Œï¼ˆåœ¨UARTæ¥æ”¶æ•°æ®ä¸­æ–­ä¸­ï¼Œåˆ¤æ–­åˆ é™¤è¯¥SoftTimerï¼Œè‹¥è¯¥SoftTimerèƒ½è§¦å‘è¶…æ—¶ä¸­æ–­å¤„ç†ï¼Œåˆ™è¡¨ç¤ºå1Sæ— æ•°æ®ä¸‹å‘ï¼‰*/
+            /*è®¾ç½®å½“å‰å¤„äºå‘½ä»¤æ¨¡å¼åˆ‡æ¢ç¬¬ä¸‰é˜¶æ®µ*/
 			uart_ctx->stage = DETECT_STAGE_3;
             bsp_softtimer_add(&g_hsuart_ctrl.switch_state3_timer);
         }
         else
         {
-			/*ÉèÖÃµ±Ç°´¦ÓÚÃüÁîÄ£Ê½ÇĞ»»µÚÒ»½×¶Î£¬ÖØĞÂµÈ1S¿ÕÏĞ*/
+			/*è®¾ç½®å½“å‰å¤„äºå‘½ä»¤æ¨¡å¼åˆ‡æ¢ç¬¬ä¸€é˜¶æ®µï¼Œé‡æ–°ç­‰1Sç©ºé—²*/
 			hsuart_error("DETECT_STAGE_2 to DETECT_STAGE_1.\n");           
             uart_ctx->stage = DETECT_STAGE_1;
             bsp_softtimer_add(&g_hsuart_ctrl.switch_state1_timer);
@@ -1272,34 +1272,34 @@ int switch_mode_cmd_detect(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû  : discard_read_mem_node
+* å‡½ æ•° å  : discard_read_mem_node
 *
-* ¹¦ÄÜÃèÊö  : ¶ªÆú¶ÁÊı¾İ½Úµã
+* åŠŸèƒ½æè¿°  : ä¸¢å¼ƒè¯»æ•°æ®èŠ‚ç‚¹
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄ pMemNode ÄÚ´æ½Úµã
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡ pMemNode å†…å­˜èŠ‚ç‚¹
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 void discard_read_mem_node(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
 {
     kfree_skb(pMemNode->pSkb);
-    /*½«¸ÃÊı¾İ½Úµã·Å»ØFreelist£¬¼´¶ªÆú¸ÃÊı¾İ*/
+    /*å°†è¯¥æ•°æ®èŠ‚ç‚¹æ”¾å›Freelistï¼Œå³ä¸¢å¼ƒè¯¥æ•°æ®*/
     add_mem_to_freelist(&uart_ctx->read_info, pMemNode);
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû  : check_mem_to_donelist
+* å‡½ æ•° å  : check_mem_to_donelist
 *
-* ¹¦ÄÜÃèÊö  : ½ÓÊÕÊı¾İ¼ì²é
+* åŠŸèƒ½æè¿°  : æ¥æ”¶æ•°æ®æ£€æŸ¥
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄ pMemNode ÄÚ´æ½Úµã
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡ pMemNode å†…å­˜èŠ‚ç‚¹
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 int check_mem_to_donelist(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
@@ -1309,13 +1309,13 @@ int check_mem_to_donelist(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
 
     if (uart_ctx->baud_adapt)
     {
-        /*Êı¾İÊÊÅäAT ÊÇ·ñ³É¹¦*/
+        /*æ•°æ®é€‚é…AT æ˜¯å¦æˆåŠŸ*/
         if (memcmp("AT", pMemNode->mem.vaddr, 2) && memcmp("at", pMemNode->mem.vaddr, 2))
         {
             hsuart_error("baud adapt fail!   idx:%d baud:%d\n", uart_ctx->baud_idx, typical_baud[uart_ctx->baud_idx]);
-            /* ¶ªÆú¸ÃÊı¾İ*/
+            /* ä¸¢å¼ƒè¯¥æ•°æ®*/
             pMemNode->valid_size = 0;
-            /*ÖØĞÂÉèÖÃ²¨ÌØÂÊ*/
+            /*é‡æ–°è®¾ç½®æ³¢ç‰¹ç‡*/
             hsuart_disable(&uart_ctx->dev);
             hsuart_set_baud(&uart_ctx->dev, 0);
             hsuart_enable(&uart_ctx->dev);
@@ -1343,15 +1343,15 @@ int check_mem_to_donelist(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
 }
 
 /*******************************************************************************
-* º¯ Êı Ãû  : hsuart_rx_complete
+* å‡½ æ•° å  : hsuart_rx_complete
 *
-* ¹¦ÄÜÃèÊö  : ½ÓÊÕÍê³É
+* åŠŸèƒ½æè¿°  : æ¥æ”¶å®Œæˆ
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄ
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *******************************************************************************/
 void hsuart_rx_complete(hsuart_ctx *uart_ctx)
@@ -1369,7 +1369,7 @@ void hsuart_rx_complete(hsuart_ctx *uart_ctx)
 
     if (pMemNode->pSkb)
     {
-        /*Ê¹ÓÃ±ê×¼µÄAPIÀ´ĞŞ¸Älen */
+        /*ä½¿ç”¨æ ‡å‡†çš„APIæ¥ä¿®æ”¹len */
         skb_put(pMemNode->pSkb, pMemNode->valid_size);
     }
    
@@ -1385,9 +1385,9 @@ void hsuart_rx_complete(hsuart_ctx *uart_ctx)
 
     //else
     //{
-        /* ¶Á»Øµ÷Î´×¢²á */
+        /* è¯»å›è°ƒæœªæ³¨å†Œ */
      //   hsuart_error("ReadCb is null.\n");
-        /* ¶ªÆú¸ÃÊı¾İ*/
+        /* ä¸¢å¼ƒè¯¥æ•°æ®*/
     //    pMemNode->valid_size = 0;
     //}
 }
@@ -1395,15 +1395,15 @@ void hsuart_rx_complete(hsuart_ctx *uart_ctx)
 
 
 /*******************************************************************************
-* º¯ Êı Ãû  : get_read_node
+* å‡½ æ•° å  : get_read_node
 *
-* ¹¦ÄÜÃèÊö  : UART »ñÈ¡µ±Ç°Ğ´µØÖ·
+* åŠŸèƒ½æè¿°  : UART è·å–å½“å‰å†™åœ°å€
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄ
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡
 
-* Êä³ö²ÎÊı  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : Ğ´µØÖ·
+* è¿” å› å€¼  : å†™åœ°å€
 *
 *******************************************************************************/
 uart_mem_node* get_read_node(hsuart_ctx *uart_ctx)
@@ -1647,14 +1647,14 @@ void hsuart_burst_dma_transfer(hsuart_ctx *uart_ctx, uart_mem_node* pMemNode)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_rx_thread
+* å‡½ æ•° å  : hsuart_rx_thread
 *
-* ¹¦ÄÜÃèÊö  : UART µ×²ã½ÓÊÕÏß³Ì
+* åŠŸèƒ½æè¿°  : UART åº•å±‚æ¥æ”¶çº¿ç¨‹
 *
-* ÊäÈë²ÎÊı  : ctx ´«²Î
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : ctx ä¼ å‚
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 s32 hsuart_rx_thread(void *ctx)
@@ -1681,10 +1681,10 @@ s32 hsuart_rx_thread(void *ctx)
 										
 
 #if 0
-                    /*µÚÒ»ºÍµÚÈı½×¶ÎÆğµÄSofttimer ¶¼É¾³ı*/  
+                    /*ç¬¬ä¸€å’Œç¬¬ä¸‰é˜¶æ®µèµ·çš„Softtimer éƒ½åˆ é™¤*/  
                     if (OK == check_delete_softtimer(&uart_ctx->switch_timer))
                     {
-                        /*ÈôÉ¾³ıµÚÈı½×¶ÎSofttimer£¬ĞèÖØĞÂ½øÈëµÚÒ»½×¶Î£¬ÇÒÍùÉÏ·¢ËÍ+++*/
+                        /*è‹¥åˆ é™¤ç¬¬ä¸‰é˜¶æ®µSofttimerï¼Œéœ€é‡æ–°è¿›å…¥ç¬¬ä¸€é˜¶æ®µï¼Œä¸”å¾€ä¸Šå‘é€+++*/
                         if (DETECT_STAGE_3 == uart_ctx->stage)
                         {
                             uart_ctx->stage = DETECT_STAGE_1;
@@ -1714,14 +1714,14 @@ s32 hsuart_rx_thread(void *ctx)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : wait_tx_fifo_empty
+* å‡½ æ•° å  : wait_tx_fifo_empty
 *
-* ¹¦ÄÜÃèÊö  : UART µÈ´ı·¢ËÍÍê³É
+* åŠŸèƒ½æè¿°  : UART ç­‰å¾…å‘é€å®Œæˆ
 *
-* ÊäÈë²ÎÊı  : ctx ´«²Î
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : ctx ä¼ å‚
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void wait_tx_fifo_empty(hsuart_ctx *uart_ctx)
@@ -1743,14 +1743,14 @@ void wait_tx_fifo_empty(hsuart_ctx *uart_ctx)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : check_set_feature
+* å‡½ æ•° å  : check_set_feature
 *
-* ¹¦ÄÜÃèÊö  : uart ¼ì²éÉèÖÃÊôĞÔ
+* åŠŸèƒ½æè¿°  : uart æ£€æŸ¥è®¾ç½®å±æ€§
 *
-* ÊäÈë²ÎÊı  : uart_ctx:uartÉÏÏÂÎÄ
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : uart_ctx:uartä¸Šä¸‹æ–‡
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void check_set_feature(hsuart_ctx *uart_ctx)
@@ -1787,15 +1787,15 @@ void check_set_feature(hsuart_ctx *uart_ctx)
     }
 }
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_irq
+* å‡½ æ•° å  : hsuart_irq
 *
-* ¹¦ÄÜÃèÊö  : uart ÖĞ¶Ï·şÎñ³ÌĞò
+* åŠŸèƒ½æè¿°  : uart ä¸­æ–­æœåŠ¡ç¨‹åº
 *
-* ÊäÈë²ÎÊı  : irq:ÖĞ¶ÏºÅ
-*                           dev_id:´«²Î
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : irq:ä¸­æ–­å·
+*                           dev_id:ä¼ å‚
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ÖĞ¶Ï·µ»ØÖµ
+* è¿” å› å€¼  : ä¸­æ–­è¿”å›å€¼
 *
 *****************************************************************************/
 irqreturn_t hsuart_irq(int irq, void *ctx)
@@ -1810,7 +1810,7 @@ irqreturn_t hsuart_irq(int irq, void *ctx)
     ulInt = readl(uart_dev->vir_addr_base+ UART_REGOFF_IIR);
     ulInt &= UART_FIFO_MASK;
 
-    if(ulInt == UART_IIR_REV_TIMEOUT) //½ÓÊÕ³¬Ê±ÖĞ¶Ï
+    if(ulInt == UART_IIR_REV_TIMEOUT) //æ¥æ”¶è¶…æ—¶ä¸­æ–­
     {	
 		hsuart_error("UART_IIR_REV_TIMEOUT ......!\n");
         ulCharNum = readl(uart_dev->vir_addr_base + 0x84);
@@ -1839,7 +1839,7 @@ irqreturn_t hsuart_irq(int irq, void *ctx)
         }
     }
 
-    else if(ulInt == UART_IIR_REV_VALID)   //½ÓÊÕÊı¾İÓĞĞ§ÖĞ¶Ï
+    else if(ulInt == UART_IIR_REV_VALID)   //æ¥æ”¶æ•°æ®æœ‰æ•ˆä¸­æ–­
     {
 
 		hsuart_error("UART_IIR_REV_VALID ......!\n");
@@ -1860,14 +1860,14 @@ irqreturn_t hsuart_irq(int irq, void *ctx)
 	return (irqreturn_t)IRQ_HANDLED;
 }
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_tx_thread
+* å‡½ æ•° å  : hsuart_tx_thread
 *
-* ¹¦ÄÜÃèÊö  : UART µ×²ã·¢ËÍÏß³Ì
+* åŠŸèƒ½æè¿°  : UART åº•å±‚å‘é€çº¿ç¨‹
 *
-* ÊäÈë²ÎÊı  : ctx ´«²Î
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : ctx ä¼ å‚
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 s32 hsuart_tx_thread(void *ctx)
@@ -1885,7 +1885,7 @@ s32 hsuart_tx_thread(void *ctx)
     {
 		 hsuart_error("hsuart_tx_thread enter...!\n");
 
-		/* ²¨ÌØÂÊ×ÔÊÊÓ¦ÆÚ¼ä²»ÉÏ±¨ÏûÏ¢*/
+		/* æ³¢ç‰¹ç‡è‡ªé€‚åº”æœŸé—´ä¸ä¸ŠæŠ¥æ¶ˆæ¯*/
         if (!uart_ctx->baud_adapt)
         {
             uart_ctx->tx_running = HSUART_FALSE;
@@ -1896,7 +1896,7 @@ s32 hsuart_tx_thread(void *ctx)
             while (pMemNode)
             {
                 ret = hsuart_send(uart_ctx, pMemNode);
-                /* pMemNode³ÉÔ±È¥³õÊ¼»¯*/
+                /* pMemNodeæˆå‘˜å»åˆå§‹åŒ–*/
 			
                 if (uart_ctx->cbs.free_cb)
                 {
@@ -1923,14 +1923,14 @@ s32 hsuart_tx_thread(void *ctx)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_deepsleep_in
+* å‡½ æ•° å  : hsuart_deepsleep_in
 *
-* ¹¦ÄÜÃèÊö  : uart Ë¯Ãßº¯Êı
+* åŠŸèƒ½æè¿°  : uart ç¡çœ å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : NA
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 int hsuart_deepsleep_in(void)
@@ -1943,14 +1943,14 @@ int hsuart_deepsleep_in(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_deepsleep_out
+* å‡½ æ•° å  : hsuart_deepsleep_out
 *
-* ¹¦ÄÜÃèÊö  : uart Ë¯Ãßº¯Êı
+* åŠŸèƒ½æè¿°  : uart ç¡çœ å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : NA
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 int hsuart_deepsleep_out(void)
@@ -1966,14 +1966,14 @@ int hsuart_deepsleep_out(void)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_drv_uninit
+* å‡½ æ•° å  : hsuart_drv_uninit
 *
-* ¹¦ÄÜÃèÊö  : uart È¥³õÊ¼»¯º¯Êı
+* åŠŸèƒ½æè¿°  : uart å»åˆå§‹åŒ–å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_dev Éè±¸Ö¸Õë
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : uart_dev è®¾å¤‡æŒ‡é’ˆ
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void hsuart_drv_uninit(hsuart_ctx *uart_ctx)
@@ -1988,20 +1988,20 @@ void hsuart_drv_uninit(hsuart_ctx *uart_ctx)
     /*disable rx and tx fifo, mask all interrupt*/
     (void)writel(UART_FCR_FIFO_DISABLE, uart_ctx->dev.vir_addr_base + UART_REGOFF_FCR);
 	(void)writel(UART_IER_IRQ_DISABLE, uart_ctx->dev.vir_addr_base + UART_REGOFF_IER);
-    /* ½ûÖ¹ FIFOºÍÖĞ¶Ï */
+    /* ç¦æ­¢ FIFOå’Œä¸­æ–­ */
     free_irq((unsigned int)uart_ctx->dev.irq, NULL);
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_write_async
+* å‡½ æ•° å  : hsuart_write_async
 *
-* ¹¦ÄÜÃèÊö  : UART UDI Éè±¸Òì²½Ğ´ÊµÏÖ
+* åŠŸèƒ½æè¿°  : UART UDI è®¾å¤‡å¼‚æ­¥å†™å®ç°
 *
-* ÊäÈë²ÎÊı  : uart_ctx: ÉÏÏÂÎÄ
-*             pWRInfo: ÄÚ´æĞÅÏ¢
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : uart_ctx: ä¸Šä¸‹æ–‡
+*             pWRInfo: å†…å­˜ä¿¡æ¯
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ÇëÇóµÄ ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : è¯·æ±‚çš„ æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 BSP_S32 hsuart_write_async(hsuart_ctx* uart_ctx, hsuart_wr_async_info* pWRInfo)
@@ -2044,14 +2044,14 @@ BSP_S32 hsuart_write_async(hsuart_ctx* uart_ctx, hsuart_wr_async_info* pWRInfo)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_get_read_buffer
+* å‡½ æ•° å  : hsuart_get_read_buffer
 *
-* ¹¦ÄÜÃèÊö  : ÉÏ²ã»ñÈ¡½ÓÊÕbuf µÄĞÅÏ¢
+* åŠŸèƒ½æè¿°  : ä¸Šå±‚è·å–æ¥æ”¶buf çš„ä¿¡æ¯
 *
-* ÊäÈë²ÎÊı  :  uart_ctx ÉÏÏÂÎÄ, 
-* Êä³ö²ÎÊı  :  pWRInfo ¶ÁÄÚ´æĞÅÏ¢
+* è¾“å…¥å‚æ•°  :  uart_ctx ä¸Šä¸‹æ–‡, 
+* è¾“å‡ºå‚æ•°  :  pWRInfo è¯»å†…å­˜ä¿¡æ¯
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 s32 hsuart_get_read_buffer(hsuart_ctx* uart_ctx, hsuart_wr_async_info* pWRInfo)
@@ -2068,15 +2068,15 @@ s32 hsuart_get_read_buffer(hsuart_ctx* uart_ctx, hsuart_wr_async_info* pWRInfo)
         return ERROR;
     }
     
-    /* »ñÈ¡Íê³ÉµÄ buffer½Úµã */
+    /* è·å–å®Œæˆçš„ bufferèŠ‚ç‚¹ */
     pMemNode = get_mem_from_donelist(&(uart_ctx->read_info));
     if (pMemNode)
     {
-        /*Êı¾İËùÖ¸ÏòµÄÊı¾İ*/
+        /*æ•°æ®æ‰€æŒ‡å‘çš„æ•°æ®*/
         pWRInfo->pBuffer = (char *)pMemNode->pSkb;
-        /*Êı¾İµÄ´óĞ¡*/
+        /*æ•°æ®çš„å¤§å°*/
         pWRInfo->u32Size = (u32)pMemNode->pSkb->len;
-        /*µ±Ç°ĞÅÏ¢Í·Ö¸Õë*/
+        /*å½“å‰ä¿¡æ¯å¤´æŒ‡é’ˆ*/
         pWRInfo->pDrvPriv = (void*)pMemNode->pSkb;
         
         add_mem_to_freelist(&(uart_ctx->read_info), pMemNode);
@@ -2084,7 +2084,7 @@ s32 hsuart_get_read_buffer(hsuart_ctx* uart_ctx, hsuart_wr_async_info* pWRInfo)
         (void)hsuart_alloc_skb(pMemNode, uart_ctx->read_info.node_size);
 #ifdef HSUART_2_LINE
 #else
-        /*·ÇÉÏ²ãÆğÁ÷¿Ø*/
+        /*éä¸Šå±‚èµ·æµæ§*/
         if (CPU_TRANSFER == uart_ctx->transfer_mode)
         {
             if (uart_ctx->feature.rtsen && (!uart_ctx->rts))
@@ -2107,14 +2107,14 @@ s32 hsuart_get_read_buffer(hsuart_ctx* uart_ctx, hsuart_wr_async_info* pWRInfo)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_return_read_buffer
+* å‡½ æ•° å  : hsuart_return_read_buffer
 *
-* ¹¦ÄÜÃèÊö  : ÉÏ²ãÊÍ·Å½ÓÊÕBuffer µÄ½Ó¿Ú
+* åŠŸèƒ½æè¿°  : ä¸Šå±‚é‡Šæ”¾æ¥æ”¶Buffer çš„æ¥å£
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄ, pWRInfo ÄÚ´æĞÅÏ¢
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡, pWRInfo å†…å­˜ä¿¡æ¯
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 s32 hsuart_return_read_buffer(hsuart_ctx* uart_ctx, hsuart_wr_async_info* pWRInfo)
@@ -2135,14 +2135,14 @@ s32 hsuart_return_read_buffer(hsuart_ctx* uart_ctx, hsuart_wr_async_info* pWRInf
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_modem_write_signal
+* å‡½ æ•° å  : hsuart_modem_write_signal
 *
-* ¹¦ÄÜÃèÊö  :Ğ´modem ¹Ü½ÅĞÅºÅ
+* åŠŸèƒ½æè¿°  :å†™modem ç®¡è„šä¿¡å·
 *
-* ÊäÈë²ÎÊı  :uart_dev Éè±¸½á¹¹ÌåpModemMsc ¹Ü½ÅĞÅÏ¢
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  :uart_dev è®¾å¤‡ç»“æ„ä½“pModemMsc ç®¡è„šä¿¡æ¯
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 s32 hsuart_modem_write_signal(hsuart_ctx *uart_ctx, MODEM_MSC_STRU* pModemMsc)
@@ -2154,21 +2154,21 @@ s32 hsuart_modem_write_signal(hsuart_ctx *uart_ctx, MODEM_MSC_STRU* pModemMsc)
 	}
 #ifdef HSUART_2_LINE
 #else
-    /*´¦ÀíDCE rts ¹Ü½Å*/
+    /*å¤„ç†DCE rts ç®¡è„š*/
     if (uart_ctx->feature.rtsen)
     {
         if (SIGNALCH == pModemMsc->OP_Cts)
         {
             if (LOWLEVEL == pModemMsc->ucCts)
             {
-                /*À­µÍrts ¹Ü½Å*/
+                /*æ‹‰ä½rts ç®¡è„š*/
                 uart_ctx->rts = HSUART_TRUE;
                 //hsuart_set_rts(&uart_ctx->dev);
                 hsuart_error("rts valued:%d\n", pModemMsc->ucCts);
             }
             else
             {
-                /*À­¸ßrts ¹Ü½Å*/
+                /*æ‹‰é«˜rts ç®¡è„š*/
                 uart_ctx->rts = HSUART_FALSE;
 //                hsuart_clear_rts(&uart_ctx->dev);
                 hsuart_error("rts invalued:%d\n", pModemMsc->ucCts);
@@ -2204,15 +2204,15 @@ s32 hsuart_modem_write_signal(hsuart_ctx *uart_ctx, MODEM_MSC_STRU* pModemMsc)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_realloc_read_buf
+* å‡½ æ•° å  : hsuart_realloc_read_buf
 *
-* ¹¦ÄÜÃèÊö  : ÖØĞÂ·ÖÅä¶Á»º´æ
+* åŠŸèƒ½æè¿°  : é‡æ–°åˆ†é…è¯»ç¼“å­˜
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄpReadBuffInfo ÄÚ´æĞÅÏ¢
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡pReadBuffInfo å†…å­˜ä¿¡æ¯
+* è¾“å‡ºå‚æ•°  :
 
 *
-* ·µ »Ø Öµ  :Ê§°Ü/³É¹¦
+* è¿” å› å€¼  :å¤±è´¥/æˆåŠŸ
 *
 *****************************************************************************/
 s32 hsuart_realloc_read_buf(hsuart_ctx* uart_ctx, hsuart_read_buff_info* pReadBuffInfo)
@@ -2244,15 +2244,15 @@ s32 hsuart_realloc_read_buf(hsuart_ctx* uart_ctx, hsuart_read_buff_info* pReadBu
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_mode_switch_config
+* å‡½ æ•° å  : hsuart_mode_switch_config
 *
-* ¹¦ÄÜÃèÊö  : Ä£Ê½ÇĞ»»ÉèÖÃ
+* åŠŸèƒ½æè¿°  : æ¨¡å¼åˆ‡æ¢è®¾ç½®
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄs32Arg ÅäÖÃ²ÎÊı
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡s32Arg é…ç½®å‚æ•°
+* è¾“å‡ºå‚æ•°  :
 
 *
-* ·µ »Ø Öµ  :NA
+* è¿” å› å€¼  :NA
 *
 *****************************************************************************/
 void hsuart_mode_switch_config(hsuart_ctx* uart_ctx, void* s32Arg)
@@ -2262,9 +2262,9 @@ void hsuart_mode_switch_config(hsuart_ctx* uart_ctx, void* s32Arg)
     spin_lock_irqsave(&(uart_ctx->dev.lock_irq), flags);
     if (NULL == s32Arg)
     {
-        /*µÚÒ»ºÍµÚÈı½×¶ÎÆğµÄSofttimer ¶¼É¾³ı*/
+        /*ç¬¬ä¸€å’Œç¬¬ä¸‰é˜¶æ®µèµ·çš„Softtimer éƒ½åˆ é™¤*/
 //        check_delete_softtimer(&uart_ctx->switch_timer);
-        /* ¼ì²â½×¶ÎÎª0£©*/
+        /* æ£€æµ‹é˜¶æ®µä¸º0ï¼‰*/
         uart_ctx->stage = NO_DETECT_STAGE;
 //        uart_ctx->cbs.switch_mode_cb= NULL;
         hsuart_error("detect mode switch end.\n");
@@ -2272,7 +2272,7 @@ void hsuart_mode_switch_config(hsuart_ctx* uart_ctx, void* s32Arg)
     else
     {
         hsuart_error("detect mode switch start.\n");
-        /*µ±Ç°ÒÑÎªÊı¾İÄ£Ê½£¬´ò¿ª¼ì²â£¨¼ì²â½×¶ÎÎª1£©*/
+        /*å½“å‰å·²ä¸ºæ•°æ®æ¨¡å¼ï¼Œæ‰“å¼€æ£€æµ‹ï¼ˆæ£€æµ‹é˜¶æ®µä¸º1ï¼‰*/
         uart_ctx->stage = DETECT_STAGE_1;
 //        uart_ctx->cbs.switch_mode_cb = (uart_switch_mode_cb_t)s32Arg;
        // check_create_softtimer(&uart_ctx->switch_timer, SWITCH_TIMER_LENGTH, SOFTTIMER_NO_LOOP,
@@ -2282,22 +2282,22 @@ void hsuart_mode_switch_config(hsuart_ctx* uart_ctx, void* s32Arg)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_write_uart_cr
+* å‡½ æ•° å  : hsuart_write_uart_cr
 *
-* ¹¦ÄÜÃèÊö  : Ğ´uart_cr¼Ä´æÆ÷
+* åŠŸèƒ½æè¿°  : å†™uart_crå¯„å­˜å™¨
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄs32Arg ÅäÖÃ²ÎÊı
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡s32Arg é…ç½®å‚æ•°
+* è¾“å‡ºå‚æ•°  :
 
 *
-* ·µ »Ø Öµ  :NA
+* è¿” å› å€¼  :NA
 *
 *****************************************************************************/
 void hsuart_write_uart_cr(hsuart_ctx* uart_ctx, u32 value)
 {
     hsuart_disable(&uart_ctx->dev);
 #if 0
-    /*µÈ´ıµ±Ç°Êı¾İ·¢ËÍ»ò½ÓÊÕ½áÊø*/
+    /*ç­‰å¾…å½“å‰æ•°æ®å‘é€æˆ–æ¥æ”¶ç»“æŸ*/
     val = readl(uart_ctx->dev.vir_addr_base + UART011_LCRH);
     val &= (~UART01x_LCRH_FEN);
     (void)writel(val, uart_ctx->dev.vir_addr_base + UART011_LCRH);
@@ -2307,15 +2307,15 @@ void hsuart_write_uart_cr(hsuart_ctx* uart_ctx, u32 value)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_set_flow_ctrl
+* å‡½ æ•° å  : hsuart_set_flow_ctrl
 *
-* ¹¦ÄÜÃèÊö  : uartÁ÷¿Ø¿ØÖÆ
+* åŠŸèƒ½æè¿°  : uartæµæ§æ§åˆ¶
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄs32Arg ÅäÖÃ²ÎÊı
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡s32Arg é…ç½®å‚æ•°
+* è¾“å‡ºå‚æ•°  :
 
 *
-* ·µ »Ø Öµ  :NA
+* è¿” å› å€¼  :NA
 *
 *****************************************************************************/
 void hsuart_set_flow_ctrl(hsuart_ctx* uart_ctx, hsuart_flow_ctrl_union* pParam)
@@ -2338,14 +2338,14 @@ void hsuart_set_flow_ctrl(hsuart_ctx* uart_ctx, hsuart_flow_ctrl_union* pParam)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_udi_open
+* å‡½ æ•° å  : hsuart_udi_open
 *
-* ¹¦ÄÜÃèÊö  : ´ò¿ªuart udiÉè±¸
+* åŠŸèƒ½æè¿°  : æ‰“å¼€uart udiè®¾å¤‡
 *
-* ÊäÈë²ÎÊı  : param ²ÎÊı, handle ¾ä±ú
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : param å‚æ•°, handle å¥æŸ„
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ´ò¿ª½á¹û
+* è¿” å› å€¼  : æ‰“å¼€ç»“æœ
 *
 *****************************************************************************/
 BSP_S32 hsuart_udi_open(UDI_OPEN_PARAM *param, UDI_HANDLE handle)
@@ -2360,14 +2360,14 @@ BSP_S32 hsuart_udi_open(UDI_OPEN_PARAM *param, UDI_HANDLE handle)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_udi_close
+* å‡½ æ•° å  : hsuart_udi_close
 *
-* ¹¦ÄÜÃèÊö  : ¹Ø±Õuart udiÉè±¸
+* åŠŸèƒ½æè¿°  : å…³é—­uart udiè®¾å¤‡
 *
-* ÊäÈë²ÎÊı  : handle
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : handle
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  :Ê§°Ü/³É¹¦
+* è¿” å› å€¼  :å¤±è´¥/æˆåŠŸ
 *
 *****************************************************************************/
 BSP_S32 hsuart_udi_close(BSP_S32 s32UartDevCtx)
@@ -2380,15 +2380,15 @@ BSP_S32 hsuart_udi_close(BSP_S32 s32UartDevCtx)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_udi_write
+* å‡½ æ•° å  : hsuart_udi_write
 *
-* ¹¦ÄÜÃèÊö  : uartĞ£×¼Í¬²½·¢ËÍ½Ó¿Ú
+* åŠŸèƒ½æè¿°  : uartæ ¡å‡†åŒæ­¥å‘é€æ¥å£
 *
-* ÊäÈë²ÎÊı  : BSP_S32 s32UartDev, BSP_U8* pBuf, u32 u32Size
-* Êä³ö²ÎÊı  : Êµ¼ÊĞ´ÈëµÄ×ÖÊı
+* è¾“å…¥å‚æ•°  : BSP_S32 s32UartDev, BSP_U8* pBuf, u32 u32Size
+* è¾“å‡ºå‚æ•°  : å®é™…å†™å…¥çš„å­—æ•°
 
 *
-* ·µ »Ø Öµ  :Ê§°Ü/Êµ¼ÊµÄÊı×Ö
+* è¿” å› å€¼  :å¤±è´¥/å®é™…çš„æ•°å­—
 *
 *****************************************************************************/
 BSP_S32 hsuart_udi_write(VOID* pPrivate, void* pMemObj, u32 u32Size)
@@ -2425,16 +2425,16 @@ BSP_S32 hsuart_udi_write(VOID* pPrivate, void* pMemObj, u32 u32Size)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_udi_ioctl
+* å‡½ æ•° å  : hsuart_udi_ioctl
 *
-* ¹¦ÄÜÃèÊö  : UART ²¦ºÅÒµÎñÏà¹Ø ioctl ÉèÖÃ
+* åŠŸèƒ½æè¿°  : UART æ‹¨å·ä¸šåŠ¡ç›¸å…³ ioctl è®¾ç½®
 *
-* ÊäÈë²ÎÊı  : s32UartDevId: Éè±¸¹ÜÀí½á¹¹Ö¸Õë
-*             s32Cmd: ÃüÁîÂë
-*             pParam: ÃüÁî²ÎÊı
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : s32UartDevId: è®¾å¤‡ç®¡ç†ç»“æ„æŒ‡é’ˆ
+*             s32Cmd: å‘½ä»¤ç 
+*             pParam: å‘½ä»¤å‚æ•°
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü´íÎóÂë
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥é”™è¯¯ç 
 *
 *****************************************************************************/
 BSP_S32 hsuart_udi_ioctl(VOID* pPrivate, u32 u32Cmd, VOID* pParam)
@@ -2460,55 +2460,55 @@ BSP_S32 hsuart_udi_ioctl(VOID* pPrivate, u32 u32Cmd, VOID* pParam)
     uart_dev = &uart_ctx->dev;
     switch(u32Cmd)
     {
-        /* ÏÂĞĞÒì²½Ğ´½Ó¿Ú*/
+        /* ä¸‹è¡Œå¼‚æ­¥å†™æ¥å£*/
         case UART_IOCTL_WRITE_ASYNC:
             {
                 ret = hsuart_write_async(uart_ctx, (hsuart_wr_async_info *)pParam);
             }
             break;
-        /* NAS×¢²áÏÂĞĞÊı¾İbuf ÊÍ·Åº¯Êı*/
+        /* NASæ³¨å†Œä¸‹è¡Œæ•°æ®buf é‡Šæ”¾å‡½æ•°*/
         case UART_IOCTL_SET_FREE_CB:
             {
                 uart_ctx->cbs.free_cb = (hsuart_free_cb_t)pParam;
             }
             break;
-        /* ÊÕµ½Êı¾İºóµ÷ÓÃ´Ë×¢²á½Ó¿ÚÍ¨ÖªÉÏ²ã½ÓÊÕ*/
+        /* æ”¶åˆ°æ•°æ®åè°ƒç”¨æ­¤æ³¨å†Œæ¥å£é€šçŸ¥ä¸Šå±‚æ¥æ”¶*/
         case UART_IOCTL_SET_READ_CB:
             {
                 uart_ctx->cbs.read_cb = (hsuart_read_cb_t)pParam;
             }
             break;
-         /* ÉÏ²ãµ÷ÓÃ´Ë½Ó¿Ú»ñµÃÉÏĞĞbuf µØÖ·£¬ÉÏ²ãÔÚÎÒÃÇµÄread»Øµ÷º¯ÊıÖĞÀ´ÊµÏÖµÄ*/
+         /* ä¸Šå±‚è°ƒç”¨æ­¤æ¥å£è·å¾—ä¸Šè¡Œbuf åœ°å€ï¼Œä¸Šå±‚åœ¨æˆ‘ä»¬çš„readå›è°ƒå‡½æ•°ä¸­æ¥å®ç°çš„*/
         case UART_IOCTL_GET_RD_BUFF:
             {               
                 ret = hsuart_get_read_buffer(uart_ctx, (hsuart_wr_async_info*)pParam);
             }
             break;
-        /* ÉÏ²ãµ÷ÓÃ´Ë½Ó¿ÚÊÍ·ÅÉÏĞĞbuf */
+        /* ä¸Šå±‚è°ƒç”¨æ­¤æ¥å£é‡Šæ”¾ä¸Šè¡Œbuf */
         case UART_IOCTL_RETURN_BUFF:
             {
                 ret = hsuart_return_read_buffer(uart_ctx, (hsuart_wr_async_info*)pParam);
             }
             break;
-        /* ÖØĞÂ·ÖÅäµ¥¸öbuffer´óĞ¡ÃüÁî*/
+        /* é‡æ–°åˆ†é…å•ä¸ªbufferå¤§å°å‘½ä»¤*/
         case UART_IOCTL_RELLOC_READ_BUFF:
             {
                 ret = hsuart_realloc_read_buf(uart_ctx, (hsuart_read_buff_info*)pParam);
             }
             break;
-        /*×¢²áDTR¹Ü½Å±ä»¯Í¨Öª»Øµ÷²ÎÊıÎªpMODEM_MSC_STRU Ö¸Ïò±¾µØÈ«¾Ö*/
+        /*æ³¨å†ŒDTRç®¡è„šå˜åŒ–é€šçŸ¥å›è°ƒå‚æ•°ä¸ºpMODEM_MSC_STRU æŒ‡å‘æœ¬åœ°å…¨å±€*/
         case UART_IOCTL_SET_MSC_READ_CB:
             {
                 uart_ctx->cbs.msc_read_cb = (hsuart_msc_read_cb_t)pParam;
             }
             break;
-        /*Ğ´modem¹Ü½ÅĞÅºÅ£¬²ÎÊıÎªpMODEM_MSC_STRU*/
+        /*å†™modemç®¡è„šä¿¡å·ï¼Œå‚æ•°ä¸ºpMODEM_MSC_STRU*/
         case UART_IOCTL_MSC_WRITE_CMD:
             {
                 ret = hsuart_modem_write_signal(uart_ctx, (MODEM_MSC_STRU*)(pParam));
             }
             break;
-        /* +++ÇĞ»»ÃüÁîÄ£Ê½»Øµ÷£¬ÉèÖÃNULL¹Ø±Õ¸Ã¹¦ÄÜ */
+        /* +++åˆ‡æ¢å‘½ä»¤æ¨¡å¼å›è°ƒï¼Œè®¾ç½®NULLå…³é—­è¯¥åŠŸèƒ½ */
         case UART_IOCTL_SWITCH_MODE_CB:
             {
                 hsuart_mode_switch_config(uart_ctx, pParam);
@@ -2582,14 +2582,14 @@ BSP_S32 hsuart_udi_ioctl(VOID* pPrivate, u32 u32Cmd, VOID* pParam)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_timer_init
+* å‡½ æ•° å  : hsuart_timer_init
 *
-* ¹¦ÄÜÃèÊö  : 
+* åŠŸèƒ½æè¿°  : 
 *
-* ÊäÈë²ÎÊı  : uart_ctx ÉÏÏÂÎÄ
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : uart_ctx ä¸Šä¸‹æ–‡
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Übcmsdh_register_oob_intr
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥bcmsdh_register_oob_intr
 *
 *****************************************************************************/
 int hsuart_timer_init(hsuart_ctx *uart_ctx)
@@ -2672,14 +2672,14 @@ free_SleepTimer:
 	return -1;	
 }
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_drv_init
+* å‡½ æ•° å  : hsuart_drv_init
 *
-* ¹¦ÄÜÃèÊö  : uart µ×²ã³õÊ¼»¯º¯Êı
+* åŠŸèƒ½æè¿°  : uart åº•å±‚åˆå§‹åŒ–å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : uart_ctx:uartÉÏÏÂÎÄ
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : uart_ctx:uartä¸Šä¸‹æ–‡
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 s32 hsuart_drv_init(hsuart_ctx *uart_ctx)
@@ -2712,17 +2712,17 @@ s32 hsuart_drv_init(hsuart_ctx *uart_ctx)
     uart_ctx->feature.baud = 115200;
     uart_ctx->dma_info.rx_dma_done = HSUART_FALSE;
 
-    /* ¸ù¾İ²¨ÌØÂÊ»ñÈ¡dmaÑÓÊ±Ê±¼ä */
+    /* æ ¹æ®æ³¢ç‰¹ç‡è·å–dmaå»¶æ—¶æ—¶é—´ */
 	hsuart_get_dma_info(uart_ctx);
 	
-	/* ´´½¨ĞÅºÅÁ¿ */
+	/* åˆ›å»ºä¿¡å·é‡ */
     osl_sem_init(SEM_EMPTY,&(uart_ctx->rx_sema));
     osl_sem_init(SEM_EMPTY,&(uart_ctx->tx_sema));
     osl_sem_init(SEM_EMPTY,&(uart_ctx->dma_sema));
     osl_sem_init(SEM_EMPTY,&(uart_ctx->sleep_sema));
     
  
-	/* ³õÊ¼»¯»º´æÁ´±í */
+	/* åˆå§‹åŒ–ç¼“å­˜é“¾è¡¨ */
     if (hsuart_buf_init(uart_ctx) != OK)
     {
         hsuart_error("hsuart_buf_init is error.\n");
@@ -2737,40 +2737,40 @@ s32 hsuart_drv_init(hsuart_ctx *uart_ctx)
 
 	else 
 	{
-		/* ÉêÇëÊ¹ÓÃÖĞ¶Ï´¦Àí */
+		/* ç”³è¯·ä½¿ç”¨ä¸­æ–­å¤„ç† */
 	    ret = request_irq((unsigned int)uart_dev->irq, (irq_handler_t)hsuart_irq,0,"HS UART ISR", &uart_ctx->dev);
 	    if (ret)
 	    {
 	        hsuart_error("request_irq is failed!\n");
 	        return ERROR;
 	    }
-		/* ¸ßËÙ´®¿Úµ×²ã³õÊ¼»¯ */
+		/* é«˜é€Ÿä¸²å£åº•å±‚åˆå§‹åŒ– */
 	    writel(UART_DEF_RT_ONETWO|UART_DEF_NO_DMA_MODE|UART_TX_FIFO_RESET|UART_RX_FIFO_RESET|UART_FCR_FIFO_ENABLE, uart_dev->vir_addr_base+ UART_REGOFF_FCR);
 
-		/* È¥Ê¹ÄÜËùÓĞÖĞ¶Ï */
+		/* å»ä½¿èƒ½æ‰€æœ‰ä¸­æ–­ */
 	    writel(UART_IER_IRQ_DISABLE, uart_dev->vir_addr_base + UART_REGOFF_IER);
 		
 		readl(uart_dev->vir_addr_base + UART_REGOFF_LSR);
-	    /* Çå³ı½ÓÊÕÖĞ¶Ï */
+	    /* æ¸…é™¤æ¥æ”¶ä¸­æ–­ */
 	    readl(uart_dev->vir_addr_base + UART_REGOFF_RBR);
-	    /* Çå³ı·¢ËÍ¿ÕÖĞ¶Ï */
+	    /* æ¸…é™¤å‘é€ç©ºä¸­æ–­ */
 	    readl(uart_dev->vir_addr_base + UART_REGOFF_IIR);
-	    /* Çå³ıÏßÃ¦ÖĞ¶Ï */
+	    /* æ¸…é™¤çº¿å¿™ä¸­æ–­ */
 	    readl(uart_dev->vir_addr_base + UART_REGOFF_USR);
 	}
 
-	/* ÉèÖÃ²¨ÌØÂÊ */
+	/* è®¾ç½®æ³¢ç‰¹ç‡ */
     hsuart_set_baud(uart_dev, uart_ctx->feature.baud);
 	
-	/*ÉèÖÃÊı¾İÎ»³¤8£¬1¸öÍ£Ö¹Î»£¬ÎŞĞ£Ñé*/
+	/*è®¾ç½®æ•°æ®ä½é•¿8ï¼Œ1ä¸ªåœæ­¢ä½ï¼Œæ— æ ¡éªŒ*/
     writel(UART_LCR_DLS_8BITS | UART_LCR_STOP_1BITS |UART_LCR_PEN_NONE, uart_dev->vir_addr_base + UART_REGOFF_LCR);
 	
-	/* ÅäÖÃ·¢ËÍÉî¶È */
+	/* é…ç½®å‘é€æ·±åº¦ */
     writel(0x10, uart_dev->vir_addr_base +  0x2c);
 	
 	if(CPU_TRANSFER == uart_ctx->transfer_mode)
 	{
-		/* Ê¹ÄÜ½ÓÊÕºÍ³¬Ê±ÖĞ¶Ï */
+		/* ä½¿èƒ½æ¥æ”¶å’Œè¶…æ—¶ä¸­æ–­ */
 		(void)writel(UART_IER_RX_IRQ_ENABLE | 0x10,  uart_dev->vir_addr_base+ UART_REGOFF_IER);
 	}
 	
@@ -2788,29 +2788,29 @@ static UDI_DRV_INTEFACE_TABLE hsuart_udi = {
     .udi_ioctl_cb = (UDI_IOCTL_CB_T)hsuart_udi_ioctl,
 };
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_udi_init
+* å‡½ æ•° å  : hsuart_udi_init
 *
-* ¹¦ÄÜÃèÊö  : UART UDI ³õÊ¼»¯½Ó¿Ú
+* åŠŸèƒ½æè¿°  : UART UDI åˆå§‹åŒ–æ¥å£
 *
-* ÊäÈë²ÎÊı  : NA
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *
 *****************************************************************************/
 int hsuart_udi_init(void)
 {
-    hsuart_ctx *uart_ctx = &m2m_hsuart_ctx;//»ñÈ¡´®¿ÚÊôĞÔ±íÊöĞÅÏ¢
+    hsuart_ctx *uart_ctx = &m2m_hsuart_ctx;//è·å–ä¸²å£å±æ€§è¡¨è¿°ä¿¡æ¯
     
     hsuart_error("hsuart_udi_init enter...!\n");
 
     uart_ctx->init = HSUART_FALSE;
 
-    /* UDI²ãµÄ³õÊ¼»¯ */
+    /* UDIå±‚çš„åˆå§‹åŒ– */
     (void)BSP_UDI_SetCapability(uart_ctx->udi_device_id, 0);
     (void)BSP_UDI_SetInterfaceTable(uart_ctx->udi_device_id, &hsuart_udi);
 
-    /* Ğ¾Æ¬Çı¶¯²ãµÄ³õÊ¼»¯*/
+    /* èŠ¯ç‰‡é©±åŠ¨å±‚çš„åˆå§‹åŒ–*/
     if (OK != hsuart_drv_init(uart_ctx))
     {
         hsuart_error("hsuart_drv_init create failed!\n");
@@ -2819,7 +2819,7 @@ int hsuart_udi_init(void)
 	
 	if(DMA_TRANSFER == uart_ctx->transfer_mode)
 	{
-		/*´´½¨½ÓÊÕÏß³Ì*/
+		/*åˆ›å»ºæ¥æ”¶çº¿ç¨‹*/
 	    if (ERROR == osl_task_init("uart_recv_thread",HSUART_RX_TASK_PRI,HSUART_RX_TASK_SIZE,(void *)hsuart_rx_thread,(void *)uart_ctx,
 									&g_hsuart_ctrl.rx_task_id))
 	    {
@@ -2827,7 +2827,7 @@ int hsuart_udi_init(void)
 	         return ERROR;
 	    }
 	    
-	    /*´´½¨·¢ËÍÏß³Ì*/
+	    /*åˆ›å»ºå‘é€çº¿ç¨‹*/
 	    if (ERROR == osl_task_init("uart_send_thread",HSUART_TX_TASK_PRI,HSUART_TX_TASK_SIZE,(void *)hsuart_tx_thread,(void *)uart_ctx,
 									&g_hsuart_ctrl.tx_task_id))
 	    {
@@ -2841,14 +2841,14 @@ int hsuart_udi_init(void)
 
 module_init(hsuart_udi_init);
 /*****************************************************************************
-* º¯ Êı Ãû  : show_hsuart_info
+* å‡½ æ•° å  : show_hsuart_info
 *
-* ¹¦ÄÜÃèÊö  : UART ¿ÉÎ¬¿É²â½Ó¿Ú
+* åŠŸèƒ½æè¿°  : UART å¯ç»´å¯æµ‹æ¥å£
 *
-* ÊäÈë²ÎÊı  : NA
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : NA
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void show_hsuart_info(void)
@@ -2883,7 +2883,7 @@ void show_hsuart_info(void)
  //   printk("MEMORY_AXI_HSUART_INOUT_ADDR: 0x%x \n", *( volatile unsigned int* )MEMORY_AXI_HSUART_INOUT_ADDR);
 #endif
 
-    /* Ä£¿éÎ´³õÊ¼»¯£¬½«µ¼ÖÂ¿ÕÖ¸Õë*/
+    /* æ¨¡å—æœªåˆå§‹åŒ–ï¼Œå°†å¯¼è‡´ç©ºæŒ‡é’ˆ*/
     if (uart_ctx->init)
     {
         spin_lock_irqsave(&uart_ctx->read_info.list_lock, flags);
@@ -2933,14 +2933,14 @@ void hsuart_write_reg(u32 offset, u32 value)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_read_cb
+* å‡½ æ•° å  : hsuart_read_cb
 *
-* ¹¦ÄÜÃèÊö  : UART »Ø»·²âÊÔ»Øµ÷
+* åŠŸèƒ½æè¿°  : UART å›ç¯æµ‹è¯•å›è°ƒ
 *
-* ÊäÈë²ÎÊı  : ctx ´«²Î
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : ctx ä¼ å‚
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 void hsuart_read_cb(void)
@@ -2954,14 +2954,14 @@ void hsuart_read_cb(void)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : hsuart_loop_test
+* å‡½ æ•° å  : hsuart_loop_test
 *
-* ¹¦ÄÜÃèÊö  : UART »Ø»·²âÊÔ
+* åŠŸèƒ½æè¿°  : UART å›ç¯æµ‹è¯•
 *
-* ÊäÈë²ÎÊı  : ctx ´«²Î
-* Êä³ö²ÎÊı  : NA
+* è¾“å…¥å‚æ•°  : ctx ä¼ å‚
+* è¾“å‡ºå‚æ•°  : NA
 *
-* ·µ »Ø Öµ  : NA
+* è¿” å› å€¼  : NA
 *
 *****************************************************************************/
 #if 0
@@ -3022,12 +3022,12 @@ void set_baud(u32 baud)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : DualModem_InQue
- ¹¦ÄÜÃèÊö  : ¸ßËÙ´®¿Ú½ÓÊÕ»º³åÇøÈë¶Óº¯Êı
- ÊäÈë²ÎÊı  : pstQue »º³åÇø¶ÓÁĞÖ¸Õë
-             sucData ½ÓÊÕµ½µÄ×Ö·û
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
+ å‡½ æ•° å  : DualModem_InQue
+ åŠŸèƒ½æè¿°  : é«˜é€Ÿä¸²å£æ¥æ”¶ç¼“å†²åŒºå…¥é˜Ÿå‡½æ•°
+ è¾“å…¥å‚æ•°  : pstQue ç¼“å†²åŒºé˜Ÿåˆ—æŒ‡é’ˆ
+             sucData æ¥æ”¶åˆ°çš„å­—ç¬¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
 *****************************************************************************/
 int M2m_hsuart_InQue(m2m_recv_str *pstQue, UINT8 ucData)
 {
@@ -3045,12 +3045,12 @@ int M2m_hsuart_InQue(m2m_recv_str *pstQue, UINT8 ucData)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : DualModem_InQue
- ¹¦ÄÜÃèÊö  : ¸ßËÙ´®¿Ú½ÓÊÕ»º³åÇøÈë¶Óº¯Êı
- ÊäÈë²ÎÊı  : pstQue »º³åÇø¶ÓÁĞÖ¸Õë
-             sucData ½ÓÊÕµ½µÄ×Ö·û
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
+ å‡½ æ•° å  : DualModem_InQue
+ åŠŸèƒ½æè¿°  : é«˜é€Ÿä¸²å£æ¥æ”¶ç¼“å†²åŒºå…¥é˜Ÿå‡½æ•°
+ è¾“å…¥å‚æ•°  : pstQue ç¼“å†²åŒºé˜Ÿåˆ—æŒ‡é’ˆ
+             sucData æ¥æ”¶åˆ°çš„å­—ç¬¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
 *****************************************************************************/
 void m2m_hsuart(void)
 {

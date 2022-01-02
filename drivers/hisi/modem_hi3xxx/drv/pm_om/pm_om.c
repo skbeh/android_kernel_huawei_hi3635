@@ -42,11 +42,11 @@ u32 g_pm_om_magic_tbl[PM_OM_MOD_ID_MAX]={
 };
 u32 ring_buffer_in(struct ring_buffer *rb, void *data, u32 len)
 {
-	/* Ê×ÏÈ¿½±´ rb->writeµ½bufferÄ©Î²µÄÒ»¶ÎÊı¾İ */
+	/* é¦–å…ˆæ‹·è´ rb->writeåˆ°bufferæœ«å°¾çš„ä¸€æ®µæ•°æ® */
 	u32 left = min(len,  rb->size - rb->write);
 	memcpy_s((void *)(rb->base + rb->write), rb->size, (void *)data, left);/*lint !e124 */
 
-	/* ½Ó×Å½«Ê£Óà´ıĞ´ÈëÊı¾İ (Èç¹û»¹ÓĞµÄ»°)´ÓbufferµÄ¿ªÊ¼Î»ÖÃ¿½±´ */
+	/* æ¥ç€å°†å‰©ä½™å¾…å†™å…¥æ•°æ® (å¦‚æœè¿˜æœ‰çš„è¯)ä»bufferçš„å¼€å§‹ä½ç½®æ‹·è´ */
 	memcpy_s((void *)rb->base, rb->size, (void *)(data + left), len - left);/*lint !e124 */
 
 	rb->write += len;
@@ -79,7 +79,7 @@ int pm_om_log_out(u32 mod_id, u32 typeid, u32 data_len , void *data)
 	u32  consuming_time = 0;
 	UNUSED(flags);
 
-	/* ¼ÇÂ¼log¹ı³¤»áÓ°ÏìDRXÑ°ºô(Õ»ÉÏ±äÁ¿) */
+	/* è®°å½•logè¿‡é•¿ä¼šå½±å“DRXå¯»å‘¼(æ ˆä¸Šå˜é‡) */
 	if (data_len > PM_OM_LOG_MAX_LEN)
 	{
 		return PM_OM_ERR_LEN_LIMIT;
@@ -95,7 +95,7 @@ int pm_om_log_out(u32 mod_id, u32 typeid, u32 data_len , void *data)
 		return PM_OM_ERR_MOD_OFF;
 	}
 
-	/* ²Ù×÷ring bufferÖ®Ç°, ÏÈ½«ºË¼äÖ¸ÕëÈ¡µ½±¾ºË */
+	/* æ“ä½œring bufferä¹‹å‰, å…ˆå°†æ ¸é—´æŒ‡é’ˆå–åˆ°æœ¬æ ¸ */
 	g_pmom_ctrl.log.rb.write     = g_pmom_ctrl.log.smem->rb_info.write;
 	g_pmom_ctrl.log.rb.read      = g_pmom_ctrl.log.smem->rb_info.read;
 	g_pmom_ctrl.log.app_is_alive = g_pmom_ctrl.log.smem->fwrite_sw;
@@ -108,7 +108,7 @@ int pm_om_log_out(u32 mod_id, u32 typeid, u32 data_len , void *data)
 	pm_om_spin_lock(&g_pmom_ctrl.log.lock, flags);
 	log_head.sn        = (g_pmom_ctrl.log.smem->sn)++;
 
-	/* ³öÏÖlog¸²¸Ç: 1> Ó¦ÓÃ´ò¿ª,Å×ÆúĞÂÊı¾İ; 2> Ó¦ÓÃÎ´´ò¿ª,Å×Æú¾ÉÊı¾İ */
+	/* å‡ºç°logè¦†ç›–: 1> åº”ç”¨æ‰“å¼€,æŠ›å¼ƒæ–°æ•°æ®; 2> åº”ç”¨æœªæ‰“å¼€,æŠ›å¼ƒæ—§æ•°æ® */
 	left_size = ring_buffer_writable_size(&g_pmom_ctrl.log.rb);
 	if ((head_len + data_len) > left_size)
 	{
@@ -127,16 +127,16 @@ int pm_om_log_out(u32 mod_id, u32 typeid, u32 data_len , void *data)
 
 	ring_buffer_in_with_header(&g_pmom_ctrl.log.rb, (void *)&log_head, head_len, data, data_len);
 
-	/* Êı¾İĞ´ÈëÖ®ºó¸üĞÂºË¼äring buffer Ğ´Ö¸Õë */
+	/* æ•°æ®å†™å…¥ä¹‹åæ›´æ–°æ ¸é—´ring buffer å†™æŒ‡é’ˆ */
 	g_pmom_ctrl.log.smem->rb_info.write = g_pmom_ctrl.log.rb.write;
 	
 out:
 	consuming_time = pm_om_log_time_rec(log_head.timestamp);
 
-	/* bsp_ipc_spin_unlock¿É±£Ö¤µ÷ÓÃcache_sync³å³öwrite buffer */
+	/* bsp_ipc_spin_unlockå¯ä¿è¯è°ƒç”¨cache_syncå†²å‡ºwrite buffer */
 	pm_om_spin_unlock((&g_pmom_ctrl.log.lock), flags);
 
-	/* Ğ´ÈëÊı¾İ³¬¹ılogË®Ïß,»½ĞÑacoreĞ´ÎÄ¼ş */
+	/* å†™å…¥æ•°æ®è¶…è¿‡logæ°´çº¿,å”¤é†’acoreå†™æ–‡ä»¶ */
 	if (ring_buffer_writen_size(&g_pmom_ctrl.log.rb) >= g_pmom_ctrl.log.threshold)
 	{
 		pm_om_fwrite_trigger();
@@ -241,7 +241,7 @@ int bsp_pm_om_log_init(void)
 	memset_s((void *)&nv_cfg, sizeof(nv_cfg), 0, sizeof(nv_cfg));
 	memset_s((void *)&g_pmom_ctrl.log, sizeof(g_pmom_ctrl.log), 0, sizeof(g_pmom_ctrl.log));
 
-	/* µ±Ç°debugºÍplatformÖ÷ÒªºÍlogÇ¿Ïà¹Ø, dump±È½Ï¶ÀÁ¢ */
+	/* å½“å‰debugå’Œplatformä¸»è¦å’Œlogå¼ºç›¸å…³, dumpæ¯”è¾ƒç‹¬ç«‹ */
 	g_pmom_ctrl.platform = NULL;
 	g_pmom_ctrl.debug = NULL;
 

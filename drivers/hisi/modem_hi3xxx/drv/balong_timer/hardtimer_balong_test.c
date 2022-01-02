@@ -78,7 +78,7 @@ void print_count(void)
    return;
 }
 
-/*测试函数接口操作timer0*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer0*/
 s32 hardtimer_test_case01(void)
 {
    u32 i=0; 
@@ -108,7 +108,7 @@ s32 hardtimer_test_case01(void)
    return OK;
 }
 
-/*测试函数接口操作timer9*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer9*/
 s32 hardtimer_test_case02(void)
 {
    u32 i=9; 
@@ -137,7 +137,7 @@ s32 hardtimer_test_case02(void)
    osl_sema_delete(&sem);
    return OK;
 }
-/*测试函数接口操作timer10*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer10*/
 s32 hardtimer_test_case03(void)
 {
    u32 i=11;
@@ -166,7 +166,7 @@ s32 hardtimer_test_case03(void)
    osl_sema_delete(&sem);
    return OK;
 }
-/*测试函数接口操作timer17*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer17*/
 
 s32 hardtimer_test_case04(void)
 {
@@ -197,7 +197,7 @@ s32 hardtimer_test_case04(void)
    return OK;
 }
 
-/*测试函数接口操作timer19*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer19*/
 s32 hardtimer_test_case05(void)
 {
    u32 i=19;
@@ -226,7 +226,7 @@ s32 hardtimer_test_case05(void)
    osl_sema_delete(&sem);
    return OK;
 }
-/*测试函数接口操作timer20*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer20*/
 
 s32 hardtimer_test_case06(void)
 {
@@ -256,7 +256,7 @@ s32 hardtimer_test_case06(void)
    osl_sema_delete(&sem);
    return OK;
 }
-/*测试函数接口操作timer21*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer21*/
 
 s32 hardtimer_test_case07(void)
 {
@@ -286,7 +286,7 @@ s32 hardtimer_test_case07(void)
    osl_sema_delete(&sem);
    return OK;
 }
-/*测试函数接口操作timer22*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer22*/
 
 s32 hardtimer_test_case08(void)
 {
@@ -316,7 +316,7 @@ s32 hardtimer_test_case08(void)
    osl_sema_delete(&sem);
    return OK;
 }
-/*测试函数接口操作timer23*/
+/*娴嬭瘯鍑芥暟鎺ュ彛鎿嶄綔timer23*/
 
 s32 hardtimer_test_case09(void)
 {

@@ -124,7 +124,7 @@ u32 nv_writeEx(u32 modem_id,u32 itemid,u32 offset,u8* pdata,u32 datalen)
     }
     nv_offset = ddr_info->file_info[file_info.file_id -1].offset+offset+ref_info.nv_off;
 
-    /*IPCËø±£»¤£¬·ÀÖ¹ÔÚĞ£ÑéCRCÊ±Ğ´NV²Ù×÷»¹Ã»ÓĞÍê³É*/
+    /*IPCé”ä¿æŠ¤ï¼Œé˜²æ­¢åœ¨æ ¡éªŒCRCæ—¶å†™NVæ“ä½œè¿˜æ²¡æœ‰å®Œæˆ*/
     nv_ipc_sem_take(IPC_SEM_NV_CRC, IPC_SME_TIME_OUT);
     ret = nv_check_nv_data_crc(nv_offset, datalen);
     nv_ipc_sem_give(IPC_SEM_NV_CRC);
@@ -318,7 +318,7 @@ u32 bsp_nvm_flushEx(u32 off,u32 len,u32 itemid)
     }
 
     nv_ipc_sem_take(IPC_SEM_NV_CRC, IPC_SME_TIME_OUT);
-    /*Èç¹ûÖ§³ÖCRCĞ£ÑéÂëÔòĞèÒª½«CRCĞ£ÑéÂëĞ´ÈëÎÄ¼ş*/
+    /*å¦‚æœæ”¯æŒCRCæ ¡éªŒç åˆ™éœ€è¦å°†CRCæ ¡éªŒç å†™å…¥æ–‡ä»¶*/
     if(NV_CRC_CHECK_YES)
     {
         crc_count = NV_CRC_CODE_COUNT((off + len - ctrl_info->ctrl_size)) - (off- ctrl_info->ctrl_size)/NV_CRC32_CHECK_SIZE;
@@ -410,7 +410,7 @@ u32 bsp_nvm_flushEn(void)
     }
     if(NV_CRC_CHECK_YES)
     {
-        writeLen = ddr_info->file_len + NV_CRC_CODE_COUNT(ddr_info->file_len - ctrl_info->ctrl_size)*sizeof(u32) + sizeof(u32);/*sizeofÊÇÎÄ¼şÎ²½áÊø·û*/
+        writeLen = ddr_info->file_len + NV_CRC_CODE_COUNT(ddr_info->file_len - ctrl_info->ctrl_size)*sizeof(u32) + sizeof(u32);/*sizeofæ˜¯æ–‡ä»¶å°¾ç»“æŸç¬¦*/
     }
     else
     {
@@ -460,12 +460,12 @@ u32 bsp_nvm_flushSys(u32 itemid)
     }
     ulTotalLen = ddr_info->file_len;
 #if defined(FEATURE_NV_FLASH_ON)
-    /*ÔÚnvdload·ÖÇøÎÄ¼şÄ©Î²ÖÃ±êÖ¾0xabcd8765*/
+    /*åœ¨nvdloadåˆ†åŒºæ–‡ä»¶æœ«å°¾ç½®æ ‡å¿—0xabcd8765*/
     *( unsigned int* )( (u8*)NV_GLOBAL_CTRL_INFO_ADDR + ddr_info->file_len )
         = ( unsigned int )NV_FILE_TAIL_MAGIC_NUM;
     ulTotalLen += sizeof(unsigned int);
 #endif
-    /*ÏµÍ³·ÖÇøÊı¾İ²»×öCRCĞ£Ñé£¬Òò´Ë»ØĞ´Ê±²»¿¼ÂÇCRCĞ£ÑéÂëµÄ´æ·ÅÎ»ÖÃ*/
+    /*ç³»ç»Ÿåˆ†åŒºæ•°æ®ä¸åšCRCæ ¡éªŒï¼Œå› æ­¤å›å†™æ—¶ä¸è€ƒè™‘CRCæ ¡éªŒç çš„å­˜æ”¾ä½ç½®*/
     ret = (u32)nv_file_write((u8*)NV_GLOBAL_CTRL_INFO_ADDR,1,ulTotalLen,fp);
     nv_file_close(fp);
     if(ret != ulTotalLen)
@@ -798,7 +798,7 @@ u32 bsp_nvm_revert_default(void)
         return ret;
     }
 
-    /*»úÒªnvÏî²»»Ö¸´*/
+    /*æœºè¦nvé¡¹ä¸æ¢å¤*/
     ret = nv_revert_data(NV_IMG_PATH,g_ausNvResumeSecureIdList,\
         bsp_nvm_getRevertNum(NV_SECURE_ITEM));
     if(ret)
@@ -828,7 +828,7 @@ u32 bsp_nvm_key_check(void)
     struct nv_ref_data_info_stru    mem_ref_info  = {0};
     struct nv_file_list_info_stru   mem_file_info = {0};
 
-    if(nv_file_access((s8*)NV_DEFAULT_PATH,0))  /*Ã»ÓĞÎÄ¼şÔòÖ±½Ó·µ»Øok*/
+    if(nv_file_access((s8*)NV_DEFAULT_PATH,0))  /*æ²¡æœ‰æ–‡ä»¶åˆ™ç›´æ¥è¿”å›ok*/
     {
         return NV_OK;
     }
@@ -929,7 +929,7 @@ u32 bsp_nvm_key_check(void)
     file_offset = bak_ddr_info.file_info[bak_file_info.file_id-1].offset +bak_ref_info.nv_off;
 
     nv_file_seek(fp,(s32)file_offset,SEEK_SET);
-    ret = (u32)nv_file_read(bak_data,1,datalen,fp);/*°ÑÊı¾İ´ÓÎÄ¼şÖĞÖ¸¶¨Æ«ÒÆ´¦¶Á³ö*/
+    ret = (u32)nv_file_read(bak_data,1,datalen,fp);/*æŠŠæ•°æ®ä»æ–‡ä»¶ä¸­æŒ‡å®šåç§»å¤„è¯»å‡º*/
     if(ret != datalen)
     {
         nv_debug(NV_FUN_KEY_CHECK,11,ret,datalen,0);
@@ -944,7 +944,7 @@ u32 bsp_nvm_key_check(void)
     }
 
     nv_file_close(fp);
-    ret = (u32)memcmp(mem_data,bak_data,datalen);  /*±È½ÏÊı¾İ²îÒì*/
+    ret = (u32)memcmp(mem_data,bak_data,datalen);  /*æ¯”è¾ƒæ•°æ®å·®å¼‚*/
     if(ret)
     {
         ret = bsp_nvm_revert_defaultEx((s8*)NV_DEFAULT_PATH);/* [false alarm]:ret is in using */
@@ -992,7 +992,7 @@ s32 bsp_nvm_icc_task(void* parm)
         g_nv_ctrl.opState = NV_OPS_STATE;
         wake_lock(&g_nv_ctrl.wake_lock);
 
-        /*Èç¹ûµ±Ç°´¦ÓÚË¯Ãß×´Ì¬£¬ÔòµÈ´ı»½ĞÑ´¦Àí*/
+        /*å¦‚æœå½“å‰å¤„äºç¡çœ çŠ¶æ€ï¼Œåˆ™ç­‰å¾…å”¤é†’å¤„ç†*/
         if(g_nv_ctrl.pmState == NV_SLEEP_STATE)
         {
             printk("%s cur state in sleeping,wait for resume end!\n",__func__);
@@ -1091,7 +1091,7 @@ u32 bsp_nvm_xml_decode(void)
     }
 
 
-    /*CUST XML ÎŞ¶ÔÓ¦MAPÎÄ¼ş£¬´«Èë¿ÕÖµ¼´¿É*/
+    /*CUST XML æ— å¯¹åº”MAPæ–‡ä»¶ï¼Œä¼ å…¥ç©ºå€¼å³å¯*/
     if(!nv_file_access(NV_CUST_CARD1_PATH,0))
     {
         ret = nv_xml_decode(NV_CUST_CARD1_PATH,NULL,NV_USIMM_CARD_1);
@@ -1121,7 +1121,7 @@ u32 bsp_nvm_reload(void)
     u32 datalen = 0;
 
     nv_debug(NV_FUN_MEM_INIT,0,0,0,0);
-    /*¹¤×÷·ÖÇøÊı¾İ´æÔÚ£¬ÇÒÎŞÎ´Ğ´ÈëÍê³ÉµÄ±êÖ¾ÎÄ¼ş*/
+    /*å·¥ä½œåˆ†åŒºæ•°æ®å­˜åœ¨ï¼Œä¸”æ— æœªå†™å…¥å®Œæˆçš„æ ‡å¿—æ–‡ä»¶*/
     if( true == nv_check_file_validity((s8 *)NV_IMG_PATH, (s8 *)NV_IMG_FLAG_PATH))
     {
         nv_mntn_record("load from %s ...%s %s \n",NV_IMG_PATH,__DATE__,__TIME__);
@@ -1188,7 +1188,7 @@ load_bak:
             goto load_err_proc;
         }
 
-        /*´Ó±¸·İÇø¼ÓÔØĞèÒªÊ×ÏÈĞ´Èë¹¤×÷Çø*/
+        /*ä»å¤‡ä»½åŒºåŠ è½½éœ€è¦é¦–å…ˆå†™å…¥å·¥ä½œåŒº*/
         ret = bsp_nvm_flushEn();
         if(ret)
         {
@@ -1218,7 +1218,7 @@ u32 bsp_nvm_upgrade(void)
 
     nv_debug(NV_FUN_UPGRADE_PROC,0,0,0,0);
 
-    /*ÅĞ¶Ïfastboot½×¶Îxml ½âÎöÊÇ·ñÒì³££¬Èô³öÏÖÒì³££¬ÔòĞèÒªÖØĞÂ½âÎöxml*/
+    /*åˆ¤æ–­fastbooté˜¶æ®µxml è§£ææ˜¯å¦å¼‚å¸¸ï¼Œè‹¥å‡ºç°å¼‚å¸¸ï¼Œåˆ™éœ€è¦é‡æ–°è§£æxml*/
     if(ddr_info->xml_dec_state != NV_XML_DEC_SUCC_STATE)
     {
         ret = bsp_nvm_xml_decode();
@@ -1235,7 +1235,7 @@ u32 bsp_nvm_upgrade(void)
         goto out;
     }
 
-    /*Éı¼¶»Ö¸´´¦Àí£¬ÉÕÆ¬°æ±¾Ö±½Ó·µ»Øok*/
+    /*å‡çº§æ¢å¤å¤„ç†ï¼Œçƒ§ç‰‡ç‰ˆæœ¬ç›´æ¥è¿”å›ok*/
     ret = nv_upgrade_revert_proc();
     if(ret)
     {
@@ -1251,7 +1251,7 @@ u32 bsp_nvm_upgrade(void)
         nv_debug(NV_FUN_UPGRADE_PROC,6,ret,0,0);
         goto out;
     }
-    /*½«×îĞÂÊı¾İĞ´Èë¸÷¸ö·ÖÇø*/
+    /*å°†æœ€æ–°æ•°æ®å†™å…¥å„ä¸ªåˆ†åŒº*/
     ret = nv_data_writeback();
     if(ret)
     {
@@ -1259,7 +1259,7 @@ u32 bsp_nvm_upgrade(void)
         goto out;
     }
 
-    /*ÖÃÉı¼¶°üÎŞĞ§*/
+    /*ç½®å‡çº§åŒ…æ— æ•ˆ*/
     ret = (u32)nv_modify_upgrade_flag(false);/*lint !e747 */
     if(ret)
     {
@@ -1308,8 +1308,8 @@ s32 bsp_nvm_kernel_init(void)
     ddr_info->acore_init_state = NV_KERNEL_INIT_DOING;
     nv_flush_cache((void*)NV_GLOBAL_INFO_ADDR, (u32)NV_GLOBAL_INFO_SIZE);
     if((ddr_info->mem_file_type == NV_MEM_DLOAD) &&
-       (!nv_file_access((s8*)NV_DLOAD_PATH,0)) &&/*Éı¼¶·ÖÇø´æÔÚÊı¾İ*/
-       (true == nv_get_upgrade_flag())/*Éı¼¶ÎÄ¼şÓĞĞ§*/
+       (!nv_file_access((s8*)NV_DLOAD_PATH,0)) &&/*å‡çº§åˆ†åŒºå­˜åœ¨æ•°æ®*/
+       (true == nv_get_upgrade_flag())/*å‡çº§æ–‡ä»¶æœ‰æ•ˆ*/
        )
     {
         ret = bsp_nvm_upgrade();
@@ -1321,7 +1321,7 @@ s32 bsp_nvm_kernel_init(void)
     }
     else
     {
-        /*ÖØĞÂ¼ÓÔØ×îĞÂÊı¾İ*/
+        /*é‡æ–°åŠ è½½æœ€æ–°æ•°æ®*/
         ret = bsp_nvm_reload();
         if(ret)
         {
@@ -1329,7 +1329,7 @@ s32 bsp_nvm_kernel_init(void)
             goto out;
         }
     }
-    /*³õÊ¼»¯Ë«ºËÊ¹ÓÃµÄÁ´±í*/
+    /*åˆå§‹åŒ–åŒæ ¸ä½¿ç”¨çš„é“¾è¡¨*/
     nv_flushListInit();
     ret = bsp_ipc_sem_create(IPC_SEM_NV_CRC);
     if(ret)
@@ -1337,11 +1337,11 @@ s32 bsp_nvm_kernel_init(void)
         nv_debug(NV_FUN_KERNEL_INIT,6,ret,0,0);
         goto out;
     }
-    /*ÖÃ³õÊ¼»¯×´Ì¬ÎªOK*/
+    /*ç½®åˆå§‹åŒ–çŠ¶æ€ä¸ºOK*/
     ddr_info->acore_init_state = NV_INIT_OK;
     nv_flush_cache((void*)NV_GLOBAL_INFO_ADDR, (u32)NV_GLOBAL_INFO_SIZE);
 
-    /*±£Ö¤¸÷·ÖÇøÊı¾İÕı³£Ğ´Èë*/
+    /*ä¿è¯å„åˆ†åŒºæ•°æ®æ­£å¸¸å†™å…¥*/
     nv_file_flag_check();
 
     INIT_LIST_HEAD(&g_nv_ctrl.stList);
@@ -1390,7 +1390,7 @@ u32 bsp_nvm_reload(void)
 
     nv_debug(NV_FUN_MEM_INIT,0,NV_GLOBAL_INFO_ADDR,NV_GLOBAL_CTRL_INFO_ADDR,0);
 
-    /*ÖØĞÂ¼ÓÔØÖ®Ç°ÇåÀí¸÷·ÖÇø×´Ì¬Î»*/
+    /*é‡æ–°åŠ è½½ä¹‹å‰æ¸…ç†å„åˆ†åŒºçŠ¶æ€ä½*/
     ddr_info->mem_file_type &= ~(0x1 << NV_MEM_DATA_NVSYS_IMG);
     ddr_info->mem_file_type &= ~(0x1 << NV_MEM_DATA_NVBACK);
 
@@ -1419,7 +1419,7 @@ u32 bsp_nvm_reload(void)
     }
 
 
-/*hi3630°æ±¾Èç¹ûmnvm2:0Ä¿Â¼ÏÂÃ»ÓĞ£¬Ôò´Ómodem_logÄ¿Â¼ÖĞ²éÕÒ*/
+/*hi3630ç‰ˆæœ¬å¦‚æœmnvm2:0ç›®å½•ä¸‹æ²¡æœ‰ï¼Œåˆ™ä»modem_logç›®å½•ä¸­æŸ¥æ‰¾*/
 #ifdef BSP_CONFIG_HI3630
 
     if(!nv_file_access(NV_IMG_BACK_PATH,0))
@@ -1492,12 +1492,12 @@ u32 bsp_nvm_upgrade(void)
     u32 mem_type = 0;
     bool RevertFlag = false;
 
-    ddr_info->mem_file_type &= ~(0x1 << NV_MEM_DATA_NVDLOAD); /*ÇåÀíÏÂÔØ·ÖÇøÄÚ´æ±êÖ¾Î»*/
-    mem_type                 = ddr_info->mem_file_type;       /*¼ÇÂ¼µ±Ç°ÄÚ´æÊı¾İ±êÖ¾Î»*/
+    ddr_info->mem_file_type &= ~(0x1 << NV_MEM_DATA_NVDLOAD); /*æ¸…ç†ä¸‹è½½åˆ†åŒºå†…å­˜æ ‡å¿—ä½*/
+    mem_type                 = ddr_info->mem_file_type;       /*è®°å½•å½“å‰å†…å­˜æ•°æ®æ ‡å¿—ä½*/
 
     nv_debug(NV_FUN_UPGRADE_PROC,0,0,0,0);
 
-    /*Èç¹ûÉı¼¶°üÖĞ´æÔÚÒÔÏÂ¼¸¸öÎÄ¼ş£¬Ôò¾ùÈÏÎªÉı¼¶²Ù×÷£¬¾ùĞèÒª½øĞĞĞ£×¼nvÊı¾İ»Ö¸´*/
+    /*å¦‚æœå‡çº§åŒ…ä¸­å­˜åœ¨ä»¥ä¸‹å‡ ä¸ªæ–‡ä»¶ï¼Œåˆ™å‡è®¤ä¸ºå‡çº§æ“ä½œï¼Œå‡éœ€è¦è¿›è¡Œæ ¡å‡†nvæ•°æ®æ¢å¤*/
     if(((!nv_file_access(NV_DLOAD_PATH,0)) ||
         (!nv_file_access(NV_XNV_CARD1_PATH,0)) ||
         (!nv_file_access(NV_XNV_CARD2_PATH,0)) ||
@@ -1512,7 +1512,7 @@ u32 bsp_nvm_upgrade(void)
             nv_debug(NV_FUN_UPGRADE_PROC,1,ret,0,0);
             goto upgrade_fail_out;
         }
-        RevertFlag = true;    /*¼ÇÂ¼Éı¼¶¹ı³ÌÖĞµÄ±¸·İ¶¯×÷*/
+        RevertFlag = true;    /*è®°å½•å‡çº§è¿‡ç¨‹ä¸­çš„å¤‡ä»½åŠ¨ä½œ*/
     }
 
     if(!nv_file_access(NV_DLOAD_PATH,0))
@@ -1540,7 +1540,7 @@ u32 bsp_nvm_upgrade(void)
 
         ddr_info->mem_file_type |= (0x1 << NV_MEM_DATA_NVDLOAD);
     }
-    else if(!mem_type)  /*ÄÚ´æÓëÉı¼¶°üÖĞ¾ùÃ»ÓĞÊı¾İ£¬ÔòĞèÒª·µ»Ø´íÎó*/
+    else if(!mem_type)  /*å†…å­˜ä¸å‡çº§åŒ…ä¸­å‡æ²¡æœ‰æ•°æ®ï¼Œåˆ™éœ€è¦è¿”å›é”™è¯¯*/
     {
         ret = BSP_ERR_NV_NO_FILE;
         nv_debug(NV_FUN_UPGRADE_PROC,5,ret,0,0);
@@ -1555,7 +1555,7 @@ u32 bsp_nvm_upgrade(void)
     }
 
 /*lint -save -e731*/
-    if(RevertFlag == true)/*Óë±¸·İ¶¯×÷Í¬²½£¬Èç¹û³öÏÖ±¸·İ²Ù×÷£¬ÔòÍ¬ÑùĞèÒª½øĞĞ»Ö¸´¶¯×÷*/
+    if(RevertFlag == true)/*ä¸å¤‡ä»½åŠ¨ä½œåŒæ­¥ï¼Œå¦‚æœå‡ºç°å¤‡ä»½æ“ä½œï¼Œåˆ™åŒæ ·éœ€è¦è¿›è¡Œæ¢å¤åŠ¨ä½œ*/
     {
         ret = bsp_nvm_revert();
         if(ret)
@@ -1565,7 +1565,7 @@ u32 bsp_nvm_upgrade(void)
         }
     }
 
-    mem_type = ddr_info->mem_file_type &(~(0x1 << NV_MEM_DATA_NVSYS_IMG));/*ÄÚ´æÖĞÊÇ·ñ´æÔÚ·Çsys·ÖÇø¼°¹¤×÷·ÖÇøÊı¾İ*/
+    mem_type = ddr_info->mem_file_type &(~(0x1 << NV_MEM_DATA_NVSYS_IMG));/*å†…å­˜ä¸­æ˜¯å¦å­˜åœ¨ésysåˆ†åŒºåŠå·¥ä½œåˆ†åŒºæ•°æ®*/
     if(mem_type)
     {
         ret = bsp_nvm_flushEn();
@@ -1576,7 +1576,7 @@ u32 bsp_nvm_upgrade(void)
         }
     }
 
-    if(RevertFlag == true)/*Ö»ÓĞÔÚÉı¼¶Çé¿öÏÂ¸üĞÂ±¸·İÇø*/
+    if(RevertFlag == true)/*åªæœ‰åœ¨å‡çº§æƒ…å†µä¸‹æ›´æ–°å¤‡ä»½åŒº*/
     {
         ret = bsp_nvm_backup();
         if(ret)
@@ -1587,10 +1587,10 @@ u32 bsp_nvm_upgrade(void)
     }
 /*lint -restore +e731*/
 
-    /*¼ì²éÊÇ·ñÓĞÉı¼¶°üÊı¾İ£¬½øĞĞÉ¾³ı*/
+    /*æ£€æŸ¥æ˜¯å¦æœ‰å‡çº§åŒ…æ•°æ®ï¼Œè¿›è¡Œåˆ é™¤*/
     bsp_nvm_remove_dload_packet();
 
-    if(mem_type)/*²»ÄÜÃ¿´ÎÆô¶¯¶¼ÒªË¢£¬Òª¼õÉÙflushsys ´ÎÊı*/
+    if(mem_type)/*ä¸èƒ½æ¯æ¬¡å¯åŠ¨éƒ½è¦åˆ·ï¼Œè¦å‡å°‘flushsys æ¬¡æ•°*/
     {
         ret = bsp_nvm_flushSys(NV_ERROR);
         if(ret)
@@ -1643,7 +1643,7 @@ s32 bsp_nvm_kernel_init(void)
     ddr_info->acore_init_state = NV_KERNEL_INIT_DOING;
     nv_flush_cache((void*)NV_GLOBAL_INFO_ADDR, (u32)NV_GLOBAL_INFO_SIZE);
 
-    /*³õÊ¼»¯¿ªÊ¼£¬´ÓĞÂ¼ÓÔØÊı¾İµ½ÄÚ´æÖĞ*/
+    /*åˆå§‹åŒ–å¼€å§‹ï¼Œä»æ–°åŠ è½½æ•°æ®åˆ°å†…å­˜ä¸­*/
     ret = bsp_nvm_reload();
     if(ret)
     {
@@ -1651,14 +1651,14 @@ s32 bsp_nvm_kernel_init(void)
         goto nv_init_fail;
     }
 
-    /*Éı¼¶´¦ÀíÁ÷³Ì*/
+    /*å‡çº§å¤„ç†æµç¨‹*/
     ret = bsp_nvm_upgrade();
     if(ret)
     {
         nv_debug(NV_FUN_KERNEL_INIT,3,ret,0,0);
         goto nv_init_fail;
     }
-#if 0    /*´ıÌÖÂÛ*/
+#if 0    /*å¾…è®¨è®º*/
     ret = bsp_nvm_key_check();
     if(ret)
     {
@@ -1716,10 +1716,10 @@ static void bsp_nvm_exit(void)
 {
     struct nv_global_ddr_info_stru* ddr_info = (struct nv_global_ddr_info_stru*)NV_GLOBAL_INFO_ADDR;
 
-    /*¹Ø»úĞ´Êı¾İ*/
+    /*å…³æœºå†™æ•°æ®*/
     bsp_nvm_flush();
     bsp_nvm_backup();
-    /*Çå³ı±êÖ¾*/
+    /*æ¸…é™¤æ ‡å¿—*/
     memset(ddr_info,0,sizeof(struct nv_global_ddr_info_stru));
 }
 /*lint -restore +e529*/
@@ -1861,7 +1861,7 @@ void sc_sigle_file_copy(const char* new_path,const char* old_path)
     int len = 0;
     int ret = 0;
 
-    if((!BSP_access(new_path,0))||(BSP_access(old_path,0)))  /*ĞÂÎÄ¼ş´æÔÚ»òÕß¾ÉÎÄ¼ş²»´æÔÚÔòÎŞĞè¿½±´*/
+    if((!BSP_access(new_path,0))||(BSP_access(old_path,0)))  /*æ–°æ–‡ä»¶å­˜åœ¨æˆ–è€…æ—§æ–‡ä»¶ä¸å­˜åœ¨åˆ™æ— éœ€æ‹·è´*/
     {
         return;
     }
@@ -2010,10 +2010,10 @@ void modem_nv_delay(void)
     struct mtd_info* mtd;
     int i;
 
-    /*×î³¤µÈ´ıÊ±³¤5s*/
+    /*æœ€é•¿ç­‰å¾…æ—¶é•¿5s*/
     for(i=0;i<5000;i++)
     {
-        if( 0 == (i+1)%1000 )/*Ã¿³¬¹ı1s£¬´òÓ¡¼ÇÂ¼Ò»´Î*/
+        if( 0 == (i+1)%1000 )/*æ¯è¶…è¿‡1sï¼Œæ‰“å°è®°å½•ä¸€æ¬¡*/
         {
             nv_printf("modem nv wait for mtd device %d ms\n",i);
         }

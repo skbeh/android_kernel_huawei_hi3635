@@ -28,10 +28,10 @@ extern "C"
 #define RTC_INT_ID 36
 #define RTC_BASE_YEAR   1900 /*RTC base year*/
 
-/*RTC È«¾Ö±äÁ¿½á¹¹Ìå*/
+/*RTC å…¨å±€å˜é‡ç»“æ„ä½“*/
 struct rtc_control
 {
-	u32 rtc_base_addr;/*RTC ¼Ä´æÆ÷»ùµØÖ·*/
+	u32 rtc_base_addr;/*RTC å¯„å­˜å™¨åŸºåœ°å€*/
 };
 
 extern struct rtc_control g_rtc_ctrl;

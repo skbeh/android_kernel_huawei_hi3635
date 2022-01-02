@@ -22,7 +22,7 @@ extern "C" {
 #include <inetLib.h>
 #include <selectLib.h>
 #elif (VOS_LINUX == VOS_OS_VER)
-/*lint -save -e322 -e7*//*ÏµÍ³Í·ÎÄ¼þÕÒ²»µ½£¬ÊôÓÚ»·¾³ÎÊÌâ*/
+/*lint -save -e322 -e7*//*ç³»ç»Ÿå¤´æ–‡ä»¶æ‰¾ä¸åˆ°ï¼Œå±žäºŽçŽ¯å¢ƒé—®é¢˜*/
 #include "hisocket.h"
 /*lint -restore +e322 +e7*/
 #endif
@@ -120,7 +120,7 @@ DIAG_TCPIP_CTRL_INFO_STRU* diag_GetTcpInfo(VOS_VOID)
 
 VOS_VOID diag_SocketInfo_Init(VOS_VOID)
 {
-	//DIAGÍ¨µÀ
+	//DIAGé€šé“
 	g_diagPort[EN_DIAG_SOCKET_BEARER_TCP_20248].ucChanStat         =ACM_EVT_DEV_SUSPEND ;
 	g_diagPort[EN_DIAG_SOCKET_BEARER_TCP_20248].ucHdlcFlag         = EN_HDLC_DATA;
 	g_diagPort[EN_DIAG_SOCKET_BEARER_TCP_20248].ulCodeDesChanId    = SOCP_CODER_DST_LOM_IND;
@@ -296,7 +296,7 @@ static VOS_VOID diag_AcceptOnSocket(DIAG_TCPIP_PORT_ENUM ucTcpPort , DIAG_TCPIP_
         return;
     }
 
-    /*Ôö¼ÓDiagÍ¨µÀµÄÖØÁ¬´¦ÀíÁ÷³Ì*/
+    /*å¢žåŠ Diagé€šé“çš„é‡è¿žå¤„ç†æµç¨‹*/
     else
     {
         if(astTcpPort[ucTcpPort].Tcp !=INVALID_SOCKET)
@@ -324,7 +324,7 @@ static VOS_VOID diag_AcceptOnSocket(DIAG_TCPIP_PORT_ENUM ucTcpPort , DIAG_TCPIP_
     }
 #endif
 
-    /* ¼ÇÂ¼¸ÃÁ¬½Ó×´Ì¬*/
+    /* è®°å½•è¯¥è¿žæŽ¥çŠ¶æ€*/
 	if(ucTcpPort == EN_TCP_PORT_DIAG)
 	{
 
@@ -336,7 +336,7 @@ static VOS_VOID diag_AcceptOnSocket(DIAG_TCPIP_PORT_ENUM ucTcpPort , DIAG_TCPIP_
         }
     }
 
-    /* ¼ÇÂ¼¸ÃÁ¬½Ó×´Ì¬*/
+    /* è®°å½•è¯¥è¿žæŽ¥çŠ¶æ€*/
     astTcpPort[ucTcpPort].ulConnectSta = DIAG_CONN;
 }
 
@@ -460,9 +460,9 @@ VOS_UINT32 diag_TcpSendData(DIAG_TCPIP_PORT_ENUM enTcpPort,VOS_UINT8 *pcData, VO
 
     if (SOCKET_ERROR == len)
     {
-        /*Èç¹ûÊÇÖØÁ¬Ö®ºóµÄµÚÒ»´Î·¢ËÍ£¬¿ÉÄÜÓÉÓÚÈÎÎñµ÷¶ÈµÄÔ­Òòµ¼ÖÂsocket»ñÈ¡´íÎó£»
+        /*å¦‚æžœæ˜¯é‡è¿žä¹‹åŽçš„ç¬¬ä¸€æ¬¡å‘é€ï¼Œå¯èƒ½ç”±äºŽä»»åŠ¡è°ƒåº¦çš„åŽŸå› å¯¼è‡´socketèŽ·å–é”™è¯¯ï¼›
  */
-        /*´ËÀà´íÎó²»¿ÉÒÔ¹Ø±Õsocket£»
+        /*æ­¤ç±»é”™è¯¯ä¸å¯ä»¥å…³é—­socketï¼›
  */
         if(pstTcpIpInfo->astTcpIpPort[enTcpPort].ulIsReCon==1)
         {
@@ -471,11 +471,11 @@ VOS_UINT32 diag_TcpSendData(DIAG_TCPIP_PORT_ENUM enTcpPort,VOS_UINT8 *pcData, VO
             return ERR_MSP_FAILURE;
         }
 
-		/*¹Ø±Õsocket
+		/*å…³é—­socket
  */
         diag_CloseSocket(enTcpPort);
 
-		/*ÖÃÁ¬½Ó×´Ì¬Îª¶Ï¿ª
+		/*ç½®è¿žæŽ¥çŠ¶æ€ä¸ºæ–­å¼€
  */
         if (enTcpPort == EN_TCP_PORT_DIAG)
         {
@@ -492,7 +492,7 @@ VOS_UINT32 diag_TcpSendData(DIAG_TCPIP_PORT_ENUM enTcpPort,VOS_UINT8 *pcData, VO
         return ERR_MSP_FAILURE;
     }
 
-    /*ºóÐøµÄ·¢ËÍÊ§°Ü¾Í»áÖ±½Ó¹Ø±Õsocket
+    /*åŽç»­çš„å‘é€å¤±è´¥å°±ä¼šç›´æŽ¥å…³é—­socket
  */
     pstTcpIpInfo->astTcpIpPort[enTcpPort].ulIsReCon = 0;
 
@@ -597,7 +597,7 @@ VOS_UINT32 diag_TcpSendData(DIAG_TCPIP_PORT_ENUM enTcpPort,VOS_UINT8 *pcData, VO
     /* monitor incoming connection/data for TCP sockets*/
     maxSocket = (maxAcceptSock > maxRecvSock) ? maxAcceptSock : maxRecvSock;
 
-	/*select²Ù×÷×Ó´ÓfdRxSetÖÐÑ¡È¡ÒÑ¾­×¼±¸ºÃ¿É¶ÁµÄÃèÊö·û¼¯ºÏReadySet*/
+	/*selectæ“ä½œå­ä»ŽfdRxSetä¸­é€‰å–å·²ç»å‡†å¤‡å¥½å¯è¯»çš„æè¿°ç¬¦é›†åˆReadySet*/
     /*lint -save -e419 -e420*/
     memcpy(&ReadySet, &fdRxSet, sizeof(Ip_fd_set));
     memcpy(&ErrorSet, &fdRxSet, sizeof(Ip_fd_set));
@@ -649,19 +649,19 @@ VOS_VOID diag_TcpHelp(VOS_VOID)
 	DIAG_TCPIP_CTRL_INFO_STRU *pstDiagTcpInfo;
 	pstDiagTcpInfo = diag_GetTcpInfo();
 
-    printk("´òÓ¡Ê¹ÄÜ¿ª¹Ø .................=%d\n",     (VOS_INT)g_dmsPrintFlag);
+    printk("æ‰“å°ä½¿èƒ½å¼€å…³ .................=%d\n",     (VOS_INT)g_dmsPrintFlag);
 
-	printk("TCP¶Ë¿ÚËø´ÎÊý ................=%d\n",     (VOS_INT)g_diagTcpPortLock);
-	printk("TCP¶Ë¿Ú½âËø´ÎÊý...............=%d\n",     (VOS_INT)g_diagTcpPortUnLock);
+	printk("TCPç«¯å£é”æ¬¡æ•° ................=%d\n",     (VOS_INT)g_diagTcpPortLock);
+	printk("TCPç«¯å£è§£é”æ¬¡æ•°...............=%d\n",     (VOS_INT)g_diagTcpPortUnLock);
 	printk("fdcount.......................=%d\n",     (VOS_INT)g_fdCount);
 
-	printk("DIAG¶Ë¿ÚÁ¬½Ó×´Ì¬: ............=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].ulConnectSta);
-	printk("DIAG¶Ë¿ÚÖØÁ¬×´Ì¬: ............=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].ulIsReCon);
+	printk("DIAGç«¯å£è¿žæŽ¥çŠ¶æ€: ............=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].ulConnectSta);
+	printk("DIAGç«¯å£é‡è¿žçŠ¶æ€: ............=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].ulIsReCon);
 
-	printk("DIAG¶ÔÓ¦¶Ë¿ÚºÅ: ..............=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].aulPortNum);
+	printk("DIAGå¯¹åº”ç«¯å£å·: ..............=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].aulPortNum);
 
-	printk("DIAG¶Ë¿Ú listen ÃèÊö·û:.......=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].listener);
-	printk("DIAG¶Ë¿Ú accept ÃèÊö·û:.......=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].Tcp);
+	printk("DIAGç«¯å£ listen æè¿°ç¬¦:.......=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].listener);
+	printk("DIAGç«¯å£ accept æè¿°ç¬¦:.......=%d\n",     (VOS_INT)pstDiagTcpInfo->astTcpIpPort[EN_TCP_PORT_DIAG].Tcp);
 
 }
 

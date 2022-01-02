@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "vos.h"
 #include "msp_errno.h"
@@ -22,7 +22,7 @@
 #endif
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 /*lint -e767 -e960*/
@@ -31,7 +31,7 @@
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 DMS_MAIN_INFO                   g_stDmsMainInfo = {0};
@@ -73,7 +73,7 @@ static struct netlink_kernel_cfg        g_stDmsNlkCfg =
 
 
 /*****************************************************************************
-  3 Íâ²¿º¯ÊıÉùÃ÷
+  3 å¤–éƒ¨å‡½æ•°å£°æ˜
 *****************************************************************************/
 
 extern VOS_VOID At_MsgProc(MsgBlock* pMsg);
@@ -82,7 +82,7 @@ extern int DRV_GET_BBP_TIMER_VALUE(unsigned int  *pulHigh32bitValue,  unsigned i
 
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -94,7 +94,7 @@ VOS_VOID DMS_ReadPortDebugCfgNV(VOS_VOID)
 
     VOS_MemSet(&stPortDebugNVCfg, 0, sizeof(TAF_NV_PORT_DEBUG_CFG_STRU));
 
-    /* ¶ÁÈ¡NVÏî */
+    /* è¯»å–NVé¡¹ */
     if (NV_OK != NV_ReadEx(MODEM_ID_0,
                            en_NV_Item_DMS_DEBUG_CFG,
                           &stPortDebugNVCfg,
@@ -121,13 +121,13 @@ VOS_VOID DMS_Init(VOS_VOID)
     g_stDmsMainInfo.pfnRdDataCallback  = NULL;
     g_stDmsMainInfo.pfnConnectCallBack = NULL;
 
-    /*³õÊ¼»¯ËùÓĞ¶Ë¿ÚµÄhandle*/
+    /*åˆå§‹åŒ–æ‰€æœ‰ç«¯å£çš„handle*/
     for (ulport = 0; ulport < DMS_PHY_BEAR_LAST; ulport++)
     {
         g_stDmsMainInfo.stPhyProperty[ulport].lPortHandle = UDI_INVALID_HANDLE;
     }
 
-    /*ÎïÀíÍ¨µÀÄ¬ÈÏÊôĞÔ£¬´æÔÚ¶à¸öÎïÀíÍ¨µÀÓĞÄÜÁ¦¶ÔÓ¦Ò»¸öÂß¼­Í¨µÀ*/
+    /*ç‰©ç†é€šé“é»˜è®¤å±æ€§ï¼Œå­˜åœ¨å¤šä¸ªç‰©ç†é€šé“æœ‰èƒ½åŠ›å¯¹åº”ä¸€ä¸ªé€»è¾‘é€šé“*/
     g_stDmsMainInfo.stPhyProperty[DMS_PHY_BEAR_USB_PCUI].enLogicChan = DMS_CHANNEL_AT;
     g_stDmsMainInfo.stPhyProperty[DMS_PHY_BEAR_USB_CTRL].enLogicChan = DMS_CHANNEL_AT;
 
@@ -135,13 +135,13 @@ VOS_VOID DMS_Init(VOS_VOID)
     g_stDmsMainInfo.bPortOpenFlg    = VOS_FALSE;
     g_stDmsMainInfo.ulPortCfgValue  = DMS_TEST_MODE;
 
-    /* ³õÊ¼»¯ATÍ¨µÀÊ¹ÓÃµÄ¾²Ì¬ÄÚ´æ */
+    /* åˆå§‹åŒ–ATé€šé“ä½¿ç”¨çš„é™æ€å†…å­˜ */
     Dms_StaticBufInit();
 
-    /* ´´½¨ÎÄ¼ş */
+    /* åˆ›å»ºæ–‡ä»¶ */
     DMS_InitPorCfgFile();
 
-    /* ´´½¨ÎÄ¼ş */
+    /* åˆ›å»ºæ–‡ä»¶ */
     DMS_InitGetSliceFile();
 
     DMS_ReadPortDebugCfgNV();
@@ -156,18 +156,18 @@ VOS_VOID DMS_Init(VOS_VOID)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : DMS_GetConnStaFun
- ¹¦ÄÜÃèÊö  : »ñÈ¡Í¨µÀÁ¬½Ó´¦Àíº¯Êı
- ÊäÈë²ÎÊı  :
+ å‡½ æ•° å  : DMS_GetConnStaFun
+ åŠŸèƒ½æè¿°  : è·å–é€šé“è¿æ¥å¤„ç†å‡½æ•°
+ è¾“å…¥å‚æ•°  :
 
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  : VOS_NULL/»Øµ÷º¯Êı
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  : VOS_NULL/å›è°ƒå‡½æ•°
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 DMS_CONNECT_STA_PFN DMS_GetConnStaFun(VOS_VOID)
 {
@@ -175,18 +175,18 @@ DMS_CONNECT_STA_PFN DMS_GetConnStaFun(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : DMS_SetConnStaCB
- ¹¦ÄÜÃèÊö  : Í¨µÀÁ¬½ÓÊÂ¼ş´¦Àí×¢²áº¯Êı
- ÊäÈë²ÎÊı  : pfnReg: »Øµ÷º¯ÊıÖ¸Õë
+ å‡½ æ•° å  : DMS_SetConnStaCB
+ åŠŸèƒ½æè¿°  : é€šé“è¿æ¥äº‹ä»¶å¤„ç†æ³¨å†Œå‡½æ•°
+ è¾“å…¥å‚æ•°  : pfnReg: å›è°ƒå‡½æ•°æŒ‡é’ˆ
 
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID DMS_SetConnStaCB(DMS_CONNECT_STA_PFN pfnReg)
 {
@@ -202,17 +202,17 @@ VOS_VOID DMS_SetConnStaCB(DMS_CONNECT_STA_PFN pfnReg)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : DMS_GetDataReadFun
- ¹¦ÄÜÃèÊö  : »ñÈ¡¶Á»Øµ÷º¯Êı
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  : »Øµ÷º¯ÊıÖ¸Õë
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : DMS_GetDataReadFun
+ åŠŸèƒ½æè¿°  : è·å–è¯»å›è°ƒå‡½æ•°
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  : å›è°ƒå‡½æ•°æŒ‡é’ˆ
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 DMS_READ_DATA_PFN DMS_GetDataReadFun(VOS_VOID)
 {
@@ -220,17 +220,17 @@ DMS_READ_DATA_PFN DMS_GetDataReadFun(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : DMS_GetMainInfo
- ¹¦ÄÜÃèÊö  : »ñÈ¡DMSÈ«¾Ö±äÁ¿Ö¸Õë
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  : È«¾Ö±äÁ¿Ö¸Õë
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : DMS_GetMainInfo
+ åŠŸèƒ½æè¿°  : è·å–DMSå…¨å±€å˜é‡æŒ‡é’ˆ
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  : å…¨å±€å˜é‡æŒ‡é’ˆ
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 DMS_MAIN_INFO* DMS_GetMainInfo(VOS_VOID)
 {
@@ -238,16 +238,16 @@ DMS_MAIN_INFO* DMS_GetMainInfo(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : DMS_GetPhyBearProperty
- ¹¦ÄÜÃèÊö  : »ñÈ¡ÎïÀíÍ¨µÀÊı¾İ½á¹¹Ö¸Õë
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  : ½á¹¹ÌåÖ¸Õë
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : DMS_GetPhyBearProperty
+ åŠŸèƒ½æè¿°  : è·å–ç‰©ç†é€šé“æ•°æ®ç»“æ„æŒ‡é’ˆ
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  : ç»“æ„ä½“æŒ‡é’ˆ
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
  DMS_PHY_BEAR_PROPERTY_STRU* DMS_GetPhyBearProperty(DMS_PHY_BEAR_ENUM enPhyBear)
 {
@@ -261,17 +261,17 @@ VOS_VOID DMS_UsbDisableCB(VOS_VOID)
 
     DMS_DBG_SDM_FUN(DMS_SDM_USB_DISABLE, 0, 0, 0);
 
-    /* nvÖµÎª1±íÊ¾ÓĞat sever£¬·Ç1±íÊ¾ÎŞat sever£¬ÎŞat sever¹Ø±ÕpcuiºÍctrl¿Ú */
+    /* nvå€¼ä¸º1è¡¨ç¤ºæœ‰at severï¼Œé1è¡¨ç¤ºæ— at severï¼Œæ— at severå…³é—­pcuiå’Œctrlå£ */
     if (VOS_TRUE == g_stDmsMainInfo.bPortOpenFlg)
     {
-        /* ¹Ø±ÕPCUIÍ¨µÀ */
+        /* å…³é—­PCUIé€šé“ */
         ulRet = DMS_VcomPcuiClose();
         if(ERR_MSP_SUCCESS!=ulRet)
         {
             DMS_DBG_SDM_FUN(DMS_SDM_USB_DISABLE_ERR,0, 0, 3);
         }
 
-        /* ¹Ø±ÕCTRLÍ¨µÀ */
+        /* å…³é—­CTRLé€šé“ */
         ulRet = DMS_VcomCtrlClose();
         if(ERR_MSP_SUCCESS!=ulRet)
         {
@@ -279,7 +279,7 @@ VOS_VOID DMS_UsbDisableCB(VOS_VOID)
         }
     }
 
-    /* ¹Ø±ÕNDIS CTRLÍ¨µÀ */
+    /* å…³é—­NDIS CTRLé€šé“ */
     ulRet =  DMS_NcmClose();
     if(ERR_MSP_SUCCESS!=ulRet)
     {
@@ -304,7 +304,7 @@ VOS_VOID DMS_UsbEnableCB(VOS_VOID)
 
     DMS_DBG_SDM_FUN(DMS_SDM_USB_ENABLE, 0, 0, 0);
 
-    /* NVEÖ»¶ÁÈ¡Ò»´Î£¬¶ÁÈ¡ºó²»ÔÙ¶ÁÈ¡ */
+    /* NVEåªè¯»å–ä¸€æ¬¡ï¼Œè¯»å–åä¸å†è¯»å– */
     if (VOS_FALSE == g_stDmsMainInfo.bPortCfgFlg)
     {
         lReadNvRet = DRV_NVE_ACCESS(&stAtServerNv);
@@ -313,7 +313,7 @@ VOS_VOID DMS_UsbEnableCB(VOS_VOID)
 
         g_stDmsMainInfo.bPortCfgFlg                 = VOS_TRUE;
 
-        /* nvÖµÎª1±íÊ¾ÓĞat sever£¬·Ç1±íÊ¾ÎŞat sever£¬ÎŞat sever´ò¿ªpcuiºÍctrl¿Ú */
+        /* nvå€¼ä¸º1è¡¨ç¤ºæœ‰at severï¼Œé1è¡¨ç¤ºæ— at severï¼Œæ— at severæ‰“å¼€pcuiå’Œctrlå£ */
         if ((1 != stAtServerNv.nv_data[0]) || (ERR_MSP_SUCCESS != lReadNvRet))
         {
             g_stDmsMainInfo.ulPortCfgValue = DMS_TEST_MODE;
@@ -328,14 +328,14 @@ VOS_VOID DMS_UsbEnableCB(VOS_VOID)
     {
         g_stDmsMainInfo.bPortOpenFlg = VOS_TRUE;
 
-        /*´ò¿ª AT PCUI Í¨µÀ*/
+        /*æ‰“å¼€ AT PCUI é€šé“*/
         ulRet = DMS_VcomPcuiOpen();
         if (ERR_MSP_SUCCESS != ulRet)
         {
             DMS_DBG_SDM_FUN(DMS_SDM_USB_ENABLE_ERR, 0, 0, 3);
         }
 
-        /*´ò¿ª AT CTRL Í¨µÀ*/
+        /*æ‰“å¼€ AT CTRL é€šé“*/
         ulRet = DMS_VcomCtrlOpen();
         if (ERR_MSP_SUCCESS != ulRet)
         {
@@ -343,7 +343,7 @@ VOS_VOID DMS_UsbEnableCB(VOS_VOID)
         }
     }
 
-    /*´ò¿ª NDIS CTRL Í¨µÀ*/
+    /*æ‰“å¼€ NDIS CTRL é€šé“*/
     ulRet = DMS_NcmOpen();
     if (ERR_MSP_SUCCESS != ulRet)
     {
@@ -360,18 +360,18 @@ UDI_HANDLE DMS_GetPortHandle(DMS_PHY_BEAR_ENUM enPhyBear)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : DMS_DsFidInit
- ¹¦ÄÜÃèÊö  : dms FID ³õÊ¼»¯º¯Êı
- ÊäÈë²ÎÊı  :
+ å‡½ æ•° å  : DMS_DsFidInit
+ åŠŸèƒ½æè¿°  : dms FID åˆå§‹åŒ–å‡½æ•°
+ è¾“å…¥å‚æ•°  :
 
- Êä³ö²ÎÊı  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 DMS_DsFidInit(enum VOS_INIT_PHASE_DEFINE ip)
 {
@@ -420,18 +420,18 @@ VOS_UINT32 DMS_InitPorCfgFile(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : DMS_ReadPortCfgFile
- ¹¦ÄÜÃèÊö  : PortCfgĞéÄâÎÄ¼ş¶ÁÊµÏÖ
- ÊäÈë²ÎÊı  : file --- ÎÄ¼ş¾ä±ú
-             buf  --- ÓÃ»§¿Õ¼ä
-             ppos --- ÎÄ¼şÆ«ÒÆ£¬²ÎÊıÎ´Ê¹ÓÃ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ³É¹¦»òÊ§°Ü
+ å‡½ æ•° å  : DMS_ReadPortCfgFile
+ åŠŸèƒ½æè¿°  : PortCfgè™šæ‹Ÿæ–‡ä»¶è¯»å®ç°
+ è¾“å…¥å‚æ•°  : file --- æ–‡ä»¶å¥æŸ„
+             buf  --- ç”¨æˆ·ç©ºé—´
+             ppos --- æ–‡ä»¶åç§»ï¼Œå‚æ•°æœªä½¿ç”¨
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æˆåŠŸæˆ–å¤±è´¥
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê10ÔÂ25ÈÕ
-    ×÷    Õß   : z6057
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´10æœˆ25æ—¥
+    ä½œ    è€…   : z6057
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 ssize_t DMS_ReadPortCfgFile(
     struct file                        *file,
@@ -455,7 +455,7 @@ ssize_t DMS_ReadPortCfgFile(
     ulLength        = VOS_StrLen(acModeTemp);
     len             = PS_MIN(len, ulLength);
 
-    /*¿½±´ÄÚºË¿Õ¼äÊı¾İµ½ÓÃ»§¿Õ¼äÉÏÃæ*/
+    /*æ‹·è´å†…æ ¸ç©ºé—´æ•°æ®åˆ°ç”¨æˆ·ç©ºé—´ä¸Šé¢*/
     if (0 == copy_to_user(buf,(VOS_VOID *)acModeTemp, (VOS_ULONG)len))
     {
         *ppos += (loff_t)len;
@@ -470,19 +470,19 @@ ssize_t DMS_ReadPortCfgFile(
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : DMS_WritePortCfgFile
- ¹¦ÄÜÃèÊö  : PortCfgĞéÄâÎÄ¼şĞ´ÊµÏÖ
- ÊäÈë²ÎÊı  : file ----- ÎÄ¼ş¾ä±ú
-             buf  ----- ÓÃ»§¿Õ¼äÊı¾İ
-             lLength -- ÓÃ»§Êı¾İ³¤¶È
-             ppos - ----ÎÄ¼şÆ«ÒÆ£¬²ÎÊıÎ´Ê¹ÓÃ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ³É¹¦»òÊ§°Ü
+ å‡½ æ•° å  : DMS_WritePortCfgFile
+ åŠŸèƒ½æè¿°  : PortCfgè™šæ‹Ÿæ–‡ä»¶å†™å®ç°
+ è¾“å…¥å‚æ•°  : file ----- æ–‡ä»¶å¥æŸ„
+             buf  ----- ç”¨æˆ·ç©ºé—´æ•°æ®
+             lLength -- ç”¨æˆ·æ•°æ®é•¿åº¦
+             ppos - ----æ–‡ä»¶åç§»ï¼Œå‚æ•°æœªä½¿ç”¨
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æˆåŠŸæˆ–å¤±è´¥
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê10ÔÂ25ÈÕ
-    ×÷    Õß   : z6057
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´10æœˆ25æ—¥
+    ä½œ    è€…   : z6057
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 ssize_t DMS_WritePortCfgFile(
     struct file                        *file,
@@ -504,7 +504,7 @@ ssize_t DMS_WritePortCfgFile(
         return -ENOSPC;
     }
 
-    /*¿½±´ÓÃ»§¿Õ¼äÊı¾İµ½ÄÚºË¿Õ¼äÉÏÃæ*/
+    /*æ‹·è´ç”¨æˆ·ç©ºé—´æ•°æ®åˆ°å†…æ ¸ç©ºé—´ä¸Šé¢*/
     if (copy_from_user((VOS_VOID *)acModeTemp, (VOS_VOID *)buf, (VOS_ULONG)len) > 0)
     {
         return -EFAULT;
@@ -524,7 +524,7 @@ ssize_t DMS_WritePortCfgFile(
 
     g_stDmsMainInfo.ulPortCfgValue  = ulValue;
 
-    /* Èç¹ûÒÑ¾­Ğ´¹ıÕâ¸öÎÄ¼ş£¬ÔòÒÔĞ´µÄÖµÎª×¼£¬ºóĞø²»ĞèÒªÔÙ¶ÁNVE */
+    /* å¦‚æœå·²ç»å†™è¿‡è¿™ä¸ªæ–‡ä»¶ï¼Œåˆ™ä»¥å†™çš„å€¼ä¸ºå‡†ï¼Œåç»­ä¸éœ€è¦å†è¯»NVE */
     g_stDmsMainInfo.bPortCfgFlg     = TRUE;
 
     return (ssize_t)len;
@@ -538,7 +538,7 @@ VOS_UINT32 DMS_RegOmChanDataReadCB(
 {
     DMS_NLK_OM_CHAN_PROPERTY_STRU      *pstOmChanProp = VOS_NULL_PTR;
 
-    /* ¼ì²éÍ¨µÀºÅºÍº¯ÊıÖ¸Õë */
+    /* æ£€æŸ¥é€šé“å·å’Œå‡½æ•°æŒ‡é’ˆ */
     if ((enChan >= DMS_OM_CHAN_BUTT) || (VOS_NULL_PTR == pFunc))
     {
         printk(KERN_ERR "[%s][LINE: %d] Invalid channel %d.\n",
@@ -546,7 +546,7 @@ VOS_UINT32 DMS_RegOmChanDataReadCB(
         return VOS_ERR;
     }
 
-    /* ÉèÖÃÍ¨µÀÊı¾İ»Øµ÷º¯Êı */
+    /* è®¾ç½®é€šé“æ•°æ®å›è°ƒå‡½æ•° */
     pstOmChanProp = DMS_GET_NLK_OM_CHAN_PROP(enChan);
     pstOmChanProp->pDataFunc = pFunc;
 
@@ -561,7 +561,7 @@ VOS_UINT32 DMS_RegOmChanEventCB(
 {
     DMS_NLK_OM_CHAN_PROPERTY_STRU      *pstOmChanProp = VOS_NULL_PTR;
 
-    /* ¼ì²éÍ¨µÀºÅ */
+    /* æ£€æŸ¥é€šé“å· */
     if ((enChan >= DMS_OM_CHAN_BUTT) || (VOS_NULL_PTR == pFunc))
     {
         printk(KERN_ERR "[%s][LINE: %d] Invalid channel %d.\n",
@@ -569,7 +569,7 @@ VOS_UINT32 DMS_RegOmChanEventCB(
         return VOS_ERR;
     }
 
-    /* ÉèÖÃÍ¨µÀÊÂ¼ş»Øµ÷º¯Êı */
+    /* è®¾ç½®é€šé“äº‹ä»¶å›è°ƒå‡½æ•° */
     pstOmChanProp = DMS_GET_NLK_OM_CHAN_PROP(enChan);
     pstOmChanProp->pEvtFunc = pFunc;
 
@@ -590,14 +590,14 @@ VOS_UINT32 DMS_WriteOmData(
 
     DMS_DBG_NLK_DL_TOTAL_PKT_NUM(1);
 
-    /* ¼ì²éÍ¨µÀ */
+    /* æ£€æŸ¥é€šé“ */
     if (enChan >= DMS_OM_CHAN_BUTT)
     {
         DMS_DBG_NLK_DL_ERR_CHAN_PKT_NUM(1);
         return VOS_ERR;
     }
 
-    /* ¼ì²éÊı¾İ */
+    /* æ£€æŸ¥æ•°æ® */
     if ((VOS_NULL_PTR == pucData) || (0 == ulLength))
     {
         DMS_DBG_NLK_DL_ERR_PARA_PKT_NUM(1);
@@ -606,21 +606,21 @@ VOS_UINT32 DMS_WriteOmData(
 
     DMS_DBG_NLK_DL_NORM_CHAN_PKT_NUM(enChan, 1);
 
-    /* ¶ÔÊı¾İ·Ö¿é, ±ÜÃâÒ»´Î·¢ËÍ¹ı¶àÊı¾İ */
+    /* å¯¹æ•°æ®åˆ†å—, é¿å…ä¸€æ¬¡å‘é€è¿‡å¤šæ•°æ® */
     pucMem        = pucData;
     ulMemNum      = ulLength / DMS_GET_NLK_DATA_SIZE();
     ulLastMemSize = ulLength % DMS_GET_NLK_DATA_SIZE();
 
     wake_lock(&g_stDmsMainInfo.stwakelock);
 
-    /* ·¢ËÍ¹Ì¶¨´óĞ¡Êı¾İ¿é */
+    /* å‘é€å›ºå®šå¤§å°æ•°æ®å— */
     for (ulCnt = 0; ulCnt < ulMemNum; ulCnt++)
     {
         DMS_NLK_Send(DMS_GET_NLK_PHY_BEAR(enChan), DMS_GET_NLK_MSG_TYPE(enChan), pucMem, DMS_GET_NLK_DATA_SIZE());
         pucMem += DMS_GET_NLK_DATA_SIZE();
     }
 
-    /* ·¢ËÍ×îºóÒ»¿éÊı¾İ¿é */
+    /* å‘é€æœ€åä¸€å—æ•°æ®å— */
     if (0 != ulLastMemSize)
     {
         DMS_NLK_Send(DMS_GET_NLK_PHY_BEAR(enChan), DMS_GET_NLK_MSG_TYPE(enChan), pucMem, ulLastMemSize);
@@ -639,26 +639,26 @@ VOS_VOID DMS_NLK_InitEntity(VOS_VOID)
     /* netlink socket */
     pstNlkEntity->pstSock    = VOS_NULL_PTR;
 
-    /* netlink ÏûÏ¢Êı¾İ¿é´óĞ¡ */
+    /* netlink æ¶ˆæ¯æ•°æ®å—å¤§å° */
     pstNlkEntity->ulDataSize = DMS_NLK_DEFUALT_DATA_SIZE;
 
-    /* netlink ÎïÀí³ĞÔØ½ø³ÌºÅ */
+    /* netlink ç‰©ç†æ‰¿è½½è¿›ç¨‹å· */
     pstNlkEntity->astPhyBearProp[DMS_NLK_PHY_BEAR_LTE].lPid     = DMS_NLK_INVALID_PID;
     pstNlkEntity->astPhyBearProp[DMS_NLK_PHY_BEAR_GU].lPid      = DMS_NLK_INVALID_PID;
 
-    /* netlink Âß¼­Í¨µÀÊôĞÔ(LTE CLTR) */
+    /* netlink é€»è¾‘é€šé“å±æ€§(LTE CLTR) */
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_LTE_CTRL].pDataFunc = VOS_NULL_PTR;
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_LTE_CTRL].pEvtFunc  = VOS_NULL_PTR;
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_LTE_CTRL].enPhyBear = DMS_NLK_PHY_BEAR_LTE;
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_LTE_CTRL].enMsgType = DMS_NLK_MSG_TYPE_LTE_CTRL;
 
-    /* netlink Âß¼­Í¨µÀÊôĞÔ(LTE DATA) */
+    /* netlink é€»è¾‘é€šé“å±æ€§(LTE DATA) */
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_LTE_DATA].pDataFunc = VOS_NULL_PTR;
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_LTE_DATA].pEvtFunc  = VOS_NULL_PTR;
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_LTE_DATA].enPhyBear = DMS_NLK_PHY_BEAR_LTE;
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_LTE_DATA].enMsgType = DMS_NLK_MSG_TYPE_LTE_DATA;
 
-    /* netlink Âß¼­Í¨µÀÊôĞÔ(GU DATA) */
+    /* netlink é€»è¾‘é€šé“å±æ€§(GU DATA) */
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_GU_DATA].pDataFunc  = VOS_NULL_PTR;
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_GU_DATA].pEvtFunc   = VOS_NULL_PTR;
     pstNlkEntity->astOmChanProp[DMS_OM_CHAN_GU_DATA].enPhyBear  = DMS_NLK_PHY_BEAR_GU;
@@ -677,7 +677,7 @@ VOS_UINT32 DMS_NLK_CfgOpen(
     DMS_OM_CHAN_EVENT_CB_FUNC           pEvtFunc       = VOS_NULL_PTR;
     DMS_OM_CHAN_ENUM_UINT32             enChan;
 
-    /* ¼ì²é³ĞÔØºÅ */
+    /* æ£€æŸ¥æ‰¿è½½å· */
     if (enPhyBear >= DMS_NLK_PHY_BEAR_BUTT)
     {
         printk("[%s][LINE: %d] Invalid PHY bearer %d.\n",
@@ -685,16 +685,16 @@ VOS_UINT32 DMS_NLK_CfgOpen(
         return VOS_ERR;
     }
 
-    /* ÉèÖÃ³ĞÔØPID */
+    /* è®¾ç½®æ‰¿è½½PID */
     pstPhyBearProp = DMS_GET_NLK_PHY_BEAR_PROP(enPhyBear);
     pstPhyBearProp->lPid = pstNlkHdr->nlmsg_pid;
 
-    /* ±éÀúËùÓĞÓë¸Ã³ĞÔØ¹ØÁªµÄÍ¨µÀ */
+    /* éå†æ‰€æœ‰ä¸è¯¥æ‰¿è½½å…³è”çš„é€šé“ */
     for (enChan = 0; enChan < DMS_OM_CHAN_BUTT; enChan++)
     {
         pEvtFunc = DMS_GET_NLK_OM_CHAN_EVT_CB_FUNC(enChan);
 
-        /* Í¨ÖªÎïÀí³ĞÔØÏàÍ¬µÄÂß¼­Í¨µÀÊ¹ÓÃÕßÍ¨µÀ´ò¿ª */
+        /* é€šçŸ¥ç‰©ç†æ‰¿è½½ç›¸åŒçš„é€»è¾‘é€šé“ä½¿ç”¨è€…é€šé“æ‰“å¼€ */
         if ((enPhyBear == DMS_GET_NLK_PHY_BEAR(enChan)) && (VOS_NULL_PTR != pEvtFunc))
         {
             pEvtFunc(enChan, DMS_CHAN_EVT_OPEN);
@@ -714,7 +714,7 @@ VOS_UINT32 DMS_NLK_CfgClose(
     DMS_OM_CHAN_EVENT_CB_FUNC           pEvtFunc       = VOS_NULL_PTR;
     DMS_OM_CHAN_ENUM_UINT32             enChan;
 
-    /* ¼ì²é³ĞÔØºÅ */
+    /* æ£€æŸ¥æ‰¿è½½å· */
     if (enBear >= DMS_NLK_PHY_BEAR_BUTT)
     {
         printk("[%s][LINE: %d] Invalid PHY bearer %d.\n",
@@ -722,16 +722,16 @@ VOS_UINT32 DMS_NLK_CfgClose(
         return VOS_ERR;
     }
 
-    /* ÉèÖÃ³ĞÔØPID */
+    /* è®¾ç½®æ‰¿è½½PID */
     pstPhyBearProp = DMS_GET_NLK_PHY_BEAR_PROP(enBear);
     pstPhyBearProp->lPid = DMS_NLK_INVALID_PID;
 
-    /* ±éÀúËùÓĞÓë¸Ã³ĞÔØ¹ØÁªµÄÍ¨µÀ */
+    /* éå†æ‰€æœ‰ä¸è¯¥æ‰¿è½½å…³è”çš„é€šé“ */
     for (enChan = 0; enChan < DMS_OM_CHAN_BUTT; enChan++)
     {
         pEvtFunc = DMS_GET_NLK_OM_CHAN_EVT_CB_FUNC(enChan);
 
-        /* Í¨ÖªÎïÀí³ĞÔØÏàÍ¬µÄÂß¼­Í¨µÀÊ¹ÓÃÕßÍ¨µÀ¹Ø±Õ */
+        /* é€šçŸ¥ç‰©ç†æ‰¿è½½ç›¸åŒçš„é€»è¾‘é€šé“ä½¿ç”¨è€…é€šé“å…³é—­ */
         if ((enBear == DMS_GET_NLK_PHY_BEAR(enChan)) && (VOS_NULL_PTR != pEvtFunc))
         {
             pEvtFunc(enChan, DMS_CHAN_EVT_CLOSE);
@@ -801,11 +801,11 @@ VOS_VOID DMS_NLK_ProcLteCtrlMsg(struct nlmsghdr *pstNlkHdr)
     DMS_OM_CHAN_DATA_READ_CB_FUNC       pDataFunc  = VOS_NULL_PTR;
     DMS_NLK_PAYLOAD_STRU               *pstPayload = VOS_NULL_PTR;
 
-    /* »ñÈ¡Í¨µÀ×¢²áµÄ»Øµ÷ */
+    /* è·å–é€šé“æ³¨å†Œçš„å›è°ƒ */
     pDataFunc = DMS_GET_NLK_OM_CHAN_DATA_CB_FUNC(DMS_OM_CHAN_LTE_CTRL);
     if (VOS_NULL_PTR != pDataFunc)
     {
-        /* Í¸´«Êı¾İÄÚÈİ */
+        /* é€ä¼ æ•°æ®å†…å®¹ */
         pstPayload = nlmsg_data(pstNlkHdr);
         (VOS_VOID)pDataFunc(DMS_OM_CHAN_LTE_CTRL, pstPayload->aucData, pstPayload->ulLength);
         DMS_DBG_NLK_UL_SEND_MSG_NUM(pstNlkHdr->nlmsg_type, 1);
@@ -824,11 +824,11 @@ VOS_VOID DMS_NLK_ProcLteDataMsg(struct nlmsghdr *pstNlkHdr)
     DMS_OM_CHAN_DATA_READ_CB_FUNC       pDataFunc  = VOS_NULL_PTR;
     DMS_NLK_PAYLOAD_STRU               *pstPayload = VOS_NULL_PTR;
 
-    /* »ñÈ¡Í¨µÀ×¢²áµÄ»Øµ÷ */
+    /* è·å–é€šé“æ³¨å†Œçš„å›è°ƒ */
     pDataFunc = DMS_GET_NLK_OM_CHAN_DATA_CB_FUNC(DMS_OM_CHAN_LTE_DATA);
     if (VOS_NULL_PTR != pDataFunc)
     {
-        /* Í¸´«Êı¾İÄÚÈİ */
+        /* é€ä¼ æ•°æ®å†…å®¹ */
         pstPayload = nlmsg_data(pstNlkHdr);
         (VOS_VOID)pDataFunc(DMS_OM_CHAN_LTE_DATA, pstPayload->aucData, pstPayload->ulLength);
         DMS_DBG_NLK_UL_SEND_MSG_NUM(pstNlkHdr->nlmsg_type, 1);
@@ -847,11 +847,11 @@ VOS_VOID DMS_NLK_ProcGuDataMsg(struct nlmsghdr *pstNlkHdr)
     DMS_OM_CHAN_DATA_READ_CB_FUNC       pDataFunc = VOS_NULL_PTR;
     DMS_NLK_PAYLOAD_STRU               *pstPayload = VOS_NULL_PTR;
 
-    /* »ñÈ¡Í¨µÀ×¢²áµÄ»Øµ÷ */
+    /* è·å–é€šé“æ³¨å†Œçš„å›è°ƒ */
     pDataFunc = DMS_GET_NLK_OM_CHAN_DATA_CB_FUNC(DMS_OM_CHAN_GU_DATA);
     if (VOS_NULL_PTR != pDataFunc)
     {
-        /* Í¸´«Êı¾İÄÚÈİ */
+        /* é€ä¼ æ•°æ®å†…å®¹ */
         pstPayload = nlmsg_data(pstNlkHdr);
         (VOS_VOID)pDataFunc(DMS_OM_CHAN_GU_DATA, pstPayload->aucData, pstPayload->ulLength);
         DMS_DBG_NLK_UL_SEND_MSG_NUM(pstNlkHdr->nlmsg_type, 1);
@@ -881,21 +881,21 @@ VOS_INT DMS_NLK_Send(
 
     DMS_DBG_NLK_DL_TOTAL_MSG_NUM(1);
 
-    /* ¼ì²é netlink socket */
+    /* æ£€æŸ¥ netlink socket */
     if (VOS_NULL_PTR == DMS_GET_NLK_SOCK())
     {
         DMS_DBG_NLK_DL_ERR_SOCK_MSG_NUM(1);
         return -EIO;
     }
 
-    /* ¼ì²éÎïÀí³ĞÔØ×´Ì¬ */
+    /* æ£€æŸ¥ç‰©ç†æ‰¿è½½çŠ¶æ€ */
     if (DMS_NLK_INVALID_PID == DMS_GET_NLK_PHY_PID(enPhyBear))
     {
         DMS_DBG_NLK_DL_ERR_PID_MSG_NUM(1);
         return -EINVAL;
     }
 
-    /* ÉêÇë netlink ÏûÏ¢ */
+    /* ç”³è¯· netlink æ¶ˆæ¯ */
     ulPayloadSize = sizeof(DMS_NLK_PAYLOAD_STRU) + ulLength;
     ulMsgSize = NLMSG_SPACE(ulPayloadSize);
 
@@ -906,7 +906,7 @@ VOS_INT DMS_NLK_Send(
         return -ENOBUFS;
     }
 
-    /* Ìî³ä netlink ÏûÏ¢Í· */
+    /* å¡«å…… netlink æ¶ˆæ¯å¤´ */
     /* Use "ulMsgSize - sizeof(*pstNlkHdr)" here (incluing align pads) */
     pstNlkHdr = nlmsg_put(pstSkb, 0, 0, (VOS_INT)enMsgType,
                     (VOS_INT)(ulMsgSize - sizeof(struct nlmsghdr)), 0);
@@ -917,7 +917,7 @@ VOS_INT DMS_NLK_Send(
         return -EMSGSIZE;
     }
 
-    /* Ìî³ä netlink ÏûÏ¢½ÓÊÕPID */
+    /* å¡«å…… netlink æ¶ˆæ¯æ¥æ”¶PID */
     /*lint -e545*/
 #if ((LINUX_VERSION_CODE >= KERNEL_VERSION(3, 10, 0)) || (VOS_OS_VER == VOS_WIN32))
     NETLINK_CB(pstSkb).portid = DMS_GET_NLK_PHY_PID(enPhyBear);
@@ -927,12 +927,12 @@ VOS_INT DMS_NLK_Send(
     NETLINK_CB(pstSkb).dst_group = 0;
     /*lint +e545*/
 
-    /* Ìî³ä netlink ÏûÏ¢ÄÚÈİ */
+    /* å¡«å…… netlink æ¶ˆæ¯å†…å®¹ */
     pstPlayload = nlmsg_data(pstNlkHdr);
     pstPlayload->ulLength = ulLength;
     memcpy(pstPlayload->aucData, pucData, ulLength);
 
-    /* ·¢ËÍ netlink ÏûÏ¢ */
+    /* å‘é€ netlink æ¶ˆæ¯ */
     /*lint -e545*/
 #if ((LINUX_VERSION_CODE >= KERNEL_VERSION(3, 10, 0)) || (VOS_OS_VER == VOS_WIN32))
     lRet = netlink_unicast(DMS_GET_NLK_SOCK(), pstSkb, NETLINK_CB(pstSkb).portid, 0);
@@ -957,17 +957,17 @@ VOS_VOID DMS_NLK_Input(struct sk_buff *pstSkb)
 
     DMS_DBG_NLK_UL_TOTAL_MSG_NUM(1);
 
-    /* »ñÈ¡ netlink ÏûÏ¢ */
+    /* è·å– netlink æ¶ˆæ¯ */
     pstNlkHdr = nlmsg_hdr(pstSkb);
 
-    /* ¼ì²é netlink ÏûÏ¢ÊÇ·ñºÏ·¨ */
+    /* æ£€æŸ¥ netlink æ¶ˆæ¯æ˜¯å¦åˆæ³• */
     if (!NLMSG_OK(pstNlkHdr, pstSkb->len))
     {
         DMS_DBG_NLK_UL_ERR_MSG_NUM(1);
         return;
     }
 
-    /* ´¦Àí netlink ÏûÏ¢ */
+    /* å¤„ç† netlink æ¶ˆæ¯ */
     switch (pstNlkHdr->nlmsg_type)
     {
         case DMS_NLK_MSG_TYPE_LTE_CFG:
@@ -1004,10 +1004,10 @@ VOS_INT __init DMS_NLK_Init(VOS_VOID)
 
     printk("DMS_NLK_Init entry,%u",VOS_GetSlice());
 
-    /* ³õÊ¼»¯ netlink ÊµÌå */
+    /* åˆå§‹åŒ– netlink å®ä½“ */
     DMS_NLK_InitEntity();
 
-    /* ÔÚÄÚºËÌ¬´´½¨Ò»¸ö netlink socket */
+    /* åœ¨å†…æ ¸æ€åˆ›å»ºä¸€ä¸ª netlink socket */
 #if ((LINUX_VERSION_CODE >= KERNEL_VERSION(3, 10, 0)) || (VOS_OS_VER == VOS_WIN32))
     pstSock = netlink_kernel_create(&init_net, NETLINK_HW_LOGCAT, &g_stDmsNlkCfg);
 #else
@@ -1022,7 +1022,7 @@ VOS_INT __init DMS_NLK_Init(VOS_VOID)
         return -ENOMEM;
     }
 
-    /* ±£´æ socket */
+    /* ä¿å­˜ socket */
     pstNlkEntity = DMS_GET_NLK_ENTITY();
     pstNlkEntity->pstSock = pstSock;
 
@@ -1032,7 +1032,7 @@ VOS_INT __init DMS_NLK_Init(VOS_VOID)
 }
 VOS_VOID __exit DMS_NLK_Exit(VOS_VOID)
 {
-    /* ÊÍ·Å netlink socket */
+    /* é‡Šæ”¾ netlink socket */
     netlink_kernel_release(DMS_GET_NLK_SOCK());
     DMS_NLK_InitEntity();
     return;
@@ -1068,14 +1068,14 @@ ssize_t DMS_ReadGetSliceFile(
         return 0;
     }
 
-    /* ³õÊ¼»¯ */
+    /* åˆå§‹åŒ– */
     ulLength            = 0;
     ulHigh32bitValue    = 0;
     ulLow32bitValue     = 0;
 
     VOS_MemSet(acModeTemp, 0x00, DMS_GET_SLICE_FILE_LEN);
 
-    /* »ñÈ¡Ê±¼ä  Seattle ºÍ Portland²»Ò»Ñù */
+    /* è·å–æ—¶é—´  Seattle å’Œ Portlandä¸ä¸€æ · */
     DRV_GET_BBP_TIMER_VALUE(&ulHigh32bitValue, &ulLow32bitValue);
 
     if (ulHigh32bitValue != 0)
@@ -1090,7 +1090,7 @@ ssize_t DMS_ReadGetSliceFile(
     ulLength        = VOS_StrLen(acModeTemp);
     len             = PS_MIN(len, ulLength);
 
-    /*¿½±´ÄÚºË¿Õ¼äÊı¾İµ½ÓÃ»§¿Õ¼äÉÏÃæ*/
+    /*æ‹·è´å†…æ ¸ç©ºé—´æ•°æ®åˆ°ç”¨æˆ·ç©ºé—´ä¸Šé¢*/
     if (0 == copy_to_user(buf,(VOS_VOID *)acModeTemp, (VOS_ULONG)len))
     {
         *ppos += (loff_t)len;

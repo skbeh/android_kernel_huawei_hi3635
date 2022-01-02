@@ -40,7 +40,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_VOS_ID_C
 
@@ -99,7 +99,7 @@ VOS_UINT16      g_usPidInitId;
 
 #if VOS_YES == VOS_ANALYZE_PID_MEM
 
-/* ��������������PID �ڴ�����ͳ���ٽ���Դ���� */
+/* 自旋锁，用来作PID 内存消耗统计临界资源保护 */
 VOS_SPINLOCK             g_stVosPidMemAnaSpinLock;
 
 #endif

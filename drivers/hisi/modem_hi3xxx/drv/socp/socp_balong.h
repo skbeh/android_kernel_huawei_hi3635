@@ -9,7 +9,7 @@ extern "C"
 #endif
 
 /**************************************************************************
-  ͷ�ļ�����
+  头文件包含
 **************************************************************************/
 #include "bsp_memmap.h"
 #include "soc_interrupts.h"
@@ -32,7 +32,7 @@ extern "C"
 #include "bsp_external_stub.h"
 
 /**************************************************************************
-  �궨��
+  宏定义
 **************************************************************************/
 #if 0
 #define SOCP_VIRT_PHY(virt)          virt_to_phys((void*)virt)
@@ -45,7 +45,7 @@ extern "C"
 typedef int (*socp_task_entry)(void * data);
 
 /**************************************************************************
-  �Ĵ�������,ƫ�Ƶ�ַ
+  寄存器定义,偏移地址
 **************************************************************************/
 #define SOCP_REG_GBLRST             (HI_SOCP_GLOBAL_SRST_CTRL_OFFSET)
 #define SOCP_REG_ENCRST             (HI_SOCP_ENC_SRST_CTRL_OFFSET)
@@ -62,7 +62,7 @@ typedef int (*socp_task_entry)(void * data);
 #define SOCP_REG_DEC_PKTLEN         (HI_SOCP_DEC_PKT_LEN_CFG_OFFSET)
 #define SOCP_REG_GBL_INTSTAT        (HI_SOCP_GLOBAL_INT_STATUS_OFFSET)
 
-/* ������ �жϼĴ���*/
+/* 编码器 中断寄存器*/
 #define SOCP_REG_ENC_MASK0          (HI_SOCP_ENC_CORE0_MASK0_OFFSET)
 #define SOCP_REG_ENC_RAWINT0        (HI_SOCP_ENC_CORE0_RAWINT0_OFFSET)
 #define SOCP_REG_ENC_INTSTAT0       (HI_SOCP_ENC_CORE0_INT0_OFFSET)
@@ -84,7 +84,7 @@ typedef int (*socp_task_entry)(void * data);
 #define SOCP_REG_ENC_CORE1_MASK2    (HI_SOCP_ENC_CORE1_MASK2_OFFSET)
 #define SOCP_REG_ENC_CORE1_INT2     (HI_SOCP_ENC_CORE1_INT2_OFFSET)
 
-/* �������жϼĴ���*/
+/* 解码器中断寄存器*/
 #define SOCP_REG_DEC_CORE0MASK0     (HI_SOCP_DEC_CORE0_MASK0_OFFSET)
 #define SOCP_REG_DEC_CORE1MASK0     (HI_SOCP_DEC_CORE1_MASK0_OFFSET)
 #define SOCP_REG_DEC_RAWINT0        (HI_SOCP_DEC_RAWINT0_OFFSET)
@@ -101,7 +101,7 @@ typedef int (*socp_task_entry)(void * data);
 #define SOCP_REG_DEC_CORE1_MASK1    (HI_SOCP_DEC_CORE1_MASK1_OFFSET)
 #define SOCP_REG_DEC_CORE1_INT1     (HI_SOCP_DEC_CORE1_INT1_OFFSET)
 
-/*������ͨ��buffer�Ĵ���*/
+/*编码器通道buffer寄存器*/
 #define SOCP_REG_ENCSRC_BUFWPTR(m)  (HI_SOCP_ENC_SRC_BUFM_WPTR_0_OFFSET + m*0x40)
 #define SOCP_REG_ENCSRC_BUFRPTR(m)  (HI_SOCP_ENC_SRC_BUFM_RPTR_0_OFFSET + m*0x40)
 #define SOCP_REG_ENCSRC_BUFADDR(m)  (HI_SOCP_ENC_SRC_BUFM_ADDR_0_OFFSET + m*0x40)
@@ -119,7 +119,7 @@ typedef int (*socp_task_entry)(void * data);
 #define SOCP_REG_ENCDEST_BUFCFG(n)  (HI_SOCP_ENC_DEST_BUFN_CFG_0_OFFSET + n*0x20)
 #define SOCP_REG_ENCDEST_BUFTHRH(n) (HI_SOCP_ENC_DEST_BUFN_THRH_0_OFFSET + n*0x20)
 
-/*������ͨ��buffer�Ĵ���*/
+/*解码器通道buffer寄存器*/
 #define SOCP_REG_DECSRC_BUFWPTR(x)  (HI_SOCP_DEC_SRC_BUFX_WPTR_0_OFFSET + x*0x40)
 #define SOCP_REG_DECSRC_BUFRPTR(x)  (HI_SOCP_DEC_SRC_BUFX_RPTR_0_OFFSET + x*0x40)
 #define SOCP_REG_DECSRC_BUFADDR(x)  (HI_SOCP_DEC_SRC_BUFX_ADDR_0_OFFSET + x*0x40)
@@ -132,7 +132,7 @@ typedef int (*socp_task_entry)(void * data);
 #define SOCP_REG_DECDEST_BUFADDR(y) (HI_SOCP_DEC_DEST_BUFY_ADDR_0_OFFSET + y*0x10)
 #define SOCP_REG_DECDEST_BUFCFG(y)  (HI_SOCP_DEC_DEST_BUFY_CFG0_0_OFFSET + y*0x10)
 
-/*DEBUG�Ĵ���*/
+/*DEBUG寄存器*/
 #define SOCP_REG_ENCCD_DBG0         (HI_SOCP_ENC_CD_DBG0_OFFSET)
 #define SOCP_REG_ENCCD_DBG1         (HI_SOCP_ENC_CD_DBG1_OFFSET)
 #define SOCP_REG_ENCIBUF_DBG0       (HI_SOCP_ENC_IBUF_DBG0_OFFSET)
@@ -152,7 +152,7 @@ typedef int (*socp_task_entry)(void * data);
 #define SOCP_REG_DECOBUF_DBG2       (HI_SOCP_DEC_OBUF_DBG2_OFFSET)
 #define SOCP_REG_DECOBUF_DBG3       (HI_SOCP_DEC_OBUF_DBG3_OFFSET)
 
-/* BBP ͨ���Ĵ��� */
+/* BBP 通道寄存器 */
 #define BBP_REG_LOG_ADDR(m)         (0x0200 + 0x10*m)
 #define BBP_REG_LOG_WPTR(m)         (0x0204 + 0x10*m)
 #define BBP_REG_LOG_RPTR(m)         (0x0208 + 0x10*m)
@@ -168,7 +168,7 @@ typedef int (*socp_task_entry)(void * data);
 #define BBP_REG_LOG_EN              (0x02B8)
 
 /**************************************************************************
-  ͨ�����ֵ����
+  通道最大值定义
 **************************************************************************/
 #define SOCP_TOTAL_ENCSRC_CHN         (0x20)
 
@@ -176,34 +176,34 @@ typedef int (*socp_task_entry)(void * data);
 #define BBP_MAX_LOG_CHN               (0x08)
 #define DSP_MAX_CHN                   (0x02)
 #define SOCP_FIXED_MAX_CHAN           (BBP_MAX_CHN+DSP_MAX_CHN)
-#define SOCP_MAX_ENCSRC_CHN           (0x20)    /* ����Դͨ�� */
+#define SOCP_MAX_ENCSRC_CHN           (0x20)    /* 编码源通道 */
 #define SOCP_MAX_ENCDST_CHN           (0x07)
 #define SOCP_MAX_DECSRC_CHN           (0x04)
 #define SOCP_MAX_DECDST_CHN           (0x10)
 #define SOCP_CCORE_ENCSRC_CHN_BASE    (4)
 #define SOCP_CCORE_ENCSRC_CHN_NUM     (5)
 
-/* LTE DSP/BBPͨ�� */
+/* LTE DSP/BBP通道 */
 #define SOCP_DSPLOG_CHN               (0x0e)         // 14
-#define SOCP_BBPLOG_CHN               (SOCP_DSPLOG_CHN + 2)  // 16��ʼ����8��
+#define SOCP_BBPLOG_CHN               (SOCP_DSPLOG_CHN + 2)  // 16开始，共8个
 #define SOCP_BBPDS_CHN                (SOCP_BBPLOG_CHN + 8)  // 24
 #define SOCP_FIXCHN_BASE              (SOCP_DSPLOG_CHN)
 #define SOCP_FIXCHN_END               (SOCP_BBPDS_CHN)
 
 #define SOCP_REG_BASE                 HI_SOCP_REGBASE_ADDR_VIRT
-/* ��ַ��ȷ�� */
+/* 地址需确认 */
 #define BBP_REG_ARM_BASEADDR          HI_BBP_DMA_BASE_ADDR_VIRT
-#define TENSILICA_CORE0_DRAM_ADDR     (0x49f80000)      /* DSP��ַ��ȷ�� */
+#define TENSILICA_CORE0_DRAM_ADDR     (0x49f80000)      /* DSP地址需确认 */
 #define SOCP_REG_BASEADDR             g_strSocpStat.baseAddr
 
-/*SOCP BBP����ʹ�õ�Ԥ���ڴ�ռ�궨��*/
-#define PBXA9_DRAM_BBPDS_VIRT         (IO_ADDRESS(DDR_SOCP_ADDR))      /* �õ�ַ��Ҫȷ�� */
-#define PBXA9_DRAM_BBPDS_PHYS         (DDR_SOCP_ADDR)      /* �õ�ַ��Ҫȷ�� */
-#define PBXA9_DRAM_BBPDS_SIZE         (DDR_SOCP_SIZE)           /* �ÿռ��С��Ҫȷ�� */
+/*SOCP BBP数采使用的预留内存空间宏定义*/
+#define PBXA9_DRAM_BBPDS_VIRT         (IO_ADDRESS(DDR_SOCP_ADDR))      /* 该地址需要确认 */
+#define PBXA9_DRAM_BBPDS_PHYS         (DDR_SOCP_ADDR)      /* 该地址需要确认 */
+#define PBXA9_DRAM_BBPDS_SIZE         (DDR_SOCP_SIZE)           /* 该空间大小需要确认 */
 
 #define INT_LVL_SOCP                  INT_LVL_SOCP0
 
-/*ϵͳ������*/
+/*系统控制器*/
 #define INTEGRATOR_SC_BASE            HI_SYSCTRL_BASE_ADDR_VIRT
 #define INTEGRATOR_SC_SIZE            SZ_4K
 #define SOCP_BBPDS_CHN_ADDR           (PBXA9_DRAM_BBPDS_PHYS)
@@ -223,14 +223,14 @@ typedef int (*socp_task_entry)(void * data);
 
 
 /* log2.0 2014-03-19 Begin:*/
-/* SOCP�������������������ӳ�ʱ�䣬10msΪ��λ */
+/* SOCP缓存数据立即输出最大延迟时间，10ms为单位 */
 #define SOCP_LOG_FLUSH_MAX_OVER_TIME    10 
 /* log2.0 2014-03-19 End:*/
 /**************************************************************************
-  �ṹ����
+  结构定义
 **************************************************************************/
 
-/* ͨ��״̬�ṹ�壬������ */
+/* 通道状态结构体，共四类 */
 typedef struct tagSOCP_RING_BUF_S
 {
     u32             u32Start;
@@ -247,10 +247,10 @@ typedef struct tagSOCP_ENCSRC_CHAN_S
     u32                     u32ChanEn;
     u32                     u32DestChanID;
     u32                     u32BypassEn;
-    u32                     u32AllocStat;  /* ͨ���Ѿ���û�з���ı�ʶ*/
+    u32                     u32AllocStat;  /* 通道已经或没有分配的标识*/
     u32                     u32LastRdSize;
     u32                     u32RdThreshold;
-    SOCP_ENCSRC_CHNMODE_ENUM_UIN32   eChnMode;      /* ���ݽṹ���� */
+    SOCP_ENCSRC_CHNMODE_ENUM_UIN32   eChnMode;      /* 数据结构类型 */
     SOCP_CHAN_PRIORITY_ENUM_UIN32    ePriority;
     SOCP_DATA_TYPE_ENUM_UIN32        eDataType;
     SOCP_DATA_TYPE_EN_ENUM_UIN32     eDataTypeEn;
@@ -267,7 +267,7 @@ typedef struct tagSOCP_ENCSRC_FIXCHAN_S
     u32                     u32ChanID;
     u32                     u32ChanEn;
     u32                     u32DestChanID;
-    SOCP_ENCSRC_CHNMODE_ENUM_UIN32   eChnMode;      /* ���ݽṹ���� */
+    SOCP_ENCSRC_CHNMODE_ENUM_UIN32   eChnMode;      /* 数据结构类型 */
     SOCP_CHAN_PRIORITY_ENUM_UIN32    ePriority;
     SOCP_DATA_TYPE_ENUM_UIN32        eDataType;
     SOCP_DATA_TYPE_EN_ENUM_UIN32     eDataTypeEn;
@@ -281,8 +281,8 @@ typedef struct tagSOCP_ENCSRC_FIXCHAN_S
 typedef struct tagSOCP_ENCDST_CHAN_S
 {
     u32                     u32ChanID;
-    u32                     u32SetStat;    /* ͨ���Ѿ���û�����õı�ʶ*/
-    u32                     u32Thrh;       /* ��ֵ*/
+    u32                     u32SetStat;    /* 通道已经或没有配置的标识*/
+    u32                     u32Thrh;       /* 阈值*/
     SOCP_RING_BUF_S         sEncDstBuf;
     SOCP_EVENT_ENUM_UIN32            eChnEvent;
     socp_event_cb           event_cb;
@@ -293,10 +293,10 @@ typedef struct tagSOCP_DECSRC_CHAN_S
 {
     u32                     u32ChanID;
     u32                     u32ChanEn;
-    u32                     u32SetStat;    /* ͨ���Ѿ���û�����õı�ʶ*/
+    u32                     u32SetStat;    /* 通道已经或没有配置的标识*/
     u32                     u32RdThreshold;
     SOCP_DATA_TYPE_EN_ENUM_UIN32     eDataTypeEn;
-    SOCP_DECSRC_CHNMODE_ENUM_UIN32   eChnMode;      /* ���ݽṹ���� */
+    SOCP_DECSRC_CHNMODE_ENUM_UIN32   eChnMode;      /* 数据结构类型 */
     SOCP_RING_BUF_S         sDecSrcBuf;
     SOCP_RING_BUF_S         sDecRdBuf;
     socp_event_cb           event_cb;
@@ -314,7 +314,7 @@ typedef struct tagSOCP_DECDST_CHAN_S
 }SOCP_DECDST_CHAN_S;
 
 
-/* ȫ��״̬�ṹ�� */
+/* 全局状态结构体 */
 typedef struct tagSOCP_GBL_STATE
 {
     s32                     bInitFlag;
@@ -346,113 +346,113 @@ typedef struct tagSOCP_GBL_STATE
 
 typedef struct tagSOCP_DEBUG_GBL_S
 {
-    u32  u32SocpAllocEncSrcCnt;        /* SOCP�������Դͨ���Ĵ���*/
-    u32  u32SocpAllocEncSrcSucCnt;     /* SOCP�������Դͨ���ɹ��Ĵ���*/
-    u32  u32SocpSetEncDstCnt;          /* SOCP���ñ���Ŀ��ͨ���Ĵ���*/
-    u32  u32SocpSetEncDstSucCnt;       /* SOCP���ñ���Ŀ��ͨ���ɹ��Ĵ���*/
-    u32  u32SocpSetDecSrcCnt;          /* SOCP���ý���Դͨ���Ĵ���*/
-    u32  u32SocpSetDeSrcSucCnt;        /* SOCP���ý���Դͨ���ɹ��Ĵ���*/
-    u32  u32SocpAllocDecDstCnt;        /* SOCP�������Ŀ��ͨ���Ĵ���*/
-    u32  u32SocpAllocDecDstSucCnt;     /* SOCP�������Ŀ��ͨ���ɹ��Ĵ���*/
-    u32 u32SocpAppEtrIntCnt;           /* ����APP�жϵĴ���*/
-    u32 u32SocpAppSucIntCnt;           /* ����APP�жϴ����ɹ��Ĵ���*/
+    u32  u32SocpAllocEncSrcCnt;        /* SOCP申请编码源通道的次数*/
+    u32  u32SocpAllocEncSrcSucCnt;     /* SOCP申请编码源通道成功的次数*/
+    u32  u32SocpSetEncDstCnt;          /* SOCP配置编码目的通道的次数*/
+    u32  u32SocpSetEncDstSucCnt;       /* SOCP配置编码目的通道成功的次数*/
+    u32  u32SocpSetDecSrcCnt;          /* SOCP配置解码源通道的次数*/
+    u32  u32SocpSetDeSrcSucCnt;        /* SOCP配置解码源通道成功的次数*/
+    u32  u32SocpAllocDecDstCnt;        /* SOCP申请解码目的通道的次数*/
+    u32  u32SocpAllocDecDstSucCnt;     /* SOCP申请解码目的通道成功的次数*/
+    u32 u32SocpAppEtrIntCnt;           /* 进入APP中断的次数*/
+    u32 u32SocpAppSucIntCnt;           /* 进入APP中断处理成功的次数*/
 } SOCP_DEBUG_GBL_S;
 
 typedef struct tagSOCP_DEBUG_ENCSRC_S
 {
-    u32 u32SocpFreeEncSrcCnt[SOCP_MAX_ENCSRC_CHN];         /* SOCP�ͷű���Դͨ���ɹ��Ĵ���*/
-    u32 u32SocpSoftResetEncSrcCnt[SOCP_MAX_ENCSRC_CHN];    /* SOCP����λ����Դͨ���Ĵ���*/
-    u32 u32SocpStartEncSrcCnt[SOCP_MAX_ENCSRC_CHN];        /* SOCP��������Դͨ���Ĵ���*/
-    u32 u32SocpStopEncSrcCnt[SOCP_MAX_ENCSRC_CHN];         /* SOCP�رձ���Դͨ���Ĵ���*/
-    u32 u32SocpRegEventEncSrcCnt[SOCP_MAX_ENCSRC_CHN];     /* SOCPע�����Դͨ���¼��Ĵ���*/
-    u32 u32SocpGetWBufEncSrcEtrCnt[SOCP_MAX_ENCSRC_CHN];      /* SOCP����Դͨ�����Ի��дbuffer�Ĵ���*/
-    u32 u32SocpGetWBufEncSrcSucCnt[SOCP_MAX_ENCSRC_CHN];      /* SOCP����Դͨ���ɹ����дbuffer�Ĵ���*/
-    u32 u32socp_write_doneEncSrcEtrCnt[SOCP_MAX_ENCSRC_CHN];    /* SOCP����Դͨ������д��buffer�Ĵ���*/
-    u32 u32socp_write_doneEncSrcSucCnt[SOCP_MAX_ENCSRC_CHN];    /* SOCP����Դͨ���ɹ�д��buffer�Ĵ���*/
-    u32 u32socp_write_doneEncSrcFailCnt[SOCP_MAX_ENCSRC_CHN];    /* SOCP����Դͨ��д��bufferʧ�ܵĴ���*/
-    u32 u32SocpRegRdCBEncSrcCnt[SOCP_MAX_ENCSRC_CHN];          /* SOCPע�����Դͨ��RDbuffer�ص������Ĵ���*/
-    u32 u32SocpGetRdBufEncSrcEtrCnt[SOCP_MAX_ENCSRC_CHN];     /* SOCP����Դͨ�����Ի��Rdbuffer�Ĵ���*/
-    u32 u32SocpGetRdBufEncSrcSucCnt[SOCP_MAX_ENCSRC_CHN];     /* SOCP����Դͨ���ɹ����Rdbuffer�Ĵ���*/
-    u32 u32SocpReadRdDoneEncSrcEtrCnt[SOCP_MAX_ENCSRC_CHN];   /* SOCP����Դͨ������д��Rdbuffer�Ĵ���*/
-    u32 u32SocpReadRdDoneEncSrcSucCnt[SOCP_MAX_ENCSRC_CHN];   /* SOCP����Դͨ���ɹ�д��Rdbuffer�Ĵ���*/
-    u32 u32SocpReadRdDoneEncSrcFailCnt[SOCP_MAX_ENCSRC_CHN];   /* SOCP����Դͨ��д��Rdbufferʧ�ܵĴ���*/
-    u32 u32SocpEncSrcTskHeadCbCnt[SOCP_MAX_ENCSRC_CHN];      /* �����лص�����Դͨ����ͷ�����жϴ���������ɵĴ���*/
-    u32 u32SocpEncSrcTskHeadCbOriCnt[SOCP_MAX_ENCSRC_CHN];   /* �����лص�����Դͨ����ͷ�����жϴ�����������*/
-    u32 u32SocpEncSrcTskRdCbCnt[SOCP_MAX_ENCSRC_CHN];        /* �����лص�����Դͨ��Rd ����жϴ���������ɵĴ���*/
-    u32 u32SocpEncSrcTskRdCbOriCnt[SOCP_MAX_ENCSRC_CHN];     /* �����лص�����Դͨ��Rd ����жϴ�����������*/
-    u32 u32SocpEncSrcIsrHeadIntCnt[SOCP_MAX_ENCSRC_CHN];      /* ISR�н������Դͨ����ͷ�����жϴ���*/
-    u32 u32SocpEncSrcIsrRdIntCnt[SOCP_MAX_ENCSRC_CHN];        /* ISR�������Դͨ��Rd ����жϴ���*/
+    u32 u32SocpFreeEncSrcCnt[SOCP_MAX_ENCSRC_CHN];         /* SOCP释放编码源通道成功的次数*/
+    u32 u32SocpSoftResetEncSrcCnt[SOCP_MAX_ENCSRC_CHN];    /* SOCP软复位编码源通道的次数*/
+    u32 u32SocpStartEncSrcCnt[SOCP_MAX_ENCSRC_CHN];        /* SOCP启动编码源通道的次数*/
+    u32 u32SocpStopEncSrcCnt[SOCP_MAX_ENCSRC_CHN];         /* SOCP关闭编码源通道的次数*/
+    u32 u32SocpRegEventEncSrcCnt[SOCP_MAX_ENCSRC_CHN];     /* SOCP注册编码源通道事件的次数*/
+    u32 u32SocpGetWBufEncSrcEtrCnt[SOCP_MAX_ENCSRC_CHN];      /* SOCP编码源通道尝试获得写buffer的次数*/
+    u32 u32SocpGetWBufEncSrcSucCnt[SOCP_MAX_ENCSRC_CHN];      /* SOCP编码源通道成功获得写buffer的次数*/
+    u32 u32socp_write_doneEncSrcEtrCnt[SOCP_MAX_ENCSRC_CHN];    /* SOCP编码源通道尝试写回buffer的次数*/
+    u32 u32socp_write_doneEncSrcSucCnt[SOCP_MAX_ENCSRC_CHN];    /* SOCP编码源通道成功写回buffer的次数*/
+    u32 u32socp_write_doneEncSrcFailCnt[SOCP_MAX_ENCSRC_CHN];    /* SOCP编码源通道写回buffer失败的次数*/
+    u32 u32SocpRegRdCBEncSrcCnt[SOCP_MAX_ENCSRC_CHN];          /* SOCP注册编码源通道RDbuffer回调函数的次数*/
+    u32 u32SocpGetRdBufEncSrcEtrCnt[SOCP_MAX_ENCSRC_CHN];     /* SOCP编码源通道尝试获得Rdbuffer的次数*/
+    u32 u32SocpGetRdBufEncSrcSucCnt[SOCP_MAX_ENCSRC_CHN];     /* SOCP编码源通道成功获得Rdbuffer的次数*/
+    u32 u32SocpReadRdDoneEncSrcEtrCnt[SOCP_MAX_ENCSRC_CHN];   /* SOCP编码源通道尝试写回Rdbuffer的次数*/
+    u32 u32SocpReadRdDoneEncSrcSucCnt[SOCP_MAX_ENCSRC_CHN];   /* SOCP编码源通道成功写回Rdbuffer的次数*/
+    u32 u32SocpReadRdDoneEncSrcFailCnt[SOCP_MAX_ENCSRC_CHN];   /* SOCP编码源通道写回Rdbuffer失败的次数*/
+    u32 u32SocpEncSrcTskHeadCbCnt[SOCP_MAX_ENCSRC_CHN];      /* 任务中回调编码源通道包头错误中断处理函数完成的次数*/
+    u32 u32SocpEncSrcTskHeadCbOriCnt[SOCP_MAX_ENCSRC_CHN];   /* 任务中回调编码源通道包头错误中断处理函数次数*/
+    u32 u32SocpEncSrcTskRdCbCnt[SOCP_MAX_ENCSRC_CHN];        /* 任务中回调编码源通道Rd 完成中断处理函数完成的次数*/
+    u32 u32SocpEncSrcTskRdCbOriCnt[SOCP_MAX_ENCSRC_CHN];     /* 任务中回调编码源通道Rd 完成中断处理函数次数*/
+    u32 u32SocpEncSrcIsrHeadIntCnt[SOCP_MAX_ENCSRC_CHN];      /* ISR中进入编码源通道包头错误中断次数*/
+    u32 u32SocpEncSrcIsrRdIntCnt[SOCP_MAX_ENCSRC_CHN];        /* ISR进入编码源通道Rd 完成中断次数*/
 } SOCP_DEBUG_ENCSRC_S;
 
 typedef struct tagSOCP_DEBUG_ENCDST_S
 {
-    u32 u32SocpRegEventEncDstCnt[SOCP_MAX_ENCDST_CHN];     /* SOCPע�����Ŀ��ͨ���¼��Ĵ���*/
-    u32 u32SocpRegReadCBEncDstCnt[SOCP_MAX_ENCDST_CHN];    /* SOCPע�����Ŀ��ͨ�������ݻص������Ĵ���*/
-    u32 u32SocpGetReadBufEncDstEtrCnt[SOCP_MAX_ENCDST_CHN];   /* SOCP����Ŀ��ͨ�����Զ����ݵĴ���*/
-    u32 u32SocpGetReadBufEncDstSucCnt[SOCP_MAX_ENCDST_CHN];   /* SOCP����Ŀ��ͨ���ɹ������ݵĴ���*/
-    u32 u32socp_read_doneEncDstEtrCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP����Ŀ��ͨ������д��Ŀ��buffer�Ĵ���*/
-    u32 u32socp_read_doneEncDstSucCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP����Ŀ��ͨ��д��Ŀ��buffer�ɹ��Ĵ���*/
-    u32 u32socp_read_doneEncDstFailCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP����Ŀ��ͨ��д��Ŀ��bufferʧ�ܵĴ���*/
-    u32 u32socp_read_doneZeroEncDstCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP����Ŀ��ͨ��д��Ŀ��buffer size ����0 �Ĵ���*/
-    u32 u32socp_read_doneValidEncDstCnt[SOCP_MAX_ENCDST_CHN];    /* SOCP����Ŀ��ͨ��д��Ŀ��buffer size ������0 �Ĵ���*/
-    u32 u32SocpEncDstTskTrfCbCnt[SOCP_MAX_ENCDST_CHN];        /* �����лص�����Ŀ��ͨ����������жϴ���������ɵĴ���*/
-    u32 u32SocpEncDstTskTrfCbOriCnt[SOCP_MAX_ENCDST_CHN];        /* �����лص�����Ŀ��ͨ����������жϴ��������Ĵ���*/
-    u32 u32SocpEncDstTskOvfCbCnt[SOCP_MAX_ENCDST_CHN];        /* �����лص�����Ŀ��ͨ��buf ����жϴ���������ɵĴ���*/
-    u32 u32SocpEncDstTskOvfCbOriCnt[SOCP_MAX_ENCDST_CHN];     /* �����лص�����Ŀ��ͨ��buf ����жϴ�����������*/
-    u32 u32SocpEncDstIsrTrfIntCnt[SOCP_MAX_ENCDST_CHN];        /* ISR�н������Ŀ��ͨ����������жϴ���*/
-    u32 u32SocpEncDstIsrOvfIntCnt[SOCP_MAX_ENCDST_CHN];        /* ISR�н������Ŀ��ͨ��buf ����жϴ���*/
-    u32 u32SocpEncDstTskThresholdOvfCbCnt[SOCP_MAX_ENCDST_CHN];        /* �����лص�����Ŀ��ͨ��buf��ֵ����жϴ���������ɵĴ���*/
-    u32 u32SocpEncDstTskThresholdOvfCbOriCnt[SOCP_MAX_ENCDST_CHN];     /* �����лص�����Ŀ��ͨ��buf��ֵ����жϴ�����������*/
-    u32 u32SocpEncDstIsrThresholdOvfIntCnt[SOCP_MAX_ENCDST_CHN];       /* ISR�н������Ŀ��ͨ��buf��ֵ����жϴ���*/
+    u32 u32SocpRegEventEncDstCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP注册编码目的通道事件的次数*/
+    u32 u32SocpRegReadCBEncDstCnt[SOCP_MAX_ENCDST_CHN];    /* SOCP注册编码目的通道读数据回调函数的次数*/
+    u32 u32SocpGetReadBufEncDstEtrCnt[SOCP_MAX_ENCDST_CHN];   /* SOCP编码目的通道尝试读数据的次数*/
+    u32 u32SocpGetReadBufEncDstSucCnt[SOCP_MAX_ENCDST_CHN];   /* SOCP编码目的通道成功读数据的次数*/
+    u32 u32socp_read_doneEncDstEtrCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP编码目的通道尝试写回目的buffer的次数*/
+    u32 u32socp_read_doneEncDstSucCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP编码目的通道写回目的buffer成功的次数*/
+    u32 u32socp_read_doneEncDstFailCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP编码目的通道写回目的buffer失败的次数*/
+    u32 u32socp_read_doneZeroEncDstCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP编码目的通道写回目的buffer size 等于0 的次数*/
+    u32 u32socp_read_doneValidEncDstCnt[SOCP_MAX_ENCDST_CHN];    /* SOCP编码目的通道写回目的buffer size 不等于0 的次数*/
+    u32 u32SocpEncDstTskTrfCbCnt[SOCP_MAX_ENCDST_CHN];        /* 任务中回调编码目的通道传输完成中断处理函数完成的次数*/
+    u32 u32SocpEncDstTskTrfCbOriCnt[SOCP_MAX_ENCDST_CHN];        /* 任务中回调编码目的通道传输完成中断处理函数的次数*/
+    u32 u32SocpEncDstTskOvfCbCnt[SOCP_MAX_ENCDST_CHN];        /* 任务中回调编码目的通道buf 溢出中断处理函数完成的次数*/
+    u32 u32SocpEncDstTskOvfCbOriCnt[SOCP_MAX_ENCDST_CHN];     /* 任务中回调编码目的通道buf 溢出中断处理函数次数*/
+    u32 u32SocpEncDstIsrTrfIntCnt[SOCP_MAX_ENCDST_CHN];        /* ISR中进入编码目的通道传输完成中断次数*/
+    u32 u32SocpEncDstIsrOvfIntCnt[SOCP_MAX_ENCDST_CHN];        /* ISR中进入编码目的通道buf 溢出中断次数*/
+    u32 u32SocpEncDstTskThresholdOvfCbCnt[SOCP_MAX_ENCDST_CHN];        /* 任务中回调编码目的通道buf阈值溢出中断处理函数完成的次数*/
+    u32 u32SocpEncDstTskThresholdOvfCbOriCnt[SOCP_MAX_ENCDST_CHN];     /* 任务中回调编码目的通道buf阈值溢出中断处理函数次数*/
+    u32 u32SocpEncDstIsrThresholdOvfIntCnt[SOCP_MAX_ENCDST_CHN];       /* ISR中进入编码目的通道buf阈值溢出中断次数*/
     /* log2.0 2014-03-19 Begin:*/
-	BSP_U32 u32SocpEncDstSoftOverTimeOriCnt[SOCP_MAX_ENCDST_CHN];  /* SOCP����Ŀ��ͨ��������ʱ�������� */
-    BSP_U32 u32SocpEncDstSoftOverTimeCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP����Ŀ��ͨ��������ʱ������ɴ��� */
+	BSP_U32 u32SocpEncDstSoftOverTimeOriCnt[SOCP_MAX_ENCDST_CHN];  /* SOCP编码目的通道软件超时处理次数 */
+    BSP_U32 u32SocpEncDstSoftOverTimeCnt[SOCP_MAX_ENCDST_CHN];     /* SOCP编码目的通道软件超时处理完成次数 */
 	/* log2.0 2014-03-19 End:*/
 } SOCP_DEBUG_ENCDST_S;
 
 typedef struct tagSOCP_DEBUG_DECSRC_S
 {
-    u32 u32SocpSoftResetDecSrcCnt[SOCP_MAX_DECSRC_CHN];    /* SOCP����λ����Դͨ���Ĵ���*/
-    u32 u32SocpStartDecSrcCnt[SOCP_MAX_DECSRC_CHN];        /* SOCP��������Դͨ���Ĵ���*/
-    u32 u32SocpStopDecSrcCnt[SOCP_MAX_DECSRC_CHN];         /* SOCP�رս���Դͨ���Ĵ���*/
-    u32 u32SocpRegEventDecSrcCnt[SOCP_MAX_DECSRC_CHN];     /* SOCPע�����Դͨ���¼��Ĵ���*/
-    u32 u32SocpGetWBufDecSrcEtrCnt[SOCP_MAX_DECSRC_CHN];      /* SOCP����Դͨ�����Ի��дbuffer�Ĵ���*/
-    u32 u32SocpGetWBufDecSrcSucCnt[SOCP_MAX_DECSRC_CHN];      /* SOCP����Դͨ�����дbuffer�ɹ��Ĵ���*/
-    u32 u32socp_write_doneDecSrcEtrCnt[SOCP_MAX_DECSRC_CHN];    /* SOCP����Դͨ������д��buffer�Ĵ���*/
-    u32 u32socp_write_doneDecSrcSucCnt[SOCP_MAX_DECSRC_CHN];    /* SOCP����Դͨ��д��buffer�ɹ��Ĵ���*/
-    u32 u32socp_write_doneDecSrcFailCnt[SOCP_MAX_DECSRC_CHN];    /* SOCP����Դͨ��д��bufferʧ�ܵĴ���*/
-    u32 u32SocpRegRdCBDecSrcCnt[SOCP_MAX_DECSRC_CHN];      /* SOCPע�����Դͨ��RDbuffer�ص������Ĵ���*/
-    u32 u32SocpGetRdBufDecSrcEtrCnt[SOCP_MAX_DECSRC_CHN];     /* SOCP����Դͨ�����Ի��Rdbuffer�Ĵ���*/
-    u32 u32SocpGetRdBufDecSrcSucCnt[SOCP_MAX_DECSRC_CHN];     /* SOCP����Դͨ�����Rdbuffer�ɹ��Ĵ���*/
-    u32 u32SocpReadRdDoneDecSrcEtrCnt[SOCP_MAX_DECSRC_CHN];   /* SOCP����Դͨ������д��Rdbuffer�Ĵ���*/
-    u32 u32SocpReadRdDoneDecSrcSucCnt[SOCP_MAX_DECSRC_CHN];   /* SOCP����Դͨ��д��Rdbuffer�ɹ��Ĵ���*/
-    u32 u32SocpReadRdDoneDecSrcFailCnt[SOCP_MAX_DECSRC_CHN];   /* SOCP����Դͨ��д��Rdbufferʧ�ܵĴ���*/
-    u32 u32SocpDecSrcIsrErrIntCnt[SOCP_MAX_DECSRC_CHN];        /* ISR�н������Դͨ�������жϴ���*/
-    u32 u32SocpDecSrcTskErrCbCnt[SOCP_MAX_DECSRC_CHN];        /* �����е��ý���Դͨ�������жϴ���������ɵĴ���*/
-    u32 u32SocpDecSrcTskErrCbOriCnt[SOCP_MAX_DECSRC_CHN];     /* �����е��ý���Դͨ�������жϴ�����������*/
+    u32 u32SocpSoftResetDecSrcCnt[SOCP_MAX_DECSRC_CHN];    /* SOCP软复位解码源通道的次数*/
+    u32 u32SocpStartDecSrcCnt[SOCP_MAX_DECSRC_CHN];        /* SOCP启动解码源通道的次数*/
+    u32 u32SocpStopDecSrcCnt[SOCP_MAX_DECSRC_CHN];         /* SOCP关闭解码源通道的次数*/
+    u32 u32SocpRegEventDecSrcCnt[SOCP_MAX_DECSRC_CHN];     /* SOCP注册解码源通道事件的次数*/
+    u32 u32SocpGetWBufDecSrcEtrCnt[SOCP_MAX_DECSRC_CHN];      /* SOCP解码源通道尝试获得写buffer的次数*/
+    u32 u32SocpGetWBufDecSrcSucCnt[SOCP_MAX_DECSRC_CHN];      /* SOCP解码源通道获得写buffer成功的次数*/
+    u32 u32socp_write_doneDecSrcEtrCnt[SOCP_MAX_DECSRC_CHN];    /* SOCP解码源通道尝试写回buffer的次数*/
+    u32 u32socp_write_doneDecSrcSucCnt[SOCP_MAX_DECSRC_CHN];    /* SOCP解码源通道写回buffer成功的次数*/
+    u32 u32socp_write_doneDecSrcFailCnt[SOCP_MAX_DECSRC_CHN];    /* SOCP解码源通道写回buffer失败的次数*/
+    u32 u32SocpRegRdCBDecSrcCnt[SOCP_MAX_DECSRC_CHN];      /* SOCP注册解码源通道RDbuffer回调函数的次数*/
+    u32 u32SocpGetRdBufDecSrcEtrCnt[SOCP_MAX_DECSRC_CHN];     /* SOCP解码源通道尝试获得Rdbuffer的次数*/
+    u32 u32SocpGetRdBufDecSrcSucCnt[SOCP_MAX_DECSRC_CHN];     /* SOCP解码源通道获得Rdbuffer成功的次数*/
+    u32 u32SocpReadRdDoneDecSrcEtrCnt[SOCP_MAX_DECSRC_CHN];   /* SOCP解码源通道尝试写回Rdbuffer的次数*/
+    u32 u32SocpReadRdDoneDecSrcSucCnt[SOCP_MAX_DECSRC_CHN];   /* SOCP解码源通道写回Rdbuffer成功的次数*/
+    u32 u32SocpReadRdDoneDecSrcFailCnt[SOCP_MAX_DECSRC_CHN];   /* SOCP解码源通道写回Rdbuffer失败的次数*/
+    u32 u32SocpDecSrcIsrErrIntCnt[SOCP_MAX_DECSRC_CHN];        /* ISR中进入解码源通道错误中断次数*/
+    u32 u32SocpDecSrcTskErrCbCnt[SOCP_MAX_DECSRC_CHN];        /* 任务中调用解码源通道错误中断处理函数完成的次数*/
+    u32 u32SocpDecSrcTskErrCbOriCnt[SOCP_MAX_DECSRC_CHN];     /* 任务中调用解码源通道错误中断处理函数次数*/
 } SOCP_DEBUG_DECSRC_S;
 
 typedef struct tagSOCP_DEBUG_DECDST_S
 {
-    u32 u32SocpFreeDecDstCnt[SOCP_MAX_DECDST_CHN];         /* SOCP�ͷŽ���Ŀ��ͨ���ɹ��Ĵ���*/
-    u32 u32SocpRegEventDecDstCnt[SOCP_MAX_DECDST_CHN];     /* SOCPע�����Ŀ��ͨ���¼��Ĵ���*/
-    u32 u32SocpRegReadCBDecDstCnt[SOCP_MAX_DECDST_CHN];    /* SOCPע�����Ŀ��ͨ�������ݻص������Ĵ���*/
-    u32 u32SocpGetReadBufDecDstEtrCnt[SOCP_MAX_DECDST_CHN];   /* SOCP����Ŀ��ͨ�����Զ����ݵĴ���*/
-    u32 u32SocpGetReadBufDecDstSucCnt[SOCP_MAX_DECDST_CHN];   /* SOCP����Ŀ��ͨ�������ݳɹ��Ĵ���*/
-    u32 u32socp_read_doneDecDstEtrCnt[SOCP_MAX_DECDST_CHN];     /* SOCP����Ŀ��ͨ������д��Ŀ��buffer�Ĵ���*/
-    u32 u32socp_read_doneDecDstSucCnt[SOCP_MAX_DECDST_CHN];     /* SOCP����Ŀ��ͨ��д��Ŀ��buffer�ɹ��Ĵ���*/
-    u32 u32socp_read_doneDecDstFailCnt[SOCP_MAX_DECDST_CHN];     /* SOCP����Ŀ��ͨ��д��Ŀ��bufferʧ�ܵĴ���*/
-    u32 u32socp_read_doneZeroDecDstCnt[SOCP_MAX_DECDST_CHN];   /* SOCP����Ŀ��ͨ��д��Ŀ��buffer size ����0 �Ĵ���*/
-    u32 u32socp_read_doneValidDecDstCnt[SOCP_MAX_DECDST_CHN];   /* SOCP����Ŀ��ͨ��д��Ŀ��buffer size ������0 �Ĵ���*/
-    u32 u32SocpDecDstIsrTrfIntCnt[SOCP_MAX_DECDST_CHN];        /* ISR�н������Ŀ��ͨ����������жϴ���*/
-    u32 u32SocpDecDstTskTrfCbCnt[SOCP_MAX_DECDST_CHN];         /* �����лص�����Ŀ��ͨ����������жϴ���������ɵĴ���*/
-    u32 u32SocpDecDstTskTrfCbOriCnt[SOCP_MAX_DECDST_CHN];      /* �����лص�����Ŀ��ͨ����������жϴ�����������*/
-    u32 u32SocpDecDstIsrOvfIntCnt[SOCP_MAX_DECDST_CHN];        /* ISR�н������Ŀ��ͨ��buf ����жϴ���*/
-    u32 u32SocpDecDstTskOvfCbCnt[SOCP_MAX_DECDST_CHN];         /* �����н������Ŀ��ͨ��buf ����жϴ���������ɵĴ���*/
-    u32 u32SocpDecDstTskOvfCbOriCnt[SOCP_MAX_DECDST_CHN];      /* �����н������Ŀ��ͨ��buf ����жϴ�����������*/
+    u32 u32SocpFreeDecDstCnt[SOCP_MAX_DECDST_CHN];         /* SOCP释放解码目的通道成功的次数*/
+    u32 u32SocpRegEventDecDstCnt[SOCP_MAX_DECDST_CHN];     /* SOCP注册解码目的通道事件的次数*/
+    u32 u32SocpRegReadCBDecDstCnt[SOCP_MAX_DECDST_CHN];    /* SOCP注册解码目的通道读数据回调函数的次数*/
+    u32 u32SocpGetReadBufDecDstEtrCnt[SOCP_MAX_DECDST_CHN];   /* SOCP解码目的通道尝试读数据的次数*/
+    u32 u32SocpGetReadBufDecDstSucCnt[SOCP_MAX_DECDST_CHN];   /* SOCP解码目的通道读数据成功的次数*/
+    u32 u32socp_read_doneDecDstEtrCnt[SOCP_MAX_DECDST_CHN];     /* SOCP解码目的通道尝试写回目的buffer的次数*/
+    u32 u32socp_read_doneDecDstSucCnt[SOCP_MAX_DECDST_CHN];     /* SOCP解码目的通道写回目的buffer成功的次数*/
+    u32 u32socp_read_doneDecDstFailCnt[SOCP_MAX_DECDST_CHN];     /* SOCP解码目的通道写回目的buffer失败的次数*/
+    u32 u32socp_read_doneZeroDecDstCnt[SOCP_MAX_DECDST_CHN];   /* SOCP解码目的通道写回目的buffer size 等于0 的次数*/
+    u32 u32socp_read_doneValidDecDstCnt[SOCP_MAX_DECDST_CHN];   /* SOCP解码目的通道写回目的buffer size 不等于0 的次数*/
+    u32 u32SocpDecDstIsrTrfIntCnt[SOCP_MAX_DECDST_CHN];        /* ISR中进入解码目的通道传输完成中断次数*/
+    u32 u32SocpDecDstTskTrfCbCnt[SOCP_MAX_DECDST_CHN];         /* 任务中回调解码目的通道传输完成中断处理函数完成的次数*/
+    u32 u32SocpDecDstTskTrfCbOriCnt[SOCP_MAX_DECDST_CHN];      /* 任务中回调解码目的通道传输完成中断处理函数次数*/
+    u32 u32SocpDecDstIsrOvfIntCnt[SOCP_MAX_DECDST_CHN];        /* ISR中进入解码目的通道buf 溢出中断次数*/
+    u32 u32SocpDecDstTskOvfCbCnt[SOCP_MAX_DECDST_CHN];         /* 任务中进入解码目的通道buf 溢出中断处理函数完成的次数*/
+    u32 u32SocpDecDstTskOvfCbOriCnt[SOCP_MAX_DECDST_CHN];      /* 任务中进入解码目的通道buf 溢出中断处理函数次数*/
 } SOCP_DEBUG_DECDST_S;
 
-/* ������Ϣ*/
+/* 调试信息*/
 typedef struct tagSOCP_DEBUG_INFO_S
 {
     SOCP_DEBUG_GBL_S    sSocpDebugGBl;
@@ -491,64 +491,64 @@ typedef unsigned int SOCP_POWER_STATE_ENUM_U32;
 #endif
 
 /**************************************************************************
-  �Ĵ���λ����
+  寄存器位域定义
 **************************************************************************/
 
 /*
 * Bit masks for registers: ENCSTAT,DECSTAT, channel state
 */
-#define SOCP_CHN_BUSY                   ( (s32) 1)   /*ͨ��æ*/
-#define SOCP_CHN_IDLE                   ( (s32) 0)   /*ͨ����*/
+#define SOCP_CHN_BUSY                   ( (s32) 1)   /*通道忙*/
+#define SOCP_CHN_IDLE                   ( (s32) 0)   /*通道闲*/
 
 /*
-* ͨ���򿪺궨�壬�����ڱ���Դͨ���ͽ���Ŀ��ͨ��
+* 通道打开宏定义，适用于编码源通道和解码目的通道
 */
-#define SOCP_CHN_ALLOCATED              ((s32) 1)    /*ͨ���Ѿ�����*/
-#define SOCP_CHN_UNALLOCATED            ((s32) 0)    /*ͨ��û�з���*/
+#define SOCP_CHN_ALLOCATED              ((s32) 1)    /*通道已经分配*/
+#define SOCP_CHN_UNALLOCATED            ((s32) 0)    /*通道没有分配*/
 
 /*
-* ͨ��ʹ�ܺ궨�壬ͬʱ�����ڱ���Դͨ���ͽ���Դͨ��
+* 通道使能宏定义，同时适用于编码源通道和解码源通道
 */
-#define SOCP_CHN_ENABLE                 ( (s32) 1)   /*ͨ����*/
-#define SOCP_CHN_DISABLE                ( (s32) 0)   /*ͨ���ر�*/
+#define SOCP_CHN_ENABLE                 ( (s32) 1)   /*通道打开*/
+#define SOCP_CHN_DISABLE                ( (s32) 0)   /*通道关闭*/
 
 /*
-* ͨ���Ƿ��Ѿ�����
+* 通道是否已经设置
 */
-#define SOCP_CHN_SET                    ( (s32) 1)     /*ͨ���Ѿ�����*/
-#define SOCP_CHN_UNSET                  ( (s32) 0)     /*ͨ��û������*/
+#define SOCP_CHN_SET                    ( (s32) 1)     /*通道已经配置*/
+#define SOCP_CHN_UNSET                  ( (s32) 0)     /*通道没有配置*/
 /*
-* ������·����ʹ��λ
+* 编码旁路设置使能位
 */
-#define SOCP_ENCSRC_BYPASS_ENABLE       ( (s32) 1)     /*ͨ����·ʹ��*/
-#define SOCP_ENCSRC_BYPASS_DISABLE      ( (s32) 0)     /*ͨ����·û��ʹ��*/
+#define SOCP_ENCSRC_BYPASS_ENABLE       ( (s32) 1)     /*通道旁路使能*/
+#define SOCP_ENCSRC_BYPASS_DISABLE      ( (s32) 0)     /*通道旁路没有使能*/
 
 
 /*
-* ������·����ʹ��λ
+* 编码旁路设置使能位
 */
-#define SOCP_DECSRC_DEBUG_ENBALE        ( (s32) 1)     /*ͨ��DEBUG ʹ��*/
-#define SOCP_DECSRC_DEBUG_DISBALE       ( (s32) 0)     /*ͨ��DEBUG û��ʹ��*/
+#define SOCP_DECSRC_DEBUG_ENBALE        ( (s32) 1)     /*通道DEBUG 使能*/
+#define SOCP_DECSRC_DEBUG_DISBALE       ( (s32) 0)     /*通道DEBUG 没有使能*/
 
-#define SOCP_CORE0_DEC_OUTOVFINT_MASK   ( (s32)(1))          /* ����core0 Ŀ��BUFFER����ж� */
-#define SOCP_DEC_INERRINT_MASK          ( (s32)(1<<1))       /* ��������������ж� */
-#define SOCP_CORE0_DEC_TFRINT_MASK      ( (s32)(1<<2))       /* ����core0��������ж� */
-#define SOCP_CORE1_DEC_TFRINT_MASK      ( (s32)(1<<3))       /* ����core1 ��������ж� */
-#define SOCP_CORE1_DEC_OUTOVFINT_MASK   ( (s32)(1<<4))       /* ����core1 Ŀ��BUFFER����ж�*/
-#define SOCP_MODEM_ENC_RDINT_MASK       ( (s32)(1<<10))      /* ����RDBUFFER����ж� */
-#define SOCP_APP_ENC_RDINT_MASK         ( (s32)(1<<11))      /* ����MODEMCPU��ͷ�������ж� */
-#define SOCP_APP_ENC_OUTOVFINT_MASK     ( (s32)(1<<12))      /* ����RDBUFFER����ж� */
-#define SOCP_MODEM_ENC_FLAGINT_MASK     ( (s32)(1<<13))      /* ����MODEMCPU��ͷ�������ж� */
-#define SOCP_APP_ENC_FLAGINT_MASK       ( (s32)(1<<14))      /* ����RDBUFFER����ж� */
-#define SOCP_APP_ENC_TFRINT_MASK        ( (s32)(1<<15))      /* ����MODEMCPU��ͷ�������ж� */
-#define SOCP_DEC_SRCINT_NUM             (6)                  /* ����MODEMCPU��ͷ�������ж� */
+#define SOCP_CORE0_DEC_OUTOVFINT_MASK   ( (s32)(1))          /* 解码core0 目的BUFFER溢出中断 */
+#define SOCP_DEC_INERRINT_MASK          ( (s32)(1<<1))       /* 编码输入检测错误中断 */
+#define SOCP_CORE0_DEC_TFRINT_MASK      ( (s32)(1<<2))       /* 编码core0传输完成中断 */
+#define SOCP_CORE1_DEC_TFRINT_MASK      ( (s32)(1<<3))       /* 解码core1 传输完成中断 */
+#define SOCP_CORE1_DEC_OUTOVFINT_MASK   ( (s32)(1<<4))       /* 编码core1 目的BUFFER溢出中断*/
+#define SOCP_MODEM_ENC_RDINT_MASK       ( (s32)(1<<10))      /* 编码RDBUFFER完成中断 */
+#define SOCP_APP_ENC_RDINT_MASK         ( (s32)(1<<11))      /* 编码MODEMCPU包头检测错误中断 */
+#define SOCP_APP_ENC_OUTOVFINT_MASK     ( (s32)(1<<12))      /* 编码RDBUFFER完成中断 */
+#define SOCP_MODEM_ENC_FLAGINT_MASK     ( (s32)(1<<13))      /* 编码MODEMCPU包头检测错误中断 */
+#define SOCP_APP_ENC_FLAGINT_MASK       ( (s32)(1<<14))      /* 编码RDBUFFER完成中断 */
+#define SOCP_APP_ENC_TFRINT_MASK        ( (s32)(1<<15))      /* 编码MODEMCPU包头检测错误中断 */
+#define SOCP_DEC_SRCINT_NUM             (6)                  /* 编码MODEMCPU包头检测错误中断 */
 
 
 #define SOCP_TRANS_TIMEOUT_DEFAULT      (0x17)     //dec:23
 #define SOCP_OVERFLOW_TIMEOUT_DEFAULT   (0x5969)   //dec:22889
 
-#define SOCP_DEC_PKTLGTH_MAX            (0x04)     //dec:4096, ��λΪKB
-#define SOCP_DEC_PKTLGTH_MIN            (0x06)     //dec:6, ��λΪ�ֽ�
+#define SOCP_DEC_PKTLGTH_MAX            (0x04)     //dec:4096, 单位为KB
+#define SOCP_DEC_PKTLGTH_MIN            (0x06)     //dec:6, 单位为字节
 #define SOCP_TIMEOUT_MAX                (0xffff)
 #define SOCP_DEC_MAXPKT_MAX             (0x1000)
 #define SOCP_DEC_MINPKT_MAX             (0x1f)
@@ -561,12 +561,12 @@ typedef unsigned int SOCP_POWER_STATE_ENUM_U32;
 #define SOCP_DEC_DST_BUFLGTH_MAX        (0xffff)
 #define SOCP_DEC_DST_TH_MAX             (0xff)
 
-// ����Ŀ��buffer�����ж�״̬�Ĵ���16-22λָʾ��ֵ����ж�
+// 编码目的buffer上溢中断状态寄存器16-22位指示阈值溢出中断
 #define SOCP_ENC_DST_BUFF_THRESHOLD_OVF_MASK    (0x007f0000)
 #define SOCP_ENC_DST_BUFF_OVF_MASK              (0x0000007f)
-// ��ֵ�жϼĴ�����ʼλ
+// 阈值中断寄存器起始位
 #define SOCP_ENC_DST_BUFF_THRESHOLD_OVF_BEGIN   (16)
-// ָʾSOCP״̬��ϵͳ������ƫ�Ƶ�ַ
+// 指示SOCP状态的系统控制器偏移地址
 #define SOCP_STATE_SC_OFFSET            0x668
 #define SOCP_STATE_SC_MASK              0x00000001
 
@@ -575,7 +575,7 @@ typedef unsigned int SOCP_POWER_STATE_ENUM_U32;
 
 extern SOCP_GBL_STATE g_strSocpStat;
 
-/* ����Ƿ��ʼ���ĺ궨�� */
+/* 检测是否初始化的宏定义 */
 #define SOCP_CHECK_INIT() \
     do{\
         if (!g_strSocpStat.bInitFlag)\
@@ -585,7 +585,7 @@ extern SOCP_GBL_STATE g_strSocpStat;
         }\
     }while(0)
 
-/* �������Ƿ���Ч */
+/* 检测参数是否有效 */
 #define SOCP_CHECK_PARA(para) \
     do{\
         if (0 == para)\
@@ -632,7 +632,7 @@ extern SOCP_GBL_STATE g_strSocpStat;
         } \
     } while (0)
 
-/* ����Ƿ�8�ֽڶ��� */
+/* 检测是否8字节对齐 */
 #define SOCP_CHECK_8BYTESALIGN(para) \
     do{\
         if (0 != (para%8))\
@@ -734,7 +734,7 @@ extern SOCP_GBL_STATE g_strSocpStat;
 
 
 /**************************************************************************
-  ��������
+  函数声明
 **************************************************************************/
 s32 socp_soft_free_encdst_chan(u32 u32EncDstChanId);
 s32 socp_soft_free_decsrc_chan(u32 u32DecSrcChanId);

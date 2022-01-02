@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 **************************************************************************** */
 #include "OamSpecTaskDef.h"
 #include "SCMProc.h"
@@ -22,30 +22,30 @@ extern "C" {
 /* lint +e767  */
 
 /* ****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 **************************************************************************** */
-/* ×ÔĞıËø£¬ÓÃÀ´×÷CBTÊı¾İ½ÓÊÕµÄÁÙ½ç×ÊÔ´±£»¤ */
+/* è‡ªæ—‹é”ï¼Œç”¨æ¥ä½œCBTæ•°æ®æ¥æ”¶çš„ä¸´ç•Œèµ„æºä¿æŠ¤ */
 VOS_SPINLOCK             g_stCbtScmDataRcvSpinLock;
 
-/* HDLC¿ØÖÆ½á¹¹ */
+/* HDLCæ§åˆ¶ç»“æ„ */
 OM_HDLC_STRU             g_stCbtScmHdlcSoftDecodeEntity;
 
-/* SCMÊı¾İ½ÓÊÕÊı¾İ»º³åÇø */
+/* SCMæ•°æ®æ¥æ”¶æ•°æ®ç¼“å†²åŒº */
 VOS_CHAR                 g_aucCbtScmDataRcvBuffer[SCM_DATA_RCV_PKT_SIZE];
 
-/* SCMÊı¾İ½ÓÊÕÈÎÎñ¿ØÖÆ½á¹¹ */
+/* SCMæ•°æ®æ¥æ”¶ä»»åŠ¡æ§åˆ¶ç»“æ„ */
 SCM_DATA_RCV_CTRL_STRU   g_stCbtScmDataRcvTaskCtrlInfo;
 
 SCM_SOFTDECODE_INFO_STRU   g_stCbtScmSoftDecodeInfo;
 
 
 /*****************************************************************************
-  3 Íâ²¿ÒıÓÃÉùÃ÷
+  3 å¤–éƒ¨å¼•ç”¨å£°æ˜
 *****************************************************************************/
 extern SCM_SOFTDECODE_INFO_STRU   g_stScmSoftDecodeInfo;
 
 /*****************************************************************************
-  4 º¯ÊıÊµÏÖ
+  4 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -129,7 +129,7 @@ VOS_UINT32 CBTSCM_SoftDecodeAcpuRcvData(
                 continue;
             }
 
-            /* GU CBTÊı¾İ²»ĞèÒªDATATYPE×Ö¶Î£¬»Øµ÷Ê±É¾³ı */
+            /* GU CBTæ•°æ®ä¸éœ€è¦DATATYPEå­—æ®µï¼Œå›è°ƒæ—¶åˆ é™¤ */
             if (VOS_NULL_PTR != g_astSCMDecoderCbFunc[SOCP_DECODER_DST_CB_GU_CBT])
             {
                 g_astSCMDecoderCbFunc[SOCP_DECODER_DST_CB_GU_CBT](SOCP_DECODER_CBT,
@@ -141,7 +141,7 @@ VOS_UINT32 CBTSCM_SoftDecodeAcpuRcvData(
         }
         else if (HDLC_NOT_HDLC_FRAME == ulResult)
         {
-            /*²»ÊÇÍêÕû·ÖÖ¡,¼ÌĞøHDLC½â·â×°*/
+            /*ä¸æ˜¯å®Œæ•´åˆ†å¸§,ç»§ç»­HDLCè§£å°è£…*/
         }
         else
         {
@@ -155,7 +155,7 @@ VOS_UINT32 CBTSCM_SoftDecodeAcpuRcvData(
 
 VOS_UINT32 CBTSCM_SoftDecodeHdlcInit(OM_HDLC_STRU *pstHdlc)
 {
-    /* ÉêÇëÓÃÓÚHDLC½â·â×°µÄ»º´æ */
+    /* ç”³è¯·ç”¨äºHDLCè§£å°è£…çš„ç¼“å­˜ */
     pstHdlc->pucDecapBuff    = (VOS_UINT8 *)VOS_MemAlloc(ACPU_PID_OM, STATIC_MEM_PT, SCM_DATA_RCV_PKT_SIZE);
 
     if (VOS_NULL_PTR == pstHdlc->pucDecapBuff)
@@ -165,10 +165,10 @@ VOS_UINT32 CBTSCM_SoftDecodeHdlcInit(OM_HDLC_STRU *pstHdlc)
         return VOS_ERR;
     }
 
-    /* HDLC½â·â×°»º´æ³¤¶È¸³Öµ */
+    /* HDLCè§£å°è£…ç¼“å­˜é•¿åº¦èµ‹å€¼ */
     pstHdlc->ulDecapBuffSize = SCM_DATA_RCV_PKT_SIZE;
 
-    /* ³õÊ¼»¯HDLC½â·â×°¿ØÖÆÉÏÏÂÎÄ */
+    /* åˆå§‹åŒ–HDLCè§£å°è£…æ§åˆ¶ä¸Šä¸‹æ–‡ */
     Om_HdlcInit(pstHdlc);
 
     return VOS_OK;
@@ -245,7 +245,7 @@ VOS_VOID CBTSCM_SoftDecodeReqRcvSelfTask(
 
             lRemainlen -= lReadLen;
 
-            /* µ÷ÓÃHDLC½â·â×°º¯Êı */
+            /* è°ƒç”¨HDLCè§£å°è£…å‡½æ•° */
             if (VOS_OK != CBTSCM_SoftDecodeAcpuRcvData(&g_stCbtScmHdlcSoftDecodeEntity,
                                                         (VOS_UINT8 *)g_stCbtScmDataRcvTaskCtrlInfo.pucBuffer,
                                                         (VOS_UINT32)lReadLen))
@@ -268,7 +268,7 @@ VOS_UINT32 CBTSCM_SoftDecodeReqRcvTaskInit(VOS_VOID)
 {
     VOS_UINT32                              ulRslt;
 
-    /* ×¢²áCBTÊı¾İ½ÓÊÕ×Ô´¦ÀíÈÎÎñ */
+    /* æ³¨å†ŒCBTæ•°æ®æ¥æ”¶è‡ªå¤„ç†ä»»åŠ¡ */
     ulRslt = VOS_RegisterSelfTaskPrio(ACPU_FID_OM,
                                       (VOS_TASK_ENTRY_TYPE)CBTSCM_SoftDecodeReqRcvSelfTask,
                                       SCM_DATA_RCV_SELFTASK_PRIO,

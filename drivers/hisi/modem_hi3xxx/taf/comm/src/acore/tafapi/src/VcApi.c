@@ -1,23 +1,23 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓĞ (C), 2001-2011, »ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼ş Ãû   : VcApi.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : ºúÎÄ 44270
-  Éú³ÉÈÕÆÚ   : 2009Äê7ÔÂ05ÈÕ
-  ×î½üĞŞ¸Ä   : 2007Äê7ÔÂ05ÈÕ
-  ¹¦ÄÜÃèÊö   : ÊµÏÖVCÄ£¿éµÄ¹¦ÄÜ
-  º¯ÊıÁĞ±í   :
-  ĞŞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2009Äê7ÔÂ05ÈÕ
-    ×÷    Õß   : ºúÎÄ 44270
-    ĞŞ¸ÄÄÚÈİ   : ´´½¨ÎÄ¼ş
+  æ–‡ ä»¶ å   : VcApi.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : èƒ¡æ–‡ 44270
+  ç”Ÿæˆæ—¥æœŸ   : 2009å¹´7æœˆ05æ—¥
+  æœ€è¿‘ä¿®æ”¹   : 2007å¹´7æœˆ05æ—¥
+  åŠŸèƒ½æè¿°   : å®ç°VCæ¨¡å—çš„åŠŸèƒ½
+  å‡½æ•°åˆ—è¡¨   :
+  ä¿®æ”¹å†å²   :
+  1.æ—¥    æœŸ   : 2009å¹´7æœˆ05æ—¥
+    ä½œ    è€…   : èƒ¡æ–‡ 44270
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 ******************************************************************************/
 
 /*****************************************************************************
-   1 Í·ÎÄ¼ş°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "AppVcApi.h"
 #include "vos.h"
@@ -37,7 +37,7 @@
 /*lint +e767 +e960*/
 
 /*****************************************************************************
-   2 º¯ÊıÊµÏÖ
+   2 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -47,11 +47,11 @@ VOS_UINT32  APP_VC_SetVoiceVolume(
     VOS_UINT8                           ucVoiceVolume
 )
 {
-    /*¹¹ÔìÏûÏ¢·¢ËÍÏûÏ¢¸øVCÄ£¿é*/
+    /*æ„é€ æ¶ˆæ¯å‘é€æ¶ˆæ¯ç»™VCæ¨¡å—*/
     VOS_UINT32                          ulRslt;
     APP_VC_REQ_MSG_STRU                *pstMsg;
 
-    /* ÉêÇëÏûÏ¢ */
+    /* ç”³è¯·æ¶ˆæ¯ */
     pstMsg = (APP_VC_REQ_MSG_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                   sizeof(APP_VC_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH);
     if (VOS_NULL_PTR == pstMsg)
@@ -88,11 +88,11 @@ VOS_UINT32  APP_VC_SetVoiceMode(
     VOS_UINT32                          ulTaskPid
 )
 {
-    /*¹¹ÔìÏûÏ¢·¢ËÍÏûÏ¢¸øVCÄ£¿é*/
+    /*æ„é€ æ¶ˆæ¯å‘é€æ¶ˆæ¯ç»™VCæ¨¡å—*/
     VOS_UINT32                          ulRslt;
     APP_VC_REQ_MSG_STRU                *pstMsg;
 
-    /* ÉêÇëÏûÏ¢ */
+    /* ç”³è¯·æ¶ˆæ¯ */
     pstMsg = (APP_VC_REQ_MSG_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                   sizeof(APP_VC_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH);
     if (VOS_NULL_PTR == pstMsg)
@@ -128,12 +128,12 @@ VOS_UINT32 APP_VC_SetVoicePort(
     APP_VC_VOICE_PORT_ENUM_U8           ucVoicePort
 )
 {
-    /*¹¹ÔìÏûÏ¢·¢ËÍÏûÏ¢¸øVCÄ£¿é*/
+    /*æ„é€ æ¶ˆæ¯å‘é€æ¶ˆæ¯ç»™VCæ¨¡å—*/
     VOS_UINT32                          ulRslt;
     APP_VC_REQ_MSG_STRU                *pstMsg;
 
 
-    /* ÉêÇëÏûÏ¢ */
+    /* ç”³è¯·æ¶ˆæ¯ */
     pstMsg = (APP_VC_REQ_MSG_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                   sizeof(APP_VC_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH);
     if (VOS_NULL_PTR == pstMsg)
@@ -168,11 +168,11 @@ VOS_UINT32 APP_VC_GetVoiceMode(
     MN_OPERATION_ID_T                   OpId
 )
 {
-    /*¹¹ÔìÏûÏ¢·¢ËÍÏûÏ¢¸øVCÄ£¿é*/
+    /*æ„é€ æ¶ˆæ¯å‘é€æ¶ˆæ¯ç»™VCæ¨¡å—*/
     VOS_UINT32                          ulRslt;
     APP_VC_REQ_MSG_STRU                *pstMsg;
 
-    /* ÉêÇëÏûÏ¢ */
+    /* ç”³è¯·æ¶ˆæ¯ */
     pstMsg = (APP_VC_REQ_MSG_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                   sizeof(APP_VC_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH);
     if (VOS_NULL_PTR == pstMsg)
@@ -207,11 +207,11 @@ VOS_UINT32 APP_VC_GetVoicePort(
     MN_OPERATION_ID_T                   OpId
 )
 {
-    /*¹¹ÔìÏûÏ¢·¢ËÍÏûÏ¢¸øVCÄ£¿é*/
+    /*æ„é€ æ¶ˆæ¯å‘é€æ¶ˆæ¯ç»™VCæ¨¡å—*/
     VOS_UINT32                          ulRslt;
     APP_VC_REQ_MSG_STRU                *pstMsg;
 
-    /* ÉêÇëÏûÏ¢ */
+    /* ç”³è¯·æ¶ˆæ¯ */
     pstMsg = (APP_VC_REQ_MSG_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                   sizeof(APP_VC_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH);
     if (VOS_NULL_PTR == pstMsg)
@@ -220,7 +220,7 @@ VOS_UINT32 APP_VC_GetVoicePort(
         return VOS_ERR;
     }
 
-    /* ×é×°ÏûÏ¢ */
+    /* ç»„è£…æ¶ˆæ¯ */
     pstMsg->clientId                    = ClientId;
     pstMsg->opId                        = OpId;
     pstMsg->enMsgName                   = APP_VC_MSG_REQ_QRY_PORT;
@@ -297,11 +297,11 @@ VOS_UINT32  APP_VC_GetVoiceVolume(
     MN_OPERATION_ID_T                   OpId
 )
 {
-    /*¹¹ÔìÏûÏ¢·¢ËÍÏûÏ¢¸øVCÄ£¿é*/
+    /*æ„é€ æ¶ˆæ¯å‘é€æ¶ˆæ¯ç»™VCæ¨¡å—*/
     VOS_UINT32                          ulRslt;
     APP_VC_REQ_MSG_STRU                *pstMsg;
 
-    /* ÉêÇëÏûÏ¢ */
+    /* ç”³è¯·æ¶ˆæ¯ */
     pstMsg = (APP_VC_REQ_MSG_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                   sizeof(APP_VC_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH);
     if (VOS_NULL_PTR == pstMsg)
@@ -340,7 +340,7 @@ VOS_UINT32 APP_VC_SetMuteStatus(
     VOS_UINT32                          ulRslt;
     APP_VC_REQ_MSG_STRU                *pstMsg;
 
-    /* ¹¹ÔìÏûÏ¢ */
+    /* æ„é€ æ¶ˆæ¯ */
     pstMsg = (APP_VC_REQ_MSG_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                         WUEPS_PID_AT,
                                         sizeof(APP_VC_REQ_MSG_STRU));
@@ -350,22 +350,22 @@ VOS_UINT32 APP_VC_SetMuteStatus(
         return VOS_ERR;
     }
 
-    /* ³õÊ¼»¯ÏûÏ¢ */
+    /* åˆå§‹åŒ–æ¶ˆæ¯ */
     PS_MEM_SET((VOS_CHAR *)pstMsg + VOS_MSG_HEAD_LENGTH,
                0x00,
                (VOS_SIZE_T)(sizeof(APP_VC_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     pstMsg->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstMsg->ulReceiverPid   = AT_GetDestPid(usClientId, I0_WUEPS_PID_VC);
     pstMsg->enMsgName       = APP_VC_MSG_SET_MUTE_STATUS_REQ;
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     pstMsg->clientId        = usClientId;
     pstMsg->opId            = ucOpId;
     pstMsg->aucContent[0]   = enMuteStatus;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     ulRslt = PS_SEND_MSG(WUEPS_PID_AT, pstMsg);
     if (VOS_OK != ulRslt)
     {
@@ -383,7 +383,7 @@ VOS_UINT32 APP_VC_GetMuteStatus(
     VOS_UINT32                          ulRslt;
     APP_VC_REQ_MSG_STRU                *pstMsg;
 
-    /* ¹¹ÔìÏûÏ¢ */
+    /* æ„é€ æ¶ˆæ¯ */
     pstMsg = (APP_VC_REQ_MSG_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                         WUEPS_PID_AT,
                                         sizeof(APP_VC_REQ_MSG_STRU));
@@ -393,21 +393,21 @@ VOS_UINT32 APP_VC_GetMuteStatus(
         return VOS_ERR;
     }
 
-    /* ³õÊ¼»¯ÏûÏ¢ */
+    /* åˆå§‹åŒ–æ¶ˆæ¯ */
     PS_MEM_SET((VOS_CHAR *)pstMsg + VOS_MSG_HEAD_LENGTH,
                0x00,
                (VOS_SIZE_T)(sizeof(APP_VC_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     pstMsg->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstMsg->ulReceiverPid   = AT_GetDestPid(usClientId, I0_WUEPS_PID_VC);
     pstMsg->enMsgName       = APP_VC_MSG_GET_MUTE_STATUS_REQ;
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     pstMsg->clientId        = usClientId;
     pstMsg->opId            = ucOpId;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     ulRslt = PS_SEND_MSG(WUEPS_PID_AT, pstMsg);
     if (VOS_OK != ulRslt)
     {
@@ -426,7 +426,7 @@ VOS_UINT32 APP_VC_SetModemLoop(
     VOS_UINT32                          ulRslt;
     APP_VC_REQ_MSG_STRU                *pstMsg;
 
-    /* ¹¹ÔìÏûÏ¢ */
+    /* æ„é€ æ¶ˆæ¯ */
     pstMsg = (APP_VC_REQ_MSG_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                         WUEPS_PID_AT,
                                         sizeof(APP_VC_REQ_MSG_STRU));
@@ -436,22 +436,22 @@ VOS_UINT32 APP_VC_SetModemLoop(
         return VOS_ERR;
     }
 
-    /* ³õÊ¼»¯ÏûÏ¢ */
+    /* åˆå§‹åŒ–æ¶ˆæ¯ */
     PS_MEM_SET((VOS_CHAR *)pstMsg + VOS_MSG_HEAD_LENGTH,
                0x00,
                (VOS_SIZE_T)(sizeof(APP_VC_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     pstMsg->ulReceiverCpuId = VOS_LOCAL_CPUID;
     pstMsg->ulReceiverPid   = AT_GetDestPid(usClientId, I0_WUEPS_PID_VC);
     pstMsg->enMsgName       = APP_VC_MSG_SET_MODEMLOOP_REQ;
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     pstMsg->clientId        = usClientId;
     pstMsg->opId            = ucOpId;
     pstMsg->aucContent[0]   = ucModemLoop;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     ulRslt = PS_SEND_MSG(WUEPS_PID_AT, pstMsg);
     if (VOS_OK != ulRslt)
     {

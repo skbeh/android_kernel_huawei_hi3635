@@ -116,7 +116,7 @@ static ssize_t do_read_log_to_user(struct logger_log *log,
 {
 	size_t len;
 
-	/* Ìø¹ıheaderÍ· */
+	/* è·³è¿‡headerå¤´ */
 	reader->r_off += sizeof(struct logger_entry);
 	reader->r_off %= log->size;
 
@@ -496,7 +496,7 @@ int a_cshell_write(int log_left_space, const void * in_buff, int in_len, unsigne
 		return -1;
 
 //    now = current_kernel_time();
-	/*°´linuxÄÚºËÊµÏÖÊ±¼ä´Á´òÓ¡µ½´®¿ÚÊÇÂÒÂë£¬Ôİ²»ÊµÏÖ*/
+	/*æŒ‰linuxå†…æ ¸å®ç°æ—¶é—´æˆ³æ‰“å°åˆ°ä¸²å£æ˜¯ä¹±ç ï¼Œæš‚ä¸å®ç°*/
 	header.pid = 0;
 	header.tid = 0;
 	header.sec = 0;

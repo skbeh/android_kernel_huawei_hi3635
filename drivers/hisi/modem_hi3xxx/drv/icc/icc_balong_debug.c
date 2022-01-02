@@ -264,7 +264,7 @@ void icc_dbg_info_print(const char *fifo_name, u32 channel_id, u8 *data, u32 dat
 extern s32  intCnt;
 #endif
 
-/* Èç¹ûÔÚÖĞ¶ÏÖĞ£¬Ôò·µ»Ø0 */
+/* å¦‚æœåœ¨ä¸­æ–­ä¸­ï¼Œåˆ™è¿”å›0 */
 u32 icc_taskid_get(void)
 {
 	
@@ -405,13 +405,13 @@ void icc_sub_channel_info_show_all(u32 msg_type, u32 real_channel_id)
 
 void icc_recv_ipc_int_show(void)
 {
-	icc_print_info("*******iccÊÕµ½µÄipcÖĞ¶ÏÍ³¼Æ*******\n");
+	icc_print_info("*******iccæ”¶åˆ°çš„ipcä¸­æ–­ç»Ÿè®¡*******\n");
 	icc_print_info("ipc_int_cnt: %d\n", g_icc_dbg.ipc_int_cnt);
 }
 
 void icc_errno_show(void)
 {
-	icc_print_info("******************icc´íÎóÂëĞÅÏ¢******************\n");
+	icc_print_info("******************iccé”™è¯¯ç ä¿¡æ¯******************\n");
 	icc_print_info("0x%x: channel init error\n",ICC_CHN_INIT_FAIL);
 	icc_print_info("0x%x: malloc channel memory fail\n",ICC_MALLOC_CHANNEL_FAIL);
 	icc_print_info("0x%x: malloc rector memory fail\n",ICC_MALLOC_VECTOR_FAIL);
@@ -438,28 +438,28 @@ void icc_print_level_set(u32 level)
 
 void icc_struct_dump(void)
 {
-	icc_print_info("***************************icc½á¹¹ÌåĞÅÏ¢***************************\n");
-	icc_print_info("icc³õÊ¼»¯ĞÅÏ¢            : icc_init_info_dump channel_id\n");
-	icc_print_info("icc_control½á¹¹Ìå        : icc_control_dump\n");
-	icc_print_info("icc_channel½á¹¹Ìå        : icc_channel_dump channel_id\n");
-	icc_print_info("icc_channel_fifo½á¹¹Ìå   : icc_channel_fifo_dump channel_id\n");
-	icc_print_info("icc_channel_vector½á¹¹Ìå : icc_channel_vector_dump channel_id func_id\n");
-	icc_print_info("½á¹¹ÌåÏÔÊ¾º¯Êı²ÎÊıËµÃ÷   : channel_id, Ö÷Í¨µÀºÅ; fucn_id,×ÓÍ¨µÀºÅ\n");
+	icc_print_info("***************************iccç»“æ„ä½“ä¿¡æ¯***************************\n");
+	icc_print_info("iccåˆå§‹åŒ–ä¿¡æ¯            : icc_init_info_dump channel_id\n");
+	icc_print_info("icc_controlç»“æ„ä½“        : icc_control_dump\n");
+	icc_print_info("icc_channelç»“æ„ä½“        : icc_channel_dump channel_id\n");
+	icc_print_info("icc_channel_fifoç»“æ„ä½“   : icc_channel_fifo_dump channel_id\n");
+	icc_print_info("icc_channel_vectorç»“æ„ä½“ : icc_channel_vector_dump channel_id func_id\n");
+	icc_print_info("ç»“æ„ä½“æ˜¾ç¤ºå‡½æ•°å‚æ•°è¯´æ˜   : channel_id, ä¸»é€šé“å·; fucn_id,å­é€šé“å·\n");
 }
 
 void icc_help(void)
 {
-	icc_print_info("***************************************iccµ÷ÊÔ°ïÖúĞÅÏ¢***************************************\n");
-	icc_print_info("½á¹¹ÌåĞÅÏ¢dump          : icc_struct_dump\n");
-	icc_print_info("µ÷ÊÔ´òÓ¡¿ª¹Ø            : icc_dbg_print_sw 0|1\n");
-	icc_print_info("´íÎóÂëËµÃ÷              : icc_errno_show\n");
-	icc_print_info("ÊÕµ½ipcÖĞ¶ÏÍ³¼Æ         : icc_recv_ipc_int_show\n");
-	icc_print_info("×î½ünÌõÊÕ·¢ÏûÏ¢ÏÔÊ¾     : icc_msg_record_show msg_type msg_num\n");
-	icc_print_info("µ¥¸öÍ¨µÀÍ³¼ÆĞÅÏ¢        : icc_channel_info_show msg_type channel_id\n");
-	icc_print_info("ËùÓĞ×ÓÍ¨µÀÍ³¼ÆĞÅÏ¢      : icc_sub_channel_info_show_all msg_type channel_id\n");
-	icc_print_info("µ¥¸ö×ÓÍ¨µÀÍ³¼ÆĞÅÏ¢      : icc_sub_channel_info_show msg_type channel_id func_id\n");
-	icc_print_info("ÊÕ·¢ÏûÏ¢ÏÔÊ¾º¯Êı²ÎÊıËµÃ÷: msg_type, ÏûÏ¢ÀàĞÍ(0: ½ÓÊÕ; 1: ·¢ËÍ); msg_num, ÏÔÊ¾ÏûÏ¢¸öÊı(<=10)\n");
-	icc_print_info("Í¨µÀÍ³¼ÆĞÅÏ¢º¯Êı²ÎÊıËµÃ÷: msg_type, Í¬ÉÏ; channel_id, Ö÷Í¨µÀºÅ; fucn_id, ×ÓÍ¨µÀºÅ\n");
+	icc_print_info("***************************************iccè°ƒè¯•å¸®åŠ©ä¿¡æ¯***************************************\n");
+	icc_print_info("ç»“æ„ä½“ä¿¡æ¯dump          : icc_struct_dump\n");
+	icc_print_info("è°ƒè¯•æ‰“å°å¼€å…³            : icc_dbg_print_sw 0|1\n");
+	icc_print_info("é”™è¯¯ç è¯´æ˜              : icc_errno_show\n");
+	icc_print_info("æ”¶åˆ°ipcä¸­æ–­ç»Ÿè®¡         : icc_recv_ipc_int_show\n");
+	icc_print_info("æœ€è¿‘næ¡æ”¶å‘æ¶ˆæ¯æ˜¾ç¤º     : icc_msg_record_show msg_type msg_num\n");
+	icc_print_info("å•ä¸ªé€šé“ç»Ÿè®¡ä¿¡æ¯        : icc_channel_info_show msg_type channel_id\n");
+	icc_print_info("æ‰€æœ‰å­é€šé“ç»Ÿè®¡ä¿¡æ¯      : icc_sub_channel_info_show_all msg_type channel_id\n");
+	icc_print_info("å•ä¸ªå­é€šé“ç»Ÿè®¡ä¿¡æ¯      : icc_sub_channel_info_show msg_type channel_id func_id\n");
+	icc_print_info("æ”¶å‘æ¶ˆæ¯æ˜¾ç¤ºå‡½æ•°å‚æ•°è¯´æ˜: msg_type, æ¶ˆæ¯ç±»å‹(0: æ¥æ”¶; 1: å‘é€); msg_num, æ˜¾ç¤ºæ¶ˆæ¯ä¸ªæ•°(<=10)\n");
+	icc_print_info("é€šé“ç»Ÿè®¡ä¿¡æ¯å‡½æ•°å‚æ•°è¯´æ˜: msg_type, åŒä¸Š; channel_id, ä¸»é€šé“å·; fucn_id, å­é€šé“å·\n");
 }
 
 void icc_dump_hook(void)
@@ -511,7 +511,7 @@ s32  icc_debug_init(u32 channel_num)
 
 	for(i = 0; i < channel_num; i++)
 	{
-		/* Ê¹ÓÃg_icc_ctrl¶ø²»ÊÇg_icc_init_info£¬ÒòÎª²âÊÔ±à½øÈ¥ÒÔºó£¬Í³¼ÆÍ¨µÀ²»ĞèÒªÔÙ´¦Àí */
+		/* ä½¿ç”¨g_icc_ctrlè€Œä¸æ˜¯g_icc_init_infoï¼Œå› ä¸ºæµ‹è¯•ç¼–è¿›å»ä»¥åï¼Œç»Ÿè®¡é€šé“ä¸éœ€è¦å†å¤„ç† */
 		icc_channel = g_icc_ctrl.channels[g_icc_init_info[i].real_channel_id];
 		channel = (struct icc_channel_info *)osl_malloc(sizeof(struct icc_channel_info));
 		if (!channel)
@@ -520,7 +520,7 @@ s32  icc_debug_init(u32 channel_num)
 			return (s32)ICC_ERR;
 		}
 
-		/* ÊÕ·¢×ÓÍ¨µÀÒ»Í¬·ÖÅä */
+		/* æ”¶å‘å­é€šé“ä¸€åŒåˆ†é… */
 		sub_channel = (struct icc_channel_stat_info *)osl_malloc(sizeof(struct icc_channel_stat_info) * icc_channel->func_size * 2);
 		if (!sub_channel)
 		{

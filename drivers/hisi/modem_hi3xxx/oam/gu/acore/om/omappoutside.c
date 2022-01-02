@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "omprivate.h"
 #include "OamSpecTaskDef.h"
@@ -16,7 +16,7 @@ extern "C"{
 
 
 /*****************************************************************************
-  2 Íâ²¿ÒýÓÃ±äÁ¿¶¨Òå
+  2 å¤–éƒ¨å¼•ç”¨å˜é‡å®šä¹‰
 *****************************************************************************/
 #if (FEATURE_ON == FEATURE_MERGE_OM_CHAN)
 #if ((VOS_OS_VER == VOS_WIN32) || (FEATURE_HISOCKET == FEATURE_ON))
@@ -35,7 +35,7 @@ VOS_VOID OM_AcpuCallBackMsgProc(MsgBlock* pMsg)
     pstAppMsg = (OM_REQ_PACKET_STRU*)pMsg->aucValue;
     ulFuncID  = (VOS_UINT32)pstAppMsg->ucModuleId;
 
-    /*²ÎÊý¼ì²â*/
+    /*å‚æ•°æ£€æµ‹*/
     if ((OM_FUNCID_ACPU_PART_NUM >= ulFuncID) || (OM_FUNCID_MAX_NUM <= ulFuncID))
     {
         PS_LOG1(ACPU_PID_OM_CALLBACK, 0, PS_PRINT_WARNING,
@@ -87,14 +87,14 @@ VOS_UINT32 OM_AcpuCallBackFidInit(enum VOS_INIT_PHASE_DEFINE ip)
 
                 return VOS_ERR;
             }
-/*lint -e960 ÐÞ¸ÄÈË:¸ÊÀ¼ */
+/*lint -e960 ä¿®æ”¹äºº:ç”˜å…° */
 
 #if (FEATURE_HISOCKET == FEATURE_ON)
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
             if((BSP_MODULE_SUPPORT == DRV_GET_WIFI_SUPPORT())
                 && (VOS_TRUE == Sock_IsEnable()))
             {
-                /* ½ÓÊÕSOCKETÊý¾ÝµÄ×Ô´¦ÀíÈÎÎñ */
+                /* æŽ¥æ”¶SOCKETæ•°æ®çš„è‡ªå¤„ç†ä»»åŠ¡ */
                 ulRslt = VOS_RegisterSelfTaskPrio(ACPU_FID_OM_CALLBACK,
                                  (VOS_TASK_ENTRY_TYPE)Sock_ServerTask,
                                  COMM_SOCK_SELFTASK_PRIO, RL_SOCK_TASK_STACK_SIZE);
@@ -107,7 +107,7 @@ VOS_UINT32 OM_AcpuCallBackFidInit(enum VOS_INIT_PHASE_DEFINE ip)
             if((BSP_MODULE_SUPPORT == DRV_GET_WIFI_SUPPORT())
                 && (VOS_TRUE == PPM_SockIsEnable()))
             {
-                /* ½ÓÊÕSOCKETÊý¾ÝµÄ×Ô´¦ÀíÈÎÎñ */
+                /* æŽ¥æ”¶SOCKETæ•°æ®çš„è‡ªå¤„ç†ä»»åŠ¡ */
                 ulRslt = VOS_RegisterSelfTaskPrio(ACPU_FID_OM_CALLBACK,
                                  (VOS_TASK_ENTRY_TYPE)PPM_SockOmServerTask,
                                  COMM_SOCK_SELFTASK_PRIO, RL_SOCK_TASK_STACK_SIZE);
@@ -116,7 +116,7 @@ VOS_UINT32 OM_AcpuCallBackFidInit(enum VOS_INIT_PHASE_DEFINE ip)
                     return VOS_ERR;
                 }
 
-                /* ½ÓÊÕSOCKETÊý¾ÝµÄ×Ô´¦ÀíÈÎÎñ */
+                /* æŽ¥æ”¶SOCKETæ•°æ®çš„è‡ªå¤„ç†ä»»åŠ¡ */
                 ulRslt = VOS_RegisterSelfTaskPrio(ACPU_FID_OM_CALLBACK,
                                  (VOS_TASK_ENTRY_TYPE)PPM_SockAtServerTask,
                                  COMM_SOCK_SELFTASK_PRIO, RL_SOCK_TASK_STACK_SIZE);
@@ -128,7 +128,7 @@ VOS_UINT32 OM_AcpuCallBackFidInit(enum VOS_INIT_PHASE_DEFINE ip)
 #endif //(FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
 #endif //(FEATURE_HISOCKET == FEATURE_ON)
 
-/*lint +e960 ÐÞ¸ÄÈË:¸ÊÀ¼ */
+/*lint +e960 ä¿®æ”¹äºº:ç”˜å…° */
             break;
         }
 

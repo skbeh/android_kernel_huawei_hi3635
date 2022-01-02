@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "AtParse.h"
 
@@ -38,20 +38,20 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_AT_DEVICECMD_C
 
 
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
 
-/* �������ޱ�־�궨��˵��
-#define CMD_TBL_E5_IS_LOCKED        (0x00000001)     ����E5�������Ƶ�����
-#define CMD_TBL_PIN_IS_LOCKED       (0x00000002)     ����PIN���������Ƶ�����
-#define CMD_TBL_IS_E5_DOCK          (0x00000004)     E5 DOCK����
-#define CMD_TBL_CLAC_IS_INVISIBLE   (0x00000008)     +CLAC�����в������ʾ������
+/* 命令受限标志宏定义说明
+#define CMD_TBL_E5_IS_LOCKED        (0x00000001)     不受E5锁定控制的命令
+#define CMD_TBL_PIN_IS_LOCKED       (0x00000002)     不受PIN码锁定控制的命令
+#define CMD_TBL_IS_E5_DOCK          (0x00000004)     E5 DOCK命令
+#define CMD_TBL_CLAC_IS_INVISIBLE   (0x00000008)     +CLAC命令中不输出显示的命令
 */
 
 VOS_UINT32                 g_ulNVRD = 0;
@@ -213,7 +213,7 @@ AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTbl[] = {
     VOS_NULL_PTR,        AT_NOT_SET_TIME,
     AT_CME_INCORRECT_PARAMETERS,       CMD_TBL_PIN_IS_LOCKED,
     (VOS_UINT8*)"^GETEXBANDTESTINFO",      (VOS_UINT8*)"(101-116),(14,50,100,150,200)"},
-    /* ����NV�ָ� */
+    /* 生产NV恢复 */
     {AT_CMD_INFORRS,
     At_SetInfoRRS,       AT_SET_PARA_TIME,    VOS_NULL_PTR,          AT_NOT_SET_TIME,   VOS_NULL_PTR ,    AT_NOT_SET_TIME,
     VOS_NULL_PTR,        AT_NOT_SET_TIME,
@@ -291,7 +291,7 @@ AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTbl[] = {
     AT_CME_INCORRECT_PARAMETERS,    CMD_TBL_PIN_IS_LOCKED,
     (VOS_UINT8*)"^TMMI",  (VOS_UINT8*)"(0,1)"},
 
-    /* V7R1Ҫ��ʹ��"=?"��ѯ���ʹ��״̬ */
+    /* V7R1要求使用"=?"查询充电使能状态 */
     {AT_CMD_TCHRENABLE,
     AT_SetChrgEnablePara,AT_NOT_SET_TIME,    AT_QryChrgEnablePara,  AT_NOT_SET_TIME,   AT_TestChrgEnablePara, AT_SET_PARA_TIME,
     VOS_NULL_PTR,        AT_NOT_SET_TIME,
@@ -586,10 +586,10 @@ AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTbl[] = {
 };
 
 
-/* ʾ��: ^CMDX �����ǲ���E5���뱣���������+CLAC�о���������ʱ����ʾ����һ�������ǲ���˫���ŵ��ַ���,
-        �ڶ��������Ǵ�˫���ŵ��ַ����������������������Ͳ���
+/* 示例: ^CMDX 命令是不受E5密码保护命令，且在+CLAC列举所有命令时不显示，第一个参数是不带双引号的字符串,
+        第二个参数是带双引号的字符串，第三个参数是整数型参数
 
-   !!!!!!!!!!!ע��: param1��param2��ʾ����ʵ�ʶ�������ʱӦ��������ļ��(����߽���Ч��)!!!!!!!!!!!!!
+   !!!!!!!!!!!注意: param1和param2是示例，实际定义命令时应尽量定义的简短(可提高解析效率)!!!!!!!!!!!!!
 
     {AT_CMD_CMDX,
     At_SetCmdxPara, AT_SET_PARA_TIME, At_QryCmdxPara, AT_QRY_PARA_TIME, At_TestCmdxPara, AT_NOT_SET_TIME,
@@ -599,7 +599,7 @@ AT_PAR_CMD_ELEMENT_STRU g_astAtDeviceCmdTbl[] = {
 
 
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 VOS_UINT32 At_TestTmodePara(VOS_UINT8 ucIndex)
@@ -704,8 +704,8 @@ VOS_UINT32 AT_SetTbatPara(VOS_UINT8 ucIndex)
     AT_TBAT_BATTERY_ADC_INFO_STRU           stAdcInfo;
     VOS_UINT32                              ulRet;
 
-    /* ������Ч�Լ�� */
-    /* ^TBAT���������������ٴ�2������: �������ͺͷ��� */
+    /* 参数有效性检查 */
+    /* ^TBAT命令设置命令至少带2个参数: 操作类型和方向 */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -717,12 +717,12 @@ VOS_UINT32 AT_SetTbatPara(VOS_UINT8 ucIndex)
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* ^TBAT������������������:
-       ���ֵ�ص�ѹ���ò���������3.7V��Ӧ��HKADCֵ��4.2V��Ӧ��HKADCֵ
-       ���ֵ�ص�ѹ��ѯ������<value1>��<value2>����
+    /* ^TBAT命令设置命令参数检查:
+       数字电池电压设置操作必须有3.7V对应的HKADC值和4.2V对应的HKADC值
+       数字电池电压查询操作无<value1>和<value2>参数
       */
 
-    /* V3R2-��֧�ֵ��ģ���ѹ */
+    /* V3R2-不支持电池模拟电压 */
     if (AT_TBAT_BATTERY_ANALOG_VOLTAGE == gastAtParaList[0].ulParaValue)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -748,7 +748,7 @@ VOS_UINT32 AT_SetTbatPara(VOS_UINT8 ucIndex)
 
     if (AT_TBAT_READ_FROM_UUT == enTbatOperdirection)
     {
-        /* ���õ����ӿڻ�ȡ������ֵ�ѹ */
+        /* 调用底软接口获取电池数字电压 */
         if (TAF_SUCCESS == AT_FillAndSndAppReqMsg(gastAtClientTab[ucIndex].usClientId,
                                                  gastAtClientTab[ucIndex].opId,
                                                  DRV_AGENT_HKADC_GET_REQ,
@@ -756,8 +756,8 @@ VOS_UINT32 AT_SetTbatPara(VOS_UINT8 ucIndex)
                                                  0,
                                                  I0_WUEPS_PID_DRV_AGENT))
         {
-            gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_TBAT_SET;     /*���õ�ǰ����ģʽ */
-            return AT_WAIT_ASYNC_RETURN;                                                       /* �ȴ��첽�¼����� */
+            gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_TBAT_SET;     /*设置当前操作模式 */
+            return AT_WAIT_ASYNC_RETURN;                                                       /* 等待异步事件返回 */
         }
         else
         {
@@ -766,7 +766,7 @@ VOS_UINT32 AT_SetTbatPara(VOS_UINT8 ucIndex)
     }
     else
     {
-        /* д���������У׼�õ�NV��90 en_NV_Item_BATTERY_ADC */
+        /* 写参数到电池校准用的NV项90 en_NV_Item_BATTERY_ADC */
         stAdcInfo.usMinAdc = (VOS_UINT16)gastAtParaList[2].ulParaValue;
         stAdcInfo.usMaxAdc = (VOS_UINT16)gastAtParaList[3].ulParaValue;
         ulRet = NV_WriteEx(MODEM_ID_0, en_NV_Item_BATTERY_ADC, &stAdcInfo, sizeof(stAdcInfo));
@@ -780,14 +780,14 @@ VOS_UINT32 AT_SetTbatPara(VOS_UINT8 ucIndex)
     }
 #endif
     /*
-    ���ݲ�����ͬ������������:
-    1.  ֧���û�����AT^TBAT=1,0��ȡ��ص�ѹ����ֵ��
-    ���õ���/OM�ӿڻ�ȡ�������ֵ
-    2.  ֧���û�����AT^TBAT=1,1,<value1>,<value2>���õ�ص�ѹ����ֵ�����ڵ��У׼��
-    дУ׼��ѹ��NVID 90(en_NV_Item_BATTERY_ADC)���˴������ʴ�ȷ�ϣ�
-    en_NV_Item_BATTERY_ADC�м�¼������������ֵ����AT�����һ�����������ӳ��
-    3.4V ��ѹ��Ӧ��ADCֵ
-    4.2V ��ѹ��Ӧ��ADCֵ
+    根据参数不同进行下述操作:
+    1.  支持用户输入AT^TBAT=1,0获取电池电压数字值；
+    调用底软/OM接口获取电池数字值
+    2.  支持用户输入AT^TBAT=1,1,<value1>,<value2>设置电池电压数字值，用于电池校准；
+    写校准电压到NVID 90(en_NV_Item_BATTERY_ADC)，此处有疑问待确认，
+    en_NV_Item_BATTERY_ADC中记录的是下述两个值，而AT命令仅一个参数，如何映射
+    3.4V 电压对应的ADC值
+    4.2V 电压对应的ADC值
     */
 }
 
@@ -795,13 +795,13 @@ VOS_UINT32 AT_SetTbatPara(VOS_UINT8 ucIndex)
 VOS_UINT32 AT_QryTbatPara(VOS_UINT8 ucIndex)
 {
     /*
-    ���õ����ӿڻ�ȡ��ذ�װ��ʽ:
-    <mount type> ��ذ�װ��ʽ
-    0 �޵��
-    1 �ɸ������
-    2 ����һ�廯���
+    调用底软接口获取电池安装方式:
+    <mount type> 电池安装方式
+    0 无电池
+    1 可更换电池
+    2 内置一体化电池
     */
-    /*����״̬���ͼ��*/
+    /*命令状态类型检查*/
     if (AT_CMD_OPT_READ_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_DEVICE_OTHER_ERROR;
@@ -819,8 +819,8 @@ VOS_UINT32 AT_QryTbatPara(VOS_UINT8 ucIndex)
                                                0,
                                                I0_WUEPS_PID_DRV_AGENT))
     {
-        gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_TBAT_QRY;             /*���õ�ǰ����ģʽ */
-        return AT_WAIT_ASYNC_RETURN;                                                              /* �ȴ��첽�¼����� */
+        gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_TBAT_QRY;             /*设置当前操作模式 */
+        return AT_WAIT_ASYNC_RETURN;                                                              /* 等待异步事件返回 */
     }
     else
     {
@@ -837,7 +837,7 @@ VOS_UINT32 AT_SetPstandbyPara(VOS_UINT8 ucIndex)
 
 #endif
 
-    /* ^PSTANDBY�����������ҽ���2������: �������״̬��ʱ�䳤�Ⱥ͵���������״̬���л�ʱ�� */
+    /* ^PSTANDBY设置命令有且仅有2个参数: 进入待机状态的时间长度和单板进入待机状态的切换时间 */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -850,30 +850,30 @@ VOS_UINT32 AT_SetPstandbyPara(VOS_UINT8 ucIndex)
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    At_FormatResultData(ucIndex, AT_OK); /*��Ҫ�Ȼظ�OK*/
+    At_FormatResultData(ucIndex, AT_OK); /*需要先回复OK*/
 
-    /*��֤�������ݷ������*/
+    /*保证返回数据发送完成*/
     VOS_TaskDelay(10);
 
     /*
-    ���õ�����OM�ӿ�ʹ����������״̬:
-    ACPU����ɵĲ�����
-    1���µ�WIFI
-    2��LED�µ�
-    3��USB PowerOff
+    调用底软和OM接口使单板进入待机状态:
+    ACPU上完成的操作：
+    1、下电WIFI
+    2、LED下电
+    3、USB PowerOff
 
-    ����Ϣ��C�ˣ�ָʾCCPU����ɵĲ�����
-    1��ͨ��ģ���µ�
-    2���ض�ʱ��
-    3�����ж�
-    4�����õ����ӿڽ�����˯
+    发消息到C核，指示CCPU上完成的操作：
+    1、通信模块下电
+    2、关定时器
+    3、关中断
+    4、调用底软接口进入深睡
     */
     stPstandbyInfo.ulStandbyTime = gastAtParaList[0].ulParaValue;
     stPstandbyInfo.ulSwitchTime   = gastAtParaList[1].ulParaValue;
 
     DRV_PWRCTRL_STANDBYSTATEACPU(stPstandbyInfo.ulStandbyTime, stPstandbyInfo.ulSwitchTime);
 
-    /*������Ϣ��c��*/
+    /*发送消息到c核*/
     if (TAF_SUCCESS != AT_FillAndSndAppReqMsg(gastAtClientTab[ucIndex].usClientId,
                            gastAtClientTab[ucIndex].opId,
                            DRV_AGENT_PSTANDBY_SET_REQ,
@@ -884,17 +884,17 @@ VOS_UINT32 AT_SetPstandbyPara(VOS_UINT8 ucIndex)
         AT_ERR_LOG("AT_SetPstandbyPara: AT_FillAndSndAppReqMsg fail.");
     }
 
-    /* V7R2���ùػ�����͹����������� */
+    /* V7R2采用关机进入低功耗流程流程 */
 #ifdef FEATURE_UPGRADE_TL
 
     stPhoneModePara.PhMode = TAF_PH_MODE_MINI;
 
     if (VOS_TRUE == TAF_MMA_PhoneModeSetReq(WUEPS_PID_AT, gastAtClientTab[ucIndex].usClientId, 0, &stPhoneModePara))
     {
-        /* ���õ�ǰ�������� */
+        /* 设置当前操作类型 */
         gastAtClientTab[ucIndex].CmdCurrentOpt = (AT_CMD_CURRENT_OPT_ENUM)AT_CMD_PSTANDBY_SET;
 
-        return AT_WAIT_ASYNC_RETURN;    /* �������������״̬ */
+        return AT_WAIT_ASYNC_RETURN;    /* 返回命令处理挂起状态 */
     }
 #endif
 
@@ -908,13 +908,13 @@ VOS_UINT32 AT_SetExbandInfoPara(VOS_UINT8 ucIndex)
     VOS_UINT32 ulRet  = AT_OK;
     VOS_UINT32 ulNvId = 0;
 
-    /* 1��AT���������Ƿ���ȷ */
+    /* 1、AT命令类型是否正确 */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* 2�����������Ƿ����Ҫ�� */
+    /* 2、参数个数是否符合要求 */
     if(1 != gucAtParaIndex)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -978,13 +978,13 @@ VOS_UINT32 AT_SetExbandTestInfoPara(VOS_UINT8 ucIndex)
 
     VOS_UINT32 BandWidthArray[BAND_WIDTH_NUMS]= {14,30,50,100,150,200};
 
-    /* 1��AT���������Ƿ���ȷ */
+    /* 1、AT命令类型是否正确 */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* 2�����������Ƿ����Ҫ�� */
+    /* 2、参数个数是否符合要求 */
     if(2 != gucAtParaIndex)
     {
         return AT_CME_INCORRECT_PARAMETERS;
@@ -1059,7 +1059,7 @@ VOS_UINT32 AT_WriteWiWep(
     VOS_UINT32                          ulLoop;
     VOS_UINT8                          *paucWifiWepKey;
 
-    /* ��Ϊ���޸�en_NV_Item_WIFI_KEY�е�WIFI KEY���������Ҫ�Ȼ�ȡȫ��NVֵ��Ȼ������޸Ĳ��� */
+    /* 因为仅修改en_NV_Item_WIFI_KEY中的WIFI KEY子项，所以需要先获取全部NV值，然后更新修改部分 */
     ulRet = NV_ReadEx(MODEM_ID_0, en_NV_Item_MULTI_WIFI_KEY, pstWifiSecInfo, sizeof(TAF_AT_MULTI_WIFI_SEC_STRU));
     if (NV_OK != ulRet)
     {
@@ -1067,12 +1067,12 @@ VOS_UINT32 AT_WriteWiWep(
         return AT_ERROR;
     }
 
-    /* ����index��ȡNV�б�������� */
+    /* 根据index获取NV中保存的密码 */
     paucWifiWepKey = ((0 == ulIndex) ? pstWifiSecInfo->aucWifiWepKey1[ucGroup] :
                       ((1 == ulIndex) ? pstWifiSecInfo->aucWifiWepKey2[ucGroup] :
                       ((2 == ulIndex) ? pstWifiSecInfo->aucWifiWepKey3[ucGroup] : pstWifiSecInfo->aucWifiWepKey4[ucGroup])));
 
-    /* �ж��µ�WIFI KEY��NV�м�¼���Ƿ�һ�� */
+    /* 判断新的WIFI KEY与NV中记录的是否一致 */
     for (ulLoop = 0; ulLoop < AT_NV_WLKEY_LEN; ulLoop++)
     {
         if (paucWifiWepKey[ulLoop] != aucWiWep[ulLoop])
@@ -1081,13 +1081,13 @@ VOS_UINT32 AT_WriteWiWep(
         }
     }
 
-    /* �ж��µ�WIFI KEY��NV�м�¼��һ����ֱ�ӷ��ز������*/
+    /* 判断新的WIFI KEY与NV中记录的一致则直接返回操作完成*/
     if (AT_NV_WLKEY_LEN == ulLoop)
     {
         return AT_OK;
     }
 
-    /* �������ݵ�NV��en_NV_Item_WIFI_KEY */
+    /* 更新数据到NV项en_NV_Item_WIFI_KEY */
     PS_MEM_SET(paucWifiWepKey, 0, AT_NV_WLKEY_LEN);
 
     PS_MEM_CPY(paucWifiWepKey, aucWiWep, usWiWepLen);
@@ -1113,7 +1113,7 @@ VOS_UINT32 AT_SetWiwepPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* ����������: ���ҽ���< index >��< content >�������� */
+    /* 输入参数检查: 有且仅有< index >和< content >两个参数 */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_ERROR;
@@ -1126,13 +1126,13 @@ VOS_UINT32 AT_SetWiwepPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* WIFI key ������DATALOCK���� */
+    /* WIFI key 操作受DATALOCK保护 */
     if (VOS_TRUE == g_bAtDataLocked)
     {
         return AT_ERROR;
     }
 
-    /* < index >������0-3��Χ�ڣ�< content >����С��NV_WLKEY_LEN */
+    /* < index >必须在0-3范围内，< content >长度小于NV_WLKEY_LEN */
     ulIndex = gastAtParaList[0].ulParaValue;
     if (ulIndex > AT_WIWEP_CARD_WIFI_KEY_TOTAL)
     {
@@ -1151,7 +1151,7 @@ VOS_UINT32 AT_SetWiwepPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* ��װWIFI KEY��NV�ṹ���������ݵ�NV��en_NV_Item_WIFI_KEY */
+    /* 组装WIFI KEY到NV结构并更新数据到NV项en_NV_Item_WIFI_KEY */
     pstWifiSecInfo = (TAF_AT_MULTI_WIFI_SEC_STRU *)PS_MEM_ALLOC(WUEPS_PID_AT,
                                                   sizeof(TAF_AT_MULTI_WIFI_SEC_STRU));
     if (VOS_NULL_PTR == pstWifiSecInfo)
@@ -1189,7 +1189,7 @@ VOS_UINT32 AT_QryWiwepPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* Ϊ��ȡWIFI KEY�����ڴ棬��NV��en_NV_Item_WIFI_KEY��ȡWIFI KEY��Ϣ */
+    /* 为读取WIFI KEY申请内存，读NV项en_NV_Item_WIFI_KEY获取WIFI KEY信息 */
     pstWifiSecInfo = (TAF_AT_MULTI_WIFI_SEC_STRU *)PS_MEM_ALLOC(WUEPS_PID_AT,
                                                       sizeof(TAF_AT_MULTI_WIFI_SEC_STRU));
     if (VOS_NULL_PTR == pstWifiSecInfo)
@@ -1213,7 +1213,7 @@ VOS_UINT32 AT_QryWiwepPara(VOS_UINT8 ucIndex)
 
     for (ulLoop = 0; ulLoop < AT_WIFI_MAX_SSID_NUM; ulLoop++)
     {
-        /* KEY1��Ӧ��NV���ձ�ʾKEY1��Ч */
+        /* KEY1对应的NV不空表示KEY1有效 */
         aucWepKeyLen1[ulLoop] = (VOS_UINT8)VOS_StrLen((VOS_CHAR*)pstWifiSecInfo->aucWifiWepKey1[ulLoop]);
         if (0 != aucWepKeyLen1[ulLoop])
         {
@@ -1239,7 +1239,7 @@ VOS_UINT32 AT_QryWiwepPara(VOS_UINT8 ucIndex)
         }
     }
 
-    /* δ����ʱ����Ҫ�����Ѷ���0�� */
+    /* 未解锁时，需要返回已定制0组 */
     if (VOS_TRUE == g_bAtDataLocked)
     {
         ucWepKeyNum = 0;
@@ -1250,9 +1250,9 @@ VOS_UINT32 AT_QryWiwepPara(VOS_UINT8 ucIndex)
     }
 
     /*
-    ���㹤λ�Խ�Ҫ����Ҫ�����λ֧�ֵ�ȫ����20��WiFi WEP��WIFI��KEY��
-    ��ӡ���鵥��֧�ֵ�WIFI KEY��Ϣ
-    ���16��^WIWEP: <index>,�빤λҪ���20����WiFi WEP��WIFI��KEY��һ�£�
+    满足工位对接要求，需要输出工位支持的全部数20个WiFi WEP（WIFI的KEY）
+    打印四组单板支持的WIFI KEY信息
+    填充16行^WIWEP: <index>,与工位要求的20个的WiFi WEP（WIFI的KEY）一致，
     */
     usLength = (VOS_UINT16)At_sprintf(AT_CMD_MAX_LEN,
                                      (VOS_CHAR *)pgucAtSndCodeAddr,
@@ -1380,10 +1380,10 @@ VOS_UINT32 AT_TestWifiPaRangePara (VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* ��ʼ�� */
+    /* 初始化 */
     ucWifiMode                          = (VOS_UINT8)WIFI_GET_PA_MODE();
 
-    /* ��ѯ����֧�ֵ�ģʽ�����ֻ֧��PAģʽ��û��NO PAģʽ����ֻ����h���ɣ��������ģʽ��֧�֣��򷵻�h,l��*/
+    /* 查询单板支持的模式：如果只支持PA模式，没有NO PA模式，则只返回h即可，如果两种模式都支持，则返回h,l。*/
     if (AT_WIFI_MODE_ONLY_PA == ucWifiMode)
     {
         gstAtSendData.usBufLen = (VOS_UINT16)At_sprintf(AT_CMD_MAX_LEN,
@@ -1426,7 +1426,7 @@ VOS_VOID AT_GetTseLrfLoadDspInfo(
     DRV_AGENT_TSELRF_SET_REQ_STRU      *pstTseLrf
 )
 {
-    /* ^TSELRF�������õ���Ƶͨ·���ΪGSM�ҵ�ǰ�Ѿ�LOAD�˸�ͨ·������LOAD */
+    /* ^TSELRF命令设置的射频通路编号为GSM且当前已经LOAD了该通路，无需LOAD */
     if (AT_TSELRF_PATH_GSM == enPath)
     {
         if ((AT_RAT_MODE_GSM == g_stAtDevCmdCtrl.ucDeviceRatMode)
@@ -1443,7 +1443,7 @@ VOS_VOID AT_GetTseLrfLoadDspInfo(
         return;
     }
 
-    /* ^TSELRF�������õ���Ƶͨ·���ΪWCDMA�����ҵ�ǰ�Ѿ�LOAD�˸�ͨ·������LOAD */
+    /* ^TSELRF命令设置的射频通路编号为WCDMA主集且当前已经LOAD了该通路，无需LOAD */
     if (AT_TSELRF_PATH_WCDMA_PRI == enPath)
     {
         if (((AT_RAT_MODE_WCDMA == g_stAtDevCmdCtrl.ucDeviceRatMode)
@@ -1495,7 +1495,7 @@ VOS_UINT32 AT_SetTseLrfPara(VOS_UINT8 ucIndex)
     }
 
 #endif
-    /* ����������Ҫ�� */
+    /* 参数不符合要求 */
     if ((1 != gucAtParaIndex)
      || (0 == gastAtParaList[0].usParaLen))
     {
@@ -1506,7 +1506,7 @@ VOS_UINT32 AT_SetTseLrfPara(VOS_UINT8 ucIndex)
     {
         if ( BSP_MODULE_SUPPORT == DRV_GET_WIFI_SUPPORT() )
         {
-            /*WIFIδEnableֱ�ӷ���ʧ��*/
+            /*WIFI未Enable直接返回失败*/
             if(VOS_FALSE == (VOS_UINT32)WIFI_GET_STATUS())
             {
                 return AT_ERROR;
@@ -1527,7 +1527,7 @@ VOS_UINT32 AT_SetTseLrfPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* �򿪷ּ�������FRXON֮�󣬲ο�RXDIVʵ�� */
+    /* 打开分集必须在FRXON之后，参考RXDIV实现 */
     if (AT_TSELRF_PATH_WCDMA_DIV == gastAtParaList[0].ulParaValue)
     {
         if (DRV_AGENT_DSP_RF_SWITCH_ON != g_stAtDevCmdCtrl.ucRxOnOff)
@@ -1544,7 +1544,7 @@ VOS_UINT32 AT_SetTseLrfPara(VOS_UINT8 ucIndex)
         gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_TSELRF_SET;
         g_stAtDevCmdCtrl.ucIndex               = ucIndex;
 
-        /* �������������״̬ */
+        /* 返回命令处理挂起状态 */
         return AT_WAIT_ASYNC_RETURN;
     }
 
@@ -1554,7 +1554,7 @@ VOS_UINT32 AT_SetTseLrfPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* �˴��ж��Ƿ���Ҫ���¼���DSP: ��Ҫ������C�˼���DSP������ֱ�ӷ���OK */
+    /* 此处判断是否需要重新加载DSP: 需要则发请求到C核加载DSP，否则，直接返回OK */
     AT_GetTseLrfLoadDspInfo(gastAtParaList[0].ulParaValue, &bLoadDsp, &stTseLrf);
     if (VOS_TRUE == bLoadDsp)
     {
@@ -1565,8 +1565,8 @@ VOS_UINT32 AT_SetTseLrfPara(VOS_UINT8 ucIndex)
                                                    sizeof(stTseLrf),
                                                    I0_WUEPS_PID_DRV_AGENT))
         {
-            gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_TSELRF_SET;             /*���õ�ǰ����ģʽ */
-            return AT_WAIT_ASYNC_RETURN;                                           /* �ȴ��첽�¼����� */
+            gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_TSELRF_SET;             /*设置当前操作模式 */
+            return AT_WAIT_ASYNC_RETURN;                                           /* 等待异步事件返回 */
         }
         else
         {
@@ -1657,10 +1657,10 @@ VOS_UINT32 AT_SetCmdlenPara(VOS_UINT8 ucIndex)
 VOS_UINT32 AT_QryCmdlenPara(VOS_UINT8 ucIndex)
 {
     /*
-      �������������ֱ�ӽ���AT�����ַ�����(AT_CMD_MAX_LEN - sizeof("AT"))��
-      ���ַ�������������AT�������ַ����Լ�����ͨ��ATһ����������Ӧ���ַ�������
-      BALONG��Ʒ��Ӧ�ַ������ȿ��Է�
-      ����ϱ���û�����ֵ�����λ�Ը�ֵ�޴������˴����һ���ϱ������ֵAT_CMD_MAX_LEN��
+      输出单板最大可以直接接收AT命令字符个数(AT_CMD_MAX_LEN - sizeof("AT"))，
+      该字符个数均不包含AT这两个字符，以及单板通过AT一次最大可以响应的字符个数，
+      BALONG产品响应字符串长度可以分
+      多次上报，没有最大值概念，工位对该值无处理，此处输出一次上报的最大值AT_CMD_MAX_LEN。
     */
     gstAtSendData.usBufLen = (VOS_UINT16)At_sprintf(AT_CMD_MAX_LEN,
                                                     (VOS_CHAR *)pgucAtSndCodeAddr,
@@ -1685,13 +1685,13 @@ VOS_UINT32 AT_UpdateMacPara(
     VOS_UINT32                          ulPhyNumMacOffset;
     VOS_UINT8                           aucWifiGlobalMac[AT_MAC_ADDR_LEN];
 
-    /* MAC��ַ���ȼ��: ����12λ */
+    /* MAC地址长度检查: 必须12位 */
     if (AT_PHYNUM_MAC_LEN != usMacLength)
     {
         return AT_PHYNUM_LENGTH_ERR;
     }
 
-    /* MAC��ַ��ʽƥ��: 7AFEE22111E4=>7A:FE:E2:21:11:E4*/
+    /* MAC地址格式匹配: 7AFEE22111E4=>7A:FE:E2:21:11:E4*/
     ulWifiGlobalMacOffset = 0;
     ulPhyNumMacOffset     = 0;
     for (ulLoop = 0; ulLoop < (AT_PHYNUM_MAC_COLON_NUM + 1); ulLoop++)
@@ -1707,7 +1707,7 @@ VOS_UINT32 AT_UpdateMacPara(
 
     aucWifiGlobalMac[AT_PHYNUM_MAC_LEN + AT_PHYNUM_MAC_COLON_NUM] = '\0';
 
-    /* ����MAC��ַ��NV */
+    /* 更新MAC地址到NV */
     ulRet = NV_WriteEx(MODEM_ID_0, en_NV_Item_WIFI_MAC_ADDR, aucWifiGlobalMac, AT_MAC_ADDR_LEN);
     if (NV_OK != ulRet)
     {
@@ -1731,9 +1731,9 @@ VOS_UINT32 AT_SetTmodeAutoPowerOff(VOS_UINT8 ucIndex)
 
     if ( SYSTEM_APP_WEBUI == *pucSystemAppConfig)
     {
-        /* ����Ϣ��C��֪ͨ�ػ����µ� */
-        /* ��֪ͨ�û�AT������ִ�У��û�ͨ�����˿��Ƿ���ʧ��ȷ�������Ƿ���ȷִ��
-           ������ִ����ɺ����µ磬����ȴ��첽����
+        /* 发消息给C核通知关机并下电 */
+        /* 先通知用户AT命令已执行，用户通过检测端口是否消失来确认任务是否正确执行
+           此命令执行完成后已下电，无需等待异步返回
         */
 
         stPhModeSet.PhMode  = TAF_PH_MODE_POWEROFF;
@@ -1790,14 +1790,14 @@ VOS_VOID AT_GetSpecificPort(
             break;
         }
 
-        /* �˿�ֵΪucPortType����ʾ�ҵ�ָ���˿ڣ���¼ulLoopΪ�˿���NV���е�ƫ�� */
+        /* 端口值为ucPortType，表示找到指定端口，记录ulLoop为端口在NV项中的偏移 */
         if (ucPortType == aucRewindPortStyle[ulLoop])
         {
             *pulPortPos = ulLoop;
         }
     }
 
-    /* �˿�ֵΪ0�򵽴�ѭ�����ޣ�ulLoop��Ϊ����Ķ˿����� */
+    /* 端口值为0或到达循环上限，ulLoop即为单板的端口总数 */
     *pulPortNum = ulLoop;
 
     return;
@@ -1817,7 +1817,7 @@ VOS_UINT32 AT_ExistSpecificPort(VOS_UINT8 ucPortType)
     ulPortNum = 0;
 
 
-    /* ��NV��en_NV_Item_Huawei_Dynamic_PID_Type��ȡ��ǰ�Ķ˿�״̬ */
+    /* 读NV项en_NV_Item_Huawei_Dynamic_PID_Type获取当前的端口状态 */
     if (NV_OK != NV_ReadEx(MODEM_ID_0, en_NV_Item_Huawei_Dynamic_PID_Type,
                         &stDynamicPidType,
                         sizeof(AT_DYNAMIC_PID_TYPE_STRU)))
@@ -1826,10 +1826,10 @@ VOS_UINT32 AT_ExistSpecificPort(VOS_UINT8 ucPortType)
         return VOS_FALSE;
     }
 
-    /* �ж�DIAG�˿��Ƿ��Ѿ���: �Ѿ�����ֱ�ӷ���AT_OK */
+    /* 判断DIAG端口是否已经打开: 已经打开则直接返回AT_OK */
     if (VOS_TRUE == stDynamicPidType.ulNvStatus)
     {
-        /* ��ѯNV��en_NV_Item_Huawei_Dynamic_PID_Type���Ƿ��Ѿ�����DIAG�� */
+        /* 查询NV项en_NV_Item_Huawei_Dynamic_PID_Type中是否已经存在DIAG口 */
         AT_GetSpecificPort(ucPortType,
                            stDynamicPidType.aucRewindPortStyle,
                            &ulPortPos,
@@ -1857,7 +1857,7 @@ VOS_UINT32 AT_OpenDiagPort(VOS_VOID)
     ulPortNum = 0;
 
 
-    /* ��NV��en_NV_Item_Huawei_Dynamic_PID_Type��ȡ��ǰ�Ķ˿�״̬ */
+    /* 读NV项en_NV_Item_Huawei_Dynamic_PID_Type获取当前的端口状态 */
     if (NV_OK != NV_ReadEx(MODEM_ID_0, en_NV_Item_Huawei_Dynamic_PID_Type,
                         &stDynamicPidType,
                         sizeof(AT_DYNAMIC_PID_TYPE_STRU)))
@@ -1866,10 +1866,10 @@ VOS_UINT32 AT_OpenDiagPort(VOS_VOID)
         return AT_ERROR;
     }
 
-    /* �ж�DIAG�˿��Ƿ��Ѿ���: �Ѿ�����ֱ�ӷ���AT_OK */
+    /* 判断DIAG端口是否已经打开: 已经打开则直接返回AT_OK */
     if (VOS_TRUE == stDynamicPidType.ulNvStatus)
     {
-        /* ��ѯNV��en_NV_Item_Huawei_Dynamic_PID_Type���Ƿ��Ѿ�����DIAG�� */
+        /* 查询NV项en_NV_Item_Huawei_Dynamic_PID_Type中是否已经存在DIAG口 */
         AT_GetSpecificPort(AT_DEV_DIAG,
                            stDynamicPidType.aucRewindPortStyle,
                            &ulPortPos,
@@ -1887,13 +1887,13 @@ VOS_UINT32 AT_OpenDiagPort(VOS_VOID)
         return AT_OK;
     }
 
-    /* DIAG�˿ڲ���Ȩ��δ��ȡ: ֱ�ӷ���AT_OK */
+    /* DIAG端口操作权限未获取: 直接返回AT_OK */
     if (AT_E5_RIGHT_FLAG_NO == g_enATE5RightFlag)
     {
         return AT_OK;
     }
 
-    /* ׷��DIAG�˿ڵ��л���˿ڼ� */
+    /* 追加DIAG端口到切换后端口集 */
     if (AT_SETPORT_PARA_MAX_LEN == ulPortNum)
     {
         return AT_OK;
@@ -1901,7 +1901,7 @@ VOS_UINT32 AT_OpenDiagPort(VOS_VOID)
 
     stDynamicPidType.aucRewindPortStyle[ulPortNum] = AT_DEV_DIAG;
 
-    /* ���¶˿ڼ������ݵ�NV��en_NV_Item_Huawei_Dynamic_PID_Type */
+    /* 更新端口集合数据到NV项en_NV_Item_Huawei_Dynamic_PID_Type */
     if (NV_OK != NV_WriteEx(MODEM_ID_0, en_NV_Item_Huawei_Dynamic_PID_Type,
                         &stDynamicPidType,
                         sizeof(AT_DYNAMIC_PID_TYPE_STRU)))
@@ -1930,7 +1930,7 @@ VOS_UINT32 AT_CloseDiagPort(VOS_VOID)
     ulPortNum = 0;
 
 
-    /* ��NV��en_NV_Item_Huawei_Dynamic_PID_Type��ȡ��ǰ�Ķ˿�״̬ */
+    /* 读NV项en_NV_Item_Huawei_Dynamic_PID_Type获取当前的端口状态 */
     if (NV_OK != NV_ReadEx(MODEM_ID_0, en_NV_Item_Huawei_Dynamic_PID_Type,
                           &stDynamicPidType,
                           sizeof(AT_DYNAMIC_PID_TYPE_STRU)))
@@ -1939,10 +1939,10 @@ VOS_UINT32 AT_CloseDiagPort(VOS_VOID)
         return AT_ERROR;
     }
 
-    /* �ж�DIAG�˿��Ƿ��Ѿ���: �Ѿ�����ֱ�ӷ���AT_OK */
+    /* 判断DIAG端口是否已经打开: 已经打开则直接返回AT_OK */
     if (VOS_TRUE == stDynamicPidType.ulNvStatus)
     {
-        /* ��ѯNV��en_NV_Item_Huawei_Dynamic_PID_Type���Ƿ��Ѿ�����DIAG�� */
+        /* 查询NV项en_NV_Item_Huawei_Dynamic_PID_Type中是否已经存在DIAG口 */
         AT_GetSpecificPort(AT_DEV_DIAG,
                            stDynamicPidType.aucRewindPortStyle,
                            &ulPortPos,
@@ -1958,13 +1958,13 @@ VOS_UINT32 AT_CloseDiagPort(VOS_VOID)
         return AT_OK;
     }
 
-    /* DIAG�˿ڲ���Ȩ��δ��ȡ: ֱ�ӷ���AT_OK */
+    /* DIAG端口操作权限未获取: 直接返回AT_OK */
     if (AT_E5_RIGHT_FLAG_NO == g_enATE5RightFlag)
     {
         return AT_OK;
     }
 
-    /* ɾ��NV���е�DIAG�˿� */
+    /* 删除NV项中的DIAG端口 */
     stDynamicPidType.aucRewindPortStyle[ulPortPos] = 0;
     ulPortNum--;
     for (ulLoop = ulPortPos; ulLoop < ulPortNum; ulLoop++)
@@ -1973,7 +1973,7 @@ VOS_UINT32 AT_CloseDiagPort(VOS_VOID)
     }
     stDynamicPidType.aucRewindPortStyle[ulPortNum] = 0;
 
-    /* �˿��쳣���ݱ���: �л�����豸��̬�У���һ���豸����ΪMASS�豸(0xa1,0xa2) */
+    /* 端口异常数据保护: 切换后的设备形态中，第一个设备不能为MASS设备(0xa1,0xa2) */
     if (0 != ulPortNum)
     {
         if ((AT_DEV_CDROM == stDynamicPidType.aucRewindPortStyle[0])
@@ -1983,7 +1983,7 @@ VOS_UINT32 AT_CloseDiagPort(VOS_VOID)
         }
     }
 
-    /* ���¶˿ڼ������ݵ�NV��en_NV_Item_Huawei_Dynamic_PID_Type */
+    /* 更新端口集合数据到NV项en_NV_Item_Huawei_Dynamic_PID_Type */
     if (NV_OK != NV_WriteEx(MODEM_ID_0, en_NV_Item_Huawei_Dynamic_PID_Type,
                           &stDynamicPidType,
                           sizeof(AT_DYNAMIC_PID_TYPE_STRU)))
@@ -2014,14 +2014,14 @@ VOS_UINT32 AT_ExistSpecificPortChange(
     AT_GetSpecificPort(ucPortType, aucOldRewindPortStyle, &ulOldPortPos, &ulPortNum);
     AT_GetSpecificPort(ucPortType, aucNewRewindPortStyle, &ulNewPortPos, &ulPortNum);
 
-    /* ����һ��ָ���˿� */
+    /* 新增一个指定端口 */
     if ((AT_DEV_NONE == ulOldPortPos)
      && (AT_DEV_NONE != ulNewPortPos))
     {
         return VOS_TRUE;
     }
 
-    /* ɾ��һ��ָ���˿� */
+    /* 删除一个指定端口 */
     if ((AT_DEV_NONE != ulOldPortPos)
      && (AT_DEV_NONE == ulNewPortPos))
     {
@@ -2059,19 +2059,19 @@ VOS_UINT32 AT_SetHsspt(VOS_UINT8 ucIndex)
 {
     VOS_UINT8                           ucRRCVer;
 
-    /* ������� */
+    /* 参数检查 */
     if (AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_DPAUPA_ERROR;
     }
 
-    /* �������� */
+    /* 参数过多 */
     if (gucAtParaIndex != 1)
     {
         return AT_DPAUPA_ERROR;
     }
 
-    /* ����Ƿ������ݱ���,δ���ʱ���س�����Ϣ:ErrCode:0 */
+    /* 检查是否解除数据保护,未解除时返回出错信息:ErrCode:0 */
     if (VOS_TRUE == g_bAtDataLocked)
     {
         return  AT_DATA_UNLOCK_ERROR;
@@ -2079,7 +2079,7 @@ VOS_UINT32 AT_SetHsspt(VOS_UINT8 ucIndex)
 
     ucRRCVer = (VOS_UINT8)gastAtParaList[0].ulParaValue;
 
-    /* ����дNV�ӿں���: AT_WriteRrcVerToNV,���ز������ */
+    /* 调用写NV接口函数: AT_WriteRrcVerToNV,返回操作结果 */
     if (VOS_OK == AT_WriteRrcVerToNV(ucRRCVer))
     {
         return  AT_OK;
@@ -2098,7 +2098,7 @@ VOS_UINT32 AT_QryHsspt(VOS_UINT8 ucIndex)
     VOS_UINT32                          ulResult;
     VOS_UINT16                          usLength;
 
-    /* ������� */
+    /* 参数检查 */
     if (AT_CMD_OPT_READ_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_DPAUPA_ERROR;
@@ -2125,7 +2125,7 @@ VOS_UINT32 AT_QryHsspt(VOS_UINT8 ucIndex)
 }
 VOS_UINT32 AT_TestHsicCmdPara(VOS_UINT8 ucIndex)
 {
-    /* ͨ����� */
+    /* 通道检查 */
     if (VOS_FALSE == AT_IsApPort(ucIndex))
     {
         return AT_ERROR;
@@ -2152,7 +2152,7 @@ VOS_UINT32 At_TestTdsScalibPara(VOS_UINT8 ucIndex)
 
 VOS_UINT32 AT_TestSimlockUnlockPara( VOS_UINT8 ucIndex )
 {
-    /* ͨ����� */
+    /* 通道检查 */
     if (VOS_FALSE == AT_IsApPort(ucIndex))
     {
         return AT_ERROR;
@@ -2193,7 +2193,7 @@ VOS_UINT32 AT_String2Hex( VOS_UINT8 *nptr,VOS_UINT16 usLen, VOS_UINT32 *pRtn)
             return VOS_ERR;
         }
 
-        if(total > 0x0FFFFFFF)              /* ������ת */
+        if(total > 0x0FFFFFFF)              /* 发生反转 */
         {
             return VOS_ERR;
         }
@@ -2215,9 +2215,9 @@ VOS_UINT32 AT_NVWRGetItemValue( VOS_UINT8 *pucPara,  VOS_UINT8 *pucValue,  VOS_U
     VOS_UINT8                          *pucEnd = VOS_NULL_PTR;
     VOS_UINT32                          ulRet;
 
-    /* ���õĵط���֤pucPara,pucValue,pucParaDst��ΪNULL */
+    /* 调用的地方保证pucPara,pucValue,pucParaDst不为NULL */
 
-    /* ֱ����һ������' '���ַ� */
+    /* 直到第一个不是' '的字符 */
     while(' ' == *pucStart)
     {
         pucStart++;
@@ -2260,7 +2260,7 @@ VOS_UINT32 AT_NVWRGetParaInfo( AT_PARSE_PARA_TYPE_STRU * pstPara, VOS_UINT8 * pu
     VOS_UINT32                          ulRet;
     VOS_UINT16                          i = 0;
 
-    /* ���õĵط���֤pstPara,pu8Data��ΪNULL */
+    /* 调用的地方保证pstPara,pu8Data不为NULL */
 
     pu8Start = pstPara->aucPara;
     usLen= pstPara->usParaLen;
@@ -2285,7 +2285,7 @@ VOS_UINT32 AT_NVWRGetParaInfo( AT_PARSE_PARA_TYPE_STRU * pstPara, VOS_UINT8 * pu
 
         ulNum++;
 
-        /* ���128�� */
+        /* 最多128个 */
         /*MAX_NV_NUM_PER_PARA */
         if(ulNum == 128)
         {
@@ -2313,21 +2313,21 @@ VOS_UINT32 AT_SetNVReadPara(VOS_UINT8 ucIndex)
     MODEM_ID_ENUM_UINT16                enModemId = MODEM_ID_0;
     VOS_UINT32                          ulRet;
 
-    /* ������� */
+    /* 参数检查 */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         g_ulNVRD = 1;
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* �������� */
+    /* 参数过多 */
     if(gucAtParaIndex > 1)
     {
         g_ulNVRD = 2;
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* ����Ϊ�� */
+    /* 参数为空 */
     if(0 == gastAtParaList[0].usParaLen)
     {
         g_ulNVRD = 3;
@@ -2346,7 +2346,7 @@ VOS_UINT32 AT_SetNVReadPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* ���ȴ���128��ֻȡǰ128���ֽ�*/
+    /* 长度大于128，只取前128个字节*/
     pucData = (VOS_UINT8*)PS_MEM_ALLOC(WUEPS_PID_AT, ulNvLen);
     if(VOS_NULL_PTR == pucData)
     {
@@ -2413,14 +2413,14 @@ VOS_UINT32 AT_SetNVWritePara(VOS_UINT8 ucIndex)
 
     gstAtSendData.usBufLen = 0;
 
-    /* ������� */
+    /* 参数检查 */
     if(AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         g_ulNVWR =1;
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* ����Ϊ�� */
+    /* 参数为空 */
     if((0 == gastAtParaList[0].usParaLen)
         || (0 == gastAtParaList[1].usParaLen)
         || (0 == gastAtParaList[2].usParaLen))
@@ -2461,7 +2461,7 @@ VOS_UINT32 AT_SetNVWritePara(VOS_UINT8 ucIndex)
             return AT_CME_INCORRECT_PARAMETERS;
         }
 
-        /* ��������ĳ��ȴ���128���򷵻�ʧ�� */
+        /* 如果参数的长度大于128，则返回失败 */
         /*MAX_NV_NUM_PER_PARA */
         if(ulNvNum > 128)
         {
@@ -2470,7 +2470,7 @@ VOS_UINT32 AT_SetNVWritePara(VOS_UINT8 ucIndex)
             return AT_CME_INCORRECT_PARAMETERS;
         }
 
-        /* ����ۼӵĲ������������ܳ��� */
+        /* 如果累加的参数个数大于总长度 */
         if((ulNvLen+ulNvNum) > usNvTotleLen)
         {
             PS_MEM_FREE(WUEPS_PID_AT, pucData);
@@ -2489,7 +2489,7 @@ VOS_UINT32 AT_SetNVWritePara(VOS_UINT8 ucIndex)
         }
     }
 
-    /* ����ۼӵĲ����������ܳ��Ȳ���� */
+    /* 如果累加的参数个数与总长度不相等 */
     if(ulNvLen != usNvTotleLen)
     {
         PS_MEM_FREE(WUEPS_PID_AT, pucData);
@@ -2672,7 +2672,7 @@ VOS_UINT32 AT_QryFPllStatusPara(VOS_UINT8 ucIndex)
     VOS_UINT32                          ulLength;
     VOS_UINT16                          usMsgId;
 
-    /*�жϵ�ǰ����ģʽ��ֻ֧��G/W*/
+    /*判断当前接入模式，只支持G/W*/
     if (AT_RAT_MODE_WCDMA == g_stAtDevCmdCtrl.ucDeviceRatMode)
     {
         ulReceiverPid = DSP_PID_WPHY;
@@ -2694,7 +2694,7 @@ VOS_UINT32 AT_QryFPllStatusPara(VOS_UINT8 ucIndex)
         return AT_DEVICE_MODE_ERROR;
     }
 
-    /* ����AT_PHY_RF_PLL_STATUS_REQ_STRU��Ϣ */
+    /* 申请AT_PHY_RF_PLL_STATUS_REQ_STRU消息 */
     ulLength = sizeof(AT_PHY_RF_PLL_STATUS_REQ_STRU) - VOS_MSG_HEAD_LENGTH;
     pstMsg   = (AT_PHY_RF_PLL_STATUS_REQ_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT, ulLength);
 
@@ -2704,25 +2704,25 @@ VOS_UINT32 AT_QryFPllStatusPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* �����Ϣ */
+    /* 填充消息 */
     pstMsg->ulReceiverPid = ulReceiverPid;
     pstMsg->usMsgID       = usMsgId;
     pstMsg->usRsv1        = 0;
     pstMsg->usDspBand     = g_stAtDevCmdCtrl.stDspBandArfcn.usDspBand;
     pstMsg->usRsv2        = 0;
 
-    /* ���ӦPHY������Ϣ */
+    /* 向对应PHY发送消息 */
     if (VOS_OK != PS_SEND_MSG(WUEPS_PID_AT, pstMsg))
     {
         AT_WARN_LOG("AT_QryFPllStatusPara: Send msg fail!");
         return AT_ERROR;
     }
 
-    /* ���õ�ǰ�������� */
+    /* 设置当前操作类型 */
     gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_FPLLSTATUS_QRY;
     g_stAtDevCmdCtrl.ucIndex               = ucIndex;
 
-    /* �������������״̬ */
+    /* 返回命令处理挂起状态 */
     return AT_WAIT_ASYNC_RETURN;
 }
 
@@ -2732,7 +2732,7 @@ VOS_VOID At_RfPllStatusCnfProc(PHY_AT_RF_PLL_STATUS_CNF_STRU *pstMsg)
     VOS_UINT8                           ucIndex;
     VOS_UINT16                          usLength;
 
-    /* ��ȡ���ر�����û����� */
+    /* 获取本地保存的用户索引 */
     ucIndex = g_stAtDevCmdCtrl.ucIndex;
 
     if (AT_CMD_FPLLSTATUS_QRY != gastAtClientTab[ucIndex].CmdCurrentOpt)
@@ -2741,7 +2741,7 @@ VOS_VOID At_RfPllStatusCnfProc(PHY_AT_RF_PLL_STATUS_CNF_STRU *pstMsg)
         return;
     }
 
-    /* ��λAT״̬ */
+    /* 复位AT状态 */
     AT_STOP_TIMER_CMD_READY(ucIndex);
 
     usLength = (VOS_UINT16)At_sprintf(AT_CMD_MAX_LEN,
@@ -2765,13 +2765,13 @@ VOS_UINT32 AT_QryFpowdetTPara(VOS_UINT8 ucIndex)
     AT_PHY_POWER_DET_REQ_STRU          *pstMsg;
     VOS_UINT32                          ulLength;
 
-    /*�жϵ�ǰ����ģʽ��ֻ֧��W*/
+    /*判断当前接入模式，只支持W*/
     if (AT_RAT_MODE_WCDMA != g_stAtDevCmdCtrl.ucDeviceRatMode)
     {
         return AT_DEVICE_MODE_ERROR;
     }
 
-    /* ����AT_PHY_POWER_DET_REQ_STRU��Ϣ */
+    /* 申请AT_PHY_POWER_DET_REQ_STRU消息 */
     ulLength = sizeof(AT_PHY_POWER_DET_REQ_STRU) - VOS_MSG_HEAD_LENGTH;
     pstMsg   = (AT_PHY_POWER_DET_REQ_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT, ulLength);
 
@@ -2781,23 +2781,23 @@ VOS_UINT32 AT_QryFpowdetTPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* �����Ϣ */
+    /* 填充消息 */
     pstMsg->ulReceiverPid = DSP_PID_WPHY;
     pstMsg->usMsgID       = ID_AT_WPHY_POWER_DET_REQ;
     pstMsg->usRsv         = 0;
 
-    /* ���ӦPHY������Ϣ */
+    /* 向对应PHY发送消息 */
     if (VOS_OK != PS_SEND_MSG(WUEPS_PID_AT, pstMsg))
     {
         AT_WARN_LOG("AT_QryFpowdetTPara: Send msg fail!");
         return AT_ERROR;
     }
 
-    /* ���õ�ǰ�������� */
+    /* 设置当前操作类型 */
     gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_FPOWDET_QRY;
     g_stAtDevCmdCtrl.ucIndex               = ucIndex;
 
-    /* �������������״̬ */
+    /* 返回命令处理挂起状态 */
     return AT_WAIT_ASYNC_RETURN;
 }
 
@@ -2807,7 +2807,7 @@ VOS_VOID At_RfFpowdetTCnfProc(PHY_AT_POWER_DET_CNF_STRU *pstMsg)
     VOS_UINT8                           ucIndex;
     VOS_UINT16                          usLength;
 
-    /* ��ȡ���ر�����û����� */
+    /* 获取本地保存的用户索引 */
     ucIndex = g_stAtDevCmdCtrl.ucIndex;
 
     if (AT_CMD_FPOWDET_QRY != gastAtClientTab[ucIndex].CmdCurrentOpt)
@@ -2816,10 +2816,10 @@ VOS_VOID At_RfFpowdetTCnfProc(PHY_AT_POWER_DET_CNF_STRU *pstMsg)
         return;
     }
 
-    /* ��λAT״̬ */
+    /* 复位AT状态 */
     AT_STOP_TIMER_CMD_READY(ucIndex);
 
-    /* Ӧ������Ҫ���������ֵΪ0x7FFF��Ϊ��Чֵ�����ѯ�߷���ERROR */
+    /* 应物理层要求，如果返回值为0x7FFF则为无效值，项查询者返回ERROR */
     if(0x7FFF == pstMsg->sPowerDet)
     {
         gstAtSendData.usBufLen = 0;
@@ -2847,31 +2847,31 @@ VOS_UINT32 AT_SetNvwrSecCtrlPara(VOS_UINT8 ucIndex)
     AT_MTA_NVWRSECCTRL_SET_REQ_STRU     stNvwrSecCtrl;
     VOS_UINT16                          usLength;
 
-    /* �ֲ�������ʼ�� */
+    /* 局部变量初始化 */
     PS_MEM_SET(&stNvwrSecCtrl, 0x00, sizeof(stNvwrSecCtrl));
 
-    /* ������� */
+    /* 参数检查 */
     if (AT_CMD_OPT_SET_PARA_CMD != g_stATParseCmd.ucCmdOptType)
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-     /* �������� */
+     /* 参数过多 */
     if (gucAtParaIndex > 2)
     {
         return AT_TOO_MANY_PARA;
     }
 
-    /* ��������������� */
+    /* 检查码流参数长度 */
     if (AT_NVWRSECCTRL_PARA_SECTYPE_LEN != gastAtParaList[0].usParaLen)
     {
         return AT_CME_INCORRECT_PARAMETERS;
     }
 
-    /* ���ð�ȫ�������� */
+    /* 设置安全控制类型 */
     stNvwrSecCtrl.ucSecType = (VOS_UINT8)gastAtParaList[0].ulParaValue;
 
-    /* ���ַ�������ת��Ϊ���� */
+    /* 将字符串参数转换为码流 */
     usLength = gastAtParaList[1].usParaLen;
     if ( (2 == gucAtParaIndex)
       && (AT_RSA_CIPHERTEXT_PARA_LEN == usLength) )
@@ -2897,7 +2897,7 @@ VOS_UINT32 AT_SetNvwrSecCtrlPara(VOS_UINT8 ucIndex)
         return AT_ERROR;
     }
 
-    /* ����ATģ��ʵ���״̬Ϊ�ȴ��첽���� */
+    /* 设置AT模块实体的状态为等待异步返回 */
     gastAtClientTab[ucIndex].CmdCurrentOpt = AT_CMD_NVWRSECCTRL_SET;
 
     return AT_WAIT_ASYNC_RETURN;
@@ -2909,12 +2909,12 @@ VOS_UINT32 AT_RcvMtaNvwrSecCtrlSetCnf( VOS_VOID *pMsg )
     VOS_UINT8                           ucIndex;
     VOS_UINT32                          ulResult;
 
-    /* ��ʼ�� */
+    /* 初始化 */
     pstRcvMsg       = (AT_MTA_MSG_STRU *)pMsg;
     pstResult       = (MTA_AT_RESULT_CNF_STRU *)pstRcvMsg->aucContent;
     ucIndex         = AT_BROADCAST_CLIENT_INDEX_MODEM_0;
 
-    /* ͨ��ClientId��ȡucIndex */
+    /* 通过ClientId获取ucIndex */
     if (AT_FAILURE == At_ClientIdToUserId(pstRcvMsg->stAppCtrl.usClientId, &ucIndex))
     {
         AT_WARN_LOG("AT_RcvMtaNvwrSecCtrlSetCnf: WARNING:AT INDEX NOT FOUND!");
@@ -2927,31 +2927,31 @@ VOS_UINT32 AT_RcvMtaNvwrSecCtrlSetCnf( VOS_VOID *pMsg )
         return VOS_ERR;
     }
 
-    /* �жϵ�ǰ���������Ƿ�ΪAT_CMD_NVWRSECCTRL_SET */
+    /* 判断当前操作类型是否为AT_CMD_NVWRSECCTRL_SET */
     if (AT_CMD_NVWRSECCTRL_SET != gastAtClientTab[ucIndex].CmdCurrentOpt)
     {
         AT_WARN_LOG("AT_RcvMtaNvwrSecCtrlSetCnf: NOT CURRENT CMD OPTION!");
         return VOS_ERR;
     }
 
-    /* ��λAT״̬ */
+    /* 复位AT状态 */
     AT_STOP_TIMER_CMD_READY(ucIndex);
 
-    /* �жϻظ���Ϣ�еĴ����� */
+    /* 判断回复消息中的错误码 */
     if (MTA_AT_RESULT_NO_ERROR == pstResult->enResult)
     {
-        /* �ɹ������OK */
+        /* 成功，输出OK */
         ulResult    = AT_OK;
     }
     else
     {
-        /* ʧ�ܣ����ERROR */
+        /* 失败，输出ERROR */
         ulResult    = AT_ERROR;
     }
 
     gstAtSendData.usBufLen = 0;
 
-    /* ����At_FormatResultData���������� */
+    /* 调用At_FormatResultData发送命令结果 */
     At_FormatResultData(ucIndex, ulResult);
 
     return VOS_OK;
@@ -2963,11 +2963,11 @@ VOS_UINT32 AT_QryNvwrSecCtrlPara(VOS_UINT8 ucIndex)
     TAF_NV_NVWR_SEC_CTRL_STRU           stNvwrSecCtrlNV;
     VOS_UINT32                          ulResult;
 
-    /* ������ʼ�� */
+    /* 参数初始化 */
     ulResult = AT_ERROR;
     PS_MEM_SET(&stNvwrSecCtrlNV, 0x00, sizeof(stNvwrSecCtrlNV));
 
-    /* �޸İ�ȫ����NV */
+    /* 修改安全控制NV */
     if (NV_OK == NV_ReadEx(MODEM_ID_0, en_NV_Item_NVWR_SEC_CTRL, &stNvwrSecCtrlNV, sizeof(stNvwrSecCtrlNV)))
     {
         ulResult = AT_OK;
@@ -2989,10 +2989,10 @@ VOS_BOOL AT_IsNVWRAllowedNvId(VOS_UINT16 usNvId)
     VOS_UINT8                           ucLoop;
     VOS_UINT8                           ucBlackListNum;
 
-    /* ������ʼ�� */
+    /* 参数初始化 */
     PS_MEM_SET(&stNvwrSecCtrlNV, 0x00, sizeof(stNvwrSecCtrlNV));
 
-    /* ��ȡ��ȫ����NV */
+    /* 读取安全控制NV */
     if (NV_OK != NV_ReadEx(MODEM_ID_0, en_NV_Item_NVWR_SEC_CTRL, &stNvwrSecCtrlNV, sizeof(stNvwrSecCtrlNV)))
     {
         AT_ERR_LOG("AT_IsNVWRAllowedNvId: NV_ReadEx fail!");

@@ -1,13 +1,13 @@
 
 #define    THIS_FILE_ID        PS_FILE_ID_TAF_MMI_STRPARSE_C
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include  "vos.h"
 #include  "Taf_MmiStrParse.h"
 #include  "TafAppSsa.h"
 #include  "MnErrorCode.h"
-/* AºËºÍCºË±à½âÂë¶¼ÒªÓÃµ½ */
+/* Aæ ¸å’ŒCæ ¸ç¼–è§£ç éƒ½è¦ç”¨åˆ° */
 #include  "MnMsgTs.h"
 #include "TafStdlib.h"
 
@@ -20,11 +20,11 @@
 /*lint -e958*/
 
 /*****************************************************************************
-  2 ³£Á¿¶¨Òå
+  2 å¸¸é‡å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  3 ºê¶¨Òå
+  3 å®å®šä¹‰
 *****************************************************************************/
 
 
@@ -32,7 +32,7 @@
 
 #define MN_MMI_BS_MAX_ENTRY (sizeof(f_stMmiBSInfo)/sizeof(MN_MMI_BS_TABLE_STRU))
 
-/* Í¨ÓÃ²¹³äÒµÎñ²Ù×÷ÂëÓ³Éä±í: µÚÒ»ÁĞ²¹³äÒµÎñ²Ù×÷Âë¶ÔÓ¦µÄMMI×Ö·û´®£¬µÚ¶şÁĞ²¹³äÒµÎñ²Ù×÷Âë */
+/* é€šç”¨è¡¥å……ä¸šåŠ¡æ“ä½œç æ˜ å°„è¡¨: ç¬¬ä¸€åˆ—è¡¥å……ä¸šåŠ¡æ“ä½œç å¯¹åº”çš„MMIå­—ç¬¦ä¸²ï¼Œç¬¬äºŒåˆ—è¡¥å……ä¸šåŠ¡æ“ä½œç  */
 MN_MMI_SS_OP_Tbl_STRU                   g_astTafMmiOporationTypeTbl[] = {
                                                     {"**", TAF_MMI_REGISTER_SS,    {0, 0, 0, 0, 0, 0, 0}},
                                                     {"*",  TAF_MMI_ACTIVATE_SS,    {0, 0, 0, 0, 0, 0, 0}},
@@ -42,13 +42,13 @@ MN_MMI_SS_OP_Tbl_STRU                   g_astTafMmiOporationTypeTbl[] = {
                                                   };
 
 /*****************************************************************************
-  4 ÀàĞÍ¶¨Òå
+  4 ç±»å‹å®šä¹‰
 *****************************************************************************/
 
 
 
 /*****************************************************************************
-  5 ±äÁ¿¶¨Òå
+  5 å˜é‡å®šä¹‰
 *****************************************************************************/
 MN_MMI_SC_TABLE_STRU     f_stMmiScInfo[] =
 
@@ -130,7 +130,7 @@ MN_CALL_CLIR_CFG_ENUM_U8  f_enClirOperate = MN_CALL_CLIR_AS_SUBS;
 /*lint -save -e958 */
 
 /*****************************************************************************
-  6 º¯ÊıÊµÏÖ
+  6 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -257,7 +257,7 @@ VOS_BOOL MMI_DecodeScAndSi(
 
     if (TAF_MMI_REGISTER_PASSWD != pMmiOpParam->MmiOperationType)
     {
-        /*Ìø¹ı¿ªÊ¼µÄ¼¸¸ö×Ö·û*/
+        /*è·³è¿‡å¼€å§‹çš„å‡ ä¸ªå­—ç¬¦*/
         for (i =0; (!MN_MMI_isdigit(pInMmiStr[i])) && (i < 2); i++)
         {
             usOffset++;
@@ -382,7 +382,7 @@ LOCAL  VOS_BOOL MMI_JudgePinOperation(
                 break;
 
             default:
-                /*¸Ã·ÖÖ§ÓÀÔ¶²»»á×ßµ½*/
+                /*è¯¥åˆ†æ”¯æ°¸è¿œä¸ä¼šèµ°åˆ°*/
                 break;
             }
 
@@ -552,7 +552,7 @@ LOCAL  VOS_BOOL MMI_JudgeImeiOperation(
 {
     VOS_UINT32       ulStrLen = VOS_StrLen(pcMmiStr);
 
-    /*ÅĞ¶ÏÒÀ¾İ*/
+    /*åˆ¤æ–­ä¾æ®*/
     /*
     3) #-string:
     Input of the form.
@@ -576,7 +576,7 @@ VOS_UINT32 MMI_TransMmiSsCodeToNetSsCode(
 {
     VOS_UINT8       i = 0;
 
-    /*×ª»»SS Code*/
+    /*è½¬æ¢SS Code*/
     while(i < MN_MMI_SC_MAX_ENTRY)
     {
         if (0 == VOS_MemCmp(f_stMmiScInfo[i].pcMmiSc,
@@ -607,9 +607,9 @@ LOCAL VOS_UINT32 MMI_TransMmiBsCodeToNetBsCode(
     VOS_CHAR                            acBs[MN_MMI_MAX_SIA_LEN + 1];
     VOS_UINT16                          i;
 
-    /*ÊÇ²»ÊÇĞèÒªÉè¶¨ÄÇĞ©ĞèÒªµ÷ÓÃ´Ëº¯ÊıµÄÏŞ¶¨?*/
+    /*æ˜¯ä¸æ˜¯éœ€è¦è®¾å®šé‚£äº›éœ€è¦è°ƒç”¨æ­¤å‡½æ•°çš„é™å®š?*/
 
-    /*ÕâÒ»¶ÎÊÇ×ª»»¶ÔÓ¦µÄBS code*/
+    /*è¿™ä¸€æ®µæ˜¯è½¬æ¢å¯¹åº”çš„BS code*/
     if ((TAF_ALL_FORWARDING_SS_CODE == (ucNetSsCode & 0xF0))
       ||(TAF_ALL_BARRING_SS_CODE == (ucNetSsCode & 0xF0)))
     {
@@ -646,7 +646,7 @@ LOCAL VOS_UINT32 MMI_TransMmiBsCodeToNetBsCode(
 
     return VOS_OK;
 
-    /* BS Code µÄ×ª»»Íê³É */
+    /* BS Code çš„è½¬æ¢å®Œæˆ */
 }
 VOS_UINT32 MMI_FillInRegisterSSPara(
     MN_MMI_SC_SI_PARA_STRU              *pstScSiPara,
@@ -668,10 +668,10 @@ VOS_UINT32 MMI_FillInRegisterSSPara(
     {
         pstRegisterSsReq->OP_FwdToNum = 1;
         pstRegisterSsReq->OP_NumType = 1;
-        /*Èç¹ûÊÇ´ø'+'ºÅ£¬ÈÏÎªÊÇ¹ú¼ÊºÅÂë£¬ºÅÂëÀàĞÍµÄÖµÎª0x91*/
+        /*å¦‚æœæ˜¯å¸¦'+'å·ï¼Œè®¤ä¸ºæ˜¯å›½é™…å·ç ï¼Œå·ç ç±»å‹çš„å€¼ä¸º0x91*/
         if ('+' == pstScSiPara->acSia[0])
         {
-            /*È¥³ıÍ·²¿µÄ'+'ºÅ*/
+            /*å»é™¤å¤´éƒ¨çš„'+'å·*/
             pstRegisterSsReq->NumType = 0x91;
             PS_MEM_CPY(pstRegisterSsReq->aucFwdToNum,
                       pstScSiPara->acSia + 1,
@@ -714,7 +714,7 @@ VOS_UINT32 MMI_FillInRegisterSSPara(
         }
         else
         {
-            /* Delete TAF_ALL_BARRING_SS_CODEÃÜÂëÏà¹Ø²Ù×÷ */
+            /* Delete TAF_ALL_BARRING_SS_CODEå¯†ç ç›¸å…³æ“ä½œ */
             if (0 == VOS_StrLen(pstScSiPara->acSib))
             {
                 return MN_ERR_NO_ERROR;
@@ -777,7 +777,7 @@ VOS_UINT32 MMI_FillInEraseSSPara(
         }
         else
         {
-            /* Delete TAF_ALL_BARRING_SS_CODEÃÜÂëÏà¹Ø²Ù×÷ */
+            /* Delete TAF_ALL_BARRING_SS_CODEå¯†ç ç›¸å…³æ“ä½œ */
             if (0 == VOS_StrLen(pstScSiPara->acSib))
             {
                 return MN_ERR_NO_ERROR;
@@ -811,8 +811,8 @@ VOS_UINT32 MMI_FillInActivateSSPara(
     VOS_UINT32                          ulPasswordLen;
 
     /* 
-        ºô½Ğ×ªÒÆÒµÎñ×¢²áÇ°×ºÊÇ*ÇÒ´æÔÚ²ÎÊıAÇé¿öĞèÒª°´×¢²á´¦Àí
-        ²Î¿¼Ğ­Òé3GPP 22030 6.5.2 struct of MMI
+        å‘¼å«è½¬ç§»ä¸šåŠ¡æ³¨å†Œå‰ç¼€æ˜¯*ä¸”å­˜åœ¨å‚æ•°Aæƒ…å†µéœ€è¦æŒ‰æ³¨å†Œå¤„ç†
+        å‚è€ƒåè®®3GPP 22030 6.5.2 struct of MMI
     */
     if (TAF_ALL_FORWARDING_SS_CODE == (ucNetSsCode & TAF_SS_CODE_MASK))    
     {
@@ -850,7 +850,7 @@ VOS_UINT32 MMI_FillInActivateSSPara(
         }
         else
         {
-            /* ±£´æÃÜÂëµ½¼¤»îÏûÏ¢²ÎÊı½á¹¹ */
+            /* ä¿å­˜å¯†ç åˆ°æ¿€æ´»æ¶ˆæ¯å‚æ•°ç»“æ„ */
             ulPasswordLen = VOS_StrLen(pstScSiPara->acSia);
             if (TAF_SS_MAX_PASSWORD_LEN != ulPasswordLen)
             {
@@ -953,7 +953,7 @@ VOS_UINT32 MMI_FillInDeactivateSSPara(
         }
         else
         {
-            /* ±£´æÃÜÂëµ½È¥¼¤»îÏûÏ¢²ÎÊı½á¹¹ */
+            /* ä¿å­˜å¯†ç åˆ°å»æ¿€æ´»æ¶ˆæ¯å‚æ•°ç»“æ„ */
             ulPasswordLen = VOS_StrLen(pstScSiPara->acSia);
             if (TAF_SS_MAX_PASSWORD_LEN != ulPasswordLen)
             {
@@ -1021,7 +1021,7 @@ VOS_UINT32 MMI_FillInInterrogateSSPara(
         }
         else
         {
-            /* Delete TAF_MMI_GET_PASSWDÃÜÂëÏà¹Ø²Ù×÷ */
+            /* Delete TAF_MMI_GET_PASSWDå¯†ç ç›¸å…³æ“ä½œ */
 
             if (0 == VOS_StrLen(pstScSiPara->acSib))
             {
@@ -1089,7 +1089,7 @@ LOCAL VOS_UINT32 MMI_FillInCallOrigPara(
     VOS_UINT32                          ulRslt;
 
 
-    /*ÊäÈëµÄ×Ö´®²»ÄÜ³¬¹ıÓïÒôºô½ĞÔÊĞíµÄ×î´ó³¤¶È*/
+    /*è¾“å…¥çš„å­—ä¸²ä¸èƒ½è¶…è¿‡è¯­éŸ³å‘¼å«å…è®¸çš„æœ€å¤§é•¿åº¦*/
     if (VOS_StrLen(pcMmiStr) >  (MN_CALL_MAX_BCD_NUM_LEN*2))
     {
         return MN_ERR_INVALIDPARM;
@@ -1097,7 +1097,7 @@ LOCAL VOS_UINT32 MMI_FillInCallOrigPara(
 
     if ('+' == pcMmiStr[0])
     {
-        /*½«AsciiÂë×ª»»³É¶ÔÓ¦µÄBCDÂë*/
+        /*å°†Asciiç è½¬æ¢æˆå¯¹åº”çš„BCDç */
         ulRslt = TAF_STD_ConvertAsciiNumberToBcd(pcMmiStr + 1,
                                      pstMmiOpParam->MnCallOrig.stDialNumber.aucBcdNum,
                                      &pstMmiOpParam->MnCallOrig.stDialNumber.ucNumLen);
@@ -1106,7 +1106,7 @@ LOCAL VOS_UINT32 MMI_FillInCallOrigPara(
     }
     else
     {
-        /*½«AsciiÂë×ª»»³É¶ÔÓ¦µÄBCDÂë*/
+        /*å°†Asciiç è½¬æ¢æˆå¯¹åº”çš„BCDç */
         ulRslt = TAF_STD_ConvertAsciiNumberToBcd(pcMmiStr,
                                  pstMmiOpParam->MnCallOrig.stDialNumber.aucBcdNum,
                                  &pstMmiOpParam->MnCallOrig.stDialNumber.ucNumLen);
@@ -1122,7 +1122,7 @@ LOCAL VOS_UINT32 MMI_FillInCallOrigPara(
         return ulRslt;
     }
 
-    /*ÌîĞ´ÆäËûĞèÒªµÄ²ÎÊı*/
+    /*å¡«å†™å…¶ä»–éœ€è¦çš„å‚æ•°*/
     pstMmiOpParam->MmiOperationType = TAF_MMI_CALL_ORIG;
     pstMmiOpParam->MnCallOrig.enCallType = MN_CALL_TYPE_VOICE;
 
@@ -1202,7 +1202,7 @@ LOCAL VOS_UINT32 MMI_FillInCallOrigPara(
     VOS_UINT8                           *pucNetSsCode
 )
 {
-    /* »ñÈ¡ÌØĞÔ¿ØÖÆNVµØÖ· */
+    /* è·å–ç‰¹æ€§æ§åˆ¶NVåœ°å€ */
 
     if (VOS_FALSE == MMI_DecodeScAndSi(pInMmiStr, pMmiOpParam, pstScSiPara, ppOutRestMmiStr))
     {
@@ -1394,7 +1394,7 @@ LOCAL VOS_BOOL MMI_JudgeChldOperation(
         break;
 
     default:
-        /*ÈÏÎªÊÇCCBS,ÒòÎªÄ¿Ç°²»Ö§³ÖCCBS,ÔİÊ±Ã»Ğ´´¦Àí´úÂë*/
+        /*è®¤ä¸ºæ˜¯CCBS,å› ä¸ºç›®å‰ä¸æ”¯æŒCCBS,æš‚æ—¶æ²¡å†™å¤„ç†ä»£ç */
         *pulErrCode = MN_ERR_INVALIDPARM;
         break;
 
@@ -1431,7 +1431,7 @@ TAF_UINT32 MN_MmiStringParse(
 
     PS_MEM_SET(pMmiOpParam, 0, sizeof(MN_MMI_OPERATION_PARAM_STRU));
 
-    /*ÅĞ¶Ïµ±Ç°ÊÇ²»ÊÇÏÔÊ¾IMEI²Ù×÷*/
+    /*åˆ¤æ–­å½“å‰æ˜¯ä¸æ˜¯æ˜¾ç¤ºIMEIæ“ä½œ*/
     if (VOS_TRUE == MMI_JudgeImeiOperation(pInMmiStr,
                                            ppOutRestMmiStr,
                                            pMmiOpParam))
@@ -1439,16 +1439,16 @@ TAF_UINT32 MN_MmiStringParse(
         return MN_ERR_NO_ERROR;
     }
 
-    /*ÅĞ¶Ïµ±Ç°ÊÇ²»ÊÇÁÙÊ±Ä£Ê½ÏÂÒÖÖÆ»òÕß¼¤»îCLIR²Ù×÷*/
+    /*åˆ¤æ–­å½“å‰æ˜¯ä¸æ˜¯ä¸´æ—¶æ¨¡å¼ä¸‹æŠ‘åˆ¶æˆ–è€…æ¿€æ´»CLIRæ“ä½œ*/
     if (VOS_TRUE == MMI_JudgeTmpModeClirOp(pInMmiStr,
                                            ppOutRestMmiStr,
                                            pMmiOpParam))
     {
-        /* ×÷Îª¶ÀÁ¢µÄ½âÂëº¯Êı£¬²»Ó¦ÓëATÄ£¿éµÄÒµÎñ¹¦ÄÜñîºÏ£¬É¾³ıATÄ£¿éÒµÎñÈ«¾Ö±äÁ¿µÄ¸³Öµ²Ù×÷ */
+        /* ä½œä¸ºç‹¬ç«‹çš„è§£ç å‡½æ•°ï¼Œä¸åº”ä¸ATæ¨¡å—çš„ä¸šåŠ¡åŠŸèƒ½è€¦åˆï¼Œåˆ é™¤ATæ¨¡å—ä¸šåŠ¡å…¨å±€å˜é‡çš„èµ‹å€¼æ“ä½œ */
         return MN_ERR_NO_ERROR;
     }
 
-    /*ÅĞ¶Ïµ±Ç°µÄ²Ù×÷ÀàĞÍÊÇ²»ÊÇPIN²Ù×÷ÀàĞÍ */
+    /*åˆ¤æ–­å½“å‰çš„æ“ä½œç±»å‹æ˜¯ä¸æ˜¯PINæ“ä½œç±»å‹ */
     if (VOS_TRUE == MMI_JudgePinOperation(pInMmiStr,
                                           pMmiOpParam,
                                           ppOutRestMmiStr,
@@ -1457,7 +1457,7 @@ TAF_UINT32 MN_MmiStringParse(
         return ulRtrnRslt;
     }
 
-    /*ÅĞ¶Ïµ±Ç°µÄ²Ù×÷ÀàĞÍÊÇ²»ÊÇĞŞ¸ÄÃÜÂë²Ù×÷ */
+    /*åˆ¤æ–­å½“å‰çš„æ“ä½œç±»å‹æ˜¯ä¸æ˜¯ä¿®æ”¹å¯†ç æ“ä½œ */
     if (VOS_TRUE == MMI_JudgePwdOperation(pInMmiStr,
                                           pMmiOpParam,
                                           ppOutRestMmiStr,
@@ -1466,7 +1466,7 @@ TAF_UINT32 MN_MmiStringParse(
         return ulRtrnRslt;
     }
 
-    /*ÅĞ¶Ïµ±Ç°µÄ²Ù×÷ÀàĞÍÊÇ²»ÊÇÆäËûÒÑÖªµÄºô½ĞÎŞ¹Ø²¹³äÒµÎñ²Ù×÷*/
+    /*åˆ¤æ–­å½“å‰çš„æ“ä½œç±»å‹æ˜¯ä¸æ˜¯å…¶ä»–å·²çŸ¥çš„å‘¼å«æ— å…³è¡¥å……ä¸šåŠ¡æ“ä½œ*/
     if (VOS_TRUE == MMI_JudgeSsOperation(pInMmiStr,
                                          ppOutRestMmiStr,
                                          pMmiOpParam,
@@ -1476,28 +1476,28 @@ TAF_UINT32 MN_MmiStringParse(
     }
 
     /*
-    ¶ÔÓÚ¶Ì×Ö´®µÄ´¦Àí£¬¸ù¾İĞ­Òé22.030ÖĞµÄ¹æ¶¨:
+    å¯¹äºçŸ­å­—ä¸²çš„å¤„ç†ï¼Œæ ¹æ®åè®®22.030ä¸­çš„è§„å®š:
     "Entry of 1 or 2 characters defined in the 3GPP TS 23.038 [8] Default Alphabet followed by SEND"
-    ÒÔ¼°22.030ÖĞµÄ¶ÔÓ¦µÄÁ÷³ÌÍ¼´¦Àí
+    ä»¥åŠ22.030ä¸­çš„å¯¹åº”çš„æµç¨‹å›¾å¤„ç†
     */
     if ((2 == ulStrLen) || (1 == ulStrLen))
     {
         if (VOS_TRUE == inCall)
         {
-            /*ÅĞ¶¨ÊÇ²»ÊÇCHLDÃüÁî*/
+            /*åˆ¤å®šæ˜¯ä¸æ˜¯CHLDå‘½ä»¤*/
             if (VOS_TRUE == MMI_JudgeChldOperation(pInMmiStr, pMmiOpParam, &ulRtrnRslt))
             {
                 *ppOutRestMmiStr = pInMmiStr + VOS_StrLen(pInMmiStr);
                 return ulRtrnRslt;
             }
 
-            /* Èç¹û²»ÊÇCHLDÃüÁî£¬ÄÇÃ´ÈÏÎªÊÇUSSD²Ù×÷£¬ÌîĞ´ÏàÓ¦µÄ²ÎÊı */
+            /* å¦‚æœä¸æ˜¯CHLDå‘½ä»¤ï¼Œé‚£ä¹ˆè®¤ä¸ºæ˜¯USSDæ“ä½œï¼Œå¡«å†™ç›¸åº”çš„å‚æ•° */
             pMmiOpParam->MmiOperationType = TAF_MMI_PROCESS_USSD_REQ;
             return MMI_FillInProcessUssdReqPara(pInMmiStr, ppOutRestMmiStr, pMmiOpParam);
         }
         else
         {
-            /*ÔÚÕâÖÖÇé¿öÏÂ£¬Èç¹ûÊÇ'1'¿ªÍ·£¬ÄÇÃ´ÈÏÎªÓ¦¸Ã·¢ÆğÒ»¸öºô½Ğ*/
+            /*åœ¨è¿™ç§æƒ…å†µä¸‹ï¼Œå¦‚æœæ˜¯'1'å¼€å¤´ï¼Œé‚£ä¹ˆè®¤ä¸ºåº”è¯¥å‘èµ·ä¸€ä¸ªå‘¼å«*/
             if ('1' == pInMmiStr[0])
             {
                 ulRslt = MMI_FillInCallOrigPara(pInMmiStr,
@@ -1511,7 +1511,7 @@ TAF_UINT32 MN_MmiStringParse(
             }
             else
             {
-                /*Èç¹û²»ÊÇ'1'¿ªÍ·£¬ÄÇÃ´Ò²ÊÇ×÷ÎªUSSD×Ö´®À´´¦Àí */
+                /*å¦‚æœä¸æ˜¯'1'å¼€å¤´ï¼Œé‚£ä¹ˆä¹Ÿæ˜¯ä½œä¸ºUSSDå­—ä¸²æ¥å¤„ç† */
                 pMmiOpParam->MmiOperationType = TAF_MMI_PROCESS_USSD_REQ;
                 return MMI_FillInProcessUssdReqPara(pInMmiStr, ppOutRestMmiStr, pMmiOpParam);
             }
@@ -1522,12 +1522,12 @@ TAF_UINT32 MN_MmiStringParse(
 
     return MMI_FillInCallOrigPara(pInMmiStr, pMmiOpParam, ppOutRestMmiStr);
 
-    /* ÏÈÉ¾³ı£¬¶ÔÓÚ×Ö·û'P','W'µÄ´¦Àí£¬ÊÇ·ñ·ÅÔÚÕâÀï£¬ÉĞ´ıÌÖÂÛ£¬
-       ÔİÊ±²»Ö§³Ö£¬ */
+    /* å…ˆåˆ é™¤ï¼Œå¯¹äºå­—ç¬¦'P','W'çš„å¤„ç†ï¼Œæ˜¯å¦æ”¾åœ¨è¿™é‡Œï¼Œå°šå¾…è®¨è®ºï¼Œ
+       æš‚æ—¶ä¸æ”¯æŒï¼Œ */
     #if 0
     /*
-    ÔÚ×îºóÈÏ¶¨ÊÇ·¢ÆğÒ»¸öºô½Ğ
-    Èç¹ûÔÚ×Ö·û´®ÖĞĞ¯´øÓĞ×Ö·û'p'£¬ÄÇÃ´×Ö·û'p'Ö®ºóµÄºÅÂë×÷ÎªdtmfÒô·¢ÍùÍø²à
+    åœ¨æœ€åè®¤å®šæ˜¯å‘èµ·ä¸€ä¸ªå‘¼å«
+    å¦‚æœåœ¨å­—ç¬¦ä¸²ä¸­æºå¸¦æœ‰å­—ç¬¦'p'ï¼Œé‚£ä¹ˆå­—ç¬¦'p'ä¹‹åçš„å·ç ä½œä¸ºdtmféŸ³å‘å¾€ç½‘ä¾§
     */
     pcTmp1 = MMI_StrChr(pInMmiStr, pInMmiStr + VOS_StrLen(pInMmiStr), 'p')
     pcTmp2 = MMI_StrChr(pInMmiStr, pInMmiStr + VOS_StrLen(pInMmiStr), 'p')

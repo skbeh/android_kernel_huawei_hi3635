@@ -1,6 +1,6 @@
 -include $(BALONG_TOPDIR)/config/product/$(OBB_PRODUCT_NAME)/config/balong_product_config.mk
 
-#อทฮฤผþ
+#ๅคดๆ–ไปถ
 EXTRA_CFLAGS += -Iarch/arm/mach-balong/include/mach 
 EXTRA_CFLAGS += -Iarch/arm/mach-balongv7r2/include/mach 
 EXTRA_CFLAGS += -Iarch/arm/include/asm 
@@ -156,7 +156,7 @@ EXTRA_CFLAGS += -I$(BALONG_TOPDIR)/include/oam/comm/comm/ppm
 endif
 
 
-#ฒ๚ฦทฯเนุตฤบ๊ถจาๅ
+#ไบงๅ“็ธๅ…ณ็ๅฎๅฎไน
 EXTRA_CFLAGS += -DVERSION_V3R2 -DVERSION_V3R2_C00 
 EXTRA_CFLAGS += -DBOARD_$(CFG_BOARD)
 ifeq ($(PRODUCT_CFG_CHIP_BB_TYPE),CHIP_BB_6756CS)
@@ -164,7 +164,7 @@ EXTRA_CFLAGS += -D$(PRODUCT_CFG_CHIP_BB_TYPE) \
                 -DBOARD_ASIC_BIGPACK
 endif
 
-#ืำฯตอณฯเนุตฤบ๊ถจาๅ
+#ๅญ็ณป็ป็ธๅ…ณ็ๅฎๅฎไน
 ifneq ($(strip $(CFG_OS_ANDROID_AARCH64)),YES)
 EXTRA_CFLAGS += -D__LINUX_ARM_ARCH__=7 -march=armv7-a -Uarm
 endif
@@ -173,12 +173,12 @@ EXTRA_CFLAGS += -DVOS_LINUX=4 -DOSA_CPU_ACPU=1 -DVOS_OS_VER=VOS_LINUX -DVOS_OSA_
                 -DBALONG_PHY_V200=2 -DBALONG_PHY_V300=3 -DBALONG_PHY_VER=BALONG_PHY_V300 -DBALONG_CHIP_V200=2 \
 				-DBALONG_CHIP_V300=3 -DBALONG_CHIP_V500=4 -DBALONG_CHIP_VER=BALONG_CHIP_V500 -DMSP_GUNAS_AT_UNITE -DVERSION_V3R2
 
-#ฑเา๋ฦ๗ฯเนุตฤบ๊ถจาๅ
+#็ผ–่ฏ‘ๅจ็ธๅ…ณ็ๅฎๅฎไน
 EXTRA_CFLAGS += -fsigned-char -DVOS_LINUX=4 -DOSA_CPU_ACPU=1 -DVOS_OS_VER=VOS_LINUX -DVOS_OSA_CPU=OSA_CPU_ACPU -DPRODUCT_CFG_MULTIMODE_LTE -D__LOG_RELEASE__
 EXTRA_CFLAGS += -DHAL_DIAG_SDM_USE -Wno-pointer-to-int-cast
 
 
-#ิดฮฤผþ 
+#ๆบๆ–ไปถ 
 taf-objs += comm/src/acore/ADS/Src/AdsCtx.o 
 taf-objs += comm/src/acore/ADS/Src/AdsDownLink.o 
 taf-objs += comm/src/acore/ADS/Src/AdsInit.o 

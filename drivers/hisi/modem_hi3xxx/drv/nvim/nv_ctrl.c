@@ -263,8 +263,8 @@ s32 nv_file_access(const s8* path,s32 mode)
 
 /*
  * copy file from src_path to dst_path
- * dst_path : ÎÄ¼ş¿½±´Ä¿µÄÄ¿Â¼
- * src_path : ÎÄ¼ş¿½±´
+ * dst_path : æ–‡ä»¶æ‹·è´ç›®çš„ç›®å½•
+ * src_path : æ–‡ä»¶æ‹·è´
  * path     : dst_path type :  fasle == file system
  *                             true  == non file system
  */
@@ -274,9 +274,9 @@ s32 nv_file_copy(s8* dst_path,s8* src_path,bool path)
     u32 ret = NV_ERROR;
     FILE* dst_fp = NULL;
     FILE* src_fp = NULL;
-    u32 u_ulen;  /*ÎÄ¼ş¿½±´µ¥Î»³¤¶È*/
-    u32 u_tlen;  /*Ô´ÎÄ¼ş×Ü³¤¶È*/
-    void* pdata;   /*ÎÄ¼ş¿½±´ÁÙÊ±buffer*/
+    u32 u_ulen;  /*æ–‡ä»¶æ‹·è´å•ä½é•¿åº¦*/
+    u32 u_tlen;  /*æºæ–‡ä»¶æ€»é•¿åº¦*/
+    void* pdata;   /*æ–‡ä»¶æ‹·è´ä¸´æ—¶buffer*/
 
 
     src_fp = nv_file_open(src_path,NV_FILE_READ);
@@ -294,7 +294,7 @@ s32 nv_file_copy(s8* dst_path,s8* src_path,bool path)
         goto out;
     }
 
-    pdata = (void*)nv_malloc(NV_FILE_COPY_UNIT_SIZE);/*¿½±´µ¥Î»³¤¶ÈÎª16k*/
+    pdata = (void*)nv_malloc(NV_FILE_COPY_UNIT_SIZE);/*æ‹·è´å•ä½é•¿åº¦ä¸º16k*/
     if(!pdata)
     {
         nv_printf("malloc failed !\n");
@@ -398,8 +398,8 @@ u32 nv_copy_img2backup(void)
 }
 
 
-/*ĞŞ¸ÄÉı¼¶°ü±êÖ¾
- *true :ÓĞĞ§   false :ÎŞĞ§
+/*ä¿®æ”¹å‡çº§åŒ…æ ‡å¿—
+ *true :æœ‰æ•ˆ   false :æ— æ•ˆ
  */
 
 s32 nv_modify_upgrade_flag(bool flag)
@@ -436,8 +436,8 @@ s32 nv_modify_upgrade_flag(bool flag)
     return 0;
 }
 
-/*»ñÈ¡Éı¼¶°üÊı¾İÓĞĞ§ĞÔ
- *true :ÓĞĞ§ false: ÎŞĞ§
+/*è·å–å‡çº§åŒ…æ•°æ®æœ‰æ•ˆæ€§
+ *true :æœ‰æ•ˆ false: æ— æ•ˆ
  */
 bool nv_get_upgrade_flag(void)
 {
@@ -580,7 +580,7 @@ int sc_file_backup(void)
     memset(&sc_file,0,sizeof(sc_file));
     sc_file.total_len = sizeof(sc_file);
 
-    /*´´½¨±êÖ¾ÎÄ¼ş*/
+    /*åˆ›å»ºæ ‡å¿—æ–‡ä»¶*/
     fp = BSP_fopen((char*)SC_FILE_BACKUP_FLAG,"wb+");
     if(!fp){
     }else{
@@ -592,7 +592,7 @@ int sc_file_backup(void)
     if(!fp)
         return 1;
 
-    /*Ğ´ÈëÎÄ¼şÍ·*/
+    /*å†™å…¥æ–‡ä»¶å¤´*/
     ret = BSP_fwrite(&sc_file,1,(unsigned int)sizeof(sc_file),fp);
     if(ret != (int)sizeof(sc_file)){
         printk("write packet head fail ret :%d!\n",ret);
@@ -610,7 +610,7 @@ int sc_file_backup(void)
 
 
     sc_file.magic_num = SC_FILE_PACKET_MAGIC;
-    /*×é×°°üÍ·Ğ´ÈëÎÄ¼ş*/
+    /*ç»„è£…åŒ…å¤´å†™å…¥æ–‡ä»¶*/
     BSP_fseek(fp,0,SEEK_SET);
 
     ret = BSP_fwrite(&sc_file,1,(unsigned int)sizeof(sc_file),fp);
@@ -628,13 +628,13 @@ int sc_file_backup(void)
         return 4;
     }
 
-    /*É¾³ı±êÖ¾*/
+    /*åˆ é™¤æ ‡å¿—*/
     if(BSP_access((char*)SC_FILE_BACKUP_FLAG,0)){
     }else{
     BSP_remove((char*)SC_FILE_BACKUP_FLAG);
     }
 
-    /*É¾³ı×é×°ÁÙÊ±ÎÄ¼ş*/
+    /*åˆ é™¤ç»„è£…ä¸´æ—¶æ–‡ä»¶*/
     BSP_remove((char*)SC_PACKET_TEMP_FILE);
 
     return 0;
@@ -647,7 +647,7 @@ bool get_sc_file_back_state(void)
     int ret;
     int i;
 
-    /*±êÖ¾ÎÄ¼ş´æÔÚ·µ»Øfalse*/
+    /*æ ‡å¿—æ–‡ä»¶å­˜åœ¨è¿”å›false*/
     if(!BSP_access((char*)SC_FILE_BACKUP_FLAG,0)){
         printk("%s is exist!\n",SC_FILE_BACKUP_FLAG);
         return false;

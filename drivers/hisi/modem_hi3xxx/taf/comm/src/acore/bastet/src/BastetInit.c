@@ -1,6 +1,6 @@
 
 /*****************************************************************************
-  1 м╥нд╪Ч╟Э╨╛
+  1 Е╓╢Ф√┤Д╩╤Е▄┘Е░╚
 *****************************************************************************/
 #include "vos.h"
 #include "PsTypeDef.h"
@@ -15,7 +15,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    п╜рИу╩╢Рс║╢Р╣Ц╥╫й╫об╣д.Cнд╪Ч╨Й╤╗рЕ
+    Е█▐Х╝╝Ф═┬Ф┴⌠Е█╟Ф┴⌠Г┌╧Ф√╧Е╪▐Д╦▀Г └.CФ√┤Д╩╤Е╝▐Е╝ Д╧┴
 *****************************************************************************/
 /*lint -e767*/
 #define    THIS_FILE_ID                 PS_FILE_ID_BST_INIT_C
@@ -24,11 +24,11 @@ extern "C" {
 RECV_MSG_PROC pRecvMsgProc = NULL;
 
 /*****************************************************************************
-  2 х╚╬ж╠Да©╤╗рЕ
+  2 Е┘╗Е╠─Е▐≤И┤▐Е╝ Д╧┴
 *****************************************************************************/
 
 /*****************************************************************************
-  3 ╨╞йЩй╣ож
+  3 Е┤╫Ф∙╟Е╝·Г▌╟
 *****************************************************************************/
 
 VOS_VOID BASTET_CommRegRecvCallBack(RECV_MSG_PROC pFunc)
@@ -74,7 +74,7 @@ VOS_UINT32 BASTET_CommFidInit(enum VOS_INIT_PHASE_DEFINE ip)
     {
         case VOS_IP_LOAD_CONFIG:
 
-            /* иоппPIDЁУй╪╩╞ */
+            /* Д╦┼Х║▄PIDЕ┬²Е╖▀Е▄√ */
             ulRslt = VOS_RegisterPIDInfo(ACPU_PID_BASTET_COMM,
                                          (Init_Fun_Type)BASTET_CommPidInit,
                                          (Msg_Fun_Type)BASTET_CommProcMsg);
@@ -83,7 +83,7 @@ VOS_UINT32 BASTET_CommFidInit(enum VOS_INIT_PHASE_DEFINE ip)
             {
                 return VOS_ERR;
             }
-            /* хннЯсеох╪╤ */
+            /* Д╩╩Е┼║Д╪≤Е┘┬Г╨╖ */
             ulRslt = VOS_RegisterTaskPrio(ACPU_FID_BASTET_COMM, VOS_PRIORITY_P4);
             if( VOS_OK != ulRslt )
             {

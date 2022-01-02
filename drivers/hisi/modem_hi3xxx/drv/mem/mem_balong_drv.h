@@ -12,22 +12,22 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-/* ASIC2 µ÷ÊÔ */
+/* ASIC2 è°ƒè¯• */
 
 #ifndef INLINE
 #define INLINE /*__inline__*/
 #endif
 
 /**************************************************************************
-  ºê¶¨Òå
+  å®å®šä¹‰
 **************************************************************************/
-/* Ö÷ºË¶¨Òå */
+/* ä¸»æ ¸å®šä¹‰ */
 #ifdef PRODUCT_CFG_CORE_TYPE_MODEM
 #define BSP_MEM_MAIN_PART
 #endif
 
-/* ³¤¶È¶¨Òå */
-/* ³¤¶È¶¨Òå */
+/* é•¿åº¦å®šä¹‰ */
+/* é•¿åº¦å®šä¹‰ */
 #ifdef PRODUCT_CFG_CORE_TYPE_MODEM
 #define MEM_NORM_DDR_POOL_SIZE      (512*1024)
 #else
@@ -36,18 +36,18 @@ extern "C"
 #define MEM_ICC_DDR_POOL_SIZE       (SHM_MEM_MEMMGR_SIZE)
 #define MEM_ICC_AXI_POOL_SIZE       (SRAM_DYNAMIC_SEC_SIZE)
 
-/* Mem È«¾Ö±äÁ¿·ÅÔÚAXIÖĞ */
+/* Mem å…¨å±€å˜é‡æ”¾åœ¨AXIä¸­ */
 #define MEM_CTX_ADDR                (SHM_MEMMGR_FLAG_ADDR)
 
 
-/* »ùµØÖ·¶¨Òå */
+/* åŸºåœ°å€å®šä¹‰ */
 #define _ALIGN(addr, size) (((addr) + (size) - 1) & (~((size) - 1)))
 #define MEM_NORM_DDR_POOL_BASE_ADDR (__get_free_pages(GFP_KERNEL, 0))//(kmalloc( _ALIGN(MEM_NORM_DDR_POOL_SIZE, 32), GFP_KERNEL))
 #define MEM_ICC_AXI_POOL_BASE_ADDR  (SRAM_DYNAMIC_SEC_ADDR)
 #define MEM_ICC_DDR_POOL_BASE_ADDR  (SHM_MEM_MEMMGR_ADDR)
 
 
-/* Ê¹ÓÃACPÄ£Ê½²»ĞèÒªË¢ Cache */
+/* ä½¿ç”¨ACPæ¨¡å¼ä¸éœ€è¦åˆ· Cache */
 //#define MEM_USE_ACP
 
 #ifdef __cplusplus

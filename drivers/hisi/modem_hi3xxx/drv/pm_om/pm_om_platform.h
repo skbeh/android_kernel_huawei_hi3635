@@ -22,8 +22,8 @@ extern "C"
 #define PM_OM_ICC_ACORE_CHN_ID  (ICC_CHANNEL_ID_MAKEUP(ICC_CHN_IFC, IFC_RECV_FUNC_PM_OM))
 #define PM_OM_CPUID             (IPC_CORE_ACORE)
 #define PM_OM_WAKEUP_INTERVAL   (3000)
-#define PM_OM_LOG_THRE_CORE_NUM (4)   /* ÓĞ¼¸¸öºËĞèÒªÅäÖÃË®Ïß */
-#define PM_OM_LOG_THRE_BUF_SIZE (200) /* ´ÓÎÄ¼ş½Úµã¶ÁÈ¡Ë®ÏßµÄbuffer´óĞ¡ */
+#define PM_OM_LOG_THRE_CORE_NUM (4)   /* æœ‰å‡ ä¸ªæ ¸éœ€è¦é…ç½®æ°´çº¿ */
+#define PM_OM_LOG_THRE_BUF_SIZE (200) /* ä»æ–‡ä»¶èŠ‚ç‚¹è¯»å–æ°´çº¿çš„bufferå¤§å° */
 
 #define memset_s(dest, destMax, val, count) memset(dest, val, count)
 #define memcpy_s(dest, destMax, src, count) memcpy(dest, src, count)

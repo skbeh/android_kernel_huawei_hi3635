@@ -1,19 +1,19 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : IpsMntnCCore.h
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : caikai
-  Éú³ÉÈÕÆÚ   : 2013Äê7ÔÂ23ÈÕ
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : IPS MNTNÄ£¿éÍ·ÎÄ¼þ
-  º¯ÊýÁÐ±í   :
-  ÐÞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2013Äê7ÔÂ16ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : ´´½¨ÎÄ¼þ
+  æ–‡ ä»¶ å   : IpsMntnCCore.h
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : caikai
+  ç”Ÿæˆæ—¥æœŸ   : 2013å¹´7æœˆ23æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : IPS MNTNæ¨¡å—å¤´æ–‡ä»¶
+  å‡½æ•°åˆ—è¡¨   :
+  ä¿®æ”¹åŽ†å²   :
+  1.æ—¥    æœŸ   : 2013å¹´7æœˆ16æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼þ°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 
 #include  "product_config.h"
@@ -42,16 +42,16 @@ extern "C" {
 #pragma pack(4)
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
-#define IPS_CCORE_IFNAMSIZ                    (16)                    /*ÐéÄâÍø¿¨Ãû³Æ³¤¶È*/
+#define IPS_CCORE_IFNAMSIZ                    (16)                    /*è™šæ‹Ÿç½‘å¡åç§°é•¿åº¦*/
 #define IPS_CCORE_END_NAME                    (8)
-#define IPS_CCORE_APP_CMD_INFO_LEN            (200)                   /*²¶»ñAPP¿ØÖÆÃüÁîµÄ×î³¤³¤¶È*/
-#define IPS_MNTN_CCORE_TRACE_MAX_BYTE_LEN     (1514)                  /*²¶»ñTCP/IPÐ­ÒéÕ»±¨ÎÄ×î³¤³¤¶È */
-#define IPS_MNTN_CCORE_NAT_MAPPING_INFO_LEN   (40)                    /*²¶»ñTCP/IPÐ­ÒéÕ»NATÓ³ÉäÐÅÏ¢»ù±¾³¤¶È*/
+#define IPS_CCORE_APP_CMD_INFO_LEN            (200)                   /*æ•èŽ·APPæŽ§åˆ¶å‘½ä»¤çš„æœ€é•¿é•¿åº¦*/
+#define IPS_MNTN_CCORE_TRACE_MAX_BYTE_LEN     (1514)                  /*æ•èŽ·TCP/IPåè®®æ ˆæŠ¥æ–‡æœ€é•¿é•¿åº¦ */
+#define IPS_MNTN_CCORE_NAT_MAPPING_INFO_LEN   (40)                    /*æ•èŽ·TCP/IPåè®®æ ˆNATæ˜ å°„ä¿¡æ¯åŸºæœ¬é•¿åº¦*/
 
 
-/*Ìî³äÏûÏ¢Í·*/
+/*å¡«å……æ¶ˆæ¯å¤´*/
 #define IPS_CCORE_FILL_MSG_HEADER(pSendMsg, RecvPid)    \
         (pSendMsg)->ulReceiverCpuId  = VOS_LOCAL_CPUID; \
         (pSendMsg)->ulReceiverPid    = RecvPid;
@@ -80,15 +80,15 @@ extern "C" {
 #define IPS_CCORE_INFO_LEN                      (IPS_CCORE_OM_TRANS_DATA_OFFSET_LEN + IPS_MNTN_CCORE_INFO_LEN)
 
 /*****************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æžšä¸¾å®šä¹‰
 *****************************************************************************/
 enum IPS_MNTN_CCORE_TRACE_CONFIG_TYPE_ENUM
 {
-    ID_OM_IPS_CCORE_ADVANCED_TRACE_CONFIG_REQ = 0xD513,               /* ²¶»ñTCP/IPÐ­ÒéÕ» ±¨ÎÄÅäÖÃ*/
-    ID_IPS_CCORE_OM_ADVANCED_TRACE_CONFIG_CNF = 0xD514,               /* ²¶»ñTCP/IPÐ­ÒéÕ» ±¨ÎÄÖ¸Ê¾*/
+    ID_OM_IPS_CCORE_ADVANCED_TRACE_CONFIG_REQ = 0xD513,               /* æ•èŽ·TCP/IPåè®®æ ˆ æŠ¥æ–‡é…ç½®*/
+    ID_IPS_CCORE_OM_ADVANCED_TRACE_CONFIG_CNF = 0xD514,               /* æ•èŽ·TCP/IPåè®®æ ˆ æŠ¥æ–‡æŒ‡ç¤º*/
 
-    ID_OM_IPS_MNTN_CCORE_INFO_CONFIG_REQ      = 0xD515,               /* ÖÜÆÚÐÔ²¶»ñTCP/IPÐ­ÒéÕ» »ù´¡ÐÅÏ¢ÅäÖÃ*/
-    ID_IPS_CCORE_OM_MNTN_INFO_CONFIG_CNF      = 0xD516,               /* ÖÜÆÚÐÔ²¶»ñTCP/IPÐ­ÒéÕ» »ù´¡ÐÅÏ¢ÅäÖÃÖ¸Ê¾*/
+    ID_OM_IPS_MNTN_CCORE_INFO_CONFIG_REQ      = 0xD515,               /* å‘¨æœŸæ€§æ•èŽ·TCP/IPåè®®æ ˆ åŸºç¡€ä¿¡æ¯é…ç½®*/
+    ID_IPS_CCORE_OM_MNTN_INFO_CONFIG_CNF      = 0xD516,               /* å‘¨æœŸæ€§æ•èŽ·TCP/IPåè®®æ ˆ åŸºç¡€ä¿¡æ¯é…ç½®æŒ‡ç¤º*/
 
     ID_IPS_MNTN_CCORE_TRACE_CONFIG_TYPE_BUTT
 };
@@ -96,8 +96,8 @@ typedef VOS_UINT16 IPS_MNTN_CCORE_TRACE_CONFIG_TYPE_ENUM_UINT16;
 
 enum IPS_MNTN_CCORE_INFO_ACTION_ENUM
 {
-    IPS_MNTN_CCORE_INFO_REPORT_STOP           = 0,                    /*¿ªÆôÖÜÆÚÐÔ²¶»ñTCP/IPÐ­ÒéÕ»»ù´¡ÐÅÏ¢*/
-    IPS_MNTN_CCORE_INFO_REPORT_START          = 1,                    /*¹Ø±ÕÖÜÆÚÐÔ²¶»ñTCP/IPÐ­ÒéÕ»»ù´¡ÐÅÏ¢*/
+    IPS_MNTN_CCORE_INFO_REPORT_STOP           = 0,                    /*å¼€å¯å‘¨æœŸæ€§æ•èŽ·TCP/IPåè®®æ ˆåŸºç¡€ä¿¡æ¯*/
+    IPS_MNTN_CCORE_INFO_REPORT_START          = 1,                    /*å…³é—­å‘¨æœŸæ€§æ•èŽ·TCP/IPåè®®æ ˆåŸºç¡€ä¿¡æ¯*/
 
     IPS_MNTN_CCORE_INFO_REPORT_BUTT
 };
@@ -118,7 +118,7 @@ typedef VOS_UINT16  IPS_MNTN_CCORE_RESULT_TYPE_ENUM_UINT16;
 
 enum IPS_MNTN_CCORE_TIMER_NAME_ENUM
 {
-    IPS_MNTN_CCORE_INFO_TIMER                 = 0x00000001,           /*ÖÜÆÚÐÔ²¶»ñTCP/IPÐ­ÒéÕ»»ù´¡ÐÅÏ¢¶¨Ê±Æ÷*/
+    IPS_MNTN_CCORE_INFO_TIMER                 = 0x00000001,           /*å‘¨æœŸæ€§æ•èŽ·TCP/IPåè®®æ ˆåŸºç¡€ä¿¡æ¯å®šæ—¶å™¨*/
 
     IPS_MNTN_CCORE_TIMER_NAME_BUTT
 };
@@ -126,30 +126,30 @@ typedef VOS_UINT32 IPS_MNTN_CCORE_TIMER_NAME_ENUM_UINT32;
 
 enum IPS_MNTN_CCORE_TRACE_CHOSEN_ENUM
 {
-    IPS_MNTN_CCORE_TRACE_NULL_CHOSEN               =   0,             /*²»²¶»ñ±¨ÎÄÐÅÏ¢*/
-    IPS_MNTN_CCORE_TRACE_MSG_HEADER_CHOSEN         =   1,             /*²¶»ñ±¨ÎÄÍ·²¿*/
-    IPS_MNTN_CCORE_TRACE_CONFIGURABLE_LEN_CHOSEN   =   2,             /*°´ÕÕÅäÖÃ²¶»ñ±¨ÎÄ*/
-    IPS_MNTN_CCORE_TRACE_WHOLE_DATA_LEN_CHOSEN     =   3,             /*²¶»ñ±¨ÎÄÈ«²¿ÄÚÈÝ*/
+    IPS_MNTN_CCORE_TRACE_NULL_CHOSEN               =   0,             /*ä¸æ•èŽ·æŠ¥æ–‡ä¿¡æ¯*/
+    IPS_MNTN_CCORE_TRACE_MSG_HEADER_CHOSEN         =   1,             /*æ•èŽ·æŠ¥æ–‡å¤´éƒ¨*/
+    IPS_MNTN_CCORE_TRACE_CONFIGURABLE_LEN_CHOSEN   =   2,             /*æŒ‰ç…§é…ç½®æ•èŽ·æŠ¥æ–‡*/
+    IPS_MNTN_CCORE_TRACE_WHOLE_DATA_LEN_CHOSEN     =   3,             /*æ•èŽ·æŠ¥æ–‡å…¨éƒ¨å†…å®¹*/
 
     IPS_MNTN_CCORE_TRACE_MSG_CHOSEN_BUTT
 };
 typedef VOS_UINT32   IPS_MNTN_CCORE_TRACE_CHOSEN_ENUM_UINT32;
 
-/*TCP/IPÐ­ÒéÕ»¿ÉÎ¬¿É²â²¶»ñµÄÏûÏ¢±êÊ¶*/
+/*TCP/IPåè®®æ ˆå¯ç»´å¯æµ‹æ•èŽ·çš„æ¶ˆæ¯æ ‡è¯†*/
 enum IPS_MNTN_CCORE_TRACE_MSG_TYPE_ENUM
 {
-    ID_IPS_CCORE_TRACE_INPUT_DATA_INFO        = 0xD517,               /*TCP/IP¿ÉÎ¬¿É²â½ÓÊÕ±¨ÎÄ*/
-    ID_IPS_CCORE_TRACE_OUTPUT_DATA_INFO       = 0xD518,               /*TCP/IP¿ÉÎ¬¿É²â·¢ËÍ±¨ÎÄ*/
-    ID_IPS_CCORE_TRACE_BRIDGE_DATA_INFO       = 0xD519,               /*TCP/IPÍøÇÅÖÐ×ª±¨ÎÄ*/
-    ID_IPS_CCORE_TRACE_RECV_ARP_PKT           = 0xD51A,               /*TCP/IPÐ­ÒéÕ»½ÓÊÕµÄARP¿ØÖÆ±¨ÎÄ*/
-    ID_IPS_CCORE_TRACE_SEND_ARP_PKT           = 0xD51B,               /*TCP/IPÐ­ÒéÕ»·¢ËÍµÄARP¿ØÖÆ±¨ÎÄ*/
-    ID_IPS_CCORE_TRACE_RECV_DHCPC_PKT         = 0xD51C,               /*TCP/IPÐ­ÒéÕ»½ÓÊÕµÄDHCP¿ØÖÆ±¨ÎÄ*/
-    ID_IPS_CCORE_TRACE_SEND_DHCPC_PKT         = 0xD51D,               /*TCP/IPÐ­ÒéÕ»·¢ËÍµÄDHCP¿ØÖÆ±¨ÎÄ*/
-    ID_IPS_CCORE_TRACE_RECV_DHCPS_PKT         = 0xD51E,               /*TCP/IPÐ­ÒéÕ»½ÓÊÕµÄDHCP¿ØÖÆ±¨ÎÄ*/
-    ID_IPS_CCORE_TRACE_SEND_DHCPS_PKT         = 0xD51F,               /*TCP/IPÐ­ÒéÕ»·¢ËÍµÄDHCP¿ØÖÆ±¨ÎÄ*/
-    ID_IPS_CCORE_TRACE_APP_CMD                = 0xD520,               /*APP¿ØÖÆÃüÁîÐÅÏ¢*/
-    ID_IPS_CCORE_TRACE_MNTN_INFO              = 0xD521,               /*TCP/IPÐ­ÒéÕ»»ù´¡ÐÅÏ¢*/
-    ID_IPS_MNTN_CCORE_IMS_NIC_INFO            = 0xD522,               /*IMSÐéÄâÍø¿¨Í³¼ÆÐÅÏ¢*/
+    ID_IPS_CCORE_TRACE_INPUT_DATA_INFO        = 0xD517,               /*TCP/IPå¯ç»´å¯æµ‹æŽ¥æ”¶æŠ¥æ–‡*/
+    ID_IPS_CCORE_TRACE_OUTPUT_DATA_INFO       = 0xD518,               /*TCP/IPå¯ç»´å¯æµ‹å‘é€æŠ¥æ–‡*/
+    ID_IPS_CCORE_TRACE_BRIDGE_DATA_INFO       = 0xD519,               /*TCP/IPç½‘æ¡¥ä¸­è½¬æŠ¥æ–‡*/
+    ID_IPS_CCORE_TRACE_RECV_ARP_PKT           = 0xD51A,               /*TCP/IPåè®®æ ˆæŽ¥æ”¶çš„ARPæŽ§åˆ¶æŠ¥æ–‡*/
+    ID_IPS_CCORE_TRACE_SEND_ARP_PKT           = 0xD51B,               /*TCP/IPåè®®æ ˆå‘é€çš„ARPæŽ§åˆ¶æŠ¥æ–‡*/
+    ID_IPS_CCORE_TRACE_RECV_DHCPC_PKT         = 0xD51C,               /*TCP/IPåè®®æ ˆæŽ¥æ”¶çš„DHCPæŽ§åˆ¶æŠ¥æ–‡*/
+    ID_IPS_CCORE_TRACE_SEND_DHCPC_PKT         = 0xD51D,               /*TCP/IPåè®®æ ˆå‘é€çš„DHCPæŽ§åˆ¶æŠ¥æ–‡*/
+    ID_IPS_CCORE_TRACE_RECV_DHCPS_PKT         = 0xD51E,               /*TCP/IPåè®®æ ˆæŽ¥æ”¶çš„DHCPæŽ§åˆ¶æŠ¥æ–‡*/
+    ID_IPS_CCORE_TRACE_SEND_DHCPS_PKT         = 0xD51F,               /*TCP/IPåè®®æ ˆå‘é€çš„DHCPæŽ§åˆ¶æŠ¥æ–‡*/
+    ID_IPS_CCORE_TRACE_APP_CMD                = 0xD520,               /*APPæŽ§åˆ¶å‘½ä»¤ä¿¡æ¯*/
+    ID_IPS_CCORE_TRACE_MNTN_INFO              = 0xD521,               /*TCP/IPåè®®æ ˆåŸºç¡€ä¿¡æ¯*/
+    ID_IPS_MNTN_CCORE_IMS_NIC_INFO            = 0xD522,               /*IMSè™šæ‹Ÿç½‘å¡ç»Ÿè®¡ä¿¡æ¯*/
 
     ID_IPS_CCORE_TRACE_MSG_TYPE_BUTT          = 0xffff
 };
@@ -157,29 +157,29 @@ typedef VOS_UINT16  IPS_MNTN_CCORE_TRACE_MSG_TYPE_ENUM_UINT16;
 
 
 /*****************************************************************************
-  4 È«¾Ö±äÁ¿ÉùÃ÷
+  4 å…¨å±€å˜é‡å£°æ˜Ž
 *****************************************************************************/
 
 
 /*****************************************************************************
-  5 ÏûÏ¢Í·¶¨Òå
+  5 æ¶ˆæ¯å¤´å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  6 ÏûÏ¢¶¨Òå
+  6 æ¶ˆæ¯å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  7 STRUCT¶¨Òå
+  7 STRUCTå®šä¹‰
 *****************************************************************************/
 #pragma pack(4)
 
 typedef struct
 {
     IPS_MNTN_CCORE_TRACE_CHOSEN_ENUM_UINT32   ulChoice;
-    VOS_UINT32                                ulTraceDataLen;         /* µ±Ñ¡ÔñTRACE_CONFIGURABLE_LEN_CHOSENÊ±£¬´ËÖµÓÐÐ§ */
+    VOS_UINT32                                ulTraceDataLen;         /* å½“é€‰æ‹©TRACE_CONFIGURABLE_LEN_CHOSENæ—¶ï¼Œæ­¤å€¼æœ‰æ•ˆ */
 
 }IPS_MNTN_CCORE_TRACE_CONFIG_STRU;
 
@@ -191,22 +191,22 @@ typedef IPS_MNTN_CCORE_TRACE_CONFIG_STRU  IPS_MNTN_CCORE_OUTPUT_TRACE_CFG_STRU;
 
 typedef struct
 {
-    IPS_MNTN_CCORE_BRIDGE_TRACE_CFG_STRU      stBridgeTraceCfg;       /*ÅäÖÃ²¶»ñÍøÇÅÏûÏ¢*/
-    IPS_MNTN_CCORE_INPUT_TRACE_CFG_STRU       stInputTraceCfg;        /*ÅäÖÃ²¶»ñTCP/IPÐ­ÒéÕ»½ÓÊÕÏûÏ¢*/
-    IPS_MNTN_CCORE_OUTPUT_TRACE_CFG_STRU      stOutputTraceCfg;       /*ÅäÖÃ²¶»ñTCP/IPÐ­ÒéÕ»·¢ËÍÏûÏ¢*/
-    VOS_UINT8                                 aucRsv[100];            /* ±£ÁôÎ»£¬ÎªºóÆÚ¿ÉÀ©Õ¹ */
+    IPS_MNTN_CCORE_BRIDGE_TRACE_CFG_STRU      stBridgeTraceCfg;       /*é…ç½®æ•èŽ·ç½‘æ¡¥æ¶ˆæ¯*/
+    IPS_MNTN_CCORE_INPUT_TRACE_CFG_STRU       stInputTraceCfg;        /*é…ç½®æ•èŽ·TCP/IPåè®®æ ˆæŽ¥æ”¶æ¶ˆæ¯*/
+    IPS_MNTN_CCORE_OUTPUT_TRACE_CFG_STRU      stOutputTraceCfg;       /*é…ç½®æ•èŽ·TCP/IPåè®®æ ˆå‘é€æ¶ˆæ¯*/
+    VOS_UINT8                                 aucRsv[100];            /* ä¿ç•™ä½ï¼Œä¸ºåŽæœŸå¯æ‰©å±• */
 }IPS_MNTN_CCORE_TRACE_CONFIG_REQ_STRU;
 
 typedef struct
 {
-    PS_RSLT_CODE_ENUM_UINT32            enRslt;                 /* ·µ»Ø²éÑ¯½á¹¹³É¹¦»òÊ§°Ü£¬PS_SUCC±íÊ¾³É¹¦£¬PS_FAIL±íÊ¾Ê§°Ü */
+    PS_RSLT_CODE_ENUM_UINT32            enRslt;                 /* è¿”å›žæŸ¥è¯¢ç»“æž„æˆåŠŸæˆ–å¤±è´¥ï¼ŒPS_SUCCè¡¨ç¤ºæˆåŠŸï¼ŒPS_FAILè¡¨ç¤ºå¤±è´¥ */
 
 }IPS_MNTN_CCORE_TRACE_CONFIG_CNF_STRU;
 
 typedef struct
 {
     IPS_MNTN_CCORE_INFO_ACTION_ENUM_UINT16    enCommand;
-    VOS_UINT16                                usTimeLen;              /*µ¥Î»£ºÃë */
+    VOS_UINT16                                usTimeLen;              /*å•ä½ï¼šç§’ */
 }IPS_MNTN_CCORE_INFO_CFG_REQ_STRU;
 
 typedef struct
@@ -216,43 +216,43 @@ typedef struct
 }IPS_MNTN_CCORE_INFO_CFG_CNF_STRU;
 
 /*****************************************************************************
- ½á¹¹Ãû    : IPS_MNTN_CCORE_INFO_ENTITY
- ½á¹¹ËµÃ÷  : ²¶»ñTCP/IPÐ­ÒéÕ»»ù±¾ÐÅÏ¢ÊµÌå
+ ç»“æž„å    : IPS_MNTN_CCORE_INFO_ENTITY
+ ç»“æž„è¯´æ˜Ž  : æ•èŽ·TCP/IPåè®®æ ˆåŸºæœ¬ä¿¡æ¯å®žä½“
 *****************************************************************************/
 typedef struct
 {
-    HTIMER                                    hIpsMntnTimer;          /*¶¨Ê±Æ÷*/
-    VOS_UINT32                                ulIpsMntnTimerLen;      /*¶¨Ê±Æ÷³¤¶È£¬¹Ì¶¨1s*/
-    IPS_MNTN_CCORE_INFO_ACTION_ENUM_UINT16    enIpsMntnFlag;          /*²¶»ñTCP/IPÐ­ÒéÕ»»ù±¾ÐÅÏ¢¿ªÆô±êÖ¾*/
+    HTIMER                                    hIpsMntnTimer;          /*å®šæ—¶å™¨*/
+    VOS_UINT32                                ulIpsMntnTimerLen;      /*å®šæ—¶å™¨é•¿åº¦ï¼Œå›ºå®š1s*/
+    IPS_MNTN_CCORE_INFO_ACTION_ENUM_UINT16    enIpsMntnFlag;          /*æ•èŽ·TCP/IPåè®®æ ˆåŸºæœ¬ä¿¡æ¯å¼€å¯æ ‡å¿—*/
     VOS_UINT8                                 aucRsv[2];
 }IPS_MNTN_CCORE_INFO_ENTITY;
 
 /*****************************************************************************
- ½á¹¹Ãû    : IPS_MNTN_CCORE_PKT_INFO_STRU
- ½á¹¹ËµÃ÷  : TCP/IPÐ­ÒéÕ»±¨ÎÄ²¶»ñ
+ ç»“æž„å    : IPS_MNTN_CCORE_PKT_INFO_STRU
+ ç»“æž„è¯´æ˜Ž  : TCP/IPåè®®æ ˆæŠ¥æ–‡æ•èŽ·
 *****************************************************************************/
 typedef struct
 {
-    VOS_UINT8                               aucNetIfName[IPS_CCORE_IFNAMSIZ]; /* ÐéÄâÍø¿¨Ãû³Æ */
+    VOS_UINT8                               aucNetIfName[IPS_CCORE_IFNAMSIZ]; /* è™šæ‹Ÿç½‘å¡åç§° */
     VOS_UINT16                              usLen;
     VOS_UINT8                               aucData[2];
 } IPS_MNTN_CCORE_PKT_INFO_STRU;
 
 /*****************************************************************************
- ½á¹¹Ãû    : IPS_MNTN_CCORE_BRIDGE_PKT_INFO_STRU
- ½á¹¹ËµÃ÷  : ÍøÇÅÖÐ×ª±¨ÎÄ²¶»ñ
+ ç»“æž„å    : IPS_MNTN_CCORE_BRIDGE_PKT_INFO_STRU
+ ç»“æž„è¯´æ˜Ž  : ç½‘æ¡¥ä¸­è½¬æŠ¥æ–‡æ•èŽ·
 *****************************************************************************/
 typedef struct
 {
-    VOS_UINT8                               aucSrcPort[IPS_CCORE_END_NAME];   /* ·¢ËÍÐéÄâÍø¿¨ÐÅÏ¢ */
-    VOS_UINT8                               aucDestPort[IPS_CCORE_END_NAME];  /* ½ÓÊÕÐéÄâÍø¿¨Ãû³Æ */
+    VOS_UINT8                               aucSrcPort[IPS_CCORE_END_NAME];   /* å‘é€è™šæ‹Ÿç½‘å¡ä¿¡æ¯ */
+    VOS_UINT8                               aucDestPort[IPS_CCORE_END_NAME];  /* æŽ¥æ”¶è™šæ‹Ÿç½‘å¡åç§° */
     VOS_UINT16                              usLen;
     VOS_UINT8                               aucData[2];
 } IPS_MNTN_CCORE_BRIDGE_PKT_INFO_STRU;
 
 /*****************************************************************************
- ½á¹¹Ãû    : IPS_MNTN_CCORE_APP_CMD_INFO_STRU
- ½á¹¹ËµÃ÷  : APP¿ØÖÆÃüÁî²¶»ñ
+ ç»“æž„å    : IPS_MNTN_CCORE_APP_CMD_INFO_STRU
+ ç»“æž„è¯´æ˜Ž  : APPæŽ§åˆ¶å‘½ä»¤æ•èŽ·
 *****************************************************************************/
 typedef struct
 {
@@ -261,8 +261,8 @@ typedef struct
 } IPS_MNTN_CCORE_APP_CMD_INFO_STRU;
 
 /*****************************************************************************
- ½á¹¹Ãû    : IPS_MNTN_CCORE_INFO_STRU
- ½á¹¹ËµÃ÷  : APP¿ØÖÆÃüÁî²¶»ñ
+ ç»“æž„å    : IPS_MNTN_CCORE_INFO_STRU
+ ç»“æž„è¯´æ˜Ž  : APPæŽ§åˆ¶å‘½ä»¤æ•èŽ·
 *****************************************************************************/
 typedef struct
 {
@@ -272,17 +272,17 @@ typedef struct
 } IPS_MNTN_CCORE_INFO_STRU;
 
 /*****************************************************************************
-  8 UNION¶¨Òå
+  8 UNIONå®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  9 OTHERS¶¨Òå
+  9 OTHERSå®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  10 º¯ÊýÉùÃ÷
+  10 å‡½æ•°å£°æ˜Ž
 *****************************************************************************/
 
 #endif  /*FEATURE_ON == FEATURE_IMS*/

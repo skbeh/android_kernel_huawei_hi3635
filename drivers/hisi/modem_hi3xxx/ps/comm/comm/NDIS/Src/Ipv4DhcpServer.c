@@ -19,7 +19,7 @@ extern "C" {
 #include "IpComm.h"
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e767*/
 #define    THIS_FILE_ID        PS_FILE_ID_IPV4DHCPSERVER_C
@@ -32,14 +32,14 @@ extern "C" {
 extern VOS_UINT8                g_aucBroadCastAddr[];
 extern NDIS_ENTITY_STRU         g_astNdisEntity[];
 
-/*»ñµÃIPV4ÊµÌå*/
+/*èŽ·å¾—IPV4å®žä½“*/
 #define IPV4_DHCP_GET_NDIS_ENTITY(Index)        (&g_astNdisEntity[(Index)])
 
 /*****************************************************************************
   2 Declare the Global Variable
 *****************************************************************************/
 
-/*¶¨Òå×éDHCP OFFER/ACK/NACKÊ±µÄÁÙÊ±»º³åÇø*/
+/*å®šä¹‰ç»„DHCP OFFER/ACK/NACKæ—¶çš„ä¸´æ—¶ç¼“å†²åŒº*/
 VOS_UINT8     g_aucDhcpBuff[ETH_MAX_FRAME_SIZE] = {0};
 /*define global DHCP Server stat info struct*/
 IPV4_DHCP_STAT_INFO_STRU   g_stDhcpStatStru = {0};
@@ -247,7 +247,7 @@ VOS_VOID IPV4_DHCP_FormOption(const NDIS_IPV4_INFO_STRU *pstIpV4Entity,
     }
 
     pucOptionAddr = pucOption;
-    /* ±¨ÎÄÀàÐÍ */
+    /* æŠ¥æ–‡ç±»åž‹ */
     pstOptionItem = (IPV4_DHCP_OPTION_ITEM_STRU *)((VOS_VOID*)pucOptionAddr);
     pstOptionItem->ucOptionType = IPV4_DHCP_OPTION_MSG_TYPE;
     pstOptionItem->ucOptionLen  = 1;
@@ -255,7 +255,7 @@ VOS_VOID IPV4_DHCP_FormOption(const NDIS_IPV4_INFO_STRU *pstIpV4Entity,
     *pusOptionLen += 3;
     pucOptionAddr += 3;
 
-    /* ×ÓÍøÑÚÂë */
+    /* å­ç½‘æŽ©ç  */
     pstOptionItem = (IPV4_DHCP_OPTION_ITEM_STRU *)((VOS_VOID*)pucOptionAddr);
     pstOptionItem->ucOptionType = IPV4_DHCP_OPTION_SUBNET_MASK;
     pstOptionItem->ucOptionLen  = IPV4_ADDR_LEN;
@@ -263,7 +263,7 @@ VOS_VOID IPV4_DHCP_FormOption(const NDIS_IPV4_INFO_STRU *pstIpV4Entity,
     *pusOptionLen += IPV4_ADDR_LEN + 2;
     pucOptionAddr += IPV4_ADDR_LEN + 2;
 
-    /* Ä¬ÈÏÍø¹Ø */
+    /* é»˜è®¤ç½‘å…³ */
     pstOptionItem = (IPV4_DHCP_OPTION_ITEM_STRU *)((VOS_VOID*)pucOptionAddr);
     pstOptionItem->ucOptionType = IPV4_DHCP_OPTION_ROUTER_IP;
     pstOptionItem->ucOptionLen  = IPV4_ADDR_LEN;
@@ -302,11 +302,11 @@ VOS_VOID IPV4_DHCP_FormOption(const NDIS_IPV4_INFO_STRU *pstIpV4Entity,
     *pusOptionLen += IPV4_ADDR_LEN + 2;
     pucOptionAddr += IPV4_ADDR_LEN + 2;
 
-    /*  ×âÆÚ */
+    /*  ç§ŸæœŸ */
     pstOptionItem = (IPV4_DHCP_OPTION_ITEM_STRU *)((VOS_VOID*)pucOptionAddr);
     pstOptionItem->ucOptionType = IPV4_DHCP_OPTION_LEASE_TIME;
     pstOptionItem->ucOptionLen  = IPV4_DHCP_OPTION_LEASE_TIME_LEN;
-    /* ×ª»»ÎªÍøÂç×Ö½ÚÐò */
+    /* è½¬æ¢ä¸ºç½‘ç»œå­—èŠ‚åº */
     ulTimeLen = IPV4_DHCP_LEASE_TIME;
     ulTimeLen = IP_HTONL(ulTimeLen);
     IP_MEM_CPY(pstOptionItem->aucOptionValue,&ulTimeLen,IPV4_DHCP_OPTION_LEASE_TIME_LEN);
@@ -356,7 +356,7 @@ VOS_VOID IPV4_DHCP_FormOption(const NDIS_IPV4_INFO_STRU *pstIpV4Entity,
         pucOptionAddr += ucWinsLen + 2;
     }
 
-    /*  End Option 0xff option½áÊø±êÖ¾*/
+    /*  End Option 0xff optionç»“æŸæ ‡å¿—*/
     *pucOptionAddr = 0xFF;
     *pusOptionLen += 1;
 
@@ -377,7 +377,7 @@ VOS_UINT32 IPV4_DHCP_FormOfferMsg(const IPV4_DHCP_ANALYSE_RESULT_STRU *pstDhcpAn
         return PS_FAIL;
     }
 
-    /*½«BUF Çå Áã*/
+    /*å°†BUF æ¸… é›¶*/
     VOS_MemSet(IPV4_DHCP_GET_BUFFER(), 0, ETH_MAX_FRAME_SIZE);
 
     ulDhcpOffset = ETH_MAC_HEADER_LEN + IPV4_FIX_HDR_LEN + IP_UDP_HDR_LEN;
@@ -385,16 +385,16 @@ VOS_UINT32 IPV4_DHCP_FormOfferMsg(const IPV4_DHCP_ANALYSE_RESULT_STRU *pstDhcpAn
 
     IPV4_DHCP_FormDhcpHdrStru(pstDhcpAnalyse,pucDhcpPktBuf);
 
-    /* ÉèÖÃyour ip address */
+    /* è®¾ç½®your ip address */
     IP_MEM_CPY(pucDhcpPktBuf + IPV4_DHCP_HEAD_YIADDR_OFFSET, \
                pstIpV4Entity->unUeIpInfo.aucIPAddr, IPV4_ADDR_LEN);
 
-    /* dhcp option ÉèÖÃ */
+    /* dhcp option è®¾ç½® */
     pucDhcpPktBuf += IPV4_DHCP_OPTION_OFFSET;
     IPV4_DHCP_FormOption(pstIpV4Entity,pucDhcpPktBuf, \
                          IPV4_DHCP_MSG_OFFER, &usDhcpOptionLen);
 
-    /* ·µ»ØÐ´ÈëµÄ³¤¶È */
+    /* è¿”å›žå†™å…¥çš„é•¿åº¦ */
     *pusLen = usDhcpOptionLen + IPV4_DHCP_OPTION_OFFSET;
 
     return PS_SUCC;
@@ -414,15 +414,15 @@ VOS_VOID IPV4_DHCP_FormAckMsg(const IPV4_DHCP_ANALYSE_RESULT_STRU *pstDhcpAnalys
     IP_NDIS_ASSERT(VOS_NULL_PTR != pstIpV4Entity);
     IP_NDIS_ASSERT(VOS_NULL_PTR != pusLen);
 
-    /*½«BUF Çå Áã*/
+    /*å°†BUF æ¸… é›¶*/
     VOS_MemSet(IPV4_DHCP_GET_BUFFER(), 0, ETH_MAX_FRAME_SIZE);
     ulDhcpOffset = ETH_MAC_HEADER_LEN + IPV4_FIX_HDR_LEN + IP_UDP_HDR_LEN;
     pucDhcpPktBuf = IPV4_DHCP_GET_BUFFER() + ulDhcpOffset;
 
-    /* ÉèÖÃDHCP±¨ÎÄÍ·ÖÐ¹Ì¶¨²¿·Ö */
+    /* è®¾ç½®DHCPæŠ¥æ–‡å¤´ä¸­å›ºå®šéƒ¨åˆ† */
     IPV4_DHCP_FormDhcpHdrStru(pstDhcpAnalyse,pucDhcpPktBuf);
 
-    /* ÉèÖÃyour ip address */
+    /* è®¾ç½®your ip address */
     IP_MEM_CPY(pucDhcpPktBuf + IPV4_DHCP_HEAD_YIADDR_OFFSET, \
                pstIpV4Entity->unUeIpInfo.aucIPAddr, IPV4_ADDR_LEN);
 
@@ -431,7 +431,7 @@ VOS_VOID IPV4_DHCP_FormAckMsg(const IPV4_DHCP_ANALYSE_RESULT_STRU *pstDhcpAnalys
     IPV4_DHCP_FormOption(pstIpV4Entity,pucDhcpPktBuf, \
                          IPV4_DHCP_MSG_ACK, &usDhcpOptionLen);
 
-    /* ·µ»ØÐ´ÈëµÄ³¤¶È */
+    /* è¿”å›žå†™å…¥çš„é•¿åº¦ */
     *pusLen = usDhcpOptionLen + IPV4_DHCP_OPTION_OFFSET;
 
     return;
@@ -451,7 +451,7 @@ VOS_VOID IPV4_DHCP_FormNackMsg(const IPV4_DHCP_ANALYSE_RESULT_STRU *pstDhcpAnaly
         return ;
     }
 
-    /*½«BUF Çå Áã*/
+    /*å°†BUF æ¸… é›¶*/
     VOS_MemSet(IPV4_DHCP_GET_BUFFER(), 0, ETH_MAX_FRAME_SIZE);
     ulDhcpOffset = ETH_MAC_HEADER_LEN + IPV4_FIX_HDR_LEN + IP_UDP_HDR_LEN;
     pucDhcpPktBuf = IPV4_DHCP_GET_BUFFER() + ulDhcpOffset;
@@ -479,11 +479,11 @@ VOS_VOID IPV4_DHCP_FormNackMsg(const IPV4_DHCP_ANALYSE_RESULT_STRU *pstDhcpAnaly
     usDhcpOptionLen   += IPV4_ADDR_LEN + 2;
     pucDhcpPktBuf     += IPV4_ADDR_LEN + 2;
 
-    /*  End Option 0xff option½áÊø±êÖ¾*/
+    /*  End Option 0xff optionç»“æŸæ ‡å¿—*/
     *pucDhcpPktBuf   = 0xFF;
     usDhcpOptionLen += 1;
 
-    /* ·µ»ØÐ´ÈëµÄ³¤¶È */
+    /* è¿”å›žå†™å…¥çš„é•¿åº¦ */
     *pusLen = usDhcpOptionLen + IPV4_DHCP_OPTION_OFFSET;
 
 
@@ -494,7 +494,7 @@ NDIS_IPV4_INFO_STRU * IPV4_DHCP_FindIPV4Entity(VOS_UINT8 ucExRabId)
     NDIS_ENTITY_STRU         *pstNdisEntity;
     NDIS_IPV4_INFO_STRU      *pstIpv4Info;
 
-    /*ÓÉµ÷ÓÃÕß±£Ö¤Èë²ÎExRabId¶ÔÓ¦Ò»¸öNDISÊµÌå*/
+    /*ç”±è°ƒç”¨è€…ä¿è¯å…¥å‚ExRabIdå¯¹åº”ä¸€ä¸ªNDISå®žä½“*/
     pstNdisEntity = NDIS_GetEntityByRabId(ucExRabId);
     if(VOS_NULL_PTR == pstNdisEntity)
     {
@@ -554,23 +554,23 @@ VOS_VOID IPV4_DHCP_SelectingRequestMsgProc(const IPV4_DHCP_ANALYSE_RESULT_STRU *
         return;
     }
 
-    /*ÅÐ¶Ïµ±Ç°ÏûÏ¢*/
+    /*åˆ¤æ–­å½“å‰æ¶ˆæ¯*/
     if ((pstDhcpAnalyse->unServerIPAddr.ulIpAddr == pstIpV4Entity->unGwIpInfo.ulIpAddr)
          &&(pstDhcpAnalyse->unRequestIPAddr.ulIpAddr == pstIpV4Entity->unUeIpInfo.ulIpAddr))
     {
 
-        /*Éú³ÉDHCP ACK²¢·¢ËÍ*/
+        /*ç”ŸæˆDHCP ACKå¹¶å‘é€*/
         IPV4_DHCP_FormAckMsg(pstDhcpAnalyse,pstIpV4Entity,&usDhcpAckLen);
         IPV4_DHCP_SendDhcpToEth(pstDhcpAnalyse,pstIpV4Entity,usDhcpAckLen,ucRabId);
 
         IPV4_DHCP_STAT_SEND_ACK(1);
 
-        /*ÉèÖÃIPµØÖ·ÎªÒÑ·ÖÅä*/
+        /*è®¾ç½®IPåœ°å€ä¸ºå·²åˆ†é…*/
         pstIpV4Entity->ulIpAssignStatus = IPV4_DHCP_ADDR_STATUS_ASSIGNED;
     }
     else
     {
-        /*Î´Ñ¡Ôñ±¾ DHCP Server,ÉèÖÃIPµØÖ·Î´·ÖÅä*/
+        /*æœªé€‰æ‹©æœ¬ DHCP Server,è®¾ç½®IPåœ°å€æœªåˆ†é…*/
         pstIpV4Entity->ulIpAssignStatus = IPV4_DHCP_ADDR_STATUS_FREE;
         IP_ERROR_LOG("IPV4_DHCP_SelectingRequestMsgProc : The Client Has not Select Local IP");
     }
@@ -592,7 +592,7 @@ VOS_VOID IPV4_DHCP_OtherRequestMsgProc( const IPV4_DHCP_ANALYSE_RESULT_STRU *pst
     }
 
 
-    /*ÈôÇëÇóIPÍ¬UE IPÏàÍ¬£¬Ôò»ØACK;·ñÔò»Ø¸´NACK*/
+    /*è‹¥è¯·æ±‚IPåŒUE IPç›¸åŒï¼Œåˆ™å›žACK;å¦åˆ™å›žå¤NACK*/
     if (pstDhcpAnalyse->unClientIPAddr.ulIpAddr == pstIpV4Entity->unUeIpInfo.ulIpAddr)
     {
         IPV4_DHCP_FormAckMsg(pstDhcpAnalyse,pstIpV4Entity,&usDhcpAckLen);
@@ -625,7 +625,7 @@ VOS_VOID IPV4_DHCP_InitRebootRequestProc( const IPV4_DHCP_ANALYSE_RESULT_STRU *p
         return;
     }
 
-    /*ÈôÇëÇóIPÍ¬UE IPÏàÍ¬£¬Ôò»ØACK;·ñÔò»Ø¸´NACK*/
+    /*è‹¥è¯·æ±‚IPåŒUE IPç›¸åŒï¼Œåˆ™å›žACK;å¦åˆ™å›žå¤NACK*/
     if (pstDhcpAnalyse->unRequestIPAddr.ulIpAddr == pstIpV4Entity->unUeIpInfo.ulIpAddr)
     {
         IPV4_DHCP_FormAckMsg(pstDhcpAnalyse,pstIpV4Entity,&usDhcpAckLen);
@@ -717,7 +717,7 @@ VOS_VOID IPV4_DHCP_ReleaseMsgProc(const IPV4_DHCP_ANALYSE_RESULT_STRU *pstDhcpAn
         return;
     }
 
-    /*ÐÞ¸Ä·ÖÅä×´Ì¬ : Î´·ÖÅä*/
+    /*ä¿®æ”¹åˆ†é…çŠ¶æ€ : æœªåˆ†é…*/
     pstIpV4Entity->ulIpAssignStatus = IPV4_DHCP_ADDR_STATUS_FREE;
     /*Other Operation : FFS*/
 
@@ -767,13 +767,13 @@ VOS_VOID IPV4_DHCP_ProcDhcpMsg(IPV4_DHCP_ANALYSE_RESULT_STRU *pstDhcpAnalyse, VO
             break;
 
         case IPV4_DHCP_MSG_DECLINE:
-            /* µ÷ÓÃDECLINE´¦Àíº¯Êý */
+            /* è°ƒç”¨DECLINEå¤„ç†å‡½æ•° */
             IP_ERROR_LOG("IP_DHCPV4SERVER_ProcRabmDataInd:DECLINE Msg is received!");
             IPV4_DHCP_STAT_RECV_OTHER_TYPE_MSG(1);
             break;
 
         case IPV4_DHCP_MSG_INFORM:
-            /* µ÷ÓÃINFORM´¦Àíº¯Êý */
+            /* è°ƒç”¨INFORMå¤„ç†å‡½æ•° */
             IP_ERROR_LOG("IP_DHCPV4SERVER_ProcRabmDataInd:INFORM Msg is received!");
             IPV4_DHCP_STAT_RECV_OTHER_TYPE_MSG(1);
             break;
@@ -809,7 +809,7 @@ VOS_VOID IPV4_DHCP_AnalyseDhcpPkt( VOS_UINT8                     *pucDhcp,
         return;
     }
 
-    /*¼ÇÂ¼DHCP¹Ì¶¨Í·ÖÐµÄÐÅÏ¢*/
+    /*è®°å½•DHCPå›ºå®šå¤´ä¸­çš„ä¿¡æ¯*/
     pstDhcpFixHdr = (IPV4_DHCP_PROTOCL_STRU *)((VOS_VOID*)pucDhcp);
     pstAnalyseRst->ulTransactionID = pstDhcpFixHdr->ulTransactionID;
     pstAnalyseRst->unClientIPAddr.ulIpAddr = pstDhcpFixHdr->unClientIPAddr.ulIpAddr;
@@ -870,20 +870,20 @@ VOS_UINT32 IPV4_DHCP_IsDhcpPacket(VOS_UINT8  *pucIpPkt)
         return PS_FALSE;
     }
 
-    /*·ÇIPv4Êý¾Ý°ü*/
+    /*éžIPv4æ•°æ®åŒ…*/
     pstIpHdr = (ETH_IPFIXHDR_STRU *)((VOS_VOID*)pucIpPkt);
     if (IP_IPV4_VERSION != pstIpHdr->ucIpVer)
     {
         return PS_FALSE;
     }
 
-    /*·ÇUDP°ü*/
+    /*éžUDPåŒ…*/
     if (IP_PROTOCOL_UDP != pstIpHdr->ucProtocol)
     {
         return PS_FALSE;
     }
 
-    /*¶Ë¿ÚºÅ67*/
+    /*ç«¯å£å·67*/
     pstUdpHdr = (ETH_UDPHDR_STRU *)((VOS_VOID*)(pucIpPkt + (pstIpHdr->ucIpHdrLen << 2)));
     if (UDP_DHCP_SERVICE_PORT != pstUdpHdr->usDstPort)
     {

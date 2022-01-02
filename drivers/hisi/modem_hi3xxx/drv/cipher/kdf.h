@@ -10,7 +10,7 @@
 extern "C" {
 #endif
  
-/* ´íÎóÂë */
+/* é”™è¯¯ç  */
 #define CIPHER_SUCCESS   0
 
 
@@ -35,36 +35,36 @@ extern "C" {
 
 typedef enum tagKDF_SHA_KEY_SOURCE_E
 {
-    SHA_KEY_SOURCE_DDR,             /*sha_keyÀ´Ô´ÓÚinput pointÖ¸¶¨µÄµØÖ·¿Õ¼ä*/
-    SHA_KEY_SOURCE_KEYRAM,          /*sha_keyÀ´Ô´ÓÚÄÚ²¿KeyRam*/
-    SHA_KEY_SOURCE_FOLLOW,          /*sha_keyÀ´Ô´ÓÚÉÏ´ÎKDF²Ù×÷µÄsha_key*/
-    SHA_KEY_SOURCE_RESULT,          /*sha_keyÀ´Ô´ÓÚÉÏÒ»´ÎKDF²Ù×÷µÄ½á¹û*/
+    SHA_KEY_SOURCE_DDR,             /*sha_keyæ¥æºäºinput pointæŒ‡å®šçš„åœ°å€ç©ºé—´*/
+    SHA_KEY_SOURCE_KEYRAM,          /*sha_keyæ¥æºäºå†…éƒ¨KeyRam*/
+    SHA_KEY_SOURCE_FOLLOW,          /*sha_keyæ¥æºäºä¸Šæ¬¡KDFæ“ä½œçš„sha_key*/
+    SHA_KEY_SOURCE_RESULT,          /*sha_keyæ¥æºäºä¸Šä¸€æ¬¡KDFæ“ä½œçš„ç»“æœ*/
     SHA_KEY_SOURCE_MAX
 }KDF_SHA_KEY_SOURCE_E;
 
 typedef enum tagKDF_SHA_S_SOURCE_E
 {
-    SHA_S_SOURCE_DDR,               /*sha_sÀ´Ô´ÓÚinput pointÖ¸¶¨µÄµØÖ·¿Õ¼ä*/
-    SHA_S_SOURCE_KEYRAM,            /*sha_sÀ´Ô´ÓÚÄÚ²¿KeyRam*/
+    SHA_S_SOURCE_DDR,               /*sha_sæ¥æºäºinput pointæŒ‡å®šçš„åœ°å€ç©ºé—´*/
+    SHA_S_SOURCE_KEYRAM,            /*sha_sæ¥æºäºå†…éƒ¨KeyRam*/
     SHA_S_SOURCE_MAX
 }KDF_SHA_S_SOURCE_E;
 
-/* CIPHERÍ¨ÖªÀàĞÍ */
+/* CIPHERé€šçŸ¥ç±»å‹ */
 typedef enum tagCIPHER_NOTIFY_STAT_E
 {
-    CIPHER_STAT_OK = 0,           /* ³É¹¦Íê³É */
-    CIPHER_STAT_CHECK_ERR = 1,    /* ÍêÕûĞÔ¼ì²é´íÎó */
+    CIPHER_STAT_OK = 0,           /* æˆåŠŸå®Œæˆ */
+    CIPHER_STAT_CHECK_ERR = 1,    /* å®Œæ•´æ€§æ£€æŸ¥é”™è¯¯ */
     CIPHER_STAT_BUTTOM
 }CIPHER_NOTIFY_STAT_E;
 
-/* KDFÊ¹ÓÃµÄBD½á¹¹*/
+/* KDFä½¿ç”¨çš„BDç»“æ„*/
 typedef struct tagKDF_BD_SCPT_S
 {
     u32 u32KdfConfig;
     u32 u32Address;
 }KDF_BD_SCPT_S;
 
-/* KDFÊ¹ÓÃµÄRD½á¹¹*/
+/* KDFä½¿ç”¨çš„RDç»“æ„*/
 typedef struct tagKDF_RD_SCPT_S
 {
     u32 u32Address;
@@ -73,13 +73,13 @@ typedef struct tagKDF_RD_SCPT_S
 
 typedef struct tagKDF_BDCONFIG_INFO_S
 {
-    KDF_SHA_KEY_SOURCE_E enShaKeySource;    /*sha_keyÀ´Ô´*/
-    KDF_SHA_S_SOURCE_E   enShaSSource;      /*sha_sÀ´Ô´*/
-    u32                  u32ShaKeyIndex;    /*sha_keyÀ´Ô´ÓÚKeyRamÊ±£¬ÆäÔÚkeyRamÖĞµÄË÷Òı*/
-    u32                  u32ShaSIndex;      /*sha_sÀ´Ô´ÓÚKeyRamÊ±£¬ÆäÔÚkeyRamÖĞµÄË÷Òı*/
-    u32                  u32Length;         /*KDFÔËËã×÷Îªsha_sµÄ³¤¶È*/
-    u32                  u32DestIndex;      /*sha_result_snÔÚkey_ramÖĞµÄÎ»ÖÃ*/
-    void *               pAddress;          /*Ä¿µÄ(Ô´)µØÖ·*/
+    KDF_SHA_KEY_SOURCE_E enShaKeySource;    /*sha_keyæ¥æº*/
+    KDF_SHA_S_SOURCE_E   enShaSSource;      /*sha_sæ¥æº*/
+    u32                  u32ShaKeyIndex;    /*sha_keyæ¥æºäºKeyRamæ—¶ï¼Œå…¶åœ¨keyRamä¸­çš„ç´¢å¼•*/
+    u32                  u32ShaSIndex;      /*sha_sæ¥æºäºKeyRamæ—¶ï¼Œå…¶åœ¨keyRamä¸­çš„ç´¢å¼•*/
+    u32                  u32Length;         /*KDFè¿ç®—ä½œä¸ºsha_sçš„é•¿åº¦*/
+    u32                  u32DestIndex;      /*sha_result_snåœ¨key_ramä¸­çš„ä½ç½®*/
+    void *               pAddress;          /*ç›®çš„(æº)åœ°å€*/
 }KDF_BDCONFIG_INFO_S;
 
 #define KEY_INDEX    0
@@ -99,9 +99,9 @@ struct kdf_s
 };
  
 /**************************************************************************
-  ºê¶¨Òå
+  å®å®šä¹‰
 **************************************************************************/
-/* ×¢ÒâCIPHER´íÎóÂëÒªÎª¸ºÖµ */
+/* æ³¨æ„CIPHERé”™è¯¯ç è¦ä¸ºè´Ÿå€¼ */
 #define CIPHER_ERROR_BASE               0x10004000
 
 typedef enum tagCIPHER_ERR_CODE_E

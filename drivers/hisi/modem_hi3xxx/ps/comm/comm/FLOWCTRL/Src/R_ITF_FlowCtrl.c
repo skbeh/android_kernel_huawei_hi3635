@@ -2,7 +2,7 @@
 
 
 /******************************************************************************
-   1 Í·ÎÄ¼þ°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "R_ITF_FlowCtrl.h"
 #include "om.h"
@@ -21,26 +21,26 @@
 
 
 /******************************************************************************
-   2 Íâ²¿º¯Êý±äÁ¿ÉùÃ÷
+   2 å¤–éƒ¨å‡½æ•°å˜é‡å£°æ˜Ž
 ******************************************************************************/
 extern VOS_UINT32   OM_TraceMsgHook(VOS_VOID *pMsg);
 
 extern VOS_UINT32 IPSCH_FeatureSwitchIsOn(VOS_VOID);
 
 /******************************************************************************
-   3 Ë½ÓÐ¶¨Òå
+   3 ç§æœ‰å®šä¹‰
 ******************************************************************************/
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e(767)*/
 #define    THIS_FILE_ID                    PS_FILE_ID_R_ITF_FLOW_CTRL_C
 
 
 /******************************************************************************
-   4 È«¾Ö±äÁ¿¶¨Òå
+   4 å…¨å±€å˜é‡å®šä¹‰
 ******************************************************************************/
-/* R½Ó¿ÚÁ÷¿ØÊµÌå¶¨Òå */
+/* RæŽ¥å£æµæŽ§å®žä½“å®šä¹‰ */
 R_ITF_FLOW_CTRL_STRU                    g_stRItfFlowCtrl;
 VOS_UINT32                              g_ulRItfFlowCtrlProTime = 0;
 R_ITF_FLOW_CTRL_CONFIG_STRU             g_stRItfFlowCtrlConfig;
@@ -53,7 +53,7 @@ VOS_UINT32      g_ulRItfFlowCtrlDiscardNum = 20;
 
 
 /******************************************************************************
-   6 º¯ÊýÊµÏÖ
+   6 å‡½æ•°å®žçŽ°
 ******************************************************************************/
 /*lint -save -e958 */
 
@@ -99,18 +99,18 @@ VOS_VOID R_ITF_TtfMemFreeEvent(VOS_UINT32 ulMemUsedCnt, VOS_UINT32 ulMemUsedSize
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_GPRS_SetFlowCtrl
- ¹¦ÄÜÃèÊö  : Æô¶¯GÄ£GPRSÁ÷¿Ø
- ÊäÈë²ÎÊý  : usMsgId - ÏûÏ¢ID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, VOS_OK - ³É¹¦, ÆäËü - Ê§°Ü
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_GPRS_SetFlowCtrl
+ åŠŸèƒ½æè¿°  : å¯åŠ¨Gæ¨¡GPRSæµæŽ§
+ è¾“å…¥å‚æ•°  : usMsgId - æ¶ˆæ¯ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, VOS_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ19ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ19æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 R_ITF_SetGprsFlowCtrl(VOS_VOID)
@@ -120,20 +120,20 @@ VOS_UINT32 R_ITF_SetGprsFlowCtrl(VOS_VOID)
 
     pstFcSetGprsInd = (FC_SET_GPRS_FLOWCTRL_IND_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(UEPS_PID_FLOWCTRL_C, sizeof(FC_SET_GPRS_FLOWCTRL_IND_STRU));
 
-    /* ÉêÇëÏûÏ¢Ê§°Ü */
+    /* ç”³è¯·æ¶ˆæ¯å¤±è´¥ */
     if (VOS_NULL_PTR == pstFcSetGprsInd)
     {
-        /* ¸æ¾¯´òÓ¡ */
+        /* å‘Šè­¦æ‰“å° */
         LogPrint("R_ITF_SetGprsFlowCtrl, ERROR, alloc msg fail\r\n");
         return VOS_ERR;
     }
 
-    /* ÌîÐ´ÏûÏ¢Ãû×Ö */
+    /* å¡«å†™æ¶ˆæ¯åå­— */
     pstFcSetGprsInd->usMsgName          = ID_FC_SET_GPRS_FLOWCTRL_IND;
     pstFcSetGprsInd->ulReceiverCpuId    = VOS_LOCAL_CPUID;
     pstFcSetGprsInd->ulReceiverPid      = UEPS_PID_FLOWCTRL_A;
 
-    /* ·¢ÏûÏ¢ */
+    /* å‘æ¶ˆæ¯ */
     PS_SEND_MSG(UEPS_PID_FLOWCTRL_C, pstFcSetGprsInd);
 
     return VOS_OK;
@@ -146,22 +146,22 @@ VOS_UINT32 R_ITF_GprsFlowCtrlNotify(VOS_VOID)
     pstFcGprsNotify = (FC_GPRS_FLOWCTRL_NOTIFY_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
         UEPS_PID_FLOWCTRL_C, sizeof(FC_GPRS_FLOWCTRL_NOTIFY_STRU));
 
-    /* ÉêÇëÏûÏ¢Ê§°Ü */
+    /* ç”³è¯·æ¶ˆæ¯å¤±è´¥ */
     if (VOS_NULL_PTR == pstFcGprsNotify)
     {
-        /* ¸æ¾¯´òÓ¡ */
+        /* å‘Šè­¦æ‰“å° */
         LogPrint("R_ITF_StopGprsFlowCtrl, ERROR, alloc msg fail\r\n");
         return VOS_ERR;
     }
 
-    /* ÌîÐ´ÏûÏ¢Ãû×Ö */
+    /* å¡«å†™æ¶ˆæ¯åå­— */
     pstFcGprsNotify->usMsgName         = ID_FC_GPRS_C_FLOWCTRL_NOTIFY;
 
     pstFcGprsNotify->ulReceiverCpuId   = VOS_LOCAL_CPUID;
     pstFcGprsNotify->ulReceiverPid     = UEPS_PID_FLOWCTRL_C;
 
 
-    /* ·¢ÏûÏ¢ */
+    /* å‘æ¶ˆæ¯ */
     PS_SEND_MSG(UEPS_PID_FLOWCTRL_C, pstFcGprsNotify);
 
     return VOS_OK;
@@ -197,7 +197,7 @@ VOS_UINT32 R_ITF_FlowCtrlCntIsOverFlow(VOS_VOID)
 
     if (RITF_FLOWCTRL_WRED_THRESHOLD < g_ulRItfFlowCtrlCnt)
     {
-        /* ½øÈëÁ÷¿ØÁÙ½çÇø */
+        /* è¿›å…¥æµæŽ§ä¸´ç•ŒåŒº */
         lLockKey            = VOS_SplIMP();
 
         g_ulRItfFlowCtrlCnt = 0;
@@ -210,18 +210,18 @@ VOS_UINT32 R_ITF_FlowCtrlCntIsOverFlow(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_GPRS_StopFlowCtrl
- ¹¦ÄÜÃèÊö  : Í£Ö¹GÄ£GPRSÁ÷¿Ø
- ÊäÈë²ÎÊý  : usMsgId - ÏûÏ¢ID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ²Ù×÷³É¹¦Óë·ñ, VOS_OK - ³É¹¦, ÆäËü - Ê§°Ü
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_GPRS_StopFlowCtrl
+ åŠŸèƒ½æè¿°  : åœæ­¢Gæ¨¡GPRSæµæŽ§
+ è¾“å…¥å‚æ•°  : usMsgId - æ¶ˆæ¯ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ“ä½œæˆåŠŸä¸Žå¦, VOS_OK - æˆåŠŸ, å…¶å®ƒ - å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ19ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ19æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 R_ITF_StopGprsFlowCtrl(VOS_VOID)
@@ -231,22 +231,22 @@ VOS_UINT32 R_ITF_StopGprsFlowCtrl(VOS_VOID)
     pstFcStopGprsInd = (FC_SET_GPRS_FLOWCTRL_IND_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
         UEPS_PID_FLOWCTRL_C, sizeof(FC_SET_GPRS_FLOWCTRL_IND_STRU));
 
-    /* ÉêÇëÏûÏ¢Ê§°Ü */
+    /* ç”³è¯·æ¶ˆæ¯å¤±è´¥ */
     if (VOS_NULL_PTR == pstFcStopGprsInd)
     {
-        /* ¸æ¾¯´òÓ¡ */
+        /* å‘Šè­¦æ‰“å° */
         LogPrint("R_ITF_StopGprsFlowCtrl, ERROR, alloc msg fail\r\n");
         return VOS_ERR;
     }
 
-    /* ÌîÐ´ÏûÏ¢Ãû×Ö */
+    /* å¡«å†™æ¶ˆæ¯åå­— */
     pstFcStopGprsInd->usMsgName         = ID_FC_STOP_GPRS_FLOWCTRL_IND;
 
     pstFcStopGprsInd->ulReceiverCpuId   = VOS_LOCAL_CPUID;
     pstFcStopGprsInd->ulReceiverPid     = UEPS_PID_FLOWCTRL_A;
 
 
-    /* ·¢ÏûÏ¢ */
+    /* å‘æ¶ˆæ¯ */
     PS_SEND_MSG(UEPS_PID_FLOWCTRL_C, pstFcStopGprsInd);
 
     return VOS_OK;
@@ -263,21 +263,21 @@ VOS_UINT32 R_ITF_ExcFlowCtrl
 
     if ( R_ITF_FLOW_CTRL_START == ulFlowCtrlCmd )
     {
-        /* PSÈÚºÏºó, ÕâÀïÖ»¼à²âÄÚ´æ, ¶øÆäÓà¼à²â¶ÔÏóÈ«²¿Í³Ò»µ½FCµÄ¿ò¼ÜÏÂ */
+        /* PSèžåˆåŽ, è¿™é‡Œåªç›‘æµ‹å†…å­˜, è€Œå…¶ä½™ç›‘æµ‹å¯¹è±¡å…¨éƒ¨ç»Ÿä¸€åˆ°FCçš„æ¡†æž¶ä¸‹ */
         if ((R_ITF_FLOW_CTRL_TYPE_MEM_CNT == ulFlowCtrlType)
             || (R_ITF_FLOW_CTRL_TYPE_MEM_SIZE == ulFlowCtrlType))
         {
-            ulResult        = R_ITF_SetGprsFlowCtrl();    /* µ÷ÓÃÁ÷¿Øº¯Êý */
+            ulResult        = R_ITF_SetGprsFlowCtrl();    /* è°ƒç”¨æµæŽ§å‡½æ•° */
             *pulNeedTrace   = PS_TRUE;
         }
     }
     else if ( R_ITF_FLOW_CTRL_STOP == ulFlowCtrlCmd )
     {
-        /* PSÈÚºÏºó, ÕâÀïÖ»¼à²âÄÚ´æ, ¶øÆäÓà¼à²â¶ÔÏóÈ«²¿Í³Ò»µ½FCµÄ¿ò¼ÜÏÂ */
+        /* PSèžåˆåŽ, è¿™é‡Œåªç›‘æµ‹å†…å­˜, è€Œå…¶ä½™ç›‘æµ‹å¯¹è±¡å…¨éƒ¨ç»Ÿä¸€åˆ°FCçš„æ¡†æž¶ä¸‹ */
         if ((R_ITF_FLOW_CTRL_TYPE_MEM_CNT == ulFlowCtrlType)
             || (R_ITF_FLOW_CTRL_TYPE_MEM_SIZE == ulFlowCtrlType))
         {
-            ulResult        = R_ITF_StopGprsFlowCtrl();    /* µ÷ÓÃÁ÷¿Ø½â³ýº¯Êý */
+            ulResult        = R_ITF_StopGprsFlowCtrl();    /* è°ƒç”¨æµæŽ§è§£é™¤å‡½æ•° */
             *pulNeedTrace   = PS_TRUE;
         }
     }
@@ -300,8 +300,8 @@ VOS_UINT32 R_ITF_SetFlowCtrl(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNewLev)
     VOS_INT32                           lLockKey;
     VOS_UINT32                          ulOldMask;
     VOS_UINT32                          ulCurrTick;
-    VOS_UINT32                          ulNeedExec;              /* ÊÇ·ñÐèÒª½øÐÐÁ÷¿Ø»òÕß½â³ýÁ÷¿Ø²Ù×÷ */
-    VOS_UINT32                          ulResult;                /* Á÷¿ØÖ´ÐÐ½á¹û */
+    VOS_UINT32                          ulNeedExec;              /* æ˜¯å¦éœ€è¦è¿›è¡ŒæµæŽ§æˆ–è€…è§£é™¤æµæŽ§æ“ä½œ */
+    VOS_UINT32                          ulResult;                /* æµæŽ§æ‰§è¡Œç»“æžœ */
 
 
     if (R_ITF_FLOW_CTRL_TYPE_BUTT <= ulFlowCtrlType)
@@ -309,7 +309,7 @@ VOS_UINT32 R_ITF_SetFlowCtrl(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNewLev)
         return VOS_ERR;
     }
 
-    /* ½øÈëÁ÷¿ØÁÙ½çÇø */
+    /* è¿›å…¥æµæŽ§ä¸´ç•ŒåŒº */
     lLockKey            = VOS_SplIMP();
 
     ulNeedExec          = PS_FALSE;
@@ -322,11 +322,11 @@ VOS_UINT32 R_ITF_SetFlowCtrl(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNewLev)
         pFlowLev->ulMaxLev = ulNewLev;
     }
 
-    /* Á÷¿ØÊµÌåÀï±£´æµÄµ±Ç°ÖµÐèÒª×ö»¥³â±£»¤ */
+    /* æµæŽ§å®žä½“é‡Œä¿å­˜çš„å½“å‰å€¼éœ€è¦åšäº’æ–¥ä¿æŠ¤ */
     pFlowLev->ulCurrLev = ulNewLev;
     ulOldMask           = g_stRItfFlowCtrl.ulCtrlMask;
 
-    /* ´¦ÓÚ½âÁ÷¿Ø×´Ì¬Ê±³¬¹ý·§Öµ, Æô¶¯Á÷¿Ø */
+    /* å¤„äºŽè§£æµæŽ§çŠ¶æ€æ—¶è¶…è¿‡é˜€å€¼, å¯åŠ¨æµæŽ§ */
     if (ulNewLev >= pFlowLev->ulWarningLev)
     {
         if (0 == ulOldMask)
@@ -340,17 +340,17 @@ VOS_UINT32 R_ITF_SetFlowCtrl(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNewLev)
         }
     }
 
-    /* Àë¿ªÁ÷¿ØÁÙ½çÇø */
+    /* ç¦»å¼€æµæŽ§ä¸´ç•ŒåŒº */
     VOS_Splx(lLockKey);
 
     if (PS_TRUE == ulNeedExec)
     {
-        ulResult        = R_ITF_GprsFlowCtrlNotify();    /* µ÷ÓÃÁ÷¿Øº¯Êý */
+        ulResult        = R_ITF_GprsFlowCtrlNotify();    /* è°ƒç”¨æµæŽ§å‡½æ•° */
         R_ITF_UpdateFlowCtrlCnt();
 
         if (VOS_OK == ulResult)
         {
-            /* ½øÐÐÁ÷¿Ø»òÕß½â³ýÁ÷¿Ø²Ù×÷µÄÍ¬Ê±, ½øÐÐ¿É²â¿ÉÎ¬ */
+            /* è¿›è¡ŒæµæŽ§æˆ–è€…è§£é™¤æµæŽ§æ“ä½œçš„åŒæ—¶, è¿›è¡Œå¯æµ‹å¯ç»´ */
             R_ITF_MntnFlowCtrlEvent(ulFlowCtrlType, ulNewLev, R_ITF_FLOW_CTRL_START, ulResult);
         }
     }
@@ -363,8 +363,8 @@ VOS_UINT32 R_ITF_ClearFlowCtrl(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNewLev)
     R_ITF_FLOW_LEV_STRU    *pFlowLev;
     VOS_INT32               lLockKey;
     VOS_UINT32              ulCurrTick;
-    VOS_UINT32              ulNeedExec;              /* ÊÇ·ñÐèÒª½øÐÐÁ÷¿Ø»òÕß½â³ýÁ÷¿Ø²Ù×÷ */
-    VOS_UINT32              ulResult;                /* Á÷¿ØÖ´ÐÐ½á¹û */
+    VOS_UINT32              ulNeedExec;              /* æ˜¯å¦éœ€è¦è¿›è¡ŒæµæŽ§æˆ–è€…è§£é™¤æµæŽ§æ“ä½œ */
+    VOS_UINT32              ulResult;                /* æµæŽ§æ‰§è¡Œç»“æžœ */
     VOS_UINT32              ulUpdatedMask;
 
 
@@ -373,7 +373,7 @@ VOS_UINT32 R_ITF_ClearFlowCtrl(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNewLev)
         return VOS_ERR;
     }
 
-    /* ½øÈëÁ÷¿ØÁÙ½çÇø */
+    /* è¿›å…¥æµæŽ§ä¸´ç•ŒåŒº */
     lLockKey            = VOS_SplIMP();
 
     ulNeedExec          = PS_FALSE;
@@ -381,10 +381,10 @@ VOS_UINT32 R_ITF_ClearFlowCtrl(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNewLev)
     pFlowLev            = &g_stRItfFlowCtrl.astFlowCtrl[ulFlowCtrlType];
     ulCurrTick          = VOS_GetTick();
 
-    /* Á÷¿ØÊµÌåÀï±£´æµÄµ±Ç°ÖµÐèÒª×ö»¥³â±£»¤ */
+    /* æµæŽ§å®žä½“é‡Œä¿å­˜çš„å½“å‰å€¼éœ€è¦åšäº’æ–¥ä¿æŠ¤ */
     pFlowLev->ulCurrLev = ulNewLev;
 
-    /* ²¢Ã»ÓÐÒòÎª¸ÃÖÖÀàÐÍµ¼ÖÂÁ÷¿Ø, ÎÞÐë½â³ýÁ÷¿Ø */
+    /* å¹¶æ²¡æœ‰å› ä¸ºè¯¥ç§ç±»åž‹å¯¼è‡´æµæŽ§, æ— é¡»è§£é™¤æµæŽ§ */
     if (0 == (g_stRItfFlowCtrl.ulCtrlMask & pFlowLev->ulMask))
     {
         VOS_Splx(lLockKey);
@@ -397,7 +397,7 @@ VOS_UINT32 R_ITF_ClearFlowCtrl(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNewLev)
         {
             ulUpdatedMask = g_stRItfFlowCtrl.ulCtrlMask &  (~(pFlowLev->ulMask));
 
-            /*ËùÓÐÁ÷¿ØÌõ¼þ¶¼½â³ýµÄÇé¿öÏÂ£¬Ö´ÐÐ½â³ýÁ÷¿Ø²Ù×÷*/
+            /*æ‰€æœ‰æµæŽ§æ¡ä»¶éƒ½è§£é™¤çš„æƒ…å†µä¸‹ï¼Œæ‰§è¡Œè§£é™¤æµæŽ§æ“ä½œ*/
             if ( 0 == ulUpdatedMask )
             {
                 ulNeedExec      = PS_TRUE;
@@ -410,16 +410,16 @@ VOS_UINT32 R_ITF_ClearFlowCtrl(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNewLev)
         }
     }
 
-    /* Àë¿ªÁ÷¿ØÁÙ½çÇø */
+    /* ç¦»å¼€æµæŽ§ä¸´ç•ŒåŒº */
     VOS_Splx(lLockKey);
 
     if (PS_TRUE == ulNeedExec)
     {
-        ulResult        = R_ITF_GprsFlowCtrlNotify();    /* µ÷ÓÃÁ÷¿Ø½â³ýº¯Êý */
+        ulResult        = R_ITF_GprsFlowCtrlNotify();    /* è°ƒç”¨æµæŽ§è§£é™¤å‡½æ•° */
 
         if (VOS_OK == ulResult)
         {
-            /*Á÷¿ØÊÂ¼þ¿ÉÎ¬¿É²â*/
+            /*æµæŽ§äº‹ä»¶å¯ç»´å¯æµ‹*/
             R_ITF_MntnFlowCtrlEvent(ulFlowCtrlType, ulNewLev, R_ITF_FLOW_CTRL_STOP, ulResult);
         }
     }
@@ -447,7 +447,7 @@ VOS_VOID R_ITF_SetFlowLev(VOS_UINT32 ulFlowCtrlType, VOS_UINT32 ulNormalLev, VOS
     vos_printf("\r\nFlowCtrltype:%u, NormalLev:%u, ulWarningLev:%u\r\n",ulFlowCtrlType,
         pFlowLev->ulNormalLev, pFlowLev->ulWarningLev);
 }/* R_ITF_SetFlowLev */
-/* ·§ÖµÊý¾Ý²âÊÔ´úÂë END */
+/* é˜€å€¼æ•°æ®æµ‹è¯•ä»£ç  END */
 
 
 VOS_VOID R_ITF_SetLFlowLev(VOS_VOID)
@@ -455,9 +455,9 @@ VOS_VOID R_ITF_SetLFlowLev(VOS_VOID)
     R_ITF_FLOW_LEV_STRU    *pFlowLev;
     VOS_INT32               lLockKey;
 
-    /* PSÈÚºÏºó, LÄ£ÔÚCºËÁ÷¿ØÊÇÔÚAºËÉÏ¿ØÖÆ, Òò´ËÔÚCºËÉÏ½«ÃÅÏÞ¸ÄÎªÎÞÇî´ó, ÕâÑù²»ÔÙÆðÁ÷¿Ø */
+    /* PSèžåˆåŽ, Læ¨¡åœ¨Cæ ¸æµæŽ§æ˜¯åœ¨Aæ ¸ä¸ŠæŽ§åˆ¶, å› æ­¤åœ¨Cæ ¸ä¸Šå°†é—¨é™æ”¹ä¸ºæ— ç©·å¤§, è¿™æ ·ä¸å†èµ·æµæŽ§ */
 
-    /* ½øÈëÁ÷¿ØÁÙ½çÇø */
+    /* è¿›å…¥æµæŽ§ä¸´ç•ŒåŒº */
     lLockKey            = VOS_SplIMP();
 
     pFlowLev                = &g_stRItfFlowCtrl.astFlowCtrl[R_ITF_FLOW_CTRL_TYPE_MEM_CNT];
@@ -482,12 +482,12 @@ VOS_VOID R_ITF_SetLFlowLev(VOS_VOID)
         pFlowLev->ulNormalLev   = 0xffffffff;
     }
 
-    /* Àë¿ªÁ÷¿ØÁÙ½çÇø */
+    /* ç¦»å¼€æµæŽ§ä¸´ç•ŒåŒº */
     VOS_Splx(lLockKey);
 
     R_ITF_ResetFlowCtrl();
 
-    /* µ½LÄ£ÏÂ, ÄÚ´æÔÚAºË¼à²â, Òò´ËCºËÉÏ²»ÐèÒªÄÚ´æ¼à²â¹³×Ó */
+    /* åˆ°Læ¨¡ä¸‹, å†…å­˜åœ¨Aæ ¸ç›‘æµ‹, å› æ­¤Cæ ¸ä¸Šä¸éœ€è¦å†…å­˜ç›‘æµ‹é’©å­ */
     TTF_MemRegEventCallBack(TTF_MEM_POOL_ID_UL_DATA, VOS_NULL_PTR, VOS_NULL_PTR);
 
     return;
@@ -497,7 +497,7 @@ VOS_VOID R_ITF_SetLFlowLev(VOS_VOID)
 
 /******************************************************************************
  Prototype      : R_ITF_SetWFlowLev
- Description    : ÒµÎñÇÐ»»ÎªWÄ£Ê±£¬¸ü¸ÄÁ÷¿ØÃÅÏÞ
+ Description    : ä¸šåŠ¡åˆ‡æ¢ä¸ºWæ¨¡æ—¶ï¼Œæ›´æ”¹æµæŽ§é—¨é™
  Input          :
  Output         :
  Return Value   :
@@ -506,7 +506,7 @@ VOS_VOID R_ITF_SetLFlowLev(VOS_VOID)
 
  History        : ---
   1.Date        : 2009-02-27
-    Author      : ²ÌÅô48156
+    Author      : è”¡é¹48156
     Modification: Created function
 ******************************************************************************/
 VOS_VOID R_ITF_SetWFlowLev(VOS_VOID)
@@ -514,8 +514,8 @@ VOS_VOID R_ITF_SetWFlowLev(VOS_VOID)
     R_ITF_FLOW_LEV_STRU    *pFlowLev;
     VOS_INT32               lLockKey;
 
-    /* PSÈÚºÏºó, WÄ£ÔÚCºËÁ÷¿ØÊÇÔÚAºËÉÏ¿ØÖÆ, Òò´ËÔÚCºËÉÏ½«ÃÅÏÞ¸ÄÎªÎÞÇî´ó, ÕâÑù²»ÔÙÆðÁ÷¿Ø */
-    /* ½øÈëÁ÷¿ØÁÙ½çÇø */
+    /* PSèžåˆåŽ, Wæ¨¡åœ¨Cæ ¸æµæŽ§æ˜¯åœ¨Aæ ¸ä¸ŠæŽ§åˆ¶, å› æ­¤åœ¨Cæ ¸ä¸Šå°†é—¨é™æ”¹ä¸ºæ— ç©·å¤§, è¿™æ ·ä¸å†èµ·æµæŽ§ */
+    /* è¿›å…¥æµæŽ§ä¸´ç•ŒåŒº */
     lLockKey            = VOS_SplIMP();
 
     pFlowLev                = &g_stRItfFlowCtrl.astFlowCtrl[R_ITF_FLOW_CTRL_TYPE_MEM_CNT];
@@ -523,18 +523,18 @@ VOS_VOID R_ITF_SetWFlowLev(VOS_VOID)
     pFlowLev->ulWarningLev  = 0xffffffff;/*2000*/
     pFlowLev->ulMaxLev      = 0;
 
-    /* PSÈÚºÏºó, WÄ£ÓÉÓÚÊ¹ÓÃAºËÄÚ´æ, Òò´Ë½«ÃÅÏÞÉèÖÃÎªÎÞÇî´ó, ±ÜÃâÄÚ´æÆðÁ÷¿Ø */
+    /* PSèžåˆåŽ, Wæ¨¡ç”±äºŽä½¿ç”¨Aæ ¸å†…å­˜, å› æ­¤å°†é—¨é™è®¾ç½®ä¸ºæ— ç©·å¤§, é¿å…å†…å­˜èµ·æµæŽ§ */
     pFlowLev                = &g_stRItfFlowCtrl.astFlowCtrl[R_ITF_FLOW_CTRL_TYPE_MEM_SIZE];
     pFlowLev->ulNormalLev   = 0xffffffff;/*1200000*/
     pFlowLev->ulWarningLev  = 0xffffffff;/*2000000*/
     pFlowLev->ulMaxLev      = 0;
 
-    /* Àë¿ªÁ÷¿ØÁÙ½çÇø */
+    /* ç¦»å¼€æµæŽ§ä¸´ç•ŒåŒº */
     VOS_Splx(lLockKey);
 
     R_ITF_ResetFlowCtrl();
 
-    /* µ½WÄ£ÏÂ, ÄÚ´æÔÚAºË¼à²â, Òò´ËCºËÉÏ²»ÐèÒªÄÚ´æ¼à²â¹³×Ó */
+    /* åˆ°Wæ¨¡ä¸‹, å†…å­˜åœ¨Aæ ¸ç›‘æµ‹, å› æ­¤Cæ ¸ä¸Šä¸éœ€è¦å†…å­˜ç›‘æµ‹é’©å­ */
     TTF_MemRegEventCallBack(TTF_MEM_POOL_ID_UL_DATA, VOS_NULL_PTR, VOS_NULL_PTR);
 
     return;
@@ -543,7 +543,7 @@ VOS_VOID R_ITF_SetWFlowLev(VOS_VOID)
 
 /******************************************************************************
  Prototype      : R_ITF_SetGFlowLev
- Description    : ÒµÎñÇÐ»»ÎªGÄ£Ê±£¬¸ü¸ÄÁ÷¿ØÃÅÏÞ
+ Description    : ä¸šåŠ¡åˆ‡æ¢ä¸ºGæ¨¡æ—¶ï¼Œæ›´æ”¹æµæŽ§é—¨é™
  Input          :
  Output         :
  Return Value   :
@@ -552,7 +552,7 @@ VOS_VOID R_ITF_SetWFlowLev(VOS_VOID)
 
  History        : ---
   1.Date        : 2009-02-27
-    Author      : ²ÌÅô48156
+    Author      : è”¡é¹48156
     Modification: Created function
 ******************************************************************************/
 VOS_VOID R_ITF_SetGFlowLev(VOS_VOID)
@@ -560,7 +560,7 @@ VOS_VOID R_ITF_SetGFlowLev(VOS_VOID)
     R_ITF_FLOW_LEV_STRU    *pFlowLev;
     VOS_INT32               lLockKey;
 
-    /* ½øÈëÁ÷¿ØÁÙ½çÇø */
+    /* è¿›å…¥æµæŽ§ä¸´ç•ŒåŒº */
     lLockKey            = VOS_SplIMP();
 
     pFlowLev                = &g_stRItfFlowCtrl.astFlowCtrl[R_ITF_FLOW_CTRL_TYPE_MEM_CNT];
@@ -573,20 +573,20 @@ VOS_VOID R_ITF_SetGFlowLev(VOS_VOID)
     pFlowLev->ulWarningLev  = 30000;
     pFlowLev->ulMaxLev      = 0;
 
-    /* Àë¿ªÁ÷¿ØÁÙ½çÇø */
+    /* ç¦»å¼€æµæŽ§ä¸´ç•ŒåŒº */
     VOS_Splx(lLockKey);
 
     R_ITF_ResetFlowCtrl();
 
-    /* V9R1ÖÐÊ¹ÓÃÁ÷¿ØNVÏîÖÐGPRSÁ÷¿ØÊ¹ÄÜÎ»À´ÅÐ¶ÏÊÇ·ñ×¢²á¹³×Óº¯Êý */
+    /* V9R1ä¸­ä½¿ç”¨æµæŽ§NVé¡¹ä¸­GPRSæµæŽ§ä½¿èƒ½ä½æ¥åˆ¤æ–­æ˜¯å¦æ³¨å†Œé’©å­å‡½æ•° */
     if ( (FC_POLICY_MASK(FC_POLICY_ID_GPRS) == FC_POLICY_GetEnableMask(FC_POLICY_ID_GPRS) ))
     {
-        /* µ½GÄ£ÏÂ, AºËÄÚ´æÐèÒª¿½±´µ½CºËTTF_MEMÖÐ, Òò´ËCºËÉÏÐèÒªÄÚ´æ¼à²â¹³×Ó */
+        /* åˆ°Gæ¨¡ä¸‹, Aæ ¸å†…å­˜éœ€è¦æ‹·è´åˆ°Cæ ¸TTF_MEMä¸­, å› æ­¤Cæ ¸ä¸Šéœ€è¦å†…å­˜ç›‘æµ‹é’©å­ */
         TTF_MemRegEventCallBack(TTF_MEM_POOL_ID_UL_DATA, R_ITF_TtfMemAllocEvent, R_ITF_TtfMemFreeEvent);
     }
     else
     {
-        /* V9R1ÖÐÊ¹ÓÃºêÀ´ÅÐ¶Ï£¬Èç¹ûÊÇV9R1,Ôò²»×¢²á¹³×Óº¯Êý */
+        /* V9R1ä¸­ä½¿ç”¨å®æ¥åˆ¤æ–­ï¼Œå¦‚æžœæ˜¯V9R1,åˆ™ä¸æ³¨å†Œé’©å­å‡½æ•° */
         TTF_MemRegEventCallBack(TTF_MEM_POOL_ID_UL_DATA, VOS_NULL_PTR, VOS_NULL_PTR);
     }
 
@@ -713,7 +713,7 @@ VOS_VOID R_ITF_ResetFlowCtrl(VOS_VOID)
 
 }
 
-/* ÁÙÊ±²âÊÔ´úÂë£¬ÓÃÀ´²É¼¯R½Ó¿ÚÁ÷¿ØµÄ·§Öµ£¬ËùÒÔÖ±½ÓÊ¹ÓÃÁË vos_printf */
+/* ä¸´æ—¶æµ‹è¯•ä»£ç ï¼Œç”¨æ¥é‡‡é›†RæŽ¥å£æµæŽ§çš„é˜€å€¼ï¼Œæ‰€ä»¥ç›´æŽ¥ä½¿ç”¨äº† vos_printf */
 
 VOS_VOID R_ITF_Print(VOS_VOID)
 {

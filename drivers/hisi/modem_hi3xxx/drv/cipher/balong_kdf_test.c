@@ -88,7 +88,7 @@ s32 BSP_KDF_003_001(void)
 	}
 	kdf_reg_init();
 
-    /*°ÑkeyĞ´Èë0ºÅË÷ÒıÎ»ÖÃ*/
+    /*æŠŠkeyå†™å…¥0å·ç´¢å¼•ä½ç½®*/
     for(i=0; i<KDF_SHA_KEY_LENGTH/4; i++)
     {        
         *((BSP_U32 *)(HI_CIPHER_BASE_ADDR_VIRT + HI_KEY_RAM_OFFSET + 4*i))  \

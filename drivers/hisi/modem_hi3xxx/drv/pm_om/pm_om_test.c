@@ -5,7 +5,7 @@
 #define PM_OM_TEST_LOG_SIZE  (u32)(64)
 
 
-/* ¶ÔÓ¦mcoreµÄpm_om_platform_init */
+/* å¯¹åº”mcoreçš„pm_om_platform_init */
 void pmom_test_init(void)
 {
 }

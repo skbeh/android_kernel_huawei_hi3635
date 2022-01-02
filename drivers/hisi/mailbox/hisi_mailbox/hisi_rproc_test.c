@@ -104,7 +104,7 @@ int test_rproc_msg_send(unsigned int sync_id,
 			up(rproc_cb->sync_sema);
 		}
 
-		/*½ø³ÌÍ¬²½*/
+		/*è¿›ç¨‹åŒæ­¥*/
 		if (TEST_RPROC_NULL != rproc_cb->sync_sema) {
 			down(rproc_cb->sync_sema);
 			up(rproc_cb->sync_sema);
@@ -115,7 +115,7 @@ int test_rproc_msg_send(unsigned int sync_id,
 	memcpy((void*)&tx_buffer[1], (void*)&data_buf[0], sizeof(tx_buffer) - sizeof(tx_buffer[0]));
 	switch(sync_id)
 	{
-		case 0:/*Í¬²½·¢ËÍÍ¬²½ÏûÏ¢*/
+		case 0:/*åŒæ­¥å‘é€åŒæ­¥æ¶ˆæ¯*/
 			while(msg_num--){
 				ret = RPROC_SYNC_SEND(rp_id,tx_buffer, msg_len,SYNC_MSG,ack_buffer,msg_len);
 				if (ret || (((OBJ_TEST << 16) | (CMD_TEST << 8)) != ack_buffer[0]) || (0x12345678 != ack_buffer[1])) {
@@ -128,7 +128,7 @@ int test_rproc_msg_send(unsigned int sync_id,
 			}
 			break;
 
-		case 1:/*Í¬²½·¢ËÍÒì²½ÏûÏ¢*/
+		case 1:/*åŒæ­¥å‘é€å¼‚æ­¥æ¶ˆæ¯*/
 			while(msg_num--){
 				ret = RPROC_SYNC_SEND(rp_id ,tx_buffer, msg_len,ASYNC_MSG,NULL,0);
 				if (ret) {
@@ -140,7 +140,7 @@ int test_rproc_msg_send(unsigned int sync_id,
 			}
 			break;
 
-		case 2:/*Òì²½·¢ËÍÍ¬²½ÏûÏ¢*/
+		case 2:/*å¼‚æ­¥å‘é€åŒæ­¥æ¶ˆæ¯*/
 			while (msg_num--) {
 				complete_sema = (struct semaphore*)kmalloc(sizeof(struct semaphore), GFP_KERNEL);
 				sema_init(complete_sema, 0);
@@ -154,7 +154,7 @@ int test_rproc_msg_send(unsigned int sync_id,
 				if (0 != down_timeout(complete_sema, msecs_to_jiffies(1000)))
 				{
 					printk(KERN_ERR "msg_send timeout rp_id:%d rproc async send err!\r\n", rp_id);
-					/*Èç¹û³¬Ê±,²»ÄÜÊÍ·ÅÄÚ´æ*/
+					/*å¦‚æœè¶…æ—¶,ä¸èƒ½é‡Šæ”¾å†…å­˜*/
 					/*kfree(complete_sema);*/
 					return -1;
 				}
@@ -167,7 +167,7 @@ int test_rproc_msg_send(unsigned int sync_id,
 			}
 			break;
 
-		case 3:/*Òì²½·¢ËÍÒì²½ÏûÏ¢*/
+		case 3:/*å¼‚æ­¥å‘é€å¼‚æ­¥æ¶ˆæ¯*/
 			while (msg_num--) {
 				ret = RPROC_ASYNC_SEND(rp_id,tx_buffer,msg_len,ASYNC_MSG,rporc_async_callback,NULL);
 				if (ret) {
@@ -267,7 +267,7 @@ int test_rproc_msg_multi_send(unsigned int sync_id,
 	int ret = 0;
 
 	down(&send_mutex_sema);
-	/*´´½¨»Øµ÷ÓÃ»§¾ä±ú*/
+	/*åˆ›å»ºå›è°ƒç”¨æˆ·å¥æŸ„*/
 	rproc_cb = kcalloc(sizeof(struct test_rproc_cb), 1, GFP_KERNEL);
 	if (!rproc_cb) {
 		printk(KERN_ERR "error test_rproc_msg_multi_send kcalloc\n");
@@ -284,7 +284,7 @@ int test_rproc_msg_multi_send(unsigned int sync_id,
 	rproc_cb->done_task_cnt = task_num;
 	rproc_cb->msg_count = 0;
 
-	/*´´½¨Åµ¸É¸öÈÎÎñ£¬ÈÎÎñÈë¿Úº¯ÊıÎª±¾ºËÍùÆäËûºË·¢ËÍÏûÏ¢µÄº¯Êı*/
+	/*åˆ›å»ºè¯ºå¹²ä¸ªä»»åŠ¡ï¼Œä»»åŠ¡å…¥å£å‡½æ•°ä¸ºæœ¬æ ¸å¾€å…¶ä»–æ ¸å‘é€æ¶ˆæ¯çš„å‡½æ•°*/
 	while (task_num) {
 		test_rproc_msg_create_task(test_rproc_msg_send,
 				sync_id,
@@ -326,12 +326,12 @@ int test_rproc_msg_multi_send(unsigned int sync_id,
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : test_rproc_single_task
- ¹¦ÄÜÃèÊö  : µ¥Ïß³Ì¶ÔÍâ²âÊÔº¯Êı
- ÊäÈë²ÎÊı  : int msg_type 0:sync 1:async
+ å‡½ æ•° å  : test_rproc_single_task
+ åŠŸèƒ½æè¿°  : å•çº¿ç¨‹å¯¹å¤–æµ‹è¯•å‡½æ•°
+ è¾“å…¥å‚æ•°  : int msg_type 0:sync 1:async
              int rp_id    rproc id
-             int msg_len   ÓÊ¼ş³¤¶È
-             int msg_num   ÓÊ¼şÊıÄ¿
+             int msg_len   é‚®ä»¶é•¿åº¦
+             int msg_num   é‚®ä»¶æ•°ç›®
 
 *****************************************************************************/
 void test_rproc_single_task_sync(unsigned int msg_type, unsigned char rp_id, unsigned int msg_len, unsigned int msg_num)

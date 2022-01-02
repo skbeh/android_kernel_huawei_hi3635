@@ -1,24 +1,24 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû      : OmSock.c
-  °æ ±¾ ºÅ      : ³õ¸å
-  ×÷    Õß      : ¸ÊÀ¼47350
-  Éú³ÉÈÕÆÚ      : 2008Äê8ÔÂ11ÈÕ
-  ×î½üÐÞ¸Ä      :
-  ¹¦ÄÜÃèÊö      : Ð­ÒéÕ»Óë¹¤¾ß²àµÄÍ¨ÐÅSOCKET½Ó¿Ú
-  º¯ÊýÁÐ±í      :
-  ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ    : 2008Äê8ÔÂ11ÈÕ
-    ×÷    Õß    : ¸ÊÀ¼47350
-    ÐÞ¸ÄÄÚÈÝ    : ´´½¨ÎÄ¼þ
+  æ–‡ ä»¶ å      : OmSock.c
+  ç‰ˆ æœ¬ å·      : åˆç¨¿
+  ä½œ    è€…      : ç”˜å…°47350
+  ç”Ÿæˆæ—¥æœŸ      : 2008å¹´8æœˆ11æ—¥
+  æœ€è¿‘ä¿®æ”¹      :
+  åŠŸèƒ½æè¿°      : åè®®æ ˆä¸Žå·¥å…·ä¾§çš„é€šä¿¡SOCKETæŽ¥å£
+  å‡½æ•°åˆ—è¡¨      :
+  ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ    : 2008å¹´8æœˆ11æ—¥
+    ä½œ    è€…    : ç”˜å…°47350
+    ä¿®æ”¹å†…å®¹    : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "omprivate.h"
 #include "NVIM_Interface.h"
@@ -53,29 +53,29 @@ extern "C"{
 #if ((VOS_OS_VER == VOS_WIN32) || (FEATURE_HISOCKET == FEATURE_ON))
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
-/*×÷Îª·þÎñÆ÷¶ËÓÃÀ´¼àÌý¶Ë¿ÚµÄsocket*/
+/*ä½œä¸ºæœåŠ¡å™¨ç«¯ç”¨æ¥ç›‘å¬ç«¯å£çš„socket*/
 SOCKET              g_sockListen = SOCK_NULL;
 
-/*±£´æµ±Ç°Á´Â·µÄ»ù±¾ÐÅÏ¢*/
+/*ä¿å­˜å½“å‰é“¾è·¯çš„åŸºæœ¬ä¿¡æ¯*/
 COMM_INFO_STRU      g_astCommInfo[SOCKET_NUM_MAX] = {{SOCK_NULL, VOS_NULL_PTR},{SOCK_NULL, VOS_NULL_PTR}};
 
-/*Í¬²½ÐÅºÅÁ¿£¬ÓÃÀ´±£Ö¤SOCKET·þÎñÆ÷ÈÎÎñÔÚAPPÆô¶¯ºóÔÙÔËÐÐ*/
+/*åŒæ­¥ä¿¡å·é‡ï¼Œç”¨æ¥ä¿è¯SOCKETæœåŠ¡å™¨ä»»åŠ¡åœ¨APPå¯åŠ¨åŽå†è¿è¡Œ*/
 VOS_SEM             g_ulSockTaskSem = VOS_NULL_PTR;
 
-/*»¥³âÐÅºÅÁ¿£¬ÓÃÀ´±£Ö¤SOCKET·¢ËÍ¹ý³ÌÖÐ²»ÄÜ±»¹Ø±Õ*/
+/*äº’æ–¥ä¿¡å·é‡ï¼Œç”¨æ¥ä¿è¯SOCKETå‘é€è¿‡ç¨‹ä¸­ä¸èƒ½è¢«å…³é—­*/
 VOS_SEM             g_ulSockCloseSem = VOS_NULL_PTR;
 
-/*±£´æµ±Ç°SOCKETµÄ×´Ì¬*/
+/*ä¿å­˜å½“å‰SOCKETçš„çŠ¶æ€*/
 VOS_UINT32          g_ulSockState = SOCK_OK;
 VOS_BOOL Sock_IsEnable(VOS_VOID)
 {
 #if (VOS_LINUX == VOS_OS_VER)
     OM_CHANNLE_PORT_CFG_STRU    stPortCfg;
 
-    /* ¶ÁÈ¡OMµÄÎïÀíÊä³öÍ¨µÀ */
+    /* è¯»å–OMçš„ç‰©ç†è¾“å‡ºé€šé“ */
     if (NV_OK != NV_ReadEx(MODEM_ID_0,en_NV_Item_Om_Port_Type, &stPortCfg, sizeof(OM_CHANNLE_PORT_CFG_STRU)))
     {
         return VOS_FALSE;
@@ -83,7 +83,7 @@ VOS_BOOL Sock_IsEnable(VOS_VOID)
 
     stPortCfg.enPortNum += CPM_APP_PORT;
 
-    /* ¼ì²â²ÎÊý*/
+    /* æ£€æµ‹å‚æ•°*/
     if (CPM_WIFI_OM_PORT != stPortCfg.enPortNum)
     {
         return VOS_FALSE;
@@ -178,12 +178,12 @@ VOS_BOOL Sock_Init(VOS_VOID)
 
     sAddr.sin_addr.s_addr = 0;
 
-    /*¼àÌýµÄ¶Ë¿ÚºÅÎª3000*/
+    /*ç›‘å¬çš„ç«¯å£å·ä¸º3000*/
     sAddr.sin_port = htons(SOCK_PORT_NUM);
 
     lAddLen = sizeof(struct sockaddr_in);
 
-    /*½«¼àÌýSocket°ó¶¨µ½¶ÔÓ¦µÄ¶Ë¿ÚÉÏ*/
+    /*å°†ç›‘å¬Socketç»‘å®šåˆ°å¯¹åº”çš„ç«¯å£ä¸Š*/
     if (SOCKET_ERROR == bind(g_sockListen, (struct sockaddr *)&sAddr, lAddLen))
     {
         g_ulSockState = SOCK_BIND_ERR;
@@ -193,7 +193,7 @@ VOS_BOOL Sock_Init(VOS_VOID)
         return VOS_FALSE;
     }
 
-    /*ÉèÖÃ·þÎñÆ÷¶Ë¼àÌýµÄ×î´ó¿Í»§¶ËÊý*/
+    /*è®¾ç½®æœåŠ¡å™¨ç«¯ç›‘å¬çš„æœ€å¤§å®¢æˆ·ç«¯æ•°*/
     if (SOCKET_ERROR == listen(g_sockListen, SOCKET_NUM_MAX))
     {
         g_ulSockState = SOCK_LISTEN_ERR;
@@ -203,7 +203,7 @@ VOS_BOOL Sock_Init(VOS_VOID)
         return VOS_FALSE;
     }
 
-    /* ´´½¨SOCKET±£»¤ÐÅºÅÁ¿ */
+    /* åˆ›å»ºSOCKETä¿æŠ¤ä¿¡å·é‡ */
     if(VOS_OK != VOS_SmMCreate("SOCK", VOS_SEMA4_FIFO, &g_ulSockCloseSem))
     {
         closesocket(g_sockListen);
@@ -234,7 +234,7 @@ VOS_VOID Sock_ServerProc(VOS_VOID)
     {
         ulFlag = VOS_FALSE;
 
-        /*½ÓÊÕÀ´×ÔËùÓÐsocketµÄÏûÏ¢*/
+        /*æŽ¥æ”¶æ¥è‡ªæ‰€æœ‰socketçš„æ¶ˆæ¯*/
         lRet = select(__FD_SETSIZE, &readfds, 0, 0, 0);
 
     #if (VOS_LINUX == VOS_OS_VER)
@@ -248,12 +248,12 @@ VOS_VOID Sock_ServerProc(VOS_VOID)
             return;
         }
 
-        /*ÅÐ¶Ï´ËÇëÇóÊÇ·ñÊôÓÚ¼àÌýSocket.*/
+        /*åˆ¤æ–­æ­¤è¯·æ±‚æ˜¯å¦å±žäºŽç›‘å¬Socket.*/
         if (0 != SOCK_FD_ISSET(g_sockListen, &readfds))
         {
             ulFlag = VOS_TRUE;
 
-            /*ÓÐÒ»¸ö¿Í»§¶ËÁ¬½ÓÉÏ·þÎñÆ÷£¬µ«´ËÁ´Â·µÄÀàÐÍÎ´¶¨*/
+            /*æœ‰ä¸€ä¸ªå®¢æˆ·ç«¯è¿žæŽ¥ä¸ŠæœåŠ¡å™¨ï¼Œä½†æ­¤é“¾è·¯çš„ç±»åž‹æœªå®š*/
             sockUnknown = accept(g_sockListen, NULL, 0);
 
         #if (VOS_LINUX == VOS_OS_VER)
@@ -271,16 +271,16 @@ VOS_VOID Sock_ServerProc(VOS_VOID)
             SOCK_FD_SET(sockUnknown, &allfds);
         }
 
-        /*À´×Ô¿Í»§¶ËsocketµÄÏûÏ¢*/
+        /*æ¥è‡ªå®¢æˆ·ç«¯socketçš„æ¶ˆæ¯*/
         for (lIndex = 0; lIndex < SOCKET_NUM_MAX; lIndex++)
         {
-            /*½ÓÊÕµ½À´×ÔPCµÄ¹¤¾ßµÄÊý¾Ý*/
+            /*æŽ¥æ”¶åˆ°æ¥è‡ªPCçš„å·¥å…·çš„æ•°æ®*/
             if (0 != SOCK_FD_ISSET(g_astCommInfo[lIndex].socket, &readfds))
             {
                 ulFlag = VOS_TRUE;
                 lRevSize = recv(g_astCommInfo[lIndex].socket, acRcvBuf, OM_APP_SPLIT_MSG_LEN, 0);
 
-                /*¿Í»§¶ËÒÑ¾­¹Ø±Õ£¬ÐèÒª×ö½«ÆäÇå¿Õ*/
+                /*å®¢æˆ·ç«¯å·²ç»å…³é—­ï¼Œéœ€è¦åšå°†å…¶æ¸…ç©º*/
             #if (VOS_LINUX == VOS_OS_VER)
                 if (0 >= lRevSize)
             #else
@@ -296,19 +296,19 @@ VOS_VOID Sock_ServerProc(VOS_VOID)
                     continue;
                 }
 
-                /*½«½ÓÊÕµ½µÄÊý¾ÝÌá½»¸øÉÏ²ã´¦Àí*/
+                /*å°†æŽ¥æ”¶åˆ°çš„æ•°æ®æäº¤ç»™ä¸Šå±‚å¤„ç†*/
                 CPM_ComRcv((lIndex + CPM_WIFI_OM_PORT), acRcvBuf, lRevSize);
             }
         }
 
-        /*È·ÈÏÁ´Â·µÄÀàÐÍ*/
+        /*ç¡®è®¤é“¾è·¯çš„ç±»åž‹*/
         if (0 != SOCK_FD_ISSET(sockUnknown, &readfds))
         {
             ulFlag = VOS_TRUE;
 
             lRevSize = recv(sockUnknown, acRcvBuf, OM_APP_SPLIT_MSG_LEN, 0);
 
-            /*¿Í»§¶ËÒÑ¾­¹Ø±Õ£¬ÐèÒª×ö½«ÆäÇå¿Õ*/
+            /*å®¢æˆ·ç«¯å·²ç»å…³é—­ï¼Œéœ€è¦åšå°†å…¶æ¸…ç©º*/
         #if (VOS_LINUX == VOS_OS_VER)
             if (0 >= lRevSize)
         #else
@@ -322,14 +322,14 @@ VOS_VOID Sock_ServerProc(VOS_VOID)
             }
             else
             {
-                /*ÅÐ¶Ïµ±Ç°Á´Â·µÄÀàÐÍ*/
+                /*åˆ¤æ–­å½“å‰é“¾è·¯çš„ç±»åž‹*/
                 lIndex = (VOS_INT)Sock_JudgeCommType(acRcvBuf, (VOS_UINT16)lRevSize);
 
                 if (SOCK_NULL == g_astCommInfo[lIndex].socket)
                 {
                     g_astCommInfo[lIndex].socket = sockUnknown;
 
-                    /*½«½ÓÊÕÀ´×Ô¿Í»§¶ËµÄÊý¾Ý½»¸øÉÏ²ãÓ¦ÓÃ*/
+                    /*å°†æŽ¥æ”¶æ¥è‡ªå®¢æˆ·ç«¯çš„æ•°æ®äº¤ç»™ä¸Šå±‚åº”ç”¨*/
                     CPM_ComRcv((lIndex + CPM_WIFI_OM_PORT), acRcvBuf, lRevSize);
                 }
                 else
@@ -346,7 +346,7 @@ VOS_VOID Sock_ServerProc(VOS_VOID)
             sockUnknown = SOCK_NULL;
         }
 
-        if ( VOS_FALSE == ulFlag )/* ÓÐ´íÎó·¢Éú£¬»Ö¸´set */
+        if ( VOS_FALSE == ulFlag )/* æœ‰é”™è¯¯å‘ç”Ÿï¼Œæ¢å¤set */
         {
             Sock_ShutdownAll();
 
@@ -363,7 +363,7 @@ VOS_VOID Sock_ServerTask(VOS_VOID)
 {
 #if (VOS_VXWORKS == VOS_OS_VER)
 
-    /*¼ÙÈçµ±Ç°Ã»ÓÐÅäÖÃÎªWIFIÄ£Ê½,ÔòÇ¿ÖÆÍË³ö*/
+    /*å‡å¦‚å½“å‰æ²¡æœ‰é…ç½®ä¸ºWIFIæ¨¡å¼,åˆ™å¼ºåˆ¶é€€å‡º*/
     /*if (OMRL_WIFI != g_RlSndLinkType)
     {
         g_ulSockState = SOCK_NO_START;
@@ -373,7 +373,7 @@ VOS_VOID Sock_ServerTask(VOS_VOID)
 
 
 
-    /*´´½¨Í¬²½ÐÅºÅÁ¿ÓÃÀ´±£Ö¤ÔÚÓ¦ÓÃÖ®ºóÆô¶¯*/
+    /*åˆ›å»ºåŒæ­¥ä¿¡å·é‡ç”¨æ¥ä¿è¯åœ¨åº”ç”¨ä¹‹åŽå¯åŠ¨*/
     if ( VOS_OK != VOS_SmBCreate( "Sock", 0, VOS_SEMA4_FIFO, &g_ulSockTaskSem))
     {
         g_ulSockState = SOCK_INIT_SEM_ERR;
@@ -389,7 +389,7 @@ VOS_VOID Sock_ServerTask(VOS_VOID)
     }
 #endif
 
-    /*³õÊ¼»¯SOCKET*/
+    /*åˆå§‹åŒ–SOCKET*/
     if (VOS_FALSE == Sock_Init())
     {
         return;
@@ -419,7 +419,7 @@ VOS_INT32 Sock_OMComSend(VOS_UINT8* pucData, VOS_UINT16 uslength)
         return VOS_ERR;
     }
 
-    /*µ÷ÓÃsend½«Êý¾ÝÍ¨¹ýsocket·¢ËÍ³öÈ¥*/
+    /*è°ƒç”¨sendå°†æ•°æ®é€šè¿‡socketå‘é€å‡ºåŽ»*/
     nSndNum = send(socket, pucData, uslength, 0);
 
     VOS_SmV(g_ulSockCloseSem);
@@ -447,7 +447,7 @@ VOS_INT32 Sock_ATComSend(VOS_UINT8* pucData, VOS_UINT16 uslength)
         return VOS_ERR;
     }
 
-    /*µ÷ÓÃsend½«Êý¾ÝÍ¨¹ýsocket·¢ËÍ³öÈ¥*/
+    /*è°ƒç”¨sendå°†æ•°æ®é€šè¿‡socketå‘é€å‡ºåŽ»*/
     nSndNum = send(socket, pucData, uslength, 0);
 
     VOS_SmV(g_ulSockCloseSem);
@@ -461,7 +461,7 @@ VOS_INT32 Sock_ATComSend(VOS_UINT8* pucData, VOS_UINT16 uslength)
 }
 VOS_UINT32 Sock_PortInit(VOS_VOID)
 {
-    if(BSP_MODULE_UNSUPPORT == DRV_GET_WIFI_SUPPORT())  /*µ±Ç°²»Ö§³ÖWIFI*/
+    if(BSP_MODULE_UNSUPPORT == DRV_GET_WIFI_SUPPORT())  /*å½“å‰ä¸æ”¯æŒWIFI*/
     {
         return VOS_OK;
     }

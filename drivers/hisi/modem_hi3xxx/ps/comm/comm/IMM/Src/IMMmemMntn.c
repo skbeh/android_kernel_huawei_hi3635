@@ -8,7 +8,7 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
 /*lint -e767*/
 #define THIS_FILE_ID                     PS_FILE_ID_IMM_MNTN_C
@@ -19,7 +19,7 @@ extern "C" {
 
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "IMMmemMntn.h"
 #include "om.h"
@@ -29,27 +29,27 @@ extern "C" {
 #include "PsCommonDef.h"
 #include <asm/atomic.h>
 
-const VOS_UINT8             g_ulImmBlkMemCheck = 1;             /* �����Ƿ����IMM BLK MEM */
+const VOS_UINT8             g_ulImmBlkMemCheck = 1;             /* 控制是否跟踪IMM BLK MEM */
 
 
 #define IMM_BLK_MEM_DEBUG_SWITCH_ON     (1 == g_ulImmBlkMemCheck)
 
-/* �ڴ����¼���ǰʱ�� */
+/* 内存检查事件当前时戳 */
 VOS_UINT32                              g_ulCurrentTimeSlice = 0;
 
-/* �ڴ��ռ��ʱ�䳬ʱ���� 1s */
+/* 内存块占用时间超时门限 1s */
 const VOS_UINT32                        g_ulOverTimeSliceThreshold = 32768*1;
 
-/* �ڴ�й¶�¼��ϱ��������ȫ�ֱ��� */
+/* 内存泄露事件上报次数监控全局变量 */
 atomic_t                                g_stIMMBlkMemAlertEvtCnt = ATOMIC_INIT(0);
 
-/* �ڴ�����ʧ���¼��ϱ��������ȫ�ֱ��� */
+/* 内存申请失败事件上报次数监控全局变量 */
 atomic_t                                g_stIMMBlkMemAlocFailEvtCnt = ATOMIC_INIT(0);
 
-/* IMM �ڴ�ؿ�ά�ɲ���¼��ϱ��������ڴ���� */
+/* IMM 内存池可维可测各事件上报的最多的内存块数 */
 const VOS_UINT16                        EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG = 41;
 
-/* IMM ÿ�η����ڴ��ϱ��¼�ʱ��ÿ�������ڴ��¼��������� */
+/* IMM 每次发生内存上报事件时，每次所能内存事件次数门限 */
 VOS_UINT32                              g_ulImmEventRptCntThresholdPerTime = 1;
 
 VOS_UINT8                               g_ucPrintDetail = IMM_FALSE;
@@ -59,7 +59,7 @@ atomic_t                                g_stCheckLeakFlag = ATOMIC_INIT(0);
 extern VOS_UINT32                       g_ulImmMemRbFreeSem;
 
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 
@@ -68,10 +68,10 @@ VOS_UINT8 IMM_MntnCheckReportMemInfoStatus( IMM_MEM_USED_INFO_TRIG_TYPE_ENUM_UIN
 {
 
     /*
-    ������������ϱ��¼�
-    1�������ڴ�й¶:IMM_MEM_TRIG_TYPE_LEAK
-    2����һ�η����ڴ�����ʧ��:IMM_MEM_TRIG_TYPE_ALLOC_FAIL
-    3����һ�η����ڴ治��澯:IMM_MEM_TRIG_TYPE_ALERT
+    下面三种情况上报事件
+    1、检查出内存泄露:IMM_MEM_TRIG_TYPE_LEAK
+    2、第一次发生内存申请失败:IMM_MEM_TRIG_TYPE_ALLOC_FAIL
+    3、第一次发生内存不足告警:IMM_MEM_TRIG_TYPE_ALERT
     */
 
     if ( IMM_MEM_TRIG_TYPE_LEAK == enTrigType )
@@ -158,7 +158,7 @@ VOS_VOID IMM_MntnPrintBlkMemPoolUsedInfo( IMM_MEM_POOL_STRU  *pstImmMemPoolInfo 
                 (VOS_INT32)pstImmMemDebugInfo->ulTraceTick);
 /*lint +e713*/
 
-            /* ��ӡPDU���� */
+            /* 打印PDU内容 */
             IMM_LOG1(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "Data ptr: 0x%x\n ", (VOS_INT32)pMem->pstMemBlk);
         }
     }
@@ -206,10 +206,10 @@ VOS_VOID IMM_MntnMemUseBlkCntRpt
 
     ulDataLen = offsetof(IMM_OM_EVENT_BLK_MEM_USED_INFO_STRU, astBlkMemTraceInfo);
 
-    /*��Ϣ�ܳ���*/
+    /*消息总长度*/
     ulLength  = offsetof(PS_OM_EVENT_IND_STRU, aucData) + ulDataLen;
 
-    /*������Ϣ�ڴ�*/
+    /*申请消息内存*/
     pstImmOmEventInd    = (PS_OM_EVENT_IND_STRU *)PS_MEM_ALLOC(UEPS_PID_IMM_RB_FREE, ulLength);
 
     if (VOS_NULL_PTR == pstImmOmEventInd )
@@ -220,7 +220,7 @@ VOS_VOID IMM_MntnMemUseBlkCntRpt
 
     ulTotalCnt      = pstPoolInfo->usImmMemUsedCnt;
 
-    /*��д��Ϣ����*/
+    /*填写消息内容*/
     pstImmOmEventInd->ulLength      = ulLength - offsetof( PS_OM_EVENT_IND_STRU, usEventId);
     pstImmOmEventInd->usEventId     = IMM_EVENT_BLK_MEM_USED_INFO;
     pstImmOmEventInd->ulModuleId    = UEPS_PID_IMM_RB_FREE;
@@ -232,12 +232,12 @@ VOS_VOID IMM_MntnMemUseBlkCntRpt
     pstImmOmEventBlkMemUsedInfo->usRptCnt       = 0;
     pstImmOmEventBlkMemUsedInfo->ulTotalUsedCnt = ulTotalCnt;
 
-    /*����OM���¼��ϱ��ӿ�*/
+    /*调用OM的事件上报接口*/
     if ( PS_SUCC != OM_AcpuEvent((PS_OM_EVENT_IND_STRU*)pstImmOmEventInd))
     {
         IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_ERROR, "IMM_BlkMemUsedInfoEventRpt: OM Send Event Fail! \n");
     }
-    /*�ͷ�������ڴ�*/
+    /*释放申请的内存*/
     PS_MEM_FREE(UEPS_PID_IMM_RB_FREE, pstImmOmEventInd);
 
     return;
@@ -256,7 +256,7 @@ VOS_UINT32 IMM_MntnTimeDiff(VOS_UINT32 ulTimeStart, VOS_UINT32 ulTimeEnd)
     }
     else
     {
-        /* �����ʼʱ����ڽ���ʱ�䣬˵��������ת��ֻ��Ϊ������תһ�� */
+        /* 如果起始时间大于结束时间，说明发生翻转，只认为发生翻转一次 */
         ulTimeDiff = PS_NULL_UINT32 + ulTimeEnd - ulTimeStart + 1;
     }
 
@@ -275,23 +275,23 @@ VOS_UINT32 IMM_MntnGetOverMemBlkCnt( VOS_UINT8 ucPoolId )
     VOS_UINT32                          ulTotolCnt = 0;
 
 
-    /* ��ȡ��ǰCPU Slice */
+    /* 获取当前CPU Slice */
     g_ulCurrentTimeSlice = OM_GetSlice();
     pstImmMemPool        = IMM_MEM_GET_POOL(ucPoolId);
 
-    /* �����ڴ��ÿ���ڴ� */
+    /* 遍历内存池每块内存 */
     for (ulBlkMemNum = 0; ulBlkMemNum < pstImmMemPool->usImmMemTotalCnt; ++ulBlkMemNum )
     {
         pstMem = pstImmMemPool->pstImmMemStStartAddr + ulBlkMemNum;
         pstImmMemDebugInfo = &pstMem->stDbgInfo;
 
-        /* �ڴ��״̬��� */
+        /* 内存块状态检查 */
         if ( MEM_BLK_STATE_FREE == pstImmMemDebugInfo->enMemStateFlag )
         {
             continue;
         }
 
-        /* �ж��ڴ�����ʱ���뵱ǰʱ��֮���Ƿ񳬹����� */
+        /* 判断内存申请时戳与当前时戳之差是否超过门限 */
         if ( g_ulOverTimeSliceThreshold <= IMM_MntnTimeDiff(pstImmMemDebugInfo->ulAllocTick, g_ulCurrentTimeSlice))
         {
             ++ ulTotolCnt;
@@ -367,13 +367,13 @@ VOS_VOID IMM_MntnMemUsedBlkTraceInfoRpt
 
     ulTotalCnt  = pstPoolInfo->usImmMemUsedCnt;
 
-    /* �ϱ��ڴ������Ϣ */
+    /* 上报内存跟踪信息 */
     ulDataLen           = offsetof(IMM_OM_EVENT_BLK_MEM_USED_INFO_STRU, astBlkMemTraceInfo) + ( EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG * sizeof(IMM_BLK_MEM_TRACE_INFO_STRU));
 
-    /*��Ϣ�ܳ���*/
+    /*消息总长度*/
     ulLength            = offsetof(PS_OM_EVENT_IND_STRU,aucData) + ulDataLen;
 
-    /*������Ϣ�ڴ�*/
+    /*申请消息内存*/
     pstImmOmEventInd    = (PS_OM_EVENT_IND_STRU *)PS_MEM_ALLOC(UEPS_PID_IMM_RB_FREE, ulLength);
 
     if ( VOS_NULL_PTR == pstImmOmEventInd )
@@ -406,11 +406,11 @@ VOS_VOID IMM_MntnMemUsedBlkTraceInfoRpt
 
                 usRptCnt ++;
 
-                if (  EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG == usRptCnt )/* �������ͣ�ÿ����෢��һǧ�� */
+                if (  EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG == usRptCnt )/* 分批发送，每笔最多发送一千块 */
                 {
                     ucRptNo++;
                     usRptCnt = 0;
-                    /*��д��Ϣ����*/
+                    /*填写消息内容*/
 
                     pstImmOmEventInd->ulLength      = ulLength - offsetof( PS_OM_EVENT_IND_STRU, usEventId);
                     pstImmOmEventInd->usEventId     = IMM_EVENT_BLK_MEM_USED_INFO;
@@ -423,7 +423,7 @@ VOS_VOID IMM_MntnMemUsedBlkTraceInfoRpt
                     pstImmOmEventBlkMemUsedInfo->usRptCnt       = EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG;
                     pstImmOmEventBlkMemUsedInfo->ulTotalUsedCnt = ulTotalCnt;
 
-                    /*����OM���¼��ϱ��ӿ�*/
+                    /*调用OM的事件上报接口*/
                     if ( PS_SUCC != OM_AcpuEvent((PS_OM_EVENT_IND_STRU*)pstImmOmEventInd))
                     {
                         IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_ERROR, "IMM_BlkMemUsedInfoEventRpt: OM Send Event Fail! \n");
@@ -434,7 +434,7 @@ VOS_VOID IMM_MntnMemUsedBlkTraceInfoRpt
 
                 if ( g_ulImmEventRptCntThresholdPerTime < usRptEventCnt )
                 {
-                    /* �ͷ�������ڴ� */
+                    /* 释放申请的内存 */
                     PS_MEM_FREE(UEPS_PID_IMM_RB_FREE, pstImmOmEventInd);
                     return;
                 }
@@ -443,7 +443,7 @@ VOS_VOID IMM_MntnMemUsedBlkTraceInfoRpt
         }
     }
 
-    if ( 0 != usRptCnt )/* ���һ�����ݿ������� EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG */
+    if ( 0 != usRptCnt )/* 最后一笔数据块数不足 EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG */
     {
         ucRptNo++;
 
@@ -451,7 +451,7 @@ VOS_VOID IMM_MntnMemUsedBlkTraceInfoRpt
 
         ulLength    = offsetof(PS_OM_EVENT_IND_STRU, aucData) + ulDataLen;
 
-        /*��д��Ϣ����*/
+        /*填写消息内容*/
         pstImmOmEventInd->ulLength      = ulLength - offsetof( PS_OM_EVENT_IND_STRU, usEventId);
         pstImmOmEventInd->usEventId     = IMM_EVENT_BLK_MEM_USED_INFO;
         pstImmOmEventInd->ulModuleId    = UEPS_PID_IMM_RB_FREE;
@@ -463,14 +463,14 @@ VOS_VOID IMM_MntnMemUsedBlkTraceInfoRpt
         pstImmOmEventBlkMemUsedInfo->usRptCnt       = usRptCnt;
         pstImmOmEventBlkMemUsedInfo->ulTotalUsedCnt = ulTotalCnt;
 
-        /*����OM���¼��ϱ��ӿ�*/
+        /*调用OM的事件上报接口*/
         if ( PS_SUCC != OM_AcpuEvent((PS_OM_EVENT_IND_STRU*)pstImmOmEventInd))
         {
             IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_ERROR, "IMM_BlkMemUsedInfoEventRpt: OM Send Event Fail! \n");
         }
     }
 
-    /*�ͷ�������ڴ�*/
+    /*释放申请的内存*/
     PS_MEM_FREE(UEPS_PID_IMM_RB_FREE, pstImmOmEventInd);
 
     return ;
@@ -480,22 +480,22 @@ VOS_UINT32 IMM_MntnReportMemLeakMsg( VOS_UINT32 ulPid )
 {
     IMM_MEM_LEAK_INFO_IND_MSG          *pstImmMemLeakInfoInd;
 
-    /*������Ϣ  */
+    /*申请消息  */
     pstImmMemLeakInfoInd = (IMM_MEM_LEAK_INFO_IND_MSG *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                                ulPid,
                                                sizeof(IMM_MEM_LEAK_INFO_IND_MSG));
 
-    /* �ڴ�����ʧ�ܣ����� */
+    /* 内存申请失败，返回 */
     if ( VOS_NULL_PTR == pstImmMemLeakInfoInd )
     {
         return VOS_ERR;
     }
 
-    /*��д��Ϣ����*/
+    /*填写消息内容*/
     pstImmMemLeakInfoInd->ulReceiverPid     = ulPid;
     pstImmMemLeakInfoInd->enMsgID           = ID_IMM_MEM_LEAK_INFO_IND;
 
-    /* ������Ϣ */
+    /* 发送消息 */
     PS_SEND_MSG(ulPid, pstImmMemLeakInfoInd);
 
     return VOS_OK;
@@ -523,19 +523,19 @@ VOS_VOID IMM_MntnMemOverTimeInfoRpt( VOS_VOID )
     VOS_UINT32                              ulDrvRsvMemCnt;
 
 
-    /* ��ȡ�ڴ�� */
+    /* 获取内存池 */
     pstPoolInfo = IMM_MEM_GET_POOL(IMM_MEM_POOL_ID_SHARE);
 
-    /* ��ȡ��ʱ���ڴ����� */
+    /* 获取超时的内存块个数 */
     ulTotalCnt  = IMM_MntnGetOverMemBlkCnt(IMM_MEM_POOL_ID_SHARE);
 
-    /* �ϱ��ڴ������Ϣ */
+    /* 上报内存跟踪信息 */
     ulDataLen           = offsetof(IMM_OM_EVENT_BLK_MEM_USED_INFO_STRU, astBlkMemTraceInfo) + ( EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG * sizeof(IMM_BLK_MEM_TRACE_INFO_STRU));
 
-    /*��Ϣ�ܳ���*/
+    /*消息总长度*/
     ulLength            = offsetof(PS_OM_EVENT_IND_STRU,aucData) + ulDataLen;
 
-    /*������Ϣ�ڴ�*/
+    /*申请消息内存*/
     pstImmOmEventInd    = (PS_OM_EVENT_IND_STRU *)PS_MEM_ALLOC(UEPS_PID_IMM_RB_FREE, ulLength);
 
     if ( VOS_NULL_PTR == pstImmOmEventInd )
@@ -546,12 +546,12 @@ VOS_VOID IMM_MntnMemOverTimeInfoRpt( VOS_VOID )
 
     ulDrvRsvMemCnt = DRV_GET_PREMALLOC_SKB_NUM();
 
-    /* ������Ԥ�����ڴ棬С������Ԥ�����ڴ治���ڴ�й¶ */
+    /* 驱动会预申请内存，小于驱动预申请内存不算内存泄露 */
     if(ulTotalCnt <= ulDrvRsvMemCnt)
     {
         usNeedRptCnt = 0;
     }
-    else if( EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG  < ulTotalCnt )/* ��෢�� EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG �� */
+    else if( EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG  < ulTotalCnt )/* 最多发送 EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG 块 */
     {
         usNeedRptCnt = EVENT_BLK_MEM_USED_INFO_CNT_PER_MSG ;
     }
@@ -599,7 +599,7 @@ VOS_VOID IMM_MntnMemOverTimeInfoRpt( VOS_VOID )
             }
         }
     }
-    /*��д��Ϣ����*/
+    /*填写消息内容*/
 
     ucRptNo = 1;
 
@@ -614,7 +614,7 @@ VOS_VOID IMM_MntnMemOverTimeInfoRpt( VOS_VOID )
     pstImmOmEventBlkMemUsedInfo->ucNo           = ucRptNo;
     pstImmOmEventBlkMemUsedInfo->usRptCnt       = usRptCnt;
 
-    /* USB��Ҫ��ǰ����һ�����ݿ飬���С�ڵ���1,����й¶�ڴ�*/
+    /* USB需要提前申请一块数据块，因此小于等于1,不是泄露内存*/
     if(ulTotalCnt > ulDrvRsvMemCnt)
     {
         pstImmOmEventBlkMemUsedInfo->ulTotalUsedCnt = ulTotalCnt - 1;
@@ -626,13 +626,13 @@ VOS_VOID IMM_MntnMemOverTimeInfoRpt( VOS_VOID )
     }
 
 
-    /*����OM���¼��ϱ��ӿ�*/
+    /*调用OM的事件上报接口*/
     if ( PS_SUCC != OM_AcpuEvent((PS_OM_EVENT_IND_STRU*)pstImmOmEventInd))
     {
         PS_LOG(UEPS_PID_IMM_RB_FREE, 0, IMM_PRINT_ERROR, "IMM_MntnMemOverTimeInfoRpt: OM Send Event Fail! \n");
     }
 
-    /* �ͷ�������ڴ� */
+    /* 释放申请的内存 */
     PS_MEM_FREE(UEPS_PID_IMM_RB_FREE, pstImmOmEventInd);
 
     return;
@@ -653,7 +653,7 @@ VOS_VOID  IMM_MntnCheckPoolOverTimeOccupancy(VOS_VOID)
         return ;
     }
 
-    /* �ϱ��ڴ泬ʱ�¼� */
+    /* 上报内存超时事件 */
     IMM_MntnMemOverTimeInfoRpt();
 
     return ;
@@ -664,7 +664,7 @@ VOS_VOID  IMM_MntnRptPoolLeakInfo(VOS_VOID)
 {
     if ( VOS_TRUE == atomic_read(&g_stCheckLeakFlag) )
     {
-        /* ���ó�ʱ��� */
+        /* 调用超时检查 */
         IMM_MntnCheckPoolOverTimeOccupancy();
 
         atomic_set(&g_stCheckLeakFlag, VOS_FALSE);
@@ -684,7 +684,7 @@ VOS_VOID IMM_MntnMemUsedInfoEventRpt
         return;
     }
 
-/*û�д��ڴ���Ա��뿪�أ�����û�д��ڴ����ʹ�ÿ��أ����ϱ�IMM Blk MEM й¶�ܿ��� */
+/*没有打开内存调试编译开关，或者没有打开内存调试使用开关，仅上报IMM Blk MEM 泄露总块数 */
 /*lint -e506 -e774 */
 #if (FEATURE_ON == FEATURE_TTF_MEM_DEBUG)
     if ( !IMM_BLK_MEM_DEBUG_SWITCH_ON )
@@ -696,7 +696,7 @@ VOS_VOID IMM_MntnMemUsedInfoEventRpt
     }
 
 #if (FEATURE_ON == FEATURE_TTF_MEM_DEBUG)
-    /* �����ڴ���Ա����ʹ�ÿ��أ��ϱ��ڴ������Ϣ */
+    /* 打开了内存调试编译和使用开关，上报内存跟踪信息 */
     IMM_MntnMemUsedBlkTraceInfoRpt(ucPoolId, enTrigType);
     return ;
 #endif
@@ -716,20 +716,20 @@ VOS_UINT32  IMM_MntnCheckPoolLeak(VOS_UINT8 ucPoolId)
         return VOS_FALSE;
     }
 
-    /* ��ȡ�ڴ�� */
+    /* 获取内存池 */
     pstImmMemPool = IMM_MEM_GET_POOL(ucPoolId);
 
-    /* ����ڴ���Ƿ�ʹ�� */
+    /* 检查内存池是否使用 */
     if ( IMM_TRUE != pstImmMemPool->ucUsedFlag )
     {
         IMM_LOG1(UEPS_PID_IMM_RB_FREE, IMM_PRINT_WARNING, "IMM_MemCheckPoolLeak,Pool %d is not used! \n", ucPoolId);
         return VOS_FALSE;
     }
 
-    /* ��ȡ��������Mem���� */
+    /* 获取驱动保留Mem数量 */
     ulDrvRsvMemCnt = DRV_GET_PREMALLOC_SKB_NUM();
 
-    /*����ڴ��Ƿ�й¶ */
+    /*检查内存是否泄露 */
     if ( ulDrvRsvMemCnt >= pstImmMemPool->usImmMemUsedCnt )
     {
         return VOS_FALSE;
@@ -738,7 +738,7 @@ VOS_UINT32  IMM_MntnCheckPoolLeak(VOS_UINT8 ucPoolId)
     IMM_LOG1(UEPS_PID_IMM_RB_FREE, IMM_PRINT_WARNING, "IMM_MEM_BLK Is Leak, UsedCnt %d ! \n",
         pstImmMemPool->usImmMemUsedCnt);
 
-    /* ��SDT�ϱ��ڴ�й¶�¼� */
+    /* 向SDT上报内存泄露事件 */
     IMM_MntnMemUsedInfoEventRpt(ucPoolId, IMM_MEM_TRIG_TYPE_LEAK);
 
     return VOS_TRUE;
@@ -812,7 +812,7 @@ VOS_VOID IMM_MemGetAllocFailCnt(VOS_VOID)
     IMM_LOG1(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemGetAllocFailCnt Threshold: %d \n", g_usImmAllocFailCntThreshold);
 
 #if ( FEATURE_ON == FEATURE_SKB_EXP )
-    /* ��ӡ SKB ���ƽ������ʧ�ܴ��� */
+    /* 打印 SKB 控制结点申请失败次数 */
     skb_get_fail_cnt();
 #endif
 
@@ -875,20 +875,20 @@ VOS_VOID IMM_MemPrintDetail(VOS_UINT8 ucChoice)
 
 VOS_VOID IMM_MemHelp( VOS_VOID )
 {
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "********************IMM_MEM������Ϣ************************\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MntnCheckPoolLeak(ulPoolId):            ���IMM_MEM�ڴ�й¶������ulPoolId:\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "********************IMM_MEM软调信息************************\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MntnCheckPoolLeak(ulPoolId):            检查IMM_MEM内存泄露，其中ulPoolId:\n");
     IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "                                            0--SHARE; 1--EXT;\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MntnShowUsedBlkMemInfo(VOS_VOID)        �鿴�ڴ��ʹ����Ϣ(g_ucPrintDetail =1ʱ��ӡ����ϸ��Ϣ)��\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemSetTraceFunc(ucChoice)               ���ú������ٹ켣��ӡ��ucChoice = 0 �رչ켣��ӡ��\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemPrintDetail(ucChoice)                ������ʹ��IMM_MntnShowUsedBlkMemInfoʱ���Ƿ���ʹ����Ϣ��ӡ��\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemGetAllocFailCnt(VOS_VOID)            ��ȡ�ڴ�����ʧ�ܴ�����Ϣ��\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemSetAllocFailThreshold(usThreshold)   �����ڴ�����ʧ���ϱ����ޡ�\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemReSetAllocFailStatus(VOS_VOID)       �����ڴ�����ʧ��ͳ����Ϣ��\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemShowMntnInfo(VOS_VOID)               ��ȡIMM �ڴ��ά�ɲ���Ϣ��\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemClearMntnInfo(VOS_VOID)              ���IMM �ڴ��ά�ɲ���Ϣ��\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemGetFreeMntnEntityAddr(VOS_VOID)      ��ȡ IMM FREE �ڴ��ά�ɲ�ʵ���ַ��\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemGetRbMntnEntityAddr(VOS_VOID)        ��ȡ IMM RB �ڴ��ά�ɲ�ʵ���ַ��\n");
-    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_RbMemPrintIsrCnt(VOS_VOID)              A���յ�IPF�жϴ�����\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MntnShowUsedBlkMemInfo(VOS_VOID)        查看内存的使用信息(g_ucPrintDetail =1时打印出详细信息)。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemSetTraceFunc(ucChoice)               配置函数跟踪轨迹打印，ucChoice = 0 关闭轨迹打印。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemPrintDetail(ucChoice)                控制在使用IMM_MntnShowUsedBlkMemInfo时，是否开启使用信息打印。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemGetAllocFailCnt(VOS_VOID)            获取内存申请失败次数信息。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemSetAllocFailThreshold(usThreshold)   配置内存申请失败上报门限。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemReSetAllocFailStatus(VOS_VOID)       重置内存申请失败统计信息。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemShowMntnInfo(VOS_VOID)               获取IMM 内存可维可测信息。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemClearMntnInfo(VOS_VOID)              清除IMM 内存可维可测信息。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemGetFreeMntnEntityAddr(VOS_VOID)      获取 IMM FREE 内存可维可测实体地址。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_MemGetRbMntnEntityAddr(VOS_VOID)        获取 IMM RB 内存可维可测实体地址。\n");
+    IMM_LOG(UEPS_PID_IMM_RB_FREE, IMM_PRINT_NORMAL, "IMM_RbMemPrintIsrCnt(VOS_VOID)              A核收到IPF中断次数。\n");
 
     return;
 }
@@ -906,7 +906,7 @@ VOS_VOID IMM_MemSetTraceFunc(VOS_UINT8 ucChoice)
 
 
 /******************************************************************************/
-/*******************************V9R1�汾***************************************/
+/*******************************V9R1版本***************************************/
 /******************************************************************************/
 #else
 

@@ -44,16 +44,16 @@ extern "C" {
 
 #if (VOS_DEBUG == VOS_CHECK_INTLOCK)
 
-/* VOS ֧�ֵ�����ж�Ƕ����Ŀ */
+/* VOS 支持的最大中断嵌套数目 */
 #define VOS_NESTED_INTLOCK_MAX_NUM      (128)
 
-/* VOS ͳ�Ƶ����ж�ʱ���� ��λslice 30us */
+/* VOS 统计的锁中断时间间隔 单位slice 30us */
 #define VOS_INTLOCK_MAX_INTERVAL        (900)
 
-/* Ƕ����Ϣ��¼ */
+/* 嵌套信息记录 */
 typedef struct
 {
-    VOS_UINT32                          ulSuffix; /* �����±� */
+    VOS_UINT32                          ulSuffix; /* 数组下标 */
     VOS_NESTED_LOCK_INFO_STRU           astNestedInfo[VOS_NESTED_INTLOCK_MAX_NUM];
 }VOS_NESTED_INTLOCK_STRU;
 
@@ -131,16 +131,16 @@ VOS_VOID V_IntUnlock(VOS_INT lLockKey)
 
 #if (VOS_DEBUG == VOS_CHECK_INTLOCK)
 
-/* VOS ֧�ֵ�����ж�Ƕ����Ŀ */
+/* VOS 支持的最大中断嵌套数目 */
 #define VOS_NESTED_INTLOCK_MAX_NUM      (128)
 
-/* VOS ͳ�Ƶ����ж�ʱ���� ��λslice 30us */
+/* VOS 统计的锁中断时间间隔 单位slice 30us */
 #define VOS_INTLOCK_MAX_INTERVAL        (900)
 
-/* Ƕ����Ϣ��¼ */
+/* 嵌套信息记录 */
 typedef struct
 {
-    VOS_UINT32                          ulSuffix; /* �����±� */
+    VOS_UINT32                          ulSuffix; /* 数组下标 */
     VOS_NESTED_LOCK_INFO_STRU           astNestedInfo[VOS_NESTED_INTLOCK_MAX_NUM];
 }VOS_NESTED_INTLOCK_STRU;
 

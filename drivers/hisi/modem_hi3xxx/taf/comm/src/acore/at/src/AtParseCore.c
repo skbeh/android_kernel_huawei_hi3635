@@ -22,23 +22,23 @@
 #define    THIS_FILE_ID        PS_FILE_ID_AT_PARSECORE_C
 
 
-/* ÃüÁî±íÍ·½áµã */
+/* å‘½ä»¤è¡¨å¤´ç»“ç‚¹ */
 HI_LIST_S g_stCmdTblList = {0};
 
-/* ½âÎö¹ı³Ì²ÎÊı */
+/* è§£æè¿‡ç¨‹å‚æ•° */
 AT_PARSECMD_STRU g_stATParseCmd;
 
-/* ²ÎÊıÁĞ±í */
+/* å‚æ•°åˆ—è¡¨ */
 VOS_UINT8 gucAtParaIndex = 0;
 
 AT_PARSE_PARA_TYPE_STRU gastAtParaList[AT_MAX_PARA_NUMBER];
 
-/* Ã¿¸ö¿Í»§¶ËµÄ½âÎöĞÅÏ¢ */
+/* æ¯ä¸ªå®¢æˆ·ç«¯çš„è§£æä¿¡æ¯ */
 AT_PARSE_CONTEXT_STRU g_stParseContext[AT_MAX_CLIENT_NUM];
 
-/* ÓÉÓÚSMSÃüÁîÓëÆÕÍ¨ÃüÁî¸ñÊ½²»Ò»ÖÂ£¬ÓÃÀ´»º´æSMSÃüÁîµÄÏàÓ¦µÄÄÚÈİ */
-/* ½â¾ö¶ÌĞÅÃüÁîÖ§³Ö¶àÍ¨µÀ²¢·¢ÃüÁîÃû±»¸²¸ÇÎÊÌâ
-   ÓÉg_stCmdElement=> g_stCmdElement[AT_MAX_CLIENT_NUM] */
+/* ç”±äºSMSå‘½ä»¤ä¸æ™®é€šå‘½ä»¤æ ¼å¼ä¸ä¸€è‡´ï¼Œç”¨æ¥ç¼“å­˜SMSå‘½ä»¤çš„ç›¸åº”çš„å†…å®¹ */
+/* è§£å†³çŸ­ä¿¡å‘½ä»¤æ”¯æŒå¤šé€šé“å¹¶å‘å‘½ä»¤åè¢«è¦†ç›–é—®é¢˜
+   ç”±g_stCmdElement=> g_stCmdElement[AT_MAX_CLIENT_NUM] */
 AT_PAR_CMD_ELEMENT_STRU g_stCmdElement[AT_MAX_CLIENT_NUM];
 
 
@@ -72,7 +72,7 @@ VOS_UINT32 AT_RegisterCmdTable(const AT_PAR_CMD_ELEMENT_STRU* pstCmdTblEntry, VO
     HI_LIST_S* pCmdTblHeader = NULL;
     AT_PAR_CMDTBL_LIST_STRU* pstCmdTblNode = NULL;
 
-    /* ÃüÁî±í²»Îª¿Õ£¬ÇÒÃüÁî¸öÊı²»Îª0 */
+    /* å‘½ä»¤è¡¨ä¸ä¸ºç©ºï¼Œä¸”å‘½ä»¤ä¸ªæ•°ä¸ä¸º0 */
     if((NULL == pstCmdTblEntry) || (0 == usCmdNum))
     {
         return ERR_MSP_FAILURE;
@@ -80,7 +80,7 @@ VOS_UINT32 AT_RegisterCmdTable(const AT_PAR_CMD_ELEMENT_STRU* pstCmdTblEntry, VO
 
     pCmdTblHeader = &g_stCmdTblList;
 
-    /* °ÑĞÂÇëÇóµÄerrcodetblÌí¼Óµ½Á´±íÖĞ */
+    /* æŠŠæ–°è¯·æ±‚çš„errcodetblæ·»åŠ åˆ°é“¾è¡¨ä¸­ */
     pstCmdTblNode = (AT_PAR_CMDTBL_LIST_STRU *)AT_MALLOC(sizeof(AT_PAR_CMDTBL_LIST_STRU));
     if(NULL == pstCmdTblNode)
     {
@@ -118,7 +118,7 @@ VOS_VOID AT_ClacCmdProc(VOS_VOID)
 
         for(i = 0; i < pstCmdTblNode->usCmdNum; i++)
         {
-            /* ÅĞ¶ÏÊÇ·ñĞèÒªÏÔÊ¾ */
+            /* åˆ¤æ–­æ˜¯å¦éœ€è¦æ˜¾ç¤º */
             if(0 == (pstCmdElement[i].ulChkFlag & CMD_TBL_CLAC_IS_INVISIBLE))
             {
                 gstAtSendData.usBufLen += (VOS_UINT16)At_sprintf(AT_CMD_MAX_LEN,
@@ -136,10 +136,10 @@ VOS_UINT8 AT_BlockCmdCheck(VOS_VOID)
     VOS_UINT8 i = 0;
     VOS_UINT8 ucBlockid = AT_MAX_CLIENT_NUM;
 
-    /* ²éÑ¯ËùÓĞÍ¨µÀ×´Ì¬ */
+    /* æŸ¥è¯¢æ‰€æœ‰é€šé“çŠ¶æ€ */
     for(i = 0; i < AT_MAX_CLIENT_NUM; i++)
     {
-        /* Èç¹ûÄ³Í¨µÀ´¦ÓÚ·ÇreadyÌ¬£¬ÔòÖ±½Ó·µ»Ø£¬²»´¦Àí */
+        /* å¦‚æœæŸé€šé“å¤„äºéreadyæ€ï¼Œåˆ™ç›´æ¥è¿”å›ï¼Œä¸å¤„ç† */
         if(AT_FW_CLIENT_STATUS_READY != g_stParseContext[i].ucClientStatus)
         {
             return AT_MAX_CLIENT_NUM;
@@ -180,11 +180,11 @@ PRIVATE AT_RRETURN_CODE_ENUM AT_BlockCmdProc(VOS_UINT8 ucIndex)
     pData = g_stParseContext[ucIndex].pBlockCmd;
     usLen = g_stParseContext[ucIndex].usBlockCmdLen;
 
-    /* TODO: »º´æ A/ */
+    /* TODO: ç¼“å­˜ A/ */
 
     ulResult = (AT_RRETURN_CODE_ENUM)At_CombineCmdChkProc(ucIndex, pData, usLen);
 
-    /* ·µ»Ø½á¹û */
+    /* è¿”å›ç»“æœ */
     if((AT_FAILURE == ulResult) || (AT_SUCCESS == ulResult))
     {
         return ulResult;
@@ -210,15 +210,15 @@ VOS_VOID AT_CheckProcBlockCmd(VOS_VOID)
     VOS_UINT32 ulRet;
 
 
-    /* ÅĞ¶ÏÊÇ·ñÓĞ»º´æµÄÃüÁî */
+    /* åˆ¤æ–­æ˜¯å¦æœ‰ç¼“å­˜çš„å‘½ä»¤ */
     ucIndex = AT_BlockCmdCheck();
     if(ucIndex < AT_MAX_CLIENT_NUM)
     {
-        /* ·¢ËÍÏûÏ¢´¦Àí»º´æÃüÁî */
+        /* å‘é€æ¶ˆæ¯å¤„ç†ç¼“å­˜å‘½ä»¤ */
         ulRet = At_SendCmdMsg(ucIndex, &ucIndex, sizeof(ucIndex), AT_COMBIN_BLOCK_MSG);
         if(ERR_MSP_SUCCESS != ulRet)
         {
-            /* ÓÉ¶¨Ê±Æ÷³¬Ê±È¥´¦Àí */
+            /* ç”±å®šæ—¶å™¨è¶…æ—¶å»å¤„ç† */
         }
     }
 
@@ -243,19 +243,19 @@ VOS_VOID AT_ParseCmdOver(VOS_UINT8 ucIndex)
     {
         pstCombineCmdInfo->usProcNum++;
     }
-    else    /* ±ÜÃâ±»Îóµ÷ÓÃ */
+    else    /* é¿å…è¢«è¯¯è°ƒç”¨ */
     {
         pstCombineCmdInfo->usProcNum = pstCombineCmdInfo->usTotalNum;
     }
 
-    /* ÅĞ¶Ï×éºÏÃüÁîÊÇ·ñ´¦ÀíÍê±Ï */
+    /* åˆ¤æ–­ç»„åˆå‘½ä»¤æ˜¯å¦å¤„ç†å®Œæ¯• */
     if((pstCombineCmdInfo->usProcNum < pstCombineCmdInfo->usTotalNum))
     {
-        /* ·¢ËÍÏûÏ¢´¦ÀíÏÂÒ»ÌõÃüÁî */
+        /* å‘é€æ¶ˆæ¯å¤„ç†ä¸‹ä¸€æ¡å‘½ä»¤ */
         ulRet = At_SendCmdMsg(ucIndex, &ucIndex, sizeof(ucIndex), AT_COMBIN_BLOCK_MSG);
         if(ERR_MSP_SUCCESS != ulRet)
         {
-            /* ÏûÏ¢·¢ËÍÊ§°Ü»Ö¸´½âÎöÆ÷×´Ì¬ */
+            /* æ¶ˆæ¯å‘é€å¤±è´¥æ¢å¤è§£æå™¨çŠ¶æ€ */
             pClientContext->ucClientStatus = AT_FW_CLIENT_STATUS_READY;
         }
 
@@ -304,7 +304,7 @@ VOS_VOID AT_PendClientProc(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usLen
 
     else if ( VOS_TRUE == AT_IsAbortCmdStr(ucIndex, pData, usLen) )
     {
-        /* AT´ò¶Ïµ±Ç°PEND×´Ì¬µÄ´¦Àí */
+        /* ATæ‰“æ–­å½“å‰PENDçŠ¶æ€çš„å¤„ç† */
         AT_AbortCmdProc(ucIndex);
     }
 
@@ -322,7 +322,7 @@ VOS_VOID AT_HoldBlockCmd(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usLen)
 
     pstClientContext = &(g_stParseContext[ucIndex]);
 
-    /* Ö»Ö§³Ö»º´æÒ»ÌõÊı¾İ£¬µ±ÓĞĞÂµÄATÃüÁî×Ö·ûÁ÷Ôò¸²¸Ç±¾Í¨µÀÖ®Ç°»º´æµÄÃüÁîĞÅÏ¢ */
+    /* åªæ”¯æŒç¼“å­˜ä¸€æ¡æ•°æ®ï¼Œå½“æœ‰æ–°çš„ATå‘½ä»¤å­—ç¬¦æµåˆ™è¦†ç›–æœ¬é€šé“ä¹‹å‰ç¼“å­˜çš„å‘½ä»¤ä¿¡æ¯ */
     if(NULL != pstClientContext->pBlockCmd)
     {
         AT_FREE(pstClientContext->pBlockCmd);
@@ -343,7 +343,7 @@ VOS_VOID AT_HoldBlockCmd(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usLen)
     ulTimerName |= AT_INTERNAL_PROCESS_TYPE;
     ulTimerName |= (ulTempIndex<<12);
 
-    /* ÖØÆô¶¨Ê±Æ÷ */
+    /* é‡å¯å®šæ—¶å™¨ */
     VOS_StopRelTimer(&pstClientContext->hTimer);
 
     AT_StartRelTimer(&pstClientContext->hTimer, AT_HOLD_CMD_TIMER_LEN, ulTimerName, 0, VOS_RELTIMER_NOLOOP);
@@ -359,7 +359,7 @@ VOS_UINT32 AT_ParseCmdIsComb(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usL
 
     pstClientContext = &(g_stParseContext[ucIndex]);
 
-    /* ±íÊ¾±¾Í¨µÀÓĞ×éºÏÃüÁîÕıÔÚ´¦Àí */
+    /* è¡¨ç¤ºæœ¬é€šé“æœ‰ç»„åˆå‘½ä»¤æ­£åœ¨å¤„ç† */
     if(pstClientContext->stCombineCmdInfo.usProcNum < pstClientContext->stCombineCmdInfo.usTotalNum)
     {
         CmdStringFormat(ucIndex, pData, &usLen);
@@ -383,7 +383,7 @@ VOS_UINT32 AT_ParseCmdIsPend(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usL
 
         if (i == ucIndex)
         {
-            /* ±¾Í¨µÀ´¦ÓÚPEND×´Ì¬Ê±ĞèÒªÅĞ¶ÏÊÇ·ñÊÇSTOP»òATH */
+            /* æœ¬é€šé“å¤„äºPENDçŠ¶æ€æ—¶éœ€è¦åˆ¤æ–­æ˜¯å¦æ˜¯STOPæˆ–ATH */
             if (AT_FW_CLIENT_STATUS_PEND == pstClientContext->ucClientStatus)
             {
                 CmdStringFormat(ucIndex, pData, &usLen);
@@ -392,19 +392,19 @@ VOS_UINT32 AT_ParseCmdIsPend(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usL
                 return ERR_MSP_FAILURE;
             }
         }
-        /* ÆäËûÍ¨µÀ´¦ÓÚPEND×´Ì¬»ò¶ÌĞÅ×´Ì¬ */
+        /* å…¶ä»–é€šé“å¤„äºPENDçŠ¶æ€æˆ–çŸ­ä¿¡çŠ¶æ€ */
         else if ((AT_FW_CLIENT_STATUS_PEND == pstClientContext->ucClientStatus)
               || (AT_SMS_MODE == pstClientContext->ucMode))
         {
-            /* ÅĞ¶Ï±¾Í¨µÀÒÔ¼°±éÀúµ½µÄÍ¨µÀÊÇ·ñ¿ÉÒÔ²¢·¢ */
+            /* åˆ¤æ–­æœ¬é€šé“ä»¥åŠéå†åˆ°çš„é€šé“æ˜¯å¦å¯ä»¥å¹¶å‘ */
             if (VOS_TRUE == AT_IsConcurrentPorts(ucIndex, (VOS_UINT8)i))
             {
-                /* Èç¹ûÊÇ£¬Ôò¼ÌĞø±éÀúÍ¨µÀ */
+                /* å¦‚æœæ˜¯ï¼Œåˆ™ç»§ç»­éå†é€šé“ */
                 continue;
             }
             else
             {
-                /* Èç¹û²»ÊÇ£¬Ôò»º´æ¸ÃÃüÁî */
+                /* å¦‚æœä¸æ˜¯ï¼Œåˆ™ç¼“å­˜è¯¥å‘½ä»¤ */
                 AT_HoldBlockCmd(ucIndex, pData, usLen);
                 return ERR_MSP_FAILURE;
             }
@@ -446,29 +446,29 @@ VOS_VOID AT_DiscardInvalidCharForSms(TAF_UINT8* pData, TAF_UINT16 *pusLen)
         return;
     }
 
-    /*  MACÏµÍ³ÉÏµÄMPºóÌ¨ÎÊÌâ:AT+CMGS=**<CR><^z><Z>(»òAT+CMGW=**<CR><^z><Z>)
-       ÎªÁË¹æ±Ü¸ÃÎÊÌâ£¬ĞèÒªÔÚ½ÓÊÕµ½ÈçÉÏĞÎÊ½µÄÂëÁ÷ºó£¬
-       ĞèÒª½«ÃüÁîºóµÄÎŞĞ§×Ö·û<^z><Z>É¾È¥  */
+    /*  MACç³»ç»Ÿä¸Šçš„MPåå°é—®é¢˜:AT+CMGS=**<CR><^z><Z>(æˆ–AT+CMGW=**<CR><^z><Z>)
+       ä¸ºäº†è§„é¿è¯¥é—®é¢˜ï¼Œéœ€è¦åœ¨æ¥æ”¶åˆ°å¦‚ä¸Šå½¢å¼çš„ç æµåï¼Œ
+       éœ€è¦å°†å‘½ä»¤åçš„æ— æ•ˆå­—ç¬¦<^z><Z>åˆ å»  */
     /*lint -e960 Note -- Violates MISRA 2004 Required Rule 4.1, Prohibited escape sequence used (hexadecimal)*/
     if ((ucAtS3 == pData[*pusLen - 3]) && ('\x1a' == pData[*pusLen - 2])
         && (('z' == pData[*pusLen - 1]) || ('Z' == pData[*pusLen - 1])))
     /*lint +e960*/
     {
-        /* É¾È¥½áÎ²µÄ<^z><Z>×Ö·û */
+        /* åˆ å»ç»“å°¾çš„<^z><Z>å­—ç¬¦ */
         *pusLen -= 2;
     }
-    /* MACÏµÍ³SFRºóÌ¨ÎÊÌâ: AT+CMGS=<LENGTH><CR><LF><CR>*/
+    /* MACç³»ç»ŸSFRåå°é—®é¢˜: AT+CMGS=<LENGTH><CR><LF><CR>*/
     else if ((ucAtS3 == pData[*pusLen - 3])
           && (ucAtS4 == pData[*pusLen - 2])
           && (ucAtS3 == pData[*pusLen - 1]))
     {
-        /* É¾È¥½áÎ²µÄ<LF><CR>×Ö·û */
+        /* åˆ å»ç»“å°¾çš„<LF><CR>å­—ç¬¦ */
         *pusLen -= 2;
     }
-    /* ÅĞ¶ÏpDataÂëÁ÷µÄ½áÎ²ÊÇ·ñÎª<CR><LF>ĞÎÊ½ */
+    /* åˆ¤æ–­pDataç æµçš„ç»“å°¾æ˜¯å¦ä¸º<CR><LF>å½¢å¼ */
     else if ((ucAtS3 == pData[*pusLen - 2]) && (ucAtS4 == pData[*pusLen - 1]))
     {
-        /* É¾È¥½áÎ²µÄ<LF>×Ö·û */
+        /* åˆ å»ç»“å°¾çš„<LF>å­—ç¬¦ */
         *pusLen -= 1;
     }
     else
@@ -498,16 +498,16 @@ VOS_UINT32 AT_ParseCmdType( VOS_UINT8 * pData, VOS_UINT16 usLen)
     VOS_UINT8* pDataTmp = pData + 2;
     VOS_UINT32 ulResult = 0;
 
-    /* µ÷ÓÃµÄµØ·½±£Ö¤pData²»Îª¿Õ */
+    /* è°ƒç”¨çš„åœ°æ–¹ä¿è¯pDataä¸ä¸ºç©º */
 
     if(usLen < 2)
     {
         return AT_ERROR;
     }
 
-    if(AT_SUCCESS == At_CheckCharA(*pData))   /* Èç¹ûÊÇ'A'/'a' */
+    if(AT_SUCCESS == At_CheckCharA(*pData))   /* å¦‚æœæ˜¯'A'/'a' */
     {
-        if(AT_SUCCESS == At_CheckCharT(*(pData+1)))   /* Èç¹ûÊÇ'T'/'t' */
+        if(AT_SUCCESS == At_CheckCharT(*(pData+1)))   /* å¦‚æœæ˜¯'T'/'t' */
         {
             if(2 == usLen)
             {
@@ -522,34 +522,34 @@ VOS_UINT32 AT_ParseCmdType( VOS_UINT8 * pData, VOS_UINT16 usLen)
                 }
             }
 
-            AT_ResetParseVariable();    /* ÖØÖÃ½âÊÍÆ÷ËùÓÃµÄÈ«¾Ö±äÁ¿ */
+            AT_ResetParseVariable();    /* é‡ç½®è§£é‡Šå™¨æ‰€ç”¨çš„å…¨å±€å˜é‡ */
 
             pDataTmp = pData + 2;
             usDataTmpLen = usLen - 2;
 
-            /* ·ÇDÃüÁî£¬ĞèÒªÈ¥³ıÃüÁî½áÎ²µÄ';' */
+            /* éDå‘½ä»¤ï¼Œéœ€è¦å»é™¤å‘½ä»¤ç»“å°¾çš„';' */
             if(AT_SUCCESS != (At_CheckCharD(*pDataTmp)) && (';' == *(pDataTmp+usDataTmpLen-1)))
             {
                 usDataTmpLen--;
             }
 
-            switch(*pDataTmp)      /* ¸ù¾İµÚÈı¸ö×Ö·û½øĞĞ·Ö·¢ */
+            switch(*pDataTmp)      /* æ ¹æ®ç¬¬ä¸‰ä¸ªå­—ç¬¦è¿›è¡Œåˆ†å‘ */
             {
-            case '^':   /* À©Õ¹ÃüÁî */
-            case '+':   /* À©Õ¹ÃüÁî */
-            case '$':   /* À©Õ¹ÃüÁî */
+            case '^':   /* æ‰©å±•å‘½ä»¤ */
+            case '+':   /* æ‰©å±•å‘½ä»¤ */
+            case '$':   /* æ‰©å±•å‘½ä»¤ */
                 return atParseExtendCmd(pDataTmp, usDataTmpLen);
 
             case 'd':
-            case 'D':   /* DÃüÁî */
+            case 'D':   /* Då‘½ä»¤ */
 
                 return ParseDCmdPreProc(pDataTmp, usDataTmpLen);
 
             case 's':
-            case 'S':   /* SÃüÁî */
+            case 'S':   /* Så‘½ä»¤ */
                 return atParseSCmd(pDataTmp, usDataTmpLen);
 
-            default:    /*»ù±¾ÃüÁî */
+            default:    /*åŸºæœ¬å‘½ä»¤ */
                 {
                     ulResult = atParseBasicCmd(pDataTmp, usDataTmpLen);
 
@@ -629,11 +629,11 @@ VOS_UINT32 atMatchCmdName (VOS_UINT8 ucClientId, VOS_UINT32 CmdType)
     AT_PAR_CMDTBL_LIST_STRU* pstCmdNode = NULL;
     VOS_CHAR *pszCmdName = NULL;
 
-    /* µ÷ÓÃµÄµØ·½±£Ö¤ÊäÈëµÄÖ¸Õë²»Îª¿Õ */
+    /* è°ƒç”¨çš„åœ°æ–¹ä¿è¯è¾“å…¥çš„æŒ‡é’ˆä¸ä¸ºç©º */
 
     pCmdTblList = &(g_stCmdTblList);
 
-    /* È«²¿¸ñÊ½»¯Îª´óĞ´×Ö·û */
+    /* å…¨éƒ¨æ ¼å¼åŒ–ä¸ºå¤§å†™å­—ç¬¦ */
     if(AT_FAILURE == At_UpString(g_stATParseCmd.stCmdName.aucCmdName,g_stATParseCmd.stCmdName.usCmdNameLen))
     {
         return AT_ERROR;
@@ -643,7 +643,7 @@ VOS_UINT32 atMatchCmdName (VOS_UINT8 ucClientId, VOS_UINT32 CmdType)
 
     if((AT_EXTEND_CMD_TYPE == CmdType) || (AT_BASIC_CMD_TYPE == CmdType))
     {
-        /* ¶ÌĞÅÃüÁîĞèÒªÌØÊâ´¦Àí */
+        /* çŸ­ä¿¡å‘½ä»¤éœ€è¦ç‰¹æ®Šå¤„ç† */
         if(ERR_MSP_SUCCESS == At_MatchSmsCmdName(ucClientId, pszCmdName))
         {
             return ERR_MSP_SUCCESS;
@@ -683,8 +683,8 @@ VOS_UINT32 ParseParam(AT_PAR_CMD_ELEMENT_STRU* pstCmdElement)
     {
         if((NULL != pstCmdElement) && (NULL != pstCmdElement->pszParam))
         {
-            ulParaLen = AT_STRLEN((VOS_CHAR *)pstCmdElement->pszParam);  /* »ñÈ¡²ÎÊı½Å±¾³¤¶È */
-            if(AT_SUCCESS != atParsePara((VOS_UINT8*)pstCmdElement->pszParam,(VOS_UINT16)ulParaLen))  /* ²ÎÊıÆ¥Åä */
+            ulParaLen = AT_STRLEN((VOS_CHAR *)pstCmdElement->pszParam);  /* è·å–å‚æ•°è„šæœ¬é•¿åº¦ */
+            if(AT_SUCCESS != atParsePara((VOS_UINT8*)pstCmdElement->pszParam,(VOS_UINT16)ulParaLen))  /* å‚æ•°åŒ¹é… */
             {
                 return AT_CME_INCORRECT_PARAMETERS;
             }
@@ -699,7 +699,7 @@ AT_RRETURN_CODE_ENUM_UINT32 fwCmdTestProc(VOS_UINT8 ucIndex, AT_PAR_CMD_ELEMENT_
 {
     AT_RRETURN_CODE_ENUM_UINT32         ulResult = AT_FAILURE;
 
-    /* µ÷ÓÃµÄµØ·½±£Ö¤Ö¸Õë²»Îª¿Õ */
+    /* è°ƒç”¨çš„åœ°æ–¹ä¿è¯æŒ‡é’ˆä¸ä¸ºç©º */
 
     if(NULL != pstCmdElement->pfnTestProc)
     {
@@ -709,7 +709,7 @@ AT_RRETURN_CODE_ENUM_UINT32 fwCmdTestProc(VOS_UINT8 ucIndex, AT_PAR_CMD_ELEMENT_
         {
             g_stParseContext[ucIndex].ucClientStatus = AT_FW_CLIENT_STATUS_PEND;
 
-            /* ¿ª¶¨Ê±Æ÷ */
+            /* å¼€å®šæ—¶å™¨ */
             if(AT_SUCCESS != At_StartTimer(pstCmdElement->ulTestTimeOut, ucIndex))
             {
                 return AT_ERROR;
@@ -747,20 +747,20 @@ AT_RRETURN_CODE_ENUM_UINT32 atCmdDispatch (VOS_UINT8 ucIndex)
     {
     case AT_CMD_OPT_SET_PARA_CMD:
     case AT_CMD_OPT_SET_CMD_NO_PARA:
-        pfnCmdProc = pstCmdElement->pfnSetProc;          /* ÉèÖÃÎŞ²ÎÊıÃüÁî */
+        pfnCmdProc = pstCmdElement->pfnSetProc;          /* è®¾ç½®æ— å‚æ•°å‘½ä»¤ */
         ulTimerLen = pstCmdElement->ulSetTimeOut;
         break;
 
     case AT_CMD_OPT_READ_CMD:
-        pfnCmdProc = pstCmdElement->pfnQryProc;          /* ²éÑ¯²ÎÊı */
+        pfnCmdProc = pstCmdElement->pfnQryProc;          /* æŸ¥è¯¢å‚æ•° */
         ulTimerLen = pstCmdElement->ulQryTimeOut;
         break;
 
     case AT_CMD_OPT_TEST_CMD:
-        return fwCmdTestProc(ucIndex, pstCmdElement);         /* ²âÊÔ²ÎÊı */
+        return fwCmdTestProc(ucIndex, pstCmdElement);         /* æµ‹è¯•å‚æ•° */
 
     default:
-        return AT_ERROR;                        /* ÆäËüÇé¿ö£¬Ôò·µ»Ø´íÎó */
+        return AT_ERROR;                        /* å…¶å®ƒæƒ…å†µï¼Œåˆ™è¿”å›é”™è¯¯ */
     }
 
     if(NULL == pfnCmdProc)
@@ -772,7 +772,7 @@ AT_RRETURN_CODE_ENUM_UINT32 atCmdDispatch (VOS_UINT8 ucIndex)
 
     if(AT_WAIT_ASYNC_RETURN == ulResult)
     {
-        /* ¿ª¶¨Ê±Æ÷ */
+        /* å¼€å®šæ—¶å™¨ */
         if(AT_SUCCESS != At_StartTimer(ulTimerLen, ucIndex))
         {
             return AT_ERROR;
@@ -797,31 +797,31 @@ VOS_UINT32 LimitedCmdProc(VOS_UINT8 ucClientId, VOS_UINT8 *pData, VOS_UINT16 usL
 
 
 
-    /* Èç¹ûE5ÃÜÂë±£»¤ÊÜÏŞ£¬Ôòµ÷ÓÃ²éÑ¯E5ÊÜÏŞÌõ¼ş½Ó¿Ú£¬ÊÜÏŞµÄ»°·µ»ØAT_ERROR£¬·ñÔò·µ»ØAT_OK */
+    /* å¦‚æœE5å¯†ç ä¿æŠ¤å—é™ï¼Œåˆ™è°ƒç”¨æŸ¥è¯¢E5å—é™æ¡ä»¶æ¥å£ï¼Œå—é™çš„è¯è¿”å›AT_ERRORï¼Œå¦åˆ™è¿”å›AT_OK */
     if(0 == (pstCmdElement->ulChkFlag & CMD_TBL_E5_IS_LOCKED))
     {
-        /* ·ÇATÍ¨µÀ ·ÇWIFIÍ¨µÀ, ¾ù²»ĞèÃÜÂë±£»¤ */
+        /* éATé€šé“ éWIFIé€šé“, å‡ä¸éœ€å¯†ç ä¿æŠ¤ */
         if ( (AT_USBCOM_USER != gastAtClientTab[ucClientId].UserType)
           && (AT_SOCK_USER != gastAtClientTab[ucClientId].UserType)
           && (AT_APP_SOCK_USER != gastAtClientTab[ucClientId].UserType))
         {
-            /* ¼ÌĞø½øĞĞPINÂë±£»¤µÄ¼ì²é */
+            /* ç»§ç»­è¿›è¡ŒPINç ä¿æŠ¤çš„æ£€æŸ¥ */
         }
         else
         {
             bE5CheckRight = AT_E5CheckRight(ucClientId, pData, usLen);
             if(VOS_TRUE == bE5CheckRight)
             {
-                /* E5ÒÑ½âËø£¬¼ÌĞø½øĞĞPINÂë±£»¤µÄ¼ì²é */
+                /* E5å·²è§£é”ï¼Œç»§ç»­è¿›è¡ŒPINç ä¿æŠ¤çš„æ£€æŸ¥ */
             }
             else
             {
-                return AT_SUCCESS;  /* AT_E5CheckRight ÄÚ²¿ÒÑ·µ»ØÉÏ±¨½á¹û */
+                return AT_SUCCESS;  /* AT_E5CheckRight å†…éƒ¨å·²è¿”å›ä¸ŠæŠ¥ç»“æœ */
             }
         }
     }
 
-    /* Èç¹ûÊÇE5 DOCKÃüÁî£¬ÔòÖ±½Óµ÷ÓÃDOCKÃüÁî×ª·¢½Ó¿Ú£¬·µ»ØAT_SUCCESS */
+    /* å¦‚æœæ˜¯E5 DOCKå‘½ä»¤ï¼Œåˆ™ç›´æ¥è°ƒç”¨DOCKå‘½ä»¤è½¬å‘æ¥å£ï¼Œè¿”å›AT_SUCCESS */
     if(pstCmdElement->ulChkFlag & CMD_TBL_IS_E5_DOCK)
     {
         if (AT_USBCOM_USER == gastAtClientTab[ucClientId].UserType)
@@ -829,26 +829,26 @@ VOS_UINT32 LimitedCmdProc(VOS_UINT8 ucClientId, VOS_UINT8 *pData, VOS_UINT16 usL
             ulResult = (AT_RRETURN_CODE_ENUM_UINT32)AT_DockHandleCmd(ucClientId, pData, usLen);
             if(AT_SUCCESS == ulResult)
             {
-                return AT_SUCCESS;  /* ÃüÁîÄÚÈİÒÑ×ª·¢µ½E5Í¨µÀ£¬±¾Í¨µÀ²»·µ»ØÈÎºÎ½á¹û */
+                return AT_SUCCESS;  /* å‘½ä»¤å†…å®¹å·²è½¬å‘åˆ°E5é€šé“ï¼Œæœ¬é€šé“ä¸è¿”å›ä»»ä½•ç»“æœ */
             }
             else
             {
-                return AT_ERROR;    /* ´¦ÀíÊ§°Ü£¬·µ»ØERROR */
+                return AT_ERROR;    /* å¤„ç†å¤±è´¥ï¼Œè¿”å›ERROR */
             }
         }
     }
 
-    /* Èç¹ûPINÂë±£»¤ÊÜÏŞ£¬Ôòµ÷ÓÃ²éÑ¯PINÂëÊÜÏŞÌõ¼ş½Ó¿Ú£¬ÊÜÏŞµÄ»°·µ»ØAT_ERROR£¬·ñÔò·µ»ØAT_OK */
+    /* å¦‚æœPINç ä¿æŠ¤å—é™ï¼Œåˆ™è°ƒç”¨æŸ¥è¯¢PINç å—é™æ¡ä»¶æ¥å£ï¼Œå—é™çš„è¯è¿”å›AT_ERRORï¼Œå¦åˆ™è¿”å›AT_OK */
     if(0 == (pstCmdElement->ulChkFlag & CMD_TBL_PIN_IS_LOCKED))
     {
         ulResult = (AT_RRETURN_CODE_ENUM_UINT32)At_CheckUsimStatus((VOS_UINT8*)pstCmdElement->pszCmdName, ucClientId);
         if(AT_SUCCESS == ulResult)
         {
-            /* PINÂëÒÑ½âËø£¬¼ÌĞøºóĞøµÄ¼ì²é´¦Àí */
+            /* PINç å·²è§£é”ï¼Œç»§ç»­åç»­çš„æ£€æŸ¥å¤„ç† */
         }
         else
         {
-            return ulResult;    /* ·µ»Ø¾ßÌåËø¶¨µÄÔ­ÒòÖµ */
+            return ulResult;    /* è¿”å›å…·ä½“é”å®šçš„åŸå› å€¼ */
         }
     }
 
@@ -862,10 +862,10 @@ VOS_UINT32 CmdParseProc(VOS_UINT8 ucClientId, VOS_UINT8 *pData, VOS_UINT16 usLen
     AT_RRETURN_CODE_ENUM_UINT32         ulResult = AT_FAILURE;
     AT_PAR_CMD_ELEMENT_STRU* pstCmdElement = NULL;
 
-    /* ¸Ãº¯Êıµ÷ÓÃ´¦¿É±£Ö¤ucClientIdµÄºÏ·¨ĞÔ£¬pDataIn²»Îª¿Õ */
+    /* è¯¥å‡½æ•°è°ƒç”¨å¤„å¯ä¿è¯ucClientIdçš„åˆæ³•æ€§ï¼ŒpDataInä¸ä¸ºç©º */
 
 
-    /* Æ¥ÅäÃüÁîÃû³Æ */
+    /* åŒ¹é…å‘½ä»¤åç§° */
     ulResult = (AT_RRETURN_CODE_ENUM_UINT32)atMatchCmdName(ucClientId, g_stATParseCmd.ucCmdFmtType);
     if(ERR_MSP_SUCCESS != ulResult)
     {
@@ -880,14 +880,14 @@ VOS_UINT32 CmdParseProc(VOS_UINT8 ucClientId, VOS_UINT8 *pData, VOS_UINT16 usLen
         return AT_ERROR;
     }
 
-    /* ÊÜÏŞÃüÁîÅĞ¶ÏºÍ´¦Àí½Ó¿Ú£¬·µ»ØÊ§°Ü±íÊ¾´¦ÓÚÊÜÏŞÌõ¼ş£¬Ö±½Ó·µ»Ø´íÎóÂë */
+    /* å—é™å‘½ä»¤åˆ¤æ–­å’Œå¤„ç†æ¥å£ï¼Œè¿”å›å¤±è´¥è¡¨ç¤ºå¤„äºå—é™æ¡ä»¶ï¼Œç›´æ¥è¿”å›é”™è¯¯ç  */
     ulResult = (AT_RRETURN_CODE_ENUM_UINT32)LimitedCmdProc(ucClientId, pData, usLen, pstCmdElement);
     if(AT_OK != ulResult)
     {
         return ulResult;
     }
 
-    /* Æ¥Åä½âÎö²ÎÊı */
+    /* åŒ¹é…è§£æå‚æ•° */
     ulResult = (AT_RRETURN_CODE_ENUM_UINT32)ParseParam(pstCmdElement);
 
     if(ERR_MSP_SUCCESS != ulResult)
@@ -926,7 +926,7 @@ VOS_VOID RepeatCmdProc(AT_PARSE_CONTEXT_STRU* pstClientContext)
         ulLen--;
     }
 
-    /* ¼ì²éÊÇ·ñÊÇ"A/" */
+    /* æ£€æŸ¥æ˜¯å¦æ˜¯"A/" */
     if(3 == ulLen)
     {
         if(AT_SUCCESS == At_CheckCharA(*pData))
@@ -953,7 +953,7 @@ VOS_VOID RepeatCmdProc(AT_PARSE_CONTEXT_STRU* pstClientContext)
 }
 VOS_VOID SaveRepeatCmd(AT_PARSE_CONTEXT_STRU* pstClientContext, VOS_UINT8 *pData, VOS_UINT16 usLen)
 {
-    /* ±£´æA/ÃüÁî»º´æ */
+    /* ä¿å­˜A/å‘½ä»¤ç¼“å­˜ */
     if(NULL != pstClientContext->pucCmdLine)
     {
         AT_FREE(pstClientContext->pucCmdLine);
@@ -976,14 +976,14 @@ VOS_UINT32 ScanDelChar( VOS_UINT8 *pData, VOS_UINT16 *pLen, VOS_UINT8 AtS5)
     VOS_UINT16 usLen     = 0;
     VOS_UINT8  *pWrite   = pData;
     VOS_UINT8  *pRead    = pData;
-    VOS_UINT16 usNum     = 0;    /* ¼ÇÂ¼¶ººÅµÄ¸öÊı */
+    VOS_UINT16 usNum     = 0;    /* è®°å½•é€—å·çš„ä¸ªæ•° */
 
     if(0 == *pLen)
     {
         return AT_FAILURE;
     }
 
-    /* ÊäÈë²ÎÊı¼ì²é */
+    /* è¾“å…¥å‚æ•°æ£€æŸ¥ */
     while ( usChkLen++ < *pLen )
     {
         if('"' == *pRead)
@@ -992,7 +992,7 @@ VOS_UINT32 ScanDelChar( VOS_UINT8 *pData, VOS_UINT16 *pLen, VOS_UINT8 AtS5)
             *pWrite++ = *pRead;
             usLen++;
         }
-        else if((AtS5 == *pRead) && (0 == (usNum%2)))       /*É¾³ıÉÏÒ»×Ö·û,ÒıºÅÄÚµÄÉ¾³ı·û²»´¦Àí*/
+        else if((AtS5 == *pRead) && (0 == (usNum%2)))       /*åˆ é™¤ä¸Šä¸€å­—ç¬¦,å¼•å·å†…çš„åˆ é™¤ç¬¦ä¸å¤„ç†*/
         {
             if( usLen > 0 )
             {
@@ -1000,7 +1000,7 @@ VOS_UINT32 ScanDelChar( VOS_UINT8 *pData, VOS_UINT16 *pLen, VOS_UINT8 AtS5)
                 usLen--;
             }
         }
-        else                        /*Ñ¡ÔñÓĞĞ§×Ö·û*/
+        else                        /*é€‰æ‹©æœ‰æ•ˆå­—ç¬¦*/
         {
             *pWrite++ = *pRead;
             usLen++;
@@ -1028,7 +1028,7 @@ VOS_UINT32 ScanCtlChar( VOS_UINT8 *pData, VOS_UINT16 *pLen)
 
     while( usChkLen++ < *pLen )
     {
-        if( 0x20 <= *pRead )   /* Ñ¡ÔñÓĞĞ§×Ö·û */
+        if( 0x20 <= *pRead )   /* é€‰æ‹©æœ‰æ•ˆå­—ç¬¦ */
         {
             if('"' == *pRead)
             {
@@ -1039,7 +1039,7 @@ VOS_UINT32 ScanCtlChar( VOS_UINT8 *pData, VOS_UINT16 *pLen)
         }
         else
         {
-            if(usNum%2)            /* Ë«ÒıºÅÄÚµÄĞ¡ÓÚ0x20µÄ×Ö·û²»È¥³ı */
+            if(usNum%2)            /* åŒå¼•å·å†…çš„å°äº0x20çš„å­—ç¬¦ä¸å»é™¤ */
             {
                 *pWrite++ = *pRead;
                 usLen++;
@@ -1071,7 +1071,7 @@ VOS_UINT32 ScanBlankChar( VOS_UINT8 *pData, VOS_UINT16 *pLen)
     }
 
 #if 0
-    /* ¼ì²éÒıºÅ */
+    /* æ£€æŸ¥å¼•å· */
     while( usQoutNum ++ < *pLen )
     {
         if('"' == *pCheck++)
@@ -1086,7 +1086,7 @@ VOS_UINT32 ScanBlankChar( VOS_UINT8 *pData, VOS_UINT16 *pLen)
     }
 #endif
 
-    /* ¼ì²é */
+    /* æ£€æŸ¥ */
     while( usChkLen++ < *pLen )
     {
         if('=' == *pRead)
@@ -1096,13 +1096,13 @@ VOS_UINT32 ScanBlankChar( VOS_UINT8 *pData, VOS_UINT16 *pLen)
 
         if((' ' == *pRead) && (TRUE != bIsEqual))
         {
-            /* µÈºÅÇ°µÄ¿Õ¸ñÈ¥³ı */
+            /* ç­‰å·å‰çš„ç©ºæ ¼å»é™¤ */
         }
-        else    /* rim¶ººÅÇ°ºóµÄ¿Õ¸ñ */
+        else    /* rimé€—å·å‰åçš„ç©ºæ ¼ */
         {
             if(0x20 != *pRead && ',' != *pRead)
             {
-                /* rim','ºó¿Õ¸ñ */
+                /* rim','åç©ºæ ¼ */
                 if(bIsColonBack)
                 {
                     pWrite -= usColonBankCnt;
@@ -1117,7 +1117,7 @@ VOS_UINT32 ScanBlankChar( VOS_UINT8 *pData, VOS_UINT16 *pLen)
             }
             else if(',' == *pRead)
             {
-                /* rim','Ç°¿Õ¸ñ */
+                /* rim','å‰ç©ºæ ¼ */
                 pWrite -= usColonBankCnt;
                 usLen  -= usColonBankCnt;
                 usColonBankCnt = 0;
@@ -1155,7 +1155,7 @@ PRIVATE VOS_UINT32 ScanBlankCharAfterEq(IN OUT VOS_UINT8 *pData,IN OUT VOS_UINT1
         return AT_FAILURE;
     }
 
-    /* ¼ì²é */
+    /* æ£€æŸ¥ */
     while( usChkLen++ < *pLen )
     {
         if('=' == *pRead)
@@ -1166,7 +1166,7 @@ PRIVATE VOS_UINT32 ScanBlankCharAfterEq(IN OUT VOS_UINT8 *pData,IN OUT VOS_UINT1
         {
             if((TRUE != bIsEqual) || (TRUE == bIsEqualNoSp))
             {
-                /* µÈºÅÇ°µÄ×Ö·ûÈ«²¿¸´ÖÆ£¬µÈºÅºóµÄ·Ç¿Õ¸ñ×Ö·ûÈ«²¿¸´ÖÆ */
+                /* ç­‰å·å‰çš„å­—ç¬¦å…¨éƒ¨å¤åˆ¶ï¼Œç­‰å·åçš„éç©ºæ ¼å­—ç¬¦å…¨éƒ¨å¤åˆ¶ */
             }
             else
             {
@@ -1198,7 +1198,7 @@ VOS_UINT32 FormatCmdStr (VOS_UINT8 *pData, VOS_UINT16 *pLen, VOS_UINT8 AtS3)
     VOS_UINT32 ulFlg      = 0;
     VOS_UINT16 usLen      = 0;
 
-    /* ±£ÁôĞĞ½áÊø·ûÖ®Ç°µÄ×Ö·û */
+    /* ä¿ç•™è¡Œç»“æŸç¬¦ä¹‹å‰çš„å­—ç¬¦ */
     while ( ulChkS3Len++ < *pLen  )
     {
         if(AtS3 == *pCheck++)
@@ -1208,7 +1208,7 @@ VOS_UINT32 FormatCmdStr (VOS_UINT8 *pData, VOS_UINT16 *pLen, VOS_UINT8 AtS3)
         }
         else
         {
-            /* *pCheck &= 0x7f; */   /* ºöÂÔÃ¿¸ö×Ö½ÚµÄ×î¸ßbitÎ» */
+            /* *pCheck &= 0x7f; */   /* å¿½ç•¥æ¯ä¸ªå­—èŠ‚çš„æœ€é«˜bitä½ */
             usLen++;
         }
     }
@@ -1273,28 +1273,28 @@ VOS_UINT32 CmdStringFormat(VOS_UINT8 ucClientId, VOS_UINT8 *pData,VOS_UINT16* pu
         return AT_ERROR;
     }
 
-    /* É¨ÃèÍË¸ñ·û */
+    /* æ‰«æé€€æ ¼ç¬¦ */
     ulRet = ScanDelChar(pData,pusLen, ucAtS5);
     if(ERR_MSP_SUCCESS != ulRet)
     {
         return AT_CME_INVALID_CHARACTERS_IN_TEXT_STRING;
     }
 
-    /* É¨Ãè¿ØÖÆ·û */
+    /* æ‰«ææ§åˆ¶ç¬¦ */
     ulRet = ScanCtlChar(pData,pusLen);
     if(ERR_MSP_SUCCESS != ulRet)
     {
         return AT_CME_INVALID_CHARACTERS_IN_TEXT_STRING;
     }
 
-    /* É¨Ãè¿Õ¸ñ·û */
+    /* æ‰«æç©ºæ ¼ç¬¦ */
     ulRet = ScanBlankChar(pData,pusLen);
     if(ERR_MSP_SUCCESS != ulRet)
     {
         return AT_CME_INVALID_CHARACTERS_IN_TEXT_STRING;
     }
 
-    /* É¨Ãè½ô°¤×ÅµÈºÅºóÃæµÄ¿Õ¸ñ·û */
+    /* æ‰«æç´§æŒ¨ç€ç­‰å·åé¢çš„ç©ºæ ¼ç¬¦ */
     ulRet = ScanBlankCharAfterEq(pData,pusLen);
     if(ERR_MSP_SUCCESS != ulRet)
     {
@@ -1349,15 +1349,15 @@ VOS_UINT32 AnyCharCmdParse(VOS_UINT8* pData, VOS_UINT16 usLen, VOS_UINT8* pName)
     VOS_UINT16 i,j;
     VOS_UINT8  bInQoute = 0;
 
-    VOS_UINT8  aucPara[AT_PARA_MAX_LEN + 1]  = {0};     /* ÓÃÀ´·ÅÖÃ½âÎö³öµÄ²ÎÊı×Ö·û´® */
-    VOS_UINT16 usParaLen                     = 0;       /* ÓÃÀ´±êÊ¶²ÎÊı×Ö·û´®³¤¶È */
+    VOS_UINT8  aucPara[AT_PARA_MAX_LEN + 1]  = {0};     /* ç”¨æ¥æ”¾ç½®è§£æå‡ºçš„å‚æ•°å­—ç¬¦ä¸² */
+    VOS_UINT16 usParaLen                     = 0;       /* ç”¨æ¥æ ‡è¯†å‚æ•°å­—ç¬¦ä¸²é•¿åº¦ */
 
-    AT_ResetParseVariable();    /* ÖØÖÃ½âÊÍÆ÷ËùÓÃµÄÈ«¾Ö±äÁ¿ */
+    AT_ResetParseVariable();    /* é‡ç½®è§£é‡Šå™¨æ‰€ç”¨çš„å…¨å±€å˜é‡ */
 
-    g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_SET_PARA_CMD;  /* ÉèÖÃÃüÁî²Ù×÷ÀàĞÍ*/
-    g_stATParseCmd.ucCmdFmtType = AT_EXTEND_CMD_TYPE;       /* ÉèÖÃÃüÁîÀàĞÍ*/
+    g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_SET_PARA_CMD;  /* è®¾ç½®å‘½ä»¤æ“ä½œç±»å‹*/
+    g_stATParseCmd.ucCmdFmtType = AT_EXTEND_CMD_TYPE;       /* è®¾ç½®å‘½ä»¤ç±»å‹*/
 
-    g_stATParseCmd.stCmdName.usCmdNameLen = (VOS_UINT16)VOS_StrLen((VOS_CHAR *)pName) - 2;    /* ÃüÁîÃû ^CPBW ³¤¶È*/
+    g_stATParseCmd.stCmdName.usCmdNameLen = (VOS_UINT16)VOS_StrLen((VOS_CHAR *)pName) - 2;    /* å‘½ä»¤å ^CPBW é•¿åº¦*/
 
     PS_MEM_CPY(g_stATParseCmd.stCmdName.aucCmdName, pName, g_stATParseCmd.stCmdName.usCmdNameLen);
 
@@ -1378,16 +1378,16 @@ VOS_UINT32 AnyCharCmdParse(VOS_UINT8* pData, VOS_UINT16 usLen, VOS_UINT8* pName)
             {
                 if (1 == bInQoute)
                 {
-                    /* ±íÃ÷¸Ã','ºÅÊÇ²ÎÊıµÄÒ»²¿·Ö£¬¶ø·Ç²ÎÊı·Ö¸ô·û */
+                    /* è¡¨æ˜è¯¥','å·æ˜¯å‚æ•°çš„ä¸€éƒ¨åˆ†ï¼Œè€Œéå‚æ•°åˆ†éš”ç¬¦ */
                     aucPara[usParaLen] = *pData;
                     usParaLen++;
 
                     continue;
                 }
 
-                bInQoute = 0;      /* Ë«ÒıºÅÄÚ¿ÉÄÜ»¹ÓĞË«ÒıºÅ£¬²»ÄÜÔÙ¸ù¾İµÚ¶ş¸öË«ÒıºÅÈÏÎª×Ö·û´®½áÊø , ÒÔ²ÎÊı·Ö¸î·û','×÷Îª×Ö·û´®½áÊø·û¡£*/
+                bInQoute = 0;      /* åŒå¼•å·å†…å¯èƒ½è¿˜æœ‰åŒå¼•å·ï¼Œä¸èƒ½å†æ ¹æ®ç¬¬äºŒä¸ªåŒå¼•å·è®¤ä¸ºå­—ç¬¦ä¸²ç»“æŸ , ä»¥å‚æ•°åˆ†å‰²ç¬¦','ä½œä¸ºå­—ç¬¦ä¸²ç»“æŸç¬¦ã€‚*/
 
-                /* ´¦ÀíÒÔÏÂÒì³£ : ÔÚ×Ö·û´®ºóÃæ£¬','Ç°ÃæµÄÎŞĞ§¿Õ¸ñ */
+                /* å¤„ç†ä»¥ä¸‹å¼‚å¸¸ : åœ¨å­—ç¬¦ä¸²åé¢ï¼Œ','å‰é¢çš„æ— æ•ˆç©ºæ ¼ */
                 for(j=usParaLen-1; j>0; j--)
                 {
                     if(' ' == aucPara[j])
@@ -1400,7 +1400,7 @@ VOS_UINT32 AnyCharCmdParse(VOS_UINT8* pData, VOS_UINT16 usLen, VOS_UINT8* pName)
                     }
                     else
                     {
-                        return AT_CME_INCORRECT_PARAMETERS;    /* ×îºóÒ»¸öË«ÒıºÅºóÃæÓĞÆäËü×Ö·û£¬·µ»Ø´íÎó */
+                        return AT_CME_INCORRECT_PARAMETERS;    /* æœ€åä¸€ä¸ªåŒå¼•å·åé¢æœ‰å…¶å®ƒå­—ç¬¦ï¼Œè¿”å›é”™è¯¯ */
                     }
                 }
             }
@@ -1421,7 +1421,7 @@ VOS_UINT32 AnyCharCmdParse(VOS_UINT8* pData, VOS_UINT16 usLen, VOS_UINT8* pName)
         }
         else
         {
-            /* ´æ´¢²ÎÊıµ½È«¾Ö±äÁ¿ÖĞ */
+            /* å­˜å‚¨å‚æ•°åˆ°å…¨å±€å˜é‡ä¸­ */
             aucPara[usParaLen] = *pData;
             usParaLen++;
 
@@ -1491,9 +1491,9 @@ VOS_VOID At_ReadyClientCmdProc(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 u
 
     ulRet = AnyCharCmdProc(pData, &usLen);
 
-    if(AT_SUCCESS == ulRet)     /* ÊÇÈÎÒâ×Ö·û²ÎÊıµÄÃüÁî */
+    if(AT_SUCCESS == ulRet)     /* æ˜¯ä»»æ„å­—ç¬¦å‚æ•°çš„å‘½ä»¤ */
     {
-        /* ÃüÁî´¦Àí */
+        /* å‘½ä»¤å¤„ç† */
         ulRet = CmdParseProc(ucIndex, pData, usLen);
         if((AT_OK != ulRet) && (AT_WAIT_ASYNC_RETURN != ulRet))
         {
@@ -1504,13 +1504,13 @@ VOS_VOID At_ReadyClientCmdProc(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 u
 
         return ;
     }
-    else if(AT_FAILURE != ulRet)    /* ÊÇÈÎÒâ×Ö·û²ÎÊıµÄÃüÁî£¬µ«²ÎÊı½âÎöÊ§°Ü */
+    else if(AT_FAILURE != ulRet)    /* æ˜¯ä»»æ„å­—ç¬¦å‚æ•°çš„å‘½ä»¤ï¼Œä½†å‚æ•°è§£æå¤±è´¥ */
     {
         At_FormatResultData(ucIndex, ulRet);
 
         return;
     }
-    else    /* ²»ÊÇÈÎÒâ×Ö·û²ÎÊıµÄÃüÁî */
+    else    /* ä¸æ˜¯ä»»æ„å­—ç¬¦å‚æ•°çš„å‘½ä»¤ */
     {
         /* do nothing */
     }
@@ -1523,31 +1523,31 @@ VOS_VOID At_ReadyClientCmdProc(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 u
         return;
     }
 
-    /* ¸ù¾İV3R1ÒªÇó£¬Ç°Á½¸ö×Ö·û²»ÊÇ"AT"£¬²»·µ»ØÈÎºÎĞÅÏ¢ */
-    if(AT_SUCCESS != At_CheckCharA(*pData))   /* Èç¹û²»ÊÇ'A'/'a' */
+    /* æ ¹æ®V3R1è¦æ±‚ï¼Œå‰ä¸¤ä¸ªå­—ç¬¦ä¸æ˜¯"AT"ï¼Œä¸è¿”å›ä»»ä½•ä¿¡æ¯ */
+    if(AT_SUCCESS != At_CheckCharA(*pData))   /* å¦‚æœä¸æ˜¯'A'/'a' */
     {
         return;
     }
 
-    if(AT_SUCCESS != At_CheckCharT(*(pData+1)))   /* Èç¹û²»ÊÇ'T'/'t' */
+    if(AT_SUCCESS != At_CheckCharT(*(pData+1)))   /* å¦‚æœä¸æ˜¯'T'/'t' */
     {
         return;
     }
 
-    /* SIMLOCKÃüÁî¿ÉÄÜÓĞ61¸ö²ÎÊı£¬ÌØÊâ´¦Àí */
+    /* SIMLOCKå‘½ä»¤å¯èƒ½æœ‰61ä¸ªå‚æ•°ï¼Œç‰¹æ®Šå¤„ç† */
     if (AT_SUCCESS == At_ProcSimLockPara(ucIndex, pData, usLen))
     {
         return;
     }
 
-    /* ^DOCKÃüÁîºóÃæ»¹ÓĞ"^"ºÍ"="£¬ÌØÊâ´¦Àí */
+    /* ^DOCKå‘½ä»¤åé¢è¿˜æœ‰"^"å’Œ"="ï¼Œç‰¹æ®Šå¤„ç† */
     if (AT_SUCCESS == AT_HandleDockSetCmd(ucIndex, pData, usLen))
     {
         return;
     }
 
-    /* AP-ModemĞÎÌ¬ÏÂ£¬²úÏßÃüÁîAT^FACAUTHPUBKEYºÍAT^SIMLOCKDATAWRITEµÄÉèÖÃÃüÁî£¬²ÎÊıÒÑ¾­³¬¹ıÁË½âÎöÆ÷ÖĞ
-       ²ÎÊı³¤¶ÈÉÏÏŞ512£¬ĞèÒªÌØÊâ´¦Àí*/
+    /* AP-Modemå½¢æ€ä¸‹ï¼Œäº§çº¿å‘½ä»¤AT^FACAUTHPUBKEYå’ŒAT^SIMLOCKDATAWRITEçš„è®¾ç½®å‘½ä»¤ï¼Œå‚æ•°å·²ç»è¶…è¿‡äº†è§£æå™¨ä¸­
+       å‚æ•°é•¿åº¦ä¸Šé™512ï¼Œéœ€è¦ç‰¹æ®Šå¤„ç†*/
     if (AT_SUCCESS == At_HandleApModemSpecialCmd(ucIndex, pData, usLen))
     {
         return;
@@ -1555,7 +1555,7 @@ VOS_VOID At_ReadyClientCmdProc(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 u
 
     ulResult = (AT_RRETURN_CODE_ENUM_UINT32)At_CombineCmdChkProc(ucIndex, pData, usLen);
 
-    /* ·µ»Ø½á¹û */
+    /* è¿”å›ç»“æœ */
     if((AT_FAILURE == ulResult) || (AT_SUCCESS == ulResult))
     {
         return ;
@@ -1598,9 +1598,9 @@ VOS_VOID atCmdMsgProc(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usLen)
             return ;
         }
 
-        gastAtClientTab[ucIndex].usSmsTxtLen = 0;   /* ¶ÌĞÅBUFFERÇå¿Õ */
+        gastAtClientTab[ucIndex].usSmsTxtLen = 0;   /* çŸ­ä¿¡BUFFERæ¸…ç©º */
 
-        At_SetMode(ucIndex,AT_CMD_MODE,AT_NORMAL_MODE);         /* ÖÃ»ØÃüÁî×´Ì¬ */
+        At_SetMode(ucIndex,AT_CMD_MODE,AT_NORMAL_MODE);         /* ç½®å›å‘½ä»¤çŠ¶æ€ */
 
         if (AT_WAIT_ASYNC_RETURN == ulResult)
         {
@@ -1621,22 +1621,22 @@ VOS_VOID atCmdMsgProc(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usLen)
     }
     else if (AT_XML_MODE == pClientContext->ucMode)
     {
-        /* µ÷ÓÃXMLÊäÈë´¦Àíº¯Êı */
+        /* è°ƒç”¨XMLè¾“å…¥å¤„ç†å‡½æ•° */
         ulResult = (AT_RRETURN_CODE_ENUM_UINT32)At_ProcXmlText(ucIndex, pData, usLen);
 
-        /* ´¦Àí³É¹¦£¬Êä³öÌáÊ¾·û">" */
+        /* å¤„ç†æˆåŠŸï¼Œè¾“å‡ºæç¤ºç¬¦">" */
         if (AT_WAIT_XML_INPUT == ulResult)
         {
             At_FormatResultData(ucIndex,ulResult);
             return;
         }
 
-        /* Çå¿Õ»º´æÇø */
-        PS_MEM_FREE(WUEPS_PID_AT, pstAgpsCtx->stXml.pcXmlTextHead);                         /* XML BUFFERÇå¿Õ */
+        /* æ¸…ç©ºç¼“å­˜åŒº */
+        PS_MEM_FREE(WUEPS_PID_AT, pstAgpsCtx->stXml.pcXmlTextHead);                         /* XML BUFFERæ¸…ç©º */
         pstAgpsCtx->stXml.pcXmlTextHead = VOS_NULL_PTR;
         pstAgpsCtx->stXml.pcXmlTextCur  = VOS_NULL_PTR;
 
-        At_SetMode(ucIndex, AT_CMD_MODE, AT_NORMAL_MODE);                           /* ÖÃ»ØÃüÁî×´Ì¬ */
+        At_SetMode(ucIndex, AT_CMD_MODE, AT_NORMAL_MODE);                           /* ç½®å›å‘½ä»¤çŠ¶æ€ */
 
         if (AT_WAIT_ASYNC_RETURN == ulResult)
         {
@@ -1659,14 +1659,14 @@ VOS_VOID atCmdMsgProc(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usLen)
     {
     }
 
-    /* ±ÜÃâ×éºÏÃüÁî´¦Àí¹ı³ÌÖĞÆäËûÍ¨µÀÓĞÃüÁîÊäÈë */
+    /* é¿å…ç»„åˆå‘½ä»¤å¤„ç†è¿‡ç¨‹ä¸­å…¶ä»–é€šé“æœ‰å‘½ä»¤è¾“å…¥ */
     ulRet = AT_ParseCmdIsComb(ucIndex, pData, usLen);
     if(ERR_MSP_SUCCESS != ulRet)
     {
         return;
     }
 
-    /* ÅĞ¶ÏÊÇ·ñÓĞPEND×´Ì¬µÄÍ¨µÀ */
+    /* åˆ¤æ–­æ˜¯å¦æœ‰PENDçŠ¶æ€çš„é€šé“ */
     ulRet = AT_ParseCmdIsPend(ucIndex, pData, usLen);
     if(ERR_MSP_SUCCESS != ulRet)
     {
@@ -1683,11 +1683,11 @@ VOS_VOID atCmdMsgProc(VOS_UINT8 ucIndex, VOS_UINT8 *pData, VOS_UINT16 usLen)
 VOS_UINT32 At_CmdStreamRcv(VOS_UINT8 ucIndex, VOS_UINT8* pData, VOS_UINT16 usLen)
 {
     VOS_UINT8* pHead = NULL;
-    VOS_UINT16 usCount = 0;  /* µ±Ç°Ö¸ÏòµÄ×Ö·ûÎ»ÖÃ */
-    VOS_UINT16 usTotal = 0;  /* ÒÑ¾­´¦ÀíµÄ×Ö·û¸öÊı */
+    VOS_UINT16 usCount = 0;  /* å½“å‰æŒ‡å‘çš„å­—ç¬¦ä½ç½® */
+    VOS_UINT16 usTotal = 0;  /* å·²ç»å¤„ç†çš„å­—ç¬¦ä¸ªæ•° */
     AT_PARSE_CONTEXT_STRU* pstClientContext = NULL;
 
-    /* ucIndexÖ»¼ì²éÒ»´Î£¬ºóĞøµÄ×Óº¯Êı²»ÔÙ¼ì²é */
+    /* ucIndexåªæ£€æŸ¥ä¸€æ¬¡ï¼Œåç»­çš„å­å‡½æ•°ä¸å†æ£€æŸ¥ */
     if((NULL == pData) || (ucIndex >= AT_MAX_CLIENT_NUM))
     {
         return ERR_MSP_INVALID_PARAMETER;
@@ -1697,14 +1697,14 @@ VOS_UINT32 At_CmdStreamRcv(VOS_UINT8 ucIndex, VOS_UINT8* pData, VOS_UINT16 usLen
 
     pHead = pData;
 
-    /* ĞĞ½áÊø·û(<CR>»òÕßÓÃ»§Ö¸¶¨) */
+    /* è¡Œç»“æŸç¬¦(<CR>æˆ–è€…ç”¨æˆ·æŒ‡å®š) */
     while(usCount++ < usLen)
     {
         /*lint -e960 Note -- Violates MISRA 2004 Required Rule 4.1, Prohibited escape sequence used (hexadecimal)*/
         if(At_CheckCmdSms(*(pData+usCount-1), pstClientContext->ucMode))
         /*lint +e960*/
         {
-            /* »º´æÖĞÒÑ¾­ÓĞÊı¾İ */
+            /* ç¼“å­˜ä¸­å·²ç»æœ‰æ•°æ® */
             if(pstClientContext->usDataLen > 0)
             {
                 if((pstClientContext->usDataLen + usCount) >= AT_CMD_MAX_LEN)
@@ -1716,7 +1716,7 @@ VOS_UINT32 At_CmdStreamRcv(VOS_UINT8 ucIndex, VOS_UINT8* pData, VOS_UINT16 usLen
                 PS_MEM_CPY(&pstClientContext->aucDataBuff[pstClientContext->usDataLen], pHead, usCount);
                 pstClientContext->usDataLen += usCount;
             }
-            else    /* »º´æÖĞÎŞÊı¾İ */
+            else    /* ç¼“å­˜ä¸­æ— æ•°æ® */
             {
                 PS_MEM_CPY(&pstClientContext->aucDataBuff[0], pHead, (VOS_SIZE_T)(usCount-usTotal));
                 pstClientContext->usDataLen = usCount-usTotal;
@@ -1732,7 +1732,7 @@ VOS_UINT32 At_CmdStreamRcv(VOS_UINT8 ucIndex, VOS_UINT8* pData, VOS_UINT16 usLen
         }
     }
 
-    /* ÓĞ²¿·Ö×Ö·ûÎ´´¦Àí£¬ĞèÒª»º´æ */
+    /* æœ‰éƒ¨åˆ†å­—ç¬¦æœªå¤„ç†ï¼Œéœ€è¦ç¼“å­˜ */
     if(usTotal < usLen)
     {
         if((pstClientContext->usDataLen + (usLen-usTotal)) >= AT_CMD_MAX_LEN)
@@ -1768,13 +1768,13 @@ VOS_VOID At_CombineBlockCmdProc(VOS_UINT8 ucIndex)
 
     pstCombineCmdInfo = &pClientContext->stCombineCmdInfo;
 
-    /* ÅĞ¶Ï×éºÏÃüÁîÊÇ·ñ´¦ÀíÍê±Ï */
+    /* åˆ¤æ–­ç»„åˆå‘½ä»¤æ˜¯å¦å¤„ç†å®Œæ¯• */
     if((pstCombineCmdInfo->usProcNum < pstCombineCmdInfo->usTotalNum))
     {
-        /* ´¦ÀíÏÂÒ»ÌõÃüÁî */
+        /* å¤„ç†ä¸‹ä¸€æ¡å‘½ä»¤ */
         ulResult = (AT_RRETURN_CODE_ENUM_UINT32)At_CombineCmdProc(ucIndex);
 
-        /* ·µ»Ø½á¹û */
+        /* è¿”å›ç»“æœ */
         if((AT_FAILURE == ulResult) || (AT_SUCCESS == ulResult))
         {
             return ;
@@ -1788,20 +1788,20 @@ VOS_VOID At_CombineBlockCmdProc(VOS_UINT8 ucIndex)
         return ;
     }
 
-    /* ÅĞ¶ÏÊÇ·ñÓĞ»º´æµÄÃüÁî */
+    /* åˆ¤æ–­æ˜¯å¦æœ‰ç¼“å­˜çš„å‘½ä»¤ */
     ucIndex = AT_BlockCmdCheck();
     if(ucIndex < AT_MAX_CLIENT_NUM)
     {
         pClientContext = &(g_stParseContext[ucIndex]);
 
-        /* Í£Ö¹»º´æÃüÁîµÄ¶¨Ê±Æ÷ */
+        /* åœæ­¢ç¼“å­˜å‘½ä»¤çš„å®šæ—¶å™¨ */
         AT_StopRelTimer(ucIndex, &pClientContext->hTimer);
 
         usBlockCmdLen = pClientContext->usBlockCmdLen;
         pucBlockCmd = (VOS_UINT8*)AT_MALLOC(usBlockCmdLen);
         if(NULL == pucBlockCmd)
         {
-            /* Áô´ı³¬Ê±·µ»Ø»òÏÂÌõÃüÁî´¦Àí½áÊøºó´¥·¢ */
+            /* ç•™å¾…è¶…æ—¶è¿”å›æˆ–ä¸‹æ¡å‘½ä»¤å¤„ç†ç»“æŸåè§¦å‘ */
             return ;
         }
 
@@ -1809,7 +1809,7 @@ VOS_VOID At_CombineBlockCmdProc(VOS_UINT8 ucIndex)
 
         AT_ClearBlockCmdInfo(ucIndex);
 
-        /* ´¦Àí»º´æÃüÁî */
+        /* å¤„ç†ç¼“å­˜å‘½ä»¤ */
         At_ReadyClientCmdProc(ucIndex, pucBlockCmd, usBlockCmdLen);
 
         AT_FREE(pucBlockCmd);
@@ -1830,7 +1830,7 @@ VOS_VOID At_CmdMsgDistr(AT_MSG_STRU *pstMsg)
     pData   = pstMsg->aucValue;
     ucIndex = pstMsg->ucIndex;
 
-    /* CºË/HIFI¸´Î»Ê±£¬Ä£ÄâµÄÊÇAT¸øAT·¢µÄÏûÏ¢ */
+    /* Cæ ¸/HIFIå¤ä½æ—¶ï¼Œæ¨¡æ‹Ÿçš„æ˜¯ATç»™ATå‘çš„æ¶ˆæ¯ */
     switch(pstMsg->ucType)
     {
         case ID_CCPU_AT_RESET_START_IND:
@@ -1855,7 +1855,7 @@ VOS_VOID At_CmdMsgDistr(AT_MSG_STRU *pstMsg)
 
     AT_AddUsedClientId2Tab(ucIndex);
 
-    /* Èç¹û´¦ÓÚCºË¸´Î»Ç°Ôò²»´¦ÀíÈÎºÎATÃüÁî */
+    /* å¦‚æœå¤„äºCæ ¸å¤ä½å‰åˆ™ä¸å¤„ç†ä»»ä½•ATå‘½ä»¤ */
     if (VOS_TRUE == AT_GetResetFlag())
     {
         return;
@@ -1901,13 +1901,13 @@ VOS_UINT32 atfwParseSaveParam(VOS_UINT8* pStringBuf, VOS_UINT16 usLen)
         return ERR_MSP_FAILURE;
     }
 
-    /* Èç¹û³¤¶ÈÎª0£¬ÔòÔÊĞí×Ö·û´®Ö¸ÕëÎª¿Õ£¬·ñÔò·µ»ØÊ§°Ü */
+    /* å¦‚æœé•¿åº¦ä¸º0ï¼Œåˆ™å…è®¸å­—ç¬¦ä¸²æŒ‡é’ˆä¸ºç©ºï¼Œå¦åˆ™è¿”å›å¤±è´¥ */
     if ((NULL == pStringBuf) && (0 != usLen))
     {
         return ERR_MSP_FAILURE;
     }
 
-    /* Èç¹û×Ö·û´®³¤¶ÈÎª0£¬Ôò²»ĞèÒª¿½±´ */
+    /* å¦‚æœå­—ç¬¦ä¸²é•¿åº¦ä¸º0ï¼Œåˆ™ä¸éœ€è¦æ‹·è´ */
     if((0 != usLen) && (NULL != pStringBuf))
     {
         PS_MEM_CPY(gastAtParaList[gucAtParaIndex].aucPara, pStringBuf, usLen);
@@ -2023,11 +2023,11 @@ VOS_UINT32 AT_IsAbortCmdStr(
     ulAtCurrSetTick = VOS_GetTick();
     pstCmdAbortTick = At_GetAtCmdAbortTickInfo();
 
-    /* ÊäÈëµÄ×Ö·ûÒÑ¾­È¥³ıÁË²»¿É¼û×Ö·û(<0x20µÄASCII×Ö·û),¿Õ¸ñ, S3, S5µÈ×Ö·û. µ«Ã»ÓĞ×Ö·û´®½áÊø·û */
+    /* è¾“å…¥çš„å­—ç¬¦å·²ç»å»é™¤äº†ä¸å¯è§å­—ç¬¦(<0x20çš„ASCIIå­—ç¬¦),ç©ºæ ¼, S3, S5ç­‰å­—ç¬¦. ä½†æ²¡æœ‰å­—ç¬¦ä¸²ç»“æŸç¬¦ */
 
     ulAbortCmdStrLen = 0;
 
-    /* »ñÈ¡´ò¶ÏÃüÁîµÄ²ÎÊı */
+    /* è·å–æ‰“æ–­å‘½ä»¤çš„å‚æ•° */
     pstAbortCmdPara  = AT_GetAbortCmdPara();
 
     if (VOS_NULL_PTR == pstAbortCmdPara)
@@ -2035,7 +2035,7 @@ VOS_UINT32 AT_IsAbortCmdStr(
         return VOS_FALSE;
     }
 
-    /* ÅĞ¶ÏÊÇ·ñÊ¹ÄÜ´ò¶ÏÃüÁî¹¦ÄÜ */
+    /* åˆ¤æ–­æ˜¯å¦ä½¿èƒ½æ‰“æ–­å‘½ä»¤åŠŸèƒ½ */
     if ( VOS_TRUE != pstAbortCmdPara->ucAbortEnableFlg )
     {
         return VOS_FALSE;
@@ -2043,7 +2043,7 @@ VOS_UINT32 AT_IsAbortCmdStr(
 
 
 
-    /* ¼ì²âµ±Ç°´ò¶ÏtickÖµÊÇ·ñÂú×ãÏà¸ô125msÌõ¼ş,Èç¹û²»Âú×ã£¬ÔòÖ±½Ó·µ»Ø²»´ò¶Ï */
+    /* æ£€æµ‹å½“å‰æ‰“æ–­tickå€¼æ˜¯å¦æ»¡è¶³ç›¸éš”125msæ¡ä»¶,å¦‚æœä¸æ»¡è¶³ï¼Œåˆ™ç›´æ¥è¿”å›ä¸æ‰“æ–­ */
     if  ( ulAtCurrSetTick >= pstCmdAbortTick->ulAtSetTick[ucIndex] )
     {
 
@@ -2059,20 +2059,20 @@ VOS_UINT32 AT_IsAbortCmdStr(
         return VOS_FALSE;
     }
 
-    /* ¼ì²âµ±Ç°ÊÇ·ñÊÇÈÎÒâ×Ö·û´ò¶Ï£¬Èç¹ûÊÇ£¬ÔòÖ±½Ó·µ»Ø´ò¶Ï */
+    /* æ£€æµ‹å½“å‰æ˜¯å¦æ˜¯ä»»æ„å­—ç¬¦æ‰“æ–­ï¼Œå¦‚æœæ˜¯ï¼Œåˆ™ç›´æ¥è¿”å›æ‰“æ–­ */
     if  ( VOS_TRUE == At_GetAtCmdAnyAbortFlg() )
     {
         return VOS_TRUE;
     }
 
-    /* ³¤¶ÈÅĞ¶Ï */
+    /* é•¿åº¦åˆ¤æ–­ */
     ulAbortCmdStrLen = VOS_StrLen((VOS_CHAR *)pstAbortCmdPara->aucAbortAtCmdStr);
     if ( (0 == usLen) || (usLen != ulAbortCmdStrLen) )
     {
         return VOS_FALSE;
     }
 
-    /* µ±Ç°²»ÊÇÈÎÒâ×Ö·û´ò¶Ï£¬ÔòĞèÒª¼ì²âAT´ò¶ÏÄÚÈİ£¬ÊÇ´ò¶ÏÃüÁî£¬Ôò·µ»Ø´ò¶Ï */
+    /* å½“å‰ä¸æ˜¯ä»»æ„å­—ç¬¦æ‰“æ–­ï¼Œåˆ™éœ€è¦æ£€æµ‹ATæ‰“æ–­å†…å®¹ï¼Œæ˜¯æ‰“æ–­å‘½ä»¤ï¼Œåˆ™è¿”å›æ‰“æ–­ */
     if ( (0 == VOS_StrNiCmp((VOS_CHAR *)pucData, (VOS_CHAR *)pstAbortCmdPara->aucAbortAtCmdStr, usLen)) )
     {
         return VOS_TRUE;
@@ -2087,7 +2087,7 @@ VOS_VOID AT_AbortCmdProc(
     VOS_UINT32                          ulTimerLen;
     VOS_UINT32                          ulResult;
 
-    /* ¿ÕÖ¸Õë¼ì²é */
+    /* ç©ºæŒ‡é’ˆæ£€æŸ¥ */
     if ( VOS_NULL_PTR == g_stParseContext[ucIndex].pstCmdElement )
     {
         AT_WARN_LOG("AT_AbortCmdProc: pstCmdElement NULL.");
@@ -2099,13 +2099,13 @@ VOS_VOID AT_AbortCmdProc(
         return;
     }
 
-    /* µ÷ÓÃµ±Ç°ÕıÔÚ´¦ÀíµÄATÃüÁîµÄAbortº¯Êı */
+    /* è°ƒç”¨å½“å‰æ­£åœ¨å¤„ç†çš„ATå‘½ä»¤çš„Abortå‡½æ•° */
     ulResult = g_stParseContext[ucIndex].pstCmdElement->pfnAbortProc(ucIndex);
     if ( AT_WAIT_ASYNC_RETURN == ulResult )
     {
-        /* ÓÉÓÚµ±Ç°AT¶Ë¿ÚµÄ×´Ì¬ÒÑ¾­´¦ÓÚPEND×´Ì¬, ´Ë´¦²»ĞèÒªÔÙ¸üĞÂ¶Ë¿Ú×´Ì¬ */
+        /* ç”±äºå½“å‰ATç«¯å£çš„çŠ¶æ€å·²ç»å¤„äºPENDçŠ¶æ€, æ­¤å¤„ä¸éœ€è¦å†æ›´æ–°ç«¯å£çŠ¶æ€ */
 
-        /* Æô¶¯´ò¶Ï±£»¤¶¨Ê±Æ÷, ³¬Ê±ºóĞèÒªÏòAT¶Ë¿ÚÉÏ±¨ABORT */
+        /* å¯åŠ¨æ‰“æ–­ä¿æŠ¤å®šæ—¶å™¨, è¶…æ—¶åéœ€è¦å‘ATç«¯å£ä¸ŠæŠ¥ABORT */
         ulTimerLen = g_stParseContext[ucIndex].pstCmdElement->ulAbortTimeOut;
         if ( 0 == ulTimerLen )
         {
@@ -2113,14 +2113,14 @@ VOS_VOID AT_AbortCmdProc(
             return;
         }
 
-        /* Æğ±£»¤¶¨Ê±Æ÷ */
+        /* èµ·ä¿æŠ¤å®šæ—¶å™¨ */
         if ( AT_SUCCESS != At_StartTimer(ulTimerLen, ucIndex) )
         {
             AT_WARN_LOG("AT_AbortCmdProc: StartTimer Err.");
             return;
         }
     }
-    /* ±íÊ¾ATÖ±½Ó´ò¶Ï ²»ĞèÒªµÈÒì²½ÏûÏ¢ */
+    /* è¡¨ç¤ºATç›´æ¥æ‰“æ–­ ä¸éœ€è¦ç­‰å¼‚æ­¥æ¶ˆæ¯ */
     else if ( (AT_ABORT == ulResult)
            || (AT_OK    == ulResult) )
     {
@@ -2131,8 +2131,8 @@ VOS_VOID AT_AbortCmdProc(
 
         At_FormatResultData(ucIndex,ulResult);
     }
-    /* ÆäËüÒì³££¬ÈçÏûÏ¢·¢ËÍÊ§°Ü ÄÚ´æÉêÇëÊ§°Ü£¬µ±Ç°ÃüÁî²Ù×÷ÀàĞÍ²»Ö§³Ö´ò¶Ï
-       (ÈçÔÚÖ¸¶¨ËÑ¹ı³ÌÊÕµ½´ò¶ÏÃüÁî, µ«µ±Ç°Ö¸¶¨ËÑ²»Ö§³Ö´ò¶Ï)µÈ£¬¶ªÆú ²»×ö´ò¶Ï´¦Àí */
+    /* å…¶å®ƒå¼‚å¸¸ï¼Œå¦‚æ¶ˆæ¯å‘é€å¤±è´¥ å†…å­˜ç”³è¯·å¤±è´¥ï¼Œå½“å‰å‘½ä»¤æ“ä½œç±»å‹ä¸æ”¯æŒæ‰“æ–­
+       (å¦‚åœ¨æŒ‡å®šæœè¿‡ç¨‹æ”¶åˆ°æ‰“æ–­å‘½ä»¤, ä½†å½“å‰æŒ‡å®šæœä¸æ”¯æŒæ‰“æ–­)ç­‰ï¼Œä¸¢å¼ƒ ä¸åšæ‰“æ–­å¤„ç† */
     else
     {
         AT_WARN_LOG1("AT_AbortCmdProc, WARNING, Return Code %d!", ulResult);
@@ -2152,29 +2152,29 @@ AT_PAR_CMD_ELEMENT_STRU* AT_GetCmdElementInfo(
     VOS_UINT32                          i;
 
 
-    /* µ÷ÓÃµÄµØ·½±£Ö¤ÊäÈëµÄÖ¸Õë²»Îª¿Õ */
+    /* è°ƒç”¨çš„åœ°æ–¹ä¿è¯è¾“å…¥çš„æŒ‡é’ˆä¸ä¸ºç©º */
 
     pstCmdTblList   = &(g_stCmdTblList);
 
-    /* Èç¹ûÃüÁîÀàĞÍ²»ÊÇÀ©Õ¹ÃüÁîÒ²²»ÊÇ»ù±¾ÃüÁî£¬Ö±½Ó·µ»Ø¿ÕÖ¸Õë */
+    /* å¦‚æœå‘½ä»¤ç±»å‹ä¸æ˜¯æ‰©å±•å‘½ä»¤ä¹Ÿä¸æ˜¯åŸºæœ¬å‘½ä»¤ï¼Œç›´æ¥è¿”å›ç©ºæŒ‡é’ˆ */
     if ((AT_EXTEND_CMD_TYPE != ulCmdType) && (AT_BASIC_CMD_TYPE != ulCmdType))
     {
         return VOS_NULL_PTR;
     }
 
-    /* ÔÚ¸÷ÃüÁî±íÖĞ²éÕÒÖ¸¶¨ÃüÁî */
+    /* åœ¨å„å‘½ä»¤è¡¨ä¸­æŸ¥æ‰¾æŒ‡å®šå‘½ä»¤ */
     msp_list_for_each(pstCurList, pstCmdTblList)
     {
         pstCurCmdNode = msp_list_entry(pstCurList, AT_PAR_CMDTBL_LIST_STRU, stCmdTblList);
 
         for (i = 0; i < pstCurCmdNode->usCmdNum; i++)
         {
-            /* Ã»ÕÒµ½Ê±£¬ÔÚÃüÁî±íÖĞ²éÕÒÏÂÒ»ÌõÃüÁî */
+            /* æ²¡æ‰¾åˆ°æ—¶ï¼Œåœ¨å‘½ä»¤è¡¨ä¸­æŸ¥æ‰¾ä¸‹ä¸€æ¡å‘½ä»¤ */
             if ((NULL == pstCurCmdNode->pstCmdElement) || (NULL == pstCurCmdNode->pstCmdElement[i].pszCmdName))
             {
                 continue;
             }
-            /* ÕÒµ½Ê±£¬Ö¸ÕëÖ¸µ½ÏàÓ¦µÄÃüÁî */
+            /* æ‰¾åˆ°æ—¶ï¼ŒæŒ‡é’ˆæŒ‡åˆ°ç›¸åº”çš„å‘½ä»¤ */
             if (ERR_MSP_SUCCESS == AT_STRCMP((VOS_CHAR*)pucCmdName, (VOS_CHAR*)pstCurCmdNode->pstCmdElement[i].pszCmdName))
             {
                 return &(pstCurCmdNode->pstCmdElement[i]);
@@ -2197,7 +2197,7 @@ VOS_VOID AT_SaveCmdElementInfo(
         return;
     }
 
-    /* Ã»ÓĞÕÒµ½ÏàÓ¦µÄÖ¸¶¨ÃüÁîÊ±£¬Ö±½Ó·µ»Ø */
+    /* æ²¡æœ‰æ‰¾åˆ°ç›¸åº”çš„æŒ‡å®šå‘½ä»¤æ—¶ï¼Œç›´æ¥è¿”å› */
     pstGetCmdElemnet = AT_GetCmdElementInfo(pucCmdName, ulCmdType);
     if (VOS_NULL_PTR == pstGetCmdElemnet)
     {
@@ -2205,7 +2205,7 @@ VOS_VOID AT_SaveCmdElementInfo(
         return;
     }
 
-    /* ÕÒµ½Ê±£¬±£´æµ½È«¾Ö±äÁ¿ */
+    /* æ‰¾åˆ°æ—¶ï¼Œä¿å­˜åˆ°å…¨å±€å˜é‡ */
     g_stParseContext[ucIndex].pstCmdElement = pstGetCmdElemnet;
 
     return;
@@ -2226,7 +2226,7 @@ VOS_UINT32 AT_IsAnyParseClientPend(VOS_VOID)
         pstPortBuffCfg->ucNum = AT_MAX_CLIENT_NUM;
     }
 
-    /* ¸ù¾İµ±Ç°¼ÇÂ¼µÄÍ¨µÀ²éÑ¯Í¨µÀ×´Ì¬ */
+    /* æ ¹æ®å½“å‰è®°å½•çš„é€šé“æŸ¥è¯¢é€šé“çŠ¶æ€ */
     for (i = 0; i < pstPortBuffCfg->ucNum; i++)
     {
         ucClientIndex = (VOS_UINT8)pstPortBuffCfg->ulUsedClientID[i];
@@ -2259,7 +2259,7 @@ VOS_UINT32 AT_IsAllClientDataMode(VOS_VOID)
         pstPortBuffCfg->ucNum = AT_MAX_CLIENT_NUM;
     }
 
-    /* ²é¿´ÓĞ¶àÉÙ¸öÍ¨µÀ´¦ÓÚdataÄ£Ê½ */
+    /* æŸ¥çœ‹æœ‰å¤šå°‘ä¸ªé€šé“å¤„äºdataæ¨¡å¼ */
     for (i = 0; i < pstPortBuffCfg->ucNum; i++)
     {
         ucClientIndex = (VOS_UINT8)pstPortBuffCfg->ulUsedClientID[i];
@@ -2274,7 +2274,7 @@ VOS_UINT32 AT_IsAllClientDataMode(VOS_VOID)
         }
     }
 
-    /* ËùÓĞÍ¨µÀÓĞ´¦ÀídataÄ£Ê½ */
+    /* æ‰€æœ‰é€šé“æœ‰å¤„ç†dataæ¨¡å¼ */
     if (ulDataModeNum == pstPortBuffCfg->ucNum)
     {
         return VOS_TRUE;

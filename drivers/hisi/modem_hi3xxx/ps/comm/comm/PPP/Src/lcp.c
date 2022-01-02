@@ -1,8 +1,8 @@
 
  /*
-  1.ÈÕ    ÆÚ   : 2006Äê4ÔÂ4ÈÕ
-    ×÷    Õß   : liuyang id:48197
-    ÐÞ¸ÄÄÚÈÝ   : ÎÊÌâµ¥ºÅ:A32D01738
+  1.æ—¥    æœŸ   : 2006å¹´4æœˆ4æ—¥
+    ä½œ    è€…   : liuyang id:48197
+    ä¿®æ”¹å†…å®¹   : é—®é¢˜å•å·:A32D01738
  */
 
 #if 0
@@ -76,13 +76,13 @@
 #include "ppp_input.h"
 #include "ppp_atcmd.h"
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_LCP_C
 
 #if(FEATURE_ON == FEATURE_PPP)
 
-/* ±£´æ´ÓNVÏîÖÐ¶ÁÈ¡µÄMRUÖµ*/
+/* ä¿å­˜ä»ŽNVé¡¹ä¸­è¯»å–çš„MRUå€¼*/
 VOS_UINT16 g_usPppConfigMru = DEF_MRU;
 
 /* for received LQRs */
@@ -295,18 +295,18 @@ lcp_Init(struct lcp *lcp, /*struct bundle *bundle, */struct link *l,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : lcp_Setup
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊý  :
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : lcp_Setup
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê8ÔÂ1ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : Ôö¼Ó¶Ô¿ØÖÆOption MRRUºÍShortSeqµÄÈ«¾Ö±äÁ¿µÄ³õÊ¼»¯
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´8æœˆ1æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : å¢žåŠ å¯¹æŽ§åˆ¶Option MRRUå’ŒShortSeqçš„å…¨å±€å˜é‡çš„åˆå§‹åŒ–
 
 *****************************************************************************/
 void
@@ -558,18 +558,18 @@ lcp_SendProtoRej(struct lcp *lcp, VOS_CHAR *option, VOS_INT32 count)
 
 /*lint -e578 by liukai*/
 /*****************************************************************************
- º¯ Êý Ãû  : lcp_SendIdentification
- ¹¦ÄÜÃèÊö  : ÏòLCP°üÌîÐ´Identification
- ÊäÈë²ÎÊý  : lcp - LCP¿ØÖÆ½á¹¹
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : Ö¸Ê¾ÊÇ·ñÌîÐ´, Î´ÌîÐ´ - 0, ÌîÐ´ - 1
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : lcp_SendIdentification
+ åŠŸèƒ½æè¿°  : å‘LCPåŒ…å¡«å†™Identification
+ è¾“å…¥å‚æ•°  : lcp - LCPæŽ§åˆ¶ç»“æž„
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æŒ‡ç¤ºæ˜¯å¦å¡«å†™, æœªå¡«å†™ - 0, å¡«å†™ - 1
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê5ÔÂ21ÈÕ
-    ×÷    Õß   : liukai
-    ÐÞ¸ÄÄÚÈÝ   : AT2D03379
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´5æœˆ21æ—¥
+    ä½œ    è€…   : liukai
+    ä¿®æ”¹å†…å®¹   : AT2D03379
 *****************************************************************************/
 VOS_INT32
 lcp_SendIdentification(struct lcp *lcp)
@@ -655,10 +655,10 @@ LcpLayerFinish(struct fsm *fp)
 
 
 #if (PPP_FEATURE == PPP_FEATURE_PPP)
-  /*Í¨ÖªAT½øÐÐPDPÈ¥¼¤»î*/
+  /*é€šçŸ¥ATè¿›è¡ŒPDPåŽ»æ¿€æ´»*/
   PPP_ProcPppRelEvent(usPppId);
 
-  /* ¿ÉÎ¬¿É²âÐÅÏ¢ÉÏ±¨*/
+  /* å¯ç»´å¯æµ‹ä¿¡æ¯ä¸ŠæŠ¥*/
   Ppp_EventMntnInfo(usPppId, AT_PPP_RECV_RELEASE_IND);
 
 #else
@@ -671,11 +671,11 @@ LcpLayerFinish(struct fsm *fp)
       fp->link->lcp.hLcpCloseTimer = VOS_NULL_PTR;
   }
 
-  /*LCP½øÈëFinish,ËµÃ÷PPPºÍPC¼ä¶Ï¿ªÒÑ¾­Íê³É
-    ÐèÒªÍ¨ÖªÀ­¹Ü½ÅÐÅºÅ*/
+  /*LCPè¿›å…¥Finish,è¯´æ˜ŽPPPå’ŒPCé—´æ–­å¼€å·²ç»å®Œæˆ
+    éœ€è¦é€šçŸ¥æ‹‰ç®¡è„šä¿¡å·*/
   PPP_ProcPppDisconnEvent(usPppId);
 
-  /*È»ºóÊÍ·Å¸ÃPPP ID*/
+  /*ç„¶åŽé‡Šæ”¾è¯¥PPP ID*/
   PppFreeId(usPppId);
 
   return;
@@ -1078,7 +1078,7 @@ LcpDecodeConfig(struct fsm *fp, VOS_CHAR *cp, VOS_CHAR *end, VOS_INT32 mode_type
 #endif
             PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL, "Peer will only send\r\n");
             lcp->his_reject |= (1 << opt->hdr.id);
-	     /*Èç¹ûÖ§³ÖCHAP,µ«CHAPµÄËã·¨UE²»Ö§³Ö,Ôò¸ÄÎªÊ¹ÓÃPAPÑéÖ¤*/
+	     /*å¦‚æžœæ”¯æŒCHAP,ä½†CHAPçš„ç®—æ³•UEä¸æ”¯æŒ,åˆ™æ”¹ä¸ºä½¿ç”¨PAPéªŒè¯*/
 	     lcp->want_auth = PROTO_PAP;
             lcp->want_authtype = 0;
 

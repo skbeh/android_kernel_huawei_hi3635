@@ -1,26 +1,26 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓĞ (C), 2001-2011, »ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼ş Ãû   : AtMntn.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : sunshaohua
-  Éú³ÉÈÕÆÚ   : 2011Äê10ÔÂ17ÈÕ
-  ×î½üĞŞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : ÊµÏÖATÄ£¿é¿ÉÎ¬¿É²â½Ó¿Ú
-  º¯ÊıÁĞ±í   :
+  æ–‡ ä»¶ å   : AtMntn.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : sunshaohua
+  ç”Ÿæˆæ—¥æœŸ   : 2011å¹´10æœˆ17æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : å®ç°ATæ¨¡å—å¯ç»´å¯æµ‹æ¥å£
+  å‡½æ•°åˆ—è¡¨   :
 
-  ĞŞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2011Äê10ÔÂ17ÈÕ
-    ×÷    Õß   : sunshaohua
-    ĞŞ¸ÄÄÚÈİ   : ´´½¨ÎÄ¼ş
+  ä¿®æ”¹å†å²   :
+  1.æ—¥    æœŸ   : 2011å¹´10æœˆ17æ—¥
+    ä½œ    è€…   : sunshaohua
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼ş°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "AtMntn.h"
 #include "AtInputProc.h"
@@ -35,24 +35,24 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 /*lint -e767 -e960*/
 #define    THIS_FILE_ID        PS_FILE_ID_AT_MNTN_C
 /*lint -e767 +e960*/
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æšä¸¾å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  4 È«¾Ö±äÁ¿ÉùÃ÷
+  4 å…¨å±€å˜é‡å£°æ˜
 *****************************************************************************/
 AT_DEBUG_INFO_STRU                      g_stAtDebugInfo = {VOS_FALSE};
 AT_RESET_STATS_INFO_STRU                g_stAtResetMntnInfo = {0};
@@ -60,30 +60,30 @@ AT_MNTN_STATS_STRU                      g_stAtStatsInfo;
 
 
 /*****************************************************************************
-  5 ÏûÏ¢Í·¶¨Òå
+  5 æ¶ˆæ¯å¤´å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  6 ÏûÏ¢¶¨Òå
+  6 æ¶ˆæ¯å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  7 STRUCT¶¨Òå
+  7 STRUCTå®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  8 UNION¶¨Òå
+  8 UNIONå®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  9 OTHERS¶¨Òå
+  9 OTHERSå®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  10 º¯ÊıÉùÃ÷
+  10 å‡½æ•°å£°æ˜
 *****************************************************************************/
 
 VOS_VOID AT_SetPcuiCtrlConcurrentFlag(VOS_UINT8 ucFlag)
@@ -177,14 +177,14 @@ VOS_VOID AT_MNTN_TraceInputMsc(
 {
     AT_MNTN_MSC_STRU                    stMntnMsc;
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     AT_MNTN_CFG_MSG_HDR(&stMntnMsc, ID_AT_MNTN_INPUT_MSC, (sizeof(AT_MNTN_MSC_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     stMntnMsc.ulPortId = ucIndex;
     PS_MEM_CPY(&(stMntnMsc.stDceMscInfo), pstDceMsc, sizeof(AT_DCE_MSC_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     AT_MNTN_TraceEvent(&stMntnMsc);
 
     return;
@@ -196,14 +196,14 @@ VOS_VOID AT_MNTN_TraceOutputMsc(
 {
     AT_MNTN_MSC_STRU                    stMntnMsc;
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     AT_MNTN_CFG_MSG_HDR(&stMntnMsc, ID_AT_MNTN_OUTPUT_MSC, (sizeof(AT_MNTN_MSC_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     stMntnMsc.ulPortId = ucIndex;
     PS_MEM_CPY(&(stMntnMsc.stDceMscInfo), pstDceMsc, sizeof(AT_DCE_MSC_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     AT_MNTN_TraceEvent(&stMntnMsc);
 
     return;
@@ -215,14 +215,14 @@ VOS_VOID AT_MNTN_TraceStartFlowCtrl(
 {
     AT_MNTN_FLOW_CTRL_STRU              stMntnFlowCtrl;
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     AT_MNTN_CFG_MSG_HDR(&stMntnFlowCtrl, ID_AT_MNTN_START_FLOW_CTRL, (sizeof(AT_MNTN_FLOW_CTRL_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     stMntnFlowCtrl.ulPortId = ucIndex;
     stMntnFlowCtrl.enDevice = enFcDevive;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     AT_MNTN_TraceEvent(&stMntnFlowCtrl);
 
     return;
@@ -234,14 +234,14 @@ VOS_VOID AT_MNTN_TraceStopFlowCtrl(
 {
     AT_MNTN_FLOW_CTRL_STRU              stMntnFlowCtrl;
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     AT_MNTN_CFG_MSG_HDR(&stMntnFlowCtrl, ID_AT_MNTN_STOP_FLOW_CTRL, (sizeof(AT_MNTN_FLOW_CTRL_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     stMntnFlowCtrl.ulPortId = ucIndex;
     stMntnFlowCtrl.enDevice = enFcDevive;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     AT_MNTN_TraceEvent(&stMntnFlowCtrl);
 
     return;
@@ -253,14 +253,14 @@ VOS_VOID AT_MNTN_TraceRegFcPoint(
 {
     AT_MNTN_FC_POINT_STRU               stMntnFcPoint;
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     AT_MNTN_CFG_MSG_HDR(&stMntnFcPoint, ID_AT_MNTN_REG_FC_POINT, (sizeof(AT_MNTN_FC_POINT_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     stMntnFcPoint.ulPortId = ucIndex;
     stMntnFcPoint.enPoint  = enFcPoint;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     AT_MNTN_TraceEvent(&stMntnFcPoint);
 
     return;
@@ -272,14 +272,14 @@ VOS_VOID AT_MNTN_TraceDeregFcPoint(
 {
     AT_MNTN_FC_POINT_STRU               stMntnFcPoint;
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     AT_MNTN_CFG_MSG_HDR(&stMntnFcPoint, ID_AT_MNTN_DEREG_FC_POINT, (sizeof(AT_MNTN_FC_POINT_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     stMntnFcPoint.ulPortId = ucIndex;
     stMntnFcPoint.enPoint  = enFcPoint;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     AT_MNTN_TraceEvent(&stMntnFcPoint);
 
     return;
@@ -296,7 +296,7 @@ VOS_VOID AT_MNTN_TraceCmdResult(
 
     AT_GetAtMsgStruMsgLength(usDataLen, &ulLength);
 
-    /* ÉêÇëÏûÏ¢ÄÚ´æ */
+    /* ç”³è¯·æ¶ˆæ¯å†…å­˜ */
     pstMsg = (AT_MSG_STRU *)PS_MEM_ALLOC(WUEPS_PID_AT, (ulLength + VOS_MSG_HEAD_LENGTH));
     if (VOS_NULL_PTR == pstMsg)
     {
@@ -304,11 +304,11 @@ VOS_VOID AT_MNTN_TraceCmdResult(
         return;
     }
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     enEventId       = AT_GetResultMsgID(ucIndex);
     AT_MNTN_CFG_MSG_HDR(pstMsg, enEventId, ulLength);
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     pstMsg->ucType  = 0x1;
     pstMsg->ucIndex = ucIndex;
     pstMsg->usLen   = usDataLen;
@@ -317,10 +317,10 @@ VOS_VOID AT_MNTN_TraceCmdResult(
     PS_MEM_SET(pstMsg->aucReserved, 0x00, sizeof(pstMsg->aucReserved));
     PS_MEM_CPY((TAF_VOID*)pstMsg->aucValue, pucData, usDataLen);
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     AT_MNTN_TraceEvent(pstMsg);
 
-    /* ÊÍ·ÅÏûÏ¢ÄÚ´æ */
+    /* é‡Šæ”¾æ¶ˆæ¯å†…å­˜ */
     PS_MEM_FREE(WUEPS_PID_AT, pstMsg);
 
     return;
@@ -337,7 +337,7 @@ VOS_VOID AT_MNTN_TraceCmdBuffer(
 
     AT_GetAtMsgStruMsgLength(usDataLen, &ulLength);
 
-    /* ÉêÇëÏûÏ¢ÄÚ´æ */
+    /* ç”³è¯·æ¶ˆæ¯å†…å­˜ */
     pstMsg = (AT_MSG_STRU *)PS_MEM_ALLOC(WUEPS_PID_AT, (ulLength + VOS_MSG_HEAD_LENGTH));
     if (VOS_NULL_PTR == pstMsg)
     {
@@ -345,11 +345,11 @@ VOS_VOID AT_MNTN_TraceCmdBuffer(
         return;
     }
 
-    /* ÌîĞ´ÏûÏ¢Í· */
+    /* å¡«å†™æ¶ˆæ¯å¤´ */
     enEventId       = AT_GetResultMsgID(ucIndex);
     AT_MNTN_CFG_MSG_HDR(pstMsg, enEventId, ulLength);
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     pstMsg->ucType          = 0x2;
     pstMsg->ucIndex         = ucIndex;
     pstMsg->usLen           = usDataLen;
@@ -358,10 +358,10 @@ VOS_VOID AT_MNTN_TraceCmdBuffer(
     PS_MEM_SET(pstMsg->aucReserved, 0x00, sizeof(pstMsg->aucReserved));
     PS_MEM_CPY((TAF_VOID*)pstMsg->aucValue, pucData, usDataLen);
 
-    /* ÌîĞ´ÏûÏ¢ÄÚÈİ */
+    /* å¡«å†™æ¶ˆæ¯å†…å®¹ */
     AT_MNTN_TraceEvent(pstMsg);
 
-    /* ÊÍ·ÅÏûÏ¢ÄÚ´æ */
+    /* é‡Šæ”¾æ¶ˆæ¯å†…å­˜ */
     PS_FREE_MSG(WUEPS_PID_AT, pstMsg);
 
     return;
@@ -665,18 +665,18 @@ VOS_VOID AT_ShowHsUartFcState(VOS_VOID)
 #endif
 
 /*****************************************************************************
- º¯ Êı Ãû  : AT_ShowModemDataStats
- ¹¦ÄÜÃèÊö  : MODEMµÄÊı¾İÍ³¼Æ¿ÉÎ¬¿É²â
- ÊäÈë²ÎÊı  : VOS_VOID
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : AT_ShowModemDataStats
+ åŠŸèƒ½æè¿°  : MODEMçš„æ•°æ®ç»Ÿè®¡å¯ç»´å¯æµ‹
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê10ÔÂ18ÈÕ
-    ×÷    Õß   : sunshaohua
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´10æœˆ18æ—¥
+    ä½œ    è€…   : sunshaohua
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_VOID AT_ShowModemDataStats(VOS_VOID)
 {
@@ -716,15 +716,15 @@ VOS_VOID AT_ShowPsEntityInfo(VOS_UINT8 ucCallId)
         vos_printf("################MODEM ID is %d################\n", enModemId);
         pstCallEntity = &(AT_GetModemPsCtxAddrFromModemId(enModemId)->astCallEntity[ucCallId]);
 
-        vos_printf("********************PS²¦ºÅÊµÌåĞÅÏ¢***********************\n");
+        vos_printf("********************PSæ‹¨å·å®ä½“ä¿¡æ¯***********************\n");
         vos_printf("Active Flag                             %d\n", pstCallEntity->ulUsedFlg);
         vos_printf("Current Call Type                       %d\n", pstCallEntity->enCurrPdpType);
-        vos_printf("********************ÓÃ»§²¦ºÅĞÅÏ¢*************************\n");
+        vos_printf("********************ç”¨æˆ·æ‹¨å·ä¿¡æ¯*************************\n");
         vos_printf("User Actual Index                       %d\n", pstCallEntity->stUserInfo.enPortIndex);
         vos_printf("User Expect Index                       %d\n", pstCallEntity->stUserInfo.enUserIndex);
         vos_printf("User Type                               %d\n", pstCallEntity->stUserInfo.ucUsrType);
         vos_printf("User CID                                %d\n", pstCallEntity->stUserInfo.ucUsrCid);
-        vos_printf("********************IPv4Á¬½ÓĞÅÏ¢*************************\n");
+        vos_printf("********************IPv4è¿æ¥ä¿¡æ¯*************************\n");
         vos_printf("IPv4 Bearer CID                         %d\n", pstCallEntity->ucIpv4Cid);
         vos_printf("IPv4 Bearer State                       %d\n", pstCallEntity->enIpv4State);
         vos_printf("IPv4 Bearer ID (RAB ID)                 %d\n", pstCallEntity->stIpv4DhcpInfo.ucRabId);
@@ -752,7 +752,7 @@ VOS_VOID AT_ShowPsEntityInfo(VOS_UINT8 ucCallId)
                                           pstCallEntity->stIpv6DhcpInfo.aucIpv6SecDNS,
                                           TAF_IPV6_STR_RFC2373_TOKENS);
 
-        vos_printf("********************IPv6Á¬½ÓĞÅÏ¢*************************\n");
+        vos_printf("********************IPv6è¿æ¥ä¿¡æ¯*************************\n");
         vos_printf("IPv6 Bearer CID                         %d\n", pstCallEntity->ucIpv6Cid);
         vos_printf("IPv6 Bearer State                       %d\n", pstCallEntity->enIpv6State);
         vos_printf("***********************************************************\n");
@@ -776,10 +776,10 @@ VOS_VOID AT_ShowPsFcIdState(VOS_UINT32 ulFcid)
         return;
     }
 
-    vos_printf("Ö¸¶¨FCID¶ÔÓ¦µÄ½áµãÊÇ·ñÓĞĞ§                  %d\n", g_stFcIdMaptoFcPri[ulFcid].ulUsed);
-    vos_printf("Ö¸¶¨FCID¶ÔÓ¦µÄ½áµãµÄÓÅÏÈ¼¶                  %d\n", g_stFcIdMaptoFcPri[ulFcid].enFcPri);
-    vos_printf("Ö¸¶¨FCID¶ÔÓ¦µÄ½áµãµÄRABIDÑÚÂë               %d\n", g_stFcIdMaptoFcPri[ulFcid].ulRabIdMask);
-    vos_printf("Ö¸¶¨FCID¶ÔÓ¦µÄ½áµãµÄModemId                 %d\n", g_stFcIdMaptoFcPri[ulFcid].enModemId);
+    vos_printf("æŒ‡å®šFCIDå¯¹åº”çš„ç»“ç‚¹æ˜¯å¦æœ‰æ•ˆ                  %d\n", g_stFcIdMaptoFcPri[ulFcid].ulUsed);
+    vos_printf("æŒ‡å®šFCIDå¯¹åº”çš„ç»“ç‚¹çš„ä¼˜å…ˆçº§                  %d\n", g_stFcIdMaptoFcPri[ulFcid].enFcPri);
+    vos_printf("æŒ‡å®šFCIDå¯¹åº”çš„ç»“ç‚¹çš„RABIDæ©ç                %d\n", g_stFcIdMaptoFcPri[ulFcid].ulRabIdMask);
+    vos_printf("æŒ‡å®šFCIDå¯¹åº”çš„ç»“ç‚¹çš„ModemId                 %d\n", g_stFcIdMaptoFcPri[ulFcid].enModemId);
     vos_printf("\r\n");
 
     return;
@@ -788,16 +788,16 @@ VOS_VOID AT_ShowPsFcIdState(VOS_UINT32 ulFcid)
 
 VOS_VOID AT_ShowResetStatsInfo(VOS_VOID)
 {
-    vos_printf("Ä£¿é³õÊ¼»¯±êÊ¶                              %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulSemInitFlg);
-    vos_printf("µ±Ç°µÄ¶ş½øÖÆĞÅºÅÁ¿                          %p\n", AT_GetResetSem());
-    vos_printf("´´½¨µÄ¶ş½øÖÆĞÅºÅÁ¿                          %p\n", g_stAtStatsInfo.stCCpuResetStatsInfo.hBinarySemId);
-    vos_printf("´´½¨¶ş½øÖÆĞÅºÅÁ¿Ê§°Ü´ÎÊı                    %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulCreateBinarySemFailNum);
-    vos_printf("Ëø¶ş½øÖÆĞÅºÅÁ¿Ê§°Ü´ÎÊı                      %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulLockBinarySemFailNum);
-    vos_printf("×îºóÒ»´ÎËø¶ş½øÖÆĞÅºÅÁ¿Ê§°ÜÔ­Òò              %x\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulLastBinarySemErrRslt);
-    vos_printf("CºË¸´Î»Ç°µÄ´ÎÊı                             %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulResetBeforeNum);
-    vos_printf("CºË¸´Î»ºóµÄ´ÎÊı                             %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulResetAfterNum);
-    vos_printf("HIFI¸´Î»³É¹¦µÄ´ÎÊı                          %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulHifiResetNum);
-    vos_printf("AT¸´Î»×´Ì¬                                  %d\n", AT_GetResetFlag());
+    vos_printf("æ¨¡å—åˆå§‹åŒ–æ ‡è¯†                              %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulSemInitFlg);
+    vos_printf("å½“å‰çš„äºŒè¿›åˆ¶ä¿¡å·é‡                          %p\n", AT_GetResetSem());
+    vos_printf("åˆ›å»ºçš„äºŒè¿›åˆ¶ä¿¡å·é‡                          %p\n", g_stAtStatsInfo.stCCpuResetStatsInfo.hBinarySemId);
+    vos_printf("åˆ›å»ºäºŒè¿›åˆ¶ä¿¡å·é‡å¤±è´¥æ¬¡æ•°                    %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulCreateBinarySemFailNum);
+    vos_printf("é”äºŒè¿›åˆ¶ä¿¡å·é‡å¤±è´¥æ¬¡æ•°                      %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulLockBinarySemFailNum);
+    vos_printf("æœ€åä¸€æ¬¡é”äºŒè¿›åˆ¶ä¿¡å·é‡å¤±è´¥åŸå›               %x\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulLastBinarySemErrRslt);
+    vos_printf("Cæ ¸å¤ä½å‰çš„æ¬¡æ•°                             %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulResetBeforeNum);
+    vos_printf("Cæ ¸å¤ä½åçš„æ¬¡æ•°                             %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulResetAfterNum);
+    vos_printf("HIFIå¤ä½æˆåŠŸçš„æ¬¡æ•°                          %d\n", g_stAtStatsInfo.stCCpuResetStatsInfo.ulHifiResetNum);
+    vos_printf("ATå¤ä½çŠ¶æ€                                  %d\n", AT_GetResetFlag());
     vos_printf("\r\n");
 
     return;
@@ -893,28 +893,28 @@ VOS_VOID AT_ShowClientCtxInfo(VOS_VOID)
 VOS_VOID AT_Help(VOS_VOID)
 {
     vos_printf("********************************************************\n");
-    vos_printf("PSÈíµ÷ĞÅÏ¢                                              \n");
+    vos_printf("PSè½¯è°ƒä¿¡æ¯                                              \n");
     vos_printf("********************************************************\n");
-    vos_printf("AT_ShowPsEntityInfo         ÏÔÊ¾²¦ºÅÊµÌåĞÅÏ¢            \n");
-    vos_printf("AT_ShowPsFcIdState(ulFcid)  ÏÔÊ¾Á÷¿Øµã×´Ì¬ĞÅÏ¢          \n");
+    vos_printf("AT_ShowPsEntityInfo         æ˜¾ç¤ºæ‹¨å·å®ä½“ä¿¡æ¯            \n");
+    vos_printf("AT_ShowPsFcIdState(ulFcid)  æ˜¾ç¤ºæµæ§ç‚¹çŠ¶æ€ä¿¡æ¯          \n");
     vos_printf("********************************************************\n");
-    vos_printf("UARTÈíµ÷ĞÅÏ¢                                            \n");
+    vos_printf("UARTè½¯è°ƒä¿¡æ¯                                            \n");
     vos_printf("********************************************************\n");
-    vos_printf("AT_ShowHsUartConfigInfo     ÏÔÊ¾HSUARTµÄÅäÖÃĞÅÏ¢        \n");
-    vos_printf("AT_ShowHsUartNvStats        ÏÔÊ¾HSUARTµÄNV¶ÁĞ´Í³¼ÆĞÅÏ¢  \n");
-    vos_printf("AT_ShowHsUartIoctlStats     ÏÔÊ¾HSUARTµÄIOCTLÍ³¼ÆĞÅÏ¢   \n");
-    vos_printf("AT_ShowHsUartDataStats      ÏÔÊ¾HSUARTµÄÊı¾İÍ³¼ÆĞÅÏ¢    \n");
-    vos_printf("AT_ShowHsUartFcState        ÏÔÊ¾HSUARTµÄÁ÷¿Ø×´Ì¬ĞÅÏ¢    \n");
+    vos_printf("AT_ShowHsUartConfigInfo     æ˜¾ç¤ºHSUARTçš„é…ç½®ä¿¡æ¯        \n");
+    vos_printf("AT_ShowHsUartNvStats        æ˜¾ç¤ºHSUARTçš„NVè¯»å†™ç»Ÿè®¡ä¿¡æ¯  \n");
+    vos_printf("AT_ShowHsUartIoctlStats     æ˜¾ç¤ºHSUARTçš„IOCTLç»Ÿè®¡ä¿¡æ¯   \n");
+    vos_printf("AT_ShowHsUartDataStats      æ˜¾ç¤ºHSUARTçš„æ•°æ®ç»Ÿè®¡ä¿¡æ¯    \n");
+    vos_printf("AT_ShowHsUartFcState        æ˜¾ç¤ºHSUARTçš„æµæ§çŠ¶æ€ä¿¡æ¯    \n");
     vos_printf("********************************************************\n");
-    vos_printf("MODEMÈíµ÷ĞÅÏ¢                                           \n");
+    vos_printf("MODEMè½¯è°ƒä¿¡æ¯                                           \n");
     vos_printf("********************************************************\n");
-    vos_printf("AT_ShowModemDataStats       ÏÔÊ¾MODEMµÄÊı¾İÍ³¼ÆĞÅÏ¢     \n");
+    vos_printf("AT_ShowModemDataStats       æ˜¾ç¤ºMODEMçš„æ•°æ®ç»Ÿè®¡ä¿¡æ¯     \n");
     vos_printf("********************************************************\n");
-    vos_printf("ÆäËûÈíµ÷ĞÅÏ¢                                            \n");
+    vos_printf("å…¶ä»–è½¯è°ƒä¿¡æ¯                                            \n");
     vos_printf("********************************************************\n");
-    vos_printf("AT_ShowResetStatsInfo       ÏÔÊ¾AT¸´Î»×´Ì¬ĞÅÏ¢          \n");
-    vos_printf("AT_ShowAllClientState       ²é¿´¶Ë¿Ú×´Ì¬ĞÅÏ¢            \n");
-    vos_printf("AT_ShowClientCtxInfo        ²é¿´ClientÅäÖÃµÄÉÏÏÂÎÄĞÅÏ¢  \n");
+    vos_printf("AT_ShowResetStatsInfo       æ˜¾ç¤ºATå¤ä½çŠ¶æ€ä¿¡æ¯          \n");
+    vos_printf("AT_ShowAllClientState       æŸ¥çœ‹ç«¯å£çŠ¶æ€ä¿¡æ¯            \n");
+    vos_printf("AT_ShowClientCtxInfo        æŸ¥çœ‹Clienté…ç½®çš„ä¸Šä¸‹æ–‡ä¿¡æ¯  \n");
 
     return;
 }

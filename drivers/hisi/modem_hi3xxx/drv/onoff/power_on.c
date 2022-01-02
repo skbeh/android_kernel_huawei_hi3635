@@ -35,7 +35,7 @@ static ssize_t his_boot_show_property(struct device *dev,
 	.store = his_boot_store_property,	        \
 }
 
-/* ÉèÖÃ³ÉÖ»¶Á */
+/* è®¾ç½®æˆåªè¯» */
 static struct device_attribute power_on_attrs[] = {
 	POWER_ON_ATTR(power_status, POWER_SYS_PRIV_RO),
 	POWER_ON_ATTR(power_reason, POWER_SYS_PRIV_RO),
@@ -50,13 +50,13 @@ static const struct attribute_group his_boot_group = {
 };
 
 /*****************************************************************************
- º¯ Êı Ãû  : power_on_init_attrs
- ¹¦ÄÜÃèÊö  : init attributes
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : power_on_init_attrs
+ åŠŸèƒ½æè¿°  : init attributes
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static void power_on_init_attrs(void)
 {
@@ -67,13 +67,13 @@ static void power_on_init_attrs(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : power_on_log_save
- ¹¦ÄÜÃèÊö  : ±£´æ¿ª»úlog
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : power_on_log_save
+ åŠŸèƒ½æè¿°  : ä¿å­˜å¼€æœºlog
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static int power_on_log_save( void )
 {
@@ -100,7 +100,7 @@ static int power_on_log_save( void )
     power_on_mode[1] = "NORMAL";
     power_on_mode[2] = "UPDATE";
 
-    /* ¼ÇÂ¼¿ª»úĞÅÏ¢(Ê±¼ä¡¢´ÎÊı¡¢¹Ø»úÔ­Òò) */
+    /* è®°å½•å¼€æœºä¿¡æ¯(æ—¶é—´ã€æ¬¡æ•°ã€å…³æœºåŸå› ) */
     snprintf(buf, sizeof(buf) - 1, "power on reason(E5): %s, power on mode : %s, current battery voltage: %d, current time: %4d-%02d-%02d %02d:%02d:%02d\r\n", \
             power_on_reason[power_item_info.reason], power_on_mode[power_item_info.mode], battery_level, tm.tm_year, tm.tm_mon, \
             tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
@@ -121,7 +121,7 @@ static int power_on_log_save( void )
     /*coverity[unchecked_value] */
     pos = sys_lseek(pf, 0, SEEK_END);
     if(pos > EXCH_ONOFF_LOG_MAX){
-        /* ÎÄ¼ş³¬¹ı 16k,É¾³ıÖØĞÂ´ò¿ª */
+        /* æ–‡ä»¶è¶…è¿‡ 16k,åˆ é™¤é‡æ–°æ‰“å¼€ */
         sys_rmdir(EXCH_POWER_LOG_PATH);
         /*coverity[check_return] */
         pf = (unsigned int)sys_open(EXCH_POWER_LOG_PATH, O_RDWR | O_CREAT, 0666);
@@ -158,13 +158,13 @@ static int power_on_log_save( void )
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : power_on_time_get
- ¹¦ÄÜÃèÊö  : ¼ÇÂ¼¿ª»úÊ±¼ä.
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : power_on_time_get
+ åŠŸèƒ½æè¿°  : è®°å½•å¼€æœºæ—¶é—´.
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static void power_on_time_get( void )
 {
@@ -182,13 +182,13 @@ static void power_on_time_get( void )
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : power_on_reason_get
- ¹¦ÄÜÃèÊö  : »ñÈ¡¿ª»úÔ­Òò
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : power_on_reason_get
+ åŠŸèƒ½æè¿°  : è·å–å¼€æœºåŸå› 
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static void power_on_reason_get( void )
 {
@@ -216,13 +216,13 @@ static void power_on_reason_get( void )
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : power_on_mode_get
- ¹¦ÄÜÃèÊö  : »ñÈ¡¿ª»úÄ£Ê½
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : power_on_mode_get
+ åŠŸèƒ½æè¿°  : è·å–å¼€æœºæ¨¡å¼
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static void power_on_mode_get( void )
 {
@@ -246,13 +246,13 @@ static void power_on_mode_get( void )
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : power_off_timeout_isr
- ¹¦ÄÜÃèÊö  : ¿ª»ú¶¨Ê±Æ÷´¦Àí£¬¼ì²âCºË×´Ì¬
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : power_off_timeout_isr
+ åŠŸèƒ½æè¿°  : å¼€æœºå®šæ—¶å™¨å¤„ç†ï¼Œæ£€æµ‹Cæ ¸çŠ¶æ€
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static int power_on_timeout_isr( void )
 {
@@ -263,18 +263,18 @@ static int power_on_timeout_isr( void )
 
     if(RUN_MODE_NORMAL == run_mode)
     {
-        /* ¶ÁÈ¡CºËÆô¶¯×´Ì¬ */
+        /* è¯»å–Cæ ¸å¯åŠ¨çŠ¶æ€ */
         status = power_on_c_status_get();
 
 #if defined(DRV_BUILD_SEPARATE)
-        /* CºËÒì³££¬ÉèÖÃnormalÄ£Ê½Æô¶¯Ê§°Ü */
+        /* Cæ ¸å¼‚å¸¸ï¼Œè®¾ç½®normalæ¨¡å¼å¯åŠ¨å¤±è´¥ */
         if(status < POWER_BSP_OK)
 #else
         if(status < POWER_MSP_OK)
 #endif
         {
            pr_dbg("c core power on fail!\n ");
-           /* ½øÈërecoveryÄ£Ê½ */
+           /* è¿›å…¥recoveryæ¨¡å¼ */
            bsp_drv_power_reboot();
 
            /* coverity[no_escape] */
@@ -285,7 +285,7 @@ static int power_on_timeout_isr( void )
         /* for test */
        #if 0
            bsp_drv_power_reboot();
-           /* µÈ´ıÏµÍ³ÖØÆô */
+           /* ç­‰å¾…ç³»ç»Ÿé‡å¯ */
            while(1);
        #endif
     }
@@ -301,13 +301,13 @@ static int power_on_timeout_isr( void )
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : power_on_timer_init
- ¹¦ÄÜÃèÊö  : ´´½¨¿ª»útimer,ÓÃÓÚ¿ª»úºóÒ»¶ÎÊ±¼ä¼ì²âÏµÍ³ÊÇ·ñÕı³£¹¤×÷
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : power_on_timer_init
+ åŠŸèƒ½æè¿°  : åˆ›å»ºå¼€æœºtimer,ç”¨äºå¼€æœºåä¸€æ®µæ—¶é—´æ£€æµ‹ç³»ç»Ÿæ˜¯å¦æ­£å¸¸å·¥ä½œ
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 void power_on_timer_init( void )
 {
@@ -329,13 +329,13 @@ void power_on_timer_init( void )
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : his_boot_store_property
- ¹¦ÄÜÃèÊö  : echo sysfs   do nothing
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : his_boot_store_property
+ åŠŸèƒ½æè¿°  : echo sysfs   do nothing
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static ssize_t his_boot_store_property(struct device *dev,
                             struct device_attribute *attr,const char *buf,
@@ -347,13 +347,13 @@ static ssize_t his_boot_store_property(struct device *dev,
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : his_boot_show_property
- ¹¦ÄÜÃèÊö  : show power on status/reason/time item property.
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : his_boot_show_property
+ åŠŸèƒ½æè¿°  : show power on status/reason/time item property.
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static ssize_t his_boot_show_property(struct device *dev,
                             struct device_attribute *attr, char *buf)
@@ -385,13 +385,13 @@ static ssize_t his_boot_show_property(struct device *dev,
 #endif
 
 /*****************************************************************************
- º¯ Êı Ãû  : bsp_start_mode_get
- ¹¦ÄÜÃèÊö  : ÓÃÓÚ»ñÈ¡¿ª»úÄ£Ê½
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : bsp_start_mode_get
+ åŠŸèƒ½æè¿°  : ç”¨äºè·å–å¼€æœºæ¨¡å¼
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 int bsp_start_mode_get()
 {
@@ -405,13 +405,13 @@ int bsp_start_mode_get()
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : bsp_power_icc_send_state
- ¹¦ÄÜÃèÊö  : CºËºË¼äÍ¨ĞÅº¯Êı
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : bsp_power_icc_send_state
+ åŠŸèƒ½æè¿°  : Cæ ¸æ ¸é—´é€šä¿¡å‡½æ•°
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static void bsp_power_icc_send_state(void)
 {
@@ -429,13 +429,13 @@ static void bsp_power_icc_send_state(void)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : bsp_power_ctrl_read_cb
- ¹¦ÄÜÃèÊö  : CºËºË¼ä»Øµ÷º¯Êı
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : bsp_power_ctrl_read_cb
+ åŠŸèƒ½æè¿°  : Cæ ¸æ ¸é—´å›è°ƒå‡½æ•°
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static s32 bsp_power_ctrl_read_cb( void )
 {
@@ -476,13 +476,13 @@ static s32 bsp_power_ctrl_read_cb( void )
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : his_boot_probe
- ¹¦ÄÜÃèÊö  : power on
- ÊäÈë²ÎÊı  :
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : his_boot_probe
+ åŠŸèƒ½æè¿°  : power on
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static int __init his_boot_probe(struct platform_device *pdev)
 {
@@ -492,10 +492,10 @@ static int __init his_boot_probe(struct platform_device *pdev)
 #ifndef HI_ONOFF_PHONE
     /* get early param */
 
-    /* Çå³ıreboot flag */
+    /* æ¸…é™¤reboot flag */
     power_on_reboot_flag_set(POWER_OFF_REASON_INVALID);
 
-    /* normalÄ£Ê½ÏÂ clear misc partition */
+    /* normalæ¨¡å¼ä¸‹ clear misc partition */
     if(NORMAL_CHARGING_MODE == get_pd_charge_flag()){
         rt = clear_misc_message();
         if(rt < 0){
@@ -528,7 +528,7 @@ static int __init his_boot_probe(struct platform_device *pdev)
     }
 #endif
 #if 0 /* #ifdef FEATURE_E5_ONOFF */
-    /* ´´½¨¿ª»útimer */
+    /* åˆ›å»ºå¼€æœºtimer */
     power_on_timer_init();
 #endif
     rt = bsp_icc_event_register(channel_id, (read_cb_func)bsp_power_ctrl_read_cb, NULL, NULL, NULL);

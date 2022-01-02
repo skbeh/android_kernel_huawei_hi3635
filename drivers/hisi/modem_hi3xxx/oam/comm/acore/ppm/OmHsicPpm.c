@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 **************************************************************************** */
 #include "OmCommonPpm.h"
 #include "OmHsicPpm.h"
@@ -19,36 +19,36 @@ extern "C" {
 /* lint +e767  */
 
 /* ****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 **************************************************************************** */
-/* HSICºÍOM¹ØÁª×´Ì¬£¬Ä¬ÈÏÎª²»¹ØÁª */
+/* HSICå’ŒOMå…³è”çŠ¶æ€ï¼Œé»˜è®¤ä¸ºä¸å…³è” */
 OM_HSIC_PORT_STATUS_ENUM_UINT32         g_ulOmHsicConnectStatus = OM_HSIC_PORT_STATUS_OFF;
 
-/*»¥³âÐÅºÅÁ¿£¬ÓÃÀ´±£»¤OM HSIC¹ØÁª */
+/*äº’æ–¥ä¿¡å·é‡ï¼Œç”¨æ¥ä¿æŠ¤OM HSICå…³è” */
 VOS_SEM                                 g_ulOmAcpuHsicSem;
 
 /*****************************************************************************
-  3 Íâ²¿ÒýÓÃÉùÃ÷
+  3 å¤–éƒ¨å¼•ç”¨å£°æ˜Ž
 *****************************************************************************/
 
 
 /*****************************************************************************
-  4 º¯ÊýÊµÏÖ
+  4 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  :
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊý  :
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  :
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  :
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2014Äê5ÔÂ31ÈÕ
-    ×÷    Õß   : XXXXXXXX
-    ÐÞ¸ÄÄÚÈÝ   : V8R1 OM_OptimizeÏîÄ¿ÐÂÔö
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2014å¹´5æœˆ31æ—¥
+    ä½œ    è€…   : XXXXXXXX
+    ä¿®æ”¹å†…å®¹   : V8R1 OM_Optimizeé¡¹ç›®æ–°å¢ž
 
 *****************************************************************************/
 
@@ -56,27 +56,27 @@ VOS_SEM                                 g_ulOmAcpuHsicSem;
 
 OM_HSIC_PORT_STATUS_ENUM_UINT32 PPM_GetHsicPortStatus(VOS_VOID)
 {
-    /* ·µ»ØOM¿ÚºÍHSIC¹ØÁª×´Ì¬ */
+    /* è¿”å›žOMå£å’ŒHSICå…³è”çŠ¶æ€ */
     return g_ulOmHsicConnectStatus;
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : PPM_HsicIndWriteDataCB
- ¹¦ÄÜÃèÊö  : ÓÃÓÚ´¦ÀíHsic ¿ÚµÄÒì²½·¢ËÍÊý¾ÝµÄ»Øµ÷
- ÊäÈë²ÎÊý  : pucData:   ÐèÒª·¢ËÍµÄÊý¾ÝÄÚÈÝ
-             ulDataLen: Êý¾Ý³¤¶È
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê2ÔÂ2ÈÕ
-     ×÷    Õß  : zhuli
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : PPM_HsicIndWriteDataCB
+ åŠŸèƒ½æè¿°  : ç”¨äºŽå¤„ç†Hsic å£çš„å¼‚æ­¥å‘é€æ•°æ®çš„å›žè°ƒ
+ è¾“å…¥å‚æ•°  : pucData:   éœ€è¦å‘é€çš„æ•°æ®å†…å®¹
+             ulDataLen: æ•°æ®é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´2æœˆ2æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID PPM_HsicIndWriteDataCB(VOS_UINT8* pucVirData, VOS_UINT8* pucPhyData, VOS_INT lLen)
 {
-    /*µ±Ç°Ö»³ÐÔØOMÊý¾Ý*/
+    /*å½“å‰åªæ‰¿è½½OMæ•°æ®*/
     PPM_PortWriteAsyCB(OM_HSIC_IND_PORT_HANDLE, pucVirData, lLen);
 
     return;
@@ -94,7 +94,7 @@ VOS_INT32 PPM_HsicCfgReadDataCB(VOS_VOID)
 
 VOS_VOID PPM_HsicCfgWriteDataCB(VOS_UINT8* pucVirData, VOS_UINT8* pucPhyData, VOS_INT lLen)
 {
-    /*µ±Ç°Ö»³ÐÔØOMÊý¾Ý*/
+    /*å½“å‰åªæ‰¿è½½OMæ•°æ®*/
     PPM_PortWriteAsyCB(OM_HSIC_CFG_PORT_HANDLE, pucVirData, lLen);
 
     return;
@@ -114,7 +114,7 @@ VOS_VOID PPM_HsicCfgPortOpen(VOS_VOID)
 
 VOS_VOID PPM_HsicIndPortOpen(VOS_VOID)
 {
-    /* HSIC IND ¶Ë¿Ú²»»áÊÕÊý¾Ý£¬Ã»ÓÐ¶Ï¿ª´¦Àí */
+    /* HSIC IND ç«¯å£ä¸ä¼šæ”¶æ•°æ®ï¼Œæ²¡æœ‰æ–­å¼€å¤„ç† */
     PPM_ReadPortDataInit(CPM_HSIC_IND_PORT,
                            OM_HSIC_IND_PORT_HANDLE,
                            VOS_NULL_PTR,
@@ -169,14 +169,14 @@ VOS_VOID PPM_HsicCfgStatusCB(ACM_EVT_E enPortState)
 
 VOS_VOID PPM_HsicPortInit(VOS_VOID)
 {
-    /* ²úÆ·²»Ö§³ÖHSICÌØÐÔ£¬Ö±½Ó·µ»Ø */
+    /* äº§å“ä¸æ”¯æŒHSICç‰¹æ€§ï¼Œç›´æŽ¥è¿”å›ž */
     if (BSP_MODULE_SUPPORT != DRV_GET_HSIC_SUPPORT())
     {
         return;
     }
 
-    /* Èç¹ûHSICÍ¨µÀÒÑ¾­Ã¶¾Ù³É¹¦£¬ÔòÓÉÐ­ÒéÕ»Ö´ÐÐ³õÊ¼»¯²Ù×÷£»·ñÔò½«³õÊ¼»¯º¯Êý×¢²áÖÁµ×Èí£¬
-        ÓÉµ×ÈíÔÚHSICÃ¶¾Ù³É¹¦ºóµ÷ÓÃÒÔ½øÐÐ³õÊ¼»¯*/
+    /* å¦‚æžœHSICé€šé“å·²ç»æžšä¸¾æˆåŠŸï¼Œåˆ™ç”±åè®®æ ˆæ‰§è¡Œåˆå§‹åŒ–æ“ä½œï¼›å¦åˆ™å°†åˆå§‹åŒ–å‡½æ•°æ³¨å†Œè‡³åº•è½¯ï¼Œ
+        ç”±åº•è½¯åœ¨HSICæžšä¸¾æˆåŠŸåŽè°ƒç”¨ä»¥è¿›è¡Œåˆå§‹åŒ–*/
     if (VOS_TRUE == DRV_GET_HSIC_ENUM_STATUS())
     {
         PPM_HsicIndPortOpen();
@@ -205,7 +205,7 @@ VOS_VOID PPM_HsicConnectProc(VOS_VOID)
         return;
     }
 
-    /* ²úÆ·²»Ö§³ÖHSICÌØÐÔ£¬Ö±½Ó³õÊ¼»¯³É¹¦ */
+    /* äº§å“ä¸æ”¯æŒHSICç‰¹æ€§ï¼Œç›´æŽ¥åˆå§‹åŒ–æˆåŠŸ */
     if (BSP_MODULE_SUPPORT != DRV_GET_HSIC_SUPPORT())
     {
         VOS_SmV(g_ulOmAcpuHsicSem);
@@ -213,7 +213,7 @@ VOS_VOID PPM_HsicConnectProc(VOS_VOID)
         return;
     }
 
-    /* Èç¹ûÒÑ¾­¹ØÁªÉÏ²»×ö¹ØÁª */
+    /* å¦‚æžœå·²ç»å…³è”ä¸Šä¸åšå…³è” */
     if (OM_HSIC_PORT_STATUS_ON == g_ulOmHsicConnectStatus)
     {
         VOS_SmV(g_ulOmAcpuHsicSem);
@@ -221,7 +221,7 @@ VOS_VOID PPM_HsicConnectProc(VOS_VOID)
         return;
     }
 
-    /* ½«È«¾Ö±äÁ¿ÉèÖÃÎªÒÑ¹ØÁªÉÏ */
+    /* å°†å…¨å±€å˜é‡è®¾ç½®ä¸ºå·²å…³è”ä¸Š */
     g_ulOmHsicConnectStatus = OM_HSIC_PORT_STATUS_ON;
 
     VOS_SmV(g_ulOmAcpuHsicSem);
@@ -230,19 +230,19 @@ VOS_VOID PPM_HsicConnectProc(VOS_VOID)
 }
 VOS_VOID PPM_HsicDisconnectProc(VOS_VOID)
 {
-    /* ²úÆ·²»Ö§³ÖHSICÌØÐÔ£¬Ö±½Ó³õÊ¼»¯³É¹¦ */
+    /* äº§å“ä¸æ”¯æŒHSICç‰¹æ€§ï¼Œç›´æŽ¥åˆå§‹åŒ–æˆåŠŸ */
     if (BSP_MODULE_SUPPORT != DRV_GET_HSIC_SUPPORT())
     {
         return;
     }
 
-    /* Èç¹ûÒÑ¾­ÊÇÎ´¹ØÁª×´Ì¬²»×ö½â³ý¹ØÁª²Ù×÷ */
+    /* å¦‚æžœå·²ç»æ˜¯æœªå…³è”çŠ¶æ€ä¸åšè§£é™¤å…³è”æ“ä½œ */
     if (OM_HSIC_PORT_STATUS_OFF == g_ulOmHsicConnectStatus)
     {
         return;
     }
 
-    /* ½«È«¾Ö±äÁ¿ÉèÖÃÎªÒÑ½â³ý¹ØÁªÉÏ */
+    /* å°†å…¨å±€å˜é‡è®¾ç½®ä¸ºå·²è§£é™¤å…³è”ä¸Š */
     g_ulOmHsicConnectStatus = OM_HSIC_PORT_STATUS_OFF;
 
     return;

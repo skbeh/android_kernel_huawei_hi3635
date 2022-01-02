@@ -45,7 +45,7 @@ s32 balong_rtc_settime(struct device *dev, struct rtc_time *tm)
     s32  ret = 0;
     u32 alarmtime = 0;
     u32 alarmenable = 0;
-    u32 curtime = 0;/*µ±Ç°µÄÊ±¼äÖµ*/
+    u32 curtime = 0;/*å½“å‰çš„æ—¶é—´å€¼*/
     ret  = rtc_valid_tm(tm);
     if (0 != ret)
     {
@@ -62,7 +62,7 @@ s32 balong_rtc_settime(struct device *dev, struct rtc_time *tm)
     alarmtime = readl(g_rtc_ctrl.rtc_base_addr + HI_RTC_CMR_OFFSET);
     writel( secs, g_rtc_ctrl.rtc_base_addr + HI_RTC_CLR_OFFSET);
 
-    /*Ö»ÓĞÔÚÉèÖÃÁËÄÖÖÓµÄÊ±ºò²Å½øĞĞÏÂÃæµÄÖØĞÂÉèÖÃÄÖÖÓÊ±¼ä¶¯×÷*/
+    /*åªæœ‰åœ¨è®¾ç½®äº†é—¹é’Ÿçš„æ—¶å€™æ‰è¿›è¡Œä¸‹é¢çš„é‡æ–°è®¾ç½®é—¹é’Ÿæ—¶é—´åŠ¨ä½œ*/
     alarmenable = readl(g_rtc_ctrl.rtc_base_addr + HI_RTC_CCR_OFFSET)&(RTC_BIT_IM);
     if ((!alarmenable)&&( curtime < alarmtime )) {
         /* disable interrupts */
@@ -177,7 +177,7 @@ s32  balong_rtc_alarmhandler(int irq, void *data)
 
 
 	int_status = readl(g_rtc_ctrl.rtc_base_addr + HI_RTC_STAT_OFFSET);
-    /*ÇåÖĞ¶Ï*/
+    /*æ¸…ä¸­æ–­*/
     readl(g_rtc_ctrl.rtc_base_addr + HI_RTC_EOI_OFFSET);
 
 	if (!int_status)
@@ -190,7 +190,7 @@ s32  balong_rtc_alarmhandler(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
-/*RTC²Ù×÷º¯ÊıÊı¾İ½á¹¹*/
+/*RTCæ“ä½œå‡½æ•°æ•°æ®ç»“æ„*/
 static const struct rtc_class_ops balong_rtc_ops = {
 	.read_time	= balong_rtc_readtime,
 	.set_time	= balong_rtc_settime,
@@ -239,7 +239,7 @@ static s32 __devinit  balong_rtc_probe(struct platform_device *pdev)
 	}
 	platform_set_drvdata(pdev, balongv7r2_rtc);
 
-	/* ÇåÖĞ¶Ï */
+	/* æ¸…ä¸­æ–­ */
 	readl(g_rtc_ctrl.rtc_base_addr + HI_RTC_EOI_OFFSET);
 
 	/*disable the alarm interupt */

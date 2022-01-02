@@ -4,7 +4,7 @@
 #include <linux/hisi/ipc_msg.h>
 
 #ifdef GENERIC_PROJECT
-#define MCA_INST_IPC_ID                 1   //fIXME:¶¨ÒåÔÚtypedef enum tagIPC_INT_LEV_EÖÐ
+#define MCA_INST_IPC_ID                 1   //fIXME:å®šä¹‰åœ¨typedef enum tagIPC_INT_LEV_Eä¸­
 #endif
 
 #define MCA_DEBUG printk

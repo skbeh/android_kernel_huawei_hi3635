@@ -11,7 +11,7 @@ extern "C" {
 /*lint +e767*/
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "product_config.h"
 #if (FEATURE_ON == FEATURE_AT_HSIC)
@@ -20,40 +20,40 @@ extern "C" {
 #include    "PsCommonDef.h"
 
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
 
-/* ��ӡ���� */
+/* 打印开关 */
 VOS_UINT32                              g_ulDipcPrintFlag   = PS_FALSE;
 
-/* ��Ϣ���ٿ��� */
+/* 消息跟踪开关 */
 VOS_UINT32                              g_ulDipcTraceFlag   = PS_FALSE;
 
-/*����ʹ��ȫ�ֱ���,֮������2��������ΪDIPCΪAPIģʽ����������2������������*/
+/*勾包使用全局变量,之所以用2个，是因为DIPC为API模式，上下行在2个任务中运行*/
 TRACE_UL_DIPC_DATA_MSG                  *g_pstDipcTraceUlData;
 TRACE_DL_DIPC_DATA_MSG                  *g_pstDipcTraceDlData;
 
-/* DIPCͨ����ͳ����Ϣ */
+/* DIPC通道的统计信息 */
 DIPC_STATIC_INFO_STRU                   g_stDipcStaticInfo;
 
-/* �豸����Ϣ�������豸�ڲ���Ϣ���豸��SERVICE֮���ӳ���ϵ */
+/* 设备的信息，包括设备内部信息和设备到SERVICE之间的映射关系 */
 DEV_INFO_STRU                           g_astDevInfo[DIPC_DEV_NUM];
 
-/* �豸������֮���ӳ���ϵ������ʹ�� */
+/* 设备到服务之间的映射关系，上行使用 */
 DEV_SERVICE_INFO_STRU                   g_astDevService[DIPC_DEV_NUM];
 
-/* RAB ID��Service֮���ӳ���ϵ������ʹ�� */
+/* RAB ID到Service之间的映射关系，下行使用 */
 RAB_SERVICE_INFO_STRU                   g_astRabService[RAB_MAX_NUM];
 
-/* SERVICE��Ϣ */
+/* SERVICE信息 */
 TOTAL_SERVICE_INFO_STRU                 g_stTotalServiceInfo;
 
-/* DIPC���ݶ��� */
+/* DIPC数据队列 */
 DIPC_DATA_Q_CTRL_ST                     g_stDipcDataQ;
 
 
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 VOS_VOID DIPC_PrintLog
@@ -118,19 +118,19 @@ VOS_UINT32  DIPC_Snd1stDataNotify(VOS_VOID)
     VOS_INT32                    lLockKey;
 
 
-    /*������Ϣ�ڴ�:*/
+    /*申请消息内存:*/
     pMsg = (DIPC_DATA_PROC_NOTIFY_MSG *) PS_ALLOC_MSG( PS_PID_APP_DIPC,
         sizeof(DIPC_DATA_PROC_NOTIFY_MSG) - VOS_MSG_HEAD_LENGTH );
 
     if (VOS_NULL_PTR == pMsg)
     {
-        /*��ӡ������Ϣ---������Ϣ��ʧ��:*/
+        /*打印出错信息---申请消息包失败:*/
         DIPC_PrintLog( PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
             "DIPC_Snd1stDataNotify:WARNING:Allocates message for DIPC_Snd1stDataNotify FAIL!\r\n" );
         return PS_FAIL;
     }
 
-    /*��д��Ϣ����:*/
+    /*填写消息内容:*/
     pMsg->ulReceiverCpuId   = VOS_LOCAL_CPUID;
     pMsg->ulReceiverPid     = PS_PID_APP_DIPC;
     pMsg->enMsgType         = ID_DIPC_DATA_NOTIFY_REQ;
@@ -139,10 +139,10 @@ VOS_UINT32  DIPC_Snd1stDataNotify(VOS_VOID)
     g_stDipcDataQ.ulNotifyMsgCnt++;
     VOS_Splx(lLockKey);
 
-    /*������Ϣ:*/
+    /*发送消息:*/
     if (VOS_OK != PS_SEND_MSG(PS_PID_APP_DIPC, pMsg))
     {
-        /*��ӡ������Ϣ---������Ϣʧ��:*/
+        /*打印警告信息---发送消息失败:*/
         DIPC_PrintLog( PS_PID_APP_DIPC, 0, PS_PRINT_WARNING, "SEND DIPC_Snd1stDataNotify msg FAIL!\r\n" );
         return PS_FAIL;
     }
@@ -177,31 +177,31 @@ VOS_VOID DIPC_ClearDataQ(VOS_VOID)
 
 VOS_UINT32  DIPC_EnqueueData(IMM_ZC_STRU *pstImmZc)
 {
-    VOS_UINT32                          ulNonEmptyEvent = PS_FALSE;    /* ��¼�����Ƿ������ɿյ��ǿյ�ת�� */
+    VOS_UINT32                          ulNonEmptyEvent = PS_FALSE;    /* 记录队列是否发生了由空到非空的转变 */
     IMM_ZC_HEAD_STRU                   *pstDataQ;
     VOS_INT32                           lLockKey;
 
     pstDataQ   = &g_stDipcDataQ.stDipcDataQ;
 
-    /* A��������Բ���ʵʱ��֮ǰ��ȡ���Ⱥ����зֿ����жϣ�����������������ʱ
-       �ж϶��в�Ϊ�գ���������DIPC����õ����ȣ��Ѷ���ȡ�պ��ٽ�����ӵ������
-       ��Ϊ����ȡ�������ݸ�������Ӱ�����һ�����ж��� */
+    /* A核任务调试不够实时，之前获取长度和入列分开锁中断，会出现上行数据入队时
+       判断队列不为空，但紧接着DIPC任务得到调度，把队列取空后再接着入队的情况。
+       因为将获取队列数据个数和入队包含在一个锁中断中 */
     lLockKey = VOS_SplIMP();
     if (( 0 == IMM_ZcQueueLen(pstDataQ)) && (0 == g_stDipcDataQ.ulNotifyMsgCnt))
     {
         ulNonEmptyEvent = PS_TRUE;
     }
 
-    /*�����ݽ��������β��*/
+    /*将数据结点插入队列尾部*/
     IMM_ZcQueueTail(pstDataQ, pstImmZc);
     VOS_Splx(lLockKey);
 
     if (PS_TRUE == ulNonEmptyEvent)
     {
-        /*��DIPC�������ݴ���ָʾ*/
+        /*向DIPC发送数据处理指示*/
        if (PS_SUCC != DIPC_Snd1stDataNotify())
        {
-            /* ������Ϣ֪ͨʧ�ܣ���Ҫ����������� */
+            /* 发送消息通知失败，需要清空整个队列 */
             DIPC_ClearDataQ();
             DIPC_PrintLog(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
                 "DIPC, DIPC_EnqueueData, WARNING, DIPC_Snd1stDataNotify fail!\r\n");
@@ -237,7 +237,7 @@ VOS_UINT32 DIPC_DEV_AcmOpenDevice(DEV_INFO_STRU *pstDevInfo)
         return PS_FAIL;
     }
 
-    /* ע��HSIC ACM �û���ͨ���������ݽ��ջص� */
+    /* 注册HSIC ACM 用户面通道上行数据接收回调 */
     if (VOS_OK != DRV_UDI_IOCTL (pstDevInfo->slUdiHsicHdl, ACM_IOCTL_SET_READ_CB, pstDevInfo->pRxFunc.pAcmRxFunc))
     {
         DIPC_PrintLog(PS_PID_APP_DIPC, 0, PS_PRINT_ERROR,
@@ -245,7 +245,7 @@ VOS_UINT32 DIPC_DEV_AcmOpenDevice(DEV_INFO_STRU *pstDevInfo)
         return PS_FAIL;
     }
 
-    /* ע��HSIC ACM �û���ͨ�����������ڴ��ͷŽӿ� */
+    /* 注册HSIC ACM 用户面通道下行数据内存释放接口 */
     if (VOS_OK != DRV_UDI_IOCTL (pstDevInfo->slUdiHsicHdl, ACM_IOCTL_SET_FREE_CB, DIPC_DEV_HsicAcmFreeDlDataCB))
     {
         DIPC_PrintLog(PS_PID_APP_DIPC, 0, PS_PRINT_ERROR,
@@ -272,7 +272,7 @@ VOS_UINT32 DIPC_DEV_NcmOpenDevice(DEV_INFO_STRU *pstDevInfo)
         return PS_FAIL;
     }
 
-    /* ע��HSIC NCM �û���ͨ���������ݽ��ջص� */
+    /* 注册HSIC NCM 用户面通道上行数据接收回调 */
     if (VOS_OK != DRV_UDI_IOCTL (pstDevInfo->slUdiHsicHdl, NCM_IOCTL_REG_UPLINK_RX_FUNC, pstDevInfo->pRxFunc.pNcmRxFunc))
     {
         DIPC_PrintLog(PS_PID_APP_DIPC, 0, PS_PRINT_ERROR,"DIPC_DEV_NcmOpenDevice, regist RxFunc fail!");
@@ -294,7 +294,7 @@ VOS_UINT32 DIPC_DEV_AcmGetUlDataBuf(UDI_HANDLE slUdiHsicAcmHdl, IMM_ZC_STRU **pp
     stCtlParam.pPhyAddr = VOS_NULL_PTR;
 	#endif
 
-    /* ��ȡ������������buffer */
+    /* 获取底软上行数据buffer */
     lResult= DRV_UDI_IOCTL(slUdiHsicAcmHdl, ACM_IOCTL_GET_RD_BUFF, &stCtlParam);
     if ( VOS_OK != lResult )
     {
@@ -330,7 +330,7 @@ VOS_UINT32 DIPC_DEV_UsbAcmReadUlData(DIPC_DEV_ID_ENUM_UINT32 enDeviceId)
         return PS_FAIL;
     }
 
-    /* �������нӿڣ������ȡ�����ݻ�Ӱ����һ�����ݵĽ��� */
+    /* 底软现有接口，如果不取出数据会影响下一个数据的接收 */
     if (PS_SUCC != DIPC_DEV_AcmGetUlDataBuf(slUdiHandle, &pstBuf))
     {
         g_stDipcStaticInfo.astDipcDevStaticInfo[enDeviceId].ulGetDataFailNums++;
@@ -373,7 +373,7 @@ VOS_UINT32 DIPC_DEV_UsbAcmWriteData(UDI_HANDLE slUdiHandle, IMM_ZC_STRU *pstBuf)
     VOS_INT32                           ulResult;
 
 
-    /* ��д�������ڴ��ַ */
+    /* 待写入数据内存地址 */
     #ifndef FEATURE_USB_ZERO_COPY
     stCtlParam.pBuffer                  = (VOS_CHAR*)pstBuf;
     #else
@@ -383,7 +383,7 @@ VOS_UINT32 DIPC_DEV_UsbAcmWriteData(UDI_HANDLE slUdiHandle, IMM_ZC_STRU *pstBuf)
     stCtlParam.u32Size                  = 0;
     stCtlParam.pDrvPriv                 = VOS_NULL_PTR;
 
-    /* �첽��ʽд����*/
+    /* 异步方式写数，*/
     ulResult = DRV_UDI_IOCTL(slUdiHandle, ACM_IOCTL_WRITE_ASYNC, &stCtlParam);
 
     if ( VOS_OK != ulResult )
@@ -403,7 +403,7 @@ VOS_UINT32 DIPC_DEV_UsbAcmWriteData(UDI_HANDLE slUdiHandle, IMM_ZC_STRU *pstBuf)
 VOS_UINT32 DIPC_DEV_UsbNcm0ReadUlData(UDI_HANDLE ulhandle, VOS_VOID *pPktNode)
 {
     UDI_HANDLE              slUdiHandle;
-    IMM_ZC_STRU            *pstImmZcData = (IMM_ZC_STRU*)pPktNode;  /*ImmZc��sk_buff��ȫһ�£�ֱ��ǿת*/
+    IMM_ZC_STRU            *pstImmZcData = (IMM_ZC_STRU*)pPktNode;  /*ImmZc和sk_buff完全一致，直接强转*/
 
 
     slUdiHandle = DIPC_DRV_GetDevHandleByDevId(DIPC_DEV_ID1);
@@ -434,7 +434,7 @@ VOS_UINT32 DIPC_DEV_UsbNcm0ReadUlData(UDI_HANDLE ulhandle, VOS_VOID *pPktNode)
 VOS_UINT32 DIPC_DEV_UsbNcm1ReadUlData(UDI_HANDLE ulhandle, VOS_VOID *pPktNode)
 {
     UDI_HANDLE              slUdiHandle;
-    IMM_ZC_STRU            *pstImmZcData = (IMM_ZC_STRU*)pPktNode;  /*ImmZc��sk_buff��ȫһ�£�ֱ��ǿת*/
+    IMM_ZC_STRU            *pstImmZcData = (IMM_ZC_STRU*)pPktNode;  /*ImmZc和sk_buff完全一致，直接强转*/
 
 
     slUdiHandle = DIPC_DRV_GetDevHandleByDevId(DIPC_DEV_ID2);
@@ -465,7 +465,7 @@ VOS_UINT32 DIPC_DEV_UsbNcm1ReadUlData(UDI_HANDLE ulhandle, VOS_VOID *pPktNode)
 VOS_UINT32 DIPC_DEV_UsbNcm2ReadUlData(UDI_HANDLE ulhandle, VOS_VOID *pPktNode)
 {
     UDI_HANDLE              slUdiHandle;
-    IMM_ZC_STRU            *pstImmZcData = (IMM_ZC_STRU*)pPktNode;  /*ImmZc��sk_buff��ȫһ�£�ֱ��ǿת*/
+    IMM_ZC_STRU            *pstImmZcData = (IMM_ZC_STRU*)pPktNode;  /*ImmZc和sk_buff完全一致，直接强转*/
 
 
     slUdiHandle = DIPC_DRV_GetDevHandleByDevId(DIPC_DEV_ID3);
@@ -498,10 +498,10 @@ VOS_UINT32 DIPC_DEV_UsbNcmWriteData(UDI_HANDLE slUdiHandle, IMM_ZC_STRU *pstBuf)
     VOS_INT32                           ulResult;
     VOS_UINT32                          ulSize = IMM_ZcGetUsedLen(pstBuf);
 
-    /* Ϊ�˼���AP��һ�ο��������Դ˴�Ԥ��14�ֽڣ�����AP������MACͷ�� */
+    /* 为了减少AP侧一次拷贝，所以此处预留14字节，便于AP侧添加MAC头部 */
     IMM_ZcPush(pstBuf,IMM_MAC_HEADER_RES_LEN);
 
-    /* �첽��ʽд��*/
+    /* 异步方式写数*/
     ulResult = DRV_UDI_WRITE(slUdiHandle, pstBuf, ulSize);
 
     if ( VOS_OK != ulResult )
@@ -539,7 +539,7 @@ VOS_UINT32 DIPC_DEV_PortInit( VOS_VOID )
     DEV_INFO_STRU                  *pstDevInfo;
 
 
-    /*  ��Ʒ��֧��HSIC���ԣ�ֱ�ӳ�ʼ���ɹ� */
+    /*  产品不支持HSIC特性，直接初始化成功 */
     if (BSP_MODULE_SUPPORT != DRV_GET_HSIC_SUPPORT())
     {
         return VOS_OK;
@@ -564,7 +564,7 @@ VOS_UINT32 DIPC_DEV_PortInit( VOS_VOID )
             pstDevInfo = &g_astDevInfo[enDipcDevId];
             pstDevInfo->slUdiHsicHdl    = UDI_INVALID_HANDLE;
 
-            /* ���˿ڴ�ʧ�ܣ���������һ���˿� */
+            /* 本端口打开失败，继续打开下一个端口 */
             if (PS_SUCC != DIPC_DEV_NcmOpenDevice(pstDevInfo))
             {
                 DIPC_PrintLog1(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
@@ -591,7 +591,7 @@ VOS_UINT32 DIPC_DEV_PortInit( VOS_VOID )
             pstDevInfo = &g_astDevInfo[enDipcDevId];
             pstDevInfo->slUdiHsicHdl    = UDI_INVALID_HANDLE;
 
-            /* ���˿ڴ�ʧ�ܣ���������һ���˿� */
+            /* 本端口打开失败，继续打开下一个端口 */
             if (PS_SUCC != DIPC_DEV_AcmOpenDevice(pstDevInfo))
             {
                 DIPC_PrintLog1(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
@@ -702,7 +702,7 @@ VOS_UINT32 DIPC_DEV_CheckUdiDevIdPara(UDI_DEVICE_ID enUdiDevId)
 
 VOS_UINT32 DIPC_DEV_UlDataProc(DIPC_DEV_ID_ENUM_UINT32 enDeviceId, IMM_ZC_STRU *pstBuf)
 {
-    VOS_UINT16  usApp;      /* ʹ��skb_buff�ṹ�������ֶδ��������кͲ�����Ϣ */
+    VOS_UINT16  usApp;      /* 使用skb_buff结构中已有字段传递上下行和参数信息 */
 
     if (VOS_NULL_PTR == pstBuf)
     {
@@ -795,7 +795,7 @@ VOS_UINT32 DIPC_MGR_UlDataProc(DIPC_DEV_ID_ENUM_UINT32 enDeviceId, IMM_ZC_STRU *
         {
             pstServInfo = pstDevServiceInfo->apstServiceInfo[enServiceType];
 
-            /* ��Ϊ����������Ҫ������������ȷ��Rab Id��������Ҫ����Match���������в���Ҫ */
+            /* 因为上行数据需要根据数据内容确定Rab Id，所以需要进行Match操作，下行不需要 */
             if (VOS_NULL_PTR == pstServInfo->pUlMatchFunc)
             {
                 DIPC_PrintLog2(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
@@ -826,14 +826,14 @@ VOS_UINT32 DIPC_MGR_UlDataProc(DIPC_DEV_ID_ENUM_UINT32 enDeviceId, IMM_ZC_STRU *
                     return PS_FAIL;
                 }
 
-                /* �ɹ����գ����˳�����¼ */
+                /* 成功接收，则退出并记录 */
                 g_stDipcStaticInfo.astDipcDevStaticInfo[enDeviceId].ulSuccSendUlPacketNums++;
                 return PS_SUCC;
             }
         }
     }
 
-    /* ���豸��û���ҵ���Ӧ�ķ����ͷ����� */
+    /* 该设备上没有找到对应的服务，释放数据 */
     IMM_ZcFree(pstBuf);
     g_stDipcStaticInfo.astDipcDevStaticInfo[enDeviceId].ulFailMatchUlPacketNums++;
     return PS_FAIL;
@@ -878,8 +878,8 @@ VOS_UINT32 DIPC_MGR_AddNewIpService(VOS_UINT8 ucRabId,
     DIPC_DEV_ID_ENUM_UINT32 enDevId, DIPC_SERVICE_TYPE_ENUM_UINT32 enDipcServiceType,
     DIPC_SERV_ULDATA_MATCHFUNC pServiceUlDataMatchFunc,     DIPC_SERV_DLDATA_MATCHFUNC pServiceDlDataMatchFunc)
 {
-    SERVICE_INFO_STRU               stServiceInfo;  /* ����׼��ע��ķ����ȫ����Ϣ�Ľṹ */
-    SERVICE_INFO_STRU              *pstServiceInfo; /* ע���ķ��ط���ṹָ�� */
+    SERVICE_INFO_STRU               stServiceInfo;  /* 带有准备注册的服务的全部信息的结构 */
+    SERVICE_INFO_STRU              *pstServiceInfo; /* 注册后的返回服务结构指针 */
 
     stServiceInfo.ucRabId       = ucRabId;
     stServiceInfo.enDipcDevId   = enDevId;
@@ -888,17 +888,17 @@ VOS_UINT32 DIPC_MGR_AddNewIpService(VOS_UINT8 ucRabId,
     stServiceInfo.pUlCallFunc   = ADS_UL_SendPacket;
     stServiceInfo.pDlCallFunc   = DIPC_DEV_UsbWriteData;
 
-    /* ע����� */
+    /* 注册服务 */
     pstServiceInfo = DIPC_MGR_RegNewService(&stServiceInfo);
     if (VOS_NULL_PTR == pstServiceInfo)
     {
         return PS_FAIL;
     }
 
-    /* ע�������豸֮���ӳ���ϵ�������н���ʱʹ�� */
+    /* 注册服务和设备之间的映射关系，供上行接收时使用 */
     DIPC_DEV_AddNewIpTypeService(enDevId, enDipcServiceType, pstServiceInfo);
 
-    /* ע������Rab֮���ӳ���ϵ�������н���ʱʹ�� */
+    /* 注册服务和Rab之间的映射关系，供上行接收时使用 */
     DIPC_MGR_AddNewIpTypeService(ucRabId, enDipcServiceType, pstServiceInfo);
 
     return PS_SUCC;
@@ -907,20 +907,20 @@ VOS_UINT32 DIPC_MGR_DelIpVService(VOS_UINT8 ucRabId, DIPC_SERVICE_TYPE_ENUM_UINT
 {
     SERVICE_INFO_STRU             *pstServiceInfo;
 
-    /* ���ҵ���RabId�ķ��� */
+    /* 先找到该RabId的服务 */
     pstServiceInfo = DIPC_MGR_GetServiceByRabId(ucRabId, enDipcServiceType);
     if (VOS_NULL_PTR == pstServiceInfo)
     {
         return PS_FAIL;
     }
 
-    /* ɾ��Rab�ͷ���֮���ӳ���ϵ�������н���ʱʹ�� */
+    /* 删除Rab和服务之间的映射关系，供上行接收时使用 */
     DIPC_MGR_DelIpTypeService(pstServiceInfo->ucRabId, enDipcServiceType);
 
-    /* ȥע�������豸֮���ӳ���ϵ�������н���ʱʹ�� */
+    /* 去注册服务和设备之间的映射关系，供上行接收时使用 */
     DIPC_DEV_DelIpTypeService(pstServiceInfo->enDipcDevId, enDipcServiceType);
 
-    /* ȥע����� */
+    /* 去注册服务 */
     DIPC_MGR_DeregService(pstServiceInfo);
 
     return PS_SUCC;
@@ -946,7 +946,7 @@ VOS_UINT32 DIPC_MGR_AddNewService(DIPC_DEV_ID_ENUM_UINT32 enDevId,
             break;
 
         default:
-            /* ��NASȷ��DIPC_BEARER_TYPE_IPV4V6���͵���ϢNAS���Ϊһ��IPV4��һ��IPV6���͹��� */
+            /* 和NAS确定DIPC_BEARER_TYPE_IPV4V6类型的消息NAS会分为一次IPV4和一次IPV6发送过来 */
             ulRsult = PS_FAIL;
             break;
     }
@@ -981,14 +981,14 @@ VOS_UINT32 DIPC_MGR_DlAdsDataRcv(VOS_UINT8 ucRabId, IMM_ZC_STRU *pData)
                     return PS_FAIL;
                 }
 
-                /* �ɹ����գ����˳�����¼ */
+                /* 成功接收，则退出并记录 */
                 g_stDipcStaticInfo.astDipcDevStaticInfo[pstServInfo->enDipcDevId].ulSuccSendDlPacketNums++;
                 return PS_SUCC;
             }
         }
     }
 
-    /* ���豸��û���ҵ���Ӧ�ķ����ͷ����� */
+    /* 该设备上没有找到对应的服务，释放数据 */
     g_stDipcStaticInfo.ulFailMatchDlPacketNums++;
     IMM_ZcFree(pData);
     return PS_FAIL;
@@ -1003,7 +1003,7 @@ SERVICE_INFO_STRU* DIPC_MGR_GetServiceByRabId(VOS_UINT8 ucRabId,
 
     pstRabServiceInfo = &g_astRabService[ucRabId];
 
-    /* �����Ӧ�ķ�������û��ע�ᣬ�򱨴� */
+    /* 如果对应的服务类型没有注册，则报错 */
     if (PS_TRUE != DIPC_GET_SERVICE_REG(pstRabServiceInfo->ulServiceMask, enDipcServiceType))
     {
         DIPC_PrintLog(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
@@ -1011,7 +1011,7 @@ SERVICE_INFO_STRU* DIPC_MGR_GetServiceByRabId(VOS_UINT8 ucRabId,
         return VOS_NULL_PTR;
     }
 
-    /* �������˵������ע���˵���û�ж�Ӧ�ķ���ṹ��˵���ڲ�ά������ */
+    /* 如果掩码说明服务注册了但是没有对应的服务结构，说明内部维护错误 */
     if (VOS_NULL_PTR == pstRabServiceInfo->apstServiceInfo[enDipcServiceType])
     {
         DIPC_PrintLog(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
@@ -1116,13 +1116,13 @@ VOS_UINT32 DIPC_CheckRelation(AT_DIPC_PDP_ACT_STRU *pstAtDipcPdpActMsg)
     enDipcServiceType = DIPC_GET_SERVICE_TYPE_BY_BEARER_TYPE(pstAtDipcPdpActMsg->enBearerType);
     pstRabServiceInfo = &g_astRabService[pstAtDipcPdpActMsg->ucRabId];
 
-    /* ֮ǰû��ע�ᣬ��ΪΪ��ȷ��� */
+    /* 之前没有注册，认为为正确情况 */
     if (0 == pstRabServiceInfo->ulServiceCnt)
     {
         return VOS_OK;
     }
 
-    /*  ���ServiceCntΪ0������ServiceMask��Ϊ0������Ϊ�ڲ��쳣��������������Ϣ */
+    /*  如果ServiceCnt为0，但是ServiceMask不为0，则认为内部异常，不处理后续消息 */
     if (0 == pstRabServiceInfo->ulServiceMask)
     {
         DIPC_PrintLog1(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
@@ -1130,7 +1130,7 @@ VOS_UINT32 DIPC_CheckRelation(AT_DIPC_PDP_ACT_STRU *pstAtDipcPdpActMsg)
         return VOS_ERR;
     }
 
-    /* �����Rab���Ѿ��ж�Ӧ���͵ķ�����ΪΪ���� */
+    /* 如果该Rab上已经有对应类型的服务，认为为错误 */
     if (PS_TRUE == DIPC_GET_SERVICE_REG(pstRabServiceInfo->ulServiceMask, enDipcServiceType))
     {
         DIPC_PrintLog2(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
@@ -1149,14 +1149,14 @@ VOS_UINT32 DIPC_CheckRelation(AT_DIPC_PDP_ACT_STRU *pstAtDipcPdpActMsg)
         }
     }
 
-    /* ���pstRabServiceInfo->ulServiceCnt��Ϊ0�������ϲ������pstServInfoΪ�յ������
-    �˴���Ϊ������PC LINT�澯 */
+    /* 如果pstRabServiceInfo->ulServiceCnt不为0，理论上不会出现pstServInfo为空的情况，
+    此处是为了消除PC LINT告警 */
     if (VOS_NULL_PTR == pstServInfo)
     {
         return VOS_ERR;
     }
 
-    /* �����Rab���Ѿ����������͵ķ�����Ϊ��Ӧ���豸IdҪ���µ���Ϣ�е�һ�� */
+    /* 如果该Rab上已经有其它类型的服务，认为对应的设备Id要和新的消息中的一致 */
     enUdiDevId = g_astDevInfo[pstServInfo->enDipcDevId].enUdiDevId;
     if (pstAtDipcPdpActMsg->enUdiDevId != enUdiDevId)
     {
@@ -1166,7 +1166,7 @@ VOS_UINT32 DIPC_CheckRelation(AT_DIPC_PDP_ACT_STRU *pstAtDipcPdpActMsg)
         return VOS_ERR;
     }
 
-    /* ������豸���Ѿ��ж�Ӧ���͵ķ�����ΪΪ���� */
+    /* 如果该设备上已经有对应类型的服务，认为为错误 */
     pstDevServiceInfo = &(g_astDevService[pstServInfo->enDipcDevId]);
     if (PS_TRUE == DIPC_GET_SERVICE_REG(pstDevServiceInfo->ulServiceMask, enDipcServiceType))
     {
@@ -1190,7 +1190,7 @@ VOS_UINT32 DIPC_CheckPdpActPara(AT_DIPC_PDP_ACT_STRU *pstAtDipcPdpActMsg)
         return VOS_ERR;
     }
 
-    /* ��NASЭ�����һ��RabId�ϼ���IPV4����IPV6����Ҫ��2���·���DIPC_BEARER_TYPE_IPV4V6�����Ǹ�NAS�ڲ�ʹ�� */
+    /* 和NAS协商如果一个RabId上既有IPV4又有IPV6，需要分2次下发，DIPC_BEARER_TYPE_IPV4V6保留是给NAS内部使用 */
     if (DIPC_BEARER_TYPE_IPV4V6 <= pstAtDipcPdpActMsg->enBearerType)
     {
         DIPC_PrintLog1(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
@@ -1226,16 +1226,16 @@ VOS_VOID DIPC_RcvAtPdpActIndProc(AT_DIPC_PDP_ACT_STRU *pstAtDipcPdpActMsg)
         return;
     }
 
-    /* ͨ��NASʹ�õ��ⲿ�豸ID��ȡ�ڲ��豸ID */
+    /* 通过NAS使用的外部设备ID获取内部设备ID */
     enDevId = DIPC_DEV_GetDevIdByUdiId(pstAtDipcPdpActMsg->enUdiDevId);
-    if (DIPC_DEV_BUTT <= enDevId)    /* �����Ӧ���豸ID������ */
+    if (DIPC_DEV_BUTT <= enDevId)    /* 如果对应的设备ID不存在 */
     {
         DIPC_PrintLog(PS_PID_APP_DIPC, 0, PS_PRINT_WARNING,
             "DIPC, DIPC_RcvAtPdpActIndProc, can not find the device.\n");
         return;
     }
 
-    /* ��DIPC�ڲ�ע��һ���µķ��� */
+    /* 在DIPC内部注册一个新的服务 */
     ulRslt = DIPC_MGR_AddNewService(enDevId, pstAtDipcPdpActMsg->ucRabId,
         DIPC_GET_SERVICE_TYPE_BY_BEARER_TYPE(pstAtDipcPdpActMsg->enBearerType));
 
@@ -1275,7 +1275,7 @@ VOS_UINT32 DIPC_CheckPdpRelPara(AT_DIPC_PDP_DEACT_STRU *pstAtDipcPdpDeactMsg)
         return VOS_ERR;
     }
 
-    /* �����Ӧ��Rab Idû��ע����� */
+    /* 如果对应的Rab Id没有注册服务 */
     if (VOS_NULL_PTR == DIPC_MGR_GetServiceByRabId(pstAtDipcPdpDeactMsg->ucRabId,
         DIPC_GET_SERVICE_TYPE_BY_BEARER_TYPE(pstAtDipcPdpDeactMsg->enBearerType)))
     {
@@ -1324,7 +1324,7 @@ VOS_VOID DIPC_RcvAtPdpRelIndProc(AT_DIPC_PDP_DEACT_STRU *pstAtDipcPdpDeactMsg)
 VOS_UINT32 DIPC_DlAdsDataRcv(VOS_UINT8 ucRabId, IMM_ZC_STRU *pData,
     ADS_PKT_TYPE_ENUM_UINT8 enPktType)
 {
-    VOS_UINT16  usApp;      /* ʹ��skb_buff�ṹ�������ֶδ��������кͲ�����Ϣ */
+    VOS_UINT16  usApp;      /* 使用skb_buff结构中已有字段传递上下行和参数信息 */
 
     if (VOS_NULL_PTR == pData)
     {
@@ -1357,13 +1357,13 @@ VOS_VOID  DIPC_ProcDataNotify(VOS_VOID)
     {
         pstMem  = (IMM_ZC_STRU *)IMM_ZcDequeueHead(&g_stDipcDataQ.stDipcDataQ);
 
-        /* ����Ϊ�յ�ʱ�򷵻ؿ�ָ�� */
+        /* 队列为空的时候返回空指针 */
         if ( VOS_NULL_PTR == pstMem )
         {
             return;
         }
 
-        /*�����ý��(�����ͷŶ����Ѿ��ڸ����������ڲ���ɣ��������ͷŽ��)*/
+        /*处理该结点(结点的释放动作已经在各处理函数内部完成，无需再释放结点)*/
 
         usApp = IMM_ZcGetUserApp(pstMem);
 
@@ -1464,7 +1464,7 @@ VOS_UINT32 DIPC_Init( VOS_VOID )
     DIPC_DEV_ID_ENUM_UINT32         enDevId;
     DIPC_SERVICE_TYPE_ENUM_UINT32   enServiceType;
 
-    /* ��ʼ��Rab�������ӳ��� */
+    /* 初始化Rab到服务的映射表 */
     for (ucRabId = 0; ucRabId < RAB_MAX_NUM; ucRabId++)
     {
         for (enServiceType = DIPC_SERVICE_TYPE_IPV4; enServiceType < DIPC_SERVICE_TYPE_BUTT; enServiceType++)
@@ -1475,7 +1475,7 @@ VOS_UINT32 DIPC_Init( VOS_VOID )
         g_astRabService[ucRabId].ulServiceMask  = 0;
     }
 
-    /* ��ʼ��������Ϣ��*/
+    /* 初始化服务信息表*/
     for (ulServiceId = 0; ulServiceId < SERVICE_MAX_NUM; ulServiceId++)
     {
         pstServiceInfo = &g_stTotalServiceInfo.astServiceInfo[ulServiceId];
@@ -1488,7 +1488,7 @@ VOS_UINT32 DIPC_Init( VOS_VOID )
     g_stTotalServiceInfo.ulServiceNum   = 0;
     g_stTotalServiceInfo.ulServiceMask  = 0;
 
-    /* ��ʼ���豸�������ӳ��� */
+    /* 初始化设备到服务的映射表 */
     for (enDevId = DIPC_DEV_ID1; enDevId < DIPC_DEV_BUTT; enDevId++)
     {
         for (enServiceType = DIPC_SERVICE_TYPE_IPV4; enServiceType < DIPC_SERVICE_TYPE_BUTT; enServiceType++)
@@ -1499,8 +1499,8 @@ VOS_UINT32 DIPC_Init( VOS_VOID )
         g_astDevService[enDevId].ulServiceMask  = 0;
     }
 
-    /* ���HSICͨ���Ѿ�ö�ٳɹ�������Э��ջִ�г�ʼ�����������򽫳�ʼ������ע����������
-        �ɵ�����HSICö�ٳɹ�������Խ��г�ʼ��*/
+    /* 如果HSIC通道已经枚举成功，则由协议栈执行初始化操作；否则将初始化函数注册至底软，
+        由底软在HSIC枚举成功后调用以进行初始化*/
     if (VOS_TRUE == DRV_GET_HSIC_ENUM_STATUS())
     {
         DIPC_DEV_PortInit();
@@ -1768,14 +1768,14 @@ VOS_VOID DIPC_SetLogFlag( VOS_UINT32  ulFlag )
 #else   /* for feature */
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include    "PsTypeDef.h"
 #include    "PsDipc.h"
 #include    "DrvInterface.h"
 
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 UDI_HANDLE DIPC_GetDevHandleByRabId(VOS_UINT8 ucRabId)

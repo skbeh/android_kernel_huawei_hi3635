@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "AdsCtx.h"
 #include "AdsLog.h"
@@ -16,35 +16,35 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 /*lint -e767*/
 #define    THIS_FILE_ID                 PS_FILE_ID_ADS_FILTER_C
 /*lint +e767*/
 
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
-/* ADS���˹��������� */
+/* ADS过滤功能上下文 */
 ADS_FILTER_CTX_STRU                     g_stAdsFilterCtx;
 
-/* ADS���˹���ͳ����Ϣ: �����и�Ԫ����������ͳ������������:
-   ��������        ͳ����
-      0         ����IPv4 TCP
-      1         ����IPv4 UDP
-      2         ����IPv4 ECHO REQ
-      3         ���в�֧�ֵ�IPv4����
-      4         ����IPv6����
-      5         ����IPv4 TCP
-      6         ����IPv4 UDP
-      7         ����IPv4 ECHO REPLY
-      8         ����IPv4 ICMP�������
-      9         ����IPv4 ��Ƭ��(��Ƭ)
-      10        ����IPv4 ��Ƭ��(����Ƭ)
-      11        ����IPv6�� */
+/* ADS过滤功能统计信息: 数组中各元素所代表的统计量意义如下:
+   数组索引        统计量
+      0         上行IPv4 TCP
+      1         上行IPv4 UDP
+      2         上行IPv4 ECHO REQ
+      3         上行不支持的IPv4报文
+      4         上行IPv6报文
+      5         下行IPv4 TCP
+      6         下行IPv4 UDP
+      7         下行IPv4 ECHO REPLY
+      8         下行IPv4 ICMP差错报文
+      9         下行IPv4 分片包(首片)
+      10        下行IPv4 分片包(非首片)
+      11        下行IPv6包 */
 VOS_UINT32                              g_aulAdsFilterStats[ADS_FILTER_ORIG_PKT_BUTT]  = {0};
 
-/* ADS��������ICMP�������õĺ���ָ��ṹ�壬��ǰֻ֧��Echo Reply��ICMP������� */
+/* ADS解析下行ICMP报文所用的函数指针结构体，当前只支持Echo Reply和ICMP差错报文 */
 ADS_FILTER_DECODE_DL_ICMP_FUNC_STRU     g_astAdsFilterDecodeDlIcmpFuncTbl[] =
     {         /*ICMP Type*/                            /* pFunc */                               /* enOrigPktType */
         /*  0:Echo Reply              */   {ADS_FILTER_DecodeDlIPv4EchoReplyPacket,     ADS_FILTER_ORIG_PKT_DL_IPV4_ECHOREPLY},
@@ -70,7 +70,7 @@ ADS_FILTER_DECODE_DL_ICMP_FUNC_STRU     g_astAdsFilterDecodeDlIcmpFuncTbl[] =
 
 
 /*****************************************************************************
-  3 ����ʵ��
+  3 函数实现
 *****************************************************************************/
 
 VOS_VOID ADS_FILTER_ResetIPv6Addr(VOS_VOID)
@@ -86,7 +86,7 @@ VOS_VOID ADS_FILTER_InitListsHead(VOS_VOID)
     VOS_UINT32                          ulLoop;
     HI_LIST_S                          *pstListHead = VOS_NULL_PTR;
 
-    /* ѭ����ʼ��ÿһ�����˱���ͷ�ڵ� */
+    /* 循环初始化每一个过滤表的头节点 */
     for (ulLoop = 0; ulLoop < ADS_FILTER_MAX_LIST_NUM; ulLoop++)
     {
         pstListHead = ADS_FILTER_GET_LIST(ulLoop);
@@ -104,11 +104,11 @@ VOS_VOID ADS_FILTER_InitCtx(VOS_VOID)
 
     PS_MEM_SET(&g_stAdsFilterCtx, 0, sizeof(g_stAdsFilterCtx));
 
-    /* ��ʼ�����˱�ͷ�ڵ� */
+    /* 初始化过滤表头节点 */
     ADS_FILTER_InitListsHead();
 
-    /* ��ʼ���ϻ����� */
-    /* ��ȡNV���ȡ���˽ڵ��ϻ�ʱ�� */
+    /* 初始化老化周期 */
+    /* 读取NV项，获取过滤节点老化时长 */
     PS_MEM_SET(&stSharePdp, 0, sizeof(stSharePdp));
     if (NV_OK != NV_ReadEx(MODEM_ID_0,
                            en_NV_Item_SHARE_PDP_INFO,
@@ -122,7 +122,7 @@ VOS_VOID ADS_FILTER_InitCtx(VOS_VOID)
     ulTimeLen   = ADS_FILTER_SECOND_TRANSFER_JIFFIES * stSharePdp.usAgingTimeLen;
     ADS_FILTER_SET_AGING_TIME_LEN(ulTimeLen);
 
-    /* ��ʼ��IPv6���˵�ַ */
+    /* 初始化IPv6过滤地址 */
     ADS_FILTER_ResetIPv6Addr();
 
     return;
@@ -172,7 +172,7 @@ VOS_VOID ADS_FILTER_AddFilter(
     HI_LIST_S                          *pstListHead     = VOS_NULL_PTR;
     VOS_UINT8                           ucIndex;
 
-    /* ������˱��ڵ��ڴ� */
+    /* 申请过滤表节点内存 */
     pstNode = (ADS_FILTER_NODE_STRU *)ADS_FILTER_MALLOC(sizeof(ADS_FILTER_NODE_STRU));
     if (VOS_NULL_PTR == pstNode)
     {
@@ -182,13 +182,13 @@ VOS_VOID ADS_FILTER_AddFilter(
 
     pstNode->stFilter = *pstFilter;
 
-    /* ��ȡ��ʾ��Ϣ��Ӧ�Ĺ��˱������� */
+    /* 获取标示信息对应的过滤表索引号 */
     ucIndex = ADS_FILTER_GET_INDEX(pstFilter);
 
-    /* ͨ�������Ż�ȡ��Ӧ����������ͷ��� */
+    /* 通过索引号获取对应过滤链表的头结点 */
     pstListHead = ADS_FILTER_GET_LIST(ucIndex);
 
-    /* ���ڵ����ӵ����˱������� */
+    /* 将节点增加到过滤表链表中 */
     msp_list_add_tail(&pstNode->stList, pstListHead);
 
     return;
@@ -203,7 +203,7 @@ VOS_VOID ADS_FILTER_ResetLists(VOS_VOID)
     HI_LIST_S                          *pstListHead = VOS_NULL_PTR;
     ADS_FILTER_NODE_STRU               *pstNode     = VOS_NULL_PTR;
 
-    /* ѭ���������й��˱������ͷŹ��˱������нڵ� */
+    /* 循环遍历所有过滤表，并释放过滤表的所有节点 */
     for (ulLoop = 0; ulLoop < ADS_FILTER_MAX_LIST_NUM; ulLoop++)
     {
         pstListHead = ADS_FILTER_GET_LIST(ulLoop);
@@ -211,10 +211,10 @@ VOS_VOID ADS_FILTER_ResetLists(VOS_VOID)
         {
             pstNode = msp_list_entry(pstMe, ADS_FILTER_NODE_STRU, stList);
 
-            /* �ӹ��˱���ɾ���ڵ� */
+            /* 从过滤表中删除节点 */
             msp_list_del(&pstNode->stList);
 
-            /* �ͷŽڵ��ڴ� */
+            /* 释放节点内存 */
             ADS_FILTER_FREE(pstNode);
         }
     }
@@ -223,10 +223,10 @@ VOS_VOID ADS_FILTER_ResetLists(VOS_VOID)
 }
 VOS_VOID ADS_FILTER_Reset(VOS_VOID)
 {
-    /* ����IPv6���˵�ַ */
+    /* 重置IPv6过滤地址 */
     ADS_FILTER_ResetIPv6Addr();
 
-    /* ���ù��˱� */
+    /* 重置过滤表 */
     ADS_FILTER_ResetLists();
 
     return;
@@ -241,17 +241,17 @@ VOS_UINT32 ADS_FILTER_IsInfoMatch(
 
     ulRet = VOS_FALSE;
 
-    /* ƥ��Դ��ַ��Ŀ�ĵ�ַ��Э������ */
+    /* 匹配源地址、目的地址、协议类型 */
     if ( !ADS_FILTER_IS_IPHDR_MATCH(&pstFilter1->stIPHeader, &pstFilter2->stIPHeader) )
     {
         return ulRet;
     }
 
-    /* ���ձ������ͽ���ƥ�� */
+    /* 按照报文类型进行匹配 */
     switch(pstFilter1->enPktType)
     {
         case ADS_FILTER_PKT_TYPE_TCP:
-            /* ����TCP���ͽ���ƥ�� */
+            /* 按照TCP类型进行匹配 */
             if (ADS_FILTER_IS_TCP_PKT_MATCH(&pstFilter1->unFilter.stTcpFilter,
                                             &pstFilter2->unFilter.stTcpFilter))
             {
@@ -259,7 +259,7 @@ VOS_UINT32 ADS_FILTER_IsInfoMatch(
             }
             break;
         case ADS_FILTER_PKT_TYPE_UDP:
-            /* ����UDP���ͽ���ƥ�� */
+            /* 按照UDP类型进行匹配 */
             if (ADS_FILTER_IS_UDP_PKT_MATCH(&pstFilter1->unFilter.stUdpFilter,
                                             &pstFilter2->unFilter.stUdpFilter))
             {
@@ -267,7 +267,7 @@ VOS_UINT32 ADS_FILTER_IsInfoMatch(
             }
             break;
         case ADS_FILTER_PKT_TYPE_ICMP:
-            /* ����ICMP���ͽ���ƥ�� */
+            /* 按照ICMP类型进行匹配 */
             if (ADS_FILTER_IS_ICMP_PKT_MATCH(&pstFilter1->unFilter.stIcmpFilter,
                                              &pstFilter2->unFilter.stIcmpFilter))
             {
@@ -275,7 +275,7 @@ VOS_UINT32 ADS_FILTER_IsInfoMatch(
             }
             break;
         case ADS_FILTER_PKT_TYPE_FRAGMENT:
-            /* ���շ�Ƭ�����ͽ���ƥ�� */
+            /* 按照分片包类型进行匹配 */
             if (ADS_FILTER_IS_FRAGMENT_MATCH(&pstFilter1->unFilter.stFragmentFilter,
                                              &pstFilter2->unFilter.stFragmentFilter))
             {
@@ -302,41 +302,41 @@ VOS_UINT32 ADS_FILTER_Match(
 
     ulRet   = VOS_FALSE;
 
-    /* ��ȡ��ʾ��Ϣ��Ӧ�Ĺ��˱������� */
+    /* 获取标示信息对应的过滤表索引号 */
     ucIndex = ADS_FILTER_GET_INDEX(pstFilter);
 
-    /* ͨ�������Ż�ȡ��Ӧ����������ͷ��� */
+    /* 通过索引号获取对应过滤链表的头结点 */
     pstListHead = ADS_FILTER_GET_LIST(ucIndex);
 
-    /* ѭ����������������ƥ���� */
+    /* 循环遍历链表，查找匹配项 */
     msp_list_for_each_safe(pstMe, pstListTmp, pstListHead)
     {
         pstNode = msp_list_entry(pstMe, ADS_FILTER_NODE_STRU, stList);
 
-        /* �жϽڵ��Ƿ���� */
+        /* 判断节点是否过期 */
         if (ADS_FILTER_IS_AGED(pstNode->stFilter.ulTmrCnt))
         {
-            /* �������в���ýڵ� */
+            /* 从链表中拆出该节点 */
             msp_list_del(&pstNode->stList);
 
-            /* �ͷŽڵ��ڴ� */
+            /* 释放节点内存 */
             ADS_FILTER_FREE(pstNode);
 
             continue;
         }
 
-        /* �жϱ��������Ƿ�ƥ�� */
+        /* 判断报文类型是否匹配 */
         if ( (pstFilter->enPktType != pstNode->stFilter.enPktType)
           || (VOS_TRUE == ulRet) )
         {
-            /* �����Ͳ�ƥ����Ѿ��ҵ�ƥ���������������һ���ڵ� */
+            /* 若类型不匹配或已经找到匹配项则继续处理下一个节点 */
             continue;
         }
 
-        /* ���Ĺ�����Ϣƥ�� */
+        /* 报文过滤信息匹配 */
         ulRet = ADS_FILTER_IsInfoMatch(pstFilter, &pstNode->stFilter);
 
-        /* ������Ϣƥ�䣬ˢ���ϻ�ʱ�� */
+        /* 过滤信息匹配，刷新老化时间 */
         if (VOS_TRUE == ulRet)
         {
             pstNode->stFilter.ulTmrCnt = ADS_GET_CURR_KERNEL_TIME();
@@ -350,7 +350,7 @@ VOS_UINT32 ADS_FILTER_Match(
 VOS_VOID ADS_FILTER_SaveIPAddrInfo(
     ADS_FILTER_IP_ADDR_INFO_STRU       *pstFilterIpAddr)
 {
-    /* IPv6���ͣ�����Ҫ��IPv6��ַ���浽ȫ�ֹ�����Ϣ�� */
+    /* IPv6类型，则需要将IPv6地址保存到全局过滤信息中 */
     if (VOS_TRUE == pstFilterIpAddr->bitOpIpv6Addr)
     {
         PS_MEM_CPY(ADS_FILTER_GET_IPV6_ADDR()->aucIpAddr,
@@ -369,40 +369,40 @@ VOS_UINT32 ADS_FILTER_DecodeUlPacket(
     ADS_TCP_HDR_STRU                   *pstTcpHdr       = VOS_NULL_PTR;
     ADS_ICMP_HDR_STRU                  *pstIcmpHdr      = VOS_NULL_PTR;
 
-    /* ����IP�ײ� */
+    /* 解析IP首部 */
     pstIPv4Hdr  = (ADS_IPV4_HDR_STRU *)IMM_ZcGetDataPtr(pstData);
 
-    /* ��Ƭ���ķ���Ƭ����ֱ�ӷ��ͣ�����Ҫ���й�����Ϣ��ȡ���������б���������(��Ƭ������Ƭ�жϷ���: OffsetΪ��0):
+    /* 分片包的非首片，则直接发送，不需要进行过滤信息提取。各类型判别条件如下(分片包非首片判断方法: Offset为非0):
                          MF      Offset
-        �Ƿ�Ƭ��         0         0
-        ��Ƭ����Ƭ       1         0
-        ��Ƭ���м�Ƭ     1         ��0
-        ��Ƭ��βƬ       0         ��0 */
+        非分片包         0         0
+        分片包首片       1         0
+        分片包中间片     1         非0
+        分片包尾片       0         非0 */
     if (0 != (pstIPv4Hdr->usFlags_fo & VOS_HTONS(ADS_IP_OFFSET)))
     {
-        /* ��ά�ɲ�ͳ�� */
+        /* 可维可测统计 */
         ADS_FILTER_DBG_STATISTIC(ADS_FILTER_ORIG_PKT_UL_IPV4_NOT_FIRST_FRAGMENT, 1);
         return VOS_ERR;
     }
 
 
-    /* ��ȡ��ǰϵͳʱ�� */
+    /* 获取当前系统时间 */
     pstIPv4Filter->ulTmrCnt                 = ADS_GET_CURR_KERNEL_TIME();
 
     pstIPv4Filter->stIPHeader.ulSrcAddr     = pstIPv4Hdr->unSrcAddr.ulIpAddr;
     pstIPv4Filter->stIPHeader.ulDstAddr     = pstIPv4Hdr->unDstAddr.ulIpAddr;
     pstIPv4Filter->stIPHeader.ucProtocol    = pstIPv4Hdr->ucProtocol;
 
-    /* �жϱ��������Ƿ�ΪTCP\UDP\ICMP��ע��:��Ƭ����ƬΪTCP��UDP��ͳһ����TCP/UDP�����ͽ��д��� */
+    /* 判断报文类型是否为TCP\UDP\ICMP。注意:分片包首片为TCP或UDP，统一按照TCP/UDP包类型进行处理 */
     switch (pstIPv4Hdr->ucProtocol)
     {
         case ADS_IPPROTO_ICMP:
             pstIcmpHdr = (ADS_ICMP_HDR_STRU *)((VOS_UINT8 *)pstIPv4Hdr + ADS_FILTER_IPV4_HDR_LEN);
 
-            /* Ŀǰ����ֻ֧��PING ECHO REQ����ICMP���ģ����յ���������ICMP���ģ��������˴�����ֱ�ӷ��� */
+            /* 目前上行只支持PING ECHO REQ类型ICMP报文，若收到其他类型ICMP报文，不做过滤处理，直接发送 */
             if (ADS_ICMP_ECHOREQUEST != pstIcmpHdr->ucType)
             {
-                /* ��������ICMP���ģ�����������ά�ɲ�ͳ�� */
+                /* 其他类型ICMP报文，不处理，可维可测统计 */
                 ADS_FILTER_DBG_STATISTIC(ADS_FILTER_ORIG_PKT_UL_IPV4_NOT_SUPPORT, 1);
                 return VOS_ERR;
             }
@@ -411,7 +411,7 @@ VOS_UINT32 ADS_FILTER_DecodeUlPacket(
             pstIPv4Filter->unFilter.stIcmpFilter.usIdentifier = pstIcmpHdr->unIcmp.stIcmpEcho.usIdentifier;
             pstIPv4Filter->unFilter.stIcmpFilter.usSeqNum     = pstIcmpHdr->unIcmp.stIcmpEcho.usSeqNum;
 
-            /* ��ά�ɲ�ͳ�� */
+            /* 可维可测统计 */
             ADS_FILTER_DBG_STATISTIC(ADS_FILTER_ORIG_PKT_UL_IPV4_ECHOREQ, 1);
             return VOS_OK;
 
@@ -421,7 +421,7 @@ VOS_UINT32 ADS_FILTER_DecodeUlPacket(
             pstIPv4Filter->unFilter.stTcpFilter.usSrcPort = pstTcpHdr->usSrcPort;
             pstIPv4Filter->unFilter.stTcpFilter.usDstPort = pstTcpHdr->usDstPort;
 
-            /* ��ά�ɲ�ͳ�� */
+            /* 可维可测统计 */
             ADS_FILTER_DBG_STATISTIC(ADS_FILTER_ORIG_PKT_UL_IPV4_TCP, 1);
             return VOS_OK;
 
@@ -431,13 +431,13 @@ VOS_UINT32 ADS_FILTER_DecodeUlPacket(
             pstIPv4Filter->unFilter.stUdpFilter.usSrcPort = pstUdpHdr->usSrcPort;
             pstIPv4Filter->unFilter.stUdpFilter.usDstPort = pstUdpHdr->usDstPort;
 
-            /* ��ά�ɲ�ͳ�� */
+            /* 可维可测统计 */
             ADS_FILTER_DBG_STATISTIC(ADS_FILTER_ORIG_PKT_UL_IPV4_UDP, 1);
             return VOS_OK;
 
         default:
-            /* ��֧�ֵ�IPv4���������� */
-            /* ��ά�ɲ�ͳ�� */
+            /* 不支持的IPv4包，不处理 */
+            /* 可维可测统计 */
             ADS_FILTER_DBG_STATISTIC(ADS_FILTER_ORIG_PKT_UL_IPV4_NOT_SUPPORT, 1);
             break;
     }
@@ -454,29 +454,29 @@ VOS_VOID ADS_FILTER_ProcUlPacket(
     VOS_UINT32                          ulDecodeRet;
     VOS_UINT32                          ulRet;
 
-    /* ��ʼ�� */
+    /* 初始化 */
     PS_MEM_SET(&stIPv4Filter, 0 ,sizeof(stIPv4Filter));
 
-    /* ������IPv4�������ݰ���IPv6����ֱ�ӷ��� */
+    /* 仅处理IPv4类型数据包，IPv6包则直接发送 */
     if (ADS_PKT_TYPE_IPV4 != enIpType)
     {
         ADS_FILTER_DBG_STATISTIC(ADS_FILTER_ORIG_PKT_UL_IPV6_PKT, 1);
         return;
     }
 
-    /* �����������ݰ�������ȡ��Ӧ���������еĹ��˱�ʾ��Ϣ */
+    /* 解码上行数据包，并提取对应报文类型中的过滤标示信息 */
     ulDecodeRet = ADS_FILTER_DecodeUlPacket(pstData, &stIPv4Filter);
     if (VOS_OK != ulDecodeRet)
     {
-        /* ����ʧ�ܻ�֧�ֵı������Ͳ����� */
+        /* 解析失败或不支持的报文类型不处理 */
         return;
     }
 
-    /* �ڹ��˱���ƥ���ʾ��Ϣ */
+    /* 在过滤表中匹配标示信息 */
     ulRet       = ADS_FILTER_Match(&stIPv4Filter);
     if (VOS_TRUE != ulRet)
     {
-        /* ûƥ�䵽�ڵ㣬��IP��ʾ��Ϣ���ӵ����˱� */
+        /* 没匹配到节点，则将IP标示信息添加到过滤表 */
         ADS_FILTER_AddFilter(&stIPv4Filter);
     }
 
@@ -490,7 +490,7 @@ VOS_VOID ADS_FILTER_DecodeDlIPv4NotFirstFragPacket(
 {
     PS_MEM_SET(pstIPv4Filter, 0, sizeof(ADS_FILTER_IPV4_INFO_STRU));
 
-    /* ��ȡ��Ƭ��������Ϣ */
+    /* 提取分片包过滤信息 */
     pstIPv4Filter->enPktType = ADS_FILTER_PKT_TYPE_FRAGMENT;
     pstIPv4Filter->ulTmrCnt  = ADS_GET_CURR_KERNEL_TIME();
     pstIPv4Filter->stIPHeader.ulSrcAddr  = pstIPv4Hdr->unDstAddr.ulIpAddr;
@@ -506,7 +506,7 @@ VOS_UINT32 ADS_FILTER_DecodeDlIPv4EchoReplyPacket(
 {
     ADS_ICMP_HDR_STRU                  *pstIcmpHdr      = VOS_NULL_PTR;
 
-    /* ��ȡICMP�����ײ� */
+    /* 获取ICMP报文首部 */
     pstIcmpHdr = (ADS_ICMP_HDR_STRU *)((VOS_UINT8 *)pstIPv4Hdr + ADS_FILTER_IPV4_HDR_LEN);
 
     pstIPv4Filter->enPktType = ADS_FILTER_PKT_TYPE_ICMP;
@@ -527,7 +527,7 @@ VOS_UINT32 ADS_FILTER_DecodeDlIPv4IcmpErrorPacket(
     ADS_TCP_HDR_STRU                   *pstTcpHdr       = VOS_NULL_PTR;
     ADS_UDP_HDR_STRU                   *pstUdpHdr       = VOS_NULL_PTR;
 
-    /* ��ȡICMP������������ԭʼ���ݰ���IP�ײ�ָ�� */
+    /* 获取ICMP报文中所带的原始数据包的IP首部指针 */
     pstIcmpIPv4Hdr = (ADS_IPV4_HDR_STRU *)(((VOS_UINT8 *)pstIPv4Hdr + ADS_FILTER_IPV4_HDR_LEN + ADS_FILTER_ICMP_HDR_LEN));
 
     pstIPv4Filter->ulTmrCnt  = ADS_GET_CURR_KERNEL_TIME();
@@ -551,7 +551,7 @@ VOS_UINT32 ADS_FILTER_DecodeDlIPv4IcmpErrorPacket(
     }
     else
     {
-        /* ��TCP/UDP�����˳���ֱ�ӽ���HOST���� */
+        /* 非TCP/UDP包则退出，直接交由HOST处理 */
         return VOS_ERR;
     }
 
@@ -565,7 +565,7 @@ VOS_VOID ADS_FILTER_DecodeDlIPv4TcpPacket(
 {
     ADS_TCP_HDR_STRU                   *pstTcpHdr       = VOS_NULL_PTR;
 
-    /* ��ȡTCP�����ײ� */
+    /* 获取TCP报文首部 */
     pstTcpHdr = (ADS_TCP_HDR_STRU *)((VOS_UINT8 *)pstIPv4Hdr + ADS_FILTER_IPV4_HDR_LEN);
 
     pstIPv4Filter->enPktType = ADS_FILTER_PKT_TYPE_TCP;
@@ -584,7 +584,7 @@ VOS_VOID ADS_FILTER_DecodeDlIPv4UdpPacket(
 {
     ADS_UDP_HDR_STRU                   *pstUdpHdr       = VOS_NULL_PTR;
 
-    /* ��ȡUDP�����ײ� */
+    /* 获取UDP报文首部 */
     pstUdpHdr = (ADS_UDP_HDR_STRU *)((VOS_UINT8 *)pstIPv4Hdr + ADS_FILTER_IPV4_HDR_LEN);
 
     pstIPv4Filter->enPktType = ADS_FILTER_PKT_TYPE_UDP;
@@ -604,49 +604,49 @@ VOS_UINT32 ADS_FILTER_DecodeDlIPv4FragPacket(
 {
     VOS_UINT32                          ulRet;
 
-    /* �жϷ�Ƭ���Ƿ�Ϊ��Ƭ(��Ƭ�����Ƭ����������Offset�Ƿ�Ϊ0).
-        �������б���������:
+    /* 判断分片包是否为首片(首片与非首片的区别在于Offset是否为0).
+        各类型判别条件如下:
                          MF      Offset
-        ��Ƭ����Ƭ       1         0
-        ��Ƭ���м�Ƭ     1         ��0
-        ��Ƭ��βƬ       0         ��0 */
+        分片包首片       1         0
+        分片包中间片     1         非0
+        分片包尾片       0         非0 */
     if (0 == (pstIPv4Hdr->usFlags_fo & VOS_HTONS(ADS_IP_OFFSET)))
     {
-        /* ��Ƭ�Ĵ���(��ǰֻ֧��TCP��UDP����Э������) */
+        /* 首片的处理(当前只支持TCP和UDP两种协议类型) */
         switch (pstIPv4Hdr->ucProtocol)
         {
             case ADS_IPPROTO_TCP:
-                /* ��¼����ԭʼ���� */
+                /* 记录报文原始类型 */
                 *penOrigPktType = ADS_FILTER_ORIG_PKT_DL_IPV4_FIRST_FRAGMENT;
 
-                /* ��ȡTCP���Ĺ�����Ϣ */
+                /* 提取TCP报文过滤信息 */
                 ADS_FILTER_DecodeDlIPv4TcpPacket(pstIPv4Hdr, pstIPv4Filter);
 
                 ulRet = VOS_OK;
                 break;
 
             case ADS_IPPROTO_UDP:
-                /* ��¼����ԭʼ���� */
+                /* 记录报文原始类型 */
                 *penOrigPktType = ADS_FILTER_ORIG_PKT_DL_IPV4_FIRST_FRAGMENT;
 
-                /* ��ȡUDP���Ĺ�����Ϣ */
+                /* 提取UDP报文过滤信息 */
                 ADS_FILTER_DecodeDlIPv4UdpPacket(pstIPv4Hdr, pstIPv4Filter);
 
                 ulRet = VOS_OK;
                 break;
 
             default:
-                /* �������ͱ��ģ���������ֱ�ӽ���HOST���� */
+                /* 其他类型报文，不处理，直接交由HOST处理 */
                 ulRet = VOS_ERR;
                 break;
         }
     }
     else
     {
-        /* ����Ϊ"����Ƭ",��¼����ԭʼ���� */
+        /* 报文为"非首片",记录报文原始类型 */
         *penOrigPktType = ADS_FILTER_ORIG_PKT_DL_IPV4_NOT_FIRST_FRAGMENT;
 
-        /* ��ȡ����Ƭ�Ĺ�����Ϣ */
+        /* 提取非首片的过滤信息 */
         ADS_FILTER_DecodeDlIPv4NotFirstFragPacket(pstIPv4Hdr, pstIPv4Filter);
 
         ulRet = VOS_OK;
@@ -666,18 +666,18 @@ VOS_UINT32 ADS_FILTER_DecodeDlIPv4Packet(
     ADS_FILTER_DECODE_DL_ICMP_FUNC_STRU                    *pDecodeDlIcmpFuncTbl = VOS_NULL_PTR;
     VOS_UINT32                                              ulRet                = VOS_ERR;
 
-    /* ����"��Ƭ��".�������б���������:
+    /* 处理"分片包".各类型判别条件如下:
                          MF      Offset
-        �Ƿ�Ƭ��         0         0
-        ��Ƭ����Ƭ       1         0
-        ��Ƭ���м�Ƭ     1         ��0
-        ��Ƭ��βƬ       0         ��0 */
+        非分片包         0         0
+        分片包首片       1         0
+        分片包中间片     1         非0
+        分片包尾片       0         非0 */
     if (0 != (pstIPv4Hdr->usFlags_fo & VOS_HTONS(ADS_IP_MF | ADS_IP_OFFSET)))
     {
         return ADS_FILTER_DecodeDlIPv4FragPacket(pstIPv4Hdr, pstIPv4Filter, penOrigPktType);
     }
 
-    /* ����TCP\UDP\ICMP(ECHO REPLY��ICMP�������) */
+    /* 处理TCP\UDP\ICMP(ECHO REPLY或ICMP差错报文) */
     switch (pstIPv4Hdr->ucProtocol)
     {
         case ADS_IPPROTO_ICMP:
@@ -689,30 +689,30 @@ VOS_UINT32 ADS_FILTER_DecodeDlIPv4Packet(
                 pDecodeDlIcmpFunc = pDecodeDlIcmpFuncTbl->pFunc;
                 if (VOS_NULL_PTR != pDecodeDlIcmpFunc)
                 {
-                    /* ��¼����ԭʼ���� */
+                    /* 记录报文原始类型 */
                     *penOrigPktType = pDecodeDlIcmpFuncTbl->enOrigPktType;
 
-                    /* ��ȡICMP���Ĺ�����Ϣ */
+                    /* 提取ICMP报文过滤信息 */
                     ulRet = pDecodeDlIcmpFunc(pstIPv4Hdr, pstIPv4Filter);
                 }
             }
             break;
 
         case ADS_IPPROTO_TCP:
-            /* ��¼����ԭʼ���� */
+            /* 记录报文原始类型 */
             *penOrigPktType = ADS_FILTER_ORIG_PKT_DL_IPV4_TCP;
 
-            /* ��ȡTCP���Ĺ�����Ϣ */
+            /* 提取TCP报文过滤信息 */
             ADS_FILTER_DecodeDlIPv4TcpPacket(pstIPv4Hdr, pstIPv4Filter);
 
             ulRet = VOS_OK;
             break;
 
         case ADS_IPPROTO_UDP:
-            /* ��¼����ԭʼ���� */
+            /* 记录报文原始类型 */
             *penOrigPktType = ADS_FILTER_ORIG_PKT_DL_IPV4_UDP;
 
-            /* ��ȡUDP���Ĺ�����Ϣ */
+            /* 提取UDP报文过滤信息 */
             ADS_FILTER_DecodeDlIPv4UdpPacket(pstIPv4Hdr, pstIPv4Filter);
 
             ulRet = VOS_OK;
@@ -733,29 +733,29 @@ VOS_UINT32 ADS_FILTER_ProcDlIPv4Packet(
     VOS_UINT32                          ulRet;
     ADS_FILTER_ORIG_PKT_ENUM_UINT32     enOrigPktType;
 
-    /* ��ȡIPV4�����ײ���ַ */
+    /* 获取IPV4报文首部地址 */
     pstIPv4Hdr  = (ADS_IPV4_HDR_STRU *)IMM_ZcGetDataPtr(pstData);
 
-    /* �жϱ������Ͳ���ȡ���˱�ʾ��Ϣ */
+    /* 判断报文类型并提取过滤标示信息 */
     PS_MEM_SET(&stIPv4Filter, 0, sizeof(ADS_FILTER_IPV4_INFO_STRU));
     ulDecodeRet = ADS_FILTER_DecodeDlIPv4Packet(pstIPv4Hdr, &stIPv4Filter, &enOrigPktType);
     if (VOS_OK != ulDecodeRet)
     {
-        /* ����ʧ�ܻ�֧�ֵı������Ͳ�����������HOST���� */
+        /* 解析失败或不支持的报文类型不处理，交给HOST处理 */
         return VOS_ERR;
     }
 
-    /* �ڹ��˱���ƥ���ʾ��Ϣ */
+    /* 在过滤表中匹配标示信息 */
     ulRet       = ADS_FILTER_Match(&stIPv4Filter);
     if (VOS_TRUE == ulRet)
     {
-        /* �ҵ���ƥ��ڵ㣬����Ƿ�Ƭ����Ƭ������Ҫ����Ƭ�е������Ϣ��ȡ���������ӵ����˱��У�
-            ��Ϊ��������Ƭ��Ƭ���Ĺ������� */
+        /* 找到了匹配节点，如果是分片包首片，则需要将首片中的相关信息提取出来并添加到过滤表中，
+            作为后续非首片分片包的过滤条件 */
         if (ADS_FILTER_ORIG_PKT_DL_IPV4_FIRST_FRAGMENT == enOrigPktType)
         {
             ADS_FILTER_DecodeDlIPv4NotFirstFragPacket(pstIPv4Hdr, &stIPv4Filter);
 
-            /* ����Ƭ��������Ϣ���ӵ����˱��� */
+            /* 将分片包过滤信息添加到过滤表中 */
             ADS_FILTER_AddFilter(&stIPv4Filter);
         }
 
@@ -772,10 +772,10 @@ VOS_UINT32 ADS_FILTER_ProcDlIPv6Packet(
     ADS_IPV6_HDR_STRU                  *pstIPv6Hdr      = VOS_NULL_PTR;
     VOS_UINT32                          ulRet;
 
-    /* ��ȡIPV6�ײ�ָ�� */
+    /* 获取IPV6首部指针 */
     pstIPv6Hdr = (ADS_IPV6_HDR_STRU *)IMM_ZcGetDataPtr(pstData);
 
-    /* �ж����а��е�Ŀ�ĵ�ַ�Ƿ���DEVICE�˵�ַ��ͬ */
+    /* 判断下行包中的目的地址是否与DEVICE端地址相同 */
     if (ADS_FILTER_IS_IPV6_ADDR_IDENTICAL(ADS_FILTER_GET_IPV6_ADDR(), &(pstIPv6Hdr->unDstAddr)))
     {
         ADS_FILTER_DBG_STATISTIC(ADS_FILTER_ORIG_PKT_DL_IPV6_PKT, 1);
@@ -797,19 +797,19 @@ VOS_UINT32 ADS_FILTER_ProcDlPacket(
 {
     VOS_UINT32                          ulRet;
 
-    /* ��ʼ�� */
+    /* 初始化 */
     ulRet   = VOS_ERR;
 
-    /* ����IP����ѡ����˴�����ʽ */
+    /* 根据IP类型选择过滤处理方式 */
     switch (enIpType)
     {
         case ADS_PKT_TYPE_IPV4:
-            /* IPv4������Ҫƥ����˱� */
+            /* IPv4类型需要匹配过滤表 */
             ulRet = ADS_FILTER_ProcDlIPv4Packet(pstData);
             break;
 
         case ADS_PKT_TYPE_IPV6:
-            /* IPv6������Ҫƥ��IP��ַ�Ƿ���ͬ */
+            /* IPv6类型需要匹配IP地址是否相同 */
             ulRet = ADS_FILTER_ProcDlIPv6Packet(pstData);
             break;
 
@@ -854,22 +854,22 @@ VOS_UINT32 ADS_Ipv4AddrItoa(
 
 VOS_VOID ADS_FILTER_ShowStatisticInfo(VOS_VOID)
 {
-    vos_printf("\n********************ADS FILTER ����ͳ����Ϣ************************\n");
-    vos_printf("����IPv4����TCP���ĸ���ͳ��              %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_TCP));
-    vos_printf("����IPv4����UDP���ĸ���ͳ��              %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_UDP));
-    vos_printf("����IPv4����Echo Req���ĸ���ͳ��         %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_ECHOREQ));
-    vos_printf("����IPv4���ͷ�Ƭ����(����Ƭ)����ͳ��     %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_NOT_FIRST_FRAGMENT));
-    vos_printf("����IPv4���Ͳ�֧�ֹ��˵ı��ĸ���ͳ��     %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_NOT_SUPPORT));
-    vos_printf("����IPv6���ͱ��ĸ���ͳ��                 %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV6_PKT));
+    vos_printf("\n********************ADS FILTER 上行统计信息************************\n");
+    vos_printf("上行IPv4类型TCP报文个数统计              %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_TCP));
+    vos_printf("上行IPv4类型UDP报文个数统计              %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_UDP));
+    vos_printf("上行IPv4类型Echo Req报文个数统计         %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_ECHOREQ));
+    vos_printf("上行IPv4类型分片报文(非首片)个数统计     %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_NOT_FIRST_FRAGMENT));
+    vos_printf("上行IPv4类型不支持过滤的报文个数统计     %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV4_NOT_SUPPORT));
+    vos_printf("上行IPv6类型报文个数统计                 %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_UL_IPV6_PKT));
 
-    vos_printf("********************ADS FILTER ����ͳ����Ϣ************************\n");
-    vos_printf("����IPv4����TCPƥ�䱨�ĸ���ͳ��          %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_TCP));
-    vos_printf("����IPv4����UDPƥ�䱨�ĸ���ͳ��          %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_UDP));
-    vos_printf("����IPv4����Echo Replyƥ�䱨�ĸ���ͳ��   %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_ECHOREPLY));
-    vos_printf("����IPv4����ICMP�������ƥ�䱨�ĸ���ͳ�� %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_ICMPERROR));
-    vos_printf("����IPv4������Ƭ��Ƭƥ�䱨�ĸ���ͳ��     %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_FIRST_FRAGMENT));
-    vos_printf("����IPv4���ͷ���Ƭ��Ƭƥ�䱨�ĸ���ͳ��   %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_NOT_FIRST_FRAGMENT));
-    vos_printf("����IPv6����ƥ�䱨�ĸ���ͳ��             %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV6_PKT));
+    vos_printf("********************ADS FILTER 下行统计信息************************\n");
+    vos_printf("下行IPv4类型TCP匹配报文个数统计          %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_TCP));
+    vos_printf("下行IPv4类型UDP匹配报文个数统计          %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_UDP));
+    vos_printf("下行IPv4类型Echo Reply匹配报文个数统计   %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_ECHOREPLY));
+    vos_printf("下行IPv4类型ICMP差错报文匹配报文个数统计 %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_ICMPERROR));
+    vos_printf("下行IPv4类型首片分片匹配报文个数统计     %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_FIRST_FRAGMENT));
+    vos_printf("下行IPv4类型非首片分片匹配报文个数统计   %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV4_NOT_FIRST_FRAGMENT));
+    vos_printf("下行IPv6类型匹配报文个数统计             %d\n", ADS_FILTER_DBG_GET_STATS_BY_INDEX(ADS_FILTER_ORIG_PKT_DL_IPV6_PKT));
 
     return;
 }
@@ -891,23 +891,23 @@ VOS_VOID ADS_FILTER_ShowFilterLists(VOS_VOID)
     HI_LIST_S                          *pstListHead  = VOS_NULL_PTR;
     VOS_CHAR                            acIPv4Addr[ADS_MAX_IPV4_ADDR_LEN + 1];
 
-    vos_printf("*************************** ADS FILTER �������б� ******************************\n");
-    vos_printf("  ����  ��������    �ϻ�����       Դ��ַ       Ŀ�ĵ�ַ        ��ʾ1   ��ʾ2\n");
+    vos_printf("*************************** ADS FILTER 过滤器列表 ******************************\n");
+    vos_printf("  索引  报文类型    老化周期       源地址       目的地址        标示1   标示2\n");
     vos_printf("********************************************************************************\n");
 
     for (ulIndex = 0; ulIndex < ADS_FILTER_MAX_LIST_NUM; ulIndex++)
     {
         pstListHead = ADS_FILTER_GET_LIST(ulIndex);
 
-        /* ѭ����������������ƥ���� */
+        /* 循环遍历链表，查找匹配项 */
         msp_list_for_each_safe(pstMe, pstListTmp, pstListHead)
         {
             pstNode = msp_list_entry(pstMe, ADS_FILTER_NODE_STRU, stList);
 
-            /* ��ӡ���� */
+            /* 打印索引 */
             vos_printf(" [%3d] ", ulIndex);
 
-            /* ��ӡ�������� */
+            /* 打印报文类型 */
             switch (pstNode->stFilter.enPktType)
             {
                 case ADS_FILTER_PKT_TYPE_TCP:
@@ -927,21 +927,21 @@ VOS_VOID ADS_FILTER_ShowFilterLists(VOS_VOID)
                     break;
             }
 
-            /* ��ӡ�ϻ����� */
+            /* 打印老化周期 */
             vos_printf("%11d  ", pstNode->stFilter.ulTmrCnt);
 
-            /* ��ӡԴ��ַ */
+            /* 打印源地址 */
             ADS_Ipv4AddrItoa(acIPv4Addr, (VOS_UINT8*)&pstNode->stFilter.stIPHeader.ulSrcAddr);
             vos_printf("%-16s", acIPv4Addr);
 
-            /* ��Ŀ�ĵ�ַ */
+            /* 打目的地址 */
             ADS_Ipv4AddrItoa(acIPv4Addr, (VOS_UINT8*)&pstNode->stFilter.stIPHeader.ulDstAddr);
             vos_printf("%-16s", acIPv4Addr);
 
-            /* ��ӡ��ʾ1 */
+            /* 打印标示1 */
             vos_printf("%8d", VOS_NTOHS(pstNode->stFilter.unFilter.stTcpFilter.usSrcPort));
 
-            /* ��ӡ��ʾ2 */
+            /* 打印标示2 */
             vos_printf("%8d\n", VOS_NTOHS(pstNode->stFilter.unFilter.stTcpFilter.usDstPort));
         }
     }

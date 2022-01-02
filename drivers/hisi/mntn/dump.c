@@ -357,7 +357,7 @@ static int __init early_parse_bitmap_abnrst_cmdline(char *p)
 early_param("bitmapofabnrst", early_parse_bitmap_abnrst_cmdline);
 #endif
 
-/*保存fastboot传递过来的异常区地址信息*/
+/*淇濆瓨fastboot浼犻�掕繃鏉ョ殑寮傚父鍖哄湴鍧�淇℃伅*/
 phys_addr_t g_memdump_addr = 0;
 phys_addr_t g_memdump_end = 0;
 unsigned int  g_memdump_size = 0;

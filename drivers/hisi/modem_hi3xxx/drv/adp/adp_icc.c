@@ -12,7 +12,7 @@ extern struct icc_init_info g_icc_init_info[];
 
 #define ICC_DEFAULT_SUB_CHANNEL   (0)
 
-#ifndef CONFIG_ICC   /* ´ò×® */
+#ifndef CONFIG_ICC   /* æ‰“æ¡© */
 
 s32 bsp_icc_send(u32 cpuid,u32 channel_id,u8 *buffer,u32 data_len)
 {
@@ -133,7 +133,7 @@ s32 icc_write_cb_wraper(u32 real_channel_id , void* context)
 
 BSP_S32 BSP_ICC_Open(BSP_U32 u32ChanId, ICC_CHAN_ATTR_S *pChanAttr)
 {
-	u32 func_id = ICC_DEFAULT_SUB_CHANNEL; /* ³ıifcÍ¨µÀÍâ£¬ÆäËûÍ¨µÀÖ»ÓĞÒ»¸ö»Øµ÷ */
+	u32 func_id = ICC_DEFAULT_SUB_CHANNEL; /* é™¤ifcé€šé“å¤–ï¼Œå…¶ä»–é€šé“åªæœ‰ä¸€ä¸ªå›è°ƒ */
 	u32 channel_id = u32ChanId << 16 | func_id;
 	u32 i = 0;
 	u32 real_channel_size = bsp_icc_channel_size_get();

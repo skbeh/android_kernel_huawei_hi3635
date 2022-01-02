@@ -28,7 +28,7 @@ struct bsp_rfile_table_stru
 };
 
 
-/* ½ÓÊÕCºËµÄÇëÇó´¦Àíº¯Êı±í */
+/* æ¥æ”¶Cæ ¸çš„è¯·æ±‚å¤„ç†å‡½æ•°è¡¨ */
 struct bsp_rfile_table_stru astAcoreRfileReq[] = {
     {EN_RFILE_OP_OPEN,              rfile_AcoreOpenReq},
     {EN_RFILE_OP_CLOSE,             rfile_AcoreCloseReq},
@@ -143,8 +143,8 @@ void rfile_MntnDotRecord(u32 line)
 }
 
 
-/* ²é¿´ÊäÈëµÄÂ·¾¶ÊÇ·ñ¿É·ÃÎÊ£¬Èç²»ÄÜ·ÃÎÊÔò´´½¨´ËÄ¿Â¼ */
-/* ±¾º¯ÊıÎªµİ¹éµ÷ÓÃº¯Êı */
+/* æŸ¥çœ‹è¾“å…¥çš„è·¯å¾„æ˜¯å¦å¯è®¿é—®ï¼Œå¦‚ä¸èƒ½è®¿é—®åˆ™åˆ›å»ºæ­¤ç›®å½• */
+/* æœ¬å‡½æ•°ä¸ºé€’å½’è°ƒç”¨å‡½æ•° */
 s32 AccessCreate(char *pathtmp, s32 mode)
 {
     char *p;
@@ -160,7 +160,7 @@ s32 AccessCreate(char *pathtmp, s32 mode)
 
     if(ret != 0)
     {
-        /* Â·¾¶ÖĞ²»°üº¬'/'£¬·µ»¹Ê§°Ü */
+        /* è·¯å¾„ä¸­ä¸åŒ…å«'/'ï¼Œè¿”è¿˜å¤±è´¥ */
         p = strrchr(pathtmp, '/');
         if(NULL == p)
         {
@@ -170,10 +170,10 @@ s32 AccessCreate(char *pathtmp, s32 mode)
             return -1;
         }
 
-        /* ÒÑ¾­²»ÊÇ¸ùÄ¿Â¼ÏÂµÄÎÄ¼ş¼Ğ£¬ÅĞ¶ÏÉÏÒ»¼¶Ä¿Â¼ÊÇ·ñ´æÔÚ */
+        /* å·²ç»ä¸æ˜¯æ ¹ç›®å½•ä¸‹çš„æ–‡ä»¶å¤¹ï¼Œåˆ¤æ–­ä¸Šä¸€çº§ç›®å½•æ˜¯å¦å­˜åœ¨ */
         if(p != pathtmp)
         {
-            /* ²é¿´ÉÏÒ»¼¶Ä¿Â¼ÊÇ·ñ´æÔÚ£¬Èç¹û²»´æÔÚÔò´´½¨´ËÄ¿Â¼ */
+            /* æŸ¥çœ‹ä¸Šä¸€çº§ç›®å½•æ˜¯å¦å­˜åœ¨ï¼Œå¦‚æœä¸å­˜åœ¨åˆ™åˆ›å»ºæ­¤ç›®å½• */
             *p = '\0';
             ret = AccessCreate(pathtmp, mode);
             if(0 != ret)
@@ -181,7 +181,7 @@ s32 AccessCreate(char *pathtmp, s32 mode)
                 return -1;
             }
 
-            /* ´´½¨µ±Ç°Ä¿Â¼ */
+            /* åˆ›å»ºå½“å‰ç›®å½• */
             *p = '/';
         }
 
@@ -323,11 +323,11 @@ s32 bsp_open(const s8 *path, s32 flags, s32 mode)
 
     memcpy(pathtmp, (char *)path, strlen(path));
 
-    /* Â·¾¶ÖĞ°üº¬'/'²¢ÇÒ²»ÔÚ¸ùÄ¿Â¼£¬Ôò¼ì²éµ±Ç°Ä¿Â¼ÊÇ·ñ´æÔÚ£¬²»´æÔÚÔò´´½¨Ä¿Â¼ */
+    /* è·¯å¾„ä¸­åŒ…å«'/'å¹¶ä¸”ä¸åœ¨æ ¹ç›®å½•ï¼Œåˆ™æ£€æŸ¥å½“å‰ç›®å½•æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨åˆ™åˆ›å»ºç›®å½• */
     p = strrchr(pathtmp, '/');
     if((NULL != p) && (p != pathtmp))
     {
-        /* ²é¿´ÉÏÒ»¼¶Ä¿Â¼ÊÇ·ñ´æÔÚ£¬Èç¹û²»´æÔÚÔò´´½¨´ËÄ¿Â¼ */
+        /* æŸ¥çœ‹ä¸Šä¸€çº§ç›®å½•æ˜¯å¦å­˜åœ¨ï¼Œå¦‚æœä¸å­˜åœ¨åˆ™åˆ›å»ºæ­¤ç›®å½• */
         *p = '\0';
         ret = AccessCreate(pathtmp, mode);
         if(ret)
@@ -604,7 +604,7 @@ s32 bsp_access(s8 *path, s32 mode)
 
 void rfile_TransStat(struct rfile_stat_stru *pstRfileStat, struct kstat *pRfileKstat)
 {
-    /* ¼æÈİ 32Î»ºÍ64Î» */
+    /* å…¼å®¹ 32ä½å’Œ64ä½ */
     pstRfileStat->ino               = (u64)pRfileKstat->ino          ;
     pstRfileStat->dev               = (u32)pRfileKstat->dev          ;
     pstRfileStat->mode              = (u16)pRfileKstat->mode         ;
@@ -687,7 +687,7 @@ void rfile_IccSend(void *pdata, u32 len, u32 ulId)
 
         if(ICC_INVALID_NO_FIFO_SPACE == ret)
         {
-            /* bufferÂú£¬ÑÓÊ±ºóÖØ·¢ */
+            /* bufferæ»¡ï¼Œå»¶æ—¶åé‡å‘ */
             RFILE_SLEEP(50);
             continue;
         }
@@ -738,9 +738,9 @@ s32 rfile_AcoreOpenReq(struct bsp_rfile_open_req *pstRfileReq, u32 ulId)
     }
 
     /* coverity[secure_coding] */
-    strcpy(pcName, RFILE_PATH); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcpy(pcName, RFILE_PATH); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcat(pcName, (char*)pstRfileReq->aucData); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcat(pcName, (char*)pstRfileReq->aucData); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
 #ifdef RFILE_AUTO_MKDIR
     if(ulNameLen > 255)
@@ -751,11 +751,11 @@ s32 rfile_AcoreOpenReq(struct bsp_rfile_open_req *pstRfileReq, u32 ulId)
 
     memcpy(pathtmp, pcName, ulNameLen);/*lint !e713 */
 
-    /* Â·¾¶ÖĞ°üº¬'/'²¢ÇÒ²»ÔÚ¸ùÄ¿Â¼£¬Ôò¼ì²éµ±Ç°Ä¿Â¼ÊÇ·ñ´æÔÚ£¬²»´æÔÚÔò´´½¨Ä¿Â¼ */
+    /* è·¯å¾„ä¸­åŒ…å«'/'å¹¶ä¸”ä¸åœ¨æ ¹ç›®å½•ï¼Œåˆ™æ£€æŸ¥å½“å‰ç›®å½•æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨åˆ™åˆ›å»ºç›®å½• */
     p = strrchr(pathtmp, '/');
     if((NULL != p) && (p != pathtmp))
     {
-        /* ²é¿´ÉÏÒ»¼¶Ä¿Â¼ÊÇ·ñ´æÔÚ£¬Èç¹û²»´æÔÚÔò´´½¨´ËÄ¿Â¼ */
+        /* æŸ¥çœ‹ä¸Šä¸€çº§ç›®å½•æ˜¯å¦å­˜åœ¨ï¼Œå¦‚æœä¸å­˜åœ¨åˆ™åˆ›å»ºæ­¤ç›®å½• */
         *p = '\0';
         ret = AccessCreate(pathtmp, pstRfileReq->mode);
         if(ret)
@@ -850,7 +850,7 @@ s32 rfile_AcoreReadReq(struct bsp_rfile_read_req *pstRfileReq, u32 ulId)
 
     pstRfileCnf->Size = bsp_read(pstRfileReq->fd, (s8*)pstRfileCnf->aucData, pstRfileReq->ulSize);
 
-    /* ÓÉCºËÇëÇóµÄµØ·½±£Ö¤¶ÁÈ¡µÄÊı¾İ³¤¶È²»³¬¹ıICC×î´ó³¤¶ÈÏŞÖÆ */
+    /* ç”±Cæ ¸è¯·æ±‚çš„åœ°æ–¹ä¿è¯è¯»å–çš„æ•°æ®é•¿åº¦ä¸è¶…è¿‡ICCæœ€å¤§é•¿åº¦é™åˆ¶ */
     if((u32)pstRfileCnf->Size > RFILE_LEN_MAX)
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_RFILE,
@@ -929,9 +929,9 @@ s32 rfile_AcoreRemoveReq(struct bsp_rfile_remove_req *pstRfileReq, u32 ulId)
     }
 
     /* coverity[secure_coding] */
-    strcpy(pcPath, RFILE_PATH); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcpy(pcPath, RFILE_PATH); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     RFILE_LPM_PRINT_PATH(EN_RFILE_OP_REMOVE, pcPath);
 
@@ -973,9 +973,9 @@ s32 rfile_AcoreMkdirReq(struct bsp_rfile_mkdir_req *pstRfileReq, u32 ulId)
     }
 
     /* coverity[secure_coding] */
-    strcpy(pcPath, RFILE_PATH); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcpy(pcPath, RFILE_PATH); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     RFILE_LPM_PRINT_PATH(EN_RFILE_OP_MKDIR, pcPath);
 
@@ -1029,9 +1029,9 @@ s32 rfile_AcoreRmdirReq(struct bsp_rfile_rmdir_req *pstRfileReq, u32 ulId)
     }
 
     /* coverity[secure_coding] */
-    strcpy(pcPath, RFILE_PATH); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcpy(pcPath, RFILE_PATH); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     RFILE_LPM_PRINT_PATH(EN_RFILE_OP_RMDIR, pcPath);
 
@@ -1069,9 +1069,9 @@ s32 rfile_AcoreOpendirReq(struct bsp_rfile_opendir_req *pstRfileReq, u32 ulId)
     }
 
     /* coverity[secure_coding] */
-    strcpy(pcPath, RFILE_PATH); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcpy(pcPath, RFILE_PATH); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     RFILE_LPM_PRINT_PATH(EN_RFILE_OP_OPENDIR, pcPath);
 
@@ -1169,9 +1169,9 @@ s32 rfile_AcoreStatReq(struct bsp_rfile_stat_req *pstRfileReq, u32 ulId)
     }
 
     /* coverity[secure_coding] */
-    strcpy(pcPath, RFILE_PATH); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcpy(pcPath, RFILE_PATH); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     RFILE_LPM_PRINT_PATH(EN_RFILE_OP_STAT, pcPath);
 
@@ -1228,13 +1228,13 @@ s32 rfile_AcoreRenameReq(struct bsp_rfile_rename_req *pstRfileReq, u32 ulId)
     }
 
     /* coverity[secure_coding] */
-    strcpy(oldname, RFILE_PATH); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcpy(oldname, RFILE_PATH); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcat(oldname, (char*)pstRfileReq->aucData); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcat(oldname, (char*)pstRfileReq->aucData); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcpy(newname, RFILE_PATH); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcpy(newname, RFILE_PATH); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcat(newname, (char*)(pstRfileReq->aucData + (uloldnamelen - (u32)strlen(RFILE_PATH)))); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcat(newname, (char*)(pstRfileReq->aucData + (uloldnamelen - (u32)strlen(RFILE_PATH)))); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     RFILE_LPM_PRINT_PATH(EN_RFILE_OP_RENAME, newname);
 
@@ -1273,9 +1273,9 @@ s32 rfile_AcoreAccessReq(struct bsp_rfile_access_req *pstRfileReq, u32 ulId)
     }
 
     /* coverity[secure_coding] */
-    strcpy(pcPath, RFILE_PATH); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcpy(pcPath, RFILE_PATH); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
     /* coverity[secure_coding] */
-    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: ÆÁ±ÎFortify´íÎó */
+    strcat(pcPath, (char*)pstRfileReq->aucData); /* [false alarm]: å±è”½Fortifyé”™è¯¯ */
 
     RFILE_LPM_PRINT_PATH(EN_RFILE_OP_ACCESS, pcPath);
 
@@ -1325,7 +1325,7 @@ s32 rfile_AcoreMassrdReq(struct bsp_rfile_massread_req *pstRfileReq, u32 ulId)
 #endif
     pstRfileCnf->errorno = -1;
 
-    /* ÓÉCºËÇëÇóµÄµØ·½±£Ö¤¶ÁÈ¡µÄÊı¾İ³¤¶È²»³¬¹ıICC×î´ó³¤¶ÈÏŞÖÆ */
+    /* ç”±Cæ ¸è¯·æ±‚çš„åœ°æ–¹ä¿è¯è¯»å–çš„æ•°æ®é•¿åº¦ä¸è¶…è¿‡ICCæœ€å¤§é•¿åº¦é™åˆ¶ */
     if((u32)pstRfileCnf->Size > RFILE_LEN_MAX)
     {
         bsp_trace(BSP_LOG_LEVEL_ERROR, BSP_MODU_RFILE,
@@ -1390,7 +1390,7 @@ s32 bsp_RfileCallback(u32 channel_id, u32 len, void *context)
         return BSP_ERROR;
     }
 
-    /* Èç¹ûrfileÎ´³õÊ¼»¯ÔòÀûÓÃiccµÄ»º´æ»úÖÆ±£´æÊı¾İ */
+    /* å¦‚æœrfileæœªåˆå§‹åŒ–åˆ™åˆ©ç”¨iccçš„ç¼“å­˜æœºåˆ¶ä¿å­˜æ•°æ® */
     if(EN_RFILE_INIT_FINISH != g_stRfileMain.eInitFlag)
     {
         bsp_trace(BSP_LOG_LEVEL_WARNING, BSP_MODU_RFILE, "![rfile]: <%s> initflag %d.\n",
@@ -1471,7 +1471,7 @@ s32 rfile_TaskProc(void* obj)
         }
 
         channel_id = RFILE_CCORE_ICC_RD_CHAN;
-        /*Î´³õÊ¼»¯Íê³É»òÕß´¦ÓÚË¯Ãß×´Ì¬ÔòÀûÓÃicc»º³åÇëÇóÊı¾İ*/
+        /*æœªåˆå§‹åŒ–å®Œæˆæˆ–è€…å¤„äºç¡çœ çŠ¶æ€åˆ™åˆ©ç”¨iccç¼“å†²è¯·æ±‚æ•°æ®*/
         if(g_stRfileMain.eInitFlag != EN_RFILE_INIT_FINISH)
         {
             continue;
@@ -1485,7 +1485,7 @@ s32 rfile_TaskProc(void* obj)
             continue;
         }
 
-        /* ¶ÁÈ¡ICC-CÍ¨µÀ£¬ÊäÈëµÄ³¤¶ÈÊÇbuffµÄsize£¬·µ»ØÖµÊÇÊµ¼Ê¶ÁÈ¡µÄÊı¾İ³¤¶È */
+        /* è¯»å–ICC-Cé€šé“ï¼Œè¾“å…¥çš„é•¿åº¦æ˜¯buffçš„sizeï¼Œè¿”å›å€¼æ˜¯å®é™…è¯»å–çš„æ•°æ®é•¿åº¦ */
         ret = bsp_icc_read(channel_id, g_stRfileMain.data, RFILE_LEN_MAX);
         if(((u32)ret > RFILE_LEN_MAX) || (ret <= 0))
         {
@@ -1493,19 +1493,19 @@ s32 rfile_TaskProc(void* obj)
 
             channel_id = RFILE_MCORE_ICC_RD_CHAN;
 
-            /* ¶ÁÈ¡ICC-MÍ¨µÀ */
+            /* è¯»å–ICC-Mé€šé“ */
             ret = bsp_icc_read(channel_id, g_stRfileMain.data, RFILE_LEN_MAX);
             if(((u32)ret > RFILE_LEN_MAX) || (ret <= 0))
             {
                 wake_unlock(&g_stRfileMain.wake_lock);
                 g_stRfileMain.opState = EN_RFILE_IDLE;
                 bsp_trace(BSP_LOG_LEVEL_DEBUG, BSP_MODU_RFILE, "![rfile]: <%s> icc_read failed %d.\n", __FUNCTION__, ret);
-                continue;   /* A-CÍ¨µÀ¡¢A-MÍ¨µÀ¶¼Ã»¶Áµ½Êı¾İ */
+                continue;   /* A-Cé€šé“ã€A-Mé€šé“éƒ½æ²¡è¯»åˆ°æ•°æ® */
             }
         }
 
 
-        /* ÇëÇóµÄµÚÒ»¸öËÄ×Ö½Ú¶ÔÓ¦µÄÊÇ op type */
+        /* è¯·æ±‚çš„ç¬¬ä¸€ä¸ªå››å­—èŠ‚å¯¹åº”çš„æ˜¯ op type */
         enOptype = *(u32*)(g_stRfileMain.data);
 
         if(enOptype >= EN_RFILE_OP_BUTT)
@@ -1524,7 +1524,7 @@ s32 rfile_TaskProc(void* obj)
         }
         wake_unlock(&g_stRfileMain.wake_lock);
 
-        /* ´¦Àí½áÊøºó±ÜÃâICCÍ¨µÀÖĞÓĞ»º´æ£¬ÔÙ´ÎÆô¶¯¶ÁÈ¡ */
+        /* å¤„ç†ç»“æŸåé¿å…ICCé€šé“ä¸­æœ‰ç¼“å­˜ï¼Œå†æ¬¡å¯åŠ¨è¯»å– */
         osl_sem_up(&g_stRfileMain.semTask);
     }
 }
@@ -1537,10 +1537,10 @@ s32 bsp_rfile_reset_cb(DRV_RESET_CALLCBFUN_MOMENT eparam, s32 userdata)    /*lin
 {
     if(DRV_RESET_CALLCBFUN_RESET_BEFORE == eparam)
     {
-        /* ÉèÖÃÎªsuspend×´Ì¬£¬´ıclose´ò¿ªµÄÎÄ¼ş¡¢Ä¿Â¼ºó»Ö¸´ÎªFINISH×´Ì¬ */
+        /* è®¾ç½®ä¸ºsuspendçŠ¶æ€ï¼Œå¾…closeæ‰“å¼€çš„æ–‡ä»¶ã€ç›®å½•åæ¢å¤ä¸ºFINISHçŠ¶æ€ */
         g_stRfileMain.eInitFlag = EN_RFILE_INIT_SUSPEND;
 
-        /* Æô¶¯ÈÎÎñÖĞµÄclose´¦Àí */
+        /* å¯åŠ¨ä»»åŠ¡ä¸­çš„closeå¤„ç† */
         osl_sem_up(&g_stRfileMain.semTask);
     }
 

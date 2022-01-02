@@ -4,7 +4,7 @@
 #include <drv_reset.h>
 #include <bsp_reset.h>
 
-#ifndef CONFIG_BALONG_MODEM_RESET /* ´ò×®!CONFIG_BALONG_MODEM_RESET */
+#ifndef CONFIG_BALONG_MODEM_RESET /* æ‰“æ¡©!CONFIG_BALONG_MODEM_RESET */
 
 int ccorereset_regcbfunc(const char *pname, pdrv_reset_cbfun pcbfun, int userdata, int priolevel)
 {
@@ -55,7 +55,7 @@ u32 bsp_reset_is_connect_ril(void)
 }
 
 
-#else  /* ÊµÏÖ */
+#else  /* å®žçŽ° */
 
 int ccorereset_regcbfunc(const char *pname, pdrv_reset_cbfun pcbfun, int userdata, int priolevel)
 {

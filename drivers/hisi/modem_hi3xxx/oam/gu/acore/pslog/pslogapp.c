@@ -1,15 +1,15 @@
 /******************************************************************************
 
-            °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+            ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : PsLog.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : ÀîÏö 46160
-  Éú³ÉÈÕÆÚ   : 2007Äê4ÔÂ23ÈÕ
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : Log¹¦ÄÜÊµÏÖ
-  º¯ÊýÁÐ±í   : Log_BufInput
+  æ–‡ ä»¶ å   : PsLog.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : æŽéœ„ 46160
+  ç”Ÿæˆæ—¥æœŸ   : 2007å¹´4æœˆ23æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : LogåŠŸèƒ½å®žçŽ°
+  å‡½æ•°åˆ—è¡¨   : Log_BufInput
                Log_BuildId
                Log_BuildStr
                Log_FileClose
@@ -40,10 +40,10 @@
                OM_LogId3
                OM_LogId4
 
-  ÐÞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ23ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ´´½¨ÎÄ¼þ
+  ä¿®æ”¹åŽ†å²   :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ23æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 #ifdef  __cplusplus
@@ -52,7 +52,7 @@
   #endif
 #endif
 
-/********************Í·ÎÄ¼þ****************************************************/
+/********************å¤´æ–‡ä»¶****************************************************/
 
 #include "vos.h"
 #include "PsLogAdapterApp.h"
@@ -61,36 +61,36 @@
 #include "omnvinterface.h"
 
 
-/******************È«¾Ö±äÁ¿ÉùÃ÷************************************************/
+/******************å…¨å±€å˜é‡å£°æ˜Ž************************************************/
 #define THIS_FILE_ID PS_FILE_ID_PS_LOG_APP_C
 
-/* LogÊµÌå */
+/* Logå®žä½“ */
 LOG_ENTITY_ST  g_stLogEnt =
 {LOG_FALSE,  OM_OUTPUT_SHELL, LOG_NULL_PTR, LOG_NULL_PTR};
 
-/*ÓÃÀ´¶ÔRingBuffer½øÐÐ»¥³â·ÃÎÊ*/
+/*ç”¨æ¥å¯¹RingBufferè¿›è¡Œäº’æ–¥è®¿é—®*/
 VOS_SEM        g_logBuffSem;
 
-/*È«¾Ö±äÁ¿£¬ÓÃÀ´±£´æÃ¿¸öÄ£¿éµÄ´òÓ¡¼¶±ð*/
+/*å…¨å±€å˜é‡ï¼Œç”¨æ¥ä¿å­˜æ¯ä¸ªæ¨¡å—çš„æ‰“å°çº§åˆ«*/
 
 LOG_LEVEL_EN   g_aulLogPrintLevPsTable[LOG_PS_MODULE_MAX_NUM] = {LOG_LEVEL_OFF};
 LOG_LEVEL_EN   g_aulLogPrintLevDrvTable[LOG_DRV_MODULE_MAX_NUM] = {LOG_LEVEL_OFF};
 
 #if (FEATURE_ON == FEATURE_MULTI_FS_PARTITION) /* SFT board*/
-/*±£´æÔÚÎÄ¼þÏµÍ³ÖÐµÄLOGÎÄ¼þÐÅÏ¢*/
+/*ä¿å­˜åœ¨æ–‡ä»¶ç³»ç»Ÿä¸­çš„LOGæ–‡ä»¶ä¿¡æ¯*/
 LOG_FILE_INFO_STRU g_astLogFileInfo[LOG_SOURCE_BUTT]
                = {{VOS_FALSE, LOG_FILE_1, 0, LOG_FILE_MAX_SIZE, 0, "/modem_log/Log/PsLog0"},
                   {VOS_FALSE, LOG_FILE_1, 0, LOG_FILE_MAX_SIZE, 0, "/modem_log/Log/Printf0"},
                   {VOS_FALSE, LOG_FILE_1, 0, (LOG_FILE_MAX_SIZE*2), 0, "/modem_log/Log/OmLog0"}};
 #else
-/*±£´æÔÚÎÄ¼þÏµÍ³ÖÐµÄLOGÎÄ¼þÐÅÏ¢*/
+/*ä¿å­˜åœ¨æ–‡ä»¶ç³»ç»Ÿä¸­çš„LOGæ–‡ä»¶ä¿¡æ¯*/
 LOG_FILE_INFO_STRU g_astLogFileInfo[LOG_SOURCE_BUTT]
                = {{VOS_FALSE, LOG_FILE_1, 0, LOG_FILE_MAX_SIZE, 0, "/yaffs0/Log/PsLog0"},
                   {VOS_FALSE, LOG_FILE_1, 0, LOG_FILE_MAX_SIZE, 0, "/yaffs0/Log/Printf0"},
                   {VOS_FALSE, LOG_FILE_1, 0, (LOG_FILE_MAX_SIZE*2), 0, "/yaffs0/Log/OmLog0"}};
 #endif
 
-/* ÓÃÓÚLOGÐ´ÈëFLASH½Ó¿ÚµÄ¶¨Î»ÐÅÏ¢ */
+/* ç”¨äºŽLOGå†™å…¥FLASHæŽ¥å£çš„å®šä½ä¿¡æ¯ */
 VOS_UINT32  g_ulLogErrFlag = LOG_OPERATION_OK;
 #if (VOS_VXWORKS == VOS_OS_VER)
 #if (FEATURE_ON == FEATURE_MULTI_FS_PARTITION) /* SFT board*/
@@ -110,18 +110,18 @@ VOS_CHAR    g_acLogDir[] = "";
 extern VOS_UINT32 OM_AcpuSendLog(VOS_UINT8 *pucLogData, VOS_UINT32 ulLength);
 
 /*****************************************************************************
- º¯ Êý Ãû  : LOG_GetTick
- ¹¦ÄÜÃèÊö  : »ñÈ¡µ±Ç°CPUµÄTickÊ±¼ä
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : LOG_ERR - ²Ù×÷Ê§°Ü
-             LOG_OK  - ²Ù×÷³É¹¦
+ å‡½ æ•° å  : LOG_GetTick
+ åŠŸèƒ½æè¿°  : èŽ·å–å½“å‰CPUçš„Tickæ—¶é—´
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : LOG_ERR - æ“ä½œå¤±è´¥
+             LOG_OK  - æ“ä½œæˆåŠŸ
 
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê7ÔÂ17ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´7æœˆ17æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 LOG_GetTick(VOS_VOID)
 {
@@ -129,11 +129,11 @@ VOS_UINT32 LOG_GetTick(VOS_VOID)
 /*lint -e718*/
 /*lint -e746*/
 
-    /*ÔÚASIC/FPGAÆ½Ì¨ÏÂ£¬ÐèÒª½«SliceÖµ×ª»»³ÉtickÖµ£¬±£Ö¤ºÍSDTµÄÏÔÊ¾Ò»ÖÂ*/
+    /*åœ¨ASIC/FPGAå¹³å°ä¸‹ï¼Œéœ€è¦å°†Sliceå€¼è½¬æ¢æˆtickå€¼ï¼Œä¿è¯å’ŒSDTçš„æ˜¾ç¤ºä¸€è‡´*/
     VOS_UINT32   ulSlice;
     ulSlice = OM_GetSlice();
-    /*SliceÖµÃ¿¸ôÒ»ÃëÔö¼Ó32768£¬Í¨¹ýÒÔÏÂ¼ÆËã×ª»»³É10msµÄtickÖµ
-    ¶øÏÈÓÒÒÆ7Î»£¬ÔÙ³ËÒÔ100£¬ÊÇÎªÁË·ÀÖ¹Êý¾Ý¹ý´ó¶øÒç³ö*/
+    /*Sliceå€¼æ¯éš”ä¸€ç§’å¢žåŠ 32768ï¼Œé€šè¿‡ä»¥ä¸‹è®¡ç®—è½¬æ¢æˆ10msçš„tickå€¼
+    è€Œå…ˆå³ç§»7ä½ï¼Œå†ä¹˜ä»¥100ï¼Œæ˜¯ä¸ºäº†é˜²æ­¢æ•°æ®è¿‡å¤§è€Œæº¢å‡º*/
     ulSlice >>= 7;
     ulSlice *= 100;
     ulSlice >>= 8;
@@ -150,39 +150,39 @@ VOS_UINT32 LOG_GetTick(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_GetPrintLevel
- ¹¦ÄÜÃèÊö  : µÃµ½Ä£¿éId¡¢×ÓÄ£¿éIdÔÚ´òÓ¡¼¶±ð¼ÇÂ¼±íÖÐµÄË÷ÒýºÅ
- ÊäÈë²ÎÊý  : LOG_MODULE_ID_EN enModuleId
+ å‡½ æ•° å  : Log_GetPrintLevel
+ åŠŸèƒ½æè¿°  : å¾—åˆ°æ¨¡å—Idã€å­æ¨¡å—Idåœ¨æ‰“å°çº§åˆ«è®°å½•è¡¨ä¸­çš„ç´¢å¼•å·
+ è¾“å…¥å‚æ•°  : LOG_MODULE_ID_EN enModuleId
              LOG_SUBMOD_ID_EN enSubModId
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
-  2.ÈÕ    ÆÚ   : 2008Äê9ÔÂ12ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼
-    ÐÞ¸ÄÄÚÈÝ   : ¿ÉÎ¬¿É²âµÚÈý½×¶ÎÐèÇó
+  2.æ—¥    æœŸ   : 2008å¹´9æœˆ12æ—¥
+    ä½œ    è€…   : ç”˜å…°
+    ä¿®æ”¹å†…å®¹   : å¯ç»´å¯æµ‹ç¬¬ä¸‰é˜¶æ®µéœ€æ±‚
 
 *****************************************************************************/
 VOS_UINT32 Log_GetPrintLevel(VOS_UINT32 ulModuleId)
 {
-    /*ÔÚÅäÖÃÎªOMÊä³öÊ±£¬²»Êä³öOMÄ£¿éµÄ´òÓ¡ÐÅÏ¢£¬·ñÔòÓÐ¿ÉÄÜ»áÔì³ÉËÀÑ­»·*/
+    /*åœ¨é…ç½®ä¸ºOMè¾“å‡ºæ—¶ï¼Œä¸è¾“å‡ºOMæ¨¡å—çš„æ‰“å°ä¿¡æ¯ï¼Œå¦åˆ™æœ‰å¯èƒ½ä¼šé€ æˆæ­»å¾ªçŽ¯*/
     if ((VOS_PID_BUTT == ulModuleId) && (OM_OUTPUT_SDT == g_stLogEnt.ulLogOutput))
     {
         return LOG_LEVEL_OFF;
     }
-    /*ÅÐ¶ÏÄ£¿éIDÊÇ·ñÔÚACPUÖ§³ÖµÄPS·¶Î§ÄÚ*/
+    /*åˆ¤æ–­æ¨¡å—IDæ˜¯å¦åœ¨ACPUæ”¯æŒçš„PSèŒƒå›´å†…*/
     if ((VOS_PID_DOPRAEND <= ulModuleId)
          && (VOS_PID_BUTT > ulModuleId))
     {
         return g_aulLogPrintLevPsTable[ulModuleId - VOS_PID_DOPRAEND];
     }
-    /*ÅÐ¶ÏÄ£¿éIDÊÇ·ñÔÚACPUÖ§³ÖµÄDRV·¶Î§ÄÚ*/
+    /*åˆ¤æ–­æ¨¡å—IDæ˜¯å¦åœ¨ACPUæ”¯æŒçš„DRVèŒƒå›´å†…*/
     if ((LOG_MIN_MODULE_ID_ACPU_DRV <= ulModuleId)
          && (LOG_MAX_MODULE_ID_ACPU_DRV >= ulModuleId))
     {
@@ -192,18 +192,18 @@ VOS_UINT32 Log_GetPrintLevel(VOS_UINT32 ulModuleId)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_GetPathOffset
- ¹¦ÄÜÃèÊö  : µÃµ½ÎÄ¼þÂ·¾¶ÃûµÄÆ«ÒÆÖµ
- ÊäÈë²ÎÊý  : VOS_CHAR* pcFileName
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : Log_GetPathOffset
+ åŠŸèƒ½æè¿°  : å¾—åˆ°æ–‡ä»¶è·¯å¾„åçš„åç§»å€¼
+ è¾“å…¥å‚æ•°  : VOS_CHAR* pcFileName
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_INT32 Log_GetPathOffset(VOS_CHAR* pcFileName)
@@ -216,14 +216,14 @@ VOS_INT32 Log_GetPathOffset(VOS_CHAR* pcFileName)
     lOffset1  = 0;
     lOffset2  = 0;
 
-    /* ²Ù×÷ÏµÍ³¿ÉÄÜÊ¹ÓÃ'\'À´²éÕÒÂ·¾¶ */
+    /* æ“ä½œç³»ç»Ÿå¯èƒ½ä½¿ç”¨'\'æ¥æŸ¥æ‰¾è·¯å¾„ */
     pcPathPos = (VOS_CHAR*)strrchr(pcFileName, '\\');
     if (LOG_NULL_PTR != pcPathPos)
     {
         lOffset1 = (VOS_INT32)(pcPathPos - pcFileName) + 1;
     }
 
-    /* ²Ù×÷ÏµÍ³¿ÉÄÜÊ¹ÓÃ'/'À´²éÕÒÂ·¾¶ */
+    /* æ“ä½œç³»ç»Ÿå¯èƒ½ä½¿ç”¨'/'æ¥æŸ¥æ‰¾è·¯å¾„ */
     pcPathPos = (VOS_CHAR*)strrchr(pcFileName, '/');
     if (LOG_NULL_PTR != pcPathPos)
     {
@@ -236,18 +236,18 @@ VOS_INT32 Log_GetPathOffset(VOS_CHAR* pcFileName)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_Init
- ¹¦ÄÜÃèÊö  : ´òÓ¡³õÊ¼»¯
- ÊäÈë²ÎÊý  : VOS_VOID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : Log_Init
+ åŠŸèƒ½æè¿°  : æ‰“å°åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : VOS_VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID Log_Init(VOS_VOID)
@@ -279,7 +279,7 @@ VOS_VOID Log_Init(VOS_VOID)
         return;
     }
 
-    /* ´ÓNVÏîÖÐ¶Á³öLOGµÄÊä³ö·½Ê½ºÍÎÄ¼þÖ§³ÖµÄ×î´ó´óÐ¡ */
+    /* ä»ŽNVé¡¹ä¸­è¯»å‡ºLOGçš„è¾“å‡ºæ–¹å¼å’Œæ–‡ä»¶æ”¯æŒçš„æœ€å¤§å¤§å° */
     if(NV_OK != NV_Read(en_NV_Item_Om_PsLog_Port,
                                 &stPortCfg,
                                 sizeof(OM_PORT_CFG_STRU)))
@@ -289,7 +289,7 @@ VOS_VOID Log_Init(VOS_VOID)
     }
     else
     {
-        /*²ÎÊý¼ì²â*/
+        /*å‚æ•°æ£€æµ‹*/
         if (OM_OUTPUT_BUTT > stPortCfg.enPortType)
         {
             g_stLogEnt.ulLogOutput = stPortCfg.enPortType;
@@ -304,23 +304,23 @@ VOS_VOID Log_Init(VOS_VOID)
 #ifdef __LOG_BBIT__
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_Log
- ¹¦ÄÜÃèÊö  : ×Ö·û´®ÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨ÎÞ²ÎÊý£©
- ÊäÈë²ÎÊý  : VOS_CHAR             *cFileName
+ å‡½ æ•° å  : OM_Log
+ åŠŸèƒ½æè¿°  : å­—ç¬¦ä¸²ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆæ— å‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : VOS_CHAR             *cFileName
              VOS_UINT32      ulLineNum
              LOG_MODULE_ID_EN  enModuleId
              LOG_SUBMOD_ID_EN   enSubModId
              LOG_LEVEL_EN      enLevel
              VOS_CHAR              *pcString
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_Log(VOS_CHAR  *cFileName,  VOS_UINT32        ulLineNum,
@@ -333,24 +333,24 @@ VOS_VOID OM_Log(VOS_CHAR  *cFileName,  VOS_UINT32        ulLineNum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_Log1
- ¹¦ÄÜÃèÊö  : ×Ö·û´®ÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨1 ¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : VOS_CHAR             *cFileName
+ å‡½ æ•° å  : OM_Log1
+ åŠŸèƒ½æè¿°  : å­—ç¬¦ä¸²ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆ1 ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : VOS_CHAR             *cFileName
              VOS_UINT32      ulLineNum
              LOG_MODULE_ID_EN  enModuleId
              LOG_SUBMOD_ID_EN   enSubModId
              LOG_LEVEL_EN      enLevel
              VOS_CHAR              *pcString
              VOS_INT32              lPara1
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_Log1(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
@@ -367,9 +367,9 @@ VOS_VOID OM_Log1(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_Log2
- ¹¦ÄÜÃèÊö  : ×Ö·û´®ÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨2¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : VOS_CHAR             *cFileName
+ å‡½ æ•° å  : OM_Log2
+ åŠŸèƒ½æè¿°  : å­—ç¬¦ä¸²ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆ2ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : VOS_CHAR             *cFileName
              VOS_UINT32      ulLineNum
              LOG_MODULE_ID_EN  enModuleId
              LOG_SUBMOD_ID_EN   enSubModId
@@ -377,15 +377,15 @@ VOS_VOID OM_Log1(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
              VOS_CHAR              *pcString
              VOS_INT32              lPara1
              VOS_INT32               lPara2
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_Log2(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
@@ -405,9 +405,9 @@ VOS_VOID OM_Log2(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_Log3
- ¹¦ÄÜÃèÊö  : ×Ö·û´®ÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨3 ¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : VOS_CHAR             *cFileName
+ å‡½ æ•° å  : OM_Log3
+ åŠŸèƒ½æè¿°  : å­—ç¬¦ä¸²ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆ3 ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : VOS_CHAR             *cFileName
              VOS_UINT32      ulLineNum
              LOG_MODULE_ID_EN  enModuleId
              LOG_SUBMOD_ID_EN   enSubModId
@@ -416,15 +416,15 @@ VOS_VOID OM_Log2(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
              VOS_INT32              lPara1
              VOS_INT32               lPara2
              VOS_INT32              lPara3
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_Log3(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
@@ -446,9 +446,9 @@ VOS_VOID OM_Log3(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_Log4
- ¹¦ÄÜÃèÊö  : ×Ö·û´®ÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨4 ¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : VOS_CHAR             *cFileName
+ å‡½ æ•° å  : OM_Log4
+ åŠŸèƒ½æè¿°  : å­—ç¬¦ä¸²ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆ4 ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : VOS_CHAR             *cFileName
                          VOS_UINT32      ulLineNum
                          LOG_MODULE_ID_EN  enModuleId
                          LOG_SUBMOD_ID_EN   enSubModId
@@ -458,15 +458,15 @@ VOS_VOID OM_Log3(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
                          VOS_INT32               lPara2
                          VOS_INT32              lPara3
                          VOS_INT32               lPara4
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_Log4(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
@@ -489,9 +489,9 @@ VOS_VOID OM_Log4(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_BuildStr
- ¹¦ÄÜÃèÊö  : ¹¹½¨×Ö·û´®ÀàÐÍµÄ´òÓ¡Êä³öÐÅÏ¢
- ÊäÈë²ÎÊý  : VOS_CHAR          *pcFileName
+ å‡½ æ•° å  : Log_BuildStr
+ åŠŸèƒ½æè¿°  : æž„å»ºå­—ç¬¦ä¸²ç±»åž‹çš„æ‰“å°è¾“å‡ºä¿¡æ¯
+ è¾“å…¥å‚æ•°  : VOS_CHAR          *pcFileName
                          VOS_UINT32  ulLineNum
                          LOG_LEVEL_EN   enPrintLev
                          VOS_CHAR          *pcOriStr
@@ -499,15 +499,15 @@ VOS_VOID OM_Log4(VOS_CHAR *cFileName,  VOS_UINT32         ulLineNum,
                          VOS_INT32          *plPara
                          VOS_CHAR          *pcDstStr
                          VOS_UINT32 *pulLen
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID Log_BuildStr(VOS_CHAR *pcFileName,  VOS_UINT32  ulLineNum,
@@ -550,7 +550,7 @@ VOS_VOID Log_BuildStr(VOS_CHAR *pcFileName,  VOS_UINT32  ulLineNum,
     lSpareLen  = LOG_MAX_COLUMN_VAL - lOccupyLen;
     LOG_AFFIRM(lSpareLen >= LOG_MAX_FILENAME_LEN)
 
-        /* ½«Â·¾¶È¥³ý,Ö»±£ÁôÎÄ¼þÃû³Æ */
+        /* å°†è·¯å¾„åŽ»é™¤,åªä¿ç•™æ–‡ä»¶åç§° */
     lOffset = Log_GetPathOffset(pcFileName);
     lTmpLen = (VOS_INT32)strlen(pcFileName + lOffset);
     if (lTmpLen < LOG_MAX_FILENAME_LEN)
@@ -572,12 +572,12 @@ VOS_VOID Log_BuildStr(VOS_CHAR *pcFileName,  VOS_UINT32  ulLineNum,
     lOccupyLen += lTmpLen;
     lSpareLen   = LOG_MAX_COLUMN_VAL - lOccupyLen;
 
-        /*=======================*/ /* ¼ÆËãÊä³ö²ÎÊýÐèÒªµÄ³¤¶È */
+        /*=======================*/ /* è®¡ç®—è¾“å‡ºå‚æ•°éœ€è¦çš„é•¿åº¦ */
     lParamLen = ucParaCnt * LOG_MAX_PARA_LEN;
     lStrLen   = lSpareLen - lParamLen;
     LOG_AFFIRM(0 <= lStrLen)
 
-        /*=======================*/ /* ¼ÓÈë×Ö·û´®ÐÅÏ¢ */
+        /*=======================*/ /* åŠ å…¥å­—ç¬¦ä¸²ä¿¡æ¯ */
     lTmpLen = (VOS_INT32)strlen(pcOriStr);
     if (lTmpLen <= lStrLen)
     {
@@ -613,7 +613,7 @@ VOS_VOID Log_BuildStr(VOS_CHAR *pcFileName,  VOS_UINT32  ulLineNum,
 
     lSpareLen = LOG_MAX_COLUMN_VAL - lOccupyLen;
 
-        /*=======================*/ /* ¼ÓÈë²ÎÊý */
+        /*=======================*/ /* åŠ å…¥å‚æ•° */
     for (i = 0; i < ucParaCnt; i++)
     {
         lTmpLen = VOS_nsprintf( pcDstStr + lOccupyLen, (VOS_UINT32)lSpareLen, " %d.", *(plPara + i));
@@ -628,9 +628,9 @@ VOS_VOID Log_BuildStr(VOS_CHAR *pcFileName,  VOS_UINT32  ulLineNum,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_StrNParam
- ¹¦ÄÜÃèÊö  : ×Ö·û´®ÀàÐÍµÄ´òÓ¡º¯Êý£¨N ¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : VOS_CHAR             *cFileName
+ å‡½ æ•° å  : Log_StrNParam
+ åŠŸèƒ½æè¿°  : å­—ç¬¦ä¸²ç±»åž‹çš„æ‰“å°å‡½æ•°ï¼ˆN ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : VOS_CHAR             *cFileName
                          VOS_UINT32      ulLineNum
                          LOG_MODULE_ID_EN  enModuleId
                          LOG_SUBMOD_ID_EN   enSubModId
@@ -638,15 +638,15 @@ VOS_VOID Log_BuildStr(VOS_CHAR *pcFileName,  VOS_UINT32  ulLineNum,
                          VOS_CHAR              *pcOriStr
                          VOS_UINT8     ucParaCnt
                          VOS_INT32              *plPara
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_INT32 Log_StrNParam(VOS_CHAR *cFileName, VOS_UINT32 ulLineNum,
@@ -699,8 +699,8 @@ VOS_INT32 Log_StrNParam(VOS_CHAR *cFileName, VOS_UINT32 ulLineNum,
 #else
     *((VOS_UINT32*)acLogStr) = (VOS_UINT32)enModuleId;
     *(VOS_UINT32*)(acLogStr + sizeof(VOS_UINT32)) = (VOS_UINT32)enLevel;
-    /*¼ÓÉÏLOG_MODULE_ID_LENÊÇÓÉÓÚÔÚLOGÄÚÈÝµÄÍ·²¿Ìí¼ÓÁËModule ID
-      ¶øÔì³ÉµÄÆ«ÒÆ*/
+    /*åŠ ä¸ŠLOG_MODULE_ID_LENæ˜¯ç”±äºŽåœ¨LOGå†…å®¹çš„å¤´éƒ¨æ·»åŠ äº†Module ID
+      è€Œé€ æˆçš„åç§»*/
     Log_BuildStr(cFileName, ulLineNum, enLevel,  pcOriStr,
                  ucParaCnt, plPara,    acLogStr + LOG_MODULE_ID_LEN, &ulLen);
     ret = Log_BufInput(acLogStr, ulLen + LOG_MODULE_ID_LEN);
@@ -713,21 +713,21 @@ VOS_INT32 Log_StrNParam(VOS_CHAR *cFileName, VOS_UINT32 ulLineNum,
 #ifdef __LOG_RELEASE__
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_LogId
- ¹¦ÄÜÃèÊö  : ´òÓ¡µãÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨ÎÞ²ÎÊý£©
- ÊäÈë²ÎÊý  : LOG_MODULE_ID_EN  enModuleId
+ å‡½ æ•° å  : OM_LogId
+ åŠŸèƒ½æè¿°  : æ‰“å°ç‚¹ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆæ— å‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : LOG_MODULE_ID_EN  enModuleId
                          LOG_SUBMOD_ID_EN  enSubModId
                          LOG_LEVEL_EN      enLevel
                          VOS_UINT32     ulLogId
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_LogId(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
@@ -738,22 +738,22 @@ VOS_VOID OM_LogId(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_LogId1
- ¹¦ÄÜÃèÊö  : ´òÓ¡µãÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨1 ¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : LOG_MODULE_ID_EN  enModuleId
+ å‡½ æ•° å  : OM_LogId1
+ åŠŸèƒ½æè¿°  : æ‰“å°ç‚¹ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆ1 ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : LOG_MODULE_ID_EN  enModuleId
                          LOG_SUBMOD_ID_EN  enSubModId
                          LOG_LEVEL_EN      enLevel
                          VOS_UINT32     ulLogId
                          VOS_INT32              lPara1
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_LogId1(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
@@ -768,23 +768,23 @@ VOS_VOID OM_LogId1(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_LogId2
- ¹¦ÄÜÃèÊö  : ´òÓ¡µãÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨2 ¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : LOG_MODULE_ID_EN  enModuleId
+ å‡½ æ•° å  : OM_LogId2
+ åŠŸèƒ½æè¿°  : æ‰“å°ç‚¹ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆ2 ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : LOG_MODULE_ID_EN  enModuleId
                          LOG_SUBMOD_ID_EN  enSubModId
                          LOG_LEVEL_EN      enLevel
                          VOS_UINT32     ulLogId
                          VOS_INT32              lPara1
                          VOS_INT32              lPara2
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_LogId2(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
@@ -802,24 +802,24 @@ VOS_VOID OM_LogId2(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_LogId3
- ¹¦ÄÜÃèÊö  : ´òÓ¡µãÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨3 ¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : LOG_MODULE_ID_EN  enModuleId
+ å‡½ æ•° å  : OM_LogId3
+ åŠŸèƒ½æè¿°  : æ‰“å°ç‚¹ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆ3 ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : LOG_MODULE_ID_EN  enModuleId
                          LOG_SUBMOD_ID_EN  enSubModId
                          LOG_LEVEL_EN      enLevel
                          VOS_UINT32     ulLogId
                          VOS_INT32              lPara1
                          VOS_INT32              lPara2
                          VOS_INT32              lPara3
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_LogId3(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
@@ -839,9 +839,9 @@ VOS_VOID OM_LogId3(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : OM_LogId4
- ¹¦ÄÜÃèÊö  : ´òÓ¡µãÀàÐÍµÄ´òÓ¡½Ó¿Úº¯Êý£¨4 ¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : LOG_MODULE_ID_EN  enModuleId
+ å‡½ æ•° å  : OM_LogId4
+ åŠŸèƒ½æè¿°  : æ‰“å°ç‚¹ç±»åž‹çš„æ‰“å°æŽ¥å£å‡½æ•°ï¼ˆ4 ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : LOG_MODULE_ID_EN  enModuleId
                          LOG_SUBMOD_ID_EN  enSubModId
                          LOG_LEVEL_EN      enLevel
                          VOS_UINT32     ulLogId
@@ -849,15 +849,15 @@ VOS_VOID OM_LogId3(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
                          VOS_INT32              lPara2
                          VOS_INT32              lPara3
                          VOS_INT32              lPara4
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID OM_LogId4(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
@@ -878,22 +878,22 @@ VOS_VOID OM_LogId4(LOG_MODULE_ID_EN  enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_BuildId
- ¹¦ÄÜÃèÊö  : ¹¹½¨´òÓ¡µãÀàÐÍµÄ´òÓ¡Êä³öÐÅÏ¢
- ÊäÈë²ÎÊý  : VOS_UINT32  ulLogId
+ å‡½ æ•° å  : Log_BuildId
+ åŠŸèƒ½æè¿°  : æž„å»ºæ‰“å°ç‚¹ç±»åž‹çš„æ‰“å°è¾“å‡ºä¿¡æ¯
+ è¾“å…¥å‚æ•°  : VOS_UINT32  ulLogId
                          VOS_UINT8  ucParaCnt
                          VOS_INT32 *plPara
                          VOS_CHAR          *pcDst
                          VOS_UINT32 *pulLen
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID Log_BuildId(VOS_UINT32  ulLogId, VOS_UINT8   ucParaCnt, VOS_INT32 *plPara,
@@ -942,23 +942,23 @@ VOS_VOID Log_BuildId(VOS_UINT32  ulLogId, VOS_UINT8   ucParaCnt, VOS_INT32 *plPa
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_IdNParam
- ¹¦ÄÜÃèÊö  : ´òÓ¡µãÀàÐÍµÄ´òÓ¡º¯Êý£¨N ¸ö²ÎÊý£©
- ÊäÈë²ÎÊý  : LOG_MODULE_ID_EN enModuleId
+ å‡½ æ•° å  : Log_IdNParam
+ åŠŸèƒ½æè¿°  : æ‰“å°ç‚¹ç±»åž‹çš„æ‰“å°å‡½æ•°ï¼ˆN ä¸ªå‚æ•°ï¼‰
+ è¾“å…¥å‚æ•°  : LOG_MODULE_ID_EN enModuleId
                          LOG_SUBMOD_ID_EN  enSubModId
                          LOG_LEVEL_EN     enLevel
                          VOS_UINT32     ulLogId
                          VOS_UINT8    ucParaCnt
                          VOS_INT32             *plPara
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_INT32 Log_IdNParam(LOG_MODULE_ID_EN enModuleId, LOG_SUBMOD_ID_EN  enSubModId,
@@ -986,8 +986,8 @@ VOS_INT32 Log_IdNParam(LOG_MODULE_ID_EN enModuleId, LOG_SUBMOD_ID_EN  enSubModId
 
     *((VOS_UINT32*)acLogStr) = (VOS_UINT32)enModuleId;
     *(VOS_UINT32*)(acLogStr + sizeof(VOS_UINT32)) = (VOS_UINT32)enLevel;
-    /*¼ÓÉÏLOG_MODULE_ID_LENÊÇÓÉÓÚÔÚLOGÄÚÈÝµÄÍ·²¿Ìí¼ÓÁËModule ID
-      ¶øÔì³ÉµÄÆ«ÒÆ*/
+    /*åŠ ä¸ŠLOG_MODULE_ID_LENæ˜¯ç”±äºŽåœ¨LOGå†…å®¹çš„å¤´éƒ¨æ·»åŠ äº†Module ID
+      è€Œé€ æˆçš„åç§»*/
     Log_BuildId(ulLogId, ucParaCnt, plPara, acLogStr + LOG_MODULE_ID_LEN, &ulLen);
     ret = Log_BufInput(acLogStr, ulLen + LOG_MODULE_ID_LEN);
 
@@ -996,19 +996,19 @@ VOS_INT32 Log_IdNParam(LOG_MODULE_ID_EN enModuleId, LOG_SUBMOD_ID_EN  enSubModId
 #endif
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_BufInput
- ¹¦ÄÜÃèÊö  : ½«´òÓ¡ÐÅÏ¢Ð´Èë»º´æ
- ÊäÈë²ÎÊý  : VOS_CHAR *pcLogStr
+ å‡½ æ•° å  : Log_BufInput
+ åŠŸèƒ½æè¿°  : å°†æ‰“å°ä¿¡æ¯å†™å…¥ç¼“å­˜
+ è¾“å…¥å‚æ•°  : VOS_CHAR *pcLogStr
                          VOS_UINT32 ulLen
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_INT32 Log_BufInput(VOS_CHAR *pcLogStr, VOS_UINT32 ulLen)
@@ -1061,21 +1061,21 @@ VOS_INT32 Log_BufInput(VOS_CHAR *pcLogStr, VOS_UINT32 ulLen)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_SelfTask
- ¹¦ÄÜÃèÊö  : ´òÓ¡×Ô´¦ÀíÈÎÎñ
- ÊäÈë²ÎÊý  : VOS_UINT32 ulPara1
+ å‡½ æ•° å  : Log_SelfTask
+ åŠŸèƒ½æè¿°  : æ‰“å°è‡ªå¤„ç†ä»»åŠ¡
+ è¾“å…¥å‚æ•°  : VOS_UINT32 ulPara1
                          VOS_UINT32 ulPara2
                          VOS_UINT32 ulPara3
                          VOS_UINT32 ulPara4
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-        ×÷    Õß   : ÀîÏö 46160
-        ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+        ä½œ    è€…   : æŽéœ„ 46160
+        ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID Log_SelfTask(VOS_UINT32 ulPara1, VOS_UINT32 ulPara2,
@@ -1132,20 +1132,20 @@ VOS_VOID Log_SelfTask(VOS_UINT32 ulPara1, VOS_UINT32 ulPara2,
     }
 }
 /*****************************************************************************
- º¯ Êý Ãû  : Log_Output
- ¹¦ÄÜÃèÊö  : ´òÓ¡Êä³öº¯Êý£¨Êä³öµ½´®¿Ú ¡¢Ð´ÈëFlash£©
- ÊäÈë²ÎÊý  : LOG_OUTPUT_EN enOutputType
+ å‡½ æ•° å  : Log_Output
+ åŠŸèƒ½æè¿°  : æ‰“å°è¾“å‡ºå‡½æ•°ï¼ˆè¾“å‡ºåˆ°ä¸²å£ ã€å†™å…¥Flashï¼‰
+ è¾“å…¥å‚æ•°  : LOG_OUTPUT_EN enOutputType
              VOS_CHAR *pcStr
              VOS_UINT32 ulLen
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID Log_Output(VOS_UINT32 ulOutputType, VOS_CHAR *pcStr, VOS_UINT32 ulLen)
@@ -1162,7 +1162,7 @@ VOS_VOID Log_Output(VOS_UINT32 ulOutputType, VOS_CHAR *pcStr, VOS_UINT32 ulLen)
     switch (ulOutputType)
     {
         case OM_OUTPUT_SHELL:
-            vos_printf("%s\n", pcStr + LOG_MODULE_ID_LEN);/* ½«×Ö·û´®Êä³öµ½´®¿Ú */
+            vos_printf("%s\n", pcStr + LOG_MODULE_ID_LEN);/* å°†å­—ç¬¦ä¸²è¾“å‡ºåˆ°ä¸²å£ */
             break;
 
         case OM_OUTPUT_SDT:
@@ -1177,31 +1177,31 @@ VOS_VOID Log_Output(VOS_UINT32 ulOutputType, VOS_CHAR *pcStr, VOS_UINT32 ulLen)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_SetOutputType
- ¹¦ÄÜÃèÊö  : µ÷Õû´òÓ¡Êä³öÎ»ÖÃ£¨´®¿Ú¡¢FileSystem, OM£©µÄ½Ó¿Ú¿ØÖÆº¯Êý
- ÊäÈë²ÎÊý  : OM_OUTPUT_PORT_ENUM_UINT32 enOutputType
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : Log_SetOutputType
+ åŠŸèƒ½æè¿°  : è°ƒæ•´æ‰“å°è¾“å‡ºä½ç½®ï¼ˆä¸²å£ã€FileSystem, OMï¼‰çš„æŽ¥å£æŽ§åˆ¶å‡½æ•°
+ è¾“å…¥å‚æ•°  : OM_OUTPUT_PORT_ENUM_UINT32 enOutputType
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê4ÔÂ24ÈÕ
-    ×÷    Õß   : ÀîÏö 46160
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
-  2.ÈÕ    ÆÚ   : 2008Äê9ÔÂ9ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ÐÞ¸ÄÄÚÈÝ   : Ìí¼Ó¿ÉÎ¬¿É²âµÚÈý½×¶ÎÐèÇó
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´4æœˆ24æ—¥
+    ä½œ    è€…   : æŽéœ„ 46160
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
+  2.æ—¥    æœŸ   : 2008å¹´9æœˆ9æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ·»åŠ å¯ç»´å¯æµ‹ç¬¬ä¸‰é˜¶æ®µéœ€æ±‚
 *****************************************************************************/
 VOS_UINT32 Log_SetOutputType(OM_OUTPUT_PORT_ENUM_UINT32 enOutputType)
 {
-    /*²ÎÊýºÏ·¨ÐÔ¼ì²é*/
+    /*å‚æ•°åˆæ³•æ€§æ£€æŸ¥*/
     if (OM_OUTPUT_BUTT <= enOutputType)
     {
         return VOS_ERR;
     }
 
-/*ÓÉÓÚ¹¤¾ß²à²»Ö§³Ö×Ö·û´®Êä³ö·½Ê½£¬ÐèÒª·µ»ØÊ§°Ü*/
+/*ç”±äºŽå·¥å…·ä¾§ä¸æ”¯æŒå­—ç¬¦ä¸²è¾“å‡ºæ–¹å¼ï¼Œéœ€è¦è¿”å›žå¤±è´¥*/
 #ifdef __LOG_BBIT__
     if (OM_OUTPUT_SDT == enOutputType)
     {
@@ -1215,18 +1215,18 @@ VOS_UINT32 Log_SetOutputType(OM_OUTPUT_PORT_ENUM_UINT32 enOutputType)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_CheckPara
- ¹¦ÄÜÃèÊö  : ¼ì²âÉèÖÃ´òÓ¡¼¶±ð²ÎÊýµÄºÏ·¨ÐÔ
- ÊäÈë²ÎÊý  : pstLogIdLevel
+ å‡½ æ•° å  : Log_CheckPara
+ åŠŸèƒ½æè¿°  : æ£€æµ‹è®¾ç½®æ‰“å°çº§åˆ«å‚æ•°çš„åˆæ³•æ€§
+ è¾“å…¥å‚æ•°  : pstLogIdLevel
              ulLength
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK  - ³É¹¦
-             VOS_ERR - Ê§°Ü
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK  - æˆåŠŸ
+             VOS_ERR - å¤±è´¥
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê9ÔÂ9ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý,Ìí¼Ó¿ÉÎ¬¿É²âµÚÈý½×¶ÎÐèÇó
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´9æœˆ9æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°,æ·»åŠ å¯ç»´å¯æµ‹ç¬¬ä¸‰é˜¶æ®µéœ€æ±‚
 *****************************************************************************/
 VOS_UINT32 Log_CheckPara(LOG_ID_LEVEL_STRU *pstLogIdLevel, VOS_UINT32 ulLength)
 {
@@ -1234,7 +1234,7 @@ VOS_UINT32 Log_CheckPara(LOG_ID_LEVEL_STRU *pstLogIdLevel, VOS_UINT32 ulLength)
 
     ulModuleNum = pstLogIdLevel->ulModuleNum;
 
-    /*ÅÐ¶Ï¸öÊýºÍ³¤¶È¼äµÄ¹ØÏµÊÇ·ñÕýÈ·*/
+    /*åˆ¤æ–­ä¸ªæ•°å’Œé•¿åº¦é—´çš„å…³ç³»æ˜¯å¦æ­£ç¡®*/
     if (ulLength != (sizeof(ulModuleNum)
              + (ulModuleNum*sizeof(LOG_MODULE_LEVEL_STRU))))
     {
@@ -1245,24 +1245,24 @@ VOS_UINT32 Log_CheckPara(LOG_ID_LEVEL_STRU *pstLogIdLevel, VOS_UINT32 ulLength)
     return VOS_OK;
 }
 /*****************************************************************************
- º¯ Êý Ãû  : Log_SetModuleIdLev
- ¹¦ÄÜÃèÊö  : ÉèÖÃÄ£¿éµÄ´òÓ¡¼¶±ð
- ÊäÈë²ÎÊý  : enModuleId - Ä£¿éIDºÅ
-             enSubModId - ×ÓÄ£¿éIDºÅ£¬Ä¿Ç°Ã»ÓÐÓÃµ½
-             enLevel    - ´òÓ¡¼¶±ð
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
+ å‡½ æ•° å  : Log_SetModuleIdLev
+ åŠŸèƒ½æè¿°  : è®¾ç½®æ¨¡å—çš„æ‰“å°çº§åˆ«
+ è¾“å…¥å‚æ•°  : enModuleId - æ¨¡å—IDå·
+             enSubModId - å­æ¨¡å—IDå·ï¼Œç›®å‰æ²¡æœ‰ç”¨åˆ°
+             enLevel    - æ‰“å°çº§åˆ«
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê9ÔÂ9ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý,Ìí¼Ó¿ÉÎ¬¿É²âµÚÈý½×¶ÎÐèÇó
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´9æœˆ9æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°,æ·»åŠ å¯ç»´å¯æµ‹ç¬¬ä¸‰é˜¶æ®µéœ€æ±‚
 *****************************************************************************/
 VOS_VOID Log_SetModuleIdLev(LOG_MODULE_ID_EN enModuleId, LOG_SUBMOD_ID_EN enSubModId,
                                 LOG_LEVEL_EN enLevel)
 {
 	/*lint -e662 -e661*/
-    /*µ±´òÓ¡¼¶±ð²»ºÏ·¨Ê±£¬·µ»ØÊ§°Ü*/
+    /*å½“æ‰“å°çº§åˆ«ä¸åˆæ³•æ—¶ï¼Œè¿”å›žå¤±è´¥*/
     if (LOG_LEVEL_BUTT <= enLevel)
     {
         vos_printf("Log_SetModuleIdLev: ModuleId is %d, Level is %d.\r\n", enModuleId, enLevel);
@@ -1285,18 +1285,18 @@ VOS_VOID Log_SetModuleIdLev(LOG_MODULE_ID_EN enModuleId, LOG_SUBMOD_ID_EN enSubM
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_SetPrintLev
- ¹¦ÄÜÃèÊö  : ÉèÖÃÄ£¿éµÄ´òÓ¡¼¶±ð
- ÊäÈë²ÎÊý  : pstLogIdLevel - Ö¸Ïò¹¤¾ß²à·¢À´µÄÄ£¿é¼¶±ð½á¹¹ÌåµÄÖ¸Õë
-             ulLength      - Êý¾ÝµÄ³¤¶È
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK  - ³É¹¦
-             VOS_ERR - Ê§°Ü
+ å‡½ æ•° å  : Log_SetPrintLev
+ åŠŸèƒ½æè¿°  : è®¾ç½®æ¨¡å—çš„æ‰“å°çº§åˆ«
+ è¾“å…¥å‚æ•°  : pstLogIdLevel - æŒ‡å‘å·¥å…·ä¾§å‘æ¥çš„æ¨¡å—çº§åˆ«ç»“æž„ä½“çš„æŒ‡é’ˆ
+             ulLength      - æ•°æ®çš„é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK  - æˆåŠŸ
+             VOS_ERR - å¤±è´¥
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê9ÔÂ9ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý,Ìí¼Ó¿ÉÎ¬¿É²âµÚÈý½×¶ÎÐèÇó
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´9æœˆ9æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°,æ·»åŠ å¯ç»´å¯æµ‹ç¬¬ä¸‰é˜¶æ®µéœ€æ±‚
 *****************************************************************************/
 VOS_UINT32 Log_SetPrintLev(LOG_ID_LEVEL_STRU *pstLogIdLevel, VOS_UINT32 ulLength)
 {
@@ -1305,19 +1305,19 @@ VOS_UINT32 Log_SetPrintLev(LOG_ID_LEVEL_STRU *pstLogIdLevel, VOS_UINT32 ulLength
     VOS_UINT32         ulModuleNum;
     LOG_LEVEL_EN       enPrintLev;
 
-    /*¼ì²â²ÎÊýµÄºÏ·¨ÐÔ*/
+    /*æ£€æµ‹å‚æ•°çš„åˆæ³•æ€§*/
     if (VOS_ERR == Log_CheckPara(pstLogIdLevel, ulLength))
     {
         return VOS_ERR;
     }
 
-    /*Çå¿ÕÉÏ´ÎÅäÖÃ*/
+    /*æ¸…ç©ºä¸Šæ¬¡é…ç½®*/
     VOS_MemSet(g_aulLogPrintLevPsTable, 0, LOG_PS_MODULE_MAX_NUM*sizeof(LOG_LEVEL_EN));
     VOS_MemSet(g_aulLogPrintLevDrvTable, 0, LOG_DRV_MODULE_MAX_NUM*sizeof(LOG_LEVEL_EN));
 
     ulModuleNum = pstLogIdLevel->ulModuleNum;
 
-    /*½«Ã¿¸öÄ£¿éµÄ´òÓ¡¼¶±ðÌîÈëµ½È«¾Ö¹ýÂË±íÖÐ*/
+    /*å°†æ¯ä¸ªæ¨¡å—çš„æ‰“å°çº§åˆ«å¡«å…¥åˆ°å…¨å±€è¿‡æ»¤è¡¨ä¸­*/
     for (ulIndex = 0; ulIndex < ulModuleNum; ulIndex++)
     {
         ulModuleId = pstLogIdLevel->astModuleLev[ulIndex].ulModuleId;
@@ -1330,16 +1330,16 @@ VOS_UINT32 Log_SetPrintLev(LOG_ID_LEVEL_STRU *pstLogIdLevel, VOS_UINT32 ulLength
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : Log_OmMsgProc
- ¹¦ÄÜÃèÊö  : ´¦Àí¹¤¾ß²à·¢À´µÄÏûÏ¢°ü
- ÊäÈë²ÎÊý  : pRspPacket - ÏûÏ¢°üµÄÖ¸Õë
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_VOID
+ å‡½ æ•° å  : Log_OmMsgProc
+ åŠŸèƒ½æè¿°  : å¤„ç†å·¥å…·ä¾§å‘æ¥çš„æ¶ˆæ¯åŒ…
+ è¾“å…¥å‚æ•°  : pRspPacket - æ¶ˆæ¯åŒ…çš„æŒ‡é’ˆ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_VOID
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê9ÔÂ11ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´9æœˆ11æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_VOID Log_AcpuOmMsgProc(OM_REQ_PACKET_STRU *pRspPacket, OM_RSP_FUNC *pRspFuncPtr)
 {
@@ -1347,19 +1347,19 @@ VOS_VOID Log_AcpuOmMsgProc(OM_REQ_PACKET_STRU *pRspPacket, OM_RSP_FUNC *pRspFunc
     VOS_UINT32                      ulOutputType;
 
     pstAppToOmMsg = (APP_OM_MSG_EX_STRU*)pRspPacket;
-    /*ÉèÖÃÈÕÖ¾Êä³ö·½Ê½µÄÔ­ÓïÏûÏ¢*/
+    /*è®¾ç½®æ—¥å¿—è¾“å‡ºæ–¹å¼çš„åŽŸè¯­æ¶ˆæ¯*/
     if (APP_OM_SET_PRINT_OUTPUT_REQ == pstAppToOmMsg->usPrimId)
     {
         ulOutputType = *((VOS_UINT32*)pstAppToOmMsg->aucPara);
         Log_SetOutputType((OM_OUTPUT_PORT_ENUM_UINT32)ulOutputType);
     }
-    /*ÉèÖÃÈÕÖ¾´òÓ¡¼¶±ðµÄÔ­ÓïÏûÏ¢*/
+    /*è®¾ç½®æ—¥å¿—æ‰“å°çº§åˆ«çš„åŽŸè¯­æ¶ˆæ¯*/
     else if (APP_OM_SET_PRINT_LEV_REQ == pstAppToOmMsg->usPrimId)
     {
         Log_SetPrintLev((LOG_ID_LEVEL_STRU*)(pstAppToOmMsg->aucPara),
             pstAppToOmMsg->usLength - (OM_APP_MSG_EX_LEN - VOS_OM_HEADER_LEN));
     }
-    /*É¾³ýÎÄ¼þÏµÍ³ÖÐµÄÈÕÖ¾ÎÄ¼þ*/
+    /*åˆ é™¤æ–‡ä»¶ç³»ç»Ÿä¸­çš„æ—¥å¿—æ–‡ä»¶*/
     else if (APP_OM_EXPORT_LOG_END_CNF == pstAppToOmMsg->usPrimId)
     {
         return;
@@ -1374,15 +1374,15 @@ VOS_VOID Log_AcpuOmMsgProc(OM_REQ_PACKET_STRU *pRspPacket, OM_RSP_FUNC *pRspFunc
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : LogShow
- ¹¦ÄÜÃèÊö  : ÏÔÊ¾ÈÕÖ¾ÉÏ±¨µ±Ç°×´Ì¬
- ÊäÈë²ÎÊý  : VOID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOID
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê9ÔÂ11ÈÕ
-    ×÷    Õß   : ¸ÊÀ¼ 47350
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ å‡½ æ•° å  : LogShow
+ åŠŸèƒ½æè¿°  : æ˜¾ç¤ºæ—¥å¿—ä¸ŠæŠ¥å½“å‰çŠ¶æ€
+ è¾“å…¥å‚æ•°  : VOID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOID
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´9æœˆ11æ—¥
+    ä½œ    è€…   : ç”˜å…° 47350
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_VOID LogAcpuShow(VOS_VOID)
 {

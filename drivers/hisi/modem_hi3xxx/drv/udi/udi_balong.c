@@ -26,12 +26,12 @@ extern "C"
 //#define UDI_MAX_INIT_FUNC_NUM UDI_TYPE_MAX
 #define UDI_OPEN_NODE_HEADER  0x5A0000
 
-/* Mutex ĞĞÎª·â×° */
+/* Mutex è¡Œä¸ºå°è£… */
 #if 0
 #define UDI_MUTEX_T SEM_ID
 #define UDI_MTX_CREATE(mtx) \
 do {\
-    /* Ê¹ÓÃ¿ÉÖØÈëMutex */\
+    /* ä½¿ç”¨å¯é‡å…¥Mutex */\
     mtx = semMCreate(SEM_Q_FIFO | SEM_DELETE_SAFE);\
 }while((0))
 #define UDI_MTX_DELETE(mtx) {semDelete(mtx); mtx = NULL;}
@@ -42,9 +42,9 @@ do {\
 #define UDI_DEBUG
 
 /**************************************************************************
-  ÀàĞÍ¶¨Òå
+  ç±»å‹å®šä¹‰
 **************************************************************************/
-/* Éè±¸´ò¿ª½Úµã */
+/* è®¾å¤‡æ‰“å¼€èŠ‚ç‚¹ */
 typedef struct tagUDI_OPEN_NODE
 {
 	BSP_BOOL bOpen;
@@ -52,20 +52,20 @@ typedef struct tagUDI_OPEN_NODE
 	UDI_DRV_INTEFACE_TABLE *pstDrvTable;
 }UDI_OPEN_NODE;
 
-/* Éè±¸ÊµÀıÊôĞÔ */
+/* è®¾å¤‡å®ä¾‹å±æ€§ */
 typedef struct tagUDI_DEV_INSTANCE
 {
-	//BSP_U32 u32MagicNum;				/* ¼ì²éÓÃ */
-	//BSP_U32 u32DevId;					/* Éè±¸ID */
-	BSP_U32 u32Capability;					/* Éè±¸ÌØĞÔ */
-	//BSP_U8* strDevName;					/* Éè±¸Ãû,ÓÃÓÚÊÊÅäÏµÍ³±ê×¼Éè±¸ */
-	UDI_DRV_INTEFACE_TABLE *pDrvInterface;  /* ½Ó¿Ú»Øµ÷ÁĞ±í */
-	BSP_PVOID pPrivate;					/* Ã¿¸öÇı¶¯Ë½ÓĞÈ«¾Ö */
+	//BSP_U32 u32MagicNum;				/* æ£€æŸ¥ç”¨ */
+	//BSP_U32 u32DevId;					/* è®¾å¤‡ID */
+	BSP_U32 u32Capability;					/* è®¾å¤‡ç‰¹æ€§ */
+	//BSP_U8* strDevName;					/* è®¾å¤‡å,ç”¨äºé€‚é…ç³»ç»Ÿæ ‡å‡†è®¾å¤‡ */
+	UDI_DRV_INTEFACE_TABLE *pDrvInterface;  /* æ¥å£å›è°ƒåˆ—è¡¨ */
+	BSP_PVOID pPrivate;					/* æ¯ä¸ªé©±åŠ¨ç§æœ‰å…¨å±€ */
 }UDI_DEV_INSTANCE;
 
 
 /**************************************************************************
-  È«¾Ö±äÁ¿
+  å…¨å±€å˜é‡
 **************************************************************************/
 UDI_OPEN_NODE			g_openNodeTable[UDI_MAX_OPEN_NODE_NUM];
 BSP_U32					g_openNodeCurPos = 0;
@@ -75,7 +75,7 @@ extern UDI_ADP_INIT_CB_T	g_udiInitFuncTable[UDI_DEV_MAX+1];
 struct semaphore			g_udiMtxOpen;
 
 /**************************************************************************
-  ºêÊµÏÖ
+  å®å®ç°
 **************************************************************************/
 #define UDI_OFFSET_OF(type, member) ((BSP_U32) (&((type *)0)->member))
 #define UDI_IDX_TO_HANDLE(idx) ((UDI_HANDLE)(UDI_OPEN_NODE_HEADER | (idx)))
@@ -108,7 +108,7 @@ do{\
 		/*	handle, __LINE__);*/\
 		return ERROR;\
 	}\
-	/* È¡³öº¯ÊıÖ¸Õë¼°²ÎÊı */\
+	/* å–å‡ºå‡½æ•°æŒ‡é’ˆåŠå‚æ•° */\
 	pstDrvTable = g_openNodeTable[u32Idx].pstDrvTable;\
 	if (UDI_IS_INVALID_TABLE(pstDrvTable))\
     {\
@@ -124,7 +124,7 @@ do{\
 	}\
 	pPrivate = g_openNodeTable[u32Idx].pPrivate;\
 	\
-	/* µ÷ÓÃÓÃ»§µÄ»Øµ÷º¯Êı */\
+	/* è°ƒç”¨ç”¨æˆ·çš„å›è°ƒå‡½æ•° */\
 	ret = pstDrvTable->functionCB(pPrivate, param1, param2);\
 }while(0)
 
@@ -144,7 +144,7 @@ do{\
 #endif
 
 /**************************************************************************
-  ÄÚ²¿º¯Êı
+  å†…éƒ¨å‡½æ•°
 **************************************************************************/
 static UDI_HANDLE udiGetOutOpenNode(VOID)
 {
@@ -152,7 +152,7 @@ static UDI_HANDLE udiGetOutOpenNode(VOID)
 	UDI_HANDLE handle = UDI_INVALID_HANDLE;
 
 	down(&g_udiMtxOpen);
-	/* ÓÅÏÈ´Óµ±Ç°Î»ÖÃÕÒ */
+	/* ä¼˜å…ˆä»å½“å‰ä½ç½®æ‰¾ */
 	for (u32Cnt = g_openNodeCurPos; u32Cnt < UDI_MAX_OPEN_NODE_NUM; u32Cnt++)
 	{
 		if (FALSE == g_openNodeTable[u32Cnt].bOpen)
@@ -162,7 +162,7 @@ static UDI_HANDLE udiGetOutOpenNode(VOID)
 		}
 	}
 
-	/* ·ñÔò, ÔÙ´ÓÍ·ÕÒ */
+	/* å¦åˆ™, å†ä»å¤´æ‰¾ */
 	if(UDI_INVALID_HANDLE == handle)
 	{
 		for (u32Cnt = 0; u32Cnt < g_openNodeCurPos; u32Cnt++)
@@ -175,7 +175,7 @@ static UDI_HANDLE udiGetOutOpenNode(VOID)
 		}
 	}
 
-	/* ÕÒµ½Ò»¸ö¿ÉÓÃµÄhandle */
+	/* æ‰¾åˆ°ä¸€ä¸ªå¯ç”¨çš„handle */
 	if (UDI_INVALID_HANDLE != handle)
 	{
 		g_openNodeCurPos = (u32Cnt+1) % UDI_MAX_OPEN_NODE_NUM;
@@ -204,18 +204,18 @@ static BSP_S32 udiReturnOpenNode(BSP_U32 u32Idx)
 }
 
 /**************************************************************************
-  ½Ó¿ÚÊµÏÖ
+  æ¥å£å®ç°
 **************************************************************************/
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_UDI_SetPrivate
+* å‡½ æ•° å  : BSP_UDI_SetPrivate
 *
-* ¹¦ÄÜÃèÊö  : ÉèÖÃÇı¶¯ÄÚ²¿Ë½ÓĞÊı¾İ
+* åŠŸèƒ½æè¿°  : è®¾ç½®é©±åŠ¨å†…éƒ¨ç§æœ‰æ•°æ®
 *
-* ÊäÈë²ÎÊı  : devId: Éè±¸ID
-*             pPrivate: Ë½ÓĞÊı¾İ
-* Êä³ö²ÎÊı  : ÎŞ
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¾“å…¥å‚æ•°  : devId: è®¾å¤‡ID
+*             pPrivate: ç§æœ‰æ•°æ®
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *****************************************************************************/
 BSP_S32 BSP_UDI_SetPrivate(UDI_DEVICE_ID devId, void* pPrivate)
 {
@@ -234,14 +234,14 @@ BSP_S32 BSP_UDI_SetPrivate(UDI_DEVICE_ID devId, void* pPrivate)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_UDI_SetCapability
+* å‡½ æ•° å  : BSP_UDI_SetCapability
 *
-* ¹¦ÄÜÃèÊö  : ÉèÖÃÉè±¸ÌØĞÔÖµ
+* åŠŸèƒ½æè¿°  : è®¾ç½®è®¾å¤‡ç‰¹æ€§å€¼
 *
-* ÊäÈë²ÎÊı  : devId: Éè±¸ID
-*             u32Capability: Éè±¸ÌØĞÔÖµ
-* Êä³ö²ÎÊı  : ÎŞ
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¾“å…¥å‚æ•°  : devId: è®¾å¤‡ID
+*             u32Capability: è®¾å¤‡ç‰¹æ€§å€¼
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *****************************************************************************/
 BSP_S32 BSP_UDI_SetCapability(UDI_DEVICE_ID devId, BSP_U32 u32Capability)
 {
@@ -263,14 +263,14 @@ BSP_S32 BSP_UDI_SetCapability(UDI_DEVICE_ID devId, BSP_U32 u32Capability)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_UDI_SetInterfaceTable
+* å‡½ æ•° å  : BSP_UDI_SetInterfaceTable
 *
-* ¹¦ÄÜÃèÊö  : ÉèÖÃÉè±¸»Øµ÷º¯ÊıÁĞ±í(ÓÉÊÊÅä²ãµ÷ÓÃ)
+* åŠŸèƒ½æè¿°  : è®¾ç½®è®¾å¤‡å›è°ƒå‡½æ•°åˆ—è¡¨(ç”±é€‚é…å±‚è°ƒç”¨)
 *
-* ÊäÈë²ÎÊı  : devId: Éè±¸ID
-*             pDrvInterface: Çı¶¯²ãµÄ»Øµ÷º¯ÊıÁĞ±í
-* Êä³ö²ÎÊı  : ÎŞ
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¾“å…¥å‚æ•°  : devId: è®¾å¤‡ID
+*             pDrvInterface: é©±åŠ¨å±‚çš„å›è°ƒå‡½æ•°åˆ—è¡¨
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *****************************************************************************/
 BSP_S32 BSP_UDI_SetInterfaceTable(UDI_DEVICE_ID devId, UDI_DRV_INTEFACE_TABLE *pDrvInterface)
 {
@@ -290,13 +290,13 @@ BSP_S32 BSP_UDI_SetInterfaceTable(UDI_DEVICE_ID devId, UDI_DRV_INTEFACE_TABLE *p
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_UDI_Init
+* å‡½ æ•° å  : BSP_UDI_Init
 *
-* ¹¦ÄÜÃèÊö  : UDI Ä£¿é³õÊ¼»¯
+* åŠŸèƒ½æè¿°  : UDI æ¨¡å—åˆå§‹åŒ–
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  : ÎŞ
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *****************************************************************************/
 BSP_S32 BSP_UDI_Init(void)
 {
@@ -308,7 +308,7 @@ BSP_S32 BSP_UDI_Init(void)
 
 	sema_init(&g_udiMtxOpen, SEM_FULL);
 
-	/* µ÷ÓÃ³õÊ¼»¯º¯Êı */
+	/* è°ƒç”¨åˆå§‹åŒ–å‡½æ•° */
 	for (u32Cnt = 0; u32Cnt < (BSP_U32)UDI_DEV_MAX; u32Cnt++)
 	{
 		initCB = g_udiInitFuncTable[u32Cnt];
@@ -325,13 +325,13 @@ BSP_S32 BSP_UDI_Init(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : udi_get_capability
+* å‡½ æ•° å  : udi_get_capability
 *
-* ¹¦ÄÜÃèÊö  : ¸ù¾İÉè±¸ID»ñÈ¡µ±Ç°Éè±¸Ö§³ÖµÄÌØĞÔ
+* åŠŸèƒ½æè¿°  : æ ¹æ®è®¾å¤‡IDè·å–å½“å‰è®¾å¤‡æ”¯æŒçš„ç‰¹æ€§
 *
-* ÊäÈë²ÎÊı  : devId: Éè±¸ID
-* Êä³ö²ÎÊı  : ÎŞ
-* ·µ »Ø Öµ  : Ö§³ÖµÄÌØĞÔÖµ
+* è¾“å…¥å‚æ•°  : devId: è®¾å¤‡ID
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å› å€¼  : æ”¯æŒçš„ç‰¹æ€§å€¼
 *****************************************************************************/
 BSP_S32 udi_get_capability(UDI_DEVICE_ID devId)
 {
@@ -349,13 +349,13 @@ BSP_S32 udi_get_capability(UDI_DEVICE_ID devId)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_UDI_GetPrivate
+* å‡½ æ•° å  : BSP_UDI_GetPrivate
 *
-* ¹¦ÄÜÃèÊö  : µÃµ½Éè±¸ Çı¶¯ÄÚ²¿Ë½ÓĞÊı¾İ
+* åŠŸèƒ½æè¿°  : å¾—åˆ°è®¾å¤‡ é©±åŠ¨å†…éƒ¨ç§æœ‰æ•°æ®
 *
-* ÊäÈë²ÎÊı  : handle: Éè±¸µÄhandle
-* Êä³ö²ÎÊı  : ÎŞ
-* ·µ »Ø Öµ  : Éè±¸ÄÚ²¿Ë½ÓĞÊı¾İ
+* è¾“å…¥å‚æ•°  : handle: è®¾å¤‡çš„handle
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å› å€¼  : è®¾å¤‡å†…éƒ¨ç§æœ‰æ•°æ®
 *****************************************************************************/
 BSP_PVOID BSP_UDI_GetPrivate(UDI_HANDLE handle)
 {
@@ -373,13 +373,13 @@ BSP_PVOID BSP_UDI_GetPrivate(UDI_HANDLE handle)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : udi_open
+* å‡½ æ•° å  : udi_open
 *
-* ¹¦ÄÜÃèÊö  : ´ò¿ªÉè±¸(Êı¾İÍ¨µÀ)
+* åŠŸèƒ½æè¿°  : æ‰“å¼€è®¾å¤‡(æ•°æ®é€šé“)
 *
-* ÊäÈë²ÎÊı  : pParam: Éè±¸µÄ´ò¿ªÅäÖÃ²ÎÊı
-* Êä³ö²ÎÊı  : ÎŞ
-* ·µ »Ø Öµ  : -1:Ê§°Ü / ÆäËû:³É¹¦
+* è¾“å…¥å‚æ•°  : pParam: è®¾å¤‡çš„æ‰“å¼€é…ç½®å‚æ•°
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å› å€¼  : -1:å¤±è´¥ / å…¶ä»–:æˆåŠŸ
 *****************************************************************************/
 UDI_HANDLE udi_open(UDI_OPEN_PARAM *pParam)
 {
@@ -400,7 +400,7 @@ UDI_HANDLE udi_open(UDI_OPEN_PARAM *pParam)
       /*printk("udi_open para error: u32MainId=%u u32DevType=%u\n", u32MainId, u32DevType);*/
 	  goto UDI_OPEN_ERR;
 	}
-	/* ²éÕÒÒ»¸ö¿ÉÓÃµÄ½Úµã */
+	/* æŸ¥æ‰¾ä¸€ä¸ªå¯ç”¨çš„èŠ‚ç‚¹ */
 	handle = udiGetOutOpenNode();
 	if (UDI_INVALID_HANDLE == handle)
 	{
@@ -409,7 +409,7 @@ UDI_HANDLE udi_open(UDI_OPEN_PARAM *pParam)
 	}
 	u32Idx = UDI_HANDLE_TO_IDX(handle);
 
-	/* µ÷ÓÃÓÃ»§»Øµ÷º¯Êı */
+	/* è°ƒç”¨ç”¨æˆ·å›è°ƒå‡½æ•° */
 	pstDrvTable = g_deviceTable[u32MainId][u32DevType].pDrvInterface;
 	if (NULL == pstDrvTable || NULL == pstDrvTable->udi_open_cb)
 	{
@@ -422,7 +422,7 @@ UDI_HANDLE udi_open(UDI_OPEN_PARAM *pParam)
 		goto UDI_OPEN_ERR_RET_NODE;
 	}
 
-	/* ±£´æÇı¶¯Ë½ÓĞÊı¾İ */
+	/* ä¿å­˜é©±åŠ¨ç§æœ‰æ•°æ® */
 	g_openNodeTable[u32Idx].pstDrvTable =
 	g_deviceTable[u32MainId][u32DevType].pDrvInterface;
 	g_openNodeTable[u32Idx].pPrivate =
@@ -437,13 +437,13 @@ UDI_OPEN_ERR:
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : udi_close
+* å‡½ æ•° å  : udi_close
 *
-* ¹¦ÄÜÃèÊö  : ¹Ø±ÕÉè±¸(Êı¾İÍ¨µÀ)
+* åŠŸèƒ½æè¿°  : å…³é—­è®¾å¤‡(æ•°æ®é€šé“)
 *
-* ÊäÈë²ÎÊı  : handle: Éè±¸µÄhandle
-* Êä³ö²ÎÊı  : ÎŞ
-* ·µ »Ø Öµ  : ÎŞ
+* è¾“å…¥å‚æ•°  : handle: è®¾å¤‡çš„handle
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 BSP_S32 udi_close(UDI_HANDLE handle)
 {
@@ -460,7 +460,7 @@ BSP_S32 udi_close(UDI_HANDLE handle)
 		/*printk(KERN_ERR "BSP_MODU_UDI invalid handle:0x%x, line:%d\n", handle, __LINE__);*/
 		return ERROR;
 	}
-	/* µ÷ÓÃÓÃ»§µÄ»Øµ÷º¯Êı */
+	/* è°ƒç”¨ç”¨æˆ·çš„å›è°ƒå‡½æ•° */
 	pstDrvTable = g_openNodeTable[u32Idx].pstDrvTable;
 	if (UDI_IS_INVALID_TABLE(pstDrvTable))/*lint !e58*/
     {
@@ -474,23 +474,23 @@ BSP_S32 udi_close(UDI_HANDLE handle)
 	}
 	s32Ret = pstDrvTable->udi_close_cb(g_openNodeTable[u32Idx].pPrivate);
 
-	/* ÊÍ·Å Open Node */
+	/* é‡Šæ”¾ Open Node */
 	(BSP_VOID)udiReturnOpenNode(u32Idx);
 
 	return s32Ret;
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : udi_write
+* å‡½ æ•° å  : udi_write
 *
-* ¹¦ÄÜÃèÊö  : Êı¾İĞ´
+* åŠŸèƒ½æè¿°  : æ•°æ®å†™
 *
-* ÊäÈë²ÎÊı  : handle:  Éè±¸µÄhandle
-*             pMemObj: bufferÄÚ´æ »ò ÄÚ´æÁ´±í¶ÔÏó
-*             u32Size: Êı¾İĞ´³ß´ç »ò ÄÚ´æÁ´±í¶ÔÏó¿É²»ÉèÖÃ
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : handle:  è®¾å¤‡çš„handle
+*             pMemObj: bufferå†…å­˜ æˆ– å†…å­˜é“¾è¡¨å¯¹è±¡
+*             u32Size: æ•°æ®å†™å°ºå¯¸ æˆ– å†…å­˜é“¾è¡¨å¯¹è±¡å¯ä¸è®¾ç½®
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : Íê³É×Ö½ÚÊı »ò ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : å®Œæˆå­—èŠ‚æ•° æˆ– æˆåŠŸ/å¤±è´¥
 *****************************************************************************/
 BSP_S32 udi_write(UDI_HANDLE handle, void* pMemObj, BSP_U32 u32Size)
 {
@@ -502,16 +502,16 @@ BSP_S32 udi_write(UDI_HANDLE handle, void* pMemObj, BSP_U32 u32Size)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : udi_read
+* å‡½ æ•° å  : udi_read
 *
-* ¹¦ÄÜÃèÊö  : Êı¾İ¶Á
+* åŠŸèƒ½æè¿°  : æ•°æ®è¯»
 *
-* ÊäÈë²ÎÊı  : handle:  Éè±¸µÄhandle
-*             pMemObj: bufferÄÚ´æ »ò ÄÚ´æÁ´±í¶ÔÏó
-*             u32Size: Êı¾İ¶Á³ß´ç »ò ÄÚ´æÁ´±í¶ÔÏó¿É²»ÉèÖÃ
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : handle:  è®¾å¤‡çš„handle
+*             pMemObj: bufferå†…å­˜ æˆ– å†…å­˜é“¾è¡¨å¯¹è±¡
+*             u32Size: æ•°æ®è¯»å°ºå¯¸ æˆ– å†…å­˜é“¾è¡¨å¯¹è±¡å¯ä¸è®¾ç½®
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : Íê³É×Ö½ÚÊı »ò ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : å®Œæˆå­—èŠ‚æ•° æˆ– æˆåŠŸ/å¤±è´¥
 *****************************************************************************/
 BSP_S32 udi_read(UDI_HANDLE handle, void* pMemObj, BSP_U32 u32Size)
 {
@@ -523,16 +523,16 @@ BSP_S32 udi_read(UDI_HANDLE handle, void* pMemObj, BSP_U32 u32Size)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : udi_ioctl
+* å‡½ æ•° å  : udi_ioctl
 *
-* ¹¦ÄÜÃèÊö  : Êı¾İÍ¨µÀÊôĞÔÅäÖÃ
+* åŠŸèƒ½æè¿°  : æ•°æ®é€šé“å±æ€§é…ç½®
 *
-* ÊäÈë²ÎÊı  : handle: Éè±¸µÄhandle
-*             u32Cmd: IOCTLÃüÁîÂë
-*             pParam: ²Ù×÷²ÎÊı
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : handle: è®¾å¤‡çš„handle
+*             u32Cmd: IOCTLå‘½ä»¤ç 
+*             pParam: æ“ä½œå‚æ•°
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  : ³É¹¦/Ê§°Ü
+* è¿” å› å€¼  : æˆåŠŸ/å¤±è´¥
 *****************************************************************************/
 BSP_S32 udi_ioctl(UDI_HANDLE handle, BSP_U32 u32Cmd, VOID* pParam)
 {
@@ -545,7 +545,7 @@ BSP_S32 udi_ioctl(UDI_HANDLE handle, BSP_U32 u32Cmd, VOID* pParam)
 
 #if 0
 /**************************************************************************
-  µ÷ÊÔĞÅÏ¢ÊµÏÖ
+  è°ƒè¯•ä¿¡æ¯å®ç°
 **************************************************************************/
 BSP_S32 BSP_UDI_DumpOpenNode(BSP_BOOL bDumpAll)
 {

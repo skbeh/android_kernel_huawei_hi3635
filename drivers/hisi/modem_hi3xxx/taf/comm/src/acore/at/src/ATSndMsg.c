@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "AtSndMsg.h"
 #include "AtCsimagent.h"
@@ -16,12 +16,12 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 
@@ -116,10 +116,10 @@ VOS_UINT32  AT_FillAndSndAppReqMsg(
 
     pMsgPara = (VOS_UINT8 *)pPara;
 
-    /* »ñÈ¡ÏûÏ¢³¤¶È */
+    /* èŽ·å–æ¶ˆæ¯é•¿åº¦ */
     AT_GetAppReqMsgLen( ulParaLen, &ulMsgLen);
 
-    /* ÉêÇëÏûÏ¢ */
+    /* ç”³è¯·æ¶ˆæ¯ */
     pMsg = (VOS_UINT8 *)PS_ALLOC_MSG(WUEPS_PID_AT, ulMsgLen - VOS_MSG_HEAD_LENGTH);
 
     if (VOS_NULL_PTR == pMsg)
@@ -129,10 +129,10 @@ VOS_UINT32  AT_FillAndSndAppReqMsg(
 
     PS_MEM_SET((pMsg + VOS_MSG_HEAD_LENGTH), 0, (ulMsgLen - VOS_MSG_HEAD_LENGTH));
 
-    /* Ìî³äÏûÏ¢Í· */
+    /* å¡«å……æ¶ˆæ¯å¤´ */
     AT_FillAppReqMsgHeader((MN_APP_REQ_MSG_STRU *)pMsg, usClientId, ucOpId, usMsgType, ulRcvPid);
 
-    /* Ìî³äÏûÏ¢²ÎÊý */
+    /* å¡«å……æ¶ˆæ¯å‚æ•° */
     AT_FillAppReqMsgPara(&pMsg[sizeof(MN_APP_REQ_MSG_STRU) - 4], pMsgPara, ulParaLen);
 
     ulRet = PS_SEND_MSG(WUEPS_PID_AT, pMsg);
@@ -155,17 +155,17 @@ VOS_UINT32 AT_SndSetFastDorm (
     AT_RABM_SET_FASTDORM_PARA_REQ_STRU  *pstSndMsg;
     VOS_UINT32                           ulRslt;
 
-    /* ÉêÇëÄÚ´æ  */
+    /* ç”³è¯·å†…å­˜  */
     pstSndMsg = (AT_RABM_SET_FASTDORM_PARA_REQ_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                                                sizeof(AT_RABM_SET_FASTDORM_PARA_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
     if ( VOS_NULL_PTR == pstSndMsg )
     {
-        /* ÄÚ´æÉêÇëÊ§°Ü */
+        /* å†…å­˜ç”³è¯·å¤±è´¥ */
         AT_ERR_LOG("AT_SndSetFastDorm:ERROR: Memory Alloc Error for pstMsg");
         return VOS_ERR;
     }
 
-    /* ÌîÐ´Ïà¹Ø²ÎÊý */
+    /* å¡«å†™ç›¸å…³å‚æ•° */
     pstSndMsg->stMsgHeader.ulReceiverCpuId   = VOS_LOCAL_CPUID;
     pstSndMsg->stMsgHeader.ulReceiverPid     = AT_GetDestPid(usClientId, I0_WUEPS_PID_RABM);
     pstSndMsg->stMsgHeader.ulLength          = sizeof(AT_RABM_SET_FASTDORM_PARA_REQ_STRU) - VOS_MSG_HEAD_LENGTH;
@@ -174,7 +174,7 @@ VOS_UINT32 AT_SndSetFastDorm (
     pstSndMsg->usClientId                    = usClientId;
     pstSndMsg->ucOpId                        = ucOpId;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     ulRslt = PS_SEND_MSG(WUEPS_PID_AT, pstSndMsg);
     if ( VOS_OK != ulRslt )
     {
@@ -194,17 +194,17 @@ VOS_UINT32 AT_SndQryFastDorm (
     AT_RABM_QRY_FASTDORM_PARA_REQ_STRU  *pstSndMsg;
     VOS_UINT32                           ulRslt;
 
-    /* ÉêÇëÄÚ´æ  */
+    /* ç”³è¯·å†…å­˜  */
     pstSndMsg = (AT_RABM_QRY_FASTDORM_PARA_REQ_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                                                sizeof(AT_RABM_QRY_FASTDORM_PARA_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
     if ( VOS_NULL_PTR == pstSndMsg )
     {
-        /* ÄÚ´æÉêÇëÊ§°Ü */
+        /* å†…å­˜ç”³è¯·å¤±è´¥ */
         AT_ERR_LOG("AT_SndSetFastDorm:ERROR: Memory Alloc Error for pstMsg");
         return VOS_ERR;
     }
 
-    /* ÌîÐ´Ïà¹Ø²ÎÊý */
+    /* å¡«å†™ç›¸å…³å‚æ•° */
     pstSndMsg->stMsgHeader.ulReceiverCpuId   = VOS_LOCAL_CPUID;
     pstSndMsg->stMsgHeader.ulReceiverPid     = AT_GetDestPid(usClientId, I0_WUEPS_PID_RABM);
     pstSndMsg->stMsgHeader.ulLength          = sizeof(AT_RABM_QRY_FASTDORM_PARA_REQ_STRU) - VOS_MSG_HEAD_LENGTH;
@@ -212,7 +212,7 @@ VOS_UINT32 AT_SndQryFastDorm (
     pstSndMsg->usClientId                    = usClientId;
     pstSndMsg->ucOpId                        = ucOpId;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     ulRslt = PS_SEND_MSG(WUEPS_PID_AT, pstSndMsg);
     if ( VOS_OK != ulRslt )
     {
@@ -232,19 +232,19 @@ VOS_UINT32 At_SndReleaseRrcReq (
     AT_RABM_RELEASE_RRC_REQ_STRU        *pstSndMsg;
     VOS_UINT32                           ulRslt;
 
-    /* ÉêÇëÄÚ´æ  */
+    /* ç”³è¯·å†…å­˜  */
     pstSndMsg = (AT_RABM_RELEASE_RRC_REQ_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                                                sizeof(AT_RABM_RELEASE_RRC_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
     if ( VOS_NULL_PTR == pstSndMsg )
     {
-        /* ÄÚ´æÉêÇëÊ§°Ü */
+        /* å†…å­˜ç”³è¯·å¤±è´¥ */
         AT_ERR_LOG("At_SndReleaseRrcReq:ERROR: Memory Alloc Error for pstMsg");
         return VOS_ERR;
     }
 
     PS_MEM_SET((VOS_CHAR*)pstSndMsg + VOS_MSG_HEAD_LENGTH, 0x00, (sizeof(AT_RABM_RELEASE_RRC_REQ_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîÐ´Ïà¹Ø²ÎÊý */
+    /* å¡«å†™ç›¸å…³å‚æ•° */
     pstSndMsg->stMsgHeader.ulReceiverCpuId   = VOS_LOCAL_CPUID;
     pstSndMsg->stMsgHeader.ulReceiverPid     = AT_GetDestPid(usClientId, I0_WUEPS_PID_RABM);
     pstSndMsg->stMsgHeader.ulLength          = sizeof(AT_RABM_RELEASE_RRC_REQ_STRU) - VOS_MSG_HEAD_LENGTH;
@@ -252,7 +252,7 @@ VOS_UINT32 At_SndReleaseRrcReq (
     pstSndMsg->usClientId                    = usClientId;
     pstSndMsg->ucOpId                        = ucOpId;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     ulRslt = PS_SEND_MSG(WUEPS_PID_AT, pstSndMsg);
     if ( VOS_OK != ulRslt )
     {
@@ -274,17 +274,17 @@ VOS_UINT32 AT_SndSetVoicePrefer (
     AT_RABM_SET_VOICEPREFER_PARA_REQ_STRU                  *pstSndMsg = VOS_NULL_PTR;
     VOS_UINT32                                              ulRslt;
 
-    /* ÉêÇëÄÚ´æ  */
+    /* ç”³è¯·å†…å­˜  */
     pstSndMsg = (AT_RABM_SET_VOICEPREFER_PARA_REQ_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                                                sizeof(AT_RABM_SET_VOICEPREFER_PARA_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
     if ( VOS_NULL_PTR == pstSndMsg )
     {
-        /* ÄÚ´æÉêÇëÊ§°Ü */
+        /* å†…å­˜ç”³è¯·å¤±è´¥ */
         AT_ERR_LOG("AT_SndSetVoicePrefer:ERROR: Memory Alloc Error for pstMsg");
         return VOS_ERR;
     }
 
-    /* ÌîÐ´Ïà¹Ø²ÎÊý */
+    /* å¡«å†™ç›¸å…³å‚æ•° */
     pstSndMsg->stMsgHeader.ulReceiverCpuId   = VOS_LOCAL_CPUID;
     pstSndMsg->stMsgHeader.ulReceiverPid     = AT_GetDestPid(usClientId, I0_WUEPS_PID_RABM);
     pstSndMsg->stMsgHeader.ulLength          = sizeof(AT_RABM_SET_VOICEPREFER_PARA_REQ_STRU) - VOS_MSG_HEAD_LENGTH;
@@ -294,7 +294,7 @@ VOS_UINT32 AT_SndSetVoicePrefer (
 
     pstSndMsg->ulVoicePreferApStatus         = ulVoicePreferApStatus;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     ulRslt = PS_SEND_MSG(WUEPS_PID_AT, pstSndMsg);
     if ( VOS_OK != ulRslt )
     {
@@ -314,17 +314,17 @@ VOS_UINT32 AT_SndQryVoicePrefer (
     AT_RABM_QRY_VOICEPREFER_PARA_REQ_STRU                  *pstSndMsg = VOS_NULL_PTR;
     VOS_UINT32                                              ulRslt;
 
-    /* ÉêÇëÄÚ´æ  */
+    /* ç”³è¯·å†…å­˜  */
     pstSndMsg = (AT_RABM_QRY_VOICEPREFER_PARA_REQ_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                                                sizeof(AT_RABM_QRY_VOICEPREFER_PARA_REQ_STRU) - VOS_MSG_HEAD_LENGTH);
     if ( VOS_NULL_PTR == pstSndMsg )
     {
-        /* ÄÚ´æÉêÇëÊ§°Ü */
+        /* å†…å­˜ç”³è¯·å¤±è´¥ */
         AT_ERR_LOG("AT_SndQryVoicePrefer:ERROR: Memory Alloc Error for pstMsg");
         return VOS_ERR;
     }
 
-    /* ÌîÐ´Ïà¹Ø²ÎÊý */
+    /* å¡«å†™ç›¸å…³å‚æ•° */
     pstSndMsg->stMsgHeader.ulReceiverCpuId   = VOS_LOCAL_CPUID;
     pstSndMsg->stMsgHeader.ulReceiverPid     = AT_GetDestPid(usClientId, I0_WUEPS_PID_RABM);
     pstSndMsg->stMsgHeader.ulLength          = sizeof(AT_RABM_QRY_VOICEPREFER_PARA_REQ_STRU) - VOS_MSG_HEAD_LENGTH;
@@ -332,7 +332,7 @@ VOS_UINT32 AT_SndQryVoicePrefer (
     pstSndMsg->usClientId                    = usClientId;
     pstSndMsg->ucOpId                        = ucOpId;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     ulRslt = PS_SEND_MSG(WUEPS_PID_AT, pstSndMsg);
     if ( VOS_OK != ulRslt )
     {
@@ -350,24 +350,24 @@ VOS_UINT32 AT_FillAndSndCSIMAMsg(VOS_UINT16 usClinetID, VOS_UINT32 ulModemStatus
     AT_CSIMA_RESET_STATUS_IND_MSG_STRU  *pstATCSIMAIndMsg;
     MODEM_ID_ENUM_UINT16                enModemID;
 
-    /* µ÷ÓÃ½Ó¿Ú»ñÈ¡Modem ID */
+    /* è°ƒç”¨æŽ¥å£èŽ·å–Modem ID */
     if(VOS_OK != AT_GetModemIdFromClient(usClinetID,&enModemID))
     {
         AT_ERR_LOG("AT_FillAndSndCSIMAMsg:ERROR: AT_GetModemIdFromClient Error");
         return VOS_ERR;
     }
 
-    /* ÉêÇëÄÚ´æ  */
+    /* ç”³è¯·å†…å­˜  */
     pstATCSIMAIndMsg = (AT_CSIMA_RESET_STATUS_IND_MSG_STRU *)PS_ALLOC_MSG(WUEPS_PID_AT,
                                                sizeof(AT_CSIMA_RESET_STATUS_IND_MSG_STRU) - VOS_MSG_HEAD_LENGTH);
     if ( VOS_NULL_PTR == pstATCSIMAIndMsg )
     {
-        /* ÄÚ´æÉêÇëÊ§°Ü */
+        /* å†…å­˜ç”³è¯·å¤±è´¥ */
         AT_ERR_LOG("AT_FillAndSndCSIMAMsg:ERROR: Memory Alloc Error for pstMsg");
         return VOS_ERR;
     }
 
-    /* ÌîÐ´Ïà¹Ø²ÎÊý */
+    /* å¡«å†™ç›¸å…³å‚æ•° */
     if (MODEM_ID_1 == enModemID)
     {
         pstATCSIMAIndMsg->ulReceiverPid     = I1_WUEPS_PID_CSIMA;
@@ -380,7 +380,7 @@ VOS_UINT32 AT_FillAndSndCSIMAMsg(VOS_UINT16 usClinetID, VOS_UINT32 ulModemStatus
     pstATCSIMAIndMsg->ulMsgId           = AT_CSIMA_RESET_IND_MSG;
     pstATCSIMAIndMsg->enVIAModemStatus  = (CBP_MODEM_RESET_STATUS_ENUM_UINT32)ulModemStatus;
 
-    /* µ÷ÓÃVOS·¢ËÍÔ­Óï */
+    /* è°ƒç”¨VOSå‘é€åŽŸè¯­ */
     return PS_SEND_MSG(WUEPS_PID_AT, pstATCSIMAIndMsg);
 }
 

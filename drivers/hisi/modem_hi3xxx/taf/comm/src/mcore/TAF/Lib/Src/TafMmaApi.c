@@ -2,7 +2,7 @@
 
 
 /*****************************************************************************
-   1 Í·ÎÄ¼ş°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "vos.h"
 #include "Taf_Tafm_Remote.h"
@@ -22,13 +22,13 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 #define    THIS_FILE_ID PS_FILE_ID_TAF_MMA_API_C
 
 /*****************************************************************************
-   2 È«¾Ö±äÁ¿¶¨Òå
+   2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 #if (OSA_CPU_ACPU == VOS_OSA_CPU)
     extern VOS_UINT32 AT_GetDestPid(
@@ -38,7 +38,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-   3 º¯ÊıÊµÏÖ
+   3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -96,7 +96,7 @@ VOS_UINT32 Taf_MePersonalisationHandle(MN_CLIENT_ID_T          ClientId,
 }
 
 /**********************************************************/
-/*                      µç»°¹ÜÀíAPI                       */
+/*                      ç”µè¯ç®¡ç†API                       */
 /**********************************************************/
 
 TAF_UINT32 Taf_PhonePlmnResel ( MN_CLIENT_ID_T           ClientId,
@@ -120,12 +120,12 @@ VOS_UINT32 TAF_PhonePlmnUserSel(
     VOS_UINT32                           ulRst;
 
 
-    /* ·¢ËÍÏûÏ¢ TAF_MSG_MMA_PLMN_USER_SEL ¸ø MMA ´¦Àí£¬
-       ¸ÃÏûÏ¢´øTAF_PLMN_USER_SEL_STRUÀàĞÍµÄ²ÎÊı½á¹¹ */
+    /* å‘é€æ¶ˆæ¯ TAF_MSG_MMA_PLMN_USER_SEL ç»™ MMA å¤„ç†ï¼Œ
+       è¯¥æ¶ˆæ¯å¸¦TAF_PLMN_USER_SEL_STRUç±»å‹çš„å‚æ•°ç»“æ„ */
     ulRst = MN_FillAndSndAppReqMsg(ClientId,
                                    OpId,
                                    TAF_MSG_MMA_PLMN_USER_SEL,
-                                   (VOS_UINT8*)pstPlmnUserSel, /*ÒªÇó²éÑ¯PSµÄ×¢²á×´Ì¬¡£*/
+                                   (VOS_UINT8*)pstPlmnUserSel, /*è¦æ±‚æŸ¥è¯¢PSçš„æ³¨å†ŒçŠ¶æ€ã€‚*/
                                    sizeof(TAF_PLMN_USER_SEL_STRU),
                                    I0_WUEPS_PID_MMA);
 
@@ -335,7 +335,7 @@ VOS_UINT32 Taf_NetScanHandle(
 }
 
 
-/* Modified by c00318887 for file refreshĞèÒª´¥·¢±³¾°ËÑ, 2015-3-9, begin */
+/* Modified by c00318887 for file refreshéœ€è¦è§¦å‘èƒŒæ™¯æœ, 2015-3-9, begin */
 
 VOS_UINT32 TAF_SetRefreshStub(
     MN_CLIENT_ID_T                      usClientId,
@@ -351,7 +351,7 @@ VOS_UINT32 TAF_SetRefreshStub(
                                   I0_WUEPS_PID_MMA);
 }
 
-/* Modified by c00318887 for file refreshĞèÒª´¥·¢±³¾°ËÑ, 2015-3-9, end */
+/* Modified by c00318887 for file refreshéœ€è¦è§¦å‘èƒŒæ™¯æœ, 2015-3-9, end */
 
 VOS_UINT32 TAF_SetAutoReselStub(
     MN_CLIENT_ID_T                                          usClientId,
@@ -466,18 +466,18 @@ VOS_UINT32 TAF_MMA_PhoneModeSetReq(
     ulSenderPid   = WUEPS_PID_TAF;
 #endif
 
-    /* ²ÎÊı¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (VOS_NULL_PTR == pstPhoneModePara)
     {
         return VOS_FALSE;
     }
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_PHONE_MODE_SET_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_PHONE_MODE_SET_REQ_STRU */
     pstMsg = (TAF_MMA_PHONE_MODE_SET_REQ_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                        ulSenderPid,
                                        sizeof(TAF_MMA_PHONE_MODE_SET_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -486,7 +486,7 @@ VOS_UINT32 TAF_MMA_PhoneModeSetReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_PHONE_MODE_SET_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ·¢ËÍPIDÍ³Ò»ÌîĞ´ÎªWUEPS_PID_TAF */
+    /* å‘é€PIDç»Ÿä¸€å¡«å†™ä¸ºWUEPS_PID_TAF */
     pstMsg->ulSenderPid                 = ulSenderPid;
     pstMsg->ulReceiverPid               = ulReceiverPid;
     pstMsg->ulMsgName                   = ID_TAF_MMA_PHONE_MODE_SET_REQ;
@@ -495,7 +495,7 @@ VOS_UINT32 TAF_MMA_PhoneModeSetReq(
     pstMsg->stCtrl.ucOpId               = ucOpId;
     PS_MEM_CPY(&(pstMsg->stPhoneModePara), pstPhoneModePara, sizeof(TAF_MMA_PHONE_MODE_PARA_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;
@@ -522,18 +522,18 @@ VOS_UINT32 TAF_MMA_SetSysCfgReq(
     ulSenderPid   = WUEPS_PID_TAF;
 #endif
 
-    /* ²ÎÊı¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (VOS_NULL_PTR == pstSysCfgPara)
     {
         return VOS_FALSE;
     }
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_SYS_CFG_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_SYS_CFG_REQ_STRU */
     pstMsg = (TAF_MMA_SYS_CFG_REQ_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                              ulSenderPid,
                                              sizeof(TAF_MMA_SYS_CFG_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -542,8 +542,8 @@ VOS_UINT32 TAF_MMA_SetSysCfgReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_SYS_CFG_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ¸ù¾İÊäÈë²ÎÊıÌî³äTAF_MMA_SYS_CFG_REQ_STRU */
-    /* ·¢ËÍPIDÍ³Ò»ÌîĞ´ÎªWUEPS_PID_TAF */
+    /* æ ¹æ®è¾“å…¥å‚æ•°å¡«å……TAF_MMA_SYS_CFG_REQ_STRU */
+    /* å‘é€PIDç»Ÿä¸€å¡«å†™ä¸ºWUEPS_PID_TAF */
     pstMsg->ulSenderPid       = ulSenderPid;
     pstMsg->ulReceiverPid     = ulReceiverPid;
     pstMsg->ulMsgName         = ID_TAF_MMA_SYS_CFG_SET_REQ;
@@ -553,7 +553,7 @@ VOS_UINT32 TAF_MMA_SetSysCfgReq(
 
     PS_MEM_CPY(&(pstMsg->stSysCfgPara), pstSysCfgPara, sizeof(TAF_MMA_SYS_CFG_PARA_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;
@@ -582,18 +582,18 @@ VOS_UINT32 TAF_MMA_AcqBestNetworkReq(
     ulSenderPid   = WUEPS_PID_TAF;
 #endif
 
-    /* ²ÎÊı¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (VOS_NULL_PTR == pstAcqPara)
     {
         return VOS_FALSE;
     }
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_ACQ_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_ACQ_REQ_STRU */
     pstMsg = (TAF_MMA_ACQ_REQ_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                              ulSenderPid,
                                              sizeof(TAF_MMA_ACQ_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -602,7 +602,7 @@ VOS_UINT32 TAF_MMA_AcqBestNetworkReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_ACQ_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ·¢ËÍPIDÍ³Ò»ÌîĞ´ÎªWUEPS_PID_TAF */
+    /* å‘é€PIDç»Ÿä¸€å¡«å†™ä¸ºWUEPS_PID_TAF */
     pstMsg->ulSenderPid       = ulSenderPid;
     pstMsg->ulReceiverPid     = ulReceiverPid;
     pstMsg->ulMsgName         = ID_TAF_MMA_ACQ_BEST_NETWORK_REQ;
@@ -611,7 +611,7 @@ VOS_UINT32 TAF_MMA_AcqBestNetworkReq(
     pstMsg->stCtrl.ucOpId     = ucOpId;
     PS_MEM_CPY(&(pstMsg->stAcqPara), pstAcqPara, sizeof(TAF_MMA_ACQ_PARA_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;
@@ -638,18 +638,18 @@ VOS_UINT32 TAF_MMA_RegReq(
     ulSenderPid   = WUEPS_PID_TAF;
 #endif
 
-    /* ²ÎÊı¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (VOS_NULL_PTR == pstRegPara)
     {
         return VOS_FALSE;
     }
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_REG_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_REG_REQ_STRU */
     pstMsg = (TAF_MMA_REG_REQ_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                              ulSenderPid,
                                              sizeof(TAF_MMA_REG_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -658,8 +658,8 @@ VOS_UINT32 TAF_MMA_RegReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_REG_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ¸ù¾İÊäÈë²ÎÊıÌî³äTAF_MMA_REG_REQ_STRU */
-    /* ·¢ËÍPIDÍ³Ò»ÌîĞ´ÎªWUEPS_PID_TAF */
+    /* æ ¹æ®è¾“å…¥å‚æ•°å¡«å……TAF_MMA_REG_REQ_STRU */
+    /* å‘é€PIDç»Ÿä¸€å¡«å†™ä¸ºWUEPS_PID_TAF */
     pstMsg->ulSenderPid       = ulSenderPid;
     pstMsg->ulReceiverPid     = ulReceiverPid;
     pstMsg->ulMsgName         = ID_TAF_MMA_REG_REQ;
@@ -668,7 +668,7 @@ VOS_UINT32 TAF_MMA_RegReq(
     pstMsg->stCtrl.ucOpId     = ucOpId;
     PS_MEM_CPY(&(pstMsg->stRegPara), pstRegPara, sizeof(TAF_MMA_REG_PARA_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;
@@ -698,18 +698,18 @@ VOS_UINT32 TAF_MMA_PowerSaveReq(
     ulSenderPid   = WUEPS_PID_TAF;
 #endif
 
-    /* ²ÎÊı¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (VOS_NULL_PTR == pstPowerSavePara)
     {
         return VOS_FALSE;
     }
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_POWER_SAVE_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_POWER_SAVE_REQ_STRU */
     pstMsg = (TAF_MMA_POWER_SAVE_REQ_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                            ulSenderPid,
                                            sizeof(TAF_MMA_POWER_SAVE_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -718,7 +718,7 @@ VOS_UINT32 TAF_MMA_PowerSaveReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_POWER_SAVE_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ·¢ËÍPIDÍ³Ò»ÌîĞ´ÎªWUEPS_PID_TAF */
+    /* å‘é€PIDç»Ÿä¸€å¡«å†™ä¸ºWUEPS_PID_TAF */
     pstMsg->ulSenderPid       = ulSenderPid;
     pstMsg->ulReceiverPid     = ulReceiverPid;
     pstMsg->ulMsgName         = ID_TAF_MMA_POWER_SAVE_REQ;
@@ -727,7 +727,7 @@ VOS_UINT32 TAF_MMA_PowerSaveReq(
     pstMsg->stCtrl.ucOpId     = ucOpId;
     PS_MEM_CPY(&(pstMsg->stPowerSavePara), pstPowerSavePara, sizeof(TAF_MMA_POWER_SAVE_PARA_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;
@@ -754,18 +754,18 @@ VOS_UINT32 TAF_MMA_DetachReq(
     ulSenderPid   = WUEPS_PID_TAF;
 #endif
 
-    /* ²ÎÊı¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (VOS_NULL_PTR == pstDetachPara)
     {
         return VOS_FALSE;
     }
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_DETACH_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_DETACH_REQ_STRU */
     pstMsg = (TAF_MMA_DETACH_REQ_STRU*)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                            ulSenderPid,
                                            sizeof(TAF_MMA_DETACH_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -774,8 +774,8 @@ VOS_UINT32 TAF_MMA_DetachReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_DETACH_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ¸ù¾İÊäÈë²ÎÊıÌî³äTAF_MMA_DETACH_REQ_STRU */
-    /* ·¢ËÍPIDÍ³Ò»ÌîĞ´ÎªWUEPS_PID_TAF */
+    /* æ ¹æ®è¾“å…¥å‚æ•°å¡«å……TAF_MMA_DETACH_REQ_STRU */
+    /* å‘é€PIDç»Ÿä¸€å¡«å†™ä¸ºWUEPS_PID_TAF */
     pstMsg->ulSenderPid       = ulSenderPid;
     pstMsg->ulReceiverPid     = ulReceiverPid;
     pstMsg->ulMsgName         = ID_TAF_MMA_DETACH_REQ;
@@ -784,7 +784,7 @@ VOS_UINT32 TAF_MMA_DetachReq(
     pstMsg->stCtrl.ucOpId     = ucOpId;
     PS_MEM_CPY(&(pstMsg->stDetachPara), pstDetachPara, sizeof(TAF_MMA_DETACH_PARA_STRU));
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;
@@ -796,21 +796,21 @@ VOS_UINT32 TAF_MMA_DetachReq(
 /* Added by zwx247453 for VOLTE SWITCH, 2015-02-02, Begin */
 #if (FEATURE_ON == FEATURE_IMS)
 /*****************************************************************************
- º¯ Êı Ãû  : TAF_MMA_SetImsSwitchReq
- ¹¦ÄÜÃèÊö  : IMSSwitch½Ó¿Ú
- ÊäÈë²ÎÊı  : ulModuleId     ---  Íâ²¿Ä£¿éPID
-             usCliendId     ---  Íâ²¿Ä£¿éCliendId
-             ucOpId         ---  Íâ²¿Ä£¿éOpId
-             ucImsSwitch    ---  IMS ×´Ì¬ÉèÖÃ²ÎÊı
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_TRUE:³É¹¦,VOS_FALSE:Ê§°Ü
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : TAF_MMA_SetImsSwitchReq
+ åŠŸèƒ½æè¿°  : IMSSwitchæ¥å£
+ è¾“å…¥å‚æ•°  : ulModuleId     ---  å¤–éƒ¨æ¨¡å—PID
+             usCliendId     ---  å¤–éƒ¨æ¨¡å—CliendId
+             ucOpId         ---  å¤–éƒ¨æ¨¡å—OpId
+             ucImsSwitch    ---  IMS çŠ¶æ€è®¾ç½®å‚æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_TRUE:æˆåŠŸ,VOS_FALSE:å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2015Äê02ÔÂ02ÈÕ
-    ×÷    Õß   : zwx247453
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2015å¹´02æœˆ02æ—¥
+    ä½œ    è€…   : zwx247453
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 TAF_MMA_SetImsSwitchReq(
@@ -832,19 +832,19 @@ VOS_UINT32 TAF_MMA_SetImsSwitchReq(
     ulSenderPid   = WUEPS_PID_TAF;
 #endif
 
-    /* ²ÎÊı¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if ((TAF_MMA_IMS_SWITCH_SET_POWER_OFF != enImsSwitch)
      && (TAF_MMA_IMS_SWITCH_SET_POWER_ON  != enImsSwitch))
     {
         return VOS_FALSE;
     }
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_IMS_SWITCH_SET_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_IMS_SWITCH_SET_REQ_STRU */
     pstMsg = (TAF_MMA_IMS_SWITCH_SET_REQ_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                            ulSenderPid,
                                            sizeof(TAF_MMA_IMS_SWITCH_SET_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -853,7 +853,7 @@ VOS_UINT32 TAF_MMA_SetImsSwitchReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_IMS_SWITCH_SET_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ¸ù¾İÊäÈë²ÎÊıÌî³äTAF_MMA_IMS_SWITCH_SET_REQ_STRU */
+    /* æ ¹æ®è¾“å…¥å‚æ•°å¡«å……TAF_MMA_IMS_SWITCH_SET_REQ_STRU */
     pstMsg->ulSenderPid       = ulSenderPid;
     pstMsg->ulReceiverPid     = ulReceiverPid;
     pstMsg->ulMsgName         = ID_TAF_MMA_IMS_SWITCH_SET_REQ;
@@ -862,7 +862,7 @@ VOS_UINT32 TAF_MMA_SetImsSwitchReq(
     pstMsg->stCtrl.ucOpId     = ucOpId;
     pstMsg->enImsSwitch       = enImsSwitch;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;
@@ -872,20 +872,20 @@ VOS_UINT32 TAF_MMA_SetImsSwitchReq(
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : TAF_MMA_QryImsSwitchReq
- ¹¦ÄÜÃèÊö  : IMSSwitch½Ó¿Ú
- ÊäÈë²ÎÊı  : ulModuleId     ---  Íâ²¿Ä£¿éPID
-             usCliendId     ---  Íâ²¿Ä£¿éCliendId
-             ucOpId         ---  Íâ²¿Ä£¿éOpId
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_TRUE:³É¹¦,VOS_FALSE:Ê§°Ü
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : TAF_MMA_QryImsSwitchReq
+ åŠŸèƒ½æè¿°  : IMSSwitchæ¥å£
+ è¾“å…¥å‚æ•°  : ulModuleId     ---  å¤–éƒ¨æ¨¡å—PID
+             usCliendId     ---  å¤–éƒ¨æ¨¡å—CliendId
+             ucOpId         ---  å¤–éƒ¨æ¨¡å—OpId
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_TRUE:æˆåŠŸ,VOS_FALSE:å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2015Äê02ÔÂ02ÈÕ
-    ×÷    Õß   : zwx247453
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2015å¹´02æœˆ02æ—¥
+    ä½œ    è€…   : zwx247453
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 TAF_MMA_QryImsSwitchReq(
@@ -907,12 +907,12 @@ VOS_UINT32 TAF_MMA_QryImsSwitchReq(
 #endif
 
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_IMS_SWITCH_QRY_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_IMS_SWITCH_QRY_REQ_STRU */
     pstMsg = (TAF_MMA_IMS_SWITCH_QRY_REQ_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                            ulSenderPid,
                                            sizeof(TAF_MMA_IMS_SWITCH_QRY_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -921,7 +921,7 @@ VOS_UINT32 TAF_MMA_QryImsSwitchReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_IMS_SWITCH_QRY_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ¸ù¾İÊäÈë²ÎÊıÌî³äTAF_MMA_IMS_SWITCH_QRY_REQ_STRU */
+    /* æ ¹æ®è¾“å…¥å‚æ•°å¡«å……TAF_MMA_IMS_SWITCH_QRY_REQ_STRU */
     pstMsg->ulSenderPid       = ulSenderPid;
     pstMsg->ulReceiverPid     = ulReceiverPid;
     pstMsg->ulMsgName         = ID_TAF_MMA_IMS_SWITCH_QRY_REQ;
@@ -929,7 +929,7 @@ VOS_UINT32 TAF_MMA_QryImsSwitchReq(
     pstMsg->stCtrl.usClientId = usClientId;
     pstMsg->stCtrl.ucOpId     = ucOpId;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;
@@ -939,21 +939,21 @@ VOS_UINT32 TAF_MMA_QryImsSwitchReq(
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : TAF_MMA_SetVoiceDomainReq
- ¹¦ÄÜÃèÊö  : VoiceDomain½Ó¿Ú
- ÊäÈë²ÎÊı  : ulModuleId       ---  Íâ²¿Ä£¿éPID
-             usCliendId       ---  Íâ²¿Ä£¿éCliendId
-             ucOpId           ---  Íâ²¿Ä£¿éOpId
-             enVoiceDomain    ---  ÓÅÏÈÓòÉèÖÃ²ÎÊı
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_TRUE:³É¹¦,VOS_FALSE:Ê§°Ü
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : TAF_MMA_SetVoiceDomainReq
+ åŠŸèƒ½æè¿°  : VoiceDomainæ¥å£
+ è¾“å…¥å‚æ•°  : ulModuleId       ---  å¤–éƒ¨æ¨¡å—PID
+             usCliendId       ---  å¤–éƒ¨æ¨¡å—CliendId
+             ucOpId           ---  å¤–éƒ¨æ¨¡å—OpId
+             enVoiceDomain    ---  ä¼˜å…ˆåŸŸè®¾ç½®å‚æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_TRUE:æˆåŠŸ,VOS_FALSE:å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2015Äê02ÔÂ02ÈÕ
-    ×÷    Õß   : zwx247453
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2015å¹´02æœˆ02æ—¥
+    ä½œ    è€…   : zwx247453
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 TAF_MMA_SetVoiceDomainReq(
@@ -975,18 +975,18 @@ VOS_UINT32 TAF_MMA_SetVoiceDomainReq(
     ulSenderPid   = WUEPS_PID_TAF;
 #endif
 
-    /* ²ÎÊı¼ì²é */
+    /* å‚æ•°æ£€æŸ¥ */
     if (enVoiceDomain >= TAF_MMA_VOICE_DOMAIN_BUTT)
     {
         return VOS_FALSE;
     }
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_VOICE_DOMAIN_SET_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_VOICE_DOMAIN_SET_REQ_STRU */
     pstMsg = (TAF_MMA_VOICE_DOMAIN_SET_REQ_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                            ulSenderPid,
                                            sizeof(TAF_MMA_VOICE_DOMAIN_SET_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -995,7 +995,7 @@ VOS_UINT32 TAF_MMA_SetVoiceDomainReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_VOICE_DOMAIN_SET_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ¸ù¾İÊäÈë²ÎÊıÌî³äTAF_MMA_VOICE_DOMAIN_SET_REQ_STRU */
+    /* æ ¹æ®è¾“å…¥å‚æ•°å¡«å……TAF_MMA_VOICE_DOMAIN_SET_REQ_STRU */
     pstMsg->ulSenderPid       = ulSenderPid;
     pstMsg->ulReceiverPid     = ulReceiverPid;
     pstMsg->ulMsgName         = ID_TAF_MMA_VOICE_DOMAIN_SET_REQ;
@@ -1004,7 +1004,7 @@ VOS_UINT32 TAF_MMA_SetVoiceDomainReq(
     pstMsg->stCtrl.ucOpId     = ucOpId;
     pstMsg->enVoiceDomain     = enVoiceDomain;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;
@@ -1014,20 +1014,20 @@ VOS_UINT32 TAF_MMA_SetVoiceDomainReq(
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : TAF_MMA_QryVoiceDomainReq
- ¹¦ÄÜÃèÊö  : VoiceDomain½Ó¿Ú
- ÊäÈë²ÎÊı  : ulModuleId      ---  Íâ²¿Ä£¿éPID
-             usCliendId      ---  Íâ²¿Ä£¿éCliendId
-             ucOpId          ---  Íâ²¿Ä£¿éOpId
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_TRUE:³É¹¦,VOS_FALSE:Ê§°Ü
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : TAF_MMA_QryVoiceDomainReq
+ åŠŸèƒ½æè¿°  : VoiceDomainæ¥å£
+ è¾“å…¥å‚æ•°  : ulModuleId      ---  å¤–éƒ¨æ¨¡å—PID
+             usCliendId      ---  å¤–éƒ¨æ¨¡å—CliendId
+             ucOpId          ---  å¤–éƒ¨æ¨¡å—OpId
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_TRUE:æˆåŠŸ,VOS_FALSE:å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2015Äê02ÔÂ02ÈÕ
-    ×÷    Õß   : zwx247453
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2015å¹´02æœˆ02æ—¥
+    ä½œ    è€…   : zwx247453
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 TAF_MMA_QryVoiceDomainReq(
@@ -1048,12 +1048,12 @@ VOS_UINT32 TAF_MMA_QryVoiceDomainReq(
     ulSenderPid   = WUEPS_PID_TAF;
 #endif
 
-    /* ÉêÇëÏûÏ¢°üTAF_MMA_VOICE_DOMAIN_QRY_REQ_STRU */
+    /* ç”³è¯·æ¶ˆæ¯åŒ…TAF_MMA_VOICE_DOMAIN_QRY_REQ_STRU */
     pstMsg = (TAF_MMA_VOICE_DOMAIN_QRY_REQ_STRU *)PS_ALLOC_MSG_WITH_HEADER_LEN(
                                            ulSenderPid,
                                            sizeof(TAF_MMA_VOICE_DOMAIN_QRY_REQ_STRU));
 
-    /* ÄÚ´æÉêÇëÊ§°Ü£¬·µ»Ø */
+    /* å†…å­˜ç”³è¯·å¤±è´¥ï¼Œè¿”å› */
     if (VOS_NULL_PTR == pstMsg)
     {
         return VOS_FALSE;
@@ -1062,7 +1062,7 @@ VOS_UINT32 TAF_MMA_QryVoiceDomainReq(
     PS_MEM_SET( (VOS_INT8 *)pstMsg + VOS_MSG_HEAD_LENGTH, 0X00,
             (VOS_SIZE_T)(sizeof(TAF_MMA_VOICE_DOMAIN_QRY_REQ_STRU) - VOS_MSG_HEAD_LENGTH) );
 
-    /* ¸ù¾İÊäÈë²ÎÊıÌî³äTAF_MMA_VOICE_DOMAIN_QRY_REQ_STRU */
+    /* æ ¹æ®è¾“å…¥å‚æ•°å¡«å……TAF_MMA_VOICE_DOMAIN_QRY_REQ_STRU */
     pstMsg->ulSenderPid       = ulSenderPid;
     pstMsg->ulReceiverPid     = ulReceiverPid;
     pstMsg->ulMsgName         = ID_TAF_MMA_VOICE_DOMAIN_QRY_REQ;
@@ -1070,7 +1070,7 @@ VOS_UINT32 TAF_MMA_QryVoiceDomainReq(
     pstMsg->stCtrl.usClientId = usClientId;
     pstMsg->stCtrl.ucOpId     = ucOpId;
 
-    /* ·¢ËÍÏûÏ¢ */
+    /* å‘é€æ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(ulSenderPid, pstMsg))
     {
         return VOS_FALSE;

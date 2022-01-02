@@ -234,37 +234,37 @@ void test_in_idle(void)
 
 	ccore_ipc_disable();
 	bsp_ipc_int_mask_status_dump();
-	/* ÉèÖÃÆô¶¯Ä£Ê½ÎªCºËµ¥¶À¸´Î» */
+	/* è®¾ç½®å¯åŠ¨æ¨¡å¼ä¸ºCæ ¸å•ç‹¬å¤ä½ */
 	bsp_reset_bootflag_set(CCORE_IS_REBOOT);
 	g_modem_reset_ctrl.boot_mode = readl((volatile const void *)SCBAKDATA13);
 	reset_print_debug("(%d) set boot mode:0x%x\n", ++g_reset_debug.main_stage, g_modem_reset_ctrl.boot_mode);
 
-	/* »½ĞÑccore */
+	/* å”¤é†’ccore */
 	ret = bsp_ipc_int_send(IPC_CORE_CCORE, g_modem_reset_ctrl.ipc_send_irq_wakeup_ccore);
 	if(ret != 0)
 	{
 		reset_print_err("wakeup ccore failt\n");
 	}
 
-	/* ¸´Î»Ç°¸÷×é¼ş»Øµ÷ */
+	/* å¤ä½å‰å„ç»„ä»¶å›è°ƒ */
 	ret = invoke_reset_cb(DRV_RESET_CALLCBFUN_RESET_BEFORE);
 	if(ret < 0)
 	{
 		return ;
 	}
 
-	/* ×èÖ¹ºË¼äÍ¨ĞÅ */
+	/* é˜»æ­¢æ ¸é—´é€šä¿¡ */
 	ccore_msg_switch_off(g_modem_reset_ctrl.multicore_msg_switch, CCORE_STATUS);
 	reset_print_debug("(%d) switch off msg connect:%d\n", ++g_reset_debug.main_stage, g_modem_reset_ctrl.multicore_msg_switch);
 
-	/* Í¨Öªhifi£¬Í£Ö¹Óëmodem½»»¥ */
+	/* é€šçŸ¥hifiï¼Œåœæ­¢ä¸modemäº¤äº’ */
 	ret = send_msg_to_hifi(DRV_RESET_CALLCBFUN_RESET_BEFORE);
 	if(ret < 0)
 	{
 		reset_print_err("send_msg_to_hifi=0x%x fail\n", ret);
 		return ;
 	}
-	/*  µÈ´ıhifi´¦ÀíÍê³É */
+	/*  ç­‰å¾…hifiå¤„ç†å®Œæˆ */
 	if (osl_sem_downtimeout(&(g_modem_reset_ctrl.wait_hifi_reply_sem), msecs_to_jiffies((u32)RESET_WAIT_RESP_TIMEOUT)))/*lint !e713 */
 	{
 		reset_print_err("waiting the reply from hifi timeout(%d)!\n", RESET_WAIT_RESP_TIMEOUT);
@@ -272,7 +272,7 @@ void test_in_idle(void)
 	}
 	reset_print_debug("(%d) has received the reply from hifi\n", ++g_reset_debug.main_stage);
 
-	/* Í¨Öªmodem master½øidleÌ¬,²¢µÈ´ıccore»Ø¸´ */
+	/* é€šçŸ¥modem masterè¿›idleæ€,å¹¶ç­‰å¾…ccoreå›å¤ */
 	let_modem_master_in_idle();
 	ret = osl_sem_downtimeout(&(g_modem_reset_ctrl.wait_modem_master_in_idle_sem), 
 		msecs_to_jiffies(RESET_WAIT_MODEM_IN_IDLE_TIMEOUT));/*lint !e713 */

@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 м╥нд╪Ч╟Э╨╛
+  1 Е╓╢Ф√┤Д╩╤Е▄┘Е░╚
 *****************************************************************************/
 #include "AdsCtx.h"
 #include "AdsUpLink.h"
@@ -19,32 +19,32 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    п╜рИу╩╢Рс║╢Р╣Ц╥╫й╫об╣д.Cнд╪Ч╨Й╤╗рЕ
+    Е█▐Х╝╝Ф═┬Ф┴⌠Е█╟Ф┴⌠Г┌╧Ф√╧Е╪▐Д╦▀Г └.CФ√┤Д╩╤Е╝▐Е╝ Д╧┴
 *****************************************************************************/
 /*lint -e767*/
 #define    THIS_FILE_ID                 PS_FILE_ID_ADS_CTX_C
 /*lint +e767*/
 
 /*****************************************************************************
-  2 х╚╬ж╠Да©╤╗рЕ
+  2 Е┘╗Е╠─Е▐≤И┤▐Е╝ Д╧┴
 *****************************************************************************/
 
-VOS_UINT32                              g_ulAdsULTaskId        = 0;  /* ADSиоппхннЯID */
-VOS_UINT32                              g_ulAdsDLTaskId        = 0;  /* ADSобппхннЯID */
-VOS_UINT32                              g_ulAdsULTaskReadyFlag = 0;  /* ADSиоппхннЯткппв╢л╛ */
-VOS_UINT32                              g_ulAdsDLTaskReadyFlag = 0;  /* ADSобппхннЯткппв╢л╛ */
+VOS_UINT32                              g_ulAdsULTaskId        = 0;  /* ADSД╦┼Х║▄Д╩╩Е┼║ID */
+VOS_UINT32                              g_ulAdsDLTaskId        = 0;  /* ADSД╦▀Х║▄Д╩╩Е┼║ID */
+VOS_UINT32                              g_ulAdsULTaskReadyFlag = 0;  /* ADSД╦┼Х║▄Д╩╩Е┼║Х©░Х║▄Г┼╤Ф─│ */
+VOS_UINT32                              g_ulAdsDLTaskReadyFlag = 0;  /* ADSД╦▀Х║▄Д╩╩Е┼║Х©░Х║▄Г┼╤Ф─│ */
 
-/* ADSдё©И╣диообнд */
+/* ADSФ╗║Е²≈Г └Д╦┼Д╦▀Ф√┤ */
 ADS_CTX_STRU                            g_stAdsCtx;
 
 /*****************************************************************************
-  3 ╨╞йЩй╣ож
+  3 Е┤╫Ф∙╟Е╝·Г▌╟
 *****************************************************************************/
 
 VOS_UINT32 ADS_IsValidRabId(VOS_UINT8 ucRabId)
 {
 
-    /* RabId╣дспп╖ж╣н╙{5,15} */
+    /* RabIdГ └Ф°┴Ф∙┬Е─╪Д╦╨{5,15} */
     if ((ucRabId < ADS_RAB_ID_MIN)
      || ( ucRabId > ADS_RAB_ID_MAX))
     {
@@ -63,13 +63,13 @@ VOS_UINT32 ADS_UL_GetSpecInstanceSndPermitFlg(VOS_UINT8 ucInstanceIndex)
 
     pstAdsSpecCtx = &(g_stAdsCtx.astAdsSpecCtx[ucInstanceIndex]);
 
-    /* ╡Иур╦цй╣юЩ╣дц©╦ЖRAB╤сап */
+    /* Ф÷╔Ф┴╬Х╞╔Е╝·Д╬▀Г └Ф╞▐Д╦╙RABИ≤÷Е┬≈ */
     for (i = ADS_RAB_ID_MIN; i < (ADS_RAB_ID_MAX + 1); i++)
     {
-        /* ╤сапспп╖*/
+        /* И≤÷Е┬≈Ф°┴Ф∙┬*/
         if (VOS_TRUE == pstAdsSpecCtx->stAdsUlCtx.astAdsUlQueue[i].ucIsQueueValid)
         {
-            /* ╤саптйпМ╥╒км */
+            /* И≤÷Е┬≈Е┘│Х╝╦Е▐▒И─│ */
             if (VOS_TRUE == pstAdsSpecCtx->stAdsUlCtx.astAdsUlQueue[i].ucRabSndPermitFlg)
             {
                 return VOS_TRUE;
@@ -83,7 +83,7 @@ VOS_UINT32 ADS_UL_IsAllRabNotSndPermitFlg(VOS_VOID)
 {
     VOS_UINT8                           i;
 
-    /* ╡Иура╫╦Жй╣юЩ */
+    /* Ф÷╔Ф┴╬Д╦╓Д╦╙Е╝·Д╬▀ */
     for (i = 0; i < ADS_INSTANCE_MAX_NUM; i++)
     {
         if (VOS_TRUE == ADS_UL_GetSpecInstanceSndPermitFlg(i))
@@ -109,7 +109,7 @@ VOS_UINT32 ADS_UL_CheckAllQueueEmpty(VOS_UINT8 ucInstanceIndex)
         }
     }
 
-    /* кЫсп╣дPDP╤╪х╔╪╓╩Н║║*/
+    /* Ф┴─Ф°┴Г └PDPИ┐╫Е▌╩Ф©─Ф╢╩Ц──*/
     if ((ADS_RAB_ID_MAX + 1) != i)
     {
         return VOS_FALSE;
@@ -130,7 +130,7 @@ VOS_UINT32 ADS_UL_IsQueueExistent(
     VOS_UINT8                           ucRabId
 )
 {
-    /* ╤сапн╙©у */
+    /* И≤÷Е┬≈Д╦╨Г╘╨ */
     if (VOS_NULL_PTR == ADS_UL_GET_QUEUE_LINK_PTR(ucInstanceIndex, ucRabId))
     {
         ADS_WARNING_LOG(ACPU_PID_ADS_UL, "ADS_UL_IsQueueExistent: g_stAdsCtx.stAdsUlCtx.astAdsUlQueue[ulIndex].pstAdsUlLink is NULL");
@@ -172,23 +172,23 @@ VOS_UINT32 ADS_UL_InsertQueue(
 
     ulNonEmptyEvent = VOS_FALSE;
 
-    /* ╢к╫с©з╡╩йм╥еpstDataё╛сиио╡Цдё©И╦Ы╬щ╨╞йЩ╥╣╩ьж╣еп╤ойг╥ЯпХр╙йм╥едз╢Ф */
-    /* еп╤оRabIdйг╥Ян╙спп╖ж╣ */
+    /* Ф╜╓Ф▌╔Е▐ёД╦█И┤┼Ф■╬pstDataО╪▄Г■╠Д╦┼Е╠┌Ф╗║Е²≈Ф═╧Ф█╝Е┤╫Ф∙╟Х©■Е⌡·Е─╪Е┬╓Ф√╜Ф≤╞Е░╕И°─Х╕│И┤┼Ф■╬Е├┘Е╜≤ */
+    /* Е┬╓Ф√╜RabIdФ≤╞Е░╕Д╦╨Ф°┴Ф∙┬Е─╪ */
     if (VOS_OK != ADS_IsValidRabId(ucRabId))
     {
         ADS_WARNING_LOG1(ACPU_PID_ADS_UL, "ADS_UL_InsertQueue: ucRabId is", ucRabId);
         return VOS_ERR;
     }
 
-    /* ╤сап╪скЬ */
+    /* И≤÷Е┬≈Е┼═И■│ */
     /*lint -e571*/
     VOS_SpinLockIntLock(ADS_UL_GET_QUEUE_LINK_SPINLOCK(ucInstanceIndex, ucRabId), ulLockLevel);
     /*lint +e571*/
 
-    /* ╫А╣Ц╢Фтзё╛╣╚╤сап╡╩╢Фтз */
+    /* Г╩⌠Г┌╧Е╜≤Е°╗О╪▄Д╫├И≤÷Е┬≈Д╦█Е╜≤Е°╗ */
     if (VOS_OK != ADS_UL_IsQueueExistent(ucInstanceIndex, ucRabId))
     {
-        /* ╤сап╡ывВмЙЁи╫БкЬ */
+        /* И≤÷Е┬≈Ф⌠█Д╫°Е╝▄Ф┬░Х╖ёИ■│ */
         VOS_SpinUnlockIntUnlock(ADS_UL_GET_QUEUE_LINK_SPINLOCK(ucInstanceIndex, ucRabId), ulLockLevel);
         ADS_WARNING_LOG(ACPU_PID_ADS_UL, "ADS_UL_InsertQueue:the queue is not ext!");
         return VOS_ERR;
@@ -199,26 +199,26 @@ VOS_UINT32 ADS_UL_InsertQueue(
 
     if (ulQueueLen >= ADS_UL_GET_MAX_QUEUE_LENGTH(ucInstanceIndex))
     {
-        /* ╤сап╡ывВмЙЁи╫БкЬ */
+        /* И≤÷Е┬≈Ф⌠█Д╫°Е╝▄Ф┬░Х╖ёИ■│ */
         VOS_SpinUnlockIntUnlock(ADS_UL_GET_QUEUE_LINK_SPINLOCK(ucInstanceIndex, ucRabId), ulLockLevel);
         ADS_DBG_UL_DROPPED_PACKET_NUM(1);
         return VOS_ERR;
     }
 
-    /* ╡ЕхК╤сапг╟╫╚йЩ╬щ╢Риой╠╪Д╢а */
+    /* Ф▐▓Е┘╔И≤÷Е┬≈Е┴█Е╟├Ф∙╟Ф█╝Ф┴⌠Д╦┼Ф≈╤И≈╢Ф┬Ё */
     pstData->tstamp.tv64 = (VOS_INT64)VOS_GetSlice();
 #endif
 
-    /* ╡ЕхК╤сап */
+    /* Ф▐▓Е┘╔И≤÷Е┬≈ */
     IMM_ZcQueueTail(ADS_UL_GET_QUEUE_LINK_PTR(ucInstanceIndex, ucRabId), pstData);
 
-    /* ╤сапси©у╠Дн╙╥г©у */
+    /* И≤÷Е┬≈Г■╠Г╘╨Е▐≤Д╦╨И²·Г╘╨ */
     if (1 == IMM_ZcQueueLen(ADS_UL_GET_QUEUE_LINK_PTR(ucInstanceIndex, ucRabId)))
     {
         ulNonEmptyEvent = VOS_TRUE;
     }
 
-    /* ╤сап╡ывВмЙЁи╫БкЬ */
+    /* И≤÷Е┬≈Ф⌠█Д╫°Е╝▄Ф┬░Х╖ёИ■│ */
     VOS_SpinUnlockIntUnlock(ADS_UL_GET_QUEUE_LINK_SPINLOCK(ucInstanceIndex, ucRabId), ulLockLevel);
 
     ulAllUlQueueDataNum = ADS_UL_GetAllQueueDataNum();
@@ -226,13 +226,13 @@ VOS_UINT32 ADS_UL_InsertQueue(
 #if(FEATURE_OFF == FEATURE_SKB_EXP)
     if (VOS_TRUE == ADS_UL_GET_THRESHOLD_ACTIVE_FLAG())
     {
-        /* (1).jiffiesЁ╛й╠,тРж╠╫с╢╔╥╒╥╒йЩ,╡╒мёж╧╥╒йЩ╤╗й╠фВ
-           (2).╤сапжпйЩ╬щря╣╫тэ╟Эцеочгр╣╠г╟ц╩сптз╢╕юМйЩ╬щ,╢╔╥╒иопп╩╨╢Ф╩╨╢Ф╢╕юМйб╪Ч
-           (3).╤сапси©у╠Дн╙╥г©уй╠фТ╤╞йЩ╬щмЁ╪ф╤╗й╠фВрт╪╟╠ё╩╓╤╗й╠фВ
+        /* (1).jiffiesХ╤┘Ф≈╤,Е┬≥Г⌡╢Ф▌╔Х╖╕Е▐▒Е▐▒Ф∙╟,Е╧╤Е│°Ф╜╒Е▐▒Ф∙╟Е╝ Ф≈╤Е≥╗
+           (2).И≤÷Е┬≈Д╦╜Ф∙╟Ф█╝Е╥╡Е┬╟Ф■▓Е▄┘И≈╗И≥░Д╦■Е╫⌠Е┴█Ф╡║Ф°┴Е°╗Е╓└Г░├Ф∙╟Ф█╝,Х╖╕Е▐▒Д╦┼Х║▄Г╪⌠Е╜≤Г╪⌠Е╜≤Е╓└Г░├Д╨▀Д╩╤
+           (3).И≤÷Е┬≈Г■╠Г╘╨Е▐≤Д╦╨И²·Г╘╨Ф≈╤Е░╞Е┼╗Ф∙╟Ф█╝Г╩÷Х╝║Е╝ Ф≈╤Е≥╗Д╩╔Е▐┼Д©²Ф┼╓Е╝ Ф≈╤Е≥╗
          */
         ADS_UL_ADD_STAT_PKT_NUM(1);
 
-        /* Ё╛й╠Ё╓╤хн╙╥гаЦтРпХр╙фТ╤╞╢╔╥╒╥╒йЩ */
+        /* Х╤┘Ф≈╤И∙©Е╨╕Д╦╨И²·И⌡╤Е┬≥И°─Х╕│Е░╞Е┼╗Х╖╕Е▐▒Е▐▒Ф∙╟ */
         if (0 != ADS_UL_GET_JIFFIES_EXP_TMR_LEN())
         {
             if (ADS_TIME_AFTER_EQ(ADS_GET_CURR_KERNEL_TIME(),
@@ -251,7 +251,7 @@ VOS_UINT32 ADS_UL_InsertQueue(
             ADS_UL_SndEvent(ADS_UL_EVENT_DATA_PROC);
         }
 
-        /* ╤сапси©у╠Дн╙╥г©у */
+        /* И≤÷Е┬≈Г■╠Г╘╨Е▐≤Д╦╨И²·Г╘╨ */
         if (VOS_TRUE == ulNonEmptyEvent)
         {
             ADS_StartTimer(ACPU_PID_ADS_UL, TI_ADS_UL_DATA_STAT, ADS_UL_GET_STAT_TIMER_LEN());
@@ -260,9 +260,9 @@ VOS_UINT32 ADS_UL_InsertQueue(
     }
     else
     {
-        /* (1).╤сапси©у╠Дн╙╥г©уй╠╢╔╥╒иопп╩╨╢Ф╢╕юМйб╪Ч
-           (2).╤сапжпйЩ╬щря╣╫тэ╟Эцеоч╣дуШйЩ╠╤гр╣╠г╟ц╩сптз╢╕юМйЩ╬щ
-               ╢╔╥╒иопп╩╨╢Ф╩╨╢Ф╢╕юМйб╪Ч
+        /* (1).И≤÷Е┬≈Г■╠Г╘╨Е▐≤Д╦╨И²·Г╘╨Ф≈╤Х╖╕Е▐▒Д╦┼Х║▄Г╪⌠Е╜≤Е╓└Г░├Д╨▀Д╩╤
+           (2).И≤÷Е┬≈Д╦╜Ф∙╟Ф█╝Е╥╡Е┬╟Ф■▓Е▄┘И≈╗И≥░Г └Ф∙╢Ф∙╟Е─█Д╦■Е╫⌠Е┴█Ф╡║Ф°┴Е°╗Е╓└Г░├Ф∙╟Ф█╝
+               Х╖╕Е▐▒Д╦┼Х║▄Г╪⌠Е╜≤Г╪⌠Е╜≤Е╓└Г░├Д╨▀Д╩╤
          */
         if (VOS_TRUE == ulNonEmptyEvent)
         {
@@ -277,12 +277,12 @@ VOS_UINT32 ADS_UL_InsertQueue(
         }
     }
 #else
-    /* (1).╢сTCP/IPп╜рИу╩╧Щю╢╣д╣дйЩ╬щё╛ucTailPktIndн╙0.
-           ╣╠╤сапси©у╣╫╥г©у,
-           ╩Рйг╢О╣╫тэ╟Эцеочгр╣╠г╟ц╩сптзйЩ╬щ╢╕юМй╠╢╔╥╒иопп╩╨╢Ф╢╕юМйб╪Ч.
-       (2).USB╧Щю╢╣дйЩ╬щ╥гвН╨Ср╩╦Ж╟ЭucTailPktIndн╙2ё╛вН╨Ср╩╦Ж╟ЭucTailPktIndн╙1
-           ╣╠н╙вН╨Ср╩╦ЖIP╟Э,
-           ╩Рйг╢О╣╫тэ╟Эцеочгр╣╠г╟ц╩сптзйЩ╬щ╢╕юМй╠╢╔╥╒иопп╩╨╢Ф╢╕юМйб╪Ч.
+    /* (1).Д╩▌TCP/IPЕ█▐Х╝╝Ф═┬Х©┤Ф²╔Г └Г └Ф∙╟Ф█╝О╪▄ucTailPktIndД╦╨0.
+           Е╫⌠И≤÷Е┬≈Г■╠Г╘╨Е┬╟И²·Г╘╨,
+           Ф┬√Ф≤╞Х╬╬Е┬╟Ф■▓Е▄┘И≈╗И≥░Д╦■Е╫⌠Е┴█Ф╡║Ф°┴Е°╗Ф∙╟Ф█╝Е╓└Г░├Ф≈╤Х╖╕Е▐▒Д╦┼Х║▄Г╪⌠Е╜≤Е╓└Г░├Д╨▀Д╩╤.
+       (2).USBХ©┤Ф²╔Г └Ф∙╟Ф█╝И²·Ф°─Е░▌Д╦─Д╦╙Е▄┘ucTailPktIndД╦╨2О╪▄Ф°─Е░▌Д╦─Д╦╙Е▄┘ucTailPktIndД╦╨1
+           Е╫⌠Д╦╨Ф°─Е░▌Д╦─Д╦╙IPЕ▄┘,
+           Ф┬√Ф≤╞Х╬╬Е┬╟Ф■▓Е▄┘И≈╗И≥░Д╦■Е╫⌠Е┴█Ф╡║Ф°┴Е°╗Ф∙╟Ф█╝Е╓└Г░├Ф≈╤Х╖╕Е▐▒Д╦┼Х║▄Г╪⌠Е╜≤Е╓└Г░├Д╨▀Д╩╤.
      */
 
     if (0 == pstData->private_mem.ucTailPktInd)
@@ -357,15 +357,15 @@ VOS_UINT32 ADS_UL_CreateQueue(
 
     pstAdsUlCtx = ADS_GetUlCtx(ucInstanceIndex);
 
-    /* RabId╣д╤сапря╬╜╢Фтз */
+    /* RabIdГ └И≤÷Е┬≈Е╥╡Г╩▐Е╜≤Е°╗ */
     if (VOS_OK == ADS_UL_IsQueueExistent(ucInstanceIndex, ucRabId))
     {
-        /* ╤тс╕╣д╣В╤хсеох╪╤р╡р╩яЫ╩Руъйг╠хж╝г╟╣др╙╣мё╛╡╩╦ЭпбQCIж╠╫с╥╣╩ьOK */
+        /* Е╞╧Е╨■Г └Х╟┐Е╨╕Д╪≤Е┘┬Г╨╖Д╧÷Д╦─Ф═╥Ф┬√Х─┘Ф≤╞Ф╞■Д╧▀Е┴█Г └Х╕│Д╫▌О╪▄Д╦█Ф⌡╢Ф√╟QCIГ⌡╢Ф▌╔Х©■Е⌡·OK */
         if (enPrio >= pstAdsUlCtx->astAdsUlQueue[ucRabId].enPrio)
         {
             return VOS_OK;
         }
-        /* хГ╧Ш╤тс╕╣д╣В╤хсеох╪╤╠хж╝г╟╣др╙╦ъё╛пХр╙╦Эпб╦цPDP╣д╤сапсеох╪╤ё╛╡╒╤т╤сап╧эюМ╫ЬппеепР */
+        /* Е╕┌Ф·°Е╞╧Е╨■Г └Х╟┐Е╨╕Д╪≤Е┘┬Г╨╖Ф╞■Д╧▀Е┴█Г └Х╕│И╚≤О╪▄И°─Х╕│Ф⌡╢Ф√╟Х╞╔PDPГ └И≤÷Е┬≈Д╪≤Е┘┬Г╨╖О╪▄Е╧╤Е╞╧И≤÷Е┬≈Г╝║Г░├Х©⌡Х║▄Ф▌▓Е╨▐ */
         else
         {
             ADS_UL_UpdateQueueInPdpModified(ucInstanceIndex, enPrio, ucRabId);
@@ -373,7 +373,7 @@ VOS_UINT32 ADS_UL_CreateQueue(
         }
     }
 
-    /* ucRabID╣д╤сап╡╩╢Фтз, пХр╙╢╢╫╗╤сапм╥╫А╣Ц */
+    /* ucRabIDГ └И≤÷Е┬≈Д╦█Е╜≤Е°╗, И°─Х╕│Е┬⌡Е╩╨И≤÷Е┬≈Е╓╢Г╩⌠Г┌╧ */
     pstUlQueue = (IMM_ZC_HEAD_STRU *)PS_MEM_ALLOC(ACPU_PID_ADS_UL, sizeof(IMM_ZC_HEAD_STRU));
 
     if (VOS_NULL_PTR == pstUlQueue)
@@ -382,10 +382,10 @@ VOS_UINT32 ADS_UL_CreateQueue(
         return VOS_ERR;
     }
 
-    /* ╤сапЁУй╪╩╞ */
+    /* И≤÷Е┬≈Е┬²Е╖▀Е▄√ */
     IMM_ZcQueueHeadInit(pstUlQueue);
 
-    /* ╫╚╤саппео╒╦Эпб╣╫иоппиообнд */
+    /* Е╟├И≤÷Е┬≈Д©║Ф│╞Ф⌡╢Ф√╟Е┬╟Д╦┼Х║▄Д╦┼Д╦▀Ф√┤ */
     ADS_UL_SetQueue(ucInstanceIndex,
                     ucRabId,
                     VOS_TRUE,
@@ -393,8 +393,8 @@ VOS_UINT32 ADS_UL_CreateQueue(
                     enPrio,
                     enPktType);
 
-    /* ╤сап╡╩©идэ╠╩сц╬║ё╛р╩╦ЖRABID╤тс╕р╩╦Ж╤сапё╛╤Ьнчп╖╣дря╬╜тзоШо╒╢╕юМ╢╕фа╠нё╛
-       ╧й╡╩пХр╙еп╤ойг╥ЯбЗё╛©иртж╠╫сжьпбеепР */
+    /* И≤÷Е┬≈Д╦█Е▐╞Х┐╫Х╒╚Г■╗Е╟╫О╪▄Д╦─Д╦╙RABIDЕ╞╧Е╨■Д╦─Д╦╙И≤÷Е┬≈О╪▄Х─▄Ф≈═Ф∙┬Г └Е╥╡Г╩▐Е°╗Ф╤┬Ф│╞Е╓└Г░├Е╓└Е╠▐Х■╫О╪▄
+       Ф∙┘Д╦█И°─Х╕│Е┬╓Ф√╜Ф≤╞Е░╕Ф╩║О╪▄Е▐╞Д╩╔Г⌡╢Ф▌╔И┤█Ф√╟Ф▌▓Е╨▐ */
     ADS_UL_OrderQueueIndex(ucInstanceIndex, ucRabId);
 
     /*lint -e429*/
@@ -416,7 +416,7 @@ VOS_VOID ADS_UL_ClearQueue(
     {
         pstNode = IMM_ZcDequeueHead(pstQueue);
 
-        /* йм╥е╫А╣Цдзхщ */
+        /* И┤┼Ф■╬Г╩⌠Г┌╧Е├┘Е╝╧ */
         IMM_ZcFree(pstNode);
     }
 }
@@ -427,10 +427,10 @@ VOS_VOID ADS_UL_DestroyQueue(
 {
     VOS_ULONG                           ulLockLevel;
 
-    /* ╫А╣Ц╢Фтз╣╚╤сапн╙©у */
+    /* Г╩⌠Г┌╧Е╜≤Е°╗Д╫├И≤÷Е┬≈Д╦╨Г╘╨ */
     if (VOS_ERR == ADS_UL_IsQueueExistent(ucInstanceIndex, ucRabId))
     {
-        /* Rab Idрт╪╟сеох╪╤жцн╙нчп╖ж╣ */
+        /* Rab IdД╩╔Е▐┼Д╪≤Е┘┬Г╨╖Г╫╝Д╦╨Ф≈═Ф∙┬Е─╪ */
         ADS_UL_SetQueue(ucInstanceIndex,
                         ucRabId,
                         VOS_FALSE,
@@ -438,25 +438,25 @@ VOS_VOID ADS_UL_DestroyQueue(
                         ADS_QCI_TYPE_BUTT,
                         ADS_PDP_TYPE_BUTT);
 
-        /* ╦Ы╬щвНпб╣д╤сап╧эюМ╫ЬппеепР */
+        /* Ф═╧Ф█╝Ф°─Ф√╟Г └И≤÷Е┬≈Г╝║Г░├Х©⌡Х║▄Ф▌▓Е╨▐ */
         ADS_UL_UpdateQueueInPdpDeactived(ucInstanceIndex, ucRabId);
 
         return;
     }
 
-    /* ╤сап╪скЬ */
+    /* И≤÷Е┬≈Е┼═И■│ */
     /*lint -e571*/
     VOS_SpinLockIntLock(ADS_UL_GET_QUEUE_LINK_SPINLOCK(ucInstanceIndex, ucRabId), ulLockLevel);
     /*lint +e571*/
 
-    /* оЗ╩ы╤сапжп╣дйЩ╬щ */
+    /* И■─Ф╞│И≤÷Е┬≈Д╦╜Г └Ф∙╟Ф█╝ */
     ADS_UL_ClearQueue(ucRabId,
                       ADS_UL_GET_QUEUE_LINK_PTR(ucInstanceIndex, ucRabId));
 
-    /* оЗ╩ы╤сапм╥╫А╣Ц*/
+    /* И■─Ф╞│И≤÷Е┬≈Е╓╢Г╩⌠Г┌╧*/
     PS_MEM_FREE(ACPU_PID_ADS_DL, ADS_UL_GET_QUEUE_LINK_PTR(ucInstanceIndex, ucRabId));
 
-    /* ╫╚╤саппео╒╦Эпб╣╫иоппиообнд */
+    /* Е╟├И≤÷Е┬≈Д©║Ф│╞Ф⌡╢Ф√╟Е┬╟Д╦┼Х║▄Д╦┼Д╦▀Ф√┤ */
     ADS_UL_SetQueue(ucInstanceIndex,
                     ucRabId,
                     VOS_FALSE,
@@ -464,10 +464,10 @@ VOS_VOID ADS_UL_DestroyQueue(
                     ADS_QCI_TYPE_BUTT,
                     ADS_PDP_TYPE_BUTT);
 
-    /* ╤сап╡ывВмЙЁи╫БкЬ */
+    /* И≤÷Е┬≈Ф⌠█Д╫°Е╝▄Ф┬░Х╖ёИ■│ */
     VOS_SpinUnlockIntUnlock(ADS_UL_GET_QUEUE_LINK_SPINLOCK(ucInstanceIndex, ucRabId), ulLockLevel);
 
-    /* ╦Ы╬щвНпб╣д╤сап╧эюМ╫ЬппеепР */
+    /* Ф═╧Ф█╝Ф°─Ф√╟Г └И≤÷Е┬≈Г╝║Г░├Х©⌡Х║▄Ф▌▓Е╨▐ */
     ADS_UL_UpdateQueueInPdpDeactived(ucInstanceIndex, ucRabId);
 
 }
@@ -481,7 +481,7 @@ VOS_UINT32 ADS_UL_GetInsertIndex(
 
     pstAdsUlCtx = ADS_GetUlCtx(ucInstanceIndex);
 
-    /* ╦Ы╬щсеох╪╤ю╢╩Ях║иоппиообнджп╤сап╣дIndexж╣ */
+    /* Ф═╧Ф█╝Д╪≤Е┘┬Г╨╖Ф²╔Х▌╥Е▐√Д╦┼Х║▄Д╦┼Д╦▀Ф√┤Д╦╜И≤÷Е┬≈Г └IndexЕ─╪ */
     for (i = 0; i < ADS_RAB_NUM_MAX; i++)
     {
         if (pstAdsUlCtx->aucPrioIndex[i] == ucRabId)
@@ -504,7 +504,7 @@ VOS_VOID ADS_UL_OrderQueueIndex(
 
     pstAdsUlCtx = ADS_GetUlCtx(ucInstanceIndex);
 
-    /* хГ╧Ш╦цPDP╣дсеох╪╤╠х╫о╦ъё╛пХр╙╡ЕхК╣╫фДкШPDP╣дг╟цФё╛╠хфДсеох╪╤╣м╣дпХр╙оР╨Срфр╩н╩ */
+    /* Е╕┌Ф·°Х╞╔PDPГ └Д╪≤Е┘┬Г╨╖Ф╞■Х╬┐И╚≤О╪▄И°─Х╕│Ф▐▓Е┘╔Е┬╟Е┘╤Д╩√PDPГ └Е┴█И²╒О╪▄Ф╞■Е┘╤Д╪≤Е┘┬Г╨╖Д╫▌Г └И°─Х╕│Е░▒Е░▌Г╖╩Д╦─Д╫█ */
     for (i = 0; i < ADS_RAB_NUM_MAX; i++)
     {
         if (pstAdsUlCtx->astAdsUlQueue[ucIndex].enPrio < pstAdsUlCtx->astAdsUlQueue[pstAdsUlCtx->aucPrioIndex[i]].enPrio)
@@ -531,26 +531,26 @@ VOS_VOID ADS_UL_UpdateQueueInPdpModified(
 
     pstAdsUlCtx = ADS_GetUlCtx(ucInstanceIndex);
 
-    /* ╫╚пч╦д╣дсеох╪╤╦Эпб╣╫╤тсз╣д╤сап╧эюМжп */
+    /* Е╟├Д©╝Ф■╧Г └Д╪≤Е┘┬Г╨╖Ф⌡╢Ф√╟Е┬╟Е╞╧Д╨▌Г └И≤÷Е┬≈Г╝║Г░├Д╦╜ */
     pstAdsUlCtx->astAdsUlQueue[ucRabId].enPrio = enPrio;
 
-    /* ╩Ях║пч╦д╣дRABIDтзaucPrioIndexйЩвИжпн╩жц */
+    /* Х▌╥Е▐√Д©╝Ф■╧Г └RABIDЕ°╗aucPrioIndexФ∙╟Г╩└Д╦╜Д╫█Г╫╝ */
     ulIndex = ADS_UL_GetInsertIndex(ucInstanceIndex, ucRabId);
 
-    /* ц╩спур╣╫ё╛тР╡╩вЖ╢╕юМ */
+    /* Ф╡║Ф°┴Ф┴╬Е┬╟О╪▄Е┬≥Д╦█Е│ Е╓└Г░├ */
     if (ulIndex >= ADS_RAB_NUM_MAX)
     {
         return;
     }
 
-    /* ох╫╚пч╦д╤тс╕н╩╨СцФ╣доРг╟рф╤╞р╩н╩ */
+    /* Е┘┬Е╟├Д©╝Ф■╧Е╞╧Е╨■Д╫█Е░▌И²╒Г └Е░▒Е┴█Г╖╩Е┼╗Д╦─Д╫█ */
     for (i = ulIndex; i <  ADS_RAB_NUM_MAX - 1; i++)
     {
         pstAdsUlCtx->aucPrioIndex[i] = pstAdsUlCtx->aucPrioIndex[i + 1UL];
     }
     pstAdsUlCtx->aucPrioIndex[ADS_RAB_NUM_MAX - 1] = ADS_RAB_ID_INVALID;
 
-    /* рф╤╞╨СоЮ╣╠сзйгжьпб╡ЕхК╣╫╤сап╧эюМжп */
+    /* Г╖╩Е┼╗Е░▌Г⌡╦Е╫⌠Д╨▌Ф≤╞И┤█Ф√╟Ф▐▓Е┘╔Е┬╟И≤÷Е┬≈Г╝║Г░├Д╦╜ */
     ADS_UL_OrderQueueIndex(ucInstanceIndex, ucRabId);
 
 }
@@ -565,7 +565,7 @@ VOS_VOID ADS_UL_UpdateQueueInPdpDeactived(
 
     pstAdsUlCtx = ADS_GetUlCtx(ucInstanceIndex);
 
-    /* ╦Ы╬щи╬ЁЩ╣дPDPкВрЩё╛╫╚фД╨СцФ╣дт╙кьоРг╟рф╤╞р╩н╩ */
+    /* Ф═╧Ф█╝Е┬═И≥╓Г └PDPГ╢╒Е╪∙О╪▄Е╟├Е┘╤Е░▌И²╒Г └Е┘┐Г╢═Е░▒Е┴█Г╖╩Е┼╗Д╦─Д╫█ */
     ulIndex = ADS_UL_GetInsertIndex(ucInstanceIndex, ucRabId);
 
     if (ulIndex >= ADS_RAB_NUM_MAX)
@@ -862,7 +862,7 @@ VOS_UINT32 ADS_GetCurrentRate(
     VOS_UINT32                         *pulDlBpsRate
 )
 {
-    /* FCж╩спstickсцё╛ж╩╥╣╩ьй╣юЩ0╣д */
+    /* FCЕ▐╙Ф°┴stickГ■╗О╪▄Е▐╙Х©■Е⌡·Е╝·Д╬▀0Г └ */
     *pulUlBpsRate = g_stAdsCtx.astAdsSpecCtx[ADS_INSTANCE_INDEX_0].stAdsStatsInfoCtx.stULDataStats.ulULCurDataRate << 3;
     *pulDlBpsRate = g_stAdsCtx.astAdsSpecCtx[ADS_INSTANCE_INDEX_0].stAdsStatsInfoCtx.stDLDataStats.ulDLCurDataRate << 3;
 
@@ -924,7 +924,7 @@ VOS_VOID ADS_InitUlCtx(VOS_UINT8 ucInstanceIndex)
 
     pstAdsSpecCtx = &(g_stAdsCtx.astAdsSpecCtx[ucInstanceIndex]);
 
-    /* д╛хо╢с╣зр╩╦Ж╤сап©╙й╪╣В╤х */
+    /* И╩≤Х╝╓Д╩▌Г╛╛Д╦─Д╦╙И≤÷Е┬≈Е╪─Е╖▀Х╟┐Е╨╕ */
     pstAdsSpecCtx->stAdsUlCtx.ucAdsUlCurIndex      = 0;
 
     for (i = 0; i < ADS_RAB_ID_MAX + 1; i++)
@@ -935,14 +935,14 @@ VOS_VOID ADS_InitUlCtx(VOS_UINT8 ucInstanceIndex)
         pstAdsSpecCtx->stAdsUlCtx.astAdsUlQueue[i].usRecordNum     = 0;
         pstAdsSpecCtx->stAdsUlCtx.astAdsUlQueue[i].enPktType       = ADS_CDS_IPF_PKT_TYPE_IP;
 
-        /* кЬЁУй╪╩╞ */
+        /* И■│Е┬²Е╖▀Е▄√ */
         VOS_SpinLockInit(&(pstAdsSpecCtx->stAdsUlCtx.astAdsUlQueue[i].stSpinLock));
         pstAdsSpecCtx->stAdsUlCtx.astAdsUlQueue[i].ucRabSndPermitFlg  = VOS_TRUE;
     }
 
     PS_MEM_SET(pstAdsSpecCtx->stAdsUlCtx.aucPrioIndex, 0, ADS_RAB_NUM_MAX);
 
-    /* ╤аNVё╛╫╚сеох╪╤╪сх╗йЩ╤ап╢╣╫ADSиообнджп */
+    /* Х╞╩NVО╪▄Е╟├Д╪≤Е┘┬Г╨╖Е┼═Ф²┐Ф∙╟Х╞╩Е├≥Е┬╟ADSД╦┼Д╦▀Ф√┤Д╦╜ */
     ulRst = NV_ReadEx(ucInstanceIndex,
                       en_NV_Item_ADS_Queue_Scheduler_Pri,
                       &(pstAdsSpecCtx->stAdsUlCtx.stQueuePriNv),
@@ -981,7 +981,7 @@ VOS_VOID ADS_InitDlCtx(VOS_UINT8 ucInstanceIndex)
 
     pstAdsSpecCtx = &(g_stAdsCtx.astAdsSpecCtx[ucInstanceIndex]);
 
-    /* ЁУй╪╩╞обпп╣дRABпео╒ */
+    /* Е┬²Е╖▀Е▄√Д╦▀Х║▄Г └RABД©║Ф│╞ */
     for (i = 0; i < ADS_RAB_NUM_MAX; i++)
     {
         pstAdsSpecCtx->stAdsDlCtx.astAdsDlRabInfo[i].ucRabId        = ADS_RAB_ID_INVALID;
@@ -991,7 +991,7 @@ VOS_VOID ADS_InitDlCtx(VOS_UINT8 ucInstanceIndex)
 
     //ADS_DL_StartProtectTimer();
 
-    /* ЁУй╪╩╞╣вхМ╤╞л╛вИ╟Э╡нйЩ */
+    /* Е┬²Е╖▀Е▄√Е╨∙Х╫╞Е┼╗Ф─│Г╩└Е▄┘Е▐┌Ф∙╟ */
     ADS_DL_InitFcAssemParamInfo();
 
     return;
@@ -1015,13 +1015,13 @@ VOS_VOID ADS_InitSpecCtx(VOS_VOID)
 
     for (i = 0; i < ADS_INSTANCE_MAX_NUM; i++)
     {
-        /* ЁУй╪╩╞иоппиообнд */
+        /* Е┬²Е╖▀Е▄√Д╦┼Х║▄Д╦┼Д╦▀Ф√┤ */
         ADS_InitUlCtx(i);
 
-        /* ЁУй╪╩╞обппиообнд */
+        /* Е┬²Е╖▀Е▄√Д╦▀Х║▄Д╦┼Д╦▀Ф√┤ */
         ADS_InitDlCtx(i);
 
-        /* ЁУй╪╩╞йЩ╬щмЁ╪ф╣диообнд */
+        /* Е┬²Е╖▀Е▄√Ф∙╟Ф█╝Г╩÷Х╝║Г └Д╦┼Д╦▀Ф√┤ */
         ADS_InitStatsInfoCtx(i);
     }
 }
@@ -1033,7 +1033,7 @@ VOS_VOID ADS_ResetUlCtx(VOS_UINT8 ucInstanceIndex)
 
     pstAdsSpecCtx = &(g_stAdsCtx.astAdsSpecCtx[ucInstanceIndex]);
 
-    /* д╛хо╢с╣зр╩╦Ж╤сап©╙й╪╣В╤х */
+    /* И╩≤Х╝╓Д╩▌Г╛╛Д╦─Д╦╙И≤÷Е┬≈Е╪─Е╖▀Х╟┐Е╨╕ */
     pstAdsSpecCtx->stAdsUlCtx.ucAdsUlCurIndex      = 0;
 
     for (i = 0; i < ADS_RAB_ID_MAX + 1; i++)
@@ -1049,7 +1049,7 @@ VOS_VOID ADS_ResetUlCtx(VOS_UINT8 ucInstanceIndex)
 
     PS_MEM_SET(pstAdsSpecCtx->stAdsUlCtx.aucPrioIndex, 0, ADS_RAB_NUM_MAX);
 
-    /* ╤аNVё╛╫╚сеох╪╤╪сх╗йЩ╤ап╢╣╫ADSиообнджп */
+    /* Х╞╩NVО╪▄Е╟├Д╪≤Е┘┬Г╨╖Е┼═Ф²┐Ф∙╟Х╞╩Е├≥Е┬╟ADSД╦┼Д╦▀Ф√┤Д╦╜ */
     ulRst = NV_ReadEx(ucInstanceIndex,
                       en_NV_Item_ADS_Queue_Scheduler_Pri,
                       &(pstAdsSpecCtx->stAdsUlCtx.stQueuePriNv),
@@ -1089,13 +1089,13 @@ VOS_VOID ADS_ResetDlCtx(VOS_UINT8 ucInstanceIndex)
 
     pstAdsSpecCtx = &(g_stAdsCtx.astAdsSpecCtx[ucInstanceIndex]);
 
-    /* жьжцобпп╣дRABпео╒ */
+    /* И┤█Г╫╝Д╦▀Х║▄Г └RABД©║Ф│╞ */
     for (i = 0; i < ADS_RAB_NUM_MAX; i++)
     {
         pstAdsSpecCtx->stAdsDlCtx.astAdsDlRabInfo[i].ucRabId        = ADS_RAB_ID_INVALID;
     }
 
-    /* жьжц╣вхМ╤╞л╛вИ╟Э╡нйЩ */
+    /* И┤█Г╫╝Е╨∙Х╫╞Е┼╗Ф─│Г╩└Е▄┘Е▐┌Ф∙╟ */
     ADS_DL_ResetFcAssemParamInfo();
 
     return;
@@ -1108,13 +1108,13 @@ VOS_VOID ADS_ResetSpecCtx(VOS_VOID)
 
     for (i = 0; i < ADS_INSTANCE_MAX_NUM; i++)
     {
-        /* ЁУй╪╩╞иоппиообнд */
+        /* Е┬²Е╖▀Е▄√Д╦┼Х║▄Д╦┼Д╦▀Ф√┤ */
         ADS_ResetUlCtx(i);
 
-        /* ЁУй╪╩╞обппиообнд */
+        /* Е┬²Е╖▀Е▄√Д╦▀Х║▄Д╦┼Д╦▀Ф√┤ */
         ADS_ResetDlCtx(i);
 
-        /* ЁУй╪╩╞йЩ╬щмЁ╪ф╣диообнд */
+        /* Е┬²Е╖▀Е▄√Ф∙╟Ф█╝Г╩÷Х╝║Г └Д╦┼Д╦▀Ф√┤ */
         ADS_InitStatsInfoCtx(i);
     }
 }
@@ -1131,20 +1131,20 @@ VOS_VOID ADS_ResetIpfCtx(VOS_VOID)
     }
 #endif
 
-    /* ЁУй╪╩╞иоппBD BUFF*/
+    /* Е┬²Е╖▀Е▄√Д╦┼Х║▄BD BUFF*/
     PS_MEM_SET(g_stAdsCtx.stAdsIpfCtx.astIpfUlBdBuff, 0x00, (VOS_SIZE_T)(IPF_ULBD_DESC_SIZE * sizeof(IPF_CONFIG_ULPARAM_S)));
 
-    /* ЁУй╪╩╞обппRD BUFF*/
+    /* Е┬²Е╖▀Е▄√Д╦▀Х║▄RD BUFF*/
     PS_MEM_SET(g_stAdsCtx.stAdsIpfCtx.astIpfDlRdBuff, 0x00, (VOS_SIZE_T)(IPF_DLRD_DESC_SIZE * sizeof(IPF_RD_DESC_S)));
 
-    /* д╛хоиоппйЩ╬щ╥╒км╠ё╩╓╤╗й╠фВй╠Ё╓н╙10ms */
+    /* И╩≤Х╝╓Д╦┼Х║▄Ф∙╟Ф█╝Е▐▒И─│Д©²Ф┼╓Е╝ Ф≈╤Е≥╗Ф≈╤И∙©Д╦╨10ms */
     g_stAdsCtx.stAdsIpfCtx.ulProtectTmrLen   = 10;
 
-    /* д╛хоиоппйЩ╬щмЁ╪ф╤╗й╠фВй╠Ё╓н╙100ms */
+    /* И╩≤Х╝╓Д╦┼Х║▄Ф∙╟Ф█╝Г╩÷Х╝║Е╝ Ф≈╤Е≥╗Ф≈╤И∙©Д╦╨100ms */
     g_stAdsCtx.stAdsIpfCtx.stUlAssemParmInfo.stThresholdStatInfo.ulStatTmrLen = 100;
     g_stAdsCtx.stAdsIpfCtx.stUlAssemParmInfo.stThresholdStatInfo.ulStatPktNum = 0;
 
-    /* д╛хотэ╟Э╣двН╢С╦ЖйЩ */
+    /* И╩≤Х╝╓Ф■▓Е▄┘Г └Ф°─Е╓╖Д╦╙Ф∙╟ */
     if (VOS_TRUE == g_stAdsCtx.stAdsIpfCtx.stUlAssemParmInfo.ulActiveFlag)
     {
         g_stAdsCtx.stAdsIpfCtx.ulThredHoldNum = ADS_UL_DATA_THRESHOLD_ONE;
@@ -1154,7 +1154,7 @@ VOS_VOID ADS_ResetIpfCtx(VOS_VOID)
         g_stAdsCtx.stAdsIpfCtx.ulThredHoldNum = 32;
     }
 
-    /* д╛хойЩ╬щ╡╩тз╥╒км */
+    /* И╩≤Х╝╓Ф∙╟Ф█╝Д╦█Е°╗Е▐▒И─│ */
     g_stAdsCtx.stAdsIpfCtx.ucSendingFlg = VOS_FALSE;
 }
 
@@ -1173,19 +1173,19 @@ VOS_VOID ADS_InitIpfCtx(VOS_VOID)
         PS_MEM_SET(g_stAdsCtx.stAdsIpfCtx.astIpfDlAdBuff[i], 0x00, (VOS_SIZE_T)(IPF_DLAD0_DESC_SIZE * sizeof(IPF_AD_DESC_S)));
     }
 
-    /* ЁУй╪╩╞иоппт╢дз╢Фйм╥е╤сап */
+    /* Е┬²Е╖▀Е▄√Д╦┼Х║▄Ф╨░Е├┘Е╜≤И┤┼Ф■╬И≤÷Е┬≈ */
     IMM_ZcQueueHeadInit(&g_stAdsCtx.stAdsIpfCtx.stUlSrcMemFreeQue);
 #endif
 
-    /* ЁУй╪╩╞иоппBD BUFF*/
+    /* Е┬²Е╖▀Е▄√Д╦┼Х║▄BD BUFF*/
     PS_MEM_SET(g_stAdsCtx.stAdsIpfCtx.astIpfUlBdBuff, 0x00, (VOS_SIZE_T)(IPF_ULBD_DESC_SIZE * sizeof(IPF_CONFIG_ULPARAM_S)));
 
-    /* ЁУй╪╩╞обппRD BUFF*/
+    /* Е┬²Е╖▀Е▄√Д╦▀Х║▄RD BUFF*/
     PS_MEM_SET(g_stAdsCtx.stAdsIpfCtx.astIpfDlRdBuff, 0x00, (VOS_SIZE_T)(IPF_DLRD_DESC_SIZE * sizeof(IPF_RD_DESC_S)));
 
     PS_MEM_SET(&stWakeLockCfg, 0x00, sizeof(TAF_NV_ADS_WAKE_LOCK_CFG_STRU));
 
-    /* д╛хоиоппйЩ╬щ╥╒км╠ё╩╓╤╗й╠фВй╠Ё╓н╙10ms */
+    /* И╩≤Х╝╓Д╦┼Х║▄Ф∙╟Ф█╝Е▐▒И─│Д©²Ф┼╓Е╝ Ф≈╤Е≥╗Ф≈╤И∙©Д╦╨10ms */
     g_stAdsCtx.stAdsIpfCtx.ulProtectTmrLen   = 10;
 
     pstUlAssemParmInfo = &g_stAdsCtx.stAdsIpfCtx.stUlAssemParmInfo;
@@ -1224,17 +1224,17 @@ VOS_VOID ADS_InitIpfCtx(VOS_VOID)
     pstUlAssemParmInfo->stThresholdLevel.ulThreshold3     = stThreshold.stThresholdLevel.ulThreshold3;
     pstUlAssemParmInfo->stThresholdLevel.ulThreshold4     = stThreshold.stThresholdLevel.ulThreshold4;
 
-    /* д╛хоиоппйЩ╬щмЁ╪ф╤╗й╠фВй╠Ё╓н╙100ms */
+    /* И╩≤Х╝╓Д╦┼Х║▄Ф∙╟Ф█╝Г╩÷Х╝║Е╝ Ф≈╤Е≥╗Ф≈╤И∙©Д╦╨100ms */
     pstUlAssemParmInfo->stThresholdStatInfo.ulStatTmrLen = 100;
     pstUlAssemParmInfo->stThresholdStatInfo.ulStatPktNum = 0;
 
-    /* Ё╛й╠й╠Ё╓╢СсзаЦ╡епХр╙фТ╤╞jiffies╠ё╩╓╤╗й╠фВ */
+    /* Х╤┘Ф≈╤Ф≈╤И∙©Е╓╖Д╨▌И⌡╤Ф┴█И°─Х╕│Е░╞Е┼╗jiffiesД©²Ф┼╓Е╝ Ф≈╤Е≥╗ */
     if (0 != pstUlAssemParmInfo->ulProtectTmrExpCnt)
     {
         pstUlAssemParmInfo->ulProtectTmrCnt = ADS_GET_CURR_KERNEL_TIME();
     }
 
-    /* д╛хотэ╟Э╣двН╢С╦ЖйЩ */
+    /* И╩≤Х╝╓Ф■▓Е▄┘Г └Ф°─Е╓╖Д╦╙Ф∙╟ */
     if (VOS_TRUE == pstUlAssemParmInfo->ulActiveFlag)
     {
         g_stAdsCtx.stAdsIpfCtx.ulThredHoldNum = ADS_UL_DATA_THRESHOLD_ONE;
@@ -1244,7 +1244,7 @@ VOS_VOID ADS_InitIpfCtx(VOS_VOID)
         g_stAdsCtx.stAdsIpfCtx.ulThredHoldNum = 32;
     }
 
-    /* д╛хойЩ╬щ╡╩тз╥╒км */
+    /* И╩≤Х╝╓Ф∙╟Ф█╝Д╦█Е°╗Е▐▒И─│ */
     g_stAdsCtx.stAdsIpfCtx.ucSendingFlg = VOS_FALSE;
 
     wake_lock_init(&g_stAdsCtx.stAdsIpfCtx.stUlBdWakeLock, WAKE_LOCK_SUSPEND, "ipf_bd_wake");
@@ -1296,7 +1296,7 @@ VOS_VOID ADS_InitResetSem(VOS_VOID)
     g_stAdsCtx.hULResetSem  = VOS_NULL_PTR;
     g_stAdsCtx.hDLResetSem  = VOS_NULL_PTR;
 
-    /* ╥жеД╤Ч╫Ьжфпе╨еа© */
+    /* Е┬├И┘█Д╨▄Х©⌡Е┬╤Д©║Е▐╥И┤▐ */
     if (VOS_OK != VOS_SmBCreate( "UL", 0, VOS_SEMA4_FIFO, &g_stAdsCtx.hULResetSem))
     {
         vos_printf("Create ADS acpu UL_CNF sem failed!\r\n");
@@ -1331,22 +1331,22 @@ VOS_VOID ADS_InitCtx(VOS_VOID)
 {
     PS_MEM_SET(&g_stAdsStats, 0, sizeof(g_stAdsStats));
 
-    /* ЁУй╪╩╞ц©╦Жй╣юЩ╣диообнд */
+    /* Е┬²Е╖▀Е▄√Ф╞▐Д╦╙Е╝·Д╬▀Г └Д╦┼Д╦▀Ф√┤ */
     ADS_InitSpecCtx();
 
-    /* ЁУй╪╩╞IPFоЮ╧ь╣диообнд */
+    /* Е┬²Е╖▀Е▄√IPFГ⌡╦Е┘ЁГ └Д╦┼Д╦▀Ф√┤ */
     ADS_InitIpfCtx();
 
-    /* ЁУй╪╩╞╤╗й╠фВиообнд */
+    /* Е┬²Е╖▀Е▄√Е╝ Ф≈╤Е≥╗Д╦┼Д╦▀Ф√┤ */
     ADS_InitTiCtx();
 
-    /* ЁУй╪╩╞╦╢н╩пе╨еа© */
+    /* Е┬²Е╖▀Е▄√Е╓█Д╫█Д©║Е▐╥И┤▐ */
     ADS_InitResetSem();
 
-    /* ЁУй╪╩╞ADS╧ЩбкфВиообнд */
+    /* Е┬²Е╖▀Е▄√ADSХ©┤Ф╩╓Е≥╗Д╦┼Д╦▀Ф√┤ */
     ADS_FILTER_InitCtx();
 
-    /* ЁУй╪╩╞╣╠г╟й╣юЩкВрЩж╣ */
+    /* Е┬²Е╖▀Е▄√Е╫⌠Е┴█Е╝·Д╬▀Г╢╒Е╪∙Е─╪ */
     g_stAdsCtx.ucAdsCurInstanceIndex = ADS_INSTANCE_INDEX_0;
 
     return;

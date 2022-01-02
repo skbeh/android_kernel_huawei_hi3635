@@ -18,11 +18,11 @@ static USB_CTX_S g_usb_ctx = {{0},{0},{0}};
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_SetPid
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
+ å‡½ æ•° å  : BSP_USB_SetPid
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
 *****************************************************************************/
 int BSP_USB_SetPid(unsigned char u2diagValue)
 {
@@ -30,12 +30,12 @@ int BSP_USB_SetPid(unsigned char u2diagValue)
 }
 
 /*****************************************************************************
-º¯ÊýÃû£º   BSP_USB_PortTypeQuery
-¹¦ÄÜÃèÊö:  ²éÑ¯µ±Ç°µÄÉè±¸Ã¶¾ÙµÄ¶Ë¿ÚÐÎÌ¬Öµ
-ÊäÈë²ÎÊý£º stDynamicPidType  ¶Ë¿ÚÐÎÌ¬
-Êä³ö²ÎÊý£º stDynamicPidType  ¶Ë¿ÚÐÎÌ¬
-·µ»ØÖµ£º   0:    ²éÑ¯³É¹¦
-           ÆäËû£º²éÑ¯Ê§°Ü
+å‡½æ•°åï¼š   BSP_USB_PortTypeQuery
+åŠŸèƒ½æè¿°:  æŸ¥è¯¢å½“å‰çš„è®¾å¤‡æžšä¸¾çš„ç«¯å£å½¢æ€å€¼
+è¾“å…¥å‚æ•°ï¼š stDynamicPidType  ç«¯å£å½¢æ€
+è¾“å‡ºå‚æ•°ï¼š stDynamicPidType  ç«¯å£å½¢æ€
+è¿”å›žå€¼ï¼š   0:    æŸ¥è¯¢æˆåŠŸ
+           å…¶ä»–ï¼šæŸ¥è¯¢å¤±è´¥
 *****************************************************************************/
 unsigned int BSP_USB_PortTypeQuery(DRV_DYNAMIC_PID_TYPE_STRU *pstDynamicPidType)
 {
@@ -43,14 +43,14 @@ unsigned int BSP_USB_PortTypeQuery(DRV_DYNAMIC_PID_TYPE_STRU *pstDynamicPidType)
 }
 
 /*****************************************************************************
-º¯ÊýÃû£º   BSP_USB_PortTypeValidCheck
-¹¦ÄÜÃèÊö:  Ìá¹©¸øÉÏ²ã²éÑ¯Éè±¸¶Ë¿ÚÐÎÌ¬ÅäÖÃºÏ·¨ÐÔ½Ó¿Ú
-           1¡¢¶Ë¿ÚÎªÒÑÖ§³ÖÀàÐÍ£¬2¡¢°üº¬PCUI¿Ú£¬3¡¢ÎÞÖØ¸´¶Ë¿Ú£¬4¡¢¶ËµãÊý²»³¬¹ý16£¬
-           5¡¢µÚÒ»¸öÉè±¸²»ÎªMASSÀà
-ÊäÈë²ÎÊý£º pucPortType  ¶Ë¿ÚÐÎÌ¬ÅäÖÃ
-           ulPortNum    ¶Ë¿ÚÐÎÌ¬¸öÊý
-·µ»ØÖµ£º   0:    ¶Ë¿ÚÐÎÌ¬ºÏ·¨
-           ÆäËû£º¶Ë¿ÚÐÎÌ¬·Ç·¨
+å‡½æ•°åï¼š   BSP_USB_PortTypeValidCheck
+åŠŸèƒ½æè¿°:  æä¾›ç»™ä¸Šå±‚æŸ¥è¯¢è®¾å¤‡ç«¯å£å½¢æ€é…ç½®åˆæ³•æ€§æŽ¥å£
+           1ã€ç«¯å£ä¸ºå·²æ”¯æŒç±»åž‹ï¼Œ2ã€åŒ…å«PCUIå£ï¼Œ3ã€æ— é‡å¤ç«¯å£ï¼Œ4ã€ç«¯ç‚¹æ•°ä¸è¶…è¿‡16ï¼Œ
+           5ã€ç¬¬ä¸€ä¸ªè®¾å¤‡ä¸ä¸ºMASSç±»
+è¾“å…¥å‚æ•°ï¼š pucPortType  ç«¯å£å½¢æ€é…ç½®
+           ulPortNum    ç«¯å£å½¢æ€ä¸ªæ•°
+è¿”å›žå€¼ï¼š   0:    ç«¯å£å½¢æ€åˆæ³•
+           å…¶ä»–ï¼šç«¯å£å½¢æ€éžæ³•
 *****************************************************************************/
 unsigned int BSP_USB_PortTypeValidCheck(unsigned char *pucPortType, unsigned int ulPortNum)
 {
@@ -58,13 +58,13 @@ unsigned int BSP_USB_PortTypeValidCheck(unsigned char *pucPortType, unsigned int
 }
 
 /*****************************************************************************
-º¯ÊýÃû£º   BSP_USB_GetAvailabePortType
-¹¦ÄÜÃèÊö:  Ìá¹©¸øÉÏ²ã²éÑ¯µ±Ç°Éè±¸Ö§³Ö¶Ë¿ÚÐÎÌ¬ÁÐ±í½Ó¿Ú
-ÊäÈë²ÎÊý£º ulPortMax    Ð­ÒéÕ»Ö§³Ö×î´ó¶Ë¿ÚÐÎÌ¬¸öÊý
-Êä³ö²ÎÊý:  pucPortType  Ö§³ÖµÄ¶Ë¿ÚÐÎÌ¬ÁÐ±í
-           pulPortNum   Ö§³ÖµÄ¶Ë¿ÚÐÎÌ¬¸öÊý
-·µ»ØÖµ£º   0:    »ñÈ¡¶Ë¿ÚÐÎÌ¬ÁÐ±í³É¹¦
-           ÆäËû£º»ñÈ¡¶Ë¿ÚÐÎÌ¬ÁÐ±íÊ§°Ü
+å‡½æ•°åï¼š   BSP_USB_GetAvailabePortType
+åŠŸèƒ½æè¿°:  æä¾›ç»™ä¸Šå±‚æŸ¥è¯¢å½“å‰è®¾å¤‡æ”¯æŒç«¯å£å½¢æ€åˆ—è¡¨æŽ¥å£
+è¾“å…¥å‚æ•°ï¼š ulPortMax    åè®®æ ˆæ”¯æŒæœ€å¤§ç«¯å£å½¢æ€ä¸ªæ•°
+è¾“å‡ºå‚æ•°:  pucPortType  æ”¯æŒçš„ç«¯å£å½¢æ€åˆ—è¡¨
+           pulPortNum   æ”¯æŒçš„ç«¯å£å½¢æ€ä¸ªæ•°
+è¿”å›žå€¼ï¼š   0:    èŽ·å–ç«¯å£å½¢æ€åˆ—è¡¨æˆåŠŸ
+           å…¶ä»–ï¼šèŽ·å–ç«¯å£å½¢æ€åˆ—è¡¨å¤±è´¥
 *****************************************************************************/
 unsigned int BSP_USB_GetAvailabePortType(unsigned char *pucPortType,
                             unsigned int *pulPortNum, unsigned int ulPortMax)
@@ -73,12 +73,12 @@ unsigned int BSP_USB_GetAvailabePortType(unsigned char *pucPortType,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_ATProcessRewind2Cmd
- ¹¦ÄÜÃèÊö  : rewind2 CMD ´¦Àí
- ÊäÈë²ÎÊý  : pData£ºÊý¾Ý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : false(0):´¦ÀíÊ§°Ü
-             tool(1):´¦Àí³É¹¦
+ å‡½ æ•° å  : BSP_USB_ATProcessRewind2Cmd
+ åŠŸèƒ½æè¿°  : rewind2 CMD å¤„ç†
+ è¾“å…¥å‚æ•°  : pDataï¼šæ•°æ®
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : false(0):å¤„ç†å¤±è´¥
+             tool(1):å¤„ç†æˆåŠŸ
 *****************************************************************************/
 int BSP_USB_ATProcessRewind2Cmd(unsigned char *pData)
 {
@@ -86,13 +86,13 @@ int BSP_USB_ATProcessRewind2Cmd(unsigned char *pData)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_GetDiagModeValue
- ¹¦ÄÜÃèÊö  : »ñµÃÉè±¸ÀàÐÍ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ucDialmode:  0 - Ê¹ÓÃModem²¦ºÅ; 1 - Ê¹ÓÃNDIS²¦ºÅ; 2 - ModemºÍNDIS¹²´æ
-              ucCdcSpec:   0 - Modem/NDIS¶¼·ûºÏCDC¹æ·¶; 1 - Modem·ûºÏCDC¹æ·¶;
-                           2 - NDIS·ûºÏCDC¹æ·¶;         3 - Modem/NDIS¶¼·ûºÏCDC¹æ·¶
- ·µ »Ø Öµ  : VOS_OK/VOS_ERR
+ å‡½ æ•° å  : BSP_USB_GetDiagModeValue
+ åŠŸèƒ½æè¿°  : èŽ·å¾—è®¾å¤‡ç±»åž‹
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : ucDialmode:  0 - ä½¿ç”¨Modemæ‹¨å·; 1 - ä½¿ç”¨NDISæ‹¨å·; 2 - Modemå’ŒNDISå…±å­˜
+              ucCdcSpec:   0 - Modem/NDISéƒ½ç¬¦åˆCDCè§„èŒƒ; 1 - Modemç¬¦åˆCDCè§„èŒƒ;
+                           2 - NDISç¬¦åˆCDCè§„èŒƒ;         3 - Modem/NDISéƒ½ç¬¦åˆCDCè§„èŒƒ
+ è¿” å›ž å€¼  : VOS_OK/VOS_ERR
 *****************************************************************************/
 BSP_S32 BSP_USB_GetDiagModeValue(unsigned char *pucDialmode,
                              unsigned char *pucCdcSpec)
@@ -101,11 +101,11 @@ BSP_S32 BSP_USB_GetDiagModeValue(unsigned char *pucDialmode,
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_GetPortMode
- ¹¦ÄÜÃèÊö  : »ñÈ¡¶Ë¿ÚÐÎÌ¬Ä£Ê½£¬Íø¹Ø¶Ô½ÓÐèÇó£¬´ò×®¡£
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
+ å‡½ æ•° å  : BSP_USB_GetPortMode
+ åŠŸèƒ½æè¿°  : èŽ·å–ç«¯å£å½¢æ€æ¨¡å¼ï¼Œç½‘å…³å¯¹æŽ¥éœ€æ±‚ï¼Œæ‰“æ¡©ã€‚
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
 *****************************************************************************/
 unsigned char BSP_USB_GetPortMode(char*PsBuffer, unsigned int*Length )
 {
@@ -113,11 +113,11 @@ unsigned char BSP_USB_GetPortMode(char*PsBuffer, unsigned int*Length )
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_GetU2diagDefaultValue
- ¹¦ÄÜÃèÊö  : »ñµÃ¶Ë¿ÚÄ¬ÈÏu2diagÖµ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ»ØÖµ£º   u2diagÖµ
+ å‡½ æ•° å  : BSP_USB_GetU2diagDefaultValue
+ åŠŸèƒ½æè¿°  : èŽ·å¾—ç«¯å£é»˜è®¤u2diagå€¼
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿”å›žå€¼ï¼š   u2diagå€¼
 
 *****************************************************************************/
 BSP_U32 BSP_USB_GetU2diagDefaultValue(void)
@@ -132,12 +132,12 @@ void MNTN_ERRLOG_REG_FUNC(MNTN_ERRLOGREGFUN pRegFunc)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_UdiagValueCheck
- ¹¦ÄÜÃèÊö  : ±¾½Ó¿ÚÓÃÓÚ¼ì²éNVÏîÖÐUSBÐÎÌ¬ÖµµÄºÏ·¨ÐÔ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 0£ºOK
-             -1£ºERROR
+ å‡½ æ•° å  : BSP_USB_UdiagValueCheck
+ åŠŸèƒ½æè¿°  : æœ¬æŽ¥å£ç”¨äºŽæ£€æŸ¥NVé¡¹ä¸­USBå½¢æ€å€¼çš„åˆæ³•æ€§
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 0ï¼šOK
+             -1ï¼šERROR
 *****************************************************************************/
 int BSP_USB_UdiagValueCheck(unsigned int DiagValue)
 {
@@ -145,12 +145,12 @@ int BSP_USB_UdiagValueCheck(unsigned int DiagValue)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_GetLinuxSysType
- ¹¦ÄÜÃèÊö  : ±¾½Ó¿ÚÓÃÓÚ¼ì²éPC²àÊÇ·ñÎªLinux£¬ÒÔ¹æ±ÜLinuxºóÌ¨¶þ´Î²¦ºÅÊ§°ÜµÄÎÊÌâ.
- ÊäÈë²ÎÊý  : ÎÞ¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : 0£ºLinux£»
-            -1£º·ÇLinux¡£
+ å‡½ æ•° å  : BSP_USB_GetLinuxSysType
+ åŠŸèƒ½æè¿°  : æœ¬æŽ¥å£ç”¨äºŽæ£€æŸ¥PCä¾§æ˜¯å¦ä¸ºLinuxï¼Œä»¥è§„é¿LinuxåŽå°äºŒæ¬¡æ‹¨å·å¤±è´¥çš„é—®é¢˜.
+ è¾“å…¥å‚æ•°  : æ— ã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : 0ï¼šLinuxï¼›
+            -1ï¼šéžLinuxã€‚
 *****************************************************************************/
 int BSP_USB_GetLinuxSysType(void)
 {
@@ -158,17 +158,17 @@ int BSP_USB_GetLinuxSysType(void)
 }
 
 /********************************************************
-º¯ÊýËµÃ÷£º ·µ»Øµ±Ç°Éè±¸ÁÐ±íÖÐÖ§³Ö(sel=1)»òÕß²»Ö§³Ö(sel=0)PCSCµÄÉè±¸ÐÎÌ¬Öµ
-º¯Êý¹¦ÄÜ:
-ÊäÈë²ÎÊý£ºsel
-          0: Í¨¹ý²ÎÊýdev_type·µ»Øµ±Ç°²»´øPCSCÊÇÉè±¸ÐÎÌ¬Öµ
-          1£ºÍ¨¹ý²ÎÊýdev_type·µ»Øµ±Ç°´øPCSCÊÇÉè±¸ÐÎÌ¬Öµ
-Êä³ö²ÎÊý£ºdev_type Ð´ÈëÐèÒªµÄÉè±¸ÐÎÌ¬Öµ£¬Èç¹ûÃ»ÓÐÔò²»Ð´ÈëÖµ¡£
-          NVÖÐ´æ´¢µÄÉè±¸ÐÎÌ¬Öµ
-Êä³ö²ÎÊý£ºpulDevType ÓëulCurDevType¶ÔÓ¦µÄÉè±¸ÐÎÌ¬Öµ£¬Èç¹ûÃ»ÓÐ·µ»ØÖµ1¡£
-·µ»ØÖµ£º
-          0£º²éÑ¯µ½ÏàÓ¦µÄÉè±¸ÐÎÌ¬Öµ£»
-          1£ºÃ»ÓÐ²éÑ¯µ½ÏìÓ¦µÄÉè±¸ÐÎÌ¬Öµ¡£
+å‡½æ•°è¯´æ˜Žï¼š è¿”å›žå½“å‰è®¾å¤‡åˆ—è¡¨ä¸­æ”¯æŒ(sel=1)æˆ–è€…ä¸æ”¯æŒ(sel=0)PCSCçš„è®¾å¤‡å½¢æ€å€¼
+å‡½æ•°åŠŸèƒ½:
+è¾“å…¥å‚æ•°ï¼šsel
+          0: é€šè¿‡å‚æ•°dev_typeè¿”å›žå½“å‰ä¸å¸¦PCSCæ˜¯è®¾å¤‡å½¢æ€å€¼
+          1ï¼šé€šè¿‡å‚æ•°dev_typeè¿”å›žå½“å‰å¸¦PCSCæ˜¯è®¾å¤‡å½¢æ€å€¼
+è¾“å‡ºå‚æ•°ï¼šdev_type å†™å…¥éœ€è¦çš„è®¾å¤‡å½¢æ€å€¼ï¼Œå¦‚æžœæ²¡æœ‰åˆ™ä¸å†™å…¥å€¼ã€‚
+          NVä¸­å­˜å‚¨çš„è®¾å¤‡å½¢æ€å€¼
+è¾“å‡ºå‚æ•°ï¼špulDevType ä¸ŽulCurDevTypeå¯¹åº”çš„è®¾å¤‡å½¢æ€å€¼ï¼Œå¦‚æžœæ²¡æœ‰è¿”å›žå€¼1ã€‚
+è¿”å›žå€¼ï¼š
+          0ï¼šæŸ¥è¯¢åˆ°ç›¸åº”çš„è®¾å¤‡å½¢æ€å€¼ï¼›
+          1ï¼šæ²¡æœ‰æŸ¥è¯¢åˆ°å“åº”çš„è®¾å¤‡å½¢æ€å€¼ã€‚
 ********************************************************/
 int BSP_USB_PcscInfoSet(unsigned int  ulSel, unsigned int  ulCurDevType, unsigned int *pulDevType)
 {
@@ -176,13 +176,13 @@ int BSP_USB_PcscInfoSet(unsigned int  ulSel, unsigned int  ulCurDevType, unsigne
 }
 
 /********************************************************
-º¯ÊýËµÃ÷£ºÐ­ÒéÕ»×¢²áUSBÊ¹ÄÜÍ¨Öª»Øµ÷º¯Êý
-º¯Êý¹¦ÄÜ:
-ÊäÈë²ÎÊý£ºpFunc: USBÊ¹ÄÜ»Øµ÷º¯ÊýÖ¸Õë
-Êä³ö²ÎÊý£ºÎÞ
-Êä³ö²ÎÊý£ºÎÞ
-·µ»ØÖµ  £º0£º³É¹¦
-          1£ºÊ§°Ü
+å‡½æ•°è¯´æ˜Žï¼šåè®®æ ˆæ³¨å†ŒUSBä½¿èƒ½é€šçŸ¥å›žè°ƒå‡½æ•°
+å‡½æ•°åŠŸèƒ½:
+è¾“å…¥å‚æ•°ï¼špFunc: USBä½¿èƒ½å›žè°ƒå‡½æ•°æŒ‡é’ˆ
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¿”å›žå€¼  ï¼š0ï¼šæˆåŠŸ
+          1ï¼šå¤±è´¥
 ********************************************************/
 unsigned int BSP_USB_RegUdiEnableCB(USB_UDI_ENABLE_CB_T pFunc)
 {
@@ -205,13 +205,13 @@ unsigned int BSP_USB_RegUdiEnableCB(USB_UDI_ENABLE_CB_T pFunc)
 }
 
 /********************************************************
-º¯ÊýËµÃ÷£ºÐ­ÒéÕ»×¢²áUSBÈ¥Ê¹ÄÜÍ¨Öª»Øµ÷º¯Êý
-º¯Êý¹¦ÄÜ:
-ÊäÈë²ÎÊý£ºpFunc: USBÈ¥Ê¹ÄÜ»Øµ÷º¯ÊýÖ¸Õë
-Êä³ö²ÎÊý£ºÎÞ
-Êä³ö²ÎÊý£ºÎÞ
-·µ»ØÖµ  £º0£º³É¹¦
-          1£ºÊ§°Ü
+å‡½æ•°è¯´æ˜Žï¼šåè®®æ ˆæ³¨å†ŒUSBåŽ»ä½¿èƒ½é€šçŸ¥å›žè°ƒå‡½æ•°
+å‡½æ•°åŠŸèƒ½:
+è¾“å…¥å‚æ•°ï¼špFunc: USBåŽ»ä½¿èƒ½å›žè°ƒå‡½æ•°æŒ‡é’ˆ
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¿”å›žå€¼  ï¼š0ï¼šæˆåŠŸ
+          1ï¼šå¤±è´¥
 ********************************************************/
 unsigned int BSP_USB_RegUdiDisableCB(USB_UDI_DISABLE_CB_T pFunc)
 {
@@ -238,13 +238,13 @@ unsigned int BSP_USB_RegIpsTraceCB(USB_IPS_MNTN_TRACE_CB_T pFunc)
 }
 
 /********************************************************
-º¯ÊýËµÃ÷£ºÐ­ÒéÕ»×¢²áHSICÊ¹ÄÜÍ¨Öª»Øµ÷º¯Êý
-º¯Êý¹¦ÄÜ:
-ÊäÈë²ÎÊý£ºpFunc: HSICÊ¹ÄÜ»Øµ÷º¯ÊýÖ¸Õë
-Êä³ö²ÎÊý£ºÎÞ
-Êä³ö²ÎÊý£ºÎÞ
-·µ»ØÖµ  £º0£º³É¹¦
-          1£ºÊ§°Ü
+å‡½æ•°è¯´æ˜Žï¼šåè®®æ ˆæ³¨å†ŒHSICä½¿èƒ½é€šçŸ¥å›žè°ƒå‡½æ•°
+å‡½æ•°åŠŸèƒ½:
+è¾“å…¥å‚æ•°ï¼špFunc: HSICä½¿èƒ½å›žè°ƒå‡½æ•°æŒ‡é’ˆ
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¿”å›žå€¼  ï¼š0ï¼šæˆåŠŸ
+          1ï¼šå¤±è´¥
 ********************************************************/
 unsigned int BSP_HSIC_RegUdiEnableCB(HSIC_UDI_ENABLE_CB_T pFunc)
 {
@@ -252,13 +252,13 @@ unsigned int BSP_HSIC_RegUdiEnableCB(HSIC_UDI_ENABLE_CB_T pFunc)
 }
 
 /********************************************************
-º¯ÊýËµÃ÷£ºÐ­ÒéÕ»×¢²áHSICÈ¥Ê¹ÄÜÍ¨Öª»Øµ÷º¯Êý
-º¯Êý¹¦ÄÜ:
-ÊäÈë²ÎÊý£ºpFunc: HSICÈ¥Ê¹ÄÜ»Øµ÷º¯ÊýÖ¸Õë
-Êä³ö²ÎÊý£ºÎÞ
-Êä³ö²ÎÊý£ºÎÞ
-·µ»ØÖµ£º  0£º³É¹¦
-          1£ºÊ§°Ü
+å‡½æ•°è¯´æ˜Žï¼šåè®®æ ˆæ³¨å†ŒHSICåŽ»ä½¿èƒ½é€šçŸ¥å›žè°ƒå‡½æ•°
+å‡½æ•°åŠŸèƒ½:
+è¾“å…¥å‚æ•°ï¼špFunc: HSICåŽ»ä½¿èƒ½å›žè°ƒå‡½æ•°æŒ‡é’ˆ
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¿”å›žå€¼ï¼š  0ï¼šæˆåŠŸ
+          1ï¼šå¤±è´¥
 ********************************************************/
 unsigned int BSP_HSIC_RegUdiDisableCB(HSIC_UDI_DISABLE_CB_T pFunc)
 {
@@ -295,13 +295,13 @@ int USB_otg_switch_signal_set(UINT8 group,UINT8 pin, UINT8 value )
 }
 
 /********************************************************
-º¯ÊýËµÃ÷£ºÐ­ÒéÕ»²éÑ¯HSICÃ¶¾Ù×´Ì¬
-º¯Êý¹¦ÄÜ:
-ÊäÈë²ÎÊý£ºÎÞ
-Êä³ö²ÎÊý£ºÎÞ
-Êä³ö²ÎÊý£ºÎÞ
-·µ»ØÖµ£º  1£ºÃ¶¾ÙÍê³É
-          0£ºÃ¶¾ÙÎ´Íê³É
+å‡½æ•°è¯´æ˜Žï¼šåè®®æ ˆæŸ¥è¯¢HSICæžšä¸¾çŠ¶æ€
+å‡½æ•°åŠŸèƒ½:
+è¾“å…¥å‚æ•°ï¼šæ— 
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¿”å›žå€¼ï¼š  1ï¼šæžšä¸¾å®Œæˆ
+          0ï¼šæžšä¸¾æœªå®Œæˆ
 ********************************************************/
 unsigned int BSP_GetHsicEnumStatus(void)
 {
@@ -309,12 +309,12 @@ unsigned int BSP_GetHsicEnumStatus(void)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_HSIC_SupportNcm
- ¹¦ÄÜÃèÊö  : ±¾½Ó¿ÚÓÃÓÚ²éÑ¯HSICÊÇ·ñÖ§³ÖNCM
- ÊäÈë²ÎÊý  : NA
- Êä³ö²ÎÊý  : NA
- ·µ »Ø Öµ  : 1-- Ö§³ÖNCM
-             0--²»Ö§³ÖNCM
+ å‡½ æ•° å  : BSP_USB_HSIC_SupportNcm
+ åŠŸèƒ½æè¿°  : æœ¬æŽ¥å£ç”¨äºŽæŸ¥è¯¢HSICæ˜¯å¦æ”¯æŒNCM
+ è¾“å…¥å‚æ•°  : NA
+ è¾“å‡ºå‚æ•°  : NA
+ è¿” å›ž å€¼  : 1-- æ”¯æŒNCM
+             0--ä¸æ”¯æŒNCM
 *****************************************************************************/
 int BSP_USB_HSIC_SupportNcm(void)
 {
@@ -322,12 +322,12 @@ int BSP_USB_HSIC_SupportNcm(void)
 }
 
 /********************************************************
-º¯ÊýËµÃ÷£ºTTF²éÑ¯Ô¤ÉêÇëSKB Num
-º¯Êý¹¦ÄÜ:
-ÊäÈë²ÎÊý£ºÎÞ
-Êä³ö²ÎÊý£ºÎÞ
-Êä³ö²ÎÊý£ºÎÞ
-·µ»ØÖµ£º  SKB Num
+å‡½æ•°è¯´æ˜Žï¼šTTFæŸ¥è¯¢é¢„ç”³è¯·SKB Num
+å‡½æ•°åŠŸèƒ½:
+è¾“å…¥å‚æ•°ï¼šæ— 
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¾“å‡ºå‚æ•°ï¼šæ— 
+è¿”å›žå€¼ï¼š  SKB Num
 ********************************************************/
 BSP_U32 BSP_AcmPremallocSkbNum(void)
 {
@@ -335,14 +335,14 @@ BSP_U32 BSP_AcmPremallocSkbNum(void)
 }
 
 /********************************************************
-º¯ÊýÃû£º   BSP_UDI_FindVcom
-¹¦ÄÜÃèÊö£º ²éÑ¯µ±Ç°Éè±¸ÐÎÌ¬ÏÂÖ¸¶¨µÄUDIÐéÄâ´®¿Ú¶Ë¿ÚÊÇ·ñ´æÔÚ
-ÊäÈë²ÎÊý£º UDI_DEVICE_IDÃ¶¾ÙÖµ£¬¼´´ý²éÑ¯µÄÐéÄâ´®¿Ú¶Ë¿ÚID
-Êä³ö²ÎÊý£º ÎÞ
-·µ»ØÖµ£º
-           0£ºµ±Ç°Éè±¸ÐÎÌ¬²»Ö§³Ö²éÑ¯µÄÐéÄâ´®¿Ú¶Ë¿Ú£»
-           1£ºµ±Ç°Éè±¸ÐÎÌ¬Ö§³Ö²éÑ¯µÄÐéÄâ´®¿Ú¶Ë¿Ú¡£
-×¢ÒâÊÂÏî£º ÎÞ
+å‡½æ•°åï¼š   BSP_UDI_FindVcom
+åŠŸèƒ½æè¿°ï¼š æŸ¥è¯¢å½“å‰è®¾å¤‡å½¢æ€ä¸‹æŒ‡å®šçš„UDIè™šæ‹Ÿä¸²å£ç«¯å£æ˜¯å¦å­˜åœ¨
+è¾“å…¥å‚æ•°ï¼š UDI_DEVICE_IDæžšä¸¾å€¼ï¼Œå³å¾…æŸ¥è¯¢çš„è™šæ‹Ÿä¸²å£ç«¯å£ID
+è¾“å‡ºå‚æ•°ï¼š æ— 
+è¿”å›žå€¼ï¼š
+           0ï¼šå½“å‰è®¾å¤‡å½¢æ€ä¸æ”¯æŒæŸ¥è¯¢çš„è™šæ‹Ÿä¸²å£ç«¯å£ï¼›
+           1ï¼šå½“å‰è®¾å¤‡å½¢æ€æ”¯æŒæŸ¥è¯¢çš„è™šæ‹Ÿä¸²å£ç«¯å£ã€‚
+æ³¨æ„äº‹é¡¹ï¼š æ— 
 ********************************************************/
 int BSP_UDI_FindVcom(UDI_DEVICE_ID enVCOM)
 {
@@ -350,13 +350,13 @@ int BSP_UDI_FindVcom(UDI_DEVICE_ID enVCOM)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : DRV_USB_RegEnumDoneForMsp
-* ¹¦ÄÜÃèÊö  : Ìá¹©¸øMSP×¢²áUSBÃ¶¾ÙÍê³ÉºóÍ¨Öªº¯Êý
-* ÊäÈë²ÎÊý  : pFunc:Ã¶¾ÙÍê³É»Øµ÷º¯ÊýÖ¸Õë
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : 0: ³É¹¦×¢²á,µÈ´ýÃ¶¾ÙÍê³ÉÍ¨Öª;
-*             1: USBÒÑ¾­Ã¶¾ÙÍê³É,¿ÉÒÔÖ±½Ó³õÊ¼»¯USB²¿·Ö;
-*             -1: Ê§°Ü, ·ÇUSBÐÎÌ¬,Ã»ÓÐUSBÇý¶¯
+* å‡½ æ•° å  : DRV_USB_RegEnumDoneForMsp
+* åŠŸèƒ½æè¿°  : æä¾›ç»™MSPæ³¨å†ŒUSBæžšä¸¾å®ŒæˆåŽé€šçŸ¥å‡½æ•°
+* è¾“å…¥å‚æ•°  : pFunc:æžšä¸¾å®Œæˆå›žè°ƒå‡½æ•°æŒ‡é’ˆ
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : 0: æˆåŠŸæ³¨å†Œ,ç­‰å¾…æžšä¸¾å®Œæˆé€šçŸ¥;
+*             1: USBå·²ç»æžšä¸¾å®Œæˆ,å¯ä»¥ç›´æŽ¥åˆå§‹åŒ–USBéƒ¨åˆ†;
+*             -1: å¤±è´¥, éžUSBå½¢æ€,æ²¡æœ‰USBé©±åŠ¨
 *****************************************************************************/
 signed int BSP_USB_RegEnumDoneForMsp(void *pFunc)
 {
@@ -365,13 +365,13 @@ signed int BSP_USB_RegEnumDoneForMsp(void *pFunc)
 }
 
 /*****************************************************************************
-* º¯ Êý Ãû  : BSP_USB_RegEnumDoneForPs
-* ¹¦ÄÜÃèÊö  : Ìá¹©¸øPS×¢²áUSBÃ¶¾ÙÍê³ÉºóÍ¨Öªº¯Êý
-* ÊäÈë²ÎÊý  : pFunc:Ã¶¾ÙÍê³É»Øµ÷º¯ÊýÖ¸Õë
-* Êä³ö²ÎÊý  : ÎÞ
-* ·µ »Ø Öµ  : 0: ³É¹¦×¢²á,µÈ´ýÃ¶¾ÙÍê³ÉÍ¨Öª;
-*             1: USBÒÑ¾­Ã¶¾ÙÍê³É,¿ÉÒÔÖ±½Ó³õÊ¼»¯USB²¿·Ö;
-*             -1: Ê§°Ü,·ÇUSBÐÎÌ¬,Ã»ÓÐUSBÇý¶¯
+* å‡½ æ•° å  : BSP_USB_RegEnumDoneForPs
+* åŠŸèƒ½æè¿°  : æä¾›ç»™PSæ³¨å†ŒUSBæžšä¸¾å®ŒæˆåŽé€šçŸ¥å‡½æ•°
+* è¾“å…¥å‚æ•°  : pFunc:æžšä¸¾å®Œæˆå›žè°ƒå‡½æ•°æŒ‡é’ˆ
+* è¾“å‡ºå‚æ•°  : æ— 
+* è¿” å›ž å€¼  : 0: æˆåŠŸæ³¨å†Œ,ç­‰å¾…æžšä¸¾å®Œæˆé€šçŸ¥;
+*             1: USBå·²ç»æžšä¸¾å®Œæˆ,å¯ä»¥ç›´æŽ¥åˆå§‹åŒ–USBéƒ¨åˆ†;
+*             -1: å¤±è´¥,éžUSBå½¢æ€,æ²¡æœ‰USBé©±åŠ¨
 *****************************************************************************/
 signed int BSP_USB_RegEnumDoneForPs(void *pFunc)
 {
@@ -380,10 +380,10 @@ signed int BSP_USB_RegEnumDoneForPs(void *pFunc)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_RndisAppEventDispatch
- ¹¦ÄÜÃèÊö  : ±¾½Ó¿ÚÓÃÓÚÍ¨ÖªAPP ÏàÓ¦µÄUSB²å°ÎÊÂ¼þ
- Êä³ö²ÎÊý  : usbÊÂ¼þ
- ·µ »Ø Öµ  : ÎÞ
+ å‡½ æ•° å  : BSP_USB_RndisAppEventDispatch
+ åŠŸèƒ½æè¿°  : æœ¬æŽ¥å£ç”¨äºŽé€šçŸ¥APP ç›¸åº”çš„USBæ’æ‹”äº‹ä»¶
+ è¾“å‡ºå‚æ•°  : usbäº‹ä»¶
+ è¿” å›ž å€¼  : æ— 
 *****************************************************************************/
 void BSP_USB_RndisAppEventDispatch(unsigned ulStatus)
 {
@@ -394,9 +394,9 @@ void BSP_USB_RndisAppEventDispatch(unsigned ulStatus)
  * FUNCTION
  *       rndis_app_event_dispatch
  * DESCRIPTION
- *       ÉÁµç¿¨°æ±¾¿ØÖÆÓ¦ÓÃ½øÐÐ²¦ºÅ»ò¶Ï¿ª²¦ºÅÁ¬½Ó
+ *       é—ªç”µå¡ç‰ˆæœ¬æŽ§åˆ¶åº”ç”¨è¿›è¡Œæ‹¨å·æˆ–æ–­å¼€æ‹¨å·è¿žæŽ¥
  * INPUTS
- *       ½øÐÐ²¦ºÅ»ò¶Ï¿ª²¦ºÅÖ¸Ê¾
+ *       è¿›è¡Œæ‹¨å·æˆ–æ–­å¼€æ‹¨å·æŒ‡ç¤º
  * OUTPUTS
  *       NONE
  *************************************************************************/
@@ -406,12 +406,12 @@ VOID rndis_app_event_dispatch(unsigned int ulStatus)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : BSP_USB_NASSwitchGatewayRegExtFunc
- ¹¦ÄÜÃèÊö  : ±¾½Ó¿ÚÓÃÓÚNAS×¢²áÇÐ»»Íø¹ØÍ¨Öª»Øµ÷º¯Êý
- ÊäÈë²ÎÊý  : »Øµ÷½Ó¿Ú¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : 0£º³É¹¦
-             Áã:Ê§°Ü
+ å‡½ æ•° å  : BSP_USB_NASSwitchGatewayRegExtFunc
+ åŠŸèƒ½æè¿°  : æœ¬æŽ¥å£ç”¨äºŽNASæ³¨å†Œåˆ‡æ¢ç½‘å…³é€šçŸ¥å›žè°ƒå‡½æ•°
+ è¾“å…¥å‚æ•°  : å›žè°ƒæŽ¥å£ã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : 0ï¼šæˆåŠŸ
+             é›¶:å¤±è´¥
 *****************************************************************************/
 int BSP_USB_NASSwitchGatewayRegFunc(USB_NET_DEV_SWITCH_GATEWAY switchGwMode)
 {
@@ -419,12 +419,12 @@ int BSP_USB_NASSwitchGatewayRegFunc(USB_NET_DEV_SWITCH_GATEWAY switchGwMode)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_usb_register_enablecb
- ¹¦ÄÜÃèÊö  : ±¾½Ó¿ÚÓÃÓÚCshellÍ¨ÖªUSB²åÈë»Øµ÷º¯Êý
- ÊäÈë²ÎÊý  : »Øµ÷½Ó¿Ú¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : 0£º³É¹¦
-             Áã:Ê§°Ü
+ å‡½ æ•° å  : bsp_usb_register_enablecb
+ åŠŸèƒ½æè¿°  : æœ¬æŽ¥å£ç”¨äºŽCshellé€šçŸ¥USBæ’å…¥å›žè°ƒå‡½æ•°
+ è¾“å…¥å‚æ•°  : å›žè°ƒæŽ¥å£ã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : 0ï¼šæˆåŠŸ
+             é›¶:å¤±è´¥
 *****************************************************************************/
 int bsp_usb_register_enablecb(USB_UDI_ENABLE_CB_T pFunc)
 {
@@ -433,12 +433,12 @@ int bsp_usb_register_enablecb(USB_UDI_ENABLE_CB_T pFunc)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bsp_usb_register_disablecb
- ¹¦ÄÜÃèÊö  : ±¾½Ó¿ÚÓÃÓÚCshellÍ¨ÖªUSB°Î³ö»Øµ÷º¯Êý
- ÊäÈë²ÎÊý  : »Øµ÷½Ó¿Ú¡£
- Êä³ö²ÎÊý  : ÎÞ¡£
- ·µ »Ø Öµ  : 0£º³É¹¦
-             Áã:Ê§°Ü
+ å‡½ æ•° å  : bsp_usb_register_disablecb
+ åŠŸèƒ½æè¿°  : æœ¬æŽ¥å£ç”¨äºŽCshellé€šçŸ¥USBæ‹”å‡ºå›žè°ƒå‡½æ•°
+ è¾“å…¥å‚æ•°  : å›žè°ƒæŽ¥å£ã€‚
+ è¾“å‡ºå‚æ•°  : æ— ã€‚
+ è¿” å›ž å€¼  : 0ï¼šæˆåŠŸ
+             é›¶:å¤±è´¥
 *****************************************************************************/
 int bsp_usb_register_disablecb(USB_UDI_DISABLE_CB_T pFunc)
 {
@@ -460,9 +460,9 @@ unsigned int USB_ETH_DrvClearRxFlowCtrl(unsigned int ulParam1, unsigned int ulPa
  * FUNCTION
  *       rndis_app_event_dispatch
  * DESCRIPTION
- *       ÉÁµç¿¨°æ±¾¿ØÖÆÓ¦ÓÃ½øÐÐ²¦ºÅ»ò¶Ï¿ª²¦ºÅÁ¬½Ó
+ *       é—ªç”µå¡ç‰ˆæœ¬æŽ§åˆ¶åº”ç”¨è¿›è¡Œæ‹¨å·æˆ–æ–­å¼€æ‹¨å·è¿žæŽ¥
  * INPUTS
- *       ½øÐÐ²¦ºÅ»ò¶Ï¿ª²¦ºÅÖ¸Ê¾
+ *       è¿›è¡Œæ‹¨å·æˆ–æ–­å¼€æ‹¨å·æŒ‡ç¤º
  * OUTPUTS
  *       NONE
  *************************************************************************/

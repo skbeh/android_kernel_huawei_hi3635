@@ -92,7 +92,7 @@ struct sc_file_packet_info_struct
 #define SC_PACKET_TEMP_FILE       "/modem_log/sc_packet.bin"
 #define SC_FILE_BACKUP_FLAG       "/modem_log/sc_backup.flag"
 #define SC_BACKUP_SEC_NAME        NV_DEF_SEC_NAME
-#define SC_BACKUP_SEC_OFFSET      0x280000   /*³ö³§·ÖÇø 2.5MÆ«ÒÆ´¦*/
+#define SC_BACKUP_SEC_OFFSET      0x280000   /*å‡ºå‚åˆ†åŒº 2.5Måç§»å¤„*/
 
 int sc_file_backup(void);
 int sc_file_restore(void);

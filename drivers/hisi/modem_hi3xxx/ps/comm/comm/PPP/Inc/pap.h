@@ -46,8 +46,8 @@ struct pap {
   struct {
       VOS_CHAR password[PASSWORDLEN+1];    /* just use it to store password for print */
 
-      /*ÏÂÃæÕâ¸ö½á¹¹ÊÇÎªÁË±£Áô·¢ËÍµ½GGSNÍêÕûµÄconfig req±¨ÎÄ¶øÉèµÄ
-      £¬°Ñ½ÓÊÕµ½µÄpap req±¨ÎÄ·¢¸øAT*/
+      /*ä¸‹é¢è¿™ä¸ªç»“æ„æ˜¯ä¸ºäº†ä¿ç•™å‘é€åˆ°GGSNå®Œæ•´çš„config reqæŠ¥æ–‡è€Œè®¾çš„
+      ï¼ŒæŠŠæ¥æ”¶åˆ°çš„pap reqæŠ¥æ–‡å‘ç»™AT*/
       VOS_UINT16 LenOfRequest;
       VOS_UINT8  BufRequest[PASSWORDLEN + AUTHLEN];
   } RecordData;    /* encapsulated to structure RecordData by liukai */

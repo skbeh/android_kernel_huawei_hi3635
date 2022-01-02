@@ -184,7 +184,7 @@ __inline__ int dump_in_interrrupt(void)
 /*lint -save -e123 -e530 -e701 -e713 -e718 -e732 -e737 -e746*/
 void dump_task_switch_hook(void *old_tcb, void *new_tcb)
 {
-    /* ½«ÒªÇĞ»»µÄÈÎÎñIDºÍÊ±¼äÈë¶Ó*/
+    /* å°†è¦åˆ‡æ¢çš„ä»»åŠ¡IDå’Œæ—¶é—´å…¥é˜Ÿ*/
     u32 pid_ppid = 0;
     u32 addr = DUMP_TASK_SWITCH_ADDR;
     unsigned long lock_flag;
@@ -214,16 +214,16 @@ void dump_task_switch_hook(void *old_tcb, void *new_tcb)
 
     g_dump_base_info->current_task = (u32)new_tcb;
 
-    /* ¶¨Ê±Æ÷³¬Ê±£¬ÕıÔÚ¼ÇÂ¼ÈÎÎñÃû£¬ÈÎÎñÇĞ»»²»×ö¼ÇÂ¼ */
+    /* å®šæ—¶å™¨è¶…æ—¶ï¼Œæ­£åœ¨è®°å½•ä»»åŠ¡åï¼Œä»»åŠ¡åˆ‡æ¢ä¸åšè®°å½• */
     if(g_dump_save_task_name == true)
     {
         return;
     }
 
-    /* ¿ªÊ¼¼ÇÂ¼ */
+    /* å¼€å§‹è®°å½• */
     g_dump_save_task_name = true;
 
-    /* ÒòÎªkthreaddÅÉÉú³öÀ´µÄÈÎÎñ£¬µÚÒ»´ÎÔËĞĞÊ±£¬ÈÎÎñÃû¶¼½Ğkthreadd£¬ËùÒÔÈÎÎñµÚ¶ş´Î½øÈëÊ±£¬²Å¼ÇÂ¼ */
+    /* å› ä¸ºkthreaddæ´¾ç”Ÿå‡ºæ¥çš„ä»»åŠ¡ï¼Œç¬¬ä¸€æ¬¡è¿è¡Œæ—¶ï¼Œä»»åŠ¡åéƒ½å«kthreaddï¼Œæ‰€ä»¥ä»»åŠ¡ç¬¬äºŒæ¬¡è¿›å…¥æ—¶ï¼Œæ‰è®°å½• */
     if(((struct task_struct*)new_tcb)->dump_magic == (int)new_tcb)
     {
         g_dump_save_task_name = false;
@@ -258,13 +258,13 @@ void dump_int_switch_hook(u32 dir, u32 oldVec, u32 newVec)
     }
 
     spin_lock_irqsave(&g_dump_lock, lock_flag);
-    /* ½«´¥·¢µÄÖĞ¶ÏIDºÍÊ±¼äÈë¶Ó*/
-    if (0 == dir)/*ÖĞ¶Ï½øÈë*/
+    /* å°†è§¦å‘çš„ä¸­æ–­IDå’Œæ—¶é—´å…¥é˜Ÿ*/
+    if (0 == dir)/*ä¸­æ–­è¿›å…¥*/
     {
         QueueLoopIn((dump_queue_t *)addr, (((u32)DUMP_INT_IN_FLAG<<16)|newVec));
         dump_interrrupt_enter();
     }
-    else/*ÖĞ¶ÏÍË³ö*/
+    else/*ä¸­æ–­é€€å‡º*/
     {
         QueueLoopIn((dump_queue_t *)addr, (((u32)DUMP_INT_EXIT_FLAG<<16)|newVec));
         dump_interrrupt_exit();
@@ -305,10 +305,10 @@ void dump_exc_hook(void * currentTaskId, s32 vec, u32* pReg)
     g_dump_base_info->current_task = (u32)currentTaskId;
     g_dump_global_info->reboot_reason= DUMP_REASON_ARM;
 
-    /*¿½±´¼Ä´æÆ÷ĞÅÏ¢*/
+    /*æ‹·è´å¯„å­˜å™¨ä¿¡æ¯*/
     memcpy((void * )(g_dump_base_info->regSet), (const void * )(pReg), (size_t )(ARM_REGS_NUM*sizeof(u32)));
 
-    /*½øĞĞÈ«¾Ö¸´Î»*/
+    /*è¿›è¡Œå…¨å±€å¤ä½*/
     system_error(DRV_ERRNO_DUMP_ARM_EXC, DUMP_REASON_ARM, 0, 0, 0);;
 
     return;
@@ -329,17 +329,17 @@ void dump_wdt_hook(s32 core)
         g_dump_global_info->reboot_cpu = DUMP_CPU_COMM;
     }
 
-    /* AXIÇÅËøËÀ×´Ì¬¼Ä´æÆ÷0 */
+    /* AXIæ¡¥é”æ­»çŠ¶æ€å¯„å­˜å™¨0 */
     reg_value = readl(HI_SYSCTRL_BASE_ADDR_VIRT + HI_SC_STAT9_OFFSET);
     g_dump_base_info->axi_dlock_reg[0] = reg_value;
-     /* AXIÇÅËøËÀ×´Ì¬¼Ä´æÆ÷1 */
+     /* AXIæ¡¥é”æ­»çŠ¶æ€å¯„å­˜å™¨1 */
     reg_value = readl(HI_SYSCTRL_BASE_ADDR_VIRT + HI_SC_STAT10_OFFSET);
     g_dump_base_info->axi_dlock_reg[1] = reg_value;
-    /* AXIÇÅËøËÀ×´Ì¬¼Ä´æÆ÷2 */
+    /* AXIæ¡¥é”æ­»çŠ¶æ€å¯„å­˜å™¨2 */
     reg_value = readl(HI_SYSCTRL_BASE_ADDR_VIRT + HI_SC_STAT22_OFFSET);
     g_dump_base_info->axi_dlock_reg[2] = reg_value;
 
-    /*½øĞĞÈ«¾Ö¸´Î»*/
+    /*è¿›è¡Œå…¨å±€å¤ä½*/
     system_error(DRV_ERRNO_DUMP_WDT, DUMP_REASON_WDT, 0, 0, 0);
 }
 
@@ -358,7 +358,7 @@ void dump_stack_hook(int where)
 
 void dump_onoff_callback(void)
 {
-    /* Òì³£Ö®ºó£¬²»ÔÙÖÃÕı³£ÖØÆô±êÖ¾ */
+    /* å¼‚å¸¸ä¹‹åï¼Œä¸å†ç½®æ­£å¸¸é‡å¯æ ‡å¿— */
     if(g_exc_flag)
     {
         return;
@@ -367,7 +367,7 @@ void dump_onoff_callback(void)
     g_dump_global_info->internal_info.app_internal.start_flag = DUMP_START_REBOOT;
     g_dump_global_info->internal_info.comm_internal.start_flag = DUMP_START_REBOOT;
     g_dump_global_info->internal_info.m3_internal.start_flag = DUMP_START_REBOOT;
-    /* Õı³£ÖØÆô£¬ÖÃ¸´Î»±êÖ¾ */
+    /* æ­£å¸¸é‡å¯ï¼Œç½®å¤ä½æ ‡å¿— */
     g_dump_global_info->reboot_reason = DUMP_REASON_REBOOT;
     g_dump_global_info->reboot_cpu= DUMP_CPU_APP;
 }
@@ -376,7 +376,7 @@ void dump_register_hook(void)
 {
     s32 ret;
 
-    /*Ïò²Ù×÷ÏµÍ³×¢²á¹³×Óº¯Êı*/
+    /*å‘æ“ä½œç³»ç»Ÿæ³¨å†Œé’©å­å‡½æ•°*/
     if(1 == g_dump_cfg.dump_cfg.Bits.taskSwitch)
     {
         ret = task_switch_hook_add((FUNC_VOID)dump_task_switch_hook);
@@ -399,7 +399,7 @@ void dump_register_hook(void)
         int_lock_hook_add((func_void)bsp_dump_int_lock,(func_void)bsp_dump_int_unlock);
     }
 
-    /*È±¿´ÃÅ¹·ÖĞ¶Ï*/
+    /*ç¼ºçœ‹é—¨ç‹—ä¸­æ–­*/
     ret = bsp_wdt_register_hook(dump_wdt_hook);
     if(OK != ret)
     {
@@ -408,7 +408,7 @@ void dump_register_hook(void)
 
     dump_stack_add_hook((traps_hook)dump_stack_hook);
 
-    /* ×¢²á¿ª¹Ø»ú´¦Àí */
+    /* æ³¨å†Œå¼€å…³æœºå¤„ç† */
     bsp_reboot_callback_register(dump_onoff_callback);
 
     g_dump_global_info->internal_info.app_internal.taskSwitchStart = BSP_TRUE;
@@ -420,19 +420,19 @@ void dump_register_hook(void)
 
 bool dump_need_save(void)
 {
-    /* ¼ì²éPMUÒì³£ */
+    /* æ£€æŸ¥PMUå¼‚å¸¸ */
     if(PMU_STATE_OK != bsp_pmu_get_boot_state())
     {
         g_dump_global_info->reboot_reason = DUMP_REASON_PMU;
         return BSP_TRUE;
     }
     
-    /* ÏÈ¼ì²éACORE */
+    /* å…ˆæ£€æŸ¥ACORE */
     if((DUMP_START_EXCH == g_dump_global_info->internal_info.app_internal.start_flag)
         ||(DUMP_START_EXCH == g_dump_global_info->internal_info.comm_internal.start_flag)
         ||(DUMP_START_EXCH == g_dump_global_info->internal_info.m3_internal.start_flag))
     {
-        // Òì³£ÖØÆô
+        // å¼‚å¸¸é‡å¯
         if(DUMP_SAVE_FILE_NEED == g_dump_global_info->internal_info.app_internal.save_file_flag)
         {
             return BSP_TRUE;
@@ -461,7 +461,7 @@ bool dump_need_save(void)
 
 __inline__ void dump_save_global_info(void)
 {
-    //Èç¹ûÊÇÉÏ²ã¸´Î»£¬±êÖ¾¸´Î»×´Ì¬
+    //å¦‚æœæ˜¯ä¸Šå±‚å¤ä½ï¼Œæ ‡å¿—å¤ä½çŠ¶æ€
     if(DUMP_REASON_UNDEF == g_dump_global_info->reboot_reason)
     {
         g_dump_global_info->reboot_reason = DUMP_REASON_NORMAL;
@@ -487,13 +487,13 @@ void dump_save_base_info(u32 mod_id, u32 arg1, u32 arg2, char *data, u32 length)
     }
     else
     {
-        /* µ±Ç°´¦ÓÚÈÎÎñ */
+        /* å½“å‰å¤„äºä»»åŠ¡ */
         if (0 == dump_in_interrrupt())
         {
             //if(!DUMP_T_TASK_ERROR(mod_id))
             if(mod_id == 0x11000025 || mod_id == 0x1100002A)
             {
-                /* AºËVOSÖ»¼ÇÂ¼µÄÈÎÎñµÄpid£¬Ã»ÓĞÈÎÎñµÄtask_structÖ¸Õë£¬²»¼ÇÂ¼ÈÎÎñÃû */
+                /* Aæ ¸VOSåªè®°å½•çš„ä»»åŠ¡çš„pidï¼Œæ²¡æœ‰ä»»åŠ¡çš„task_structæŒ‡é’ˆï¼Œä¸è®°å½•ä»»åŠ¡å */
                 g_dump_base_info->reboot_task = arg1;
             }
             else
@@ -508,7 +508,7 @@ void dump_save_base_info(u32 mod_id, u32 arg1, u32 arg2, char *data, u32 length)
 
             g_dump_base_info->reboot_int = (u32)(-1);
         }
-        /* µ±Ç°´¦ÓÚÖĞ¶Ï */
+        /* å½“å‰å¤„äºä¸­æ–­ */
         else
         {
             g_dump_base_info->reboot_task = (u32)(-1);
@@ -517,7 +517,7 @@ void dump_save_base_info(u32 mod_id, u32 arg1, u32 arg2, char *data, u32 length)
         }
     }
 
-    /*¼ÇÂ¼µ±Ç°×´Ì¬ÊÇÈÎÎñÌ¬»¹ÊÇÖĞ¶ÏÌ¬*/
+    /*è®°å½•å½“å‰çŠ¶æ€æ˜¯ä»»åŠ¡æ€è¿˜æ˜¯ä¸­æ–­æ€*/
     if (0 == dump_in_interrrupt())
     {
         g_dump_base_info->reboot_context = DUMP_CTX_TASK;
@@ -540,7 +540,7 @@ void dump_save_log(void)
 {
     u32 log_end_index = 0;
 
-    /* Èç¹û²»ÊÇÒì³£ÏòÁ¿£¬ÔÙ°ÑÈÎÎñÒì³£Õ»´òÓ¡Ò»´Î */
+    /* å¦‚æœä¸æ˜¯å¼‚å¸¸å‘é‡ï¼Œå†æŠŠä»»åŠ¡å¼‚å¸¸æ ˆæ‰“å°ä¸€æ¬¡ */
     if (!(DUMP_REASON_ARM == g_dump_base_info->arg1))
     {
         dump_error("###########show mem and current task stack start##############!\n");
@@ -556,7 +556,7 @@ void dump_save_log(void)
         dump_error("###########show mem and current task stack end################!\n");
     }
 
-    /* ÏÂÃæ¿ªÊ¼±£´æ´òÓ¡Êı¾İ */
+    /* ä¸‹é¢å¼€å§‹ä¿å­˜æ‰“å°æ•°æ® */
     //log_end_index = ((log_end)&(DUMP_PRINT_SIZE-1));
     log_end_index = (u32)(log_end&(log_buf_len-1));
 
@@ -565,20 +565,20 @@ void dump_save_log(void)
         u32 ulOffsetSize = 0x00;
 
         ulOffsetSize = log_buf_len - log_end_index;
-        memcpy((void * )(DUMP_PRINT_ADDR), (const void * )(log_buf+log_end_index), ulOffsetSize); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
-        memcpy((void * )(DUMP_PRINT_ADDR+ulOffsetSize), (const void * )(log_buf), log_end_index); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+        memcpy((void * )(DUMP_PRINT_ADDR), (const void * )(log_buf+log_end_index), ulOffsetSize); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
+        memcpy((void * )(DUMP_PRINT_ADDR+ulOffsetSize), (const void * )(log_buf), log_end_index); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
     }
     else if ( log_end_index >= DUMP_PRINT_SIZE)
     {
-         memcpy((void * )(DUMP_PRINT_ADDR), (const void * )(log_buf + log_end_index - DUMP_PRINT_SIZE), DUMP_PRINT_SIZE); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+         memcpy((void * )(DUMP_PRINT_ADDR), (const void * )(log_buf + log_end_index - DUMP_PRINT_SIZE), DUMP_PRINT_SIZE); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
     }
     else
     {
         u32 ulOffsetSize = 0x00;
 
         ulOffsetSize = DUMP_PRINT_SIZE - log_end_index;
-        memcpy((void * )(DUMP_PRINT_ADDR), (const void * )(log_buf+log_buf_len-ulOffsetSize), ulOffsetSize); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
-        memcpy((void * )(DUMP_PRINT_ADDR+ulOffsetSize), (const void * )(log_buf), log_end_index); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+        memcpy((void * )(DUMP_PRINT_ADDR), (const void * )(log_buf+log_buf_len-ulOffsetSize), ulOffsetSize); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
+        memcpy((void * )(DUMP_PRINT_ADDR+ulOffsetSize), (const void * )(log_buf), log_end_index); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
     }
 
     return;
@@ -620,8 +620,8 @@ void dump_save_exc_task(u32 addr)
 
     g_dump_base_info->current_task = (u32)task;
 
-    /* Ä¿Ç°Ö»±£´æstack, ±£´æÈ«²¿8KÊı¾İ */
-    memcpy((void * )DUMP_TASK_STACK_ADDR , (const void * )task->stack, (size_t )THREAD_SIZE);/* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    /* ç›®å‰åªä¿å­˜stack, ä¿å­˜å…¨éƒ¨8Kæ•°æ® */
+    memcpy((void * )DUMP_TASK_STACK_ADDR , (const void * )task->stack, (size_t )THREAD_SIZE);/* [false alarm]:å±è”½Fortifyé”™è¯¯ */
 
     return;
 }
@@ -646,19 +646,19 @@ void dump_save_all_task(void)
         }
 
         pThread = (struct thread_info*)pTid->stack;
-        // Ê×ÏÈ±£´æÈÎÎñĞÅÏ¢
+        // é¦–å…ˆä¿å­˜ä»»åŠ¡ä¿¡æ¯
         task_info = &g_dump_task_info[ulTaskNum];
         task_info->pid = PID_PPID_GET(pTid);
-        task_info->entry = (u32)BSP_NULL;                        // linuxÔİ²»Ö§³Ö
+        task_info->entry = (u32)BSP_NULL;                        // linuxæš‚ä¸æ”¯æŒ
         task_info->status = pTid->state;
         task_info->policy = pTid->policy;
         task_info->priority = pTid->prio;
         task_info->stack_base = (u32)((u32)pTid->stack + THREAD_SIZE);
         task_info->stack_end = (u32)end_of_stack(pTid);
-        task_info->stack_high = 0;                          // linuxÔİ²»Ö§³Ö
+        task_info->stack_high = 0;                          // linuxæš‚ä¸æ”¯æŒ
         /* coverity[buffer_size_warning] */
         strncpy((char *)task_info->name, pTid->comm, 16);
-        task_info->regs[0] = 0;                             // Ç°ËÄ¸öÍ¨ÓÃ¼Ä´æÆ÷ÎŞÒâÒå
+        task_info->regs[0] = 0;                             // å‰å››ä¸ªé€šç”¨å¯„å­˜å™¨æ— æ„ä¹‰
         task_info->regs[1] = 0;
         task_info->regs[2] = 0;
         task_info->regs[3] = 0;
@@ -710,11 +710,11 @@ void dump_save_usr_data(char *data, u32 length)
 {
     s32 len;
 
-    /*±£´æÓÃ»§ĞÅÏ¢*/
+    /*ä¿å­˜ç”¨æˆ·ä¿¡æ¯*/
     if ((NULL != data) && (length))
     {
         len = (length > DUMP_USER_DATA_SIZE) ? DUMP_USER_DATA_SIZE : length;
-        memcpy((void *)DUMP_USER_DATA_ADDR, (const void * )data, (size_t)len); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+        memcpy((void *)DUMP_USER_DATA_ADDR, (const void * )data, (size_t)len); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
         g_dump_core_map->sec_user_data.length = len;
     }
 
@@ -794,7 +794,7 @@ __inline__ void dump_wait_for_reboot(void)
 
 void dump_save_and_reboot(void)
 {
-    /*±£´æÎÄ¼şÔÚ¸ßÓÅÏÈ¼¶ÈÎÎñÖĞÍê³É*/
+    /*ä¿å­˜æ–‡ä»¶åœ¨é«˜ä¼˜å…ˆçº§ä»»åŠ¡ä¸­å®Œæˆ*/
     g_dump_ctrl.dump_task_job = DUMP_TASK_JOB_SAVE_REBOOT;
     up(&g_dump_ctrl.sem_dump_task);
 
@@ -806,10 +806,10 @@ void dump_save_and_reboot(void)
 
 void dump_system_error_enter(void)
 {
-    /* Í£Ö¹¼ÇÂ¼ÈÎÎñÇĞ»»/ÖĞ¶ÏµÈ */
+    /* åœæ­¢è®°å½•ä»»åŠ¡åˆ‡æ¢/ä¸­æ–­ç­‰ */
     dump_trace_stop();
 
-    /* ½ûÖ¹ÇÀÕ¼ */
+    /* ç¦æ­¢æŠ¢å  */
 //    preempt_disable();
 
     return;
@@ -828,13 +828,13 @@ void dump_save_task_name(void)
     u32 pid_ppid = 0;
     char idle_task_name[12] = {"swapper"};
 
-    /* ÈÎÎñÇĞ»»ÕıÔÚ¼ÇÂ¼£¬Ö±½Ó·µ»Ø */
+    /* ä»»åŠ¡åˆ‡æ¢æ­£åœ¨è®°å½•ï¼Œç›´æ¥è¿”å› */
     if(g_dump_save_task_name == true)
     {
         return;
     }
 
-    /* ¿ªÊ¼¼ÇÂ¼ */
+    /* å¼€å§‹è®°å½• */
     g_dump_save_task_name = true;
     
     for_each_process(pTid)
@@ -864,7 +864,7 @@ void dump_save_task_name(void)
     QueueLoopIn((dump_queue_t *)task_name_addr, *((int *)(idle_task_name+4)));
     QueueLoopIn((dump_queue_t *)task_name_addr, *((int *)(idle_task_name+8))); 
 
-    /* ¼ÇÂ¼Íê³É */
+    /* è®°å½•å®Œæˆ */
     g_dump_save_task_name = false;
 }
 
@@ -908,7 +908,7 @@ void dump_stop_timer(void)
 
 void dump_int_handle(s32 param)
 {
-    /* ÒÑ¾­·¢ÉúÒì³££¬²»ÔÙ¼ÇÂ¼ */
+    /* å·²ç»å‘ç”Ÿå¼‚å¸¸ï¼Œä¸å†è®°å½• */
     if(g_exc_flag)
     {
         return;
@@ -918,7 +918,7 @@ void dump_int_handle(s32 param)
         g_exc_flag = true;
     }
 
-    /*±£´æÒì³£ÈÎÎñĞÅÏ¢*/
+    /*ä¿å­˜å¼‚å¸¸ä»»åŠ¡ä¿¡æ¯*/
     dump_save_exc_task((u32)(&(g_dump_base_info->regSet[0])));
 
     bsp_utrace_stop();
@@ -927,7 +927,7 @@ void dump_int_handle(s32 param)
 
 	if (DUMP_INIT_FLAG != g_dump_global_info->internal_info.app_internal.init_flag)
     {
-        /*µÈ´ıÖØÆô*/
+        /*ç­‰å¾…é‡å¯*/
         dump_wait_for_reboot();
 
         return;
@@ -935,40 +935,40 @@ void dump_int_handle(s32 param)
 
     if(param == 0)
     {
-         /* CºËÒì³£ÁË£¬·¢ËÍÖĞ¶ÏÍ¨ÖªM3*/
+         /* Cæ ¸å¼‚å¸¸äº†ï¼Œå‘é€ä¸­æ–­é€šçŸ¥M3*/
          bsp_ipc_int_send(IPC_CORE_MCORE, IPC_MCU_INT_SRC_DUMP);
     }
     else if(param == 1)
     {
-         /* M3Òì³£ÁË£¬·¢ËÍÖĞ¶ÏÍ¨ÖªCºË*/
+         /* M3å¼‚å¸¸äº†ï¼Œå‘é€ä¸­æ–­é€šçŸ¥Cæ ¸*/
         bsp_ipc_int_send(IPC_CORE_CCORE, IPC_CCPU_SRC_ACPU_DUMP);
     }
 
     dump_system_error_enter();
 
-    /* Ê×ÏÈ±£´æÏµÍ³Òì³£»ù±¾ĞÅÏ¢ */
+    /* é¦–å…ˆä¿å­˜ç³»ç»Ÿå¼‚å¸¸åŸºæœ¬ä¿¡æ¯ */
     dump_save_base_info(BSP_MODU_OTHER_CORE, 0, 0, BSP_NULL, 0);
 
-    /*±£´æ´òÓ¡ĞÅÏ¢*/
+    /*ä¿å­˜æ‰“å°ä¿¡æ¯*/
     dump_save_log();
 
-    /*±£´æËùÓĞÈÎÎñĞÅÏ¢*/
+    /*ä¿å­˜æ‰€æœ‰ä»»åŠ¡ä¿¡æ¯*/
     dump_save_all_task();
 
-    /*±£´æ¼Ä´æÆ÷ĞÅÏ¢*/
+    /*ä¿å­˜å¯„å­˜å™¨ä¿¡æ¯*/
     dump_save_regs();
 
-    /* ±£´æÀ©Õ¹ÇøÊı¾İ */
+    /* ä¿å­˜æ‰©å±•åŒºæ•°æ® */
     dump_save_ext();
 
-    /*APPÊı¾İ±£´æÍê³É */
+    /*APPæ•°æ®ä¿å­˜å®Œæˆ */
     dump_save_app_done();
 
-    /* Í£Ö¹¶¨Ê±Æ÷£¬Ë¢ĞÂÈÎÎñÃû */
+    /* åœæ­¢å®šæ—¶å™¨ï¼Œåˆ·æ–°ä»»åŠ¡å */
     dump_stop_timer();
     dump_save_task_name();
 
-    /*±£´æÒì³£ÎÄ¼ş²¢ÖØÆô*/
+    /*ä¿å­˜å¼‚å¸¸æ–‡ä»¶å¹¶é‡å¯*/
     dump_save_and_reboot();
 
     return;
@@ -982,7 +982,7 @@ s32 dump_config_init(void)
     //ret = -1;
     if (BSP_OK != ret)
     {
-        /*Ê¹ÓÃÄ¬ÈÏÖµ*/
+        /*ä½¿ç”¨é»˜è®¤å€¼*/
         g_dump_cfg.dump_cfg.Bits.dump_switch     = 0x1;
         g_dump_cfg.dump_cfg.Bits.ARMexc          = 0x1;
         g_dump_cfg.dump_cfg.Bits.stackFlow       = 0x1;
@@ -1143,7 +1143,7 @@ s32 dump_global_info_init(void)
 
     strncpy((char *)g_dump_global_info->product, "Balong V700R200", 16);
 
-    /* Èí¼ş°æ±¾ºÅ */
+    /* è½¯ä»¶ç‰ˆæœ¬å· */
     str_tmp = bsp_version_get_firmware();
     if(str_tmp != NULL)
     {
@@ -1154,7 +1154,7 @@ s32 dump_global_info_init(void)
     strncpy((char *)g_dump_global_info->build_date, __DATE__, 16);
     strncpy((char *)g_dump_global_info->build_time, __TIME__, 16);
 
-    /* ¶ÁÈ¡change-id, Ö»¿½±´Ç°9Î» */
+    /* è¯»å–change-id, åªæ‹·è´å‰9ä½ */
     memset((void *)g_dump_global_info->build_sha, 0, 16);
 
     g_dump_global_info->reboot_cpu = 0;
@@ -1210,15 +1210,15 @@ s32 dump_base_info_init(void)
 
 void dump_queue_t_init(void)
 {
-    /* ³õÊ¼»¯ÈÎÎñÇĞ»»¶ÓÁĞ */
+    /* åˆå§‹åŒ–ä»»åŠ¡åˆ‡æ¢é˜Ÿåˆ— */
     QueueInit((dump_queue_t *)(DUMP_TASK_SWITCH_ADDR), (DUMP_TASK_SWITCH_SIZE - 0x10) / 0x4);
     g_dump_ptr_info.task_swt_ptr = DUMP_TASK_SWITCH_ADDR +0x10;
 
-    /* ³õÊ¼»¯ÖĞ¶Ï¶ÓÁĞ */
+    /* åˆå§‹åŒ–ä¸­æ–­é˜Ÿåˆ— */
     QueueInit((dump_queue_t *)(DUMP_INTLOCK_ADDR), (DUMP_INTLOCK_SIZE - 0x10) / 0x4);
     g_dump_ptr_info.int_lock_ptr = DUMP_INTLOCK_ADDR +0x10;
 
-    /* ³õÊ¼»¯ÈÎÎñÃû¶ÓÁĞ */
+    /* åˆå§‹åŒ–ä»»åŠ¡åé˜Ÿåˆ— */
     QueueInit((dump_queue_t *)(DUMP_ALLTASK_ADDR), (DUMP_ALLTASK_SIZE - 0x10) / 0x4);
 
     return;
@@ -1237,7 +1237,7 @@ int dump_save_task(void *data)
     {
         down(&g_dump_ctrl.sem_dump_task);
 
-        /**************************************** ¼ì²éÎÄ¼şÏµÍ³¿ÉÓÃ ***********************************************/
+        /**************************************** æ£€æŸ¥æ–‡ä»¶ç³»ç»Ÿå¯ç”¨ ***********************************************/
         do{
             if(bsp_om_fs_check())
                 break;
@@ -1246,22 +1246,22 @@ int dump_save_task(void *data)
             time_cur++;
         }while(time_cur < DUMP_INIT_WAIT_MAX);
 
-        /**************************************** ±£´æreset log   ***********************************************/
+        /**************************************** ä¿å­˜reset log   ***********************************************/
         if(g_dump_ctrl.dump_task_job & DUMP_TASK_JOB_RESET_LOG)
         {
             bsp_om_save_resetlog();
         }
 
-        /**************************************** Òì³£Æô¶¯£¬±£´ædump ********************************************/
+        /**************************************** å¼‚å¸¸å¯åŠ¨ï¼Œä¿å­˜dump ********************************************/
         if(DUMP_TASK_JOB_SAVE_INIT == (g_dump_ctrl.dump_task_job & DUMP_TASK_JOB_SAVE_INIT))
         {
-            // ±£´æÒì³£ÎÄ¼ş
+            // ä¿å­˜å¼‚å¸¸æ–‡ä»¶
             dump_save();
 
             dump_init_phase2();
         }
 
-        /**************************************** ÏµÍ³Òì³££¬±£´ædump ********************************************/
+        /**************************************** ç³»ç»Ÿå¼‚å¸¸ï¼Œä¿å­˜dump ********************************************/
         if(DUMP_TASK_JOB_SAVE_REBOOT == (g_dump_ctrl.dump_task_job & DUMP_TASK_JOB_SAVE_REBOOT))
         {
            //dump_save_ext();
@@ -1285,12 +1285,12 @@ int dump_save_task(void *data)
 
 		     save_last_profile();
 		     
-            // ±£´æÒì³£ÎÄ¼ş
+            // ä¿å­˜å¼‚å¸¸æ–‡ä»¶
             dump_save();
 
-            /* ÅäÖÃDDR½øÈë×ÔË¢ĞÂ */
+            /* é…ç½®DDRè¿›å…¥è‡ªåˆ·æ–° */
 
-            /* ÖØÆôÏµÍ³ */
+            /* é‡å¯ç³»ç»Ÿ */
             if(1 == g_dump_cfg.dump_cfg.Bits.sysErrReboot)
             {
                 bsp_drv_power_reboot_direct();
@@ -1336,15 +1336,15 @@ s32 dump_init_phase1(void)
 
     g_dump_global_info = (dump_global_info_t*)DUMP_MEM_BASE;
 
-    /*»ñÈ¡ÅäÖÃ*/
+    /*è·å–é…ç½®*/
     ret = dump_config_init();
     if(BSP_OK != ret)
     {
-        // ¶ÁÈ¡ÅäÖÃÊ§°Ü£¬Òì³£´¦Àí
+        // è¯»å–é…ç½®å¤±è´¥ï¼Œå¼‚å¸¸å¤„ç†
         dump_error("dump_init_phase1[%d]: dump_config_init failed! ret = %d\n", __LINE__, ret);
     }
 
-    /* ×¢²áÖĞ¶Ï */
+    /* æ³¨å†Œä¸­æ–­ */
     ret = bsp_ipc_int_connect(IPC_ACPU_SRC_CCPU_DUMP, (voidfuncptr)dump_int_handle, 0);
     if(OK != ret)
     {
@@ -1359,7 +1359,7 @@ s32 dump_init_phase1(void)
         return BSP_ERR_DUMP_INIT_FAILED;
     }
 
-    /* ×¢²áÖĞ¶Ï£¬MCU ->ACPU*/
+    /* æ³¨å†Œä¸­æ–­ï¼ŒMCU ->ACPU*/
     ret = bsp_ipc_int_connect(IPC_ACPU_INT_MCU_SRC_DUMP, (voidfuncptr)dump_int_handle, 1);
     if(OK != ret)
     {
@@ -1404,31 +1404,31 @@ s32 dump_init_phase2(void)
     g_dump_global_info->internal_info.comm_internal.start_wait_flag = DUMP_INIT_FLAG_WAIT;
     g_dump_global_info->internal_info.m3_internal.start_wait_flag = DUMP_INIT_FLAG_WAIT;
 
-    /* Í¨ÖªM3_DUMP³õÊ¼»¯*/
+    /* é€šçŸ¥M3_DUMPåˆå§‹åŒ–*/
     dump_init_icc_send(1);
 
-    /*ÄÚ´æ²¼¾Ö*/
+    /*å†…å­˜å¸ƒå±€*/
     dump_map_init();
 
-    /*È«¾ÖĞÅÏ¢³õÊ¼»¯*/
+    /*å…¨å±€ä¿¡æ¯åˆå§‹åŒ–*/
     dump_global_info_init();
 
-    /*È«¾ÖĞÅÏ¢³õÊ¼»¯*/
+    /*å…¨å±€ä¿¡æ¯åˆå§‹åŒ–*/
     dump_base_info_init();
 
-    /*³õÊ¼»¯¶ÓÁĞ*/
+    /*åˆå§‹åŒ–é˜Ÿåˆ—*/
     dump_queue_t_init();
 
-    /*ÏµÍ³ÔËĞĞ»Øµ÷º¯Êı×¢²á*/
+    /*ç³»ç»Ÿè¿è¡Œå›è°ƒå‡½æ•°æ³¨å†Œ*/
     dump_register_hook();
 
-    /*ÏµÍ³ÔËĞĞ»Øµ÷º¯Êı×¢²á*/
+    /*ç³»ç»Ÿè¿è¡Œå›è°ƒå‡½æ•°æ³¨å†Œ*/
     dump_init_done();
 
-    /* Çå¿ÕPRINT·ÖÇø»º´æ */
-    memset((void *)DUMP_PRINT_ADDR, 0, (u32)DUMP_PRINT_SIZE); /* [false alarm]:ÆÁ±ÎFortify´íÎó */
+    /* æ¸…ç©ºPRINTåˆ†åŒºç¼“å­˜ */
+    memset((void *)DUMP_PRINT_ADDR, 0, (u32)DUMP_PRINT_SIZE); /* [false alarm]:å±è”½Fortifyé”™è¯¯ */
     
-    /* Æô¶¯ÈÎÎñÃû¼ÇÂ¼¶¨Ê±Æ÷ */
+    /* å¯åŠ¨ä»»åŠ¡åè®°å½•å®šæ—¶å™¨ */
     dump_start_timer(60000);
 
     dump_fetal("dump init success!\n");
@@ -1444,7 +1444,7 @@ s32 __init bsp_dump_init(void)
     g_exc_flag = false;
     *dump_flag = DUMP_START_CRASH;
 
-    /*³õÊ¼»¯²¿·Ö½á¹¹Ìå*/
+    /*åˆå§‹åŒ–éƒ¨åˆ†ç»“æ„ä½“*/
     ret  = dump_init_phase1();
     if(BSP_OK != ret)
     {
@@ -1452,13 +1452,13 @@ s32 __init bsp_dump_init(void)
         return BSP_ERROR;
     }
 
-    /*¼ì²éÆô¶¯ÀàĞÍ£¬ÒòÎªµ±Ç°ÎÄ¼şÏµÍ³²»¿ÉÓÃ£¬ĞèÒª×öÒÔÏÂ¶¯×÷:
-      1. Ê×ÏÈ°Ñreset_log¼ÇÂ¼µ½ÄÚ´æ;
-      2. ¼ì²éµ±Ç°ÊÇ·ñÊÇÒì³£Æô¶¯£¬
-         Èç¹û·ñ£¬Æô¶¯ÈÎÎñ¼ÇÂ¼reset_logµ½ÎÄ¼şÏµÍ³£¬Í¬Ê±¼ÌĞø³õÊ¼»¯;
-         Èç¹ûÊÇ£¬ÔİÍ£³õÊ¼»¯£¬Æô¶¯ÈÎÎñ¼ÇÂ¼reset_logºÍdumpÄÚÈİµ½ÎÄ¼ş£¬È»ºó¼ÌĞø³õÊ¼»¯
-      3. ¼ÇÂ¼µÄÈÎÎñÖĞ£¬Ã¿1s¼ì²éÒ»´ÎÎÄ¼şÏµÍ³ÊÇ·ñ¿ÉÓÃ£¬Ö±µ½¿ÉÓÃÖ®ºó¿ªÊ¼¼ÇÂ¼ÎÄ¼ş¡£
-         ¼ì²éÓĞ³¬Ê±ÖÜÆÚ£¬60sÖ®ºó£¬ÎŞÂÛÈçºÎ£¬¿ªÊ¼Æô¶¯ÏÂÒ»½×¶Î
+    /*æ£€æŸ¥å¯åŠ¨ç±»å‹ï¼Œå› ä¸ºå½“å‰æ–‡ä»¶ç³»ç»Ÿä¸å¯ç”¨ï¼Œéœ€è¦åšä»¥ä¸‹åŠ¨ä½œ:
+      1. é¦–å…ˆæŠŠreset_logè®°å½•åˆ°å†…å­˜;
+      2. æ£€æŸ¥å½“å‰æ˜¯å¦æ˜¯å¼‚å¸¸å¯åŠ¨ï¼Œ
+         å¦‚æœå¦ï¼Œå¯åŠ¨ä»»åŠ¡è®°å½•reset_logåˆ°æ–‡ä»¶ç³»ç»Ÿï¼ŒåŒæ—¶ç»§ç»­åˆå§‹åŒ–;
+         å¦‚æœæ˜¯ï¼Œæš‚åœåˆå§‹åŒ–ï¼Œå¯åŠ¨ä»»åŠ¡è®°å½•reset_logå’Œdumpå†…å®¹åˆ°æ–‡ä»¶ï¼Œç„¶åç»§ç»­åˆå§‹åŒ–
+      3. è®°å½•çš„ä»»åŠ¡ä¸­ï¼Œæ¯1sæ£€æŸ¥ä¸€æ¬¡æ–‡ä»¶ç³»ç»Ÿæ˜¯å¦å¯ç”¨ï¼Œç›´åˆ°å¯ç”¨ä¹‹åå¼€å§‹è®°å½•æ–‡ä»¶ã€‚
+         æ£€æŸ¥æœ‰è¶…æ—¶å‘¨æœŸï¼Œ60sä¹‹åï¼Œæ— è®ºå¦‚ä½•ï¼Œå¼€å§‹å¯åŠ¨ä¸‹ä¸€é˜¶æ®µ
     */
     bsp_om_record_resetlog();
     need_save = dump_need_save();
@@ -1479,7 +1479,7 @@ s32 __init bsp_dump_init(void)
 
 void system_error(u32 mod_id, u32 arg1, u32 arg2, char *data, u32 length)
 {
-    /* ÒÑ¾­·¢ÉúÒì³££¬²»ÔÙ¼ÇÂ¼ */
+    /* å·²ç»å‘ç”Ÿå¼‚å¸¸ï¼Œä¸å†è®°å½• */
     if(g_exc_flag)
     {
         return;
@@ -1488,14 +1488,14 @@ void system_error(u32 mod_id, u32 arg1, u32 arg2, char *data, u32 length)
     {
         g_exc_flag = true;
     }
-    /*±£´æÒì³£ÈÎÎñĞÅÏ¢*/
+    /*ä¿å­˜å¼‚å¸¸ä»»åŠ¡ä¿¡æ¯*/
     dump_save_exc_task((u32)(&(g_dump_base_info->regSet[0])));
 
     bsp_utrace_stop();
 
 	if (DUMP_INIT_FLAG != g_dump_global_info->internal_info.app_internal.init_flag)
     {
-        // ÖØÆô
+        // é‡å¯
 		//wdtReboot();
 		return;
 	}
@@ -1504,39 +1504,39 @@ void system_error(u32 mod_id, u32 arg1, u32 arg2, char *data, u32 length)
 
     dump_fetal("[0x%x]================ acore enter system error! ================\n", om_timer_get());
 
-    /* Í¨Öªcomm CPU½øĞĞÒì³£´¦Àí */
+    /* é€šçŸ¥comm CPUè¿›è¡Œå¼‚å¸¸å¤„ç† */
     dump_notify_target();
 
-    /* AºËÒì³£ÁË£¬·¢ËÍÖĞ¶ÏÍ¨ÖªM3*/
+    /* Aæ ¸å¼‚å¸¸äº†ï¼Œå‘é€ä¸­æ–­é€šçŸ¥M3*/
      bsp_ipc_int_send(IPC_CORE_MCORE, IPC_MCU_INT_SRC_DUMP);
 
-    /* Ê×ÏÈ±£´æÏµÍ³Òì³£»ù±¾ĞÅÏ¢ */
+    /* é¦–å…ˆä¿å­˜ç³»ç»Ÿå¼‚å¸¸åŸºæœ¬ä¿¡æ¯ */
     dump_save_global_info();
     dump_save_base_info(mod_id, arg1, arg2, data, length);
 
-    /*±£´æ´òÓ¡ĞÅÏ¢*/
+    /*ä¿å­˜æ‰“å°ä¿¡æ¯*/
     dump_save_log();
 
-    /*±£´æËùÓĞÈÎÎñĞÅÏ¢*/
+    /*ä¿å­˜æ‰€æœ‰ä»»åŠ¡ä¿¡æ¯*/
     dump_save_all_task();
 
-    /*±£´æ¼Ä´æÆ÷ĞÅÏ¢*/
+    /*ä¿å­˜å¯„å­˜å™¨ä¿¡æ¯*/
     dump_save_regs();
 
-    /*±£´æÉÏ²ãÓÃ»§Êı¾İ*/
+    /*ä¿å­˜ä¸Šå±‚ç”¨æˆ·æ•°æ®*/
     dump_save_usr_data(data, length);
 
-    /*APPÊı¾İ±£´æÍê³É */
+    /*APPæ•°æ®ä¿å­˜å®Œæˆ */
     dump_save_app_done();
 
-    /* ±£´æÀ©Õ¹ÇøÊı¾İ */
+    /* ä¿å­˜æ‰©å±•åŒºæ•°æ® */
     dump_save_ext();
 
-    /* Í£Ö¹¶¨Ê±Æ÷£¬Ë¢ĞÂÈÎÎñÃû */
+    /* åœæ­¢å®šæ—¶å™¨ï¼Œåˆ·æ–°ä»»åŠ¡å */
     dump_stop_timer();
     dump_save_task_name();
     
-    /*ÉèÖÃÒì³£ÎÄ¼ş¼ÇÂ¼±êÖ¾*/
+    /*è®¾ç½®å¼‚å¸¸æ–‡ä»¶è®°å½•æ ‡å¿—*/
     dump_save_and_reboot();
 
     return;
@@ -1764,16 +1764,16 @@ void bsp_dump_trace_stop(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : bsp_om_set_hso_conn_flag
+* å‡½ æ•° å  : bsp_om_set_hso_conn_flag
 *
-* ¹¦ÄÜÃèÊö  :¸Ã½Ó¿ÚĞèÒªMSPµÄÕï¶ÏÄ£¿éÔÚHSOÁ¬½Ó»òÕßÈ¥Á¬½ÓµÄÊ±ºòµ÷ÓÃ
+* åŠŸèƒ½æè¿°  :è¯¥æ¥å£éœ€è¦MSPçš„è¯Šæ–­æ¨¡å—åœ¨HSOè¿æ¥æˆ–è€…å»è¿æ¥çš„æ—¶å€™è°ƒç”¨
 *
-* ÊäÈë²ÎÊı  : flag :Á¬½Ó±êÖ¾£¬1±íÊ¾Á¬½Ó£¬0±íÊ¾¶Ï¿ª
+* è¾“å…¥å‚æ•°  : flag :è¿æ¥æ ‡å¿—ï¼Œ1è¡¨ç¤ºè¿æ¥ï¼Œ0è¡¨ç¤ºæ–­å¼€
 *
 *
-* Êä³ö²ÎÊı  :ÎŞ
+* è¾“å‡ºå‚æ•°  :æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *****************************************************************************/
 
 void bsp_dump_set_hso_conn_flag(u32 flag)

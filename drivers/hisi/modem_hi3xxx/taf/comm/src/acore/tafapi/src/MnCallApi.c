@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-   1 Í·ÎÄ¼þ°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "vos.h"
 #include "PsCommonDef.h"
@@ -21,7 +21,7 @@ extern "C"{
 #define    THIS_FILE_ID        PS_FILE_ID_MNCALL_API_C
 
 /*****************************************************************************
-   2 º¯ÊýÊµÏÖ
+   2 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 
@@ -46,13 +46,13 @@ VOS_UINT32  MN_CALL_SendAppRequest(
                 0x00,
                (VOS_SIZE_T)(sizeof(MN_CALL_APP_REQ_MSG_STRU) - VOS_MSG_HEAD_LENGTH));
 
-    /* ÌîÐ´VOSÏûÏ¢Í· */
+    /* å¡«å†™VOSæ¶ˆæ¯å¤´ */
     pstMsg->ulSenderCpuId               = VOS_LOCAL_CPUID;
     pstMsg->ulSenderPid                 = WUEPS_PID_AT;
     pstMsg->ulReceiverCpuId             = VOS_LOCAL_CPUID;
     pstMsg->ulReceiverPid               = AT_GetDestPid(clientId, I0_WUEPS_PID_TAF);
 
-    /* ÌîÐ´Ô­ÓïÊ×²¿ */
+    /* å¡«å†™åŽŸè¯­é¦–éƒ¨ */
     pstMsg->enReq = enReq;
     pstMsg->clientId = clientId;
     pstMsg->opId = opId;
@@ -63,7 +63,7 @@ VOS_UINT32  MN_CALL_SendAppRequest(
         PS_MEM_CPY(&pstMsg->unParm, punParam, sizeof(pstMsg->unParm));
     }
 
-    /* ·¢ËÍVOSÏûÏ¢ */
+    /* å‘é€VOSæ¶ˆæ¯ */
     if (VOS_OK != PS_SEND_MSG(WUEPS_PID_AT, pstMsg))
     {
         AT_ERR_LOG1("MN_CALL_SendAppRequest: Send Message Fail. reqtype:", (VOS_INT32)enReq);
@@ -82,11 +82,11 @@ VOS_UINT32  MN_CALL_Orig(
     VOS_UINT32                          ulResult;
     MN_CALL_ID_T                        callId;
 
-    /* ÔÚ¸Ã´¦²»ÔÚ·ÖÅäCallId£¬Ö±½Ó½«callId¸³ÖµÎª0
-       CallIdµÄ·ÖÅä·Åµ½MN CALLÄ£¿é´¦Àí¸ÃÇé¿öµÄº¯ÊýÖÐ */
+    /* åœ¨è¯¥å¤„ä¸åœ¨åˆ†é…CallIdï¼Œç›´æŽ¥å°†callIdèµ‹å€¼ä¸º0
+       CallIdçš„åˆ†é…æ”¾åˆ°MN CALLæ¨¡å—å¤„ç†è¯¥æƒ…å†µçš„å‡½æ•°ä¸­ */
     callId = 0;
 
-    /* ·¢ËÍÒì²½Ó¦ÓÃÇëÇó */
+    /* å‘é€å¼‚æ­¥åº”ç”¨è¯·æ±‚ */
     ulResult = MN_CALL_SendAppRequest(MN_CALL_APP_ORIG_REQ, clientId,
                                       opId, callId,
                                       (MN_CALL_APP_REQ_PARM_UNION*)pstOrigParam);
@@ -110,12 +110,12 @@ VOS_UINT32  MN_CALL_End(
 
     if ( TAF_NULL_PTR == pstEndParam)
     {
-        /* ±¾µØ¹¹ÔìÒ»¸öMN_CALL_END_REQ_PARAM_STRU½á¹¹, ÌîÐ´Ô­ÒòÖµÎª255 */
+        /* æœ¬åœ°æž„é€ ä¸€ä¸ªMN_CALL_END_REQ_PARAM_STRUç»“æž„, å¡«å†™åŽŸå› å€¼ä¸º255 */
         stEndParam.enEndCause = MN_CALL_INTERWORKING_UNSPECIFIED;
         pstEndParam = &stEndParam;
     }
 
-    /* ·¢ËÍÒì²½Ó¦ÓÃÇëÇó */
+    /* å‘é€å¼‚æ­¥åº”ç”¨è¯·æ±‚ */
     ulResult = MN_CALL_SendAppRequest(MN_CALL_APP_END_REQ, clientId,
                                       opId, callId,
                                       (MN_CALL_APP_REQ_PARM_UNION*)pstEndParam);
@@ -132,7 +132,7 @@ VOS_UINT32  MN_CALL_QryCdur(
 {
     VOS_UINT32                          ulResult;
 
-    /* ·¢ËÍÒì²½Ó¦ÓÃÇëÇó */
+    /* å‘é€å¼‚æ­¥åº”ç”¨è¯·æ±‚ */
     ulResult = MN_CALL_SendAppRequest(MN_CALL_APP_GET_CDUR_REQ, clientId,
                                       opId, callId,
                                       VOS_NULL_PTR);
@@ -141,21 +141,21 @@ VOS_UINT32  MN_CALL_QryCdur(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : MN_CALL_Answer
- ¹¦ÄÜÃèÊö  : ½ÓÌýÒ»¸öÀ´µç
- ÊäÈë²ÎÊý  : clientId   - Client ID
-             opId       - ±¾´Î²Ù×÷µÄ±êÊ¶
-             callId     - ÐèÒª½ÓÌýµÄºô½ÐµÄID
-             pstAnsParam  - ½ÓÌý²Ù×÷ÐèÒªµÄ²ÎÊý, ¸Ã²ÎÊý¿ÉÑ¡, NULL±íÊ¾Ê¹ÓÃÄ¬ÈÏ²ÎÊý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : MN_CALL_Answer
+ åŠŸèƒ½æè¿°  : æŽ¥å¬ä¸€ä¸ªæ¥ç”µ
+ è¾“å…¥å‚æ•°  : clientId   - Client ID
+             opId       - æœ¬æ¬¡æ“ä½œçš„æ ‡è¯†
+             callId     - éœ€è¦æŽ¥å¬çš„å‘¼å«çš„ID
+             pstAnsParam  - æŽ¥å¬æ“ä½œéœ€è¦çš„å‚æ•°, è¯¥å‚æ•°å¯é€‰, NULLè¡¨ç¤ºä½¿ç”¨é»˜è®¤å‚æ•°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê9ÔÂ20ÈÕ
-    ×÷    Õß   : ¶¡Çì 49431
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´9æœˆ20æ—¥
+    ä½œ    è€…   : ä¸åº† 49431
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32  MN_CALL_Answer(
     MN_CLIENT_ID_T                      clientId,
@@ -169,11 +169,11 @@ VOS_UINT32  MN_CALL_Answer(
 
     if ( TAF_NULL_PTR == pstAnsParam)
     {
-        /* ±¾µØ¹¹ÔìÒ»¸öMN_CALL_ANS_REQ_PARAM_STRU½á¹¹ */
+        /* æœ¬åœ°æž„é€ ä¸€ä¸ªMN_CALL_ANS_REQ_PARAM_STRUç»“æž„ */
         pstAnsParam = &stAnsParam;
     }
 
-    /* ·¢ËÍÒì²½Ó¦ÓÃÇëÇó */
+    /* å‘é€å¼‚æ­¥åº”ç”¨è¯·æ±‚ */
     ulResult = MN_CALL_SendAppRequest(MN_CALL_APP_ANSWER_REQ, clientId,
                                       opId, callId,
                                       (MN_CALL_APP_REQ_PARM_UNION*)pstAnsParam);
@@ -193,11 +193,11 @@ VOS_UINT32  TAF_CALL_SendDtmf(
     VOS_UINT32                          ulResult;
     MN_CALL_APP_REQ_PARM_UNION          stAppPara;
 
-    /* ³õÊ¼»¯¾Ö²¿±äÁ¿ */
+    /* åˆå§‹åŒ–å±€éƒ¨å˜é‡ */
     PS_MEM_SET(&stAppPara, 0, sizeof(stAppPara));
     PS_MEM_CPY(&stAppPara.stDtmf, pstDtmfParam, sizeof(TAF_CALL_DTMF_PARAM_STRU));
 
-    /* ·¢ËÍÒì²½Ó¦ÓÃÇëÇó */
+    /* å‘é€å¼‚æ­¥åº”ç”¨è¯·æ±‚ */
     ulResult = MN_CALL_SendAppRequest(enMsgType, clientId, opId,
                                       pstDtmfParam->CallId,
                                       &stAppPara);
@@ -214,8 +214,8 @@ VOS_UINT32  MN_CALL_Sups(
 {
     VOS_UINT32                          ulResult;
 
-    /* ·¢ËÍÒì²½Ó¦ÓÃÇëÇó */
-    /* Àï²ãºÍÍâ²ãµÄCallIdÌî³ÉÒ»ÖÂ */
+    /* å‘é€å¼‚æ­¥åº”ç”¨è¯·æ±‚ */
+    /* é‡Œå±‚å’Œå¤–å±‚çš„CallIdå¡«æˆä¸€è‡´ */
     ulResult = MN_CALL_SendAppRequest(MN_CALL_APP_SUPS_CMD_REQ, clientId,
                                       opId, pstCallSupsParam->callId,
                                       (MN_CALL_APP_REQ_PARM_UNION*)pstCallSupsParam);
@@ -233,7 +233,7 @@ VOS_UINT32  MN_CALL_GetCallInfos(
 {
     VOS_UINT32                          ulResult;
 
-    /* ·¢ËÍÒì²½Ó¦ÓÃÇëÇó */
+    /* å‘é€å¼‚æ­¥åº”ç”¨è¯·æ±‚ */
     ulResult = MN_CALL_SendAppRequest(MN_CALL_APP_GET_INFO_REQ, clientId,
                                       opId, callId,
                                       VOS_NULL_PTR);
@@ -250,8 +250,8 @@ VOS_UINT32 MN_CALL_SetAlsLineNo(
 
     stSetAls.enAlsLine = enAlsLine;
 
-    /*1.Í¨¹ýTAF_MSG_ALS_LINE_NO_SETÏûÏ¢´ø²ÎÊý½á¹¹MN_CALL_ALS_PARAM_STRU
-        Í¨ÖªTAF¶ÔALS½øÐÐÉèÖÃ¡£*/
+    /*1.é€šè¿‡TAF_MSG_ALS_LINE_NO_SETæ¶ˆæ¯å¸¦å‚æ•°ç»“æž„MN_CALL_ALS_PARAM_STRU
+        é€šçŸ¥TAFå¯¹ALSè¿›è¡Œè®¾ç½®ã€‚*/
     ulRst = MN_CALL_SendAppRequest(MN_CALL_APP_SET_ALS_REQ,
                                    gastAtClientTab[ucIndex].usClientId,
                                    At_GetOpId(),
@@ -262,19 +262,19 @@ VOS_UINT32 MN_CALL_SetAlsLineNo(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : MN_CALL_CheckUus1ParmValid
- ¹¦ÄÜÃèÊö  : ¼ì²éÉèÖÃUUS1ÊäÈë²ÎÊýÊÇ·ñºÏ·¨
- ÊäÈë²ÎÊý  : enSetType      :¼¤»î»òÈ¥¼¤»îUUS1
-             pstUus1Info    :UUS1Ïà¹ØÐÅÏ¢
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32     :²ÎÊý¼ì²é³É¹¦»òÊ§°Ü
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : MN_CALL_CheckUus1ParmValid
+ åŠŸèƒ½æè¿°  : æ£€æŸ¥è®¾ç½®UUS1è¾“å…¥å‚æ•°æ˜¯å¦åˆæ³•
+ è¾“å…¥å‚æ•°  : enSetType      :æ¿€æ´»æˆ–åŽ»æ¿€æ´»UUS1
+             pstUus1Info    :UUS1ç›¸å…³ä¿¡æ¯
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32     :å‚æ•°æ£€æŸ¥æˆåŠŸæˆ–å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2010Äê7ÔÂ27ÈÕ
-    ×÷    Õß   : zhoujun /40661
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2010å¹´7æœˆ27æ—¥
+    ä½œ    è€…   : zhoujun /40661
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 MN_CALL_CheckUus1ParmValid(
@@ -287,7 +287,7 @@ VOS_UINT32 MN_CALL_CheckUus1ParmValid(
         return MN_ERR_INVALIDPARM;
     }
 
-    /*  Ð£Ñé²ÎÊýµÄºÏ·¨ÐÔ,·Ç·¨Ö±½Ó·µ»Ø */
+    /*  æ ¡éªŒå‚æ•°çš„åˆæ³•æ€§,éžæ³•ç›´æŽ¥è¿”å›ž */
     if ( ( enSetType >= MN_CALL_SET_UUS1_BUTT )
       || ( pstUus1Info->enMsgType > MN_CALL_UUS1_MSG_RELEASE_COMPLETE ))
     {
@@ -295,8 +295,8 @@ VOS_UINT32 MN_CALL_CheckUus1ParmValid(
     }
 
 
-    /* ¶ÔÓÚUUIEµÄ¼ì²é½ö¼ì²éµÚÒ»ÏîÊÇ·ñÊÇUUIE,ÆäËûµÄ³¤¶ÈºÍPD²»½øÐÐ¼ì²é,
-       ÓÉÓ¦ÓÃ±£Ö¤,¸ÃÏî½öÔÚ¼¤»îUUS1Ê±ÐèÒª¼ì²é,È¥¼¤»î²»¹ØÐÄ¸ÃÏî  */
+    /* å¯¹äºŽUUIEçš„æ£€æŸ¥ä»…æ£€æŸ¥ç¬¬ä¸€é¡¹æ˜¯å¦æ˜¯UUIE,å…¶ä»–çš„é•¿åº¦å’ŒPDä¸è¿›è¡Œæ£€æŸ¥,
+       ç”±åº”ç”¨ä¿è¯,è¯¥é¡¹ä»…åœ¨æ¿€æ´»UUS1æ—¶éœ€è¦æ£€æŸ¥,åŽ»æ¿€æ´»ä¸å…³å¿ƒè¯¥é¡¹  */
     if ( ( MN_CALL_SET_UUS1_ACT == enSetType)
       && ( MN_CALL_UUS_IEI != pstUus1Info->aucUuie[MN_CALL_IEI_POS]))
     {

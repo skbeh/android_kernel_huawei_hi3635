@@ -4,16 +4,16 @@
 #include "bsp_version.h"
 
 /*****************************************************************************
-* º¯ Êı Ãû  : show_product_version
+* å‡½ æ•° å  : show_product_version
 *
-* ¹¦ÄÜÃèÊö  : Ê¾Àı
+* åŠŸèƒ½æè¿°  : ç¤ºä¾‹
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  :
+* è¿” å› å€¼  :
 *
-* ÆäËüËµÃ÷  :
+* å…¶å®ƒè¯´æ˜  :
 *
 *****************************************************************************/
 
@@ -28,16 +28,16 @@ static ssize_t show_product_version(struct device *cdev,struct device_attribute 
 static DEVICE_ATTR(version, 0400,show_product_version, NULL);
 
 /*****************************************************************************
-* º¯ Êı Ãû  : show_product_name
+* å‡½ æ•° å  : show_product_name
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡dload_info(Éı¼¶°æ±¾ºÅ)
+* åŠŸèƒ½æè¿°  : è·å–dload_info(å‡çº§ç‰ˆæœ¬å·)
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  :
+* è¿” å› å€¼  :
 *
-* ÆäËüËµÃ÷  :
+* å…¶å®ƒè¯´æ˜  :
 *
 *****************************************************************************/
 
@@ -45,7 +45,7 @@ static ssize_t show_product_name(struct device *cdev,struct device_attribute *at
 {
 	//char *product_name=bsp_get_dloadid_version();
 
-	/*TODO:×îÖÕÓÃ×¢ÊÍ¹ıµÄ*/
+	/*TODO:æœ€ç»ˆç”¨æ³¨é‡Šè¿‡çš„*/
 	//return sprintf(buf,"%s",product_name);
 	/* coverity[secure_coding] */
 	return sprintf(buf,"%s","MPWUDP");
@@ -53,16 +53,16 @@ static ssize_t show_product_name(struct device *cdev,struct device_attribute *at
 static DEVICE_ATTR(product_name, 0400,show_product_name, NULL);
 
 /*****************************************************************************
-* º¯ Êı Ãû  : show_software_ver
+* å‡½ æ•° å  : show_software_ver
 *
-* ¹¦ÄÜÃèÊö  : »ñÈ¡Èí¼ş°æ±¾ºÅ(firmware_version)
+* åŠŸèƒ½æè¿°  : è·å–è½¯ä»¶ç‰ˆæœ¬å·(firmware_version)
 *
-* ÊäÈë²ÎÊı  :
-* Êä³ö²ÎÊı  :
+* è¾“å…¥å‚æ•°  :
+* è¾“å‡ºå‚æ•°  :
 *
-* ·µ »Ø Öµ  :
+* è¿” å› å€¼  :
 *
-* ÆäËüËµÃ÷  :
+* å…¶å®ƒè¯´æ˜  :
 *
 *****************************************************************************/
 

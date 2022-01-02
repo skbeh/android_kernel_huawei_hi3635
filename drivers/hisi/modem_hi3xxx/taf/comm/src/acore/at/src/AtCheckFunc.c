@@ -40,13 +40,13 @@ VOS_UINT32 atCheckBasicCmdName( VOS_UINT8 Char )
 
 
 /******************************************************************************
- ¹¦ÄÜÃèÊö: ±È½Ï¡¢Æ¥ÅäÊ®Áù½øÖÆ(0x»ò0X)
+ åŠŸèƒ½æè¿°: æ¯”è¾ƒã€åŒ¹é…åå…­è¿›åˆ¶(0xæˆ–0X)
 
- ²ÎÊıËµÃ÷:
-   Char [in] Ğè¼ì²éµÄ×Ö·û
+ å‚æ•°è¯´æ˜:
+   Char [in] éœ€æ£€æŸ¥çš„å­—ç¬¦
 
- ·µ »Ø Öµ: AT_SUCCESS --- ³É¹¦
-           AT_FAILURE --- Ê§°Ü
+ è¿” å› å€¼: AT_SUCCESS --- æˆåŠŸ
+           AT_FAILURE --- å¤±è´¥
 ******************************************************************************/
 VOS_UINT32 atCheckHex(VOS_UINT8 Char)
 {
@@ -62,13 +62,13 @@ VOS_UINT32 atCheckHex(VOS_UINT8 Char)
 
 
 /******************************************************************************
- ¹¦ÄÜÃèÊö: ±È½Ï¡¢Æ¥ÅäÊ®Áù½øÖÆÊı×Ö
+ åŠŸèƒ½æè¿°: æ¯”è¾ƒã€åŒ¹é…åå…­è¿›åˆ¶æ•°å­—
 
- ²ÎÊıËµÃ÷:
-   Char [in] Ğè¼ì²éµÄ×Ö·û
+ å‚æ•°è¯´æ˜:
+   Char [in] éœ€æ£€æŸ¥çš„å­—ç¬¦
 
- ·µ »Ø Öµ: AT_SUCCESS --- ³É¹¦
-           AT_FAILURE --- Ê§°Ü
+ è¿” å› å€¼: AT_SUCCESS --- æˆåŠŸ
+           AT_FAILURE --- å¤±è´¥
 ******************************************************************************/
 VOS_UINT32 atCheckHexNum(VOS_UINT8 Char)
 {
@@ -87,13 +87,13 @@ VOS_UINT32 atCheckHexNum(VOS_UINT8 Char)
 
 
 /******************************************************************************
- ¹¦ÄÜÃèÊö: ±È½Ï¡¢Æ¥ÅäÎŞË«ÒıºÅ°üÀ¨×ÖÄ¸ÆğÊ¼
+ åŠŸèƒ½æè¿°: æ¯”è¾ƒã€åŒ¹é…æ— åŒå¼•å·åŒ…æ‹¬å­—æ¯èµ·å§‹
 
- ²ÎÊıËµÃ÷:
-   Char [in] Ğè¼ì²éµÄ×Ö·û
+ å‚æ•°è¯´æ˜:
+   Char [in] éœ€æ£€æŸ¥çš„å­—ç¬¦
 
- ·µ »Ø Öµ: AT_SUCCESS --- ³É¹¦
-           AT_FAILURE --- Ê§°Ü
+ è¿” å› å€¼: AT_SUCCESS --- æˆåŠŸ
+           AT_FAILURE --- å¤±è´¥
 ******************************************************************************/
 VOS_UINT32 atNoQuotLetter(VOS_UINT8 Char)
 {
@@ -111,7 +111,7 @@ VOS_UINT32 atNoQuotLetter(VOS_UINT8 Char)
 
 VOS_UINT32 atCheckblank( VOS_UINT8 Char )
 {
-    /* Ìí¼Ó-Ö§³Ö×÷Îª×Ö·û */
+    /* æ·»åŠ -æ”¯æŒä½œä¸ºå­—ç¬¦ */
     if(' ' == Char)
     {
         return AT_SUCCESS;
@@ -162,26 +162,26 @@ VOS_UINT32 atCheckChar0x2f( VOS_UINT8 Char )
 
 
 /******************************************************************************
- ¹¦ÄÜÃèÊö: ±È½ÏÆ¥ÅäÊ®Áù½øÖÆÊı×Ö
+ åŠŸèƒ½æè¿°: æ¯”è¾ƒåŒ¹é…åå…­è¿›åˆ¶æ•°å­—
 
- ²ÎÊıËµÃ÷:
-   usLen [in]     Êı×Ö³¤¶È
-   pcTmp [in] Êı×Ö´®
+ å‚æ•°è¯´æ˜:
+   usLen [in]     æ•°å­—é•¿åº¦
+   pcTmp [in] æ•°å­—ä¸²
 
- ·µ »Ø Öµ:
-    AT_SUCCESS : Æ¥Åä
-    AT_FAILURE : ²»Æ¥Åä
+ è¿” å› å€¼:
+    AT_SUCCESS : åŒ¹é…
+    AT_FAILURE : ä¸åŒ¹é…
 ******************************************************************************/
 static VOS_UINT32 checkHexNumString(VOS_UINT16 usLen,  VOS_UINT8 *pcData)
 {
-    VOS_UINT16 usLength = 2;          /* ´Ó0xºó¿ªÊ¼±È½Ï */
-    VOS_UINT8 *pcTmp    = pcData + 2; /* ´Ó0xºó¿ªÊ¼±È½Ï */
+    VOS_UINT16 usLength = 2;          /* ä»0xåå¼€å§‹æ¯”è¾ƒ */
+    VOS_UINT8 *pcTmp    = pcData + 2; /* ä»0xåå¼€å§‹æ¯”è¾ƒ */
 
-    /* ²ÎÊıÖ¸ÕëÓÉµ÷ÓÃÕß±£Ö¤²»ÎªNULL, ¸Ã´¦²»×öÅĞ¶Ï */
+    /* å‚æ•°æŒ‡é’ˆç”±è°ƒç”¨è€…ä¿è¯ä¸ä¸ºNULL, è¯¥å¤„ä¸åšåˆ¤æ–­ */
 
     while(usLength++ < usLen)
     {
-        /* ÅĞ¶ÏÊÇ·ñÊÇÊı×Ö */
+        /* åˆ¤æ–­æ˜¯å¦æ˜¯æ•°å­— */
         if(isdigit(*pcTmp)
             || ('A' <= *pcTmp && 'F' >= *pcTmp)
             || ('a' <= *pcTmp && 'f' >= *pcTmp))
@@ -199,26 +199,26 @@ static VOS_UINT32 checkHexNumString(VOS_UINT16 usLen,  VOS_UINT8 *pcData)
 
 #if 0
 /******************************************************************************
- ¹¦ÄÜÃèÊö: ±È½ÏÆ¥Åä°Ë½øÖÆÊı×Ö
+ åŠŸèƒ½æè¿°: æ¯”è¾ƒåŒ¹é…å…«è¿›åˆ¶æ•°å­—
 
- ²ÎÊıËµÃ÷:
-   usLen [in]     Êı×Ö³¤¶È
-   pcTmp [in] Êı×Ö´®
+ å‚æ•°è¯´æ˜:
+   usLen [in]     æ•°å­—é•¿åº¦
+   pcTmp [in] æ•°å­—ä¸²
 
- ·µ »Ø Öµ:
-    AT_SUCCESS : Æ¥Åä
-    AT_FAILURE : ²»Æ¥Åä
+ è¿” å› å€¼:
+    AT_SUCCESS : åŒ¹é…
+    AT_FAILURE : ä¸åŒ¹é…
 ******************************************************************************/
 static VOS_UINT32 checkOctNumString(VOS_UINT16 usLen,  VOS_UINT8 *pcData)
 {
-    VOS_UINT16 usLength = 1;          /* ´Ó0ºó¿ªÊ¼±È½Ï */
-    VOS_UINT8 *pcTmp    = pcData + 1; /* ´Ó0ºó¿ªÊ¼±È½Ï */
+    VOS_UINT16 usLength = 1;          /* ä»0åå¼€å§‹æ¯”è¾ƒ */
+    VOS_UINT8 *pcTmp    = pcData + 1; /* ä»0åå¼€å§‹æ¯”è¾ƒ */
 
-    /* ²ÎÊıÖ¸ÕëÓÉµ÷ÓÃÕß±£Ö¤²»ÎªNULL, ¸Ã´¦²»×öÅĞ¶Ï */
+    /* å‚æ•°æŒ‡é’ˆç”±è°ƒç”¨è€…ä¿è¯ä¸ä¸ºNULL, è¯¥å¤„ä¸åšåˆ¤æ–­ */
 
     while(usLength++ < usLen)
     {
-        /* ÅĞ¶ÏÊÇ·ñÊÇÊı×Ö */
+        /* åˆ¤æ–­æ˜¯å¦æ˜¯æ•°å­— */
         if((*pcTmp >= '0') && (*pcTmp <= '7'))
         {
             pcTmp++;
@@ -234,26 +234,26 @@ static VOS_UINT32 checkOctNumString(VOS_UINT16 usLen,  VOS_UINT8 *pcData)
 #endif
 
 /******************************************************************************
- ¹¦ÄÜÃèÊö: ±È½ÏÆ¥ÅäÊ®½øÖÆÊı×Ö
+ åŠŸèƒ½æè¿°: æ¯”è¾ƒåŒ¹é…åè¿›åˆ¶æ•°å­—
 
- ²ÎÊıËµÃ÷:
-   usLen [in]     Êı×Ö³¤¶È
-   pcTmp [in] Êı×Ö´®
+ å‚æ•°è¯´æ˜:
+   usLen [in]     æ•°å­—é•¿åº¦
+   pcTmp [in] æ•°å­—ä¸²
 
- ·µ »Ø Öµ:
-    AT_SUCCESS : Æ¥Åä
-    AT_FAILURE : ²»Æ¥Åä
+ è¿” å› å€¼:
+    AT_SUCCESS : åŒ¹é…
+    AT_FAILURE : ä¸åŒ¹é…
 ******************************************************************************/
 static VOS_UINT32 checkDecNumString(VOS_UINT16 usLen,  VOS_UINT8 *pcData)
 {
-    VOS_UINT16 usLength = 0;      /* ´Ó0ºó¿ªÊ¼±È½Ï */
-    VOS_UINT8 *pcTmp    = pcData; /* ´Ó0ºó¿ªÊ¼±È½Ï */
+    VOS_UINT16 usLength = 0;      /* ä»0åå¼€å§‹æ¯”è¾ƒ */
+    VOS_UINT8 *pcTmp    = pcData; /* ä»0åå¼€å§‹æ¯”è¾ƒ */
 
-    /* ²ÎÊıÖ¸ÕëÓÉµ÷ÓÃÕß±£Ö¤²»ÎªNULL, ¸Ã´¦²»×öÅĞ¶Ï */
+    /* å‚æ•°æŒ‡é’ˆç”±è°ƒç”¨è€…ä¿è¯ä¸ä¸ºNULL, è¯¥å¤„ä¸åšåˆ¤æ–­ */
 
     while(usLength++ < usLen)
     {
-        /* ÅĞ¶ÏÊÇ·ñÊÇÊı×Ö */
+        /* åˆ¤æ–­æ˜¯å¦æ˜¯æ•°å­— */
         if(isdigit(*pcTmp))
         {
             pcTmp++;
@@ -269,14 +269,14 @@ static VOS_UINT32 checkDecNumString(VOS_UINT16 usLen,  VOS_UINT8 *pcData)
 
 
 /******************************************************************************
- ¹¦ÄÜÃèÊö: ±È½Ï¡¢Æ¥ÅäÊı×Ö
+ åŠŸèƒ½æè¿°: æ¯”è¾ƒã€åŒ¹é…æ•°å­—
 
- ²ÎÊıËµÃ÷:
-   pData [in] Ğè¼ì²éµÄ×Ö·û´®
-   usLen [in] Ğè¼ì²éµÄ³¤¶È
+ å‚æ•°è¯´æ˜:
+   pData [in] éœ€æ£€æŸ¥çš„å­—ç¬¦ä¸²
+   usLen [in] éœ€æ£€æŸ¥çš„é•¿åº¦
 
- ·µ »Ø Öµ: AT_SUCCESS --- ³É¹¦
-           AT_FAILURE --- Ê§°Ü
+ è¿” å› å€¼: AT_SUCCESS --- æˆåŠŸ
+           AT_FAILURE --- å¤±è´¥
 ******************************************************************************/
 VOS_UINT32 atCheckNumString( VOS_UINT8 *pData, VOS_UINT16 usLen)
 {
@@ -318,7 +318,7 @@ VOS_UINT32 atCheckRightArrowStr( VOS_UINT8 *pData,VOS_UINT16 usLen )
 
     while( usLength++ < usLen )
     {
-        /* ÅĞ¶ÏÊÇ·ñÊÇMMI×Ö·û */
+        /* åˆ¤æ–­æ˜¯å¦æ˜¯MMIå­—ç¬¦ */
         if(*pcTmp == '>')
         {
             return AT_SUCCESS;
@@ -337,7 +337,7 @@ VOS_UINT32 atCheckMmiString( VOS_UINT8 *pData,VOS_UINT16 usLen )
 
     while( usLength++ < usLen )
     {
-        /* ÅĞ¶ÏÊÇ·ñÊÇMMI×Ö·û */
+        /* åˆ¤æ–­æ˜¯å¦æ˜¯MMIå­—ç¬¦ */
         if((*pcTmp == '*') || (*pcTmp == '#') )
         {
             return AT_SUCCESS;
@@ -353,7 +353,7 @@ VOS_UINT32 At_CheckStringPara( AT_PARSE_PARA_TYPE_STRU *pPara)
 {
     VOS_UINT8 *pData = pPara->aucPara;
 
-    /* ¼ì²éÊÇ·ñÊÇ×Ö·û´® */
+    /* æ£€æŸ¥æ˜¯å¦æ˜¯å­—ç¬¦ä¸² */
     if (pPara->usParaLen < 2)
     {
         return AT_FAILURE;
@@ -364,8 +364,8 @@ VOS_UINT32 At_CheckStringPara( AT_PARSE_PARA_TYPE_STRU *pPara)
         return AT_FAILURE;
     }
 
-    /* È¥³ıÁ½Í·µÄË«ÒıºÅ */
-    pPara->usParaLen -= 2;       /*ĞŞ¸Ä²ÎÊı³¤¶È*/
+    /* å»é™¤ä¸¤å¤´çš„åŒå¼•å· */
+    pPara->usParaLen -= 2;       /*ä¿®æ”¹å‚æ•°é•¿åº¦*/
     PS_MEM_CPY(pData, pData+1, pPara->usParaLen);
 
     pData[pPara->usParaLen] = '\0';
@@ -375,19 +375,19 @@ VOS_UINT32 At_CheckStringPara( AT_PARSE_PARA_TYPE_STRU *pPara)
 
 
 /******************************************************************************
- ¹¦ÄÜÃèÊö: ±È½Ï¡¢Æ¥ÅäÎŞË«ÒıºÅ°üÀ¨×Ö·û´®ÀàĞÍ
+ åŠŸèƒ½æè¿°: æ¯”è¾ƒã€åŒ¹é…æ— åŒå¼•å·åŒ…æ‹¬å­—ç¬¦ä¸²ç±»å‹
 
- ²ÎÊıËµÃ÷:
-   pPara [in/out] Ğè¼ì²éµÄ×Ö·û´®
+ å‚æ•°è¯´æ˜:
+   pPara [in/out] éœ€æ£€æŸ¥çš„å­—ç¬¦ä¸²
 
- ·µ »Ø Öµ: AT_SUCCESS --- ×Ö·û´®µÄÊ×Î²¶¼ÊÇ "
-           AT_FAILURE --- ×Ö·û´®µÄÊ×Î²²»È«ÊÇ "
+ è¿” å› å€¼: AT_SUCCESS --- å­—ç¬¦ä¸²çš„é¦–å°¾éƒ½æ˜¯ "
+           AT_FAILURE --- å­—ç¬¦ä¸²çš„é¦–å°¾ä¸å…¨æ˜¯ "
 ******************************************************************************/
 VOS_UINT32 atCheckNoQuotStringPara( AT_PARSE_PARA_TYPE_STRU *pPara)
 {
     VOS_UINT8 *pData = pPara->aucPara;
 
-    /* ¼ì²éÊÇ·ñÊÇ´øÒıºÅµÄ×Ö·û´® */
+    /* æ£€æŸ¥æ˜¯å¦æ˜¯å¸¦å¼•å·çš„å­—ç¬¦ä¸² */
     if ( ('"' == *pData) && ('"' == *((pData + pPara->usParaLen) - 1)))
     {
         if (pPara->usParaLen < 2)
@@ -395,8 +395,8 @@ VOS_UINT32 atCheckNoQuotStringPara( AT_PARSE_PARA_TYPE_STRU *pPara)
             return AT_FAILURE;
         }
 
-        /* È¥³ıÁ½Í·µÄË«ÒıºÅ */
-        pPara->usParaLen -= 2;       /*ĞŞ¸Ä²ÎÊı³¤¶È*/
+        /* å»é™¤ä¸¤å¤´çš„åŒå¼•å· */
+        pPara->usParaLen -= 2;       /*ä¿®æ”¹å‚æ•°é•¿åº¦*/
         PS_MEM_CPY(pData, pData+1, pPara->usParaLen);
 
         pData[pPara->usParaLen] = '\0';
@@ -408,7 +408,7 @@ VOS_UINT32 atCheckNumPara(AT_PARSE_PARA_TYPE_STRU *pPara)
 {
     VOS_UINT32 i  = 0;
 
-    /* ¼ì²é×Ö·û´® */
+    /* æ£€æŸ¥å­—ç¬¦ä¸² */
     if(AT_SUCCESS == atCheckNumString(pPara->aucPara,pPara->usParaLen))
     {
         if(AT_SUCCESS != atAuc2ul(pPara->aucPara,pPara->usParaLen,&pPara->ulParaValue))
@@ -418,7 +418,7 @@ VOS_UINT32 atCheckNumPara(AT_PARSE_PARA_TYPE_STRU *pPara)
 
         for(i = 0; i< g_stATParseCmd.ucParaNumRangeIndex; i++)
         {
-            /* Èç¹û²ÎÊıÖµÆ¥Åä */
+            /* å¦‚æœå‚æ•°å€¼åŒ¹é… */
             if( (g_stATParseCmd.astParaNumRange[i].ulSmall <= pPara->ulParaValue)
                 && (pPara->ulParaValue <= g_stATParseCmd.astParaNumRange[i].ulBig) )
             {
@@ -458,11 +458,11 @@ VOS_UINT32 atCheckCharPara( AT_PARSE_PARA_TYPE_STRU *pPara)
 
 /*****************************************************************************
  Prototype      : At_CheckSemicolon
- Description    : ±È½Ï¡¢Æ¥Åä·ÖºÅ
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…åˆ†å·
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -520,11 +520,11 @@ TAF_UINT32 At_CheckDmChar( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckCharStar
- Description    : ±È½Ï¡¢Æ¥Åä×Ö·û*
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å­—ç¬¦*
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -546,11 +546,11 @@ TAF_UINT32 At_CheckCharStar( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckCharWell
- Description    : ±È½Ï¡¢Æ¥Åä×Ö·û#
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å­—ç¬¦#
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -572,11 +572,11 @@ TAF_UINT32 At_CheckCharWell( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckCharRightArrow
- Description    : ±È½Ï¡¢Æ¥Åä×Ö·û>
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å­—ç¬¦>
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -701,11 +701,11 @@ TAF_UINT32 At_CheckCharPlus( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckLeftBracket
- Description    : ±È½Ï¡¢Æ¥Åä×Ö·û(
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å­—ç¬¦(
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -727,11 +727,11 @@ TAF_UINT32 At_CheckLeftBracket( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckRightBracket
- Description    : ±È½Ï¡¢Æ¥Åä×Ö·û)
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å­—ç¬¦)
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -802,11 +802,11 @@ TAF_UINT32 At_CheckChar( TAF_UINT8 Char )
 
 /*****************************************************************************
  Prototype      : At_CheckAlpha
- Description    : ±È½Ï¡¢Æ¥Åä×Ö·û('a'~'z' ºÍ'A'~'Z')
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å­—ç¬¦('a'~'z' å’Œ'A'~'Z')
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -829,11 +829,11 @@ TAF_UINT32 At_CheckAlpha( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckColon
- Description    : ±È½Ï¡¢Æ¥Åä¶ººÅ
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…é€—å·
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -855,11 +855,11 @@ TAF_UINT32 At_CheckColon( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckCharSub
- Description    : ±È½Ï¡¢Æ¥Åä¼õºÅ
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å‡å·
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -881,11 +881,11 @@ TAF_UINT32 At_CheckCharSub( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckQuot
- Description    : ±È½Ï¡¢Æ¥ÅäÒıºÅ
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å¼•å·
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -920,11 +920,11 @@ TAF_UINT32 At_CheckHorizontalLine( TAF_UINT8 Char )
 
 /*****************************************************************************
  Prototype      : At_CheckEqu
- Description    : ±È½Ï¡¢Æ¥ÅäµÈºÅ
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…ç­‰å·
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -946,11 +946,11 @@ TAF_UINT32 At_CheckEqu( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckReq
- Description    : ±È½Ï¡¢Æ¥ÅäÎÊºÅ
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…é—®å·
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -972,11 +972,11 @@ TAF_UINT32 At_CheckReq( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckNoQuot
- Description    : ±È½Ï¡¢Æ¥Åä·ÇÒıºÅ
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…éå¼•å·
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -1010,11 +1010,11 @@ TAF_UINT32 At_CheckCharE( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckChar1
- Description    : ±È½Ï¡¢Æ¥Åä×Ö·û1
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å­—ç¬¦1
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -1036,11 +1036,11 @@ TAF_UINT32 At_CheckChar1( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckChar0
- Description    : ±È½Ï¡¢Æ¥Åä×Ö·û0
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å­—ç¬¦0
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -1086,11 +1086,11 @@ TAF_UINT32 At_CheckCharF( TAF_UINT8 Char )
 }
 /*****************************************************************************
  Prototype      : At_CheckCharE
- Description    : ±È½Ï¡¢Æ¥Åä×Ö·û&
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…å­—ç¬¦&
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -1125,7 +1125,7 @@ TAF_UINT32 At_CheckNumString( TAF_UINT8 *pData,TAF_UINT16 usLen )
 
     while( usLength++ < usLen )
     {
-        /*ÅĞ¶ÏÊÇ·ñÊÇÊı×Ö*/
+        /*åˆ¤æ–­æ˜¯å¦æ˜¯æ•°å­—*/
         if( (*pcTmp >= '0') && (*pcTmp <= '9') )
         {
             pcTmp++;
@@ -1170,12 +1170,12 @@ TAF_UINT32 At_CheckNumCharString( TAF_UINT8 *pData,TAF_UINT16 usLen )
 
 /*****************************************************************************
  Prototype      : At_CheckRightArrowStr
- Description    : ±È½Ï¡¢Æ¥ÅäÊı×Ö
- Input          : pData --- Ğè¼ì²éµÄ×Ö·û´®
-                  usLen --- Ğè¼ì²éµÄ³¤¶È
+ Description    : æ¯”è¾ƒã€åŒ¹é…æ•°å­—
+ Input          : pData --- éœ€æ£€æŸ¥çš„å­—ç¬¦ä¸²
+                  usLen --- éœ€æ£€æŸ¥çš„é•¿åº¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -1191,7 +1191,7 @@ TAF_UINT32 At_CheckRightArrowStr( TAF_UINT8 *pData,TAF_UINT16 usLen )
 
     while( usLength++ < usLen )
     {
-        /*ÅĞ¶ÏÊÇ·ñÊÇMMI×Ö·û*/
+        /*åˆ¤æ–­æ˜¯å¦æ˜¯MMIå­—ç¬¦*/
         if(*pcTmp == '>')
         {
             return AT_SUCCESS;
@@ -1210,7 +1210,7 @@ TAF_UINT32 At_CheckMmiString( TAF_UINT8 *pData,TAF_UINT16 usLen )
 
     while( usLength++ < usLen )
     {
-        /*ÅĞ¶ÏÊÇ·ñÊÇMMI×Ö·û*/
+        /*åˆ¤æ–­æ˜¯å¦æ˜¯MMIå­—ç¬¦*/
         if((*pcTmp == '*') || (*pcTmp == '#') )
         {
             return AT_SUCCESS;
@@ -1225,11 +1225,11 @@ TAF_UINT32 At_CheckMmiString( TAF_UINT8 *pData,TAF_UINT16 usLen )
 
 /*****************************************************************************
  Prototype      : At_CheckJuncture
- Description    : ±È½Ï¡¢Æ¥ÅäÁ¬½Ó·û
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…è¿æ¥ç¬¦
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -1252,11 +1252,11 @@ VOS_UINT32 At_CheckJuncture( VOS_UINT8 Char )
 
 /*****************************************************************************
  Prototype      : At_CheckEnd
- Description    : ±È½Ï¡¢Æ¥Åä½áÊø·û
- Input          : Char---Ğè¼ì²éµÄ×Ö·û
+ Description    : æ¯”è¾ƒã€åŒ¹é…ç»“æŸç¬¦
+ Input          : Char---éœ€æ£€æŸ¥çš„å­—ç¬¦
  Output         : ---
- Return Value   : AT_SUCCESS --- ³É¹¦
-                  AT_FAILURE --- Ê§°Ü
+ Return Value   : AT_SUCCESS --- æˆåŠŸ
+                  AT_FAILURE --- å¤±è´¥
  Calls          : ---
  Called By      : ---
 
@@ -1289,14 +1289,14 @@ VOS_UINT32 AT_CheckDateFormat(
     VOS_UINT8                           ucSecondColon;
     VOS_UINT8                           ucSpace;
 
-    /* ¸ñÊ½Îª2009-12-31 10:10:10µÄÈÕÆÚ×Ö·û´®: ×Ü³¤¶È±ØĞëÎª19 */
+    /* æ ¼å¼ä¸º2009-12-31 10:10:10çš„æ—¥æœŸå­—ç¬¦ä¸²: æ€»é•¿åº¦å¿…é¡»ä¸º19 */
     if (19 != ulDateStrLen)
     {
         AT_NORM_LOG1("AT_CheckDateFormat: length error.", (VOS_INT32)ulDateStrLen);
         return AT_ERROR;
     }
 
-    /* ¸ñÊ½Îª2009-12-31 10:10:10µÄÈÕÆÚ×Ö·û´®: µÚ5¸ö×Ö½ÚÎª'-', µÚ8¸ö×Ö½ÚÎª'-' */
+    /* æ ¼å¼ä¸º2009-12-31 10:10:10çš„æ—¥æœŸå­—ç¬¦ä¸²: ç¬¬5ä¸ªå­—èŠ‚ä¸º'-', ç¬¬8ä¸ªå­—èŠ‚ä¸º'-' */
     ucFirstJuncture     = *(pucDateStr + 4);
     ucSecondJuncture    = *(pucDateStr + 7);
     if (('-' != ucFirstJuncture) || ('-' != ucSecondJuncture))
@@ -1305,7 +1305,7 @@ VOS_UINT32 AT_CheckDateFormat(
         return AT_ERROR;
     }
 
-    /* ¸ñÊ½Îª2009-12-31 10:10:10µÄÈÕÆÚ×Ö·û´®: µÚ11¸ö×Ö½ÚÎª' ' */
+    /* æ ¼å¼ä¸º2009-12-31 10:10:10çš„æ—¥æœŸå­—ç¬¦ä¸²: ç¬¬11ä¸ªå­—èŠ‚ä¸º' ' */
     ucSpace = *(pucDateStr + 10);
     if (' ' != ucSpace)
     {
@@ -1313,7 +1313,7 @@ VOS_UINT32 AT_CheckDateFormat(
         return AT_ERROR;
     }
 
-    /* ¸ñÊ½Îª2009-12-31 10:10:10µÄÈÕÆÚ×Ö·û´®: µÚ14¸ö×Ö½ÚÎª':' µÚ17¸ö×Ö½ÚÎª':' */
+    /* æ ¼å¼ä¸º2009-12-31 10:10:10çš„æ—¥æœŸå­—ç¬¦ä¸²: ç¬¬14ä¸ªå­—èŠ‚ä¸º':' ç¬¬17ä¸ªå­—èŠ‚ä¸º':' */
     ucFirstColon    = *(pucDateStr + 13);
     ucSecondColon   = *(pucDateStr + 16);
     if ((':' != ucFirstColon) || (':' != ucSecondColon))
@@ -1334,25 +1334,25 @@ VOS_UINT32 AT_GetDaysForEachMonth(
     if ((1 == ulMonth) || (3 == ulMonth) || (5 == ulMonth) || (7 == ulMonth)
      || (8 == ulMonth) || (10 == ulMonth) || (12 == ulMonth) )
     {
-        /* 1,3,5,7,8,10,12ÔÂÓĞ31Ìì */
+        /* 1,3,5,7,8,10,12æœˆæœ‰31å¤© */
         return 31;
     }
     else if ((4 == ulMonth) || (6 == ulMonth) || (9 == ulMonth) || (11 == ulMonth))
     {
-        /* 4,6,9,11ÔÂÓĞ30Ìì */
+        /* 4,6,9,11æœˆæœ‰30å¤© */
         return 30;
     }
     else
     {
-        /* 2ÔÂ¿´ÊÇ·ñÎªÈòÄê£¬ÊÇÔòÎª29Ìì£¬·ñÔòÎª28Ìì */
+        /* 2æœˆçœ‹æ˜¯å¦ä¸ºé—°å¹´ï¼Œæ˜¯åˆ™ä¸º29å¤©ï¼Œå¦åˆ™ä¸º28å¤© */
         if ( ((0 == (ulYear % 4)) && (0 != (ulYear % 100))) || (0 == (ulYear % 400)))
         {
-            /* ÈóÄê */
+            /* æ¶¦å¹´ */
             return 29;
         }
         else
         {
-            /* ·ÇÈóÄê */
+            /* éæ¶¦å¹´ */
             return 28;
         }
     }
@@ -1363,7 +1363,7 @@ VOS_UINT32  AT_CheckDate(
 {
     VOS_UINT32                          ulDaysEachMonth;
 
-    /* ÔÂ·İÓĞĞ§ĞÔ¼ì²é: ÔÂ·İÊıÖµ±ØĞë²»Îª0£¬ÇÒĞ¡ÓÚµÈÓÚ12 */
+    /* æœˆä»½æœ‰æ•ˆæ€§æ£€æŸ¥: æœˆä»½æ•°å€¼å¿…é¡»ä¸ä¸º0ï¼Œä¸”å°äºç­‰äº12 */
     if ((pstDate->ulMonth > 12)
      || (0 == pstDate->ulMonth))
     {
@@ -1371,7 +1371,7 @@ VOS_UINT32  AT_CheckDate(
         return AT_ERROR;
     }
 
-    /* ÈÕÆÚÓĞĞ§ĞÔ¼ì²é: ÈÕÆÚÊıÖµ±ØĞë²»Îª0£¬ÇÒĞ¡ÓÚµÈÓÚµ±ÔÂµÄ×ÜÌìÊı */
+    /* æ—¥æœŸæœ‰æ•ˆæ€§æ£€æŸ¥: æ—¥æœŸæ•°å€¼å¿…é¡»ä¸ä¸º0ï¼Œä¸”å°äºç­‰äºå½“æœˆçš„æ€»å¤©æ•° */
     ulDaysEachMonth = AT_GetDaysForEachMonth(pstDate->ulYear, pstDate->ulMonth);
     if ((pstDate->ulDay > ulDaysEachMonth)
      || (0 == pstDate->ulDay))
@@ -1380,7 +1380,7 @@ VOS_UINT32  AT_CheckDate(
         return AT_ERROR;
     }
 
-    /* Ê±¼äÓĞĞ§ĞÔ¼ì²é: Ğ¡Ê±Êı±ØĞëĞ¡ÓÚ24£¬·ÖÖÓ»òÃëÊı±ØĞëĞ¡ÓÚ60 */
+    /* æ—¶é—´æœ‰æ•ˆæ€§æ£€æŸ¥: å°æ—¶æ•°å¿…é¡»å°äº24ï¼Œåˆ†é’Ÿæˆ–ç§’æ•°å¿…é¡»å°äº60 */
     if ((pstDate->ulHour >= 24)
      || (pstDate->ulMunite >= 60)
      || (pstDate->ulSecond >= 60))
@@ -1399,7 +1399,7 @@ VOS_UINT32  AT_GetDate(
 {
     VOS_UINT32                          ulRet;
 
-    /* »ñÈ¡ÈÕÆÚÖĞµÄÄê·İ: Äê·İÕ¼ÓÃ4¸ö×Ö½Ú */
+    /* è·å–æ—¥æœŸä¸­çš„å¹´ä»½: å¹´ä»½å ç”¨4ä¸ªå­—èŠ‚ */
     ulRet = At_Auc2ul(pucDateStr, 4, &pstDate->ulYear);
     if (AT_SUCCESS != ulRet)
     {
@@ -1407,7 +1407,7 @@ VOS_UINT32  AT_GetDate(
         return AT_ERROR;
     }
 
-    /* »ñÈ¡ÈÕÆÚÖĞµÄÔÂ·İ: ÔÂ·İÕ¼ÓÃ2¸ö×Ö½Ú£¬Æ«ÒÆÄê·İÕ¼ÓÃµÄ4¸ö×Ö½ÚºÍ'-'Ò»¸ö×Ö½Ú */
+    /* è·å–æ—¥æœŸä¸­çš„æœˆä»½: æœˆä»½å ç”¨2ä¸ªå­—èŠ‚ï¼Œåç§»å¹´ä»½å ç”¨çš„4ä¸ªå­—èŠ‚å’Œ'-'ä¸€ä¸ªå­—èŠ‚ */
     ulRet = At_Auc2ul((pucDateStr + 5), 2, &pstDate->ulMonth);
     if (AT_SUCCESS != ulRet)
     {
@@ -1415,7 +1415,7 @@ VOS_UINT32  AT_GetDate(
         return AT_ERROR;
     }
 
-    /* »ñÈ¡ÈÕÆÚÖĞµÄÈÕÆÚ: ÈÕÆÚÕ¼ÓÃ2¸ö×Ö½Ú£¬Æ«ÒÆÔÂ·İÕ¼ÓÃµÄ2¸ö×Ö½ÚºÍ'-'Ò»¸ö×Ö½Ú */
+    /* è·å–æ—¥æœŸä¸­çš„æ—¥æœŸ: æ—¥æœŸå ç”¨2ä¸ªå­—èŠ‚ï¼Œåç§»æœˆä»½å ç”¨çš„2ä¸ªå­—èŠ‚å’Œ'-'ä¸€ä¸ªå­—èŠ‚ */
     ulRet = At_Auc2ul((pucDateStr + 8), 2, &pstDate->ulDay);
     if (AT_SUCCESS != ulRet)
     {
@@ -1423,7 +1423,7 @@ VOS_UINT32  AT_GetDate(
         return AT_ERROR;
     }
 
-    /* »ñÈ¡ÈÕÆÚÖĞµÄĞ¡Ê±: Ğ¡Ê±Õ¼ÓÃ2¸ö×Ö½Ú£¬Æ«ÒÆÈÕÆÚÕ¼ÓÃµÄ2¸ö×Ö½ÚºÍ' 'Ò»¸ö×Ö½Ú */
+    /* è·å–æ—¥æœŸä¸­çš„å°æ—¶: å°æ—¶å ç”¨2ä¸ªå­—èŠ‚ï¼Œåç§»æ—¥æœŸå ç”¨çš„2ä¸ªå­—èŠ‚å’Œ' 'ä¸€ä¸ªå­—èŠ‚ */
     ulRet = At_Auc2ul((pucDateStr + 11), 2, &pstDate->ulHour);
     if (AT_SUCCESS != ulRet)
     {
@@ -1431,7 +1431,7 @@ VOS_UINT32  AT_GetDate(
         return AT_ERROR;
     }
 
-    /* »ñÈ¡ÈÕÆÚÖĞµÄ·ÖÖÓ: ·ÖÖÓÕ¼ÓÃ2¸ö×Ö½Ú£¬Æ«ÒÆĞ¡Ê±Õ¼ÓÃµÄ2¸ö×Ö½ÚºÍ':'Ò»¸ö×Ö½Ú */
+    /* è·å–æ—¥æœŸä¸­çš„åˆ†é’Ÿ: åˆ†é’Ÿå ç”¨2ä¸ªå­—èŠ‚ï¼Œåç§»å°æ—¶å ç”¨çš„2ä¸ªå­—èŠ‚å’Œ':'ä¸€ä¸ªå­—èŠ‚ */
     ulRet = At_Auc2ul((pucDateStr + 14), 2, &pstDate->ulMunite);
     if (AT_SUCCESS != ulRet)
     {
@@ -1439,7 +1439,7 @@ VOS_UINT32  AT_GetDate(
         return AT_ERROR;
     }
 
-    /* »ñÈ¡ÈÕÆÚÖĞµÄÃëÖÓ: ÃëÖÓÕ¼ÓÃ2¸ö×Ö½Ú£¬Æ«ÒÆ·ÖÖÓÕ¼ÓÃµÄ2¸ö×Ö½ÚºÍ':'Ò»¸ö×Ö½Ú */
+    /* è·å–æ—¥æœŸä¸­çš„ç§’é’Ÿ: ç§’é’Ÿå ç”¨2ä¸ªå­—èŠ‚ï¼Œåç§»åˆ†é’Ÿå ç”¨çš„2ä¸ªå­—èŠ‚å’Œ':'ä¸€ä¸ªå­—èŠ‚ */
     ulRet = At_Auc2ul((pucDateStr + 17), 2, &pstDate->ulSecond);
     if (AT_SUCCESS != ulRet)
     {

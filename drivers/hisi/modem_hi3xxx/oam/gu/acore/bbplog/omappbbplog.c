@@ -1,6 +1,6 @@
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "vos.h"
 #include "om.h"
@@ -16,16 +16,16 @@ extern "C"{
 #endif
 
 
-/*lint -e767 ÐÞ¸ÄÈË£º½¯µÂ±ò */
+/*lint -e767 ä¿®æ”¹äººï¼šè’‹å¾·å½¬ */
 #define    THIS_FILE_ID        PS_FILE_ID_OM_APP_BBP_LOG_C
-/*lint +e767 ÐÞ¸ÄÈË£º½¯µÂ±ò */
+/*lint +e767 ä¿®æ”¹äººï¼šè’‹å¾·å½¬ */
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  3 Íâ²¿º¯ÊýÉùÃ÷
+  3 å¤–éƒ¨å‡½æ•°å£°æ˜Ž
 *****************************************************************************/
 extern VOS_UINT32 Om_AcpuDumpReboot(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
                                            VOS_UINT16 usReturnPrimId);
@@ -33,9 +33,9 @@ extern VOS_UINT32 Om_AcpuDumpReboot(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
 extern VOS_UINT32 Om_QueryMsgFunc(OM_REQ_PACKET_STRU *pRspPacket, OM_MSG_FUN_STRU *pstMsgFuncTable, VOS_UINT32 ulTotalNum);
 
 /*****************************************************************************
-  4 ÏûÏ¢´¦Àíº¯ÊýÓ³Éä±í
+  4 æ¶ˆæ¯å¤„ç†å‡½æ•°æ˜ å°„è¡¨
 *****************************************************************************/
-/*PCÏÂ·¢µÄ BBP²ÉÊýÓë¿ÉÎ¬¿É²âÏûÏ¢´¦Àíº¯ÊýÓ³Éä±í */
+/*PCä¸‹å‘çš„ BBPé‡‡æ•°ä¸Žå¯ç»´å¯æµ‹æ¶ˆæ¯å¤„ç†å‡½æ•°æ˜ å°„è¡¨ */
 OM_MSG_FUN_STRU                         g_astAcpuOmBbpMsgFunTbl[] =
 {
     {Om_AcpuDumpReboot        ,    APP_OM_BBP_DUMP_DUMP_REQ,    OM_APP_BBP_DUMP_DUMP_CNF},
@@ -43,7 +43,7 @@ OM_MSG_FUN_STRU                         g_astAcpuOmBbpMsgFunTbl[] =
 
 
 /*****************************************************************************
-  5 º¯ÊýÊµÏÖ
+  5 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 
@@ -58,7 +58,7 @@ VOS_UINT32 Om_AcpuDumpReboot(APP_OM_MSG_EX_STRU *pstAppToOmMsg,
     {
         LogPrint("Om_AcpuDumpReboot: Reboot\r\n");
 
-        /* µ÷ÓÃDRV ½Ó¿Ú¸´Î»½øÈë fastbootÄ£Ê½ */
+        /* è°ƒç”¨DRV æŽ¥å£å¤ä½è¿›å…¥ fastbootæ¨¡å¼ */
         DRV_EDMA_BBP_SAMPLE_REBOOT();
     }
 
@@ -76,7 +76,7 @@ VOS_VOID Om_AcpuBbpConfigMsgProc(OM_REQ_PACKET_STRU *pRspPacket, OM_RSP_FUNC *pR
     pstAppToOmMsg   = (APP_OM_MSG_EX_STRU*)pRspPacket;
     ulTotalNum      = sizeof(g_astAcpuOmBbpMsgFunTbl) / sizeof(OM_MSG_FUN_STRU);
     usPrimId = pstAppToOmMsg->usPrimId;
-    /* ²éÑ¯´¦Àíº¯Êý */
+    /* æŸ¥è¯¢å¤„ç†å‡½æ•° */
     for (ulIndex = 0; ulIndex < ulTotalNum; ulIndex++)
     {
         if (usPrimId == (VOS_UINT16)(g_astAcpuOmBbpMsgFunTbl[ulIndex].ulPrimId))
@@ -87,7 +87,7 @@ VOS_VOID Om_AcpuBbpConfigMsgProc(OM_REQ_PACKET_STRU *pRspPacket, OM_RSP_FUNC *pR
         }
     }
 
-    /* Ã»ÓÐ²éÑ¯µ½´¦Àíº¯Êý  */
+    /* æ²¡æœ‰æŸ¥è¯¢åˆ°å¤„ç†å‡½æ•°  */
     if (ulIndex == ulTotalNum)
     {
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)

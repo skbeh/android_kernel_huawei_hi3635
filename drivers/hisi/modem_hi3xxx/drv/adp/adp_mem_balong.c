@@ -7,7 +7,7 @@
 #include <linux/slab.h>
 #include <osl_types.h>
 
-/*******************ÒÔÏÂÎª´ò×®º¯Êý*********************************/
+/*******************ä»¥ä¸‹ä¸ºæ‰“æ¡©å‡½æ•°*********************************/
 BSP_VOID* bsp_malloc(BSP_U32 u32Size, MEM_POOL_TYPE enFlags)
 {
     return kmalloc(u32Size, GFP_KERNEL);

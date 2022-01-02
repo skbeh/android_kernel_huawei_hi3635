@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-   1 Í·ÎÄ¼ş°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "vos.h"
 #include "Taf_Tafm_Remote.h"
@@ -22,7 +22,7 @@
 #endif
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_SSA_APP_REMOTE_C
 
@@ -140,12 +140,12 @@ TAF_UINT32 TAF_ProcessUnstructuredSSReq ( MN_CLIENT_ID_T                   Clien
 
 /*****************************************************************************
  Prototype      : Taf_EraseCCEntryReq
- Description    : APP/AT·¢ÆğEraseCCEntry-Request²Ù×÷£¬½øĞĞ´ó¶Ë±àÂëºó·¢ËÍ
- Input          : ClientId - APP/AT±êÊ¶
-                  OpId     - ²Ù×÷±êÊ¶
-                  pPara    - ²Ù×÷²ÎÊı
+ Description    : APP/ATå‘èµ·EraseCCEntry-Requestæ“ä½œï¼Œè¿›è¡Œå¤§ç«¯ç¼–ç åå‘é€
+ Input          : ClientId - APP/ATæ ‡è¯†
+                  OpId     - æ“ä½œæ ‡è¯†
+                  pPara    - æ“ä½œå‚æ•°
  Output         : --
- Return Value   : ²Ù×÷½á¹û
+ Return Value   : æ“ä½œç»“æœ
  Calls          : ---
  Called By      : --
 
@@ -155,7 +155,7 @@ TAF_UINT32 TAF_ProcessUnstructuredSSReq ( MN_CLIENT_ID_T                   Clien
     Modification: Created function
   2.Date        : 2013-5-17
     Author      : W000176964
-    Modification: SS FDN&Call ControlÏîÄ¿:ĞŞ¸ÄÏûÏ¢·¢ËÍPIDÎªTAF
+    Modification: SS FDN&Call Controlé¡¹ç›®:ä¿®æ”¹æ¶ˆæ¯å‘é€PIDä¸ºTAF
 *****************************************************************************/
 VOS_UINT32 TAF_EraseCCEntryReq(MN_CLIENT_ID_T            ClientId,
                                    MN_OPERATION_ID_T                OpId,
@@ -172,11 +172,11 @@ VOS_UINT32 TAF_EraseCCEntryReq(MN_CLIENT_ID_T            ClientId,
 #if 0
 /*****************************************************************************
  Prototype      : Taf_ProcessUSSDataReq
- Description    : APP/AT·¢ÆğProcessUnstructuredSS-Data²Ù×÷£¬½øĞĞ´ó¶Ë±àÂëºó·¢ËÍ
- Input          : ClientId - APP/AT±êÊ¶
-                  OpId     - ²Ù×÷±êÊ¶
+ Description    : APP/ATå‘èµ·ProcessUnstructuredSS-Dataæ“ä½œï¼Œè¿›è¡Œå¤§ç«¯ç¼–ç åå‘é€
+ Input          : ClientId - APP/ATæ ‡è¯†
+                  OpId     - æ“ä½œæ ‡è¯†
  Output         : --
- Return Value   : ²Ù×÷½á¹û
+ Return Value   : æ“ä½œç»“æœ
  Calls          : ---
  Called By      : --
 

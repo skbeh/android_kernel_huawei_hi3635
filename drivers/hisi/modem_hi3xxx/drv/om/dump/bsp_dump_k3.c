@@ -33,7 +33,7 @@
 #include "bsp_nvim.h"
 #include <linux/huawei/rdr.h>
 
-/* RDRÎ´´ò¿ª¶ÔRDRÖĞµÄÄÚÈİ´ò×®´¦Àí */
+/* RDRæœªæ‰“å¼€å¯¹RDRä¸­çš„å†…å®¹æ‰“æ¡©å¤„ç† */
 #ifndef CONFIG_HISI_RDR
 #define RDR_CCORE 2
 
@@ -154,7 +154,7 @@ s32 bsp_dump_print(void)
 }
 EXPORT_SYMBOL_GPL(bsp_dump_print);
 
-/* ¸ù¾İmod_id»ñÈ¡¶ÔÓ¦µÄbufferµØÖ·£¬Ê§°Ü·µ»Ø0 */
+/* æ ¹æ®mod_idè·å–å¯¹åº”çš„bufferåœ°å€ï¼Œå¤±è´¥è¿”å›0 */
 char* bsp_dump_get_buffer_addr(dump_save_modid_t mod_id)
 {
     char* addr = 0;
@@ -167,22 +167,22 @@ char* bsp_dump_get_buffer_addr(dump_save_modid_t mod_id)
         return 0;
     }
 
-    /* »ñÈ¡AP buffer */
+    /* è·å–AP buffer */
     if((mod_id & 0x0F000000) == 0x01000000)
     {
-        /* AP¶ÔÓ¦area 0 */
+        /* APå¯¹åº”area 0 */
         area_head = (dump_area_t *)(DUMP_AP_SECTION_ADDR);
     }
-    /* »ñÈ¡CP buffer */
+    /* è·å–CP buffer */
     else if((mod_id & 0x0F000000) == 0x02000000)
     {
-        /* CP¶ÔÓ¦area 2 */
+        /* CPå¯¹åº”area 2 */
         area_head = (dump_area_t *)(DUMP_COMM_SECTION_ADDR);
     }
-    /* »ñÈ¡LPM3 buffer */
+    /* è·å–LPM3 buffer */
     else if((mod_id & 0x0F000000) == 0x04000000)
     {
-        /* LPM3¶ÔÓ¦area 5 */
+        /* LPM3å¯¹åº”area 5 */
         area_head = (dump_area_t *)(DUMP_LPM3_SECTION_ADDR);
         if(area_head->head.magic_num != 0x88118811)
         {
@@ -196,7 +196,7 @@ char* bsp_dump_get_buffer_addr(dump_save_modid_t mod_id)
         return 0;
     }
 
-    /* ²éÕÒfiled id */
+    /* æŸ¥æ‰¾filed id */
     for(i=0; i<area_head->head.field_num; i++)
     {
         if(mod_id == area_head->fields[i].field_id)

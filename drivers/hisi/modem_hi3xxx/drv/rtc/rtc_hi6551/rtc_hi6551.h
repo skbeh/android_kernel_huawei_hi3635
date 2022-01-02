@@ -32,11 +32,11 @@ struct hi6551_alarm_para
     struct rtc_device *rtc_dev;
 };
 
-/*RTC È«¾Ö±äÁ¿½á¹¹Ìå*/
+/*RTC å…¨å±€å˜é‡ç»“æ„ä½“*/
 struct rtc_control
 {
-    u16 rtc_cur_addr;               /*µ±Ç°Öµ¼Ä´æÆ÷*/
-    u16 rtc_clr_addr;               /*¼ÓÔØÖµ¼Ä´æÆ÷*/
+    u16 rtc_cur_addr;               /*å½“å‰å€¼å¯„å­˜å™¨*/
+    u16 rtc_clr_addr;               /*åŠ è½½å€¼å¯„å­˜å™¨*/
     u32 alarm_irq[HI6551_RTC_DEVICE_NUM];
     u16 alarm_base_addr[HI6551_RTC_DEVICE_NUM];
 };

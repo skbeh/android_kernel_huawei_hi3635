@@ -1,26 +1,26 @@
 /******************************************************************************
 
-                  ��Ȩ���� (C), 2001-2011, ��Ϊ�������޹�˾
+                  版权所有 (C), 2001-2011, 华为技术有限公司
 
  ******************************************************************************
-  �� �� ��   : AppVcomDev.c
-  �� �� ��   : ����
-  ��    ��   : sunshaohua
-  ��������   : 2011��10��05��
-  ����޸�   :
-  ��������   : ���⴮�ڴ�������
+  文 件 名   : AppVcomDev.c
+  版 本 号   : 初稿
+  作    者   : sunshaohua
+  生成日期   : 2011年10月05日
+  最近修改   :
+  功能描述   : 虚拟串口处理函数
 
-  �����б�   :
+  函数列表   :
 
-  �޸���ʷ   :
-  1.��    ��   : 2011��10��05��
-    ��    ��   : sunshaohua
-    �޸�����   : �����ļ�
+  修改历史   :
+  1.日    期   : 2011年10月05日
+    作    者   : sunshaohua
+    修改内容   : 创建文件
 
 ******************************************************************************/
 
 /*****************************************************************************
-   1 ͷ�ļ�����
+   1 头文件包含
 *****************************************************************************/
 #include "PsTypeDef.h"
 #include "vos.h"
@@ -35,24 +35,24 @@ extern "C" {
 
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 /*lint -e767 */
 #define    THIS_FILE_ID        PS_FILE_ID_APP_VCOM_DEV_C
 /*lint -e767 */
 
 /*****************************************************************************
-   2 ȫ�ֱ�������
+   2 全局变量定义
 *****************************************************************************/
 
-/* VCOM CTX,���ڱ���VCOM��ȫ�ֱ���*/
+/* VCOM CTX,用于保存VCOM的全局变量*/
 APP_VCOM_DEV_CTX_STRU                   g_astVcomCtx[APP_VCOM_MAX_NUM];
 
 APP_VCOM_DEBUG_INFO_STRU                g_stAppVcomDebugInfo;
 
 
 
-/* ���⴮���ļ������ӿ� */
+/* 虚拟串口文件操作接口 */
 #if (VOS_OS_VER == VOS_WIN32)
 static struct file_operations           g_stOperations_Fops;
 #else
@@ -68,40 +68,40 @@ static const struct file_operations     g_stOperations_Fops =
 #endif
 
 
-/* APPVCOM�Ĺ���Ӧ��
-APPVCOM ID   �����С  ��;           �Ƿ�AT��CLIENT    ModemId
-APPVCOM        4K      RIL                   ��         MODEM0
-APPVCOM1       4K      RIL                   ��         MODEM0
-APPVCOM2       4K      ���̲˵�              ��         MODEM0
-APPVCOM3       8K      ����װ��(AT SERVER)   ��         MODEM0
-APPVCOM4       4K      audio RIL             ��         MODEM0
-APPVCOM5       4K      RIL                   ��         MODEM1
-APPVCOM6       4K      RIL                   ��         MODEM1
-APPVCOM7       8K      ����װ��(AT SERVER)   ��         MODEM1
-APPVCOM8       4K      ���̲˵�              ��         MODEM1
-APPVCOM9       4K      AGPS                  ��         MODEM0
-APPVCOM10      4K      NFC/BIP               ��         MODEM0
-APPVCOM11      4K      ISDB                  ��         MODEM0
-APPVCOM12      4K      audio ril             ��         MODEM1
-APPVCOM13      4K      SIM                   ��         MODEM0
-APPVCOM14      4K      SIM                   ��         MODEM1
-APPVCOM15      4K      Ԥ��                  ��         MODEM0
-APPVCOM16      4K      Ԥ��                  ��         MODEM0
-APPVCOM17      4K      Ԥ��                  ��         MODEM0
-APPVCOM18      4K      Ԥ��                  ��         MODEM0
-APPVCOM19      4K      Ԥ��                  ��         MODEM0
-APPVCOM20      4K      Ԥ��                  ��         MODEM0
-APPVCOM21      4K      Ԥ��                  ��         MODEM0
-APPVCOM22      4K      Ԥ��                  ��         MODEM0
-APPVCOM23      4K      Ԥ��                  ��         MODEM0
-APPVCOM24      4K      Ԥ��                  ��         MODEM0
-APPVCOM25      4K      Ԥ��                  ��         MODEM0
-APPVCOM26      4K      Ԥ��                  ��         MODEM0
-APPVCOM27      2M      CBT                   ��         MODEM0
-APPVCOM28      4K      T/Lװ��               ��
-APPVCOM29      16K     errlog                ��
-APPVCOM30      2M      log 3.5               ��
-APPVCOM31      2M      log 3.5               ��
+/* APPVCOM的规格和应用
+APPVCOM ID   缓存大小  用途           是否AT的CLIENT    ModemId
+APPVCOM        4K      RIL                   是         MODEM0
+APPVCOM1       4K      RIL                   是         MODEM0
+APPVCOM2       4K      工程菜单              是         MODEM0
+APPVCOM3       8K      生产装备(AT SERVER)   是         MODEM0
+APPVCOM4       4K      audio RIL             是         MODEM0
+APPVCOM5       4K      RIL                   是         MODEM1
+APPVCOM6       4K      RIL                   是         MODEM1
+APPVCOM7       8K      生产装备(AT SERVER)   是         MODEM1
+APPVCOM8       4K      工程菜单              是         MODEM1
+APPVCOM9       4K      AGPS                  是         MODEM0
+APPVCOM10      4K      NFC/BIP               是         MODEM0
+APPVCOM11      4K      ISDB                  是         MODEM0
+APPVCOM12      4K      audio ril             是         MODEM1
+APPVCOM13      4K      SIM                   是         MODEM0
+APPVCOM14      4K      SIM                   是         MODEM1
+APPVCOM15      4K      预留                  是         MODEM0
+APPVCOM16      4K      预留                  是         MODEM0
+APPVCOM17      4K      预留                  是         MODEM0
+APPVCOM18      4K      预留                  是         MODEM0
+APPVCOM19      4K      预留                  是         MODEM0
+APPVCOM20      4K      预留                  是         MODEM0
+APPVCOM21      4K      预留                  是         MODEM0
+APPVCOM22      4K      预留                  是         MODEM0
+APPVCOM23      4K      预留                  是         MODEM0
+APPVCOM24      4K      预留                  是         MODEM0
+APPVCOM25      4K      预留                  是         MODEM0
+APPVCOM26      4K      预留                  是         MODEM0
+APPVCOM27      2M      CBT                   是         MODEM0
+APPVCOM28      4K      T/L装备               否
+APPVCOM29      16K     errlog                否
+APPVCOM30      2M      log 3.5               否
+APPVCOM31      2M      log 3.5               否
 */
 #if (FEATURE_ON == FEATURE_VCOM_EXT)
 const APP_VCOM_DEV_CONFIG_STRU g_astAppVcomCogfigTab[] =
@@ -154,11 +154,11 @@ const APP_VCOM_DEV_CONFIG_STRU g_astAppVcomCogfigTab[] =
 
 APP_VCOM_DEBUG_CFG_STRU              g_stAppVcomDebugCfg;
 /*****************************************************************************
-   3 ��������������
+   3 函数、变量声明
 *****************************************************************************/
 
 /*****************************************************************************
-   4 ����ʵ��
+   4 函数实现
 *****************************************************************************/
 
 APP_VCOM_DEV_CTX_STRU* APP_VCOM_GetVcomCtxAddr(VOS_UINT8 ucIndex)
@@ -177,7 +177,7 @@ VOS_UINT32 APP_VCOM_RegDataCallback(VOS_UINT8 ucDevIndex, SEND_UL_AT_FUNC pFunc)
 {
     APP_VCOM_DEV_CTX_STRU              *pstVcomCtx;
 
-    /* �����Ŵ���*/
+    /* 索引号错误*/
     if (ucDevIndex >= APP_VCOM_DEV_INDEX_BUTT)
     {
         return VOS_ERR;
@@ -185,7 +185,7 @@ VOS_UINT32 APP_VCOM_RegDataCallback(VOS_UINT8 ucDevIndex, SEND_UL_AT_FUNC pFunc)
 
     pstVcomCtx = APP_VCOM_GetVcomCtxAddr(ucDevIndex);
 
-    /* ����ָ�븳��ȫ�ֱ���*/
+    /* 函数指针赋给全局变量*/
     pstVcomCtx->pSendUlAtFunc = pFunc;
 
     return VOS_OK;
@@ -197,7 +197,7 @@ VOS_UINT32 APP_VCOM_RegEvtCallback(VOS_UINT8 ucDevIndex, EVENT_FUNC pFunc)
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
     APP_VCOM_DEV_CTX_STRU              *pstVcomCtx;
 
-    /* �����Ŵ���*/
+    /* 索引号错误*/
     if (ucDevIndex >= APP_VCOM_DEV_INDEX_BUTT)
     {
         return VOS_ERR;
@@ -205,7 +205,7 @@ VOS_UINT32 APP_VCOM_RegEvtCallback(VOS_UINT8 ucDevIndex, EVENT_FUNC pFunc)
 
     pstVcomCtx = APP_VCOM_GetVcomCtxAddr(ucDevIndex);
 
-    /* ����ָ�븳��ȫ�ֱ���*/
+    /* 函数指针赋给全局变量*/
     pstVcomCtx->pEventFunc = pFunc;
 #endif
     return VOS_OK;
@@ -311,26 +311,26 @@ VOS_INT __init APP_VCOM_Init(VOS_VOID)
     pstVcomCtx = VOS_NULL_PTR;
     pstVcomDevp  = VOS_NULL_PTR;
 
-    /* ��ʼ����ά�ɲ�ȫ�ֱ��� */
+    /* 初始化可维可测全局变量 */
     VOS_MemSet(&g_stAppVcomDebugInfo, 0x0, sizeof(g_stAppVcomDebugInfo));
 
     VOS_MemSet(&g_stAppVcomDebugCfg, 0x0, sizeof(g_stAppVcomDebugCfg));
 
-    /* ��ʼ�������豸 */
+    /* 初始化虚拟设备 */
     for (ucIndex = 0; ucIndex < APP_VCOM_MAX_NUM; ucIndex++)
     {
-        /* ��ʼ��ȫ�ֱ��� */
+        /* 初始化全局变量 */
         APP_VCOM_InitSpecCtx(ucIndex);
 
-        /* ��ȡȫ�ֱ���ָ�� */
+        /* 获取全局变量指针 */
         pstVcomCtx = APP_VCOM_GetVcomCtxAddr(ucIndex);
 
-        /* ���豸��ת����dev_t ���� */
+        /* 将设备号转换成dev_t 类型 */
         ulDevno = MKDEV(pstVcomCtx->ulAppVcomMajorId, ucIndex);
 
         iResult1 = register_chrdev_region(ulDevno, 1, pstVcomCtx->aucAppVcomName);
 
-        /* ע��ʧ����̬�����豸�� */
+        /* 注册失败则动态申请设备号 */
         if (iResult1 < 0)
         {
             iResult2 = alloc_chrdev_region(&ulDevno, 0, 1, pstVcomCtx->aucAppVcomName);
@@ -343,18 +343,18 @@ VOS_INT __init APP_VCOM_Init(VOS_VOID)
             pstVcomCtx->ulAppVcomMajorId = MAJOR(ulDevno);
         }
 
-        /* ��̬�����豸�ṹ���ڴ� */
+        /* 动态申请设备结构体内存 */
         pstVcomCtx->pstAppVcomDevEntity = kmalloc(sizeof(APP_VCOM_DEV_ENTITY_STRU) , GFP_KERNEL);
 
         if (VOS_NULL_PTR == pstVcomCtx->pstAppVcomDevEntity)
         {
-            /* ȥע����豸�����ش��� */
+            /* 去注册该设备，返回错误 */
             unregister_chrdev_region(ulDevno, 1);
             APP_VCOM_TRACE_ERR(ucIndex, "APP_VCOM_Init malloc device Entity fail. ");
             return VOS_ERROR;
         }
 
-        /* ��ȡ�豸ʵ��ָ�� */
+        /* 获取设备实体指针 */
         pstVcomDevp = pstVcomCtx->pstAppVcomDevEntity;
 
         VOS_MemSet(pstVcomDevp, 0, sizeof(APP_VCOM_DEV_ENTITY_STRU));
@@ -363,7 +363,7 @@ VOS_INT __init APP_VCOM_Init(VOS_VOID)
 
         if (VOS_NULL_PTR == pstVcomDevp->pucAppVcomMem)
         {
-            /* ȥע����豸�����ش��� */
+            /* 去注册该设备，返回错误 */
             unregister_chrdev_region(ulDevno, 1);
             APP_VCOM_TRACE_ERR(ucIndex, "APP_VCOM_Init malloc device buff fail. ");
             kfree(pstVcomCtx->pstAppVcomDevEntity);
@@ -375,7 +375,7 @@ VOS_INT __init APP_VCOM_Init(VOS_VOID)
 
         APP_VCOM_Setup(pstVcomDevp, ucIndex);
 
-        /* �����ź��� */
+        /* 创建信号量 */
         sema_init(&pstVcomDevp->stMsgSendSem,1);
 
         sema_init(&pstVcomDevp->stWrtSem, 1);
@@ -387,19 +387,19 @@ VOS_INT __init APP_VCOM_Init(VOS_VOID)
 }
 
 /*****************************************************************************
- �� �� ��  : APP_VCOM_Release
- ��������  : �ļ��رպ���
- �������  : ��
- �������  : ��
- �� �� ֵ  : VOS_OK    �ɹ�
-             VOS_ERROR   ʧ��
- ���ú���  :
- ��������  :
+ 函 数 名  : APP_VCOM_Release
+ 功能描述  : 文件关闭函数
+ 输入参数  : 无
+ 输出参数  : 无
+ 返 回 值  : VOS_OK    成功
+             VOS_ERROR   失败
+ 调用函数  :
+ 被调函数  :
 
- �޸���ʷ      :
-  1.��    ��   : 2011��12��14��
-    ��    ��   : sunshaohua
-    �޸�����   : �����ɺ���
+ 修改历史      :
+  1.日    期   : 2011年12月14日
+    作    者   : sunshaohua
+    修改内容   : 新生成函数
 *****************************************************************************/
 int APP_VCOM_Release(
     struct inode                       *inode,
@@ -416,10 +416,10 @@ int APP_VCOM_Release(
         return VOS_ERROR;
     }
 
-    /* ��ȡ���豸�� */
+    /* 获取主设备号 */
     ulDevMajor = imajor(inode);
 
-    /* �������豸�ŵõ��豸��ȫ�ֱ����е�����ֵ */
+    /* 根据主设备号得到设备在全局变量中的索引值 */
     ucIndex = APP_VCOM_GetIndexFromMajorDevId(ulDevMajor);
 
     if (ucIndex >= APP_VCOM_MAX_NUM)
@@ -428,7 +428,7 @@ int APP_VCOM_Release(
         return VOS_ERROR;
     }
 
-    /* ��ȡVCOMȫ�ֱ��� */
+    /* 获取VCOM全局变量 */
     pstVcomCtx = APP_VCOM_GetVcomCtxAddr(ucIndex);
 
     if (VOS_NULL_PTR == pstVcomCtx->pstAppVcomDevEntity)
@@ -437,7 +437,7 @@ int APP_VCOM_Release(
         return VOS_ERROR;
     }
 
-    /* ���豸�ṹ��ָ�븳ֵ���ļ�˽������ָ�� */
+    /* 将设备结构体指针赋值给文件私有数据指针 */
     filp->private_data = pstVcomCtx->pstAppVcomDevEntity;
 
     APP_VCOM_TRACE_INFO(ucIndex, "APP_VCOM_Release enter. ");
@@ -465,10 +465,10 @@ int APP_VCOM_Open(
         return VOS_ERROR;
     }
 
-    /* ��ȡ���豸�� */
+    /* 获取主设备号 */
     ulDevMajor = imajor(inode);
 
-    /* �������豸�ŵõ��豸��ȫ�ֱ����е�����ֵ */
+    /* 根据主设备号得到设备在全局变量中的索引值 */
     ucIndex = APP_VCOM_GetIndexFromMajorDevId(ulDevMajor);
 
     if (ucIndex >= APP_VCOM_MAX_NUM)
@@ -477,7 +477,7 @@ int APP_VCOM_Open(
         return VOS_ERROR;
     }
 
-    /* ��ȡVCOMȫ�ֱ��� */
+    /* 获取VCOM全局变量 */
     pstVcomCtx = APP_VCOM_GetVcomCtxAddr(ucIndex);
 
     if (VOS_NULL_PTR == pstVcomCtx->pstAppVcomDevEntity)
@@ -486,7 +486,7 @@ int APP_VCOM_Open(
         return VOS_ERROR;
     }
 
-    /* ���豸�ṹ��ָ�븳ֵ���ļ�˽������ָ�� */
+    /* 将设备结构体指针赋值给文件私有数据指针 */
     filp->private_data = pstVcomCtx->pstAppVcomDevEntity;
 
     APP_VCOM_TRACE_INFO(ucIndex, "APP_VCOM_Open enter. ");
@@ -514,14 +514,14 @@ ssize_t APP_VCOM_Read(
     VOS_UINT8                           ucIndex;
     APP_VCOM_DEV_CTX_STRU              *pstVcomCtx;
 
-    /* ����豸�ṹ��ָ�� */
+    /* 获得设备结构体指针 */
     pstVcomDev = stFilp->private_data;
 
-    /* ����豸���豸�� */
+    /* 获得设备主设备号 */
     pstCdev = &(pstVcomDev->stAppVcomDev);
     ulDevMajor = MAJOR(pstCdev->dev);
 
-    /* ����豸��ȫ�ֱ����е�����ֵ */
+    /* 获得设备在全局变量中的索引值 */
     ucIndex = APP_VCOM_GetIndexFromMajorDevId(ulDevMajor);
 
     if (ucIndex >= APP_VCOM_MAX_NUM)
@@ -556,7 +556,7 @@ ssize_t APP_VCOM_Read(
 
     APP_VCOM_TRACE_INFO(ucIndex, "APP_VCOM_Read, wait_event 222,flag:%d. ", pstVcomDev->ulReadWakeUpFlg);
 
-    /* ��ȡ�ź��� */
+    /* 获取信号量 */
     down(&pstVcomCtx->pstAppVcomDevEntity->stMsgSendSem);
 
     if (count > pstVcomDev->current_len)
@@ -568,25 +568,25 @@ ssize_t APP_VCOM_Read(
     {
         APP_VCOM_TRACE_ERR(ucIndex, "APP_VCOM_Read, copy_to_user fail. ");
 
-        /* �ͷ��ź��� */
+        /* 释放信号量 */
         up(&pstVcomCtx->pstAppVcomDevEntity->stMsgSendSem);
         return APP_VCOM_ERROR;
     }
 
     if ((pstVcomDev->current_len - count) > 0)
     {
-        /* FIFO����ǰ�� */
+        /* FIFO数据前移 */
         memmove(pstVcomDev->pucAppVcomMem, (pstVcomDev->pucAppVcomMem + count), (pstVcomDev->current_len - count));
 
         APP_VCOM_TRACE_INFO(ucIndex, "APP_VCOM_Read, FIFO move. ");
     }
 
-    /* ��Ч���ݳ��ȼ�С*/
+    /* 有效数据长度减小*/
     pstVcomDev->current_len -= count;
 
     APP_VCOM_TRACE_INFO(ucIndex, "APP_VCOM_Read, read %d bytes, current_len:%d. ", count, pstVcomDev->current_len);
 
-    /* �ͷ��ź��� */
+    /* 释放信号量 */
     up(&pstVcomCtx->pstAppVcomDevEntity->stMsgSendSem);
 
     return (ssize_t)count;
@@ -608,14 +608,14 @@ ssize_t APP_VCOM_Write(
     VOS_UINT8                           ucIndex;
     APP_VCOM_DEV_CTX_STRU              *pstVcomCtx;
 
-    /* ����豸�ṹ��ָ�� */
+    /* 获得设备结构体指针 */
     pstVcomDev = stFilp->private_data;
 
-    /* ����豸���豸�� */
+    /* 获得设备主设备号 */
     pstCdev = &(pstVcomDev->stAppVcomDev);
     ulDevMajor = MAJOR(pstCdev->dev);
 
-    /* ����豸��ȫ�ֱ����е�����ֵ */
+    /* 获得设备在全局变量中的索引值 */
     ucIndex = APP_VCOM_GetIndexFromMajorDevId(ulDevMajor);
 
     if(ucIndex >= APP_VCOM_MAX_NUM)
@@ -624,10 +624,10 @@ ssize_t APP_VCOM_Write(
         return APP_VCOM_ERROR;
     }
 
-    /* ���ȫ�ֱ�����ַ */
+    /* 获得全局变量地址 */
     pstVcomCtx = APP_VCOM_GetVcomCtxAddr(ucIndex);
 
-    /* �����ڴ� */
+    /* 申请内存 */
     pucDataBuf = kmalloc(count, GFP_KERNEL);
     if (VOS_NULL_PTR == pucDataBuf )
     {
@@ -636,7 +636,7 @@ ssize_t APP_VCOM_Write(
         return APP_VCOM_ERROR;
     }
 
-    /* buffer���� */
+    /* buffer清零 */
     VOS_MemSet(pucDataBuf, 0x00, count);
 
     if (copy_from_user(pucDataBuf, buf, count))
@@ -675,7 +675,7 @@ ssize_t APP_VCOM_Write(
     }
 #endif
 
-    /* ���ûص���������buf�е�AT����*/
+    /* 调用回调函数处理buf中的AT码流*/
     if (VOS_NULL_PTR == pstVcomCtx->pSendUlAtFunc)
     {
         APP_VCOM_TRACE_ERR(ucIndex, "APP_VCOM_Write, pSendUlAtFunc is null. ");
@@ -696,7 +696,7 @@ ssize_t APP_VCOM_Write(
 
     APP_VCOM_TRACE_INFO(ucIndex, "APP_VCOM_Write, write %d bytes, AT_RcvFromAppCom Success.",count);
 
-    /* �ͷ��ڴ� */
+    /* 释放内存 */
     kfree(pucDataBuf);
 
     return (ssize_t)count;
@@ -759,7 +759,7 @@ VOS_UINT32  APP_VCOM_Send (
     }
 #endif
 
-    /* ����豸ʵ��ָ�� */
+    /* 获得设备实体指针 */
     pstVcomDev = APP_VCOM_GetAppVcomDevEntity(enDevIndex);
 
     if (VOS_NULL_PTR == pstVcomDev)
@@ -797,10 +797,10 @@ VOS_UINT32  APP_VCOM_Send (
 
     APP_VCOM_TRACE_INFO(enDevIndex, "APP_VCOM_Send, uslength:%d, current_len:%d. ", uslength, pstVcomDev->current_len);
 
-    /* ��ȡ�ź��� */
+    /* 获取信号量 */
     down(&pstVcomDev->stMsgSendSem);
 
-    /* ��������ֱ�ӷ��� */
+    /* 队列满则直接返回 */
     if (g_astAppVcomCogfigTab[enDevIndex].ulAppVcomMemSize == pstVcomDev->current_len)
     {
         APP_VCOM_TRACE_NORM(enDevIndex, "APP_VCOM_Send: VCOM MEM FULL. ");
@@ -811,7 +811,7 @@ VOS_UINT32  APP_VCOM_Send (
         return VOS_ERR;
     }
 
-    /* �������ݴ���ʣ��Buffer��С */
+    /* 发送数据大于剩余Buffer大小 */
     if (uslength > (g_astAppVcomCogfigTab[enDevIndex].ulAppVcomMemSize - pstVcomDev->current_len))
     {
         APP_VCOM_TRACE_NORM(enDevIndex, "APP_VCOM_Send: data more than Buffer. ");
@@ -819,13 +819,13 @@ VOS_UINT32  APP_VCOM_Send (
         uslength = g_astAppVcomCogfigTab[enDevIndex].ulAppVcomMemSize - pstVcomDev->current_len;
     }
 
-    /* ���Ƶ�BUFFER */
+    /* 复制到BUFFER */
     memcpy(pstVcomDev->pucAppVcomMem + pstVcomDev->current_len, pData, uslength);
     pstVcomDev->current_len += uslength;
 
     APP_VCOM_TRACE_INFO(enDevIndex, "APP_VCOM_Send, written %d byte(s), new len: %d. ", uslength, pstVcomDev->current_len);
 
-    /* �ͷ��ź��� */
+    /* 释放信号量 */
     up(&pstVcomDev->stMsgSendSem);
 #ifdef __PC_UT__
 
@@ -913,7 +913,7 @@ VOS_VOID APP_VCOM_MNTN_LogPrintf(VOS_CHAR *pcFmt, ...)
     VOS_CHAR                            acBuf[APP_VCOM_TRACE_BUF_LEN] = {0};
     VOS_UINT32                          ulPrintLength = 0;
 
-    /* ��ʽ�����BUFFER */
+    /* 格式化输出BUFFER */
     APP_VCOM_LOG_FORMAT(ulPrintLength, acBuf, APP_VCOM_TRACE_BUF_LEN, pcFmt);
 
 #if (VOS_OS_VER == VOS_LINUX)

@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼þ°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include  "product_config.h"
 #include  "PsTypeDef.h"
@@ -24,33 +24,33 @@
 
 #if ((FEATURE_ON == FEATURE_GCBS) || (FEATURE_ON == FEATURE_WCBS))
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 
 #define MSG_CBPAGE_HEADER_LEN                               6
 
 /*****************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æžšä¸¾å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  4 È«¾Ö±äÁ¿ÉùÃ÷
+  4 å…¨å±€å˜é‡å£°æ˜Ž
 *****************************************************************************/
 
 
 /*****************************************************************************
-  5 ÏûÏ¢Í·¶¨Òå
+  5 æ¶ˆæ¯å¤´å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  6 ÏûÏ¢¶¨Òå
+  6 æ¶ˆæ¯å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  7 STRUCT¶¨Òå
+  7 STRUCTå®šä¹‰
 *****************************************************************************/
 typedef struct
 {
@@ -61,12 +61,12 @@ typedef struct
 
 
 /*****************************************************************************
-  8 UNION¶¨Òå
+  8 UNIONå®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  9 OTHERS¶¨Òå
+  9 OTHERSå®šä¹‰
 *****************************************************************************/
 
 LOCAL MN_MSG_LANG_CONVERT_STRU f_astMsgCbLangTable[MN_MSG_MAX_LANG_NUM] =
@@ -95,22 +95,22 @@ LOCAL MN_MSG_LANG_CONVERT_STRU f_astMsgCbLangTable[MN_MSG_MAX_LANG_NUM] =
 
 
 /*****************************************************************************
-  10 º¯ÊýÉùÃ÷
+  10 å‡½æ•°å£°æ˜Ž
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  : MN_MSG_Iso639LangToDef
- ¹¦ÄÜÃèÊö  : Ó³ÉäISO 639 [12]±àÂëµÄÓïÑÔÀàÐÍ±àÂëµ½TAFµÄÓïÑÔÀàÐÍ±àÂë
- ÊäÈë²ÎÊý  : enIso639Lang - ISO 639 [12]±àÂëµÄÓïÑÔÀàÐÍ±àÂë
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : TAFµÄÓïÑÔÀàÐÍ±àÂë
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : MN_MSG_Iso639LangToDef
+ åŠŸèƒ½æè¿°  : æ˜ å°„ISO 639 [12]ç¼–ç çš„è¯­è¨€ç±»åž‹ç¼–ç åˆ°TAFçš„è¯­è¨€ç±»åž‹ç¼–ç 
+ è¾“å…¥å‚æ•°  : enIso639Lang - ISO 639 [12]ç¼–ç çš„è¯­è¨€ç±»åž‹ç¼–ç 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : TAFçš„è¯­è¨€ç±»åž‹ç¼–ç 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2006Äê12ÔÂ20ÈÕ
-    ×÷    Õß   : ¸µÓ³¾ý 62575
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2006å¹´12æœˆ20æ—¥
+    ä½œ    è€…   : å‚…æ˜ å› 62575
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 MN_MSG_CBLANG_ENUM_U8 MN_MSG_Iso639LangToDef(
@@ -158,13 +158,13 @@ VOS_UINT32 MN_MSG_DecodeDcsIf01(
     ulRet                               = MN_ERR_NO_ERROR;
     switch(ucDcs&0x0F)
     {
-        /* ±íÃ÷ÊÇ7 Bit±àÂë language Represetation Occupy 3 7bit,µ«×îºóÒ»¸ö×Ö½ÚÊ±<CR>,Òò´Ë³¤¶È»¹ÊÇ2*/
+        /* è¡¨æ˜Žæ˜¯7 Bitç¼–ç  language Represetation Occupy 3 7bit,ä½†æœ€åŽä¸€ä¸ªå­—èŠ‚æ—¶<CR>,å› æ­¤é•¿åº¦è¿˜æ˜¯2*/
         case 0:
             pstDcsInfo->enMsgCoding     = MN_MSG_MSG_CODING_7_BIT;
             pstDcsInfo->ucLangIndLen    = 3 - 1;
             break;
 
-        /*±íÃ÷ÎªUCS2 language Represetation Occupy 2 8bit*/
+        /*è¡¨æ˜Žä¸ºUCS2 language Represetation Occupy 2 8bit*/
         case 1:
             pstDcsInfo->enMsgCoding     = MN_MSG_MSG_CODING_UCS2;
             pstDcsInfo->ucLangIndLen    = 2;
@@ -172,7 +172,7 @@ VOS_UINT32 MN_MSG_DecodeDcsIf01(
 
         default:
             /*Reserved selection we don't support;*/
-            /*¼ÇÂ¼´íÎóTrace               ÉèÖÃ·µ»ØÖµ*/
+            /*è®°å½•é”™è¯¯Trace               è®¾ç½®è¿”å›žå€¼*/
             ulRet = MN_ERR_CLASS_SMS_INVALID_MSG_CODING;
             break;
     }
@@ -220,7 +220,7 @@ LOCAL VOS_UINT32 MN_MSG_DecodeDcsIf07(
     {
         pstDcsInfo->bCompressed     =  VOS_FALSE;
     }
-    switch((ucDcs&0x0C)>>2) /*bit2,3£¬¾ßÌåÎª±àÂë·½Ê½*/
+    switch((ucDcs&0x0C)>>2) /*bit2,3ï¼Œå…·ä½“ä¸ºç¼–ç æ–¹å¼*/
     {
         case 0:
             pstDcsInfo->enMsgCoding = MN_MSG_MSG_CODING_7_BIT;
@@ -240,7 +240,7 @@ LOCAL VOS_UINT32 MN_MSG_DecodeDcsIf07(
             break;
     }
 
-    /*ÅÐ¶Ïbit4µÄÖµ£¬0±íÊ¾ÎÞClassº¬Òå£¬1±íÊ¾ÓÐClassº¬Òå*/
+    /*åˆ¤æ–­bit4çš„å€¼ï¼Œ0è¡¨ç¤ºæ— Classå«ä¹‰ï¼Œ1è¡¨ç¤ºæœ‰Classå«ä¹‰*/
     if (0 == (ucDcs&0x10))
     {
         pstDcsInfo->enMsgClass      = MN_MSG_MSG_CLASS_NONE;
@@ -265,7 +265,7 @@ LOCAL VOS_UINT32 MN_MSG_DecodeDcsIf09(
 
     ulRet                           = MN_ERR_NO_ERROR;
 
-    switch((ucDcs&0x0C)>>2) /*bit2,3£¬¾ßÌåÎª±àÂë·½Ê½*/
+    switch((ucDcs&0x0C)>>2) /*bit2,3ï¼Œå…·ä½“ä¸ºç¼–ç æ–¹å¼*/
     {
         case 0:
             pstDcsInfo->enMsgCoding = MN_MSG_MSG_CODING_7_BIT;
@@ -346,14 +346,14 @@ VOS_UINT32 MN_MSG_DecodeCbsDcs(
 
     switch (pstDcsInfo->ucMsgCodingGroup)
     {
-        /*ÅÐ¶Ï¸ßËÄÎ»Îª0000,0011,0010*/
+        /*åˆ¤æ–­é«˜å››ä½ä¸º0000,0011,0010*/
         case 0x00:
         case 0x02:
         case 0x03:
             pstDcsInfo->enMsgLang = (ucDcs & 0x0f) ;
             break;
 
-        case 0x01: /*ÅÐ¶Ï¸ßËÄÎ»Îª0001*/
+        case 0x01: /*åˆ¤æ–­é«˜å››ä½ä¸º0001*/
             if (ulContentLength < TAF_MSG_CBA_LANG_LENGTH)
             {
                 MN_WARN_LOG("MSG_CbDecodeDcs: Invalid ulContentLength.");
@@ -366,7 +366,7 @@ VOS_UINT32 MN_MSG_DecodeCbsDcs(
                 MN_WARN_LOG("MSG_CbDecodeDcs: Invalid Dcs Info.");
             }
 
-            /*¸ù¾ÝÏûÏ¢ÄÚÈÝµÄÇ°Á½¸ö×Ö·ûµÃµ½CBSÓïÑÔ±àÂëLangCode*/
+            /*æ ¹æ®æ¶ˆæ¯å†…å®¹çš„å‰ä¸¤ä¸ªå­—ç¬¦å¾—åˆ°CBSè¯­è¨€ç¼–ç LangCode*/
             ulRet = TAF_STD_UnPack7Bit(pucContent, pstDcsInfo->ucLangIndLen, 0, aucLang);
             if (VOS_OK != ulRet)
             {
@@ -377,7 +377,7 @@ VOS_UINT32 MN_MSG_DecodeCbsDcs(
             pstDcsInfo->enMsgLang = MN_MSG_Iso639LangToDef(uslang);
             break;
 
-        /*ÅÐ¶Ï¸ßËÄÎ»Îª01xx  */
+        /*åˆ¤æ–­é«˜å››ä½ä¸º01xx  */
         case 0x04:
         case 0x05:
         case 0x06:
@@ -421,18 +421,18 @@ VOS_UINT32 MN_MSG_DecodeCbsDcs(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : MSG_CbDecodeSn
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÐ­Òé23038 5½âÂëCBSÒ³µÄSN
- ÊäÈë²ÎÊý  : pstGsmPage:µ±Ç°Ò³CBSµÄÏûÏ¢ÄÚÈÝ
- Êä³ö²ÎÊý  : pstSn:½âÎöºÃµÄserial numberµÄÖµ
- ·µ »Ø Öµ  : VOS_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : MSG_CbDecodeSn
+ åŠŸèƒ½æè¿°  : æ ¹æ®åè®®23038 5è§£ç CBSé¡µçš„SN
+ è¾“å…¥å‚æ•°  : pstGsmPage:å½“å‰é¡µCBSçš„æ¶ˆæ¯å†…å®¹
+ è¾“å‡ºå‚æ•°  : pstSn:è§£æžå¥½çš„serial numberçš„å€¼
+ è¿” å›ž å€¼  : VOS_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê1ÔÂ11ÈÕ
-    ×÷    Õß   : ¸µÓ³¾ý 62575
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´1æœˆ11æ—¥
+    ä½œ    è€…   : å‚…æ˜ å› 62575
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 LOCAL VOS_UINT32 MSG_CbDecodeSn(
@@ -459,7 +459,7 @@ VOS_UINT32  MN_MSG_DecodeCbmPage(
     MN_MSG_CBGSMPAGE_STRU               *pstGsmPage;
     VOS_UINT32                          ulDataLen;
 
-    /*ÅÐ¶ÏÊäÈë²ÎÊýµÄºÏ·¨ÐÔ*/
+    /*åˆ¤æ–­è¾“å…¥å‚æ•°çš„åˆæ³•æ€§*/
     if ((VOS_NULL_PTR == pstCbRawInfo)
      || (VOS_NULL_PTR == pstCbmPageInfo))
     {
@@ -469,7 +469,7 @@ VOS_UINT32  MN_MSG_DecodeCbmPage(
 
     pstGsmPage = (MN_MSG_CBGSMPAGE_STRU   *)pstCbRawInfo->aucData;
 
-    /* ½âÎöDCS */
+    /* è§£æžDCS */
     ulRet = MN_MSG_DecodeCbsDcs(pstGsmPage->ucDCS,
                                 pstGsmPage->aucContent,
                                 TAF_CBA_MAX_CBDATA_LEN,
@@ -479,14 +479,14 @@ VOS_UINT32  MN_MSG_DecodeCbmPage(
         MN_WARN_LOG1("MN_MSG_DecodeCbmPage:DCS Invalid:ulRet",(VOS_INT32)ulRet);
     }
 
-    /* ½âÎöSN */
+    /* è§£æžSN */
     ulRet = MSG_CbDecodeSn(pstGsmPage, &(pstCbmPageInfo->stSn));
     if (MN_ERR_NO_ERROR != ulRet)
     {
         MN_WARN_LOG1("MN_MSG_DecodeCbmPage:SN Invalid:ulRet",(VOS_INT32)ulRet);
     }
 
-    /* ½âÎöMID */
+    /* è§£æžMID */
     pstCbmPageInfo->usMid = pstGsmPage->ucMIdHigh;
     pstCbmPageInfo->usMid = (VOS_UINT16)(pstCbmPageInfo->usMid << 8) | pstGsmPage->ucMIdLow;
 
@@ -507,7 +507,7 @@ VOS_UINT32  MN_MSG_DecodeCbmPage(
     }
     ulDataLen = pstCbRawInfo->ulLen - MSG_CBPAGE_HEADER_LEN;
 
-    /* Èç¹ûÊÇ 7bit±àÂëÐèÒª½«Æä×ª»¯Îª8bit */
+    /* å¦‚æžœæ˜¯ 7bitç¼–ç éœ€è¦å°†å…¶è½¬åŒ–ä¸º8bit */
     if (MN_MSG_MSG_CODING_7_BIT == pstCbmPageInfo->stDcs.enMsgCoding )
     {
 

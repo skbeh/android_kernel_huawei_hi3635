@@ -4,9 +4,9 @@
   Author       : ---
   Version      : V200R001
   Date         : 2005-11-18
-  Description  : ¸ÃÍ·ÎÄ¼þÎªATÄ£¿é"´´½¨PPPÁ´Â·"¡¢"ÊÍ·ÅPPPÁ´Â·"¡¢
-                  "PPPÄ£¿é½ÓÊÕÍø²àÖ¸Ê¾µÄÅäÖÃÐÅÏ¢"Ìá¹©µÄ¶ÔÓ¦APIº¯ÊýÌá¹©
-                  ÒýÓÃÐÔËµÃ÷¡£
+  Description  : è¯¥å¤´æ–‡ä»¶ä¸ºATæ¨¡å—"åˆ›å»ºPPPé“¾è·¯"ã€"é‡Šæ”¾PPPé“¾è·¯"ã€
+                  "PPPæ¨¡å—æŽ¥æ”¶ç½‘ä¾§æŒ‡ç¤ºçš„é…ç½®ä¿¡æ¯"æä¾›çš„å¯¹åº”APIå‡½æ•°æä¾›
+                  å¼•ç”¨æ€§è¯´æ˜Žã€‚
 
   Function List:
         ---
@@ -16,9 +16,9 @@
   1. Date:2005-11-18
      Author: ---fanzhibin 49086
      Modification:Create
-  2.ÈÕ    ÆÚ   : 2006Äê08ÔÂ09ÈÕ
-    ×÷    Õß   : ½¯ÀöÆ¼j60010247
-    ÐÞ¸ÄÄÚÈÝ   : ÎÊÌâµ¥A32D03479£¬ÔÚPC»úÉÏÊµÏÖÊ±½«#pragma pack(0)ºÍ#pragma pack()¼Ó±àÒë¿ª¹Ø
+  2.æ—¥    æœŸ   : 2006å¹´08æœˆ09æ—¥
+    ä½œ    è€…   : è’‹ä¸½èj60010247
+    ä¿®æ”¹å†…å®¹   : é—®é¢˜å•A32D03479ï¼Œåœ¨PCæœºä¸Šå®žçŽ°æ—¶å°†#pragma pack(0)å’Œ#pragma pack()åŠ ç¼–è¯‘å¼€å…³
  ************************************************************************/
 
 #include "vos.h"

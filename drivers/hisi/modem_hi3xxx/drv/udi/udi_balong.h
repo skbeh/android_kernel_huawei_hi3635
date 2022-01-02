@@ -31,7 +31,7 @@ typedef BSP_S32 (*UDI_READ_CB_T)(VOID* pPrivate, void* pMemObj, BSP_U32 u32Size)
 typedef BSP_S32 (*UDI_IOCTL_CB_T) (VOID* pPrivate, BSP_U32 u32Cmd, VOID* pParam);
 
 
-/* Çı¶¯ÊÊÅäº¯ÊıÖ¸Õë±í */
+/* é©±åŠ¨é€‚é…å‡½æ•°æŒ‡é’ˆè¡¨ */
 typedef struct tagUDI_DRV_INTEFACE_TABLE
 {
 	/* capability */

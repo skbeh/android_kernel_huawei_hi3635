@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 
 #include "msp_errno.h"
@@ -18,7 +18,7 @@
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
 /*lint -e767 -e960*/
@@ -27,7 +27,7 @@
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 VOS_UINT32              g_ulNdisCfgFlag     = 0xffffffffU;
@@ -36,22 +36,22 @@ USBNdisAtRecvFunc       g_atCmdRcv          = NULL;
 
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 /*****************************************************************************
- º¯ Êý Ãû  : DMS_NcmOpen
- ¹¦ÄÜÃèÊö  : ´ò¿ªNDIS CTRLÍ¨µÀ
- ÊäÈë²ÎÊý  :
+ å‡½ æ•° å  : DMS_NcmOpen
+ åŠŸèƒ½æè¿°  : æ‰“å¼€NDIS CTRLé€šé“
+ è¾“å…¥å‚æ•°  :
 
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : ERR_MSP_FAILURE/ERR_MSP_SUCCESS
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : ERR_MSP_FAILURE/ERR_MSP_SUCCESS
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 DMS_NcmOpen(VOS_VOID)
 {
@@ -84,25 +84,25 @@ VOS_UINT32 DMS_NcmOpen(VOS_VOID)
         }
     }
 
-    /* ÅäÖÃ NDIS CTRL Í¨µÀ */
+    /* é…ç½® NDIS CTRL é€šé“ */
     DMS_NcmProcCbReg(g_atConnectBrk,(USB_NAS_AT_CMD_RECV)g_atCmdRcv);
 
     return ulRet;
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DMS_NcmClose
- ¹¦ÄÜÃèÊö  : NDIS CTRLÍ¨µÀ¹Ø±Õ
- ÊäÈë²ÎÊý  :
+ å‡½ æ•° å  : DMS_NcmClose
+ åŠŸèƒ½æè¿°  : NDIS CTRLé€šé“å…³é—­
+ è¾“å…¥å‚æ•°  :
 
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : -1/ERR_MSP_SUCCESS
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : -1/ERR_MSP_SUCCESS
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 DMS_NcmClose(VOS_VOID)
 {
@@ -125,18 +125,18 @@ VOS_UINT32 DMS_NcmClose(VOS_VOID)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DMS_NcmSendData
- ¹¦ÄÜÃèÊö  : NDIS CTRLÍ¨µÀÊý¾Ý·¢ËÍ½Ó¿Ú
- ÊäÈë²ÎÊý  : pData: ·¢ËÍbuf
-             ulLen: ·¢ËÍ³¤¶È
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : ERR_MSP_INVALID_PARAMETER/ERR_MSP_FAILURE/ERR_MSP_SUCCESS
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : DMS_NcmSendData
+ åŠŸèƒ½æè¿°  : NDIS CTRLé€šé“æ•°æ®å‘é€æŽ¥å£
+ è¾“å…¥å‚æ•°  : pData: å‘é€buf
+             ulLen: å‘é€é•¿åº¦
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : ERR_MSP_INVALID_PARAMETER/ERR_MSP_FAILURE/ERR_MSP_SUCCESS
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_UINT32 DMS_NcmSendData(VOS_UINT8 *pData, VOS_UINT32 ulLen)
 {
@@ -147,7 +147,7 @@ VOS_UINT32 DMS_NcmSendData(VOS_UINT8 *pData, VOS_UINT32 ulLen)
 
     ptrAddr = (VOS_UINT_PTR)pData;
 
-    /*¼ì²éNDISÍ¨µÀ×´Ì¬*/
+    /*æ£€æŸ¥NDISé€šé“çŠ¶æ€*/
     if (ACM_EVT_DEV_SUSPEND == pstPhyBearProp->ucChanStat)
     {
         return ERR_MSP_FAILURE;
@@ -180,18 +180,18 @@ VOS_UINT32 DMS_NcmSendData(VOS_UINT8 *pData, VOS_UINT32 ulLen)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DMS_NcmStatusChangeReg
- ¹¦ÄÜÃèÊö  : ndisÍ¨µÀËÙÂÊÅäÖÃº¯Êý
- ÊäÈë²ÎÊý  : pPdpStru: ÅäÖÃÊý¾Ý
+ å‡½ æ•° å  : DMS_NcmStatusChangeReg
+ åŠŸèƒ½æè¿°  : ndisé€šé“é€ŸçŽ‡é…ç½®å‡½æ•°
+ è¾“å…¥å‚æ•°  : pPdpStru: é…ç½®æ•°æ®
 
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : ERR_MSP_INVALID_PARAMETER/-1/0
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : ERR_MSP_INVALID_PARAMETER/-1/0
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_INT32 DMS_NcmStatusChangeReg(NAS_PRO_STRU * pPdpStru)
 {
@@ -220,18 +220,18 @@ VOS_INT32 DMS_NcmStatusChangeReg(NAS_PRO_STRU * pPdpStru)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : DMS_NcmExtFuncReg
- ¹¦ÄÜÃèÊö  : ndisÍ¨µÀ»Øµ÷º¯Êý×¢²áº¯Êý·â×°
- ÊäÈë²ÎÊý  : connectBrk: Á¬½Ó×´Ì¬´¦Àíº¯Êý
-             atCmdRcv: Êý¾Ý½ÓÊÕ»Øµ÷º¯Êý
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : ERR_MSP_SUCCESS
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : DMS_NcmExtFuncReg
+ åŠŸèƒ½æè¿°  : ndisé€šé“å›žè°ƒå‡½æ•°æ³¨å†Œå‡½æ•°å°è£…
+ è¾“å…¥å‚æ•°  : connectBrk: è¿žæŽ¥çŠ¶æ€å¤„ç†å‡½æ•°
+             atCmdRcv: æ•°æ®æŽ¥æ”¶å›žè°ƒå‡½æ•°
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : ERR_MSP_SUCCESS
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 int DMS_NcmExtFuncReg(USB_NAS_BRK connectBrk,USB_NAS_AT_CMD_RECV atCmdRcv)
 {
@@ -246,18 +246,18 @@ int DMS_NcmExtFuncReg(USB_NAS_BRK connectBrk,USB_NAS_AT_CMD_RECV atCmdRcv)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : DMS_NcmExtFuncReg
- ¹¦ÄÜÃèÊö  : ndisÍ¨µÀ»Øµ÷º¯Êý×¢²áº¯Êý
- ÊäÈë²ÎÊý  : connectBrk: Á¬½Ó×´Ì¬´¦Àíº¯Êý
-             atCmdRcv: Êý¾Ý½ÓÊÕ»Øµ÷º¯Êý
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
- ÐÞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ27ÈÕ
-     ×÷    Õß  : heliping
-     ÐÞ¸ÄÄÚÈÝ  : Creat Function
+ å‡½ æ•° å  : DMS_NcmExtFuncReg
+ åŠŸèƒ½æè¿°  : ndisé€šé“å›žè°ƒå‡½æ•°æ³¨å†Œå‡½æ•°
+ è¾“å…¥å‚æ•°  : connectBrk: è¿žæŽ¥çŠ¶æ€å¤„ç†å‡½æ•°
+             atCmdRcv: æ•°æ®æŽ¥æ”¶å›žè°ƒå‡½æ•°
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹åŽ†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ27æ—¥
+     ä½œ    è€…  : heliping
+     ä¿®æ”¹å†…å®¹  : Creat Function
 *****************************************************************************/
 VOS_VOID DMS_NcmProcCbReg(USBNdisStusChgFunc connectBrk,USB_NAS_AT_CMD_RECV atCmdRcv)
 {
@@ -269,7 +269,7 @@ VOS_VOID DMS_NcmProcCbReg(USBNdisStusChgFunc connectBrk,USB_NAS_AT_CMD_RECV atCm
         return ;
     }
 
-    /*NDIS Í¨µÀÃ»ÓÐ´ò¿ª»òÕß Í¨µÀÒÑ¾­±»ÅäÖÃ£¬ÔòÖ±½Ó·µ»Ø*/
+    /*NDIS é€šé“æ²¡æœ‰æ‰“å¼€æˆ–è€… é€šé“å·²ç»è¢«é…ç½®ï¼Œåˆ™ç›´æŽ¥è¿”å›ž*/
     if ((g_ulNdisCfgFlag == 0xffffffffU)||(g_ulNdisCfgFlag == 0))
     {
         return ;

@@ -19,34 +19,34 @@ extern "C" {
 /*****************************************************************************
   2 Declare the Global Variable
 *****************************************************************************/
-/* ND SERVERÊı¾İĞÅÏ¢ */
+/* ND SERVERæ•°æ®ä¿¡æ¯ */
 IP_NDSERVER_ADDR_INFO_STRU              g_astNdServerAddrInfo[IP_NDSERVER_ADDRINFO_MAX_NUM];
 IP_NDSERVER_TE_DETECT_BUF_STRU          g_astNdServerTeDetectBuf;
 
-/* ND SERVER±¾µØ±£´æµÄÅäÖÃ²ÎÊı */
-VOS_UINT8                               g_ucMFlag;            /* M±êÊ¶ */
-VOS_UINT8                               g_ucOFlag;            /* O±êÊ¶ */
+/* ND SERVERæœ¬åœ°ä¿å­˜çš„é…ç½®å‚æ•° */
+VOS_UINT8                               g_ucMFlag;            /* Mæ ‡è¯† */
+VOS_UINT8                               g_ucOFlag;            /* Oæ ‡è¯† */
 VOS_UINT16                              g_usRouterLifetime;   /* Router Lifetime */
 VOS_UINT32                              g_ulReachableTime;    /* Reachable Time */
 VOS_UINT32                              g_ulRetransTimer;     /* Retrans Timer */
 
-VOS_UINT32                              g_ulNsTimerLen;         /* ·ÇÖÜÆÚĞÔNS¶¨Ê±Æ÷Ê±³¤ */
-VOS_UINT32                              g_ulNsTimerMaxExpNum;   /* ·ÇÖÜÆÚĞÔNS×î´ó³¬Ê±´ÎÊı */
-VOS_UINT32                              g_ulPeriodicNsTimerLen; /* ÖÜÆÚĞÔNS¶¨Ê±Æ÷Ê±³¤ */
-VOS_UINT32                              g_ulPeriodicRaTimerLen; /* ÖÜÆÚĞÔRA¶¨Ê±Æ÷Ê±³¤£¬·ÀÖ¹Router¹ıÆÚ */
-VOS_UINT32                              g_ulFirstNsTimerLen;    /* ÊÕµ½ÖØ¸´µØÖ·¼ì²âºóµÈ´ıµÄ¶¨Ê±Æ÷Ê±³¤ */
-VOS_UINT32                              g_ulRaTimerLen;         /* ÊÕµ½ÖØ¸´µØÖ·¼ì²âÇ°ÖÜÆÚ·¢ËÍRA¶¨Ê±Æ÷Ê±³¤ */
+VOS_UINT32                              g_ulNsTimerLen;         /* éå‘¨æœŸæ€§NSå®šæ—¶å™¨æ—¶é•¿ */
+VOS_UINT32                              g_ulNsTimerMaxExpNum;   /* éå‘¨æœŸæ€§NSæœ€å¤§è¶…æ—¶æ¬¡æ•° */
+VOS_UINT32                              g_ulPeriodicNsTimerLen; /* å‘¨æœŸæ€§NSå®šæ—¶å™¨æ—¶é•¿ */
+VOS_UINT32                              g_ulPeriodicRaTimerLen; /* å‘¨æœŸæ€§RAå®šæ—¶å™¨æ—¶é•¿ï¼Œé˜²æ­¢Routerè¿‡æœŸ */
+VOS_UINT32                              g_ulFirstNsTimerLen;    /* æ”¶åˆ°é‡å¤åœ°å€æ£€æµ‹åç­‰å¾…çš„å®šæ—¶å™¨æ—¶é•¿ */
+VOS_UINT32                              g_ulRaTimerLen;         /* æ”¶åˆ°é‡å¤åœ°å€æ£€æµ‹å‰å‘¨æœŸå‘é€RAå®šæ—¶å™¨æ—¶é•¿ */
 
-/* ÖÜÆÚĞÔ·¢ËÍRAÊ±¼ä¼ÆÊıÆ÷ */
+/* å‘¨æœŸæ€§å‘é€RAæ—¶é—´è®¡æ•°å™¨ */
 VOS_UINT32                              g_aulPeriodicRaTimeCnt[IP_NDSERVER_ADDRINFO_MAX_NUM];
 
-/* ÓÃÓÚ´æ´¢½âÎöºóµÄND±¨ÎÄÊı¾İ */
+/* ç”¨äºå­˜å‚¨è§£æåçš„NDæŠ¥æ–‡æ•°æ® */
 IP_ND_MSG_STRU                          g_stNdMsgData;
 
-/* ND SERVERÊ¹ÓÃµÄ·¢°ü»º³åÇø */
+/* ND SERVERä½¿ç”¨çš„å‘åŒ…ç¼“å†²åŒº */
 VOS_UINT8                               g_aucSendMsgBuffer[IP_IPM_MTU];
 
-/* ND SERVER±¨ÎÄÍ³¼ÆĞÅÏ¢ */
+/* ND SERVERæŠ¥æ–‡ç»Ÿè®¡ä¿¡æ¯ */
 IP_NDSERVER_PACKET_STATISTICS_INFO_STRU g_astNdServerPktStatInfo[IP_NDSERVER_ADDRINFO_MAX_NUM];
 
 VOS_UINT8 g_aucInvalidIpv6Addr[IP_IPV6_ADDR_LEN] = {0};
@@ -69,11 +69,11 @@ VOS_VOID IP_NDSERVER_SaveTeDetectIp( const VOS_UINT8* pucTeGlobalAddr )
             || (IP_IPV6_64BITPREFIX_EQUAL_ZERO(pucTeGlobalAddr))
             || (IP_IPV6_IS_MULTICAST_ADDR(pucTeGlobalAddr)))
     {
-        /* ²»ÊÇGlobal IP */
+        /* ä¸æ˜¯Global IP */
         return;
     }
 
-    /* ÏàÍ¬PrefixµÄµØÖ·ÊÇ·ñÒÑ¾­´æÔÚ */
+    /* ç›¸åŒPrefixçš„åœ°å€æ˜¯å¦å·²ç»å­˜åœ¨ */
     while(ulIndex != g_astNdServerTeDetectBuf.ulTail)
     {
         /* modify by jiqiang 2014.04.13 pclint 960 begin */
@@ -83,7 +83,7 @@ VOS_VOID IP_NDSERVER_SaveTeDetectIp( const VOS_UINT8* pucTeGlobalAddr )
         /*lint +e960*/
         /* modify by jiqiang 2014.04.13 pclint 960 end */
             {
-            /* ÏàÍ¬PrefixÖ»±£ÁôÒ»¸öµØÖ· */
+            /* ç›¸åŒPrefixåªä¿ç•™ä¸€ä¸ªåœ°å€ */
             IP_MEM_CPY(g_astNdServerTeDetectBuf.astTeIpBuf[ulIndex].aucTeGlobalAddr, pucTeGlobalAddr, IP_IPV6_ADDR_LEN);
             return;
         }
@@ -96,11 +96,11 @@ VOS_VOID IP_NDSERVER_SaveTeDetectIp( const VOS_UINT8* pucTeGlobalAddr )
  */
         /*IP_PrintArray(IP_GET_IP_PRINT_BUF(), g_astNdServerTeDetectBuf.astTeIpBuf[g_astNdServerTeDetectBuf.ulHead].aucTeGlobalAddr, IP_IPV6_ADDR_LEN);
  */
-        /* BUFÂúÊ±¸²¸Ç×îÀÏµÄµØÖ· */
+        /* BUFæ»¡æ—¶è¦†ç›–æœ€è€çš„åœ°å€ */
         g_astNdServerTeDetectBuf.ulHead = TTF_MOD_ADD(g_astNdServerTeDetectBuf.ulHead, 1, g_astNdServerTeDetectBuf.ulMaxNum);
     }
 
-    /* ±£´æIPµØÖ· */
+    /* ä¿å­˜IPåœ°å€ */
     IP_MEM_CPY(g_astNdServerTeDetectBuf.astTeIpBuf[g_astNdServerTeDetectBuf.ulTail].aucTeGlobalAddr, pucTeGlobalAddr, IP_IPV6_ADDR_LEN);
     g_astNdServerTeDetectBuf.astTeIpBuf[g_astNdServerTeDetectBuf.ulTail].ulValid = IP_TRUE;
 
@@ -122,7 +122,7 @@ VOS_UINT8* IP_NDSERVER_GetTeDetectIp( const VOS_UINT8* pucPrefixAddr )
         {
             g_astNdServerTeDetectBuf.astTeIpBuf[ulIndex].ulValid = IP_FALSE;
 
-            /* BufÍ·²¿¿ÕÏ¶´¦Àí */
+            /* Bufå¤´éƒ¨ç©ºéš™å¤„ç† */
             while((g_astNdServerTeDetectBuf.ulHead != g_astNdServerTeDetectBuf.ulTail) &&
                 (IP_FALSE == g_astNdServerTeDetectBuf.astTeIpBuf[g_astNdServerTeDetectBuf.ulHead].ulValid))
             {
@@ -138,37 +138,37 @@ VOS_UINT8* IP_NDSERVER_GetTeDetectIp( const VOS_UINT8* pucPrefixAddr )
 }
 VOS_VOID IP_NDSERVER_SetLocalParam( VOS_VOID )
 {
-    /* M±êÊ¶£¬0£¬Ö÷»ú²»ÄÜÍ¨¹ıDHCPv6»ñÈ¡IPv6µØÖ· */
+    /* Mæ ‡è¯†ï¼Œ0ï¼Œä¸»æœºä¸èƒ½é€šè¿‡DHCPv6è·å–IPv6åœ°å€ */
     g_ucMFlag = 0;
 
-    /* O±êÊ¶£¬1£¬Ö÷»ú¿ÉÒÔÍ¨¹ıÎŞ×´Ì¬DHCPv6»ñÈ¡ÆäËû²ÎÊı£¬ÀıÈçDNS·şÎñÆ÷£¬SIP·şÎñÆ÷£» */
+    /* Oæ ‡è¯†ï¼Œ1ï¼Œä¸»æœºå¯ä»¥é€šè¿‡æ— çŠ¶æ€DHCPv6è·å–å…¶ä»–å‚æ•°ï¼Œä¾‹å¦‚DNSæœåŠ¡å™¨ï¼ŒSIPæœåŠ¡å™¨ï¼› */
     g_ucOFlag = 1;
 
-    /* Router Lifetime(Ãë) */
+    /* Router Lifetime(ç§’) */
     g_usRouterLifetime = 9000;
 
-    /* Reachable Time(ºÁÃë) */
+    /* Reachable Time(æ¯«ç§’) */
     g_ulReachableTime = 3600000;
 
-    /* Retrans Timer(ºÁÃë)£¬0£¬±íÊ¾Î´Öª */
+    /* Retrans Timer(æ¯«ç§’)ï¼Œ0ï¼Œè¡¨ç¤ºæœªçŸ¥ */
     g_ulRetransTimer = 0;
 
-    /* ·ÇÖÜÆÚĞÔNS¶¨Ê±Æ÷Ê±³¤(ºÁÃë) */
+    /* éå‘¨æœŸæ€§NSå®šæ—¶å™¨æ—¶é•¿(æ¯«ç§’) */
     g_ulNsTimerLen = 4000;
 
-    /* ·ÇÖÜÆÚĞÔNS×î´ó³¬Ê±´ÎÊı */
+    /* éå‘¨æœŸæ€§NSæœ€å¤§è¶…æ—¶æ¬¡æ•° */
     g_ulNsTimerMaxExpNum = 3;
 
-    /* ÖÜÆÚĞÔNS¶¨Ê±Æ÷Ê±³¤(ºÁÃë) */
+    /* å‘¨æœŸæ€§NSå®šæ—¶å™¨æ—¶é•¿(æ¯«ç§’) */
     g_ulPeriodicNsTimerLen = 60000;
 
-    /* ÖÜÆÚĞÔRA£¬·ÀÖ¹Router¹ıÆÚ(ºÁÃë) */
+    /* å‘¨æœŸæ€§RAï¼Œé˜²æ­¢Routerè¿‡æœŸ(æ¯«ç§’) */
     g_ulPeriodicRaTimerLen = 3600000;
 
-    /* ÊÕµ½ÖØ¸´µØÖ·¼ì²âºóµÈ´ıµÄ¶¨Ê±Æ÷Ê±³¤(ºÁÃë) */
+    /* æ”¶åˆ°é‡å¤åœ°å€æ£€æµ‹åç­‰å¾…çš„å®šæ—¶å™¨æ—¶é•¿(æ¯«ç§’) */
     g_ulFirstNsTimerLen = 2000;
 
-    /* ÊÕµ½ÖØ¸´µØÖ·¼ì²âÇ°ÖÜÆÚ·¢ËÍRAµÄ¶¨Ê±Æ÷Ê±³¤(ºÁÃë) */
+    /* æ”¶åˆ°é‡å¤åœ°å€æ£€æµ‹å‰å‘¨æœŸå‘é€RAçš„å®šæ—¶å™¨æ—¶é•¿(æ¯«ç§’) */
     g_ulRaTimerLen = 15000;
 
     return;
@@ -224,7 +224,7 @@ IP_TIMER_STRU*  IP_NDSERVER_GetTimer
 {
     IP_TIMER_STRU                      *pstTimerInfo = VOS_NULL_PTR;
 
-    /*¸ù¾İ¶¨Ê±Æ÷²»Í¬ÀàĞÍ£¬»ñÈ¡¶¨Ê±Æ÷*/
+    /*æ ¹æ®å®šæ—¶å™¨ä¸åŒç±»å‹ï¼Œè·å–å®šæ—¶å™¨*/
     switch( enTimerType )
     {
         case IP_ND_SERVER_TIMER_NS:
@@ -246,7 +246,7 @@ VOS_UINT32  IP_NDSERVER_GetTimerLen
 {
     VOS_UINT32                  ulTimerLen   = IP_NULL;
 
-    /*¸ù¾İ¶¨Ê±Æ÷²»Í¬ÀàĞÍ£¬¶¨Ê±Æ÷Ê±³¤²»Í¬*/
+    /*æ ¹æ®å®šæ—¶å™¨ä¸åŒç±»å‹ï¼Œå®šæ—¶å™¨æ—¶é•¿ä¸åŒ*/
     switch( enTimerType )
     {
         case IP_ND_SERVER_TIMER_NS:
@@ -278,7 +278,7 @@ VOS_VOID  IP_NDSERVER_PrintTimeStartInfo
     VOS_UINT32      ulEpsbId;
 
     ulEpsbId = IP_NDSERVER_GET_EPSBID(ulIndex);
-    /*¸ù¾İ¶¨Ê±Æ÷²»Í¬ÀàĞÍ£¬´òÓ¡ÏàÓ¦ĞÅÏ¢*/
+    /*æ ¹æ®å®šæ—¶å™¨ä¸åŒç±»å‹ï¼Œæ‰“å°ç›¸åº”ä¿¡æ¯*/
     switch( enTimerType )
     {
         case IP_ND_SERVER_TIMER_NS:
@@ -308,7 +308,7 @@ VOS_VOID  IP_NDSERVER_PrintTimeStopInfo
     VOS_UINT32     ulEpsbId;
 
     ulEpsbId = IP_NDSERVER_GET_EPSBID(ulIndex);
-    /*¸ù¾İ¶¨Ê±Æ÷²»Í¬ÀàĞÍ£¬´òÓ¡ÏàÓ¦ĞÅÏ¢*/
+    /*æ ¹æ®å®šæ—¶å™¨ä¸åŒç±»å‹ï¼Œæ‰“å°ç›¸åº”ä¿¡æ¯*/
     switch(enTimerType)
     {
         case IP_ND_SERVER_TIMER_NS:
@@ -340,62 +340,62 @@ VOS_VOID IP_NDSERVER_TimerStart
     VOS_UINT32                          ulTimerLen   = IP_NULL;
     IP_TIMER_STRU                      *pstTimerInfo = VOS_NULL_PTR;
 
-    /*¶ÔulIndexºÏ·¨ĞÔÅĞ¶Ï*/
+    /*å¯¹ulIndexåˆæ³•æ€§åˆ¤æ–­*/
     if (IP_FALSE == IP_NDSERVER_IsTimerNameValid(ulIndex, enTimerType))
     {
-        /*´òÓ¡Òì³£ĞÅÏ¢*/
+        /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
         IPND_WARNING_LOG2(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStart: WARN: Input Para(ulIndex) err !", ulIndex, enTimerType);
         return;
     }
 
-    /*¸ù¾İÏûÏ¢¶ÔÓ¦µÄË÷ÒıºÅºÍ¶¨Ê±Æ÷ÀàĞÍ,»ñÈ¡Ïà¹ØÁªµÄ¶¨Ê±Æ÷*/
+    /*æ ¹æ®æ¶ˆæ¯å¯¹åº”çš„ç´¢å¼•å·å’Œå®šæ—¶å™¨ç±»å‹,è·å–ç›¸å…³è”çš„å®šæ—¶å™¨*/
     pstTimerInfo = IP_NDSERVER_GetTimer(ulIndex, enTimerType);
     if (pstTimerInfo == VOS_NULL_PTR)
     {
-        /*´òÓ¡Òì³£ĞÅÏ¢*/
+        /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStart:ERROR: Get Timer failed.");
         return;
     }
 
-    /*ÅĞ¶Ï¶¨Ê±Æ÷ÊÇ·ñ´ò¿ª£¬ÒÑ´ò¿ªÔò¹Ø±Õ*/
+    /*åˆ¤æ–­å®šæ—¶å™¨æ˜¯å¦æ‰“å¼€ï¼Œå·²æ‰“å¼€åˆ™å…³é—­*/
     if(VOS_NULL_PTR != pstTimerInfo->hTm)
     {
-        /*¹Ø±ÕÊ§°Ü£¬Ôò±¨¾¯·µ»Ø*/
+        /*å…³é—­å¤±è´¥ï¼Œåˆ™æŠ¥è­¦è¿”å›*/
         if (VOS_OK != PS_STOP_REL_TIMER(&(pstTimerInfo->hTm)))
         {
-            /*´òÓ¡Òì³£ĞÅÏ¢*/
+            /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
             IPND_WARNING_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStart:WARN: stop reltimer error!");
             return;
         }
 
-        /*´òÓ¡Òì³£ĞÅÏ¢*/
+        /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
         IPND_INFO_LOG2(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStart:(TimerType) Timer not close!",pstTimerInfo->ulName, ulIndex);
     }
 
-    /*¸ù¾İ¶¨Ê±Æ÷²»Í¬ÀàĞÍ£¬¶¨Ê±Æ÷ĞÅÏ¢²»Í¬*/
+    /*æ ¹æ®å®šæ—¶å™¨ä¸åŒç±»å‹ï¼Œå®šæ—¶å™¨ä¿¡æ¯ä¸åŒ*/
     ulTimerLen = IP_NDSERVER_GetTimerLen(enTimerType);
     if (ulTimerLen == IP_NULL)
     {
-        /*´òÓ¡Òì³£ĞÅÏ¢*/
+        /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStart:ERROR: start unreasonable reltimer.");
         return;
     }
 
-    /*Éè¶¨¶¨Ê±Æ÷NAME,enTimerTypeÉè¶¨¶¨Ê±Æ÷Para£¬´ò¿ªÊ§°ÜÔò±¨¾¯·µ»Ø*/
+    /*è®¾å®šå®šæ—¶å™¨NAME,enTimerTypeè®¾å®šå®šæ—¶å™¨Paraï¼Œæ‰“å¼€å¤±è´¥åˆ™æŠ¥è­¦è¿”å›*/
     if (VOS_OK !=\
             PS_START_REL_TIMER(&(pstTimerInfo->hTm),NDIS_NDSERVER_PID,\
                                 ulTimerLen,(VOS_UINT32)enTimerType,\
                                 ulIndex,VOS_RELTIMER_NOLOOP))
     {
-          /*´òÓ¡Òì³£ĞÅÏ¢*/
+          /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
           IPND_WARNING_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStart:WARN: start reltimer error!");
           return;
     }
 
-    /* ¸üĞÂ¶¨Ê±Æ÷Àà±ğ */
+    /* æ›´æ–°å®šæ—¶å™¨ç±»åˆ« */
     pstTimerInfo->ulName = enTimerType;
 
-    /* ´òÓ¡¶¨Ê±Æ÷Æô¶¯ĞÅÏ¢ */
+    /* æ‰“å°å®šæ—¶å™¨å¯åŠ¨ä¿¡æ¯ */
     IP_NDSERVER_PrintTimeStartInfo(ulIndex, enTimerType);
 
     return;
@@ -410,43 +410,43 @@ VOS_VOID IP_NDSERVER_TimerStop
 {
     IP_TIMER_STRU                      *pstTimerInfo = VOS_NULL_PTR;
 
-    /*¶ÔulIndexºÏ·¨ĞÔÅĞ¶Ï*/
+    /*å¯¹ulIndexåˆæ³•æ€§åˆ¤æ–­*/
     if (IP_FALSE == IP_NDSERVER_IsTimerNameValid(ulIndex, enTimerType))
     {
-        /*´òÓ¡Òì³£ĞÅÏ¢*/
+        /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
         IPND_WARNING_LOG2(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStop: WARN: Input Para(ulIndex) err !", ulIndex, enTimerType);
         return;
     }
 
-    /*¸ù¾İÏûÏ¢¶ÔÓ¦µÄË÷ÒıºÅºÍ¶¨Ê±Æ÷ÀàĞÍ,»ñÈ¡Ïà¹ØÁªµÄ¶¨Ê±Æ÷*/
+    /*æ ¹æ®æ¶ˆæ¯å¯¹åº”çš„ç´¢å¼•å·å’Œå®šæ—¶å™¨ç±»å‹,è·å–ç›¸å…³è”çš„å®šæ—¶å™¨*/
     pstTimerInfo = IP_NDSERVER_GetTimer(ulIndex, enTimerType);
     if (pstTimerInfo == VOS_NULL_PTR)
     {
-        /*´òÓ¡Òì³£ĞÅÏ¢*/
+        /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStop:ERROR:Get Timer failed.");
         return;
     }
 
-    /*¶¨Ê±Æ÷´¦ÓÚ´ò¿ª×´Ì¬£¬Ôò¹Ø±Õ£¬·ñÔò£¬ºöÂÔ*/
+    /*å®šæ—¶å™¨å¤„äºæ‰“å¼€çŠ¶æ€ï¼Œåˆ™å…³é—­ï¼Œå¦åˆ™ï¼Œå¿½ç•¥*/
     if(VOS_NULL_PTR != pstTimerInfo->hTm)
     {
         if(enTimerType != pstTimerInfo->ulName)
         {
-            /*´òÓ¡Òì³£ĞÅÏ¢*/
+            /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
             IPND_WARNING_LOG2(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStop: TimerType not match:", enTimerType, pstTimerInfo->ulName);
         }
-        /*¹Ø±ÕÊ§°Ü£¬Ôò±¨¾¯·µ»Ø*/
+        /*å…³é—­å¤±è´¥ï¼Œåˆ™æŠ¥è­¦è¿”å›*/
         if (VOS_OK != PS_STOP_REL_TIMER(&(pstTimerInfo->hTm)))
         {
-            /*´òÓ¡Òì³£ĞÅÏ¢*/
+            /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
             IPND_WARNING_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerStop:WARN: stop reltimer error!");
             return;
         }
 
-        /* Çå³ı³¬Ê±¼ÆÊı */
+        /* æ¸…é™¤è¶…æ—¶è®¡æ•° */
         pstTimerInfo->ucLoopTimes = 0;
 
-        /* ´òÓ¡¶¨Ê±Æ÷¹Ø±ÕĞÅÏ¢ */
+        /* æ‰“å°å®šæ—¶å™¨å…³é—­ä¿¡æ¯ */
         IP_NDSERVER_PrintTimeStopInfo(ulIndex, enTimerType);
     }
 
@@ -483,7 +483,7 @@ VOS_VOID IP_NDSERVER_Init( VOS_VOID )
 
         g_aulPeriodicRaTimeCnt[ulIndex] = g_ulPeriodicRaTimerLen / g_ulPeriodicNsTimerLen;
 
-        /*´´½¨ÏÂĞĞIP°ü»º´æ¶ÓÁĞ*/
+        /*åˆ›å»ºä¸‹è¡ŒIPåŒ…ç¼“å­˜é˜Ÿåˆ—*/
         ulRtn = LUP_CreateQue(NDIS_NDSERVER_PID, &(IP_NDSERVER_ADDRINFO_GET_DLPKTQUE(ulIndex)), ND_IPV6_WAIT_ADDR_RSLT_Q_LEN);
         if (PS_SUCC != ulRtn)
         {
@@ -548,7 +548,7 @@ VOS_VOID IP_NDSERVER_Stop(VOS_UINT32 ulIndex)
         IP_NDSERVER_SaveTeDetectIp(pstInfoAddr->stTeAddrInfo.aucTeGlobalAddr);
     }
 
-    /* Çå³ıTEµØÖ·¼ÇÂ¼ */
+    /* æ¸…é™¤TEåœ°å€è®°å½• */
     IP_MEM_SET( &pstInfoAddr->stTeAddrInfo,
                 IP_NULL,
                 sizeof(IP_NDSERVER_TE_ADDR_INFO_STRU));
@@ -597,7 +597,7 @@ VOS_VOID NdSer_Ipv6PdnRel(VOS_UINT8 ucExRabId)
     {
         IP_NDSERVER_Stop(ulIndex);
 
-        IP_NDSERVER_ClearDlPktQue(ulIndex);           /*ÊÍ·ÅÏÂĞĞPKT»º´æ¶ÓÁĞ*/
+        IP_NDSERVER_ClearDlPktQue(ulIndex);           /*é‡Šæ”¾ä¸‹è¡ŒPKTç¼“å­˜é˜Ÿåˆ—*/
     }
     else
     {
@@ -644,7 +644,7 @@ VOS_VOID NdSer_MacAddrInvalidProc(IMM_ZC_STRU *pstImmZc, VOS_UINT8 ucIndex)
 
     IP_NDSERVER_AddMacInvalidPktNum(ucIndex);
 
-    /***********************ÏÂĞĞIPV6Êı¾İ°ü»º´æ*********************************/
+    /***********************ä¸‹è¡ŒIPV6æ•°æ®åŒ…ç¼“å­˜*********************************/
     if (PS_TRUE == LUP_IsQueFull(IP_NDSERVER_ADDRINFO_GET_DLPKTQUE(ucIndex)))
     {
         lLockKey = VOS_SplIMP();
@@ -659,12 +659,12 @@ VOS_VOID NdSer_MacAddrInvalidProc(IMM_ZC_STRU *pstImmZc, VOS_UINT8 ucIndex)
         }
         VOS_Splx(lLockKey);
         /*lint -e522*/
-        IMM_ZcFree(pstQueHead);                         /*ÊÍ·Å×îÔçµÄIP°ü*/
+        IMM_ZcFree(pstQueHead);                         /*é‡Šæ”¾æœ€æ—©çš„IPåŒ…*/
         /*lint +e522*/
     }
 
     lLockKey = VOS_SplIMP();
-    if (PS_SUCC != LUP_EnQue(IP_NDSERVER_ADDRINFO_GET_DLPKTQUE(ucIndex), pstImmZc))    /*²åÈë×îĞÂµÄIP°ü*/
+    if (PS_SUCC != LUP_EnQue(IP_NDSERVER_ADDRINFO_GET_DLPKTQUE(ucIndex), pstImmZc))    /*æ’å…¥æœ€æ–°çš„IPåŒ…*/
     {
         VOS_Splx(lLockKey);
         /*lint -e522*/
@@ -688,7 +688,7 @@ VOS_UINT32 IP_NDSERVER_FindIpv6EffectivePrefix
     VOS_UINT32                          ulIndex         = IP_NULL;
     ND_IP_IPV6_PREFIX_STRU            *pstIpv6Prefix   = IP_NULL_PTR;
 
-    /* ±éÀúÇ°×ºÁĞ±í£¬²éÕÒA±êÊ¶Îª1£¬Ç°×º³¤¶ÈÎª64µÄÇ°×º */
+    /* éå†å‰ç¼€åˆ—è¡¨ï¼ŒæŸ¥æ‰¾Aæ ‡è¯†ä¸º1ï¼Œå‰ç¼€é•¿åº¦ä¸º64çš„å‰ç¼€ */
     for (ulIndex = IP_NULL; ulIndex < pstConfigParaInd->ulPrefixNum; ulIndex++)
     {
         pstIpv6Prefix = (ND_IP_IPV6_PREFIX_STRU*)&pstConfigParaInd->astPrefixList[ulIndex];
@@ -716,22 +716,22 @@ VOS_UINT32 IP_NDSERVER_GetNwPara
 
     IP_MEM_SET(pstNwParamTmp, IP_NULL, sizeof(ESM_IP_IPV6_NW_PARA_STRU));
 
-    /* »ñÈ¡HOP LIMIT */
+    /* è·å–HOP LIMIT */
     pstNwParamTmp->ucCurHopLimit = pstNwParaInd->ulBitCurHopLimit;
 
-    /* »ñÈ¡MTU */
+    /* è·å–MTU */
     if (IP_IPV6_OP_TRUE == pstNwParaInd->ulBitOpMtu)
     {
         pstNwParamTmp->ulBitOpMtu = pstNwParaInd->ulBitOpMtu;
         pstNwParamTmp->ulMtu = pstNwParaInd->ulMtu;
     }
 
-    /* »ñÈ¡½Ó¿Ú±êÊ¶·û */
+    /* è·å–æ¥å£æ ‡è¯†ç¬¦ */
     IP_MEM_CPY( pstNwParamTmp->aucInterfaceId,
                 pstNwParaInd->aucInterfaceId,
                 ND_IP_IPV6_IFID_LENGTH);
 
-    /* ±£´æµØÖ·Ç°×ºÁĞ±í£¬Ä¿Ç°Ö»±£´æºÍÊ¹ÓÃµÚÒ»¸ö¿ÉÓÃµÄIPv6Ç°×º */
+    /* ä¿å­˜åœ°å€å‰ç¼€åˆ—è¡¨ï¼Œç›®å‰åªä¿å­˜å’Œä½¿ç”¨ç¬¬ä¸€ä¸ªå¯ç”¨çš„IPv6å‰ç¼€ */
     ulRslt = IP_NDSERVER_FindIpv6EffectivePrefix(pstNwParaInd, &ulPrefixIndex);
 
     if (IP_SUCC != ulRslt)
@@ -745,7 +745,7 @@ VOS_UINT32 IP_NDSERVER_GetNwPara
 
     pstNwParamTmp->ulPrefixNum = 1;
 
-    /* »ñÈ¡DNS·şÎñÆ÷ÁĞ±í */
+    /* è·å–DNSæœåŠ¡å™¨åˆ—è¡¨ */
     IP_MEM_CPY( pstNwParamTmp->stDnsSer.aucPriDnsServer,
                 pstNwParaInd->stDnsSer.aucPriServer,
                 IP_IPV6_ADDR_LEN);
@@ -754,7 +754,7 @@ VOS_UINT32 IP_NDSERVER_GetNwPara
                 IP_IPV6_ADDR_LEN);
     pstNwParamTmp->stDnsSer.ucDnsSerNum = pstNwParaInd->stDnsSer.ucSerNum;
 
-    /* »ñÈ¡SIP·şÎñÆ÷ÁĞ±í */
+    /* è·å–SIPæœåŠ¡å™¨åˆ—è¡¨ */
     IP_MEM_CPY( pstNwParamTmp->stSipSer.aucPriSipServer,
                 pstNwParaInd->stPcscfSer.aucPriServer,
                 IP_IPV6_ADDR_LEN);
@@ -778,34 +778,34 @@ VOS_VOID IP_NDSERVER_FormRaHeaderMsg
     IP_ASSERT(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM);
     pstNwPara = IP_NDSERVER_ADDRINFO_GET_NWPARA(ulIndex);
 
-    /* ÀàĞÍ */
+    /* ç±»å‹ */
     *pucData = IP_ICMPV6_TYPE_RA;
     pucData++;
 
-    /* ´úÂë */
+    /* ä»£ç  */
     *pucData = IP_IPV6_ND_VALID_CODE;
     pucData++;
 
-    /* Ìø¹ıĞ£ÑéºÍ */
+    /* è·³è¿‡æ ¡éªŒå’Œ */
     pucData += 2;
 
-    /* µ±Ç°ÌøÏŞÖÆ */
+    /* å½“å‰è·³é™åˆ¶ */
     *pucData = pstNwPara->ucCurHopLimit;
     pucData++;
 
-    /* ¹ÜÀíµØÖ·ÅäÖÃ±êÖ¾¡¢ÆäËûÓĞ×´Ì¬ÅäÖÃ±êÖ¾ */
+    /* ç®¡ç†åœ°å€é…ç½®æ ‡å¿—ã€å…¶ä»–æœ‰çŠ¶æ€é…ç½®æ ‡å¿— */
     *pucData = (VOS_UINT8)(((g_ucMFlag & 0x1)<<7) | ((g_ucOFlag & 0x1)<<6));
     pucData++;
 
-    /* Â·ÓÉÉú´æÆÚ */
+    /* è·¯ç”±ç”Ÿå­˜æœŸ */
     IP_SetUint16Data(pucData, g_usRouterLifetime);
     pucData += 2;
 
-    /* ¿É´ïÊ±¼ä */
+    /* å¯è¾¾æ—¶é—´ */
     IP_SetUint32Data(pucData, g_ulReachableTime);
     pucData += 4;
 
-    /* ÖØ·¢¶¨Ê±Æ÷ */
+    /* é‡å‘å®šæ—¶å™¨ */
     IP_SetUint32Data(pucData, g_ulRetransTimer);
     pucData += 4;
 
@@ -828,15 +828,15 @@ VOS_VOID IP_NDSERVER_FormRaOptMsg
     IP_ASSERT(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM);
     pstNwPara = IP_NDSERVER_ADDRINFO_GET_NWPARA(ulIndex);
 
-    /* ÀàĞÍ */
+    /* ç±»å‹ */
     *pucData = IP_ICMPV6_OPT_SRC_LINK_LAYER_ADDR;
     pucData++;
 
-    /* ³¤¶È */
+    /* é•¿åº¦ */
     *pucData = 1;
     pucData++;
 
-    /* Á´Â·²ãµØÖ· */
+    /* é“¾è·¯å±‚åœ°å€ */
     IP_MEM_CPY(pucData, pucMacAddr, IP_MAC_ADDR_LEN);
     pucData += IP_MAC_ADDR_LEN;
 
@@ -844,18 +844,18 @@ VOS_VOID IP_NDSERVER_FormRaOptMsg
 
     if (IP_IPV6_OP_TRUE == pstNwPara->ulBitOpMtu)
     {
-        /* ÀàĞÍ */
+        /* ç±»å‹ */
         *pucData = IP_ICMPV6_OPT_MTU;
         pucData++;
 
-        /* ³¤¶È */
+        /* é•¿åº¦ */
         *pucData = 1;
         pucData++;
 
-        /* ±£Áô */
+        /* ä¿ç•™ */
         pucData += 2;
 
-        /*MTU: È¡NVÖĞµÄMTUºÍRAÖĞµÄMTUµÄ×îĞ¡Öµ×÷Îª·¢¸øPCµÄMTU*/
+        /*MTU: å–NVä¸­çš„MTUå’ŒRAä¸­çš„MTUçš„æœ€å°å€¼ä½œä¸ºå‘ç»™PCçš„MTU*/
         ulTmpMtu = PS_MIN(g_ulNvMtu, pstNwPara->ulMtu);
         IP_SetUint32Data(pucData, ulTmpMtu);
         pucData += 4;
@@ -865,35 +865,35 @@ VOS_VOID IP_NDSERVER_FormRaOptMsg
 
     for (ulCount = 0; ulCount < pstNwPara->ulPrefixNum; ulCount++)
     {
-        /* ÀàĞÍ */
+        /* ç±»å‹ */
         *pucData = IP_ICMPV6_OPT_PREFIX_INFO;
         pucData++;
 
-        /* ³¤¶È */
+        /* é•¿åº¦ */
         *pucData = 4;
         pucData++;
 
-        /* Ç°×º³¤¶È */
+        /* å‰ç¼€é•¿åº¦ */
         *pucData = (VOS_UINT8)(pstNwPara->astPrefixList[ulCount].ulBitPrefixLen);
         pucData++;
 
-        /* Á´Â·ÉÏ±êÖ¾¡¢×ÔÖÎ±êÖ¾ */
+        /* é“¾è·¯ä¸Šæ ‡å¿—ã€è‡ªæ²»æ ‡å¿— */
         *pucData = (VOS_UINT8)(((pstNwPara->astPrefixList[ulCount].ulBitL & 0x1)<<7)
                                 | ((pstNwPara->astPrefixList[ulCount].ulBitA & 0x1)<<6));
         pucData++;
 
-        /* ÓĞĞ§Éú´æÆÚ */
+        /* æœ‰æ•ˆç”Ÿå­˜æœŸ */
         IP_SetUint32Data(pucData, pstNwPara->astPrefixList[ulCount].ulValidLifeTime);
         pucData += 4;
 
-        /* Ñ¡ÓÃÉú´æÆÚ */
+        /* é€‰ç”¨ç”Ÿå­˜æœŸ */
         IP_SetUint32Data(pucData, pstNwPara->astPrefixList[ulCount].ulPreferredLifeTime);
         pucData += 4;
 
-        /* ±£Áô×Ö¶Î */
+        /* ä¿ç•™å­—æ®µ */
         pucData += 4;
 
-        /* Ç°×º */
+        /* å‰ç¼€ */
         IP_MEM_CPY(pucData, pstNwPara->astPrefixList[ulCount].aucPrefix, IP_IPV6_ADDR_LEN);
         pucData += IP_IPV6_ADDR_LEN;
 
@@ -909,19 +909,19 @@ VOS_VOID IP_NDSERVER_FormEtherHeaderMsg
     VOS_UINT8                          *pucData
 )
 {
-    /* Ä¿µÄMAC */
+    /* ç›®çš„MAC */
     IP_MEM_CPY( pucData,
                 aucDstMacAddr,
                 IP_MAC_ADDR_LEN);
     pucData += IP_MAC_ADDR_LEN;
 
-    /* Ô´MAC */
+    /* æºMAC */
     IP_MEM_CPY( pucData,
                 aucSrcMacAddr,
                 IP_MAC_ADDR_LEN);
     pucData += IP_MAC_ADDR_LEN;
 
-    /* ÀàĞÍ */
+    /* ç±»å‹ */
     IP_SetUint16Data(pucData, (VOS_UINT16)IP_GMAC_PAYLOAD_TYPE_IPV6);
     pucData += 2;
 
@@ -943,19 +943,19 @@ VOS_VOID IP_NDSERVER_FormRaMsg
     VOS_UINT8                           aucDstMacAddr[IP_MAC_ADDR_LEN] = {IP_NULL};
     IP_NDSERVER_ADDR_INFO_STRU         *pstInfoAddr = IP_NULL_PTR;
 
-    /* ´òÓ¡½øÈë¸Ãº¯Êı */
+    /* æ‰“å°è¿›å…¥è¯¥å‡½æ•° */
     IPND_INFO_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_FormRaMsg is entered.");
 
     pstInfoAddr = IP_NDSERVER_ADDRINFO_GET_ADDR(ulIndex);
 
     pucData += IP_ETHERNET_HEAD_LEN + IP_IPV6_HEAD_LEN;
 
-    /* ÉèÖÃRA±¨Í· */
+    /* è®¾ç½®RAæŠ¥å¤´ */
     IP_NDSERVER_FormRaHeaderMsg(ulIndex, pucData);
 
     ulPacketLen += IP_ICMPV6_RA_HEADER_LEN;
 
-    /* ¸ù¾İ×ÔÉíMACµØÖ·Éú³Élink-localµØÖ· */
+    /* æ ¹æ®è‡ªèº«MACåœ°å€ç”Ÿæˆlink-localåœ°å€ */
     IP_MEM_CPY( aucSrcMacAddr,
                 (VOS_VOID*)BSP_GetMacAddr(),
                 IP_MAC_ADDR_LEN);
@@ -963,10 +963,10 @@ VOS_VOID IP_NDSERVER_FormRaMsg
     IP_SetUint16Data(aucSrcIPAddr, IP_IPV6_LINK_LOCAL_PREFIX);
     IP_MEM_CPY(pstInfoAddr->aucUeLinkLocalAddr, aucSrcIPAddr, IP_IPV6_ADDR_LEN);
 
-    /* ÉèÖÃRA±¨ÎÄÑ¡Ïî */
+    /* è®¾ç½®RAæŠ¥æ–‡é€‰é¡¹ */
     IP_NDSERVER_FormRaOptMsg(ulIndex, aucSrcMacAddr, (VOS_VOID *)(pucData + ulPacketLen), &ulPacketLen);
 
-    /* È·¶¨µ¥²¥»ò×é²¥·½Ê½ */
+    /* ç¡®å®šå•æ’­æˆ–ç»„æ’­æ–¹å¼ */
     if ((VOS_NULL_PTR != pstNdMsgData)
             && (IP_IPV6_IS_LINKLOCAL_ADDR(pstNdMsgData->aucSrcIp))
             && (1 == pstNdMsgData->uNdMsgStru.stRs.ucBitOpSrcLinkLayerAddr))
@@ -992,10 +992,10 @@ VOS_VOID IP_NDSERVER_FormRaMsg
 
     pucData -= IP_IPV6_HEAD_LEN;
 
-    /* ÉèÖÃIPv6±¨Í· */
+    /* è®¾ç½®IPv6æŠ¥å¤´ */
     IP_ND_FormIPv6HeaderMsg(aucSrcIPAddr, aucDstIPAddr, ulPacketLen, pucData, IP_HEAD_PROTOCOL_ICMPV6);
 
-    /* Éú³ÉICMPv6±¨Í·Ğ£ÑéºÍ */
+    /* ç”ŸæˆICMPv6æŠ¥å¤´æ ¡éªŒå’Œ */
     if (IP_SUCC != IP_BuildIcmpv6Checksum(pucData, IP_IPV6_HEAD_LEN))
     {
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_FormRaMsg: Build ICMPv6 Checksum failed.");
@@ -1003,10 +1003,10 @@ VOS_VOID IP_NDSERVER_FormRaMsg
 
     pucData -= IP_ETHERNET_HEAD_LEN;
 
-    /* ÉèÖÃÒÔÌ«±¨Í· */
+    /* è®¾ç½®ä»¥å¤ªæŠ¥å¤´ */
     IP_NDSERVER_FormEtherHeaderMsg(aucSrcMacAddr, aucDstMacAddr, pucData);
 
-    /* ·µ»Ø±¨ÎÄ³¤¶È */
+    /* è¿”å›æŠ¥æ–‡é•¿åº¦ */
     *pulSendLen = ulPacketLen + IP_IPV6_HEAD_LEN + IP_ETHERNET_HEAD_LEN;
 
     return;
@@ -1027,13 +1027,13 @@ VOS_UINT32 IP_NDSERVER_SendRaMsg
     pucSendBuff = IP_NDSERVER_GET_SENDMSG_BUFFER();
     IP_MEM_SET(pucSendBuff, IP_NULL, IP_IPM_MTU);
 
-    /* µ÷ÓÃĞÎ³ÉRAÏûÏ¢º¯Êı */
+    /* è°ƒç”¨å½¢æˆRAæ¶ˆæ¯å‡½æ•° */
     IP_NDSERVER_FormRaMsg(ulIndex, pstNdMsgData, pucSendBuff, &ulSendLen);
 
     IP_NDSERVER_AddTransRaPktNum(ulIndex);
     IP_NDSERVER_AddTransPktTotalNum(ulIndex);
 
-    /* ½«RAÏûÏ¢·¢ËÍµ½PC */
+    /* å°†RAæ¶ˆæ¯å‘é€åˆ°PC */
     return Ndis_SendMacFrm(pucSendBuff, ulSendLen, (VOS_UINT8)ulEpsbId);
 
 }
@@ -1046,25 +1046,25 @@ VOS_VOID IP_NDSERVER_FormNaHeaderMsg
     VOS_UINT8                          *pucData
 )
 {
-    /* ÀàĞÍ */
+    /* ç±»å‹ */
     *pucData = IP_ICMPV6_TYPE_NA;
     pucData++;
 
-    /* ´úÂë */
+    /* ä»£ç  */
     *pucData = IP_IPV6_ND_VALID_CODE;
     pucData++;
 
-    /* Ìø¹ıĞ£ÑéºÍ */
+    /* è·³è¿‡æ ¡éªŒå’Œ */
     pucData += 2;
 
-    /* Â·ÓÉÆ÷±êÖ¾¡¢ÇëÇó±êÖ¾¡¢¸²¸Ç±êÖ¾ */
+    /* è·¯ç”±å™¨æ ‡å¿—ã€è¯·æ±‚æ ‡å¿—ã€è¦†ç›–æ ‡å¿— */
     *pucData = (VOS_UINT8)(0xa0 | ((ucSolicitFlag & 0x1)<<6));
     pucData++;
 
-    /* ±£Áô */
+    /* ä¿ç•™ */
     pucData += 3;
 
-    /* Ä¿±êµØÖ· */
+    /* ç›®æ ‡åœ°å€ */
     IP_MEM_CPY( pucData,
                 pucTargetIPAddr,
                 IP_IPV6_ADDR_LEN);
@@ -1081,15 +1081,15 @@ VOS_VOID IP_NDSERVER_FormNaOptMsg
     VOS_UINT32                         *pulLen
 )
 {
-    /* ÀàĞÍ */
+    /* ç±»å‹ */
     *pucData = IP_ICMPV6_OPT_TGT_LINK_LAYER_ADDR;
     pucData++;
 
-    /* ³¤¶È */
+    /* é•¿åº¦ */
     *pucData = 1;
     pucData++;
 
-    /* Á´Â·²ãµØÖ· */
+    /* é“¾è·¯å±‚åœ°å€ */
     IP_MEM_CPY(pucData, pucMacAddr, IP_MAC_ADDR_LEN);
     pucData += IP_MAC_ADDR_LEN;
 
@@ -1112,30 +1112,30 @@ VOS_VOID IP_NDSERVER_FormNaMsg
     VOS_UINT8                           aucDstMacAddr[IP_MAC_ADDR_LEN] = {IP_NULL};
     VOS_UINT8                           ucSolicitFlag = IP_NULL;
 
-    /* ´òÓ¡½øÈë¸Ãº¯Êı */
+    /* æ‰“å°è¿›å…¥è¯¥å‡½æ•° */
     IPND_INFO_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_FormNaMsg is entered.");
 
-    /* ¸ù¾İ×ÔÉíMACµØÖ·×÷ÎªÔ´MAC */
+    /* æ ¹æ®è‡ªèº«MACåœ°å€ä½œä¸ºæºMAC */
     IP_MEM_CPY( aucSrcMacAddr,
                 (VOS_VOID*)BSP_GetMacAddr(),
                 IP_MAC_ADDR_LEN);
 
     if (VOS_NULL_PTR == pstNdMsgData)
     {
-        /* ¸ù¾İ×ÔÉíMACµØÖ·Éú³Élink-localµØÖ· */
+        /* æ ¹æ®è‡ªèº«MACåœ°å€ç”Ÿæˆlink-localåœ°å€ */
         IP_ProduceIfaceIdFromMacAddr(aucSrcIPAddr, aucSrcMacAddr);
         IP_SetUint16Data(aucSrcIPAddr, IP_IPV6_LINK_LOCAL_PREFIX);
     }
     else
     {
-        /* Ê¹ÓÃÄ¿±êµØÖ·×÷ÎªÔ´IP */
+        /* ä½¿ç”¨ç›®æ ‡åœ°å€ä½œä¸ºæºIP */
         IP_MEM_CPY( aucSrcIPAddr,
                     pstNdMsgData->uNdMsgStru.stNs.aucTargetAddr,
                     IP_IPV6_ADDR_LEN);
     }
 
 
-    /* È·¶¨µ¥²¥»ò×é²¥·½Ê½ */
+    /* ç¡®å®šå•æ’­æˆ–ç»„æ’­æ–¹å¼ */
     if ((VOS_NULL_PTR != pstNdMsgData)
             && (!IP_IPV6_EQUAL_ALL_ZERO(pstNdMsgData->aucSrcIp))
             && (!IP_IPV6_IS_MULTICAST_ADDR(pstNdMsgData->aucSrcIp))
@@ -1164,20 +1164,20 @@ VOS_VOID IP_NDSERVER_FormNaMsg
 
     pucData += IP_ETHERNET_HEAD_LEN + IP_IPV6_HEAD_LEN;
 
-    /* ÉèÖÃNA±¨Í· */
+    /* è®¾ç½®NAæŠ¥å¤´ */
     IP_NDSERVER_FormNaHeaderMsg(aucSrcIPAddr, ucSolicitFlag, pucData);
 
     ulPacketLen += IP_ICMPV6_NA_HEADER_LEN;
 
-    /* ÉèÖÃNA¿ÉÑ¡Ïî */
+    /* è®¾ç½®NAå¯é€‰é¡¹ */
     IP_NDSERVER_FormNaOptMsg(aucSrcMacAddr, (VOS_VOID *)(pucData + ulPacketLen), &ulPacketLen);
 
     pucData -= IP_IPV6_HEAD_LEN;
 
-    /* ÉèÖÃIPv6±¨Í· */
+    /* è®¾ç½®IPv6æŠ¥å¤´ */
     IP_ND_FormIPv6HeaderMsg(aucSrcIPAddr, aucDstIPAddr, ulPacketLen, pucData, IP_HEAD_PROTOCOL_ICMPV6);
 
-    /* Éú³ÉICMPv6Ğ£ÑéºÍ */
+    /* ç”ŸæˆICMPv6æ ¡éªŒå’Œ */
     if (IP_SUCC != IP_BuildIcmpv6Checksum(pucData, IP_IPV6_HEAD_LEN))
     {
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_FormNaMsg: Build ICMPv6 Checksum failed.");
@@ -1185,10 +1185,10 @@ VOS_VOID IP_NDSERVER_FormNaMsg
 
     pucData -= IP_ETHERNET_HEAD_LEN;
 
-    /* ÉèÖÃÒÔÌ«±¨Í· */
+    /* è®¾ç½®ä»¥å¤ªæŠ¥å¤´ */
     IP_NDSERVER_FormEtherHeaderMsg(aucSrcMacAddr, aucDstMacAddr, pucData);
 
-    /* ·µ»Ø±¨ÎÄ³¤¶È */
+    /* è¿”å›æŠ¥æ–‡é•¿åº¦ */
     *pulSendLen = ulPacketLen + IP_IPV6_HEAD_LEN + IP_ETHERNET_HEAD_LEN;
 
     return;
@@ -1209,7 +1209,7 @@ VOS_UINT32 IP_NDSERVER_SendNaMsg
     pucSendBuff = IP_NDSERVER_GET_SENDMSG_BUFFER();
     IP_MEM_SET(pucSendBuff, IP_NULL, IP_IPM_MTU);
 
-    /* µ÷ÓÃĞÎ³ÉNAÏûÏ¢º¯Êı */
+    /* è°ƒç”¨å½¢æˆNAæ¶ˆæ¯å‡½æ•° */
     IP_NDSERVER_FormNaMsg(pstNdMsgData, pucSendBuff, &ulSendLen);
 
     IP_NDSERVER_AddTransNaPktNum(ulIndex);
@@ -1226,21 +1226,21 @@ VOS_VOID IP_NDSERVER_FormNsHeaderMsg
 {
     IP_ASSERT(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM);
 
-    /* ÀàĞÍ */
+    /* ç±»å‹ */
     *pucData = IP_ICMPV6_TYPE_NS;
     pucData++;
 
-    /* ´úÂë */
+    /* ä»£ç  */
     *pucData = IP_IPV6_ND_VALID_CODE;
     pucData++;
 
-    /* Ìø¹ıĞ£ÑéºÍ */
+    /* è·³è¿‡æ ¡éªŒå’Œ */
     pucData += 2;
 
-    /* ±£Áô */
+    /* ä¿ç•™ */
     pucData += 4;
 
-    /* Ä¿±êµØÖ· */
+    /* ç›®æ ‡åœ°å€ */
     IP_MEM_CPY( pucData,
                 pstDstAddr,
                 IP_IPV6_ADDR_LEN);
@@ -1256,15 +1256,15 @@ VOS_VOID IP_NDSERVER_FormNsOptMsg
     VOS_UINT32                         *pulLen
 )
 {
-    /* ÀàĞÍ */
+    /* ç±»å‹ */
     *pucData = IP_ICMPV6_OPT_SRC_LINK_LAYER_ADDR;
     pucData++;
 
-    /* ³¤¶È */
+    /* é•¿åº¦ */
     *pucData = 1;
     pucData++;
 
-    /* Á´Â·²ãµØÖ· */
+    /* é“¾è·¯å±‚åœ°å€ */
     IP_MEM_CPY(pucData, pucMacAddr, IP_MAC_ADDR_LEN);
     pucData += IP_MAC_ADDR_LEN;
 
@@ -1287,38 +1287,38 @@ VOS_VOID IP_NDSERVER_FormNsMsg
     VOS_UINT8                           aucDstIPAddr[IP_IPV6_ADDR_LEN] = {IP_NULL};
     VOS_UINT8                           aucDstMacAddr[IP_MAC_ADDR_LEN] = {IP_NULL};
 
-    /* ´òÓ¡½øÈë¸Ãº¯Êı */
+    /* æ‰“å°è¿›å…¥è¯¥å‡½æ•° */
     IPND_INFO_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_FormNsMsg is entered.");
 
     IP_ASSERT(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM);
 
-    /* ¸ù¾İ×ÔÉíMACµØÖ·Éú³Élink-localµØÖ· */
+    /* æ ¹æ®è‡ªèº«MACåœ°å€ç”Ÿæˆlink-localåœ°å€ */
     IP_MEM_CPY( aucSrcMacAddr,
                 (VOS_VOID*)BSP_GetMacAddr(),
                 IP_MAC_ADDR_LEN);
     IP_ProduceIfaceIdFromMacAddr(aucSrcIPAddr, aucSrcMacAddr);
     IP_SetUint16Data(aucSrcIPAddr, IP_IPV6_LINK_LOCAL_PREFIX);
 
-    /* ¸ù¾İÄ¿µÄIPÉú³ÉÇëÇó½Úµã×é²¥µØÖ· */
+    /* æ ¹æ®ç›®çš„IPç”Ÿæˆè¯·æ±‚èŠ‚ç‚¹ç»„æ’­åœ°å€ */
     IP_ProduceSolicitedNodeMulticastIPAddr(aucDstIPAddr, pstDstAddr);
     IP_ProduceSolicitedNodeMulticastMacAddr(aucDstMacAddr, pstDstAddr);
 
     pucData += IP_ETHERNET_HEAD_LEN + IP_IPV6_HEAD_LEN;
 
-    /* ÉèÖÃNS±¨Í· */
+    /* è®¾ç½®NSæŠ¥å¤´ */
     IP_NDSERVER_FormNsHeaderMsg(ulIndex, pucData, pstDstAddr);
 
     ulPacketLen += IP_ICMPV6_NS_HEADER_LEN;
 
-    /* ÉèÖÃNS¿ÉÑ¡Ïî */
+    /* è®¾ç½®NSå¯é€‰é¡¹ */
     IP_NDSERVER_FormNsOptMsg(aucSrcMacAddr, (VOS_VOID *)(pucData + ulPacketLen), &ulPacketLen);
 
     pucData -= IP_IPV6_HEAD_LEN;
 
-    /* ÉèÖÃIPv6±¨Í· */
+    /* è®¾ç½®IPv6æŠ¥å¤´ */
     IP_ND_FormIPv6HeaderMsg(aucSrcIPAddr, aucDstIPAddr, ulPacketLen, pucData, IP_HEAD_PROTOCOL_ICMPV6);
 
-    /* Éú³ÉICMPv6Ğ£ÑéºÍ */
+    /* ç”ŸæˆICMPv6æ ¡éªŒå’Œ */
     if (IP_SUCC != IP_BuildIcmpv6Checksum(pucData, IP_IPV6_HEAD_LEN))
     {
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_FormNsMsg: Build ICMPv6 Checksum failed.");
@@ -1326,10 +1326,10 @@ VOS_VOID IP_NDSERVER_FormNsMsg
 
     pucData -= IP_ETHERNET_HEAD_LEN;
 
-    /* ÉèÖÃÒÔÌ«±¨Í· */
+    /* è®¾ç½®ä»¥å¤ªæŠ¥å¤´ */
     IP_NDSERVER_FormEtherHeaderMsg(aucSrcMacAddr, aucDstMacAddr, pucData);
 
-    /* ·µ»Ø±¨ÎÄ³¤¶È */
+    /* è¿”å›æŠ¥æ–‡é•¿åº¦ */
     *pulSendLen = ulPacketLen + IP_IPV6_HEAD_LEN + IP_ETHERNET_HEAD_LEN;
 
     return;
@@ -1350,7 +1350,7 @@ VOS_UINT32 IP_NDSERVER_SendNsMsg
     pucSendBuff = IP_NDSERVER_GET_SENDMSG_BUFFER();
     IP_MEM_SET(pucSendBuff, IP_NULL, IP_IPM_MTU);
 
-    /* µ÷ÓÃĞÎ³ÉNSÏûÏ¢º¯Êı */
+    /* è°ƒç”¨å½¢æˆNSæ¶ˆæ¯å‡½æ•° */
     IP_NDSERVER_FormNsMsg(ulIndex, pucSendBuff, &ulSendLen, pstDstAddr);
 
     IP_NDSERVER_AddTransNsPktNum(ulIndex);
@@ -1362,11 +1362,11 @@ VOS_UINT32 NdSer_GetAddrInfoIdx(VOS_UINT8 ucExRabId)
 {
     VOS_UINT32 i = 0;
 
-    /* ²éÑ¯ÊÇ·ñÒÑ´æÔÚÏàÓ¦Entity */
+    /* æŸ¥è¯¢æ˜¯å¦å·²å­˜åœ¨ç›¸åº”Entity */
     do{
         if((PS_TRUE == g_astNdServerAddrInfo[i].ucValidFlag) && (ucExRabId == g_astNdServerAddrInfo[i].ucEpsbId))
         {
-            /*ÕÒµ½ÏàÓ¦ÊµÌå*/
+            /*æ‰¾åˆ°ç›¸åº”å®ä½“*/
             return i;
         }
 
@@ -1390,7 +1390,7 @@ IP_NDSERVER_ADDR_INFO_STRU* NdSer_AllocAddrInfo(VOS_UINT32* pUlIndex)
     do{
         if(PS_FALSE == g_astNdServerAddrInfo[i].ucValidFlag)
         {
-            /*ÕÒµ½¿ÕÏĞÊµÌå*/
+            /*æ‰¾åˆ°ç©ºé—²å®ä½“*/
             *pUlIndex = i;
             return &g_astNdServerAddrInfo[i];
         }
@@ -1404,7 +1404,7 @@ VOS_UINT32 NdSer_CheckIpv6PdnInfo(AT_NDIS_IPV6_PDN_INFO_STRU *pstIpv6PdnInfo)
     VOS_UINT32                          ulIndex       = IP_NULL;
     ND_IP_IPV6_PREFIX_STRU             *pstIpv6Prefix = IP_NULL_PTR;
 
-    /* ±éÀúÇ°×ºÁĞ±í£¬²éÕÒA±êÊ¶Îª1£¬Ç°×º³¤¶ÈÎª64µÄÇ°×º */
+    /* éå†å‰ç¼€åˆ—è¡¨ï¼ŒæŸ¥æ‰¾Aæ ‡è¯†ä¸º1ï¼Œå‰ç¼€é•¿åº¦ä¸º64çš„å‰ç¼€ */
     for (ulIndex = IP_NULL; ulIndex < pstIpv6PdnInfo->ulPrefixNum; ulIndex++)
     {
         pstIpv6Prefix = (ND_IP_IPV6_PREFIX_STRU*)&pstIpv6PdnInfo->astPrefixList[ulIndex];
@@ -1428,7 +1428,7 @@ VOS_VOID NdSer_Ipv6PdnInfoCfg(VOS_UINT8 ucExRabId, AT_NDIS_IPV6_PDN_INFO_STRU *p
 
     IPND_INFO_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcEsmIpNwParaInd is entered.");
 
-    /*Í¨¹ıÀ©Õ¹RabId²éÕÒNDSERVERÊµÌå£¬Èç¹û²éÕÒ²»µ½£¬Ôò·ÖÅäÒ»¸ö¿ÕÏĞµÄ*/
+    /*é€šè¿‡æ‰©å±•RabIdæŸ¥æ‰¾NDSERVERå®ä½“ï¼Œå¦‚æœæŸ¥æ‰¾ä¸åˆ°ï¼Œåˆ™åˆ†é…ä¸€ä¸ªç©ºé—²çš„*/
     ulIndex = IP_NDSERVER_GET_ADDR_INFO_INDEX(ucExRabId);
     if(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM)
     {
@@ -1436,7 +1436,7 @@ VOS_VOID NdSer_Ipv6PdnInfoCfg(VOS_UINT8 ucExRabId, AT_NDIS_IPV6_PDN_INFO_STRU *p
     }
     else
     {
-        /*·ÖÅäÒ»¸öAddrInfo½á¹¹Ìå£¬²¢ÇÒ»ñµÃIndex*/
+        /*åˆ†é…ä¸€ä¸ªAddrInfoç»“æ„ä½“ï¼Œå¹¶ä¸”è·å¾—Index*/
         pstInfoAddr = NdSer_AllocAddrInfo(&ulIndex);
     }
 
@@ -1446,20 +1446,20 @@ VOS_VOID NdSer_Ipv6PdnInfoCfg(VOS_UINT8 ucExRabId, AT_NDIS_IPV6_PDN_INFO_STRU *p
         return;
     }
 
-    /* »ñÈ¡ÍøÂç²ÎÊı */
+    /* è·å–ç½‘ç»œå‚æ•° */
     if (IP_SUCC != IP_NDSERVER_GetNwPara(&stNwParamTmp, pstIpv6PdnInfo))
     {
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "NdSer_Ipv6PdnInfoCfg: Get Nw Param fail.");
         return;
     }
 
-    /* ÅĞ¶ÏÊÇ·ñÎ´·ÖÅä¹ıÂ·ÓÉÇ°×º */
+    /* åˆ¤æ–­æ˜¯å¦æœªåˆ†é…è¿‡è·¯ç”±å‰ç¼€ */
     if (IP_TRUE != pstInfoAddr->ucValidFlag)
     {
         VOS_UINT8* pucIpV6;
         pucIpV6 = IP_NDSERVER_GetTeDetectIp(stNwParamTmp.astPrefixList[0].aucPrefix);
 
-        /* MT¹Ø»úÔÙ¿ª»úºó£¬ND SERVERÊÕµ½Íø²àRAÇ°£¬¿ÉÄÜÏÈÊÕµ½TEµÄÖØ¸´µØÖ·¼ì²âNS */
+        /* MTå…³æœºå†å¼€æœºåï¼ŒND SERVERæ”¶åˆ°ç½‘ä¾§RAå‰ï¼Œå¯èƒ½å…ˆæ”¶åˆ°TEçš„é‡å¤åœ°å€æ£€æµ‹NS */
         if(IP_NULL_PTR != pucIpV6)
         {
             IPND_INFO_LOG(NDIS_NDSERVER_PID, "NdSer_Ipv6PdnInfoCfg: Using saved TeAddr to get MAC.");
@@ -1467,49 +1467,49 @@ VOS_VOID NdSer_Ipv6PdnInfoCfg(VOS_UINT8 ucExRabId, AT_NDIS_IPV6_PDN_INFO_STRU *p
             IP_MEM_CPY(pstInfoAddr->stTeAddrInfo.aucTeGlobalAddr, pucIpV6, ND_IP_IPV6_ADDR_LENGTH);
             pstInfoAddr->stTeAddrInfo.enTeAddrState = IP_NDSERVER_TE_ADDR_INCOMPLETE;
 
-            /* Æô¶¯ÊÕµ½ÖØ¸´µØÖ·¼ì²âºóµÄµÈ´ı¶¨Ê±Æ÷ */
+            /* å¯åŠ¨æ”¶åˆ°é‡å¤åœ°å€æ£€æµ‹åçš„ç­‰å¾…å®šæ—¶å™¨ */
             IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_FIRST_NS);
         }
         else
         {
             IPND_INFO_LOG(NDIS_NDSERVER_PID, "NdSer_Ipv6PdnInfoCfg: None saved TeAddr.");
 
-            /* Æô¶¯Â·ÓÉ¹«¸æ¶¨Ê±Æ÷ */
+            /* å¯åŠ¨è·¯ç”±å…¬å‘Šå®šæ—¶å™¨ */
             IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_RA);
         }
     }
-    /* ÅĞ¶ÏÊÇ·ñÂ·ÓÉÇ°×º·¢ÉúÁË±ä»¯ */
+    /* åˆ¤æ–­æ˜¯å¦è·¯ç”±å‰ç¼€å‘ç”Ÿäº†å˜åŒ– */
     else if (0 != IP_MEM_CMP(    pstInfoAddr->stIpv6NwPara.astPrefixList[0].aucPrefix,
                                 stNwParamTmp.astPrefixList[0].aucPrefix,
                                 (ND_IP_IPV6_ADDR_LENGTH - ND_IP_IPV6_IFID_LENGTH)))
     {
         IPND_INFO_LOG(NDIS_NDSERVER_PID, "NdSer_Ipv6PdnInfoCfg: Valid ND Server get new Nw Param.");
 
-        /* Çå³ıTEµØÖ·¼ÇÂ¼ */
+        /* æ¸…é™¤TEåœ°å€è®°å½• */
         IP_MEM_SET( &pstInfoAddr->stTeAddrInfo,
                     IP_NULL,
                     sizeof(IP_NDSERVER_TE_ADDR_INFO_STRU));
 
-        /* Æô¶¯Â·ÓÉ¹«¸æ¶¨Ê±Æ÷ */
+        /* å¯åŠ¨è·¯ç”±å…¬å‘Šå®šæ—¶å™¨ */
         IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_RA);
     }
 
-    /* ½«stNwParamTmpÖĞµÄÄÚÈİ¿½±´µ½pstInfoAddr->stIpv6NwParaÖĞ */
+    /* å°†stNwParamTmpä¸­çš„å†…å®¹æ‹·è´åˆ°pstInfoAddr->stIpv6NwParaä¸­ */
     IP_MEM_CPY( &pstInfoAddr->stIpv6NwPara,
                 &stNwParamTmp,
                 sizeof(ESM_IP_IPV6_NW_PARA_STRU));
 
 
-    /* ÉèÖÃ³ĞÔØºÅ */
+    /* è®¾ç½®æ‰¿è½½å· */
     pstInfoAddr->ucEpsbId = ucExRabId;
 
-    /* ÖÃÎ»ND SERVER½á¹¹ÌåÓĞĞ§±êÖ¾ */
+    /* ç½®ä½ND SERVERç»“æ„ä½“æœ‰æ•ˆæ ‡å¿— */
     pstInfoAddr->ucValidFlag = IP_TRUE;
 
-    /* ·¢ËÍRAÏûÏ¢µ½PC */
+    /* å‘é€RAæ¶ˆæ¯åˆ°PC */
     if (PS_SUCC != IP_NDSERVER_SendRaMsg(ulIndex, VOS_NULL_PTR))
     {
-        IP_NDSERVER_AddTransPktFailNum(ulIndex);/* [false alarm]:´úÂë±£Ö¤ÁË²»»áÔ½½ç */
+        IP_NDSERVER_AddTransPktFailNum(ulIndex);/* [false alarm]:ä»£ç ä¿è¯äº†ä¸ä¼šè¶Šç•Œ */
         IPND_ERROR_LOG(NDIS_NDSERVER_PID,"NdSer_Ipv6PdnInfoCfg:Send RA Msg failed.");
     }
 
@@ -1529,7 +1529,7 @@ VOS_UINT32  IP_NDSERVER_DecodeRsData
     VOS_UINT8                          *pucIpMsg = pucSrcData;
     IP_ND_MSG_RS_STRU                  *pstRs = &pstDestData->uNdMsgStru.stRs;
 
-    /* »ñÈ¡PAYLOAD */
+    /* è·å–PAYLOAD */
     IP_GetUint16Data(ulPayLoad, pucIpMsg + IP_IPV6_BASIC_HEAD_PAYLOAD_OFFSET);
 
     remainLen = (VOS_INT32)(ulPayLoad + IP_IPV6_HEAD_LEN - (ulIcmpv6HeadOffset + IP_ICMPV6_RS_HEADER_LEN));
@@ -1627,7 +1627,7 @@ VOS_VOID IP_NDSERVER_RsMsgProc
         return ;
     }
 
-    /* ·¢ËÍRAÏûÏ¢µ½PC */
+    /* å‘é€RAæ¶ˆæ¯åˆ°PC */
     if (PS_SUCC != IP_NDSERVER_SendRaMsg(ulIndex, pstNdMsgData))
     {
         IP_NDSERVER_AddTransPktFailNum(ulIndex);
@@ -1650,7 +1650,7 @@ VOS_UINT32  IP_NDSERVER_DecodeNsData
     VOS_UINT8                          *pucIpMsg = pucSrcData;
     IP_ND_MSG_NS_STRU                  *pstNs = &pstDestData->uNdMsgStru.stNs;
 
-    /* »ñÈ¡PAYLOAD */
+    /* è·å–PAYLOAD */
     IP_GetUint16Data(ulPayLoad, pucIpMsg + IP_IPV6_BASIC_HEAD_PAYLOAD_OFFSET);
 
     remainLen = (VOS_INT32)(ulPayLoad + IP_IPV6_HEAD_LEN - (ulIcmpv6HeadOffset + IP_ICMPV6_NS_HEADER_LEN));
@@ -1731,7 +1731,7 @@ VOS_UINT32 IP_NDSERVER_IsSelfIPAddr
 
     IP_ASSERT_RTN(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM, IP_FALSE);
 
-    /* ¸ù¾İ×ÔÉíMACµØÖ·Éú³Élink-localµØÖ· */
+    /* æ ¹æ®è‡ªèº«MACåœ°å€ç”Ÿæˆlink-localåœ°å€ */
     IP_MEM_CPY( aucMacAddr,
                 (VOS_VOID*)BSP_GetMacAddr(),
                 IP_MAC_ADDR_LEN);
@@ -1852,7 +1852,7 @@ VOS_VOID IP_NDSERVER_NsMsgProc
 
     if (IP_TRUE != pstInfoAddr->ucValidFlag)
     {
-        /* MT¹Ø»úÔÙ¿ª»úºó£¬ND SERVERÊÕµ½Íø²àRAÇ°£¬¿ÉÄÜÏÈÊÕµ½TEµÄÖØ¸´µØÖ·¼ì²âNS */
+        /* MTå…³æœºå†å¼€æœºåï¼ŒND SERVERæ”¶åˆ°ç½‘ä¾§RAå‰ï¼Œå¯èƒ½å…ˆæ”¶åˆ°TEçš„é‡å¤åœ°å€æ£€æµ‹NS */
         if ((IP_IPV6_EQUAL_ALL_ZERO(pstNdMsgData->aucSrcIp))
                 && (0 == pstNdMsgData->uNdMsgStru.stNs.ucBitOpSrcLinkLayerAddr))
         {
@@ -1869,7 +1869,7 @@ VOS_VOID IP_NDSERVER_NsMsgProc
 
     if (IP_TRUE == IP_NDSERVER_IsSelfIPAddr(ulIndex, pstNdMsgData->uNdMsgStru.stNs.aucTargetAddr))
     {
-        /* ·¢ËÍNAÏûÏ¢µ½PC */
+        /* å‘é€NAæ¶ˆæ¯åˆ°PC */
         if (PS_SUCC != IP_NDSERVER_SendNaMsg(ulIndex, pstNdMsgData))
         {
             IP_NDSERVER_AddTransPktFailNum(ulIndex);
@@ -1878,7 +1878,7 @@ VOS_VOID IP_NDSERVER_NsMsgProc
     }
     else
     {
-        /* ÅĞ¶ÏÊÇ·ñÊÇÖØ¸´µØÖ·¼ì²âNS */
+        /* åˆ¤æ–­æ˜¯å¦æ˜¯é‡å¤åœ°å€æ£€æµ‹NS */
         if ((IP_IPV6_EQUAL_ALL_ZERO(pstNdMsgData->aucSrcIp))
                 && (0 == pstNdMsgData->uNdMsgStru.stNs.ucBitOpSrcLinkLayerAddr))
         {
@@ -1886,7 +1886,7 @@ VOS_VOID IP_NDSERVER_NsMsgProc
             {
                 IP_NDSERVER_RcvTeDetectionAddr(ulIndex, pstNdMsgData->uNdMsgStru.stNs.aucTargetAddr);
 
-                /* Æô¶¯ÊÕµ½ÖØ¸´µØÖ·¼ì²âºóµÄµÈ´ı¶¨Ê±Æ÷ */
+                /* å¯åŠ¨æ”¶åˆ°é‡å¤åœ°å€æ£€æµ‹åçš„ç­‰å¾…å®šæ—¶å™¨ */
                 IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_FIRST_NS);
 
                 IPND_WARNING_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_NsMsgProc:Receive duplicate addr detection packet.");
@@ -1925,7 +1925,7 @@ VOS_UINT32  IP_NDSERVER_DecodeNaData
     VOS_UINT8                          *pucIpMsg = pucSrcData;
     IP_ND_MSG_NA_STRU                  *pstNa = &pstDestData->uNdMsgStru.stNa;
 
-    /* »ñÈ¡PAYLOAD */
+    /* è·å–PAYLOAD */
     IP_GetUint16Data(ulPayLoad, pucIpMsg + IP_IPV6_BASIC_HEAD_PAYLOAD_OFFSET);
 
     remainLen = (VOS_INT32)(ulPayLoad + IP_IPV6_HEAD_LEN - (ulIcmpv6HeadOffset + IP_ICMPV6_NA_HEADER_LEN));
@@ -2046,10 +2046,10 @@ VOS_VOID IP_NDSERVER_SendDlPkt(VOS_UINT32 ulIndex)
         }
         VOS_Splx(lLockKey);
 
-        /*´Ó ImmZcÖĞÈ¡³öRabIdºÍenPdpType*/
+        /*ä» ImmZcä¸­å–å‡ºRabIdå’ŒenPdpType*/
         /*lint -e522*/
         usApp     = IMM_ZcGetUserApp(pstImmZc);
-        ucRabId   = (VOS_UINT8)(usApp & 0xFF);  /*±£´æµÄÖµÊµ¼ÊÊÇ À©Õ¹RabId*/
+        ucRabId   = (VOS_UINT8)(usApp & 0xFF);  /*ä¿å­˜çš„å€¼å®é™…æ˜¯ æ‰©å±•RabId*/
         ucPktType = (VOS_UINT8)(usApp >> 8);
 
         if (PS_SUCC != Ndis_DlSendNcm(ucRabId, ucPktType, pstImmZc))
@@ -2090,7 +2090,7 @@ VOS_VOID IP_NDSERVER_UpdateTeAddrInfo
                 aucMACAddr,
                 IP_MAC_ADDR_LEN);
 
-    /*¸üĞÂÍêÕûMACÖ¡Í·ÖĞµÄÄ¿µÄMACµØÖ·*/
+    /*æ›´æ–°å®Œæ•´MACå¸§å¤´ä¸­çš„ç›®çš„MACåœ°å€*/
     IP_MEM_CPY( IP_NDSERVER_ADDRINFO_GET_MACFRAME(ulIndex),
                 aucMACAddr,
                 IP_MAC_ADDR_LEN);
@@ -2115,7 +2115,7 @@ VOS_VOID IP_NDSERVER_UpdateTeAddrInfo
     /*IP_PrintArray(IP_GET_IP_PRINT_BUF(), pstTeInfo->aucTeGlobalAddr, IP_IPV6_ADDR_LEN);
  */
 
-    /*·¢ËÍÏÂĞĞIP»º´æ¶ÓÁĞÖĞµÄÊı¾İ°ü*/
+    /*å‘é€ä¸‹è¡ŒIPç¼“å­˜é˜Ÿåˆ—ä¸­çš„æ•°æ®åŒ…*/
     IP_NDSERVER_SendDlPkt(ulIndex);
 
     return;
@@ -2184,7 +2184,7 @@ VOS_VOID IP_NDSERVER_NaMsgProc
                                         pstNdMsgData->uNdMsgStru.stNa.aucTargetLinkLayerAddr,
                                         pstNdMsgData->aucSrcIp);
 
-        /*MACµØÖ·Ö±½Ó´ÓND SERVERÊµÌåÀï»ñµÃ£¬²»ĞèÒªÔÙÅäÖÃAPRÄ£¿é*/
+        /*MACåœ°å€ç›´æ¥ä»ND SERVERå®ä½“é‡Œè·å¾—ï¼Œä¸éœ€è¦å†é…ç½®APRæ¨¡å—*/
         /*IP_NDSERVER_ConfigArpInfo(  ulIndex,
                                     pstNdMsgData->uNdMsgStru.stNa.aucTargetAddr,
                                     pstNdMsgData->uNdMsgStru.stNa.aucTargetLinkLayerAddr);*/
@@ -2219,59 +2219,59 @@ VOS_UINT32  IP_NDSERVER_BuildTooBigICMPPkt
         return IP_FAIL;
     }
 
-    /* ¸ù¾İ×ÔÉíMACµØÖ·Éú³Élink-localµØÖ· */
+    /* æ ¹æ®è‡ªèº«MACåœ°å€ç”Ÿæˆlink-localåœ°å€ */
     IP_MEM_CPY( aucSrcMacAddr,
                 (VOS_VOID*)BSP_GetMacAddr(),
                 IP_MAC_ADDR_LEN);
     IP_ProduceIfaceIdFromMacAddr(aucSrcIPAddr, aucSrcMacAddr);
     IP_SetUint16Data(aucSrcIPAddr, IP_IPV6_LINK_LOCAL_PREFIX);
 
-    /*µÃµ½Ä¿µÄIPV6µØÖ·*/
+    /*å¾—åˆ°ç›®çš„IPV6åœ°å€*/
     IP_MEM_CPY(aucDstIPAddr, pucIpMsg + IP_IPV6_SRC_ADDR_OFFSET, IP_IPV6_ADDR_LEN);
 
-    /*µÃµ½Ä¿µÄMACµØÖ·*/
+    /*å¾—åˆ°ç›®çš„MACåœ°å€*/
     pstTeInfo = IP_NDSERVER_ADDRINFO_GET_TEINFO(ulIndex);
     IP_MEM_CPY( aucDstMacAddr,
                 pstTeInfo->aucTeLinkLayerAddr,
                 IP_MAC_ADDR_LEN);
 
-    /*Ö¸ÏòICMPÊ×²¿ */
+    /*æŒ‡å‘ICMPé¦–éƒ¨ */
     pucData  = pstDestData + IP_ETHERNET_HEAD_LEN + IP_IPV6_HEAD_LEN;
 
-    /*ICMP typeÓò*/
+    /*ICMP typeåŸŸ*/
     *pucData = IP_ICMPV6_PACKET_TOO_BIG;
     pucData++;
 
-    /*ICMP codeÓò*/
+    /*ICMP codeåŸŸ*/
     *pucData = IP_IPV6_ND_VALID_CODE;
     pucData++;
 
-    /*ICMP Ğ£ÑéºÍÓò*/
+    /*ICMP æ ¡éªŒå’ŒåŸŸ*/
     *(VOS_UINT16 *)(VOS_VOID*)pucData = 0;
     pucData += 2;
 
-    /*MTU Óò*/
+    /*MTU åŸŸ*/
     /*lint -e960*/
     *(VOS_UINT32 *)(VOS_VOID*)pucData = VOS_HTONL(ulDataLen);
     /*lint +e960*/
     pucData += 4;
 
-    /*ÌîĞ´ICMP PayLoad²¿·Ö*/
+    /*å¡«å†™ICMP PayLoadéƒ¨åˆ†*/
     IP_MEM_CPY(pucData, pucIpMsg,((ulDataLen-IP_IPV6_HEAD_LEN)- IP_ICMPV6_HEAD_LEN));
 
-    /*Ö¸ÏòIPV6Ê×²¿*/
+    /*æŒ‡å‘IPV6é¦–éƒ¨*/
     pstDestData += IP_ETHERNET_HEAD_LEN;
-    /*ÌîĞ´IPV6Í·²¿*/
+    /*å¡«å†™IPV6å¤´éƒ¨*/
     IP_ND_FormIPv6HeaderMsg(aucSrcIPAddr, aucDstIPAddr, (ulDataLen-IP_IPV6_HEAD_LEN), pstDestData, IP_HEAD_PROTOCOL_ICMPV6);
 
-    /* Éú³ÉICMPv6±¨Í·Ğ£ÑéºÍ */
+    /* ç”ŸæˆICMPv6æŠ¥å¤´æ ¡éªŒå’Œ */
     if (IP_SUCC != IP_BuildIcmpv6Checksum(pstDestData, IP_IPV6_HEAD_LEN))
     {
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_FormRaMsg: Build ICMPv6 Checksum failed.");
         return IP_FAIL;
     }
 
-    /* ÉèÖÃÒÔÌ«±¨Í· */
+    /* è®¾ç½®ä»¥å¤ªæŠ¥å¤´ */
     pstDestData -= IP_ETHERNET_HEAD_LEN;
     IP_NDSERVER_FormEtherHeaderMsg(aucSrcMacAddr, aucDstMacAddr, pstDestData);
 
@@ -2304,7 +2304,7 @@ VOS_VOID IP_NDSERVER_ProcTooBigPkt(VOS_UINT8 ucRabId, VOS_UINT8 *pucSrcData, VOS
         return;
     }
 
-    /* ½«³¬³¤°üÏìÓ¦·¢ËÍµ½PC */
+    /* å°†è¶…é•¿åŒ…å“åº”å‘é€åˆ°PC */
     if (PS_FAIL == Ndis_SendMacFrm(pucSendBuff, ulDataLen+IP_ETHERNET_HEAD_LEN, pstInfoAddr->ucEpsbId))
     {
         IP_NDSERVER_AddTransPktFailNum(ulIndex);
@@ -2339,53 +2339,53 @@ VOS_UINT32  IP_NDSERVER_FormEchoReply
         return IP_FAIL;
     }
 
-    /* ¸ù¾İ×ÔÉíMACµØÖ·Éú³Élink-localµØÖ· */
+    /* æ ¹æ®è‡ªèº«MACåœ°å€ç”Ÿæˆlink-localåœ°å€ */
     IP_MEM_CPY( aucSrcMacAddr,
                 (VOS_VOID*)BSP_GetMacAddr(),
                 IP_MAC_ADDR_LEN);
     IP_ProduceIfaceIdFromMacAddr(aucSrcIPAddr, aucSrcMacAddr);
     IP_SetUint16Data(aucSrcIPAddr, IP_IPV6_LINK_LOCAL_PREFIX);
 
-    /*µÃµ½Ä¿µÄIPV6µØÖ·*/
+    /*å¾—åˆ°ç›®çš„IPV6åœ°å€*/
     IP_MEM_CPY(aucDstIPAddr, pucIpMsg + IP_IPV6_SRC_ADDR_OFFSET, IP_IPV6_ADDR_LEN);
 
-    /*µÃµ½Ä¿µÄMACµØÖ·*/
+    /*å¾—åˆ°ç›®çš„MACåœ°å€*/
     pstTeInfo = IP_NDSERVER_ADDRINFO_GET_TEINFO(ulIndex);
     IP_MEM_CPY( aucDstMacAddr,
                 pstTeInfo->aucTeLinkLayerAddr,
                 IP_MAC_ADDR_LEN);
 
-    /*Ö¸ÏòICMPÊ×²¿ */
+    /*æŒ‡å‘ICMPé¦–éƒ¨ */
     pucData  = pstDestData + IP_ETHERNET_HEAD_LEN + IP_IPV6_HEAD_LEN;
 
-    /*ÌîĞ´ICMP±¨ÎÄ*/
+    /*å¡«å†™ICMPæŠ¥æ–‡*/
     pucIpMsg += IP_IPV6_HEAD_LEN;
     IP_MEM_CPY(pucData, pucIpMsg,(ulDataLen-IP_IPV6_HEAD_LEN));
 
-    /*ICMP typeÓò*/
+    /*ICMP typeåŸŸ*/
     *pucData = IP_ICMPV6_TYPE_ECHOREPLY;
     pucData++;
 
-    /*ICMP codeÓò*/
+    /*ICMP codeåŸŸ*/
     *pucData = IP_IPV6_ND_VALID_CODE;
     pucData++;
 
-    /*ICMP Ğ£ÑéºÍÓò*/
+    /*ICMP æ ¡éªŒå’ŒåŸŸ*/
     *(VOS_UINT16 *)(VOS_VOID*)pucData = 0;
 
-    /*Ö¸ÏòIPV6Ê×²¿*/
+    /*æŒ‡å‘IPV6é¦–éƒ¨*/
     pstDestData += IP_ETHERNET_HEAD_LEN;
-    /*ÌîĞ´IPV6Í·²¿*/
+    /*å¡«å†™IPV6å¤´éƒ¨*/
     IP_ND_FormIPv6HeaderMsg(aucSrcIPAddr, aucDstIPAddr, (ulDataLen-IP_IPV6_HEAD_LEN), pstDestData, IP_HEAD_PROTOCOL_ICMPV6);
 
-    /* Éú³ÉICMPv6±¨Í·Ğ£ÑéºÍ */
+    /* ç”ŸæˆICMPv6æŠ¥å¤´æ ¡éªŒå’Œ */
     if (IP_SUCC != IP_BuildIcmpv6Checksum(pstDestData, IP_IPV6_HEAD_LEN))
     {
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_FormEchoReply: Build ICMPv6 Checksum failed.");
         return IP_FAIL;
     }
 
-    /* ÉèÖÃÒÔÌ«±¨Í· */
+    /* è®¾ç½®ä»¥å¤ªæŠ¥å¤´ */
     pstDestData -= IP_ETHERNET_HEAD_LEN;
     IP_NDSERVER_FormEtherHeaderMsg(aucSrcMacAddr, aucDstMacAddr, pstDestData);
 
@@ -2434,7 +2434,7 @@ VOS_VOID IP_NDSERVER_EchoRequestMsgProc
         return ;
     }
 
-    /* ½«ECHO REPLY·¢ËÍµ½PC */
+    /* å°†ECHO REPLYå‘é€åˆ°PC */
     if (PS_FAIL == Ndis_SendMacFrm(pucSendBuff, ulDataLen+IP_ETHERNET_HEAD_LEN, pstInfoAddr->ucEpsbId))
     {
         IP_NDSERVER_AddTransPktFailNum(ulIndex);
@@ -2479,8 +2479,8 @@ VOS_VOID NdSer_NdAndEchoPktProc(VOS_VOID *pRcvMsg)
     ulIndex = IP_NDSERVER_GET_ADDR_INFO_INDEX(ucExRabId);
     if(ulIndex >= IP_NDSERVER_ADDRINFO_MAX_NUM)
     {
-        /* MT¹Ø»úÔÙ¿ª»úºó£¬ND SERVERÊÕµ½Íø²àRAÇ°£¬¿ÉÄÜÏÈÊÕµ½TEµÄÖØ¸´µØÖ·¼ì²âNS £¬ÎªÁËÄÜ¹»´¦Àí´ËÀàÏûÏ¢£¬
-        ´Ë´¦ÁÙÊ±ÉêÇëÒ»¸öND Ser Addr Info*/
+        /* MTå…³æœºå†å¼€æœºåï¼ŒND SERVERæ”¶åˆ°ç½‘ä¾§RAå‰ï¼Œå¯èƒ½å…ˆæ”¶åˆ°TEçš„é‡å¤åœ°å€æ£€æµ‹NS ï¼Œä¸ºäº†èƒ½å¤Ÿå¤„ç†æ­¤ç±»æ¶ˆæ¯ï¼Œ
+        æ­¤å¤„ä¸´æ—¶ç”³è¯·ä¸€ä¸ªND Ser Addr Info*/
         IPND_INFO_LOG1(NDIS_NDSERVER_PID, "NdSer_NdAndEchoPktProc: Get Addr Info, will alloc new addr info for NS msg", pstAdsNdisMsg->ucRabId);
         pstNDSerAddrInfoTmp = NdSer_AllocAddrInfo(&ulIndex);
         if(IP_NULL_PTR == pstNDSerAddrInfoTmp)
@@ -2493,7 +2493,7 @@ VOS_VOID NdSer_NdAndEchoPktProc(VOS_VOID *pRcvMsg)
 
     IP_NDSERVER_AddRcvPktTotalNum(ulIndex);
 
-    /* ÅĞ¶ÏÏûÏ¢ÊÇ·ñºÏ·¨µÄNDÏûÏ¢ */
+    /* åˆ¤æ–­æ¶ˆæ¯æ˜¯å¦åˆæ³•çš„NDæ¶ˆæ¯ */
     if (IP_TRUE != IP_IsValidNdMsg(pucData, ulDataLen, &ulIcmpv6HeadOffset))
     {
         IP_NDSERVER_AddDiscPktNum(ulIndex);
@@ -2501,7 +2501,7 @@ VOS_VOID NdSer_NdAndEchoPktProc(VOS_VOID *pRcvMsg)
         return ;
     }
 
-    /* È¡ICMPV6ÏûÏ¢ÖĞµÄTYPE×Ö¶Î */
+    /* å–ICMPV6æ¶ˆæ¯ä¸­çš„TYPEå­—æ®µ */
     enIcmpv6MsgType = *(pucData + ulIcmpv6HeadOffset);
 
     switch(enIcmpv6MsgType)
@@ -2545,7 +2545,7 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
     IPV6_PKT_DHCP_OPT_HDR_STRU         *pstDhcpClientIdOpt;
     IPV6_PKT_DHCP_OPT_HDR_STRU         *pstDhcpRequestOpt;
     IPV6_PKT_DHCP_DUID_LL_OPT_STRU      stDhcpDuidLLOpt;
-    VOS_UINT8                          *pDhcpReplyDhcpHdrOffset;/* ÒÆ¶¯Ö¸Õë */
+    VOS_UINT8                          *pDhcpReplyDhcpHdrOffset;/* ç§»åŠ¨æŒ‡é’ˆ */
     VOS_UINT16                          usReplyUdpDataLen;
     VOS_UINT16                          usDhcpReplyPktLen;
     VOS_UINT16                          usDnsOptLen             = 0;
@@ -2580,7 +2580,7 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
                             + IP_UDP_DHCP_HDR_SIZE);
 
 
-    /* »ñÈ¡ DHCP Client ID Option */
+    /* è·å– DHCP Client ID Option */
     (VOS_VOID)TTF_NDIS_Ipv6GetDhcpOption(pstReqDhcpOptHdr,
                             usReqDhcpOptLen,
                             IP_IPV6_DHCP_OPT_CLIEND_ID,
@@ -2593,7 +2593,7 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
         usReplyUdpDataLen      += (usDhcpClientIdOptLen + 4);
     }
 
-    /* »ñÈ¡ DHCP Request Option */
+    /* è·å– DHCP Request Option */
     (VOS_VOID)TTF_NDIS_Ipv6GetDhcpOption(pstReqDhcpOptHdr,
                             usReqDhcpOptLen,
                             IP_IPV6_DHCP_OPT_REQUEST,
@@ -2633,17 +2633,17 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
     usDhcpReplyPktLen    = IP_IPV6_HEAD_LEN + usReplyUdpDataLen;
 
 
-    /* ¸ù¾İ×ÔÉíMACµØÖ·Éú³Élink-localµØÖ· */
+    /* æ ¹æ®è‡ªèº«MACåœ°å€ç”Ÿæˆlink-localåœ°å€ */
     IP_MEM_CPY( aucSrcMacAddr,
                 (VOS_VOID*)BSP_GetMacAddr(),
                 IP_MAC_ADDR_LEN);
     IP_ProduceIfaceIdFromMacAddr(aucSrcIPAddr, aucSrcMacAddr);
     IP_SetUint16Data(aucSrcIPAddr, IP_IPV6_LINK_LOCAL_PREFIX);
 
-    /*µÃµ½Ä¿µÄIPV6µØÖ·*/
+    /*å¾—åˆ°ç›®çš„IPV6åœ°å€*/
     IP_MEM_CPY(aucDstIPAddr, pDhcpInfoReqData + IP_IPV6_SRC_ADDR_OFFSET, IP_IPV6_ADDR_LEN);
 
-    /*µÃµ½Ä¿µÄMACµØÖ·*/
+    /*å¾—åˆ°ç›®çš„MACåœ°å€*/
     pstTeInfo = IP_NDSERVER_ADDRINFO_GET_TEINFO(ulIndex);
     IP_MEM_CPY( aucDstMacAddr,
                 pstTeInfo->aucTeLinkLayerAddr,
@@ -2652,24 +2652,24 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
     pucSendBuff = IP_NDSERVER_GET_SENDMSG_BUFFER();
     IP_MEM_SET(pucSendBuff, IP_NULL, IP_IPM_MTU);
 
-    /*Ö¸ÏòIPV6Ê×²¿*/
+    /*æŒ‡å‘IPV6é¦–éƒ¨*/
     pucSendBuff += IP_ETHERNET_HEAD_LEN;
 
     pstDhcpReplyIpv6Hdr     = (NDIS_IP6_HDR_STRU*)(pucSendBuff);
     pstDhcpReplyUdpHdr      = (UDP_HEAD_ST*)(pstDhcpReplyIpv6Hdr + 1);
     pDhcpReplyDhcpHdrOffset = (VOS_UINT8 *)(pstDhcpReplyUdpHdr+1);
 
-    /*=====================*//* Ìî³ä IP Í· */
+    /*=====================*//* å¡«å…… IP å¤´ */
     IP_ND_FormIPv6HeaderMsg(aucSrcIPAddr, aucDstIPAddr,
                                   usReplyUdpDataLen, (VOS_UINT8 *)pstDhcpReplyIpv6Hdr, IP_HEAD_PROTOCOL_UDP);
 
-    /*=====================*//* Ìî³ä UDP Í· */
+    /*=====================*//* å¡«å…… UDP å¤´ */
     (VOS_VOID)TTF_NDIS_InputUDPHead((VOS_UINT8 *)pstDhcpReplyUdpHdr,
                             IP_IPV6_DHCP6_UE_PORT,
                             IP_IPV6_DHCP6_PC_PORT,
                             usReplyUdpDataLen);
 
-    /*=====================*//* Ìî³ä DHCP reply Í· */
+    /*=====================*//* å¡«å…… DHCP reply å¤´ */
     (*pDhcpReplyDhcpHdrOffset) = IP_IPV6_DHCP6_TYPE_REPLY;
     pDhcpReplyDhcpHdrOffset   += 1;
     PS_MEM_CPY( pDhcpReplyDhcpHdrOffset,
@@ -2678,7 +2678,7 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
 
     pDhcpReplyDhcpHdrOffset   += IP_IPV6_DHCP6_TRANS_ID_LEN;
 
-    /*=====================*//* Ìî³ä DHCP ServerID option (DUID Ê¹ÓÃµÚÈıÖÖ·½Ê½¼´ DUID-LL)*/
+    /*=====================*//* å¡«å…… DHCP ServerID option (DUID ä½¿ç”¨ç¬¬ä¸‰ç§æ–¹å¼å³ DUID-LL)*/
     stDhcpDuidLLOpt.usDhcpDuidType      = VOS_HTONS(IP_IPV6_DHCP_DUID_LL_OPT_TYPE);
     stDhcpDuidLLOpt.usDhcpDuidHWType    = VOS_HTONS(IP_IPV6_HW_TYPE);
     PS_MEM_CPY(stDhcpDuidLLOpt.aucLinkLayerAddr,
@@ -2696,7 +2696,7 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
     pDhcpReplyDhcpHdrOffset   += IP_IPV6_DHCP_DUID_LL_OPT_LEN;
 
 
-    /*=====================*//* Ìî³ä DHCP CLient ID option */
+    /*=====================*//* å¡«å…… DHCP CLient ID option */
     if ( VOS_NULL_PTR != pstDhcpClientIdOpt )
     {
         PS_MEM_CPY(pDhcpReplyDhcpHdrOffset,
@@ -2705,7 +2705,7 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
         pDhcpReplyDhcpHdrOffset += (VOS_NTOHS(pstDhcpClientIdOpt->usDhcpOptLen) + 4);
     }
 
-    /*=====================*//* Ìî³ä DHCP DNS OPTION */
+    /*=====================*//* å¡«å…… DHCP DNS OPTION */
     if ( 0 != usDhcpRequestDnsOptLen )
     {
         stIpv6DhcpDnsOpt.usOptionCode = VOS_HTONS(IP_IPV6_DHCP6_OPT_DNS_SERVERS);
@@ -2734,7 +2734,7 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
                             &pstDhcpReplyIpv6Hdr->stDst,
                             IP_HEAD_PROTOCOL_UDP);
 
-    /*Ö¸ÏòÒÔÌ«ÍøÊ×²¿*/
+    /*æŒ‡å‘ä»¥å¤ªç½‘é¦–éƒ¨*/
     pucSendBuff -= IP_ETHERNET_HEAD_LEN;
     IP_NDSERVER_FormEtherHeaderMsg(aucSrcMacAddr, aucDstMacAddr, pucSendBuff);
 
@@ -2745,7 +2745,7 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
 
     ucEpsId = IP_NDSERVER_ADDRINFO_GET_EPSID(ulIndex);
 
-    /* ½«DHCPV6 REPLYÏûÏ¢·¢ËÍµ½PC */
+    /* å°†DHCPV6 REPLYæ¶ˆæ¯å‘é€åˆ°PC */
     return Ndis_SendMacFrm(pucSendBuff, usDhcpReplyPktLen, ucEpsId);
 }
 /*lint +e778*/
@@ -2754,7 +2754,7 @@ VOS_UINT32  IP_NDSERVER_SendDhcp6Reply
 
 VOS_VOID NdSer_DhcpV6PktProc(VOS_VOID *pRcvMsg)
 {
-    /*ÒÆÖ²V3R1 TTF_NDIS_Ipv6RouterLanEthInputDhcp6InfoReqº¯Êı¹¦ÄÜ*/
+    /*ç§»æ¤V3R1 TTF_NDIS_Ipv6RouterLanEthInputDhcp6InfoReqå‡½æ•°åŠŸèƒ½*/
     VOS_UINT16                          usSrcPort;
     VOS_UINT16                          usDstPort;
     VOS_UINT8                           ucMsgType;
@@ -2824,7 +2824,7 @@ VOS_VOID NdSer_DhcpV6PktProc(VOS_VOID *pRcvMsg)
 
     pstDnsSer = &(pstInfoAddr->stIpv6NwPara.stDnsSer);
 
-    /* Nd ServerÃ»ÓĞDNSÇé¿öÏÂÊÕµ½Dhcpv6 information request,¶ªÆú¸Ã±¨ÎÄ */
+    /* Nd Serveræ²¡æœ‰DNSæƒ…å†µä¸‹æ”¶åˆ°Dhcpv6 information request,ä¸¢å¼ƒè¯¥æŠ¥æ–‡ */
     if ( 0 == pstDnsSer->ucDnsSerNum )
     {
         /*PS_LOG(WUEPS_PID_NDIS, PS_SUBMOD_NULL, PS_PRINT_INFO,
@@ -2848,10 +2848,10 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgNsExp
     IP_NDSERVER_ADDR_INFO_STRU         *pstInfoAddr  = IP_NULL_PTR;
     IP_NDSERVER_TE_ADDR_INFO_STRU      *pstTeInfo  = IP_NULL_PTR;
 
-    /* ´òÓ¡½øÈë¸Ãº¯Êı */
+    /* æ‰“å°è¿›å…¥è¯¥å‡½æ•° */
     IPND_INFO_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcTimerMsgNsExp is entered.");
 
-    /* ´ÓÏûÏ¢ÖĞÈ¡³öND SERVERË÷Òı */
+    /* ä»æ¶ˆæ¯ä¸­å–å‡ºND SERVERç´¢å¼• */
     ulIndex = IP_GetTimerPara(pMsg);
     IP_ASSERT(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM);
 
@@ -2865,47 +2865,47 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgNsExp
         return ;
     }
 
-    /* ÅĞ¶¨³¬Ê±´ÎÊıÊÇ·ñĞ¡ÓÚ¹æ¶¨³¬Ê±´ÎÊı */
+    /* åˆ¤å®šè¶…æ—¶æ¬¡æ•°æ˜¯å¦å°äºè§„å®šè¶…æ—¶æ¬¡æ•° */
     if (pstInfoAddr->stTimerInfo.ucLoopTimes < g_ulNsTimerMaxExpNum)
     {
-        /* ·¢ËÍNSÏûÏ¢µ½PC */
+        /* å‘é€NSæ¶ˆæ¯åˆ°PC */
         if (PS_SUCC != IP_NDSERVER_SendNsMsg(ulIndex, pstTeInfo->aucTeGlobalAddr))
         {
             IP_NDSERVER_AddTransPktFailNum(ulIndex);
             IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcTimerMsgNsExp:Send NS Msg failed.");
         }
 
-        /* ½«¶¨Ê±Æ÷³¬Ê±´ÎÊı¼Ó1 */
+        /* å°†å®šæ—¶å™¨è¶…æ—¶æ¬¡æ•°åŠ 1 */
         pstInfoAddr->stTimerInfo.ucLoopTimes++;
 
-        /* ÖØÆôÁÚ¾ÓÇëÇó¶¨Ê±Æ÷ */
+        /* é‡å¯é‚»å±…è¯·æ±‚å®šæ—¶å™¨ */
         IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_NS);
     }
     else
     {
-        /* Çå³ı¶¨Ê±Æ÷ĞÅÏ¢ */
+        /* æ¸…é™¤å®šæ—¶å™¨ä¿¡æ¯ */
         pstInfoAddr->stTimerInfo.ucLoopTimes = 0;
 
-        /* Èç¹ûÎ´Íê³É×´Ì¬µÄTEµØÖ·²»ÏìÓ¦µØÖ·½âÎöÇëÇó£¬ÔòÇå³ıTEµØÖ·£¬ÖØ·¢RA */
+        /* å¦‚æœæœªå®ŒæˆçŠ¶æ€çš„TEåœ°å€ä¸å“åº”åœ°å€è§£æè¯·æ±‚ï¼Œåˆ™æ¸…é™¤TEåœ°å€ï¼Œé‡å‘RA */
         if (IP_NDSERVER_TE_ADDR_INCOMPLETE == pstInfoAddr->stTeAddrInfo.enTeAddrState)
         {
             pstInfoAddr->stTeAddrInfo.enTeAddrState = IP_NDSERVER_TE_ADDR_INEXISTENT;
 
-            /* ·¢ËÍRAÏûÏ¢µ½PC */
+            /* å‘é€RAæ¶ˆæ¯åˆ°PC */
             if (PS_SUCC != IP_NDSERVER_SendRaMsg(ulIndex, VOS_NULL_PTR))
             {
                 IP_NDSERVER_AddTransPktFailNum(ulIndex);
                 IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcTimerMsgNsExp:Send RA Msg failed.");
             }
 
-            /* Æô¶¯Â·ÓÉ¹«¸æ¶¨Ê±Æ÷ */
+            /* å¯åŠ¨è·¯ç”±å…¬å‘Šå®šæ—¶å™¨ */
             IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_RA);
 
-            IP_NDSERVER_ClearDlPktQue(ulIndex);          /*Çå³ıÏÂĞĞ»º´æ¶ÓÁĞÖĞµÄPKT*/
+            IP_NDSERVER_ClearDlPktQue(ulIndex);          /*æ¸…é™¤ä¸‹è¡Œç¼“å­˜é˜Ÿåˆ—ä¸­çš„PKT*/
         }
         else
         {
-            /* Æô¶¯ÖÜÆÚĞÔÁÚ¾ÓÇëÇó¶¨Ê±Æ÷ */
+            /* å¯åŠ¨å‘¨æœŸæ€§é‚»å±…è¯·æ±‚å®šæ—¶å™¨ */
             IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_PERIODIC_NS);
         }
     }
@@ -2923,10 +2923,10 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgPeriodicNsExp
     IP_NDSERVER_ADDR_INFO_STRU         *pstInfoAddr  = IP_NULL_PTR;
     IP_NDSERVER_TE_ADDR_INFO_STRU      *pstTeInfo  = IP_NULL_PTR;
 
-    /* ´òÓ¡½øÈë¸Ãº¯Êı */
+    /* æ‰“å°è¿›å…¥è¯¥å‡½æ•° */
     IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcTimerMsgPeriodicNsExp is entered.");
 
-    /* ´ÓÏûÏ¢ÖĞÈ¡³öND SERVERË÷Òı */
+    /* ä»æ¶ˆæ¯ä¸­å–å‡ºND SERVERç´¢å¼• */
     ulIndex = IP_GetTimerPara(pMsg);
     IP_ASSERT(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM);
 
@@ -2940,12 +2940,12 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgPeriodicNsExp
         return ;
     }
 
-    /* Ôö¼ÓÖÜÆÚĞÔ·¢ËÍRA¼ÆÊ±£¬·ÀÖ¹Router¹ıÆÚ */
+    /* å¢åŠ å‘¨æœŸæ€§å‘é€RAè®¡æ—¶ï¼Œé˜²æ­¢Routerè¿‡æœŸ */
     if (0 == g_aulPeriodicRaTimeCnt[ulIndex]--)
     {
         g_aulPeriodicRaTimeCnt[ulIndex] = g_ulPeriodicRaTimerLen / g_ulPeriodicNsTimerLen;;
 
-        /* ·¢ËÍRAÏûÏ¢µ½PC */
+        /* å‘é€RAæ¶ˆæ¯åˆ°PC */
         if (PS_SUCC != IP_NDSERVER_SendRaMsg(ulIndex, VOS_NULL_PTR))
         {
             IP_NDSERVER_AddTransPktFailNum(ulIndex);
@@ -2953,16 +2953,16 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgPeriodicNsExp
         }
     }
 
-    /* ·¢ËÍNSÏûÏ¢µ½PC */
+    /* å‘é€NSæ¶ˆæ¯åˆ°PC */
     if (PS_SUCC != IP_NDSERVER_SendNsMsg(ulIndex, pstTeInfo->aucTeGlobalAddr))
     {
         IP_NDSERVER_AddTransPktFailNum(ulIndex);
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcTimerMsgPeriodicNsExp:Send NS Msg failed.");
     }
 
-    /* Çå³ı¶¨Ê±Æ÷ĞÅÏ¢ */
+    /* æ¸…é™¤å®šæ—¶å™¨ä¿¡æ¯ */
     pstInfoAddr->stTimerInfo.ucLoopTimes = 0;
-    /* Æô¶¯ÁÚ¾ÓÇëÇó¶¨Ê±Æ÷ */
+    /* å¯åŠ¨é‚»å±…è¯·æ±‚å®šæ—¶å™¨ */
     IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_NS);
 
     return;
@@ -2976,10 +2976,10 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgFirstNsExp
     IP_NDSERVER_ADDR_INFO_STRU         *pstInfoAddr  = IP_NULL_PTR;
     IP_NDSERVER_TE_ADDR_INFO_STRU      *pstTeInfo  = IP_NULL_PTR;
 
-    /* ´òÓ¡½øÈë¸Ãº¯Êı */
+    /* æ‰“å°è¿›å…¥è¯¥å‡½æ•° */
     IPND_INFO_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcTimerMsgFirstNsExp is entered.");
 
-    /* ´ÓÏûÏ¢ÖĞÈ¡³öND SERVERË÷Òı */
+    /* ä»æ¶ˆæ¯ä¸­å–å‡ºND SERVERç´¢å¼• */
     ulIndex = IP_GetTimerPara(pMsg);
     IP_ASSERT(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM);
 
@@ -2993,16 +2993,16 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgFirstNsExp
         return ;
     }
 
-    /* ·¢ËÍNSÏûÏ¢µ½PC */
+    /* å‘é€NSæ¶ˆæ¯åˆ°PC */
     if (PS_SUCC != IP_NDSERVER_SendNsMsg(ulIndex, pstTeInfo->aucTeGlobalAddr))
     {
         IP_NDSERVER_AddTransPktFailNum(ulIndex);
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcTimerMsgFirstNsExp:Send NS Msg failed.");
     }
 
-    /* Çå³ı¶¨Ê±Æ÷ĞÅÏ¢ */
+    /* æ¸…é™¤å®šæ—¶å™¨ä¿¡æ¯ */
     pstInfoAddr->stTimerInfo.ucLoopTimes = 0;
-    /* Æô¶¯ÁÚ¾ÓÇëÇó¶¨Ê±Æ÷ */
+    /* å¯åŠ¨é‚»å±…è¯·æ±‚å®šæ—¶å™¨ */
     IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_NS);
 
     return;
@@ -3019,10 +3019,10 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgRaExp
     VOS_UINT8                          *pucData;
     VOS_INT32                           lLockKey;
 
-    /* ´òÓ¡½øÈë¸Ãº¯Êı */
+    /* æ‰“å°è¿›å…¥è¯¥å‡½æ•° */
     IPND_INFO_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcTimerMsgRaExp is entered.");
 
-    /* ´ÓÏûÏ¢ÖĞÈ¡³öND SERVERË÷Òı */
+    /* ä»æ¶ˆæ¯ä¸­å–å‡ºND SERVERç´¢å¼• */
     ulIndex = IP_GetTimerPara(pMsg);
     IP_ASSERT(ulIndex < IP_NDSERVER_ADDRINFO_MAX_NUM);
 
@@ -3034,20 +3034,20 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgRaExp
         return ;
     }
 
-    /* ·¢ËÍRAÏûÏ¢µ½PC */
+    /* å‘é€RAæ¶ˆæ¯åˆ°PC */
     if (PS_SUCC != IP_NDSERVER_SendRaMsg(ulIndex, VOS_NULL_PTR))
     {
         IP_NDSERVER_AddTransPktFailNum(ulIndex);
         IPND_ERROR_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_ProcTimerMsgRaExp:Send RA Msg failed.");
     }
 
-    /* Çå³ı¶¨Ê±Æ÷ĞÅÏ¢ */
+    /* æ¸…é™¤å®šæ—¶å™¨ä¿¡æ¯ */
     pstInfoAddr->stTimerInfo.ucLoopTimes = 0;
-    /* Æô¶¯Â·ÓÉ¹«¸æ¶¨Ê±Æ÷ */
+    /* å¯åŠ¨è·¯ç”±å…¬å‘Šå®šæ—¶å™¨ */
     IP_NDSERVER_TimerStart(ulIndex, IP_ND_SERVER_TIMER_RA);
 
 #if (VOS_OS_VER != VOS_WIN32)
-    /************ ÏÂĞĞIP°üµÄÄ¿µÄµØÖ·×÷ÎªNS°üµÄÄ¿±êµØÖ·£¬½øĞĞµØÖ·½âÎö **********/
+    /************ ä¸‹è¡ŒIPåŒ…çš„ç›®çš„åœ°å€ä½œä¸ºNSåŒ…çš„ç›®æ ‡åœ°å€ï¼Œè¿›è¡Œåœ°å€è§£æ **********/
     /* send NS for Address Resolution */
     lLockKey = VOS_SplIMP();
     if (PS_SUCC != LUP_PeekQueHead(IP_NDSERVER_ADDRINFO_GET_DLPKTQUE(ulIndex), (VOS_VOID**)(&pstImmZc)))
@@ -3064,7 +3064,7 @@ VOS_VOID IP_NDSERVER_ProcTimerMsgRaExp
         return;
     }
 
-    /*µÃµ½Ä¿µÄIPV6µØÖ·£¬´¥·¢NS·¢ËÍ*/
+    /*å¾—åˆ°ç›®çš„IPV6åœ°å€ï¼Œè§¦å‘NSå‘é€*/
     IP_MEM_CPY(aucDstIPAddr, pucData + IP_IPV6_DST_ADDR_OFFSET, IP_IPV6_ADDR_LEN);
     if (PS_SUCC != IP_NDSERVER_SendNsMsg(ulIndex, aucDstIPAddr))
     {
@@ -3083,36 +3083,36 @@ NDSER_TIMER_ENUM_UINT32 IP_NDSERVER_TimerMsgDistr(const VOS_VOID *pRcvMsg )
     NDSER_TIMER_ENUM_UINT32             enTimerType     = IP_ND_SERVER_TIMER_BUTT;
     IP_TIMER_STRU                      *pstTimerInfo    = VOS_NULL_PTR;
 
-    /* ´ÓÏûÏ¢ÖĞÈ¡³öulIndexºÍenTimerType */
+    /* ä»æ¶ˆæ¯ä¸­å–å‡ºulIndexå’ŒenTimerType */
     ulIndex = IP_GetTimerPara(pRcvMsg);
     enTimerType = (NDSER_TIMER_ENUM_UINT32)IP_GetTimerName(pRcvMsg);
 
-    /* ÅĞ¶ÏºÏ·¨ĞÔ */
+    /* åˆ¤æ–­åˆæ³•æ€§ */
     if (IP_FALSE == IP_NDSERVER_IsTimerNameValid(ulIndex, enTimerType))
     {
-        /*´òÓ¡Òì³£ĞÅÏ¢*/
+        /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
         IPND_WARNING_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerMsgDistr: Invalid Timer Name or Para !");
         return IP_MSG_DISCARD;
     }
 
-    /*¸ù¾İÏûÏ¢¶ÔÓ¦µÄË÷ÒıºÅºÍ¶¨Ê±Æ÷ÀàĞÍ,»ñÈ¡Ïà¹ØÁªµÄ¶¨Ê±Æ÷*/
+    /*æ ¹æ®æ¶ˆæ¯å¯¹åº”çš„ç´¢å¼•å·å’Œå®šæ—¶å™¨ç±»å‹,è·å–ç›¸å…³è”çš„å®šæ—¶å™¨*/
     pstTimerInfo = IP_NDSERVER_GetTimer(ulIndex, enTimerType);
     if (pstTimerInfo == VOS_NULL_PTR)
     {
-        /*´òÓ¡Òì³£ĞÅÏ¢*/
+        /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
         IPND_WARNING_LOG(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerMsgDistr: Get Timer failed.");
         return IP_MSG_DISCARD;
     }
 
-    /* ÅĞ¶ÏÏûÏ¢ÀàĞÍÓë¶¨Ê±Æ÷ÀàĞÍÊÇ·ñÒ»ÖÂ */
+    /* åˆ¤æ–­æ¶ˆæ¯ç±»å‹ä¸å®šæ—¶å™¨ç±»å‹æ˜¯å¦ä¸€è‡´ */
     if(enTimerType != pstTimerInfo->ulName)
     {
-        /*´òÓ¡Òì³£ĞÅÏ¢*/
+        /*æ‰“å°å¼‚å¸¸ä¿¡æ¯*/
         IPND_WARNING_LOG2(NDIS_NDSERVER_PID, "IP_NDSERVER_TimerMsgDistr: TimerType not match:", enTimerType, pstTimerInfo->ulName);
         return IP_MSG_DISCARD;
     }
 
-    /*¶¨Ê±Æ÷³¬Ê±´¦Àí*/
+    /*å®šæ—¶å™¨è¶…æ—¶å¤„ç†*/
     switch(enTimerType)
     {
         case IP_ND_SERVER_TIMER_NS:
@@ -3159,10 +3159,10 @@ VOS_VOID APP_NdServer_PidMsgProc(const MsgBlock *pRcvMsg)
 VOS_VOID  IP_NDSERVER_CmdHelp( VOS_VOID )
 {
     vos_printf("\r\n");
-    vos_printf("********************** IP NDSERVER Èíµ÷ÃüÁîÁĞ±í *********************\r\n");
-    vos_printf("%-30s : %s\r\n","IP_NDSERVER_ShowLocalNwParamInfo","ÏÔÊ¾±¾µØ±£´æµÄÍøÂç²ÎÊıĞÅÏ¢");
-    vos_printf("%-30s : %s\r\n","IP_NDSERVER_ShowAddrInfo(index)","ÏÔÊ¾Ä³ÊµÌåµØÖ·²ÎÊıĞÅÏ¢(0)");
-    vos_printf("%-30s : %s\r\n","IP_NDSERVER_ShowStatInfo(index)","ÏÔÊ¾Ä³ÊµÌå±¨ÎÄÍ³¼ÆĞÅÏ¢(0)");
+    vos_printf("********************** IP NDSERVER è½¯è°ƒå‘½ä»¤åˆ—è¡¨ *********************\r\n");
+    vos_printf("%-30s : %s\r\n","IP_NDSERVER_ShowLocalNwParamInfo","æ˜¾ç¤ºæœ¬åœ°ä¿å­˜çš„ç½‘ç»œå‚æ•°ä¿¡æ¯");
+    vos_printf("%-30s : %s\r\n","IP_NDSERVER_ShowAddrInfo(index)","æ˜¾ç¤ºæŸå®ä½“åœ°å€å‚æ•°ä¿¡æ¯(0)");
+    vos_printf("%-30s : %s\r\n","IP_NDSERVER_ShowStatInfo(index)","æ˜¾ç¤ºæŸå®ä½“æŠ¥æ–‡ç»Ÿè®¡ä¿¡æ¯(0)");
     vos_printf("*******************************************************************\r\n");
     vos_printf("\r\n");
 
@@ -3172,18 +3172,18 @@ VOS_VOID  IP_NDSERVER_CmdHelp( VOS_VOID )
 
 VOS_VOID  IP_NDSERVER_ShowLocalNwParamInfo( VOS_VOID )
 {
-    vos_printf("************************±¾µØ±£´æµÄÍøÂç²ÎÊıĞÅÏ¢***********************\r\n");
-    vos_printf("¹ÜÀíµØÖ·ÅäÖÃ±êÊ¶: %d\r\n",g_ucMFlag);
-    vos_printf("ÆäËûÓĞ×´Ì¬ÅäÖÃ±êÊ¶: %d\r\n",g_ucOFlag);
-    vos_printf("Â·ÓÉÆ÷Éú´æÆÚ(Ãë): %d\r\n",g_usRouterLifetime);
-    vos_printf("¿É´ïÊ±¼ä(ºÁÃë): %d\r\n",g_ulReachableTime);
-    vos_printf("ÖØ·¢¶¨Ê±Æ÷(ºÁÃë): %d\r\n",g_ulRetransTimer);
-    vos_printf("ÁÚ¾ÓÇëÇó¶¨Ê±Æ÷Ê±³¤(ºÁÃë): %d\r\n",g_ulNsTimerLen);
-    vos_printf("ÁÚ¾ÓÇëÇó×î´ó³¬Ê±´ÎÊı: %d\r\n",g_ulNsTimerMaxExpNum);
-    vos_printf("ÖÜÆÚĞÔÁÚ¾ÓÇëÇó¶¨Ê±Æ÷Ê±³¤(ºÁÃë): %d\r\n",g_ulPeriodicNsTimerLen);
-    vos_printf("ÖÜÆÚĞÔÂ·ÓÉ¹«¸æ¶¨Ê±Æ÷Ê±³¤(ºÁÃë): %d\r\n",g_ulPeriodicRaTimerLen);
-    vos_printf("ÊÕµ½ÖØ¸´µØÖ·¼ì²âºóµÈ´ıµÄ¶¨Ê±Æ÷Ê±³¤(ºÁÃë): %d\r\n",g_ulFirstNsTimerLen);
-    vos_printf("ÊÕµ½ÖØ¸´µØÖ·¼ì²âÇ°Â·ÓÉ¹«¸æ¶¨Ê±Æ÷Ê±³¤(ºÁÃë): %d\r\n",g_ulRaTimerLen);
+    vos_printf("************************æœ¬åœ°ä¿å­˜çš„ç½‘ç»œå‚æ•°ä¿¡æ¯***********************\r\n");
+    vos_printf("ç®¡ç†åœ°å€é…ç½®æ ‡è¯†: %d\r\n",g_ucMFlag);
+    vos_printf("å…¶ä»–æœ‰çŠ¶æ€é…ç½®æ ‡è¯†: %d\r\n",g_ucOFlag);
+    vos_printf("è·¯ç”±å™¨ç”Ÿå­˜æœŸ(ç§’): %d\r\n",g_usRouterLifetime);
+    vos_printf("å¯è¾¾æ—¶é—´(æ¯«ç§’): %d\r\n",g_ulReachableTime);
+    vos_printf("é‡å‘å®šæ—¶å™¨(æ¯«ç§’): %d\r\n",g_ulRetransTimer);
+    vos_printf("é‚»å±…è¯·æ±‚å®šæ—¶å™¨æ—¶é•¿(æ¯«ç§’): %d\r\n",g_ulNsTimerLen);
+    vos_printf("é‚»å±…è¯·æ±‚æœ€å¤§è¶…æ—¶æ¬¡æ•°: %d\r\n",g_ulNsTimerMaxExpNum);
+    vos_printf("å‘¨æœŸæ€§é‚»å±…è¯·æ±‚å®šæ—¶å™¨æ—¶é•¿(æ¯«ç§’): %d\r\n",g_ulPeriodicNsTimerLen);
+    vos_printf("å‘¨æœŸæ€§è·¯ç”±å…¬å‘Šå®šæ—¶å™¨æ—¶é•¿(æ¯«ç§’): %d\r\n",g_ulPeriodicRaTimerLen);
+    vos_printf("æ”¶åˆ°é‡å¤åœ°å€æ£€æµ‹åç­‰å¾…çš„å®šæ—¶å™¨æ—¶é•¿(æ¯«ç§’): %d\r\n",g_ulFirstNsTimerLen);
+    vos_printf("æ”¶åˆ°é‡å¤åœ°å€æ£€æµ‹å‰è·¯ç”±å…¬å‘Šå®šæ—¶å™¨æ—¶é•¿(æ¯«ç§’): %d\r\n",g_ulRaTimerLen);
 
     return;
 }
@@ -3198,20 +3198,20 @@ VOS_VOID  IP_NDSERVER_ShowAddrInfo( VOS_UINT32 ulIndex )
     if (ulIndex >= IP_NDSERVER_ADDRINFO_MAX_NUM)
     {
         ulTmp = IP_NDSERVER_ADDRINFO_MAX_NUM;
-        vos_printf("IP_NDSERVER_ShowAddrInfo:ÊäÈë²ÎÊıµÄ·¶Î§:0-%d\r\n", ulTmp-1);
+        vos_printf("IP_NDSERVER_ShowAddrInfo:è¾“å…¥å‚æ•°çš„èŒƒå›´:0-%d\r\n", ulTmp-1);
         return ;
     }
 
     pstInfoAddr = IP_NDSERVER_ADDRINFO_GET_ADDR(ulIndex);
 
-    vos_printf("**************************ND SERVERÊµÌåĞÅÏ¢(%d)*************************\r\n", ulIndex);
-    vos_printf("ÓĞĞ§±êÖ¾: %d\r\n",pstInfoAddr->ucValidFlag);
-    vos_printf("³ĞÔØºÅ: %d\r\n",pstInfoAddr->ucEpsbId);
+    vos_printf("**************************ND SERVERå®ä½“ä¿¡æ¯(%d)*************************\r\n", ulIndex);
+    vos_printf("æœ‰æ•ˆæ ‡å¿—: %d\r\n",pstInfoAddr->ucValidFlag);
+    vos_printf("æ‰¿è½½å·: %d\r\n",pstInfoAddr->ucEpsbId);
 
-    vos_printf("************ÍøÂçÅäÖÃ²ÎÊı************\r\n");
+    vos_printf("************ç½‘ç»œé…ç½®å‚æ•°************\r\n");
     vos_printf("MTU: %d\r\n",pstInfoAddr->stIpv6NwPara.ulBitOpMtu?pstInfoAddr->stIpv6NwPara.ulMtu:0);
-    vos_printf("µ±Ç°ÌøÏŞÖÆ: %d\r\n",pstInfoAddr->stIpv6NwPara.ucCurHopLimit);
-    vos_printf("½Ó¿ÚID: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
+    vos_printf("å½“å‰è·³é™åˆ¶: %d\r\n",pstInfoAddr->stIpv6NwPara.ucCurHopLimit);
+    vos_printf("æ¥å£ID: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
                                 pstInfoAddr->stIpv6NwPara.aucInterfaceId[0],
                                 pstInfoAddr->stIpv6NwPara.aucInterfaceId[1],
                                 pstInfoAddr->stIpv6NwPara.aucInterfaceId[2],
@@ -3221,16 +3221,16 @@ VOS_VOID  IP_NDSERVER_ShowAddrInfo( VOS_UINT32 ulIndex )
                                 pstInfoAddr->stIpv6NwPara.aucInterfaceId[6],
                                 pstInfoAddr->stIpv6NwPara.aucInterfaceId[7]);
 
-    vos_printf("************Ç°×ºÁĞ±í************\r\n");
-    vos_printf("Ç°×ºÊıÁ¿: %d\r\n",pstInfoAddr->stIpv6NwPara.ulPrefixNum);
+    vos_printf("************å‰ç¼€åˆ—è¡¨************\r\n");
+    vos_printf("å‰ç¼€æ•°é‡: %d\r\n",pstInfoAddr->stIpv6NwPara.ulPrefixNum);
     for (ulCnt = 0; ulCnt < pstInfoAddr->stIpv6NwPara.ulPrefixNum; ulCnt++)
     {
-        vos_printf("Ç°×º³¤¶È: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulBitPrefixLen);
-        vos_printf("×ÔÖÎ±êÖ¾: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulBitA);
-        vos_printf("Á´Â·ÉÏ±êÖ¾: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulBitL);
-        vos_printf("ÓĞĞ§Éú´æÆÚ: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulValidLifeTime);
-        vos_printf("Ñ¡ÓÃÉú´æÆÚ: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulPreferredLifeTime);
-        vos_printf("Ç°×º: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
+        vos_printf("å‰ç¼€é•¿åº¦: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulBitPrefixLen);
+        vos_printf("è‡ªæ²»æ ‡å¿—: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulBitA);
+        vos_printf("é“¾è·¯ä¸Šæ ‡å¿—: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulBitL);
+        vos_printf("æœ‰æ•ˆç”Ÿå­˜æœŸ: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulValidLifeTime);
+        vos_printf("é€‰ç”¨ç”Ÿå­˜æœŸ: %d\r\n",pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].ulPreferredLifeTime);
+        vos_printf("å‰ç¼€: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
                                     pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].aucPrefix[0],
                                     pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].aucPrefix[1],
                                     pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].aucPrefix[2],
@@ -3249,8 +3249,8 @@ VOS_VOID  IP_NDSERVER_ShowAddrInfo( VOS_UINT32 ulIndex )
                                     pstInfoAddr->stIpv6NwPara.astPrefixList[ulCnt].aucPrefix[15]);
     }
 
-    vos_printf("************DNS SERVERÁĞ±í************\r\n");
-    vos_printf("DNS SERVERÊıÁ¿: %d\r\n",pstInfoAddr->stIpv6NwPara.stDnsSer.ucDnsSerNum);
+    vos_printf("************DNS SERVERåˆ—è¡¨************\r\n");
+    vos_printf("DNS SERVERæ•°é‡: %d\r\n",pstInfoAddr->stIpv6NwPara.stDnsSer.ucDnsSerNum);
     if (pstInfoAddr->stIpv6NwPara.stDnsSer.ucDnsSerNum >= 1)
     {
         vos_printf("Prime DNS SERVER: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
@@ -3291,8 +3291,8 @@ VOS_VOID  IP_NDSERVER_ShowAddrInfo( VOS_UINT32 ulIndex )
                                     pstInfoAddr->stIpv6NwPara.stDnsSer.aucSecDnsServer[14],
                                     pstInfoAddr->stIpv6NwPara.stDnsSer.aucSecDnsServer[15]);
     }
-    vos_printf("************SIP SERVERÁĞ±í************\r\n");
-    vos_printf("SIP SERVERÊıÁ¿: %d\r\n",pstInfoAddr->stIpv6NwPara.stSipSer.ucSipSerNum);
+    vos_printf("************SIP SERVERåˆ—è¡¨************\r\n");
+    vos_printf("SIP SERVERæ•°é‡: %d\r\n",pstInfoAddr->stIpv6NwPara.stSipSer.ucSipSerNum);
     if (pstInfoAddr->stIpv6NwPara.stSipSer.ucSipSerNum >= 1)
     {
         vos_printf("Prime SIP SERVER: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
@@ -3334,9 +3334,9 @@ VOS_VOID  IP_NDSERVER_ShowAddrInfo( VOS_UINT32 ulIndex )
                                     pstInfoAddr->stIpv6NwPara.stSipSer.aucSecSipServer[15]);
     }
 
-    vos_printf("************TEµØÖ·ĞÅÏ¢************\r\n");
-    vos_printf("TEµØÖ·×´Ì¬: %d\r\n",pstInfoAddr->stTeAddrInfo.enTeAddrState);
-    vos_printf("È«ÇòµØÖ·: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
+    vos_printf("************TEåœ°å€ä¿¡æ¯************\r\n");
+    vos_printf("TEåœ°å€çŠ¶æ€: %d\r\n",pstInfoAddr->stTeAddrInfo.enTeAddrState);
+    vos_printf("å…¨çƒåœ°å€: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
                                 pstInfoAddr->stTeAddrInfo.aucTeGlobalAddr[0],
                                 pstInfoAddr->stTeAddrInfo.aucTeGlobalAddr[1],
                                 pstInfoAddr->stTeAddrInfo.aucTeGlobalAddr[2],
@@ -3353,14 +3353,14 @@ VOS_VOID  IP_NDSERVER_ShowAddrInfo( VOS_UINT32 ulIndex )
                                 pstInfoAddr->stTeAddrInfo.aucTeGlobalAddr[13],
                                 pstInfoAddr->stTeAddrInfo.aucTeGlobalAddr[14],
                                 pstInfoAddr->stTeAddrInfo.aucTeGlobalAddr[15]);
-    vos_printf("Á´Â·²ãµØÖ·: %02x:%02x:%02x:%02x:%02x:%02x\r\n",
+    vos_printf("é“¾è·¯å±‚åœ°å€: %02x:%02x:%02x:%02x:%02x:%02x\r\n",
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLayerAddr[0],
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLayerAddr[1],
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLayerAddr[2],
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLayerAddr[3],
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLayerAddr[4],
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLayerAddr[5]);
-    vos_printf("Á´Â·±¾µØµØÖ·: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
+    vos_printf("é“¾è·¯æœ¬åœ°åœ°å€: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLocalAddr[0],
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLocalAddr[1],
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLocalAddr[2],
@@ -3378,14 +3378,14 @@ VOS_VOID  IP_NDSERVER_ShowAddrInfo( VOS_UINT32 ulIndex )
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLocalAddr[14],
                                 pstInfoAddr->stTeAddrInfo.aucTeLinkLocalAddr[15]);
 
-    vos_printf("************¶¨Ê±Æ÷×´Ì¬************\r\n");
-    vos_printf("ÏµÍ³¶¨Ê±Æ÷µØÖ·: %p\r\n",pstInfoAddr->stTimerInfo.hTm);
-    vos_printf("¶¨Ê±Æ÷ÀàĞÍ: %d\r\n",pstInfoAddr->stTimerInfo.ulName);
-    vos_printf("¶¨Ê±Æ÷³¬Ê±´ÎÊı: %d\r\n",pstInfoAddr->stTimerInfo.ucLoopTimes);
-    vos_printf("ÖÜÆÚĞÔÂ·ÓÉ¹«¸æÊ±¼ä¼ÆÊı: %d\r\n",g_aulPeriodicRaTimeCnt[ulIndex]);
+    vos_printf("************å®šæ—¶å™¨çŠ¶æ€************\r\n");
+    vos_printf("ç³»ç»Ÿå®šæ—¶å™¨åœ°å€: %p\r\n",pstInfoAddr->stTimerInfo.hTm);
+    vos_printf("å®šæ—¶å™¨ç±»å‹: %d\r\n",pstInfoAddr->stTimerInfo.ulName);
+    vos_printf("å®šæ—¶å™¨è¶…æ—¶æ¬¡æ•°: %d\r\n",pstInfoAddr->stTimerInfo.ucLoopTimes);
+    vos_printf("å‘¨æœŸæ€§è·¯ç”±å…¬å‘Šæ—¶é—´è®¡æ•°: %d\r\n",g_aulPeriodicRaTimeCnt[ulIndex]);
 
-    vos_printf("************µ¥°å²àĞÅÏ¢************\r\n");
-    vos_printf("µ¥°å²à±¾µØÁ´Â·µØÖ·: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
+    vos_printf("************å•æ¿ä¾§ä¿¡æ¯************\r\n");
+    vos_printf("å•æ¿ä¾§æœ¬åœ°é“¾è·¯åœ°å€: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
                                 pstInfoAddr->aucUeLinkLocalAddr[0],
                                 pstInfoAddr->aucUeLinkLocalAddr[1],
                                 pstInfoAddr->aucUeLinkLocalAddr[2],
@@ -3414,38 +3414,38 @@ VOS_VOID  IP_NDSERVER_ShowStatInfo( VOS_UINT32 ulIndex )
     if (ulIndex >= IP_NDSERVER_ADDRINFO_MAX_NUM)
     {
         ulTmp = IP_NDSERVER_ADDRINFO_MAX_NUM;
-        vos_printf("IP_NDSERVER_ShowStatInfo:ÊäÈë²ÎÊıµÄ·¶Î§:0-%d\r\n", ulTmp-1);
+        vos_printf("IP_NDSERVER_ShowStatInfo:è¾“å…¥å‚æ•°çš„èŒƒå›´:0-%d\r\n", ulTmp-1);
         return ;
     }
 
     pstPktStatInfo = IP_NDSERVER_GET_STATINFO_ADDR(ulIndex);
 
-    vos_printf("****************************±¨ÎÄÍ³¼ÆĞÅÏ¢(%d)****************************\r\n", ulIndex);
-    vos_printf("ÊÕµ½±¨ÎÄ×ÜÊı:           %d\r\n", pstPktStatInfo->ulRcvPktTotalNum);
-    vos_printf("¶ªÆú±¨ÎÄÊı:             %d\r\n", pstPktStatInfo->ulDiscPktNum);
-    vos_printf("ÊÕµ½NS±¨ÎÄÊı:           %d\r\n", pstPktStatInfo->ulRcvNsPktNum);
-    vos_printf("ÊÕµ½NA±¨ÎÄÊı:           %d\r\n", pstPktStatInfo->ulRcvNaPktNum);
-    vos_printf("ÊÕµ½RS±¨ÎÄÊı:           %d\r\n", pstPktStatInfo->ulRcvRsPktNum);
-    vos_printf("ÊÕµ½ECHO REQ±¨ÎÄÊı:     %d\r\n", pstPktStatInfo->ulRcvEchoPktNum);
-    vos_printf("ÊÕµ½IPV6³¬³¤±¨ÎÄÊı:     %d\r\n", pstPktStatInfo->ulRcvTooBigPktNum);
-    vos_printf("ÊÕµ½DHCPV6±¨ÎÄÊı:       %d\r\n", pstPktStatInfo->ulRcvDhcpv6PktNum);
-    vos_printf("ÊÕµ½´íÎóNS±¨ÎÄÊı:       %d\r\n", pstPktStatInfo->ulErrNsPktNum);
-    vos_printf("ÊÕµ½´íÎóNA±¨ÎÄÊı:       %d\r\n", pstPktStatInfo->ulErrNaPktNum);
-    vos_printf("ÊÕµ½´íÎóRS±¨ÎÄÊı:       %d\r\n", pstPktStatInfo->ulErrRsPktNum);
-    vos_printf("ÊÕµ½´íÎóECHO REQ±¨ÎÄÊı: %d\r\n", pstPktStatInfo->ulErrEchoPktNum);
-    vos_printf("ÊÕµ½´íÎóIPV6³¬³¤±¨ÎÄÊı: %d\r\n", pstPktStatInfo->ulErrTooBigPktNum);
-    vos_printf("ÊÕµ½´íÎóDHCPV6±¨ÎÄÊı:   %d\r\n", pstPktStatInfo->ulErrDhcpv6PktNum);
-    vos_printf("·¢ËÍ±¨ÎÄ×ÜÊı:           %d\r\n", pstPktStatInfo->ulTransPktTotalNum);
-    vos_printf("·¢ËÍ±¨ÎÄÊ§°ÜÊı:         %d\r\n", pstPktStatInfo->ulTransPktFailNum);
-    vos_printf("·¢ËÍNS±¨ÎÄÊı:           %d\r\n", pstPktStatInfo->ulTransNsPktNum);
-    vos_printf("·¢ËÍNA±¨ÎÄÊı:           %d\r\n", pstPktStatInfo->ulTransNaPktNum);
-    vos_printf("·¢ËÍRA±¨ÎÄÊı:           %d\r\n", pstPktStatInfo->ulTransRaPktNum);
-    vos_printf("·¢ËÍECHO REPLY±¨ÎÄÊı:   %d\r\n", pstPktStatInfo->ulTransEchoPktNum);
-    vos_printf("·¢ËÍ³¬³¤°üÏìÓ¦±¨ÎÄÊı:   %d\r\n", pstPktStatInfo->ulTransTooBigPktNum);
-    vos_printf("·¢ËÍDHCPV6 REPLY±¨ÎÄÊı: %d\r\n", pstPktStatInfo->ulTransDhcpv6PktNum);
-    vos_printf("ÏÂĞĞIP°ü·¢ËÍÊ±PC MACµØÖ·ÎŞĞ§µÄÍ³¼ÆÁ¿: %d\r\n", pstPktStatInfo->ulMacInvalidPktNum);
-    vos_printf("ÏÂĞĞ³É¹¦»º´æµÄIP°ü¸öÊı:               %d\r\n", pstPktStatInfo->ulEnquePktNum);
-    vos_printf("ÏÂĞĞ³É¹¦·¢ËÍ»º´æµÄIP°ü¸öÊı:           %d\r\n", pstPktStatInfo->ulSendQuePktNum);
+    vos_printf("****************************æŠ¥æ–‡ç»Ÿè®¡ä¿¡æ¯(%d)****************************\r\n", ulIndex);
+    vos_printf("æ”¶åˆ°æŠ¥æ–‡æ€»æ•°:           %d\r\n", pstPktStatInfo->ulRcvPktTotalNum);
+    vos_printf("ä¸¢å¼ƒæŠ¥æ–‡æ•°:             %d\r\n", pstPktStatInfo->ulDiscPktNum);
+    vos_printf("æ”¶åˆ°NSæŠ¥æ–‡æ•°:           %d\r\n", pstPktStatInfo->ulRcvNsPktNum);
+    vos_printf("æ”¶åˆ°NAæŠ¥æ–‡æ•°:           %d\r\n", pstPktStatInfo->ulRcvNaPktNum);
+    vos_printf("æ”¶åˆ°RSæŠ¥æ–‡æ•°:           %d\r\n", pstPktStatInfo->ulRcvRsPktNum);
+    vos_printf("æ”¶åˆ°ECHO REQæŠ¥æ–‡æ•°:     %d\r\n", pstPktStatInfo->ulRcvEchoPktNum);
+    vos_printf("æ”¶åˆ°IPV6è¶…é•¿æŠ¥æ–‡æ•°:     %d\r\n", pstPktStatInfo->ulRcvTooBigPktNum);
+    vos_printf("æ”¶åˆ°DHCPV6æŠ¥æ–‡æ•°:       %d\r\n", pstPktStatInfo->ulRcvDhcpv6PktNum);
+    vos_printf("æ”¶åˆ°é”™è¯¯NSæŠ¥æ–‡æ•°:       %d\r\n", pstPktStatInfo->ulErrNsPktNum);
+    vos_printf("æ”¶åˆ°é”™è¯¯NAæŠ¥æ–‡æ•°:       %d\r\n", pstPktStatInfo->ulErrNaPktNum);
+    vos_printf("æ”¶åˆ°é”™è¯¯RSæŠ¥æ–‡æ•°:       %d\r\n", pstPktStatInfo->ulErrRsPktNum);
+    vos_printf("æ”¶åˆ°é”™è¯¯ECHO REQæŠ¥æ–‡æ•°: %d\r\n", pstPktStatInfo->ulErrEchoPktNum);
+    vos_printf("æ”¶åˆ°é”™è¯¯IPV6è¶…é•¿æŠ¥æ–‡æ•°: %d\r\n", pstPktStatInfo->ulErrTooBigPktNum);
+    vos_printf("æ”¶åˆ°é”™è¯¯DHCPV6æŠ¥æ–‡æ•°:   %d\r\n", pstPktStatInfo->ulErrDhcpv6PktNum);
+    vos_printf("å‘é€æŠ¥æ–‡æ€»æ•°:           %d\r\n", pstPktStatInfo->ulTransPktTotalNum);
+    vos_printf("å‘é€æŠ¥æ–‡å¤±è´¥æ•°:         %d\r\n", pstPktStatInfo->ulTransPktFailNum);
+    vos_printf("å‘é€NSæŠ¥æ–‡æ•°:           %d\r\n", pstPktStatInfo->ulTransNsPktNum);
+    vos_printf("å‘é€NAæŠ¥æ–‡æ•°:           %d\r\n", pstPktStatInfo->ulTransNaPktNum);
+    vos_printf("å‘é€RAæŠ¥æ–‡æ•°:           %d\r\n", pstPktStatInfo->ulTransRaPktNum);
+    vos_printf("å‘é€ECHO REPLYæŠ¥æ–‡æ•°:   %d\r\n", pstPktStatInfo->ulTransEchoPktNum);
+    vos_printf("å‘é€è¶…é•¿åŒ…å“åº”æŠ¥æ–‡æ•°:   %d\r\n", pstPktStatInfo->ulTransTooBigPktNum);
+    vos_printf("å‘é€DHCPV6 REPLYæŠ¥æ–‡æ•°: %d\r\n", pstPktStatInfo->ulTransDhcpv6PktNum);
+    vos_printf("ä¸‹è¡ŒIPåŒ…å‘é€æ—¶PC MACåœ°å€æ— æ•ˆçš„ç»Ÿè®¡é‡: %d\r\n", pstPktStatInfo->ulMacInvalidPktNum);
+    vos_printf("ä¸‹è¡ŒæˆåŠŸç¼“å­˜çš„IPåŒ…ä¸ªæ•°:               %d\r\n", pstPktStatInfo->ulEnquePktNum);
+    vos_printf("ä¸‹è¡ŒæˆåŠŸå‘é€ç¼“å­˜çš„IPåŒ…ä¸ªæ•°:           %d\r\n", pstPktStatInfo->ulSendQuePktNum);
 
     return;
 }

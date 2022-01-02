@@ -1,26 +1,26 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2001-2011, »ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2001-2011, åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : AtMsgPrint.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : fuyingjun
-  Éú³ÉÈÕÆÚ   : 2008Äê3ÔÂ4ÈÕ
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   :
-  º¯ÊýÁÐ±í   :
+  æ–‡ ä»¶ å   : AtMsgPrint.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : fuyingjun
+  ç”Ÿæˆæ—¥æœŸ   : 2008å¹´3æœˆ4æ—¥
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   :
+  å‡½æ•°åˆ—è¡¨   :
               At_PrintCmdName
               At_PrintCsmsInfo
-  ÐÞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ4ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ´´½¨ÎÄ¼þ
+  ä¿®æ”¹åŽ†å²   :
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ4æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "ATCmdProc.h"
 #include "product_config.h"
@@ -38,17 +38,17 @@
 #define THIS_FILE_ID        PS_FILE_ID_AT_MSG_PRINT_C
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  3ÀàÐÍ¶¨Òå
+  3ç±»åž‹å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  5 º¯ÊýÊµÏÖ
+  5 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 
 TAF_UINT32 AT_StubSendAutoReplyMsg(
@@ -62,7 +62,7 @@ TAF_UINT32 AT_StubSendAutoReplyMsg(
     MN_MSG_SUBMIT_STRU                  *pstSubmit;
     TAF_UINT32                          ulRet;
 
-    /*1. Îª×Ô¶¯»Ø¸´ÏûÏ¢SUBMITÉêÇëÄÚ´æ²¢Çé¿ö*/
+    /*1. ä¸ºè‡ªåŠ¨å›žå¤æ¶ˆæ¯SUBMITç”³è¯·å†…å­˜å¹¶æƒ…å†µ*/
     pstTsSubmitInfo = (MN_MSG_TS_DATA_INFO_STRU *)PS_MEM_ALLOC(WUEPS_PID_AT, sizeof(MN_MSG_TS_DATA_INFO_STRU));
     if (VOS_NULL_PTR == pstTsSubmitInfo)
     {
@@ -70,7 +70,7 @@ TAF_UINT32 AT_StubSendAutoReplyMsg(
     }
     PS_MEM_SET(pstTsSubmitInfo, 0x00, sizeof(MN_MSG_TS_DATA_INFO_STRU));
 
-    /*2. Îª×Ô¶¯»Ø¸´ÏûÏ¢SUBMITÌîÐ´TPDUÊý¾ÝÄÚÈÝ*/
+    /*2. ä¸ºè‡ªåŠ¨å›žå¤æ¶ˆæ¯SUBMITå¡«å†™TPDUæ•°æ®å†…å®¹*/
     pstTsSubmitInfo->enTpduType = MN_MSG_TPDU_SUBMIT;
     pstSubmit = (MN_MSG_SUBMIT_STRU *)&pstTsSubmitInfo->u.stSubmit;
     PS_MEM_CPY(&pstSubmit->stDestAddr,
@@ -81,7 +81,7 @@ TAF_UINT32 AT_StubSendAutoReplyMsg(
                sizeof(pstSubmit->stDcs));
     pstSubmit->stValidPeriod.enValidPeriod = MN_MSG_VALID_PERIOD_NONE;
 
-    /*3. Îª×Ô¶¯»Ø¸´ÏûÏ¢SUBMIT±àÂë*/
+    /*3. ä¸ºè‡ªåŠ¨å›žå¤æ¶ˆæ¯SUBMITç¼–ç */
     ulRet = MN_MSG_Encode(pstTsSubmitInfo, &stSendMsg.stMsgInfo.stTsRawData);
     if (MN_ERR_NO_ERROR != ulRet)
     {
@@ -89,7 +89,7 @@ TAF_UINT32 AT_StubSendAutoReplyMsg(
         return AT_ERROR;
     }
 
-    /*4. ÌîÐ´»Ø¸´ÏûÏ¢µÄ¶ÌÐÅÖÐÐÄ, ´æ´¢Éè±¸£¬ÏûÏ¢ÀàÐÍºÍ·¢ËÍÓò*/
+    /*4. å¡«å†™å›žå¤æ¶ˆæ¯çš„çŸ­ä¿¡ä¸­å¿ƒ, å­˜å‚¨è®¾å¤‡ï¼Œæ¶ˆæ¯ç±»åž‹å’Œå‘é€åŸŸ*/
     stSendMsg.enDomain                          = MN_MSG_SEND_DOMAIN_CS_PREFERRED;
     stSendMsg.enMemStore                        = MN_MSG_MEM_STORE_NONE;
     stSendMsg.enClientType                      = MN_MSG_CLIENT_NORMAL;
@@ -98,7 +98,7 @@ TAF_UINT32 AT_StubSendAutoReplyMsg(
                &pstEvent->u.stDeliverInfo.stRcvMsgInfo.stScAddr,
                sizeof(stSendMsg.stMsgInfo.stScAddr));
 
-    /*5. ·¢ËÍ»Ø¸´ÏûÏ¢*/
+    /*5. å‘é€å›žå¤æ¶ˆæ¯*/
     ulRet = MN_MSG_Send(ucIndex, 0, &stSendMsg);
     if (MN_ERR_NO_ERROR != ulRet)
     {
@@ -147,7 +147,7 @@ TAF_VOID AT_StubTriggerAutoReply(
 
     pstSmsCtx->ucSmsAutoReply = ucCfgValue;
 
-    /*Èô¹Ø±Õ×Ô¶¯»Ø¸´¹¦ÄÜ£¬ÔòÇå¿ÕÏà¹Ø¶¯Ì¬ÄÚ´æ*/
+    /*è‹¥å…³é—­è‡ªåŠ¨å›žå¤åŠŸèƒ½ï¼Œåˆ™æ¸…ç©ºç›¸å…³åŠ¨æ€å†…å­˜*/
     if (0 == pstSmsCtx->ucSmsAutoReply)
     {
         for (ucLoop = 0; ucLoop < AT_SMSMT_BUFFER_MAX; ucLoop++)
@@ -159,7 +159,7 @@ TAF_VOID AT_StubTriggerAutoReply(
         return;
     }
 
-    /*ÈôÒÑÆôÓÃ×Ô¶¯»Ø¸´¹¦ÄÜ£¬°´Ë³Ðò»Ø¸´½ÓÊÕµ½µÄ¶ÌÐÅ*/
+    /*è‹¥å·²å¯ç”¨è‡ªåŠ¨å›žå¤åŠŸèƒ½ï¼ŒæŒ‰é¡ºåºå›žå¤æŽ¥æ”¶åˆ°çš„çŸ­ä¿¡*/
     for (ucLoop = 0; ucLoop < AT_SMSMT_BUFFER_MAX; ucLoop++)
     {
         if (TAF_TRUE != pstSmsCtx->astSmsMtBuffer[ucLoop].bUsed)
@@ -201,20 +201,20 @@ TAF_VOID AT_StubSaveAutoReplyData(
 
     pstSmsCtx = AT_GetModemSmsCtxAddrFromClientId(ucIndex);
 
-    /*×Ô¶¯»Ø¸´¹¦ÄÜÎ´¿ªÆôÖ±½Ó·µ»Ø;*/
+    /*è‡ªåŠ¨å›žå¤åŠŸèƒ½æœªå¼€å¯ç›´æŽ¥è¿”å›ž;*/
     if (0 == pstSmsCtx->ucSmsAutoReply)
     {
         return;
     }
 
-    /*½ÓÊÕÏûÏ¢²»ÊÇDELIVER¶ÌÐÅ»òTP-RPÃ»ÓÐÖÃÎ»Ö±½Ó·µ»Ø*/
+    /*æŽ¥æ”¶æ¶ˆæ¯ä¸æ˜¯DELIVERçŸ­ä¿¡æˆ–TP-RPæ²¡æœ‰ç½®ä½ç›´æŽ¥è¿”å›ž*/
     if ((MN_MSG_TPDU_DELIVER != pstTsDataInfo->enTpduType)
      || (VOS_TRUE != pstTsDataInfo->u.stDeliver.bReplayPath))
     {
         return;
     }
 
-    /*ÉêÇë²¢±£´æ×Ô¶¯»Ø¸´Ïà¹Ø²ÎÊýµ½»º´æ*/
+    /*ç”³è¯·å¹¶ä¿å­˜è‡ªåŠ¨å›žå¤ç›¸å…³å‚æ•°åˆ°ç¼“å­˜*/
     for (ucLoop = 0; ucLoop < AT_SMSMT_BUFFER_MAX; ucLoop++)
     {
         if (TAF_TRUE == pstSmsCtx->astSmsMtBuffer[ucLoop].bUsed)
@@ -224,7 +224,7 @@ TAF_VOID AT_StubSaveAutoReplyData(
 
         AT_StubClearSpecificAutoRelyMsg(ucIndex, ucLoop);
 
-        /*¼ÇÂ¼½ÓÊÕ¶ÌÐÅÐÅÏ¢¼ÇÂ¼µ½ÄÚ´æ£¬ÓÃÓÚ GCF²âÊÔÓÃÀý34¡£2¡£8*/
+        /*è®°å½•æŽ¥æ”¶çŸ­ä¿¡ä¿¡æ¯è®°å½•åˆ°å†…å­˜ï¼Œç”¨äºŽ GCFæµ‹è¯•ç”¨ä¾‹34ã€‚2ã€‚8*/
         pstSmsCtx->astSmsMtBuffer[ucLoop].pstEvent = (MN_MSG_EVENT_INFO_STRU *)PS_MEM_ALLOC(WUEPS_PID_AT,
                                                   sizeof(MN_MSG_EVENT_INFO_STRU));
         if (VOS_NULL_PTR == pstSmsCtx->astSmsMtBuffer[ucLoop].pstEvent)
@@ -283,19 +283,19 @@ VOS_UINT32 At_SendDomainProtoToNvim(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_ParseCsmpFo
- ¹¦ÄÜÃèÊö  : ATÃüÁîCSMPÖÐFO²ÎÊýµÄ½âÎö
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : pucFo  - FO²ÎÊýÖ¸Õë
- ·µ »Ø Öµ  : AT_SUCCESS - ½âÎö³É¹¦
-             ÆäËû       - ½âÎöÊ§°Ü
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_ParseCsmpFo
+ åŠŸèƒ½æè¿°  : ATå‘½ä»¤CSMPä¸­FOå‚æ•°çš„è§£æž
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : pucFo  - FOå‚æ•°æŒ‡é’ˆ
+ è¿” å›ž å€¼  : AT_SUCCESS - è§£æžæˆåŠŸ
+             å…¶ä»–       - è§£æžå¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê4ÔÂ1ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´4æœˆ1æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 At_ParseCsmpFo(
@@ -304,14 +304,14 @@ VOS_UINT32 At_ParseCsmpFo(
 {
     TAF_UINT32                          ulRet;
 
-    /* ¼ì²é<fo>,Êý×ÖÀàÐÍ */
+    /* æ£€æŸ¥<fo>,æ•°å­—ç±»åž‹ */
     ulRet = At_CheckNumString(gastAtParaList[0].aucPara,gastAtParaList[0].usParaLen);
     if (AT_SUCCESS != ulRet)
     {
         return AT_CMS_OPERATION_NOT_ALLOWED;
     }
 
-    /* ×¢Òâ: gastAtParaList[0].ulParaValue´ËÊ±ÉÐÎ´×ª»»£¬¼ì²éÆäËüÃüÁîµÄÕâÖÖÇé¿ö */
+    /* æ³¨æ„: gastAtParaList[0].ulParaValueæ­¤æ—¶å°šæœªè½¬æ¢ï¼Œæ£€æŸ¥å…¶å®ƒå‘½ä»¤çš„è¿™ç§æƒ…å†µ */
     ulRet = At_Auc2ul(gastAtParaList[0].aucPara,gastAtParaList[0].usParaLen,
                       &gastAtParaList[0].ulParaValue);
     if (AT_FAILURE == ulRet)
@@ -319,7 +319,7 @@ VOS_UINT32 At_ParseCsmpFo(
         return AT_CMS_OPERATION_NOT_ALLOWED;
     }
 
-    /* ¼ì²é<fo>,Ò»¸ö×Ö½Ú */
+    /* æ£€æŸ¥<fo>,ä¸€ä¸ªå­—èŠ‚ */
     if (gastAtParaList[0].ulParaValue > 0xff)
     {
         return AT_CMS_OPERATION_NOT_ALLOWED;
@@ -351,7 +351,7 @@ TAF_UINT32 At_GetAbsoluteTime(
 
 
     /* 6th of May 1994, 22:10:00 GMT+2 "94/05/06,22:10:00+08"
-       ×¢Òâ:»¹ÒªÅÐ¶ÏÖÐ¼ä×Ö·ûÊÇ·ñºÏ·¨
+       æ³¨æ„:è¿˜è¦åˆ¤æ–­ä¸­é—´å­—ç¬¦æ˜¯å¦åˆæ³•
     */
     if ((TAF_NULL_PTR == pucTimeStr)
      || (TAF_NULL_PTR == pstAbsoluteTime))
@@ -360,7 +360,7 @@ TAF_UINT32 At_GetAbsoluteTime(
         return AT_ERROR;
     }
 
-    /* ¼ì²é<vp>,×Ö·û´®ÀàÐÍ */
+    /* æ£€æŸ¥<vp>,å­—ç¬¦ä¸²ç±»åž‹ */
     if ((22 != usTimeStrLen)
      || ('"' != pucTimeStr[0])
      || ('"' != pucTimeStr[usTimeStrLen - 1])/* '"' */
@@ -433,7 +433,7 @@ TAF_UINT32 At_GetAbsoluteTime(
         return AT_CMS_OPERATION_NOT_ALLOWED;
     }
 
-    /* '+' »òÕß '-' */
+    /* '+' æˆ–è€… '-' */
     switch(pucTimeStr[18])
     {
     case '+':
@@ -531,14 +531,14 @@ VOS_UINT32  AT_SetRelativeValidPeriod(
     }
     else
     {
-        /* ¼ì²é<vp>,Êý×ÖÀàÐÍ */
+        /* æ£€æŸ¥<vp>,æ•°å­—ç±»åž‹ */
         ulRet = At_CheckNumString(pucPara, usParaLen);
         if (AT_SUCCESS != ulRet)
         {
             return AT_CMS_OPERATION_NOT_ALLOWED;
         }
 
-        /* ×¢Òâ: gastAtParaList[1].ulParaValue´ËÊ±ÉÐÎ´×ª»»£¬¼ì²éÆäËüÃüÁîµÄÕâÖÖÇé¿ö */
+        /* æ³¨æ„: gastAtParaList[1].ulParaValueæ­¤æ—¶å°šæœªè½¬æ¢ï¼Œæ£€æŸ¥å…¶å®ƒå‘½ä»¤çš„è¿™ç§æƒ…å†µ */
         ulRet = At_Auc2ul(pucPara, usParaLen, &ulRelativeValidPeriod);
         if (AT_FAILURE == ulRet)
         {
@@ -566,7 +566,7 @@ VOS_UINT32 At_ParseCsmpVp(
 
     pstSmsCtx = AT_GetModemSmsCtxAddrFromClientId(ucIndex);
 
-    /*»ñÈ¡µ±Ç°ÅäÖÃµÄTP-VPFÖµ£¬ÈôÓÃ»§²»ÅäÖÃTP-VPFºÍTP-VPÁ½Ïî£¬Ôò¸´ÖÆµ±Ç°½á¹¹µ½ÁÙÊ±½á¹¹²¢ÍÆ³ö*/
+    /*èŽ·å–å½“å‰é…ç½®çš„TP-VPFå€¼ï¼Œè‹¥ç”¨æˆ·ä¸é…ç½®TP-VPFå’ŒTP-VPä¸¤é¡¹ï¼Œåˆ™å¤åˆ¶å½“å‰ç»“æž„åˆ°ä¸´æ—¶ç»“æž„å¹¶æŽ¨å‡º*/
     if (0 != gastAtParaList[0].usParaLen)
     {
         AT_GET_MSG_TP_VPF(pstVp->enValidPeriod, pstSmsCtx->stCscaCsmpInfo.ucTmpFo);
@@ -581,7 +581,7 @@ VOS_UINT32 At_ParseCsmpVp(
         return AT_SUCCESS;
     }
 
-    /*¶ÌÐÅÓÐÐ§ÆÚÀàÐÍÉèÖÃÎªÎÞÐ§£¬<VP>²ÎÊýÏî±ØÐëÎª¿Õ*/
+    /*çŸ­ä¿¡æœ‰æ•ˆæœŸç±»åž‹è®¾ç½®ä¸ºæ— æ•ˆï¼Œ<VP>å‚æ•°é¡¹å¿…é¡»ä¸ºç©º*/
     if (MN_MSG_VALID_PERIOD_NONE == pstVp->enValidPeriod)
     {
         if (0 != gastAtParaList[1].usParaLen)
@@ -591,7 +591,7 @@ VOS_UINT32 At_ParseCsmpVp(
         PS_MEM_SET(pstVp, 0x00, sizeof(MN_MSG_VALID_PERIOD_STRU));
         return AT_SUCCESS;
     }
-    /*¶ÌÐÅÓÐÐ§ÆÚÀàÐÍÉèÖÃÎªÏà¶ÔÓÐÐ§ÆÚ£¬*/
+    /*çŸ­ä¿¡æœ‰æ•ˆæœŸç±»åž‹è®¾ç½®ä¸ºç›¸å¯¹æœ‰æ•ˆæœŸï¼Œ*/
     else if (MN_MSG_VALID_PERIOD_RELATIVE == pstVp->enValidPeriod)
     {
         ulRet = AT_SetRelativeValidPeriod(ucIndex,
@@ -616,19 +616,19 @@ VOS_UINT32 At_ParseCsmpVp(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_MsgResultCodeFormat
- ¹¦ÄÜÃèÊö  : Êä³ö×Ö·û´®µÄ¸ñÊ½»¯
- ÊäÈë²ÎÊý  : ucIndex    - ÓÃ»§Ë÷Òý
-             usLength   - ×Ö·û´®³¤¶È
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_MsgResultCodeFormat
+ åŠŸèƒ½æè¿°  : è¾“å‡ºå­—ç¬¦ä¸²çš„æ ¼å¼åŒ–
+ è¾“å…¥å‚æ•°  : ucIndex    - ç”¨æˆ·ç´¢å¼•
+             usLength   - å­—ç¬¦ä¸²é•¿åº¦
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê4ÔÂ1ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´4æœˆ1æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_VOID At_MsgResultCodeFormat(
@@ -638,7 +638,7 @@ TAF_VOID At_MsgResultCodeFormat(
 {
     if(AT_V_ENTIRE_TYPE == gucAtVType)
     {
-        PS_MEM_CPY((TAF_CHAR *)pgucAtSndCrLfAddr,(TAF_CHAR *)gaucAtCrLf,2);/*CodeÇ°Ãæ¼Ó\r\n*/
+        PS_MEM_CPY((TAF_CHAR *)pgucAtSndCrLfAddr,(TAF_CHAR *)gaucAtCrLf,2);/*Codeå‰é¢åŠ \r\n*/
         At_SendResultData(ucIndex,pgucAtSndCrLfAddr,usLength + 2);
     }
     else
@@ -651,18 +651,18 @@ TAF_VOID At_MsgResultCodeFormat(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_GetMsgFoValue
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÏûÏ¢Êý¾ÝµÄÊ××Ö½ÚÊôÐÔ»ñÈ¡Ê××Ö½ÚÊýÖµ
- ÊäÈë²ÎÊý  : pstTsDataInfo - ÏûÏ¢Êý¾Ý½á¹¹
- Êä³ö²ÎÊý  : pucFo         - ÏûÏ¢Ê××Ö½ÚÊýÖµ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_GetMsgFoValue
+ åŠŸèƒ½æè¿°  : æ ¹æ®æ¶ˆæ¯æ•°æ®çš„é¦–å­—èŠ‚å±žæ€§èŽ·å–é¦–å­—èŠ‚æ•°å€¼
+ è¾“å…¥å‚æ•°  : pstTsDataInfo - æ¶ˆæ¯æ•°æ®ç»“æž„
+ è¾“å‡ºå‚æ•°  : pucFo         - æ¶ˆæ¯é¦–å­—èŠ‚æ•°å€¼
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ13ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ13æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_VOID At_GetMsgFoValue(
@@ -749,7 +749,7 @@ VOS_VOID At_SendMsgFoAttr(
     }
     else
     {
-        /*ÅÐ¶ÏFOµÄÓÐÐ§ÐÔ*/
+        /*åˆ¤æ–­FOçš„æœ‰æ•ˆæ€§*/
         if (TAF_TRUE == pstSmsCtx->stCscaCsmpInfo.bFoUsed)
         {
             ucFo = pstSmsCtx->stCscaCsmpInfo.ucFo;
@@ -856,18 +856,18 @@ TAF_VOID  At_PrintCsmsInfo(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_PrintAsciiAddr
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝASCIIÂë±íÊ¾ºÅÂëµÄÊý¾Ý½á¹¹´òÓ¡µØÖ·×Ö·û´®;
- ÊäÈë²ÎÊý  : pstAddr    - ASCIIÂë±íÊ¾ºÅÂëÊý¾Ý½á¹¹
- Êä³ö²ÎÊý  : pDst       - Êä³ö×Ö·û´®µÄµØÖ·
- ·µ »Ø Öµ  : Êä³ö×Ö·û´®³¤¶È
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_PrintAsciiAddr
+ åŠŸèƒ½æè¿°  : æ ¹æ®ASCIIç è¡¨ç¤ºå·ç çš„æ•°æ®ç»“æž„æ‰“å°åœ°å€å­—ç¬¦ä¸²;
+ è¾“å…¥å‚æ•°  : pstAddr    - ASCIIç è¡¨ç¤ºå·ç æ•°æ®ç»“æž„
+ è¾“å‡ºå‚æ•°  : pDst       - è¾“å‡ºå­—ç¬¦ä¸²çš„åœ°å€
+ è¿” å›ž å€¼  : è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ12ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ12æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_UINT16 At_PrintAsciiAddr(
@@ -901,18 +901,18 @@ TAF_UINT16 At_PrintAsciiAddr(
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : AT_BcdAddrToAscii
- ¹¦ÄÜÃèÊö  : Í¬²½º¯Êý,½«MN_MSG_BCD_ADDR_STRUÀàÐÍµØÖ·×ª»»³ÉMN_MSG_ASCII_ADDR_STRUÀàÐÍµØÖ·
- ÊäÈë²ÎÊý  : pstBcdAddr     - MN_MSG_BCD_ADDR_STRUÀàÐÍµØÖ·
- Êä³ö²ÎÊý  : pstAsciiAddr   - MN_MSG_ASCII_ADDR_STRUÀàÐÍµØÖ·
- ·µ »Ø Öµ  : MN_ERR_NO_ERROR×ª»»²Ù×÷³É¹¦£¬·ñÔòÊ§°Ü
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : AT_BcdAddrToAscii
+ åŠŸèƒ½æè¿°  : åŒæ­¥å‡½æ•°,å°†MN_MSG_BCD_ADDR_STRUç±»åž‹åœ°å€è½¬æ¢æˆMN_MSG_ASCII_ADDR_STRUç±»åž‹åœ°å€
+ è¾“å…¥å‚æ•°  : pstBcdAddr     - MN_MSG_BCD_ADDR_STRUç±»åž‹åœ°å€
+ è¾“å‡ºå‚æ•°  : pstAsciiAddr   - MN_MSG_ASCII_ADDR_STRUç±»åž‹åœ°å€
+ è¿” å›ž å€¼  : MN_ERR_NO_ERRORè½¬æ¢æ“ä½œæˆåŠŸï¼Œå¦åˆ™å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ12ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ12æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 AT_BcdAddrToAscii(
@@ -958,18 +958,18 @@ VOS_UINT32 AT_BcdAddrToAscii(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_PrintBcdAddr
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝBCDÂë±íÊ¾ºÅÂëµÄÊý¾Ý½á¹¹´òÓ¡µØÖ·×Ö·û´®;
- ÊäÈë²ÎÊý  : pstAddr    - BCDÂë±íÊ¾ºÅÂëµÄÊý¾Ý½á¹¹
- Êä³ö²ÎÊý  : pDst       - Êä³ö×Ö·û´®µÄµØÖ·
- ·µ »Ø Öµ  : Êä³ö×Ö·û´®³¤¶È
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_PrintBcdAddr
+ åŠŸèƒ½æè¿°  : æ ¹æ®BCDç è¡¨ç¤ºå·ç çš„æ•°æ®ç»“æž„æ‰“å°åœ°å€å­—ç¬¦ä¸²;
+ è¾“å…¥å‚æ•°  : pstAddr    - BCDç è¡¨ç¤ºå·ç çš„æ•°æ®ç»“æž„
+ è¾“å‡ºå‚æ•°  : pDst       - è¾“å‡ºå­—ç¬¦ä¸²çš„åœ°å€
+ è¿” å›ž å€¼  : è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ12ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ12æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_UINT16 At_PrintBcdAddr(
@@ -1015,18 +1015,18 @@ TAF_UINT16  At_PrintAddrType(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_PrintMsgFo
- ¹¦ÄÜÃèÊö  : ¸ù¾Ý¶ÌÏûÏ¢µÄÊ××Ö½ÚÊôÐÔ»ñµÃÊ××Ö½ÚÊýÖµ²¢´òÓ¡
- ÊäÈë²ÎÊý  : pstTsDataInfo - ¶ÌÏûÏ¢´«Êä²ãÊý¾Ý¶ÔÓ¦µÄÊý¾Ý½á¹¹
- Êä³ö²ÎÊý  : pDst          - Êä³ö×Ö·û´®µÄµØÖ·
- ·µ »Ø Öµ  : Êä³ö×Ö·û´®³¤¶È
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_PrintMsgFo
+ åŠŸèƒ½æè¿°  : æ ¹æ®çŸ­æ¶ˆæ¯çš„é¦–å­—èŠ‚å±žæ€§èŽ·å¾—é¦–å­—èŠ‚æ•°å€¼å¹¶æ‰“å°
+ è¾“å…¥å‚æ•°  : pstTsDataInfo - çŸ­æ¶ˆæ¯ä¼ è¾“å±‚æ•°æ®å¯¹åº”çš„æ•°æ®ç»“æž„
+ è¾“å‡ºå‚æ•°  : pDst          - è¾“å‡ºå­—ç¬¦ä¸²çš„åœ°å€
+ è¿” å›ž å€¼  : è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ12ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ12æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_UINT16  At_PrintMsgFo(
@@ -1136,14 +1136,14 @@ VOS_UINT32  AT_AsciiNumberToBcd(
             return ulRet;
         }
 
-        /*½«µ±Ç°ÐèÒªÌîÈëµÄ¿Õ¼äÇå0*/
+        /*å°†å½“å‰éœ€è¦å¡«å…¥çš„ç©ºé—´æ¸…0*/
         pucBcdNumber[(ucLoop / 2)] &= ((ucLoop % 2) == 1) ? 0x0F : 0xF0;
 
-        /*½«Êý×ÖÌîÈëÏàÓ¦µÄ¿Õ¼ä*/
+        /*å°†æ•°å­—å¡«å…¥ç›¸åº”çš„ç©ºé—´*/
         pucBcdNumber[(ucLoop / 2)] |= (((ucLoop % 2) == 1) ? ((ucBcdCode << 4) & 0xF0) : (ucBcdCode & 0x0F));
     }
 
-    /*Èç¹û³¤¶ÈÎªÆæÊý£¬Ôò×îºóÒ»¸ö×Ö·ûÐèÒªÌî F */
+    /*å¦‚æžœé•¿åº¦ä¸ºå¥‡æ•°ï¼Œåˆ™æœ€åŽä¸€ä¸ªå­—ç¬¦éœ€è¦å¡« F */
     if (1 == (ucLoop % 2))
     {
         pucBcdNumber[(ucLoop / 2)] |= 0xF0;
@@ -1155,18 +1155,18 @@ VOS_UINT32  AT_AsciiNumberToBcd(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : AT_BcdToAsciiCode
- ¹¦ÄÜÃèÊö  : ½«BCD±àÂëµÄ×Ö·û×ª»»³ÉAsciiÂë×Ö·û
- ÊäÈë²ÎÊý  : ucBcdCode   - BCD±àÂëµÄ×Ö·û
- Êä³ö²ÎÊý  : pcAsciiCode - ×ª»»µÃµ½µÄASCIIÂë×Ö·û
- ·µ »Ø Öµ  : VOS_UINT32:º¯Êý·µ»ØµÄ½á¹û,³É¹¦ÒÔ¼°Ê§°ÜµÄÔ­ÒòÖµ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : AT_BcdToAsciiCode
+ åŠŸèƒ½æè¿°  : å°†BCDç¼–ç çš„å­—ç¬¦è½¬æ¢æˆAsciiç å­—ç¬¦
+ è¾“å…¥å‚æ•°  : ucBcdCode   - BCDç¼–ç çš„å­—ç¬¦
+ è¾“å‡ºå‚æ•°  : pcAsciiCode - è½¬æ¢å¾—åˆ°çš„ASCIIç å­—ç¬¦
+ è¿” å›ž å€¼  : VOS_UINT32:å‡½æ•°è¿”å›žçš„ç»“æžœ,æˆåŠŸä»¥åŠå¤±è´¥çš„åŽŸå› å€¼
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2007Äê9ÔÂ20ÈÕ
-    ×÷    Õß   : ¸µÓ³¾ý 62575
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý TAF_STD_ConvertBcdCodeToAscii->AT_BcdToAsciiCode
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2007å¹´9æœˆ20æ—¥
+    ä½œ    è€…   : å‚…æ˜ å› 62575
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•° TAF_STD_ConvertBcdCodeToAscii->AT_BcdToAsciiCode
 *****************************************************************************/
 VOS_UINT32  AT_BcdToAsciiCode(
     VOS_UINT8                           ucBcdCode,
@@ -1187,17 +1187,17 @@ VOS_UINT32  AT_BcdToAsciiCode(
     }
     else if (0x0A == ucBcdCode)
     {
-        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x20);    /*×Ö·û'*'*/
+        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x20);    /*å­—ç¬¦'*'*/
     }
     else if (0x0B == ucBcdCode)
     {
-        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x18);    /*×Ö·û'#'*/
+        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x18);    /*å­—ç¬¦'#'*/
     }
     else if ((0x0C == ucBcdCode)
           || (0x0D == ucBcdCode)
           || (0x0E == ucBcdCode))
     {
-        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x55);    /*×Ö·û'a', 'b', 'c'*/
+        cAsciiCode = (VOS_CHAR)(ucBcdCode + 0x55);    /*å­—ç¬¦'a', 'b', 'c'*/
     }
     else
     {
@@ -1227,7 +1227,7 @@ VOS_UINT32  AT_BcdNumberToAscii(
         return MN_ERR_NULLPTR;
     }
 
-    /*ÕûÀíºÅÂë×Ö·û´®£¬È¥³ýÎÞÐ§µÄ0XFFÊý¾Ý*/
+    /*æ•´ç†å·ç å­—ç¬¦ä¸²ï¼ŒåŽ»é™¤æ— æ•ˆçš„0XFFæ•°æ®*/
     while (ucBcdLen > 1)
     {
         if (0xFF == pucBcdNumber[ucBcdLen - 1])
@@ -1240,8 +1240,8 @@ VOS_UINT32  AT_BcdNumberToAscii(
         }
     }
 
-    /*ÅÐ¶ÏpucBcdAddressËùÖ¸ÏòµÄ×Ö·û´®µÄ×îºóÒ»¸ö×Ö½ÚµÄ¸ßÎ»ÊÇ·ñÎª1111£¬
-    Èç¹ûÊÇ£¬ËµÃ÷ºÅÂëÎ»ÊýÎªÆæÊý£¬·ñÔòÎªÅ¼Êý*/
+    /*åˆ¤æ–­pucBcdAddressæ‰€æŒ‡å‘çš„å­—ç¬¦ä¸²çš„æœ€åŽä¸€ä¸ªå­—èŠ‚çš„é«˜ä½æ˜¯å¦ä¸º1111ï¼Œ
+    å¦‚æžœæ˜¯ï¼Œè¯´æ˜Žå·ç ä½æ•°ä¸ºå¥‡æ•°ï¼Œå¦åˆ™ä¸ºå¶æ•°*/
     if ((pucBcdNumber[ucBcdLen - 1] & 0xF0) == 0xF0)
     {
         ucLen = (VOS_UINT8)((ucBcdLen * 2) - 1);
@@ -1251,22 +1251,22 @@ VOS_UINT32  AT_BcdNumberToAscii(
         ucLen = (VOS_UINT8)(ucBcdLen * 2);
     }
 
-    /*½âÎöºÅÂë*/
+    /*è§£æžå·ç */
     for (ucLoop = 0; ucLoop < ucLen; ucLoop++)
     {
-        /*ÅÐ¶Ïµ±Ç°½âÂëµÄÊÇÆæÊýÎ»ºÅÂë»¹ÊÇÅ¼ÊýÎ»ºÅÂë£¬´Ó0¿ªÊ¼£¬ÊÇÅ¼Êý*/
+        /*åˆ¤æ–­å½“å‰è§£ç çš„æ˜¯å¥‡æ•°ä½å·ç è¿˜æ˜¯å¶æ•°ä½å·ç ï¼Œä»Ž0å¼€å§‹ï¼Œæ˜¯å¶æ•°*/
         if (1 == (ucLoop % 2))
         {
-            /*Èç¹ûÊÇÆæÊýÎ»ºÅÂë£¬ÔòÈ¡¸ß4Î»µÄÖµ*/
+            /*å¦‚æžœæ˜¯å¥‡æ•°ä½å·ç ï¼Œåˆ™å–é«˜4ä½çš„å€¼*/
             ucBcdCode = ((pucBcdNumber[(ucLoop / 2)] >> 4) & 0x0F);
         }
         else
         {
-            /*Èç¹ûÊÇÅ¼ÊýÎ»ºÅÂë£¬ÔòÈ¡µÍ4Î»µÄÖµ*/
+            /*å¦‚æžœæ˜¯å¶æ•°ä½å·ç ï¼Œåˆ™å–ä½Ž4ä½çš„å€¼*/
             ucBcdCode = (pucBcdNumber[(ucLoop / 2)] & 0x0F);
         }
 
-        /*½«¶þ½øÖÆÊý×Ö×ª»»³ÉAsciiÂëÐÎÊ½*/
+        /*å°†äºŒè¿›åˆ¶æ•°å­—è½¬æ¢æˆAsciiç å½¢å¼*/
         ulRet = AT_BcdToAsciiCode(ucBcdCode, &(pcAsciiNumber[ucLoop]));
         if (MN_ERR_NO_ERROR != ulRet)
         {
@@ -1274,7 +1274,7 @@ VOS_UINT32  AT_BcdNumberToAscii(
         }
     }
 
-    pcAsciiNumber[ucLoop] = '\0';      /*×Ö·û´®Ä©Î²Îª0*/
+    pcAsciiNumber[ucLoop] = '\0';      /*å­—ç¬¦ä¸²æœ«å°¾ä¸º0*/
 
     return MN_ERR_NO_ERROR;
 }
@@ -1291,7 +1291,7 @@ TAF_UINT32  At_GetAsciiOrBcdAddr(
 )
 {
     TAF_UINT8                           aucAsciiNum[MN_MAX_ASCII_ADDRESS_NUM+2];   /*array  of ASCII Num*/
-    TAF_UINT8                           *pucNum;                                /*Ö¸ÏòÊµ¼ÊºÅÂë£¨²»°üÀ¨+ºÅ£©µÄÖ¸Õë*/
+    TAF_UINT8                           *pucNum;                                /*æŒ‡å‘å®žé™…å·ç ï¼ˆä¸åŒ…æ‹¬+å·ï¼‰çš„æŒ‡é’ˆ*/
     TAF_UINT32                          ulAsciiAddrLen;
     TAF_UINT32                          ulRet;
     MN_MSG_TON_ENUM_U8                  enNumType;                              /*type of number*/
@@ -1332,7 +1332,7 @@ TAF_UINT32  At_GetAsciiOrBcdAddr(
         return AT_CMS_OPERATION_NOT_ALLOWED;
     }
 
-    /* ÉèÖÃ<toda> */
+    /* è®¾ç½®<toda> */
     if (AT_MSG_INTERNAL_ISDN_ADDR_TYPE == (At_GetCodeType(aucAsciiNum[0])))
     {
         pucNum = (TAF_UINT8 *)(aucAsciiNum + 1);
@@ -1419,7 +1419,7 @@ TAF_UINT32  At_PrintListMsg(
                                                (TAF_CHAR *)pgucAtSndCodeAddr,
                                                (TAF_CHAR *)(pucDst + usLength),
                                                ",");
-            /* <alpha> ²»±¨ */
+            /* <alpha> ä¸æŠ¥ */
             usLength += (TAF_UINT16)At_sprintf(AT_CMD_MAX_LEN,
                                                (TAF_CHAR *)pgucAtSndCodeAddr,
                                                (TAF_CHAR *)(pucDst + usLength),
@@ -1446,7 +1446,7 @@ TAF_UINT32  At_PrintListMsg(
                                               (pucDst + usLength));
             }
 
-            /* <data> ÓÐ¿ÉÄÜµÃµ½ÊÇUCS2£¬Ðè×ÐÏ¸´¦Àí*/
+            /* <data> æœ‰å¯èƒ½å¾—åˆ°æ˜¯UCS2ï¼Œéœ€ä»”ç»†å¤„ç†*/
             usLength += (TAF_UINT16)At_sprintf(AT_CMD_MAX_LEN,
                                                (TAF_CHAR *)pucDst,
                                                (TAF_CHAR *)(pucDst + usLength),
@@ -1471,7 +1471,7 @@ TAF_UINT32  At_PrintListMsg(
                                                (TAF_CHAR *)(pucDst + usLength),
                                                ",");
 
-            /* <alpha> ²»±¨ */
+            /* <alpha> ä¸æŠ¥ */
             usLength += (TAF_UINT16)At_sprintf(AT_CMD_MAX_LEN,
                                                (TAF_CHAR *)pgucAtSndCodeAddr,
                                                (TAF_CHAR *)(pucDst + usLength),
@@ -1495,7 +1495,7 @@ TAF_UINT32  At_PrintListMsg(
 
             }
 
-            /* <data> ÓÐ¿ÉÄÜµÃµ½ÊÇUCS2£¬Ðè×ÐÏ¸´¦Àí*/
+            /* <data> æœ‰å¯èƒ½å¾—åˆ°æ˜¯UCS2ï¼Œéœ€ä»”ç»†å¤„ç†*/
             usLength += (TAF_UINT16)At_sprintf(AT_CMD_MAX_LEN,
                                                (TAF_CHAR *)pucDst,
                                                (TAF_CHAR *)(pucDst + usLength),
@@ -1579,19 +1579,19 @@ TAF_UINT32  At_PrintListMsg(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_GetCpmsMemStatus
- ¹¦ÄÜÃèÊö  : »ñÈ¡Ö¸¶¨´æ´¢½éÖÊµÄÊ¹ÓÃ×´Ì¬
- ÊäÈë²ÎÊý  : enMemType      - ´æ´¢½éÖÊÀàÐÍ
- Êä³ö²ÎÊý  : pulTotalRec    - ´æ´¢½éÖÊµÄÈÝÁ¿
-             pulUsedRec     - ´æ´¢½éÖÊµÄÊ¹ÓÃ¼ÇÂ¼ÌõÊý
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_GetCpmsMemStatus
+ åŠŸèƒ½æè¿°  : èŽ·å–æŒ‡å®šå­˜å‚¨ä»‹è´¨çš„ä½¿ç”¨çŠ¶æ€
+ è¾“å…¥å‚æ•°  : enMemType      - å­˜å‚¨ä»‹è´¨ç±»åž‹
+ è¾“å‡ºå‚æ•°  : pulTotalRec    - å­˜å‚¨ä»‹è´¨çš„å®¹é‡
+             pulUsedRec     - å­˜å‚¨ä»‹è´¨çš„ä½¿ç”¨è®°å½•æ¡æ•°
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê8ÔÂ14ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´8æœˆ14æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_VOID At_GetCpmsMemStatus(
@@ -1614,7 +1614,7 @@ TAF_VOID At_GetCpmsMemStatus(
     {
         pstStorageList = &(pstSmsCtx->stCpmsInfo.stNvimStorage);
     }
-    else/*ÎÞ´æ´¢Éè±¸*/
+    else/*æ— å­˜å‚¨è®¾å¤‡*/
     {
         *pulUsedRec = 0;
         *pulTotalRec = 0;
@@ -1628,18 +1628,18 @@ TAF_VOID At_GetCpmsMemStatus(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_PrintSetCpmsRsp
- ¹¦ÄÜÃèÊö  : ´òÓ¡CPMSÉèÖÃÃüÁîÏìÓ¦Êý¾Ý
- ÊäÈë²ÎÊý  : ucIndex    - ÓÃ»§Ë÷Òý
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_PrintSetCpmsRsp
+ åŠŸèƒ½æè¿°  : æ‰“å°CPMSè®¾ç½®å‘½ä»¤å“åº”æ•°æ®
+ è¾“å…¥å‚æ•°  : ucIndex    - ç”¨æˆ·ç´¢å¼•
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ17ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ17æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_VOID At_PrintSetCpmsRsp(
@@ -1690,18 +1690,18 @@ TAF_VOID At_PrintSetCpmsRsp(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_GetCpmsMemTypeStr
- ¹¦ÄÜÃèÊö  : »ñÈ¡´æ´¢½éÖÊµÄÃèÊö×Ö·û´®Ö¸Õë
- ÊäÈë²ÎÊý  : enMemType      - ´æ´¢½éÖÊÀàÐÍ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ´æ´¢½éÖÊµÄÃèÊö×Ö·û´®Ö¸Õë
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_GetCpmsMemTypeStr
+ åŠŸèƒ½æè¿°  : èŽ·å–å­˜å‚¨ä»‹è´¨çš„æè¿°å­—ç¬¦ä¸²æŒ‡é’ˆ
+ è¾“å…¥å‚æ•°  : enMemType      - å­˜å‚¨ä»‹è´¨ç±»åž‹
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : å­˜å‚¨ä»‹è´¨çš„æè¿°å­—ç¬¦ä¸²æŒ‡é’ˆ
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê8ÔÂ14ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´8æœˆ14æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_UINT8 *At_GetCpmsMemTypeStr(
@@ -1843,7 +1843,7 @@ TAF_UINT32 At_SmsPrintScts(
         AT_WARN_LOG("At_SmsPrintScts: Date is invalid.");
     }
 
-    /* "yy/MM/dd,hh:mm:ss¡Àzz" */
+    /* "yy/MM/dd,hh:mm:ssÂ±zz" */
     if (0 == (MN_MSG_DATE_INVALID_YEAR & ucDateInvalidType))
     {
         usLength = (TAF_UINT16)At_sprintf(AT_CMD_MAX_LEN,
@@ -1951,7 +1951,7 @@ TAF_UINT32 At_SmsPrintScts(
                                            "00");
     }
 
-    /* ¡Àzz */
+    /* Â±zz */
     AT_PrintTimeZone(pstTimeStamp->cTimezone,
                      (pDst + usLength),
                      &usTimeZoneLength);
@@ -1961,18 +1961,18 @@ TAF_UINT32 At_SmsPrintScts(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_MsgPrintVp
- ¹¦ÄÜÃèÊö  :
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_MsgPrintVp
+ åŠŸèƒ½æè¿°  :
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ12ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ12æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_UINT16 At_MsgPrintVp(
@@ -2002,19 +2002,19 @@ TAF_UINT16 At_MsgPrintVp(
 
 /*****************************************************************************
  Prototype      : At_SmsPrintState
- Description    : ¶Á¶ÌÐÅÊ±£¬¸ù¾Ý+CMGFÊä³öµ±Ç°¶ÌÐÅ×´Ì¬ÐÅÏ¢
- Input          : enSmsFormat --- µ±Ç°¶ÌÐÅ¸ñÊ½
-                  ucState --- ´ËÌõ¶ÌÐÅµÄ×´Ì¬
-                  pDst --- Êä³ö×Ö·û´®µÄµØÖ·
+ Description    : è¯»çŸ­ä¿¡æ—¶ï¼Œæ ¹æ®+CMGFè¾“å‡ºå½“å‰çŸ­ä¿¡çŠ¶æ€ä¿¡æ¯
+ Input          : enSmsFormat --- å½“å‰çŸ­ä¿¡æ ¼å¼
+                  ucState --- æ­¤æ¡çŸ­ä¿¡çš„çŠ¶æ€
+                  pDst --- è¾“å‡ºå­—ç¬¦ä¸²çš„åœ°å€
  Output         :
- Return Value   : usLength --- Êä³ö×Ö·û´®³¤¶È
+ Return Value   : usLength --- è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
  Calls          : ---
  Called By      : ---
 
  History        : ---
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ18ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ18æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 TAF_UINT32 At_SmsPrintState(
     AT_CMGF_MSG_FORMAT_ENUM_U8          enSmsFormat,
@@ -2085,19 +2085,19 @@ TAF_UINT32 At_SmsPrintState(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_GetScaFromInputStr
- ¹¦ÄÜÃèÊö  : ¸ù¾ÝÊäÈëµÄRPDU¸ñÊ½µÄºÅÂë×Ö·û´®»ñµÃBCDÂë¸ñÊ½µÄÊý¾Ý½á¹¹
- ÊäÈë²ÎÊý  : pucAddr    -  TPDU¸ñÊ½µÄºÅÂë×Ö·û´®
- Êä³ö²ÎÊý  : pstBcdAddr -  BCDÂë¸ñÊ½µÄÊý¾Ý½á¹¹
-             pulLen     -  TPDU¸ñÊ½µÄºÅÂë×Ö·û´®³¤¶È
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_GetScaFromInputStr
+ åŠŸèƒ½æè¿°  : æ ¹æ®è¾“å…¥çš„RPDUæ ¼å¼çš„å·ç å­—ç¬¦ä¸²èŽ·å¾—BCDç æ ¼å¼çš„æ•°æ®ç»“æž„
+ è¾“å…¥å‚æ•°  : pucAddr    -  TPDUæ ¼å¼çš„å·ç å­—ç¬¦ä¸²
+ è¾“å‡ºå‚æ•°  : pstBcdAddr -  BCDç æ ¼å¼çš„æ•°æ®ç»“æž„
+             pulLen     -  TPDUæ ¼å¼çš„å·ç å­—ç¬¦ä¸²é•¿åº¦
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê3ÔÂ18ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´3æœˆ18æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_UINT32  At_GetScaFromInputStr(
@@ -2125,22 +2125,22 @@ TAF_UINT32  At_GetScaFromInputStr(
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : At_MsgDeleteCmdProc
- ¹¦ÄÜÃèÊö  : ´Ó´ýÉ¾³ýµÄÏûÏ¢×´Ì¬¼¯ÖÐ¸ù¾ÝÉ¾³ýË³ÐòÉ¾³ýÖ¸¶¨×´Ì¬µÄ¶ÌÏûÏ¢
- ÊäÈë²ÎÊý  : clientId           - ·¢Æð¸ÃÇëÇóµÄClientµÄID
-             opId               - Operation ID, ±êÊ¶±¾´Î²Ù×÷
-             stDelete           - É¾³ý²ÎÊý
-             ulDeleteTypes      - ´ýÉ¾³ýµÄÏûÏ¢×´Ì¬¼¯
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : AT_OK              - ³É¹¦
-             ÆäËû               - Ê§°Ü¼°ÆäÊ§°ÜµÄÔ­Òò
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : At_MsgDeleteCmdProc
+ åŠŸèƒ½æè¿°  : ä»Žå¾…åˆ é™¤çš„æ¶ˆæ¯çŠ¶æ€é›†ä¸­æ ¹æ®åˆ é™¤é¡ºåºåˆ é™¤æŒ‡å®šçŠ¶æ€çš„çŸ­æ¶ˆæ¯
+ è¾“å…¥å‚æ•°  : clientId           - å‘èµ·è¯¥è¯·æ±‚çš„Clientçš„ID
+             opId               - Operation ID, æ ‡è¯†æœ¬æ¬¡æ“ä½œ
+             stDelete           - åˆ é™¤å‚æ•°
+             ulDeleteTypes      - å¾…åˆ é™¤çš„æ¶ˆæ¯çŠ¶æ€é›†
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : AT_OK              - æˆåŠŸ
+             å…¶ä»–               - å¤±è´¥åŠå…¶å¤±è´¥çš„åŽŸå› 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2008Äê8ÔÂ18ÈÕ
-    ×÷    Õß   : fuyingjun
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2008å¹´8æœˆ18æ—¥
+    ä½œ    è€…   : fuyingjun
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 TAF_UINT32 At_MsgDeleteCmdProc(

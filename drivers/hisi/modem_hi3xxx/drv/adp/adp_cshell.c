@@ -3,7 +3,7 @@
 #include <bsp_reset.h>
 
 
-#ifndef CONFIG_CSHELL   /* ´ò×® */
+#ifndef CONFIG_CSHELL   /* æ‰“æ¡© */
 
 int cshell_mode_reset_cb(DRV_RESET_CALLCBFUN_MOMENT eparam, int usrdata)
 {

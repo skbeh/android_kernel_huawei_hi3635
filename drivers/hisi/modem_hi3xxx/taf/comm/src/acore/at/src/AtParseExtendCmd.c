@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-   1 ͷ�ļ�����
+   1 头文件包含
 *****************************************************************************/
 #include "ATCmdProc.h"
 #include "AtCheckFunc.h"
@@ -17,183 +17,183 @@
 
 
 /*****************************************************************************
-    Э��ջ��ӡ��㷽ʽ�µ�.C�ļ��궨��
+    协议栈打印打点方式下的.C文件宏定义
 *****************************************************************************/
 /*lint -e960*/
 #define    THIS_FILE_ID        PS_FILE_ID_AT_PARSEEXTENDCMD_C
 /*lint +e960*/
 
 /*****************************************************************************
-   2 ȫ�ֱ�������
+   2 全局变量定义
 *****************************************************************************/
-/* AT��չ�����ʼ״̬״̬�� */
+/* AT扩展命令初始状态状态表 */
 AT_SUB_STATE_STRU AT_E_CMD_NONE_STATE_TAB[]=
 {
-    /* �����ǰ״̬��ATCMD_T_STATE��atCheckCharPlus�ɹ��������AT_E_CMD_NAME_STATE */
+    /* 如果当前状态是ATCMD_T_STATE，atCheckCharPlus成功，则进入AT_E_CMD_NAME_STATE */
     {    At_CheckCharPlus    ,    AT_E_CMD_NAME_STATE    },
 
-    /* ��״̬������ */
+    /* 子状态表结束 */
     {    NULL    ,    AT_BUTT_STATE    },
 };
 
-/* AT��չ������״̬�� */
+/* AT扩展命令名状态表 */
 AT_SUB_STATE_STRU AT_E_CMD_NAME_STATE_TAB[]=
 {
-    /* �����ǰ״̬��AT_E_CMD_NAME_STATE��atCheck_char�ɹ��������AT_E_CMD_NAME_STATE */
+    /* 如果当前状态是AT_E_CMD_NAME_STATE，atCheck_char成功，则进入AT_E_CMD_NAME_STATE */
     {    At_CheckChar    ,    AT_E_CMD_NAME_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_NAME_STATE��atCheck_equ�ɹ��������AT_E_CMD_SET_STATE */
+    /* 如果当前状态是AT_E_CMD_NAME_STATE，atCheck_equ成功，则进入AT_E_CMD_SET_STATE */
     {    At_CheckEqu    ,    AT_E_CMD_SET_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_NAME_STATE��atCheck_req�ɹ��������AT_E_CMD_READ_STATE */
+    /* 如果当前状态是AT_E_CMD_NAME_STATE，atCheck_req成功，则进入AT_E_CMD_READ_STATE */
     {    At_CheckReq    ,    AT_E_CMD_READ_STATE    },
 
-    /* ��״̬������ */
+    /* 子状态表结束 */
     {    NULL    ,    AT_BUTT_STATE    },
 };
 
-/* AT��չ����Ⱥ�״̬�� */
+/* AT扩展命令等号状态表 */
 AT_SUB_STATE_STRU AT_E_CMD_SET_STATE_TAB[]=
 {
-    /* �����ǰ״̬��AT_E_CMD_SET_STATE��atCheck_req�ɹ��������AT_E_CMD_TEST_STATE */
+    /* 如果当前状态是AT_E_CMD_SET_STATE，atCheck_req成功，则进入AT_E_CMD_TEST_STATE */
     {    At_CheckReq    ,    AT_E_CMD_TEST_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_SET_STATE��atCheck_char�ɹ��������AT_E_CMD_PARA_STATE */
+    /* 如果当前状态是AT_E_CMD_SET_STATE，atCheck_char成功，则进入AT_E_CMD_PARA_STATE */
     {    At_CheckChar    ,    AT_E_CMD_PARA_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_SET_STATE��atCheck_colon�ɹ��������AT_E_CMD_COLON_STATE */
+    /* 如果当前状态是AT_E_CMD_SET_STATE，atCheck_colon成功，则进入AT_E_CMD_COLON_STATE */
     {    atCheckComma    ,    AT_E_CMD_COLON_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_SET_STATE��atCheck_quot�ɹ��������AT_E_CMD_LEFT_QUOT_STATE */
+    /* 如果当前状态是AT_E_CMD_SET_STATE，atCheck_quot成功，则进入AT_E_CMD_LEFT_QUOT_STATE */
     {    At_CheckQuot    ,    AT_E_CMD_LEFT_QUOT_STATE    },
 
-    /* ��״̬������ */
+    /* 子状态表结束 */
     {    NULL    ,    AT_BUTT_STATE    },
 };
 
-/* AT��չ�������״̬�� */
+/* AT扩展命令参数状态表 */
 AT_SUB_STATE_STRU AT_E_CMD_PARA_STATE_TAB[]=
 {
-    /* �����ǰ״̬��AT_E_CMD_PARA_STATE��atCheck_char�ɹ��������AT_E_CMD_PARA_STATE */
+    /* 如果当前状态是AT_E_CMD_PARA_STATE，atCheck_char成功，则进入AT_E_CMD_PARA_STATE */
     {    At_CheckChar    ,    AT_E_CMD_PARA_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_PARA_STATE��atCheck_char�ɹ��������AT_E_CMD_PARA_STATE */
+    /* 如果当前状态是AT_E_CMD_PARA_STATE，atCheck_char成功，则进入AT_E_CMD_PARA_STATE */
     {    atCheckblank    ,   AT_E_CMD_PARA_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_PARA_STATE��atCheckColon�ɹ��������AT_E_CMD_PARA_STATE */
+    /* 如果当前状态是AT_E_CMD_PARA_STATE，atCheckColon成功，则进入AT_E_CMD_PARA_STATE */
     {    atCheckColon    ,   AT_E_CMD_PARA_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_PARA_STATE��atCheckComma�ɹ��������AT_E_CMD_COLON_STATE */
+    /* 如果当前状态是AT_E_CMD_PARA_STATE，atCheckComma成功，则进入AT_E_CMD_COLON_STATE */
     {    atCheckComma    ,   AT_E_CMD_COLON_STATE    },
 
-    /* ��״̬������ */
+    /* 子状态表结束 */
     {    NULL    ,    AT_BUTT_STATE    },
 };
 
-/* AT��չ�����״̬�� */
+/* AT扩展命令逗号状态表 */
 AT_SUB_STATE_STRU AT_E_CMD_COLON_STATE_TAB[]=
 {
-    /* �����ǰ״̬��AT_E_CMD_COLON_STATE��atCheck_char�ɹ��������AT_E_CMD_PARA_STATE */
+    /* 如果当前状态是AT_E_CMD_COLON_STATE，atCheck_char成功，则进入AT_E_CMD_PARA_STATE */
     {    At_CheckChar    ,    AT_E_CMD_PARA_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_COLON_STATE��atCheck_colon�ɹ��������AT_E_CMD_COLON_STATE */
+    /* 如果当前状态是AT_E_CMD_COLON_STATE，atCheck_colon成功，则进入AT_E_CMD_COLON_STATE */
     {    atCheckComma    ,    AT_E_CMD_COLON_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_COLON_STATE��atCheck_quot�ɹ��������AT_E_CMD_LEFT_QUOT_STATE */
+    /* 如果当前状态是AT_E_CMD_COLON_STATE，atCheck_quot成功，则进入AT_E_CMD_LEFT_QUOT_STATE */
     {    At_CheckQuot    ,    AT_E_CMD_LEFT_QUOT_STATE    },
 
-    /* ��״̬������ */
+    /* 子状态表结束 */
     {    NULL    ,    AT_BUTT_STATE    },
 };
 
-/* AT��չ����������״̬�� */
+/* AT扩展命令左引号状态表 */
 AT_SUB_STATE_STRU AT_E_CMD_LEFT_QUOT_STATE_TAB[]=
 {
-    /* �����ǰ״̬��AT_E_CMD_LEFT_QUOT_STATE��atCheck_char�ɹ��������AT_E_CMD_LEFT_QUOT_STATE */
+    /* 如果当前状态是AT_E_CMD_LEFT_QUOT_STATE，atCheck_char成功，则进入AT_E_CMD_LEFT_QUOT_STATE */
     {    At_CheckNoQuot    ,    AT_E_CMD_LEFT_QUOT_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_LEFT_QUOT_STATE��atCheck_quot�ɹ��������AT_E_CMD_RIGHT_QUOT_STATE */
+    /* 如果当前状态是AT_E_CMD_LEFT_QUOT_STATE，atCheck_quot成功，则进入AT_E_CMD_RIGHT_QUOT_STATE */
     {    At_CheckQuot    ,    AT_E_CMD_RIGHT_QUOT_STATE    },
 
-    /* ��״̬������ */
+    /* 子状态表结束 */
     {    NULL    ,    AT_BUTT_STATE    },
 };
 
-/* AT��չ����������״̬�� */
+/* AT扩展命令右引号状态表 */
 AT_SUB_STATE_STRU AT_E_CMD_RIGHT_QUOT_STATE_TAB[]=
 {
-    /* �����ǰ״̬��AT_E_CMD_RIGHT_QUOT_STATE��atCheck_colon�ɹ��������AT_E_CMD_COLON_STATE */
+    /* 如果当前状态是AT_E_CMD_RIGHT_QUOT_STATE，atCheck_colon成功，则进入AT_E_CMD_COLON_STATE */
     {    atCheckComma    ,    AT_E_CMD_COLON_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_RIGHT_QUOT_STATE��atCheck_char�ɹ��������AT_E_CMD_RIGHT_QUOT_STATE */
+    /* 如果当前状态是AT_E_CMD_RIGHT_QUOT_STATE，atCheck_char成功，则进入AT_E_CMD_RIGHT_QUOT_STATE */
     {    At_CheckChar     ,    AT_E_CMD_RIGHT_QUOT_STATE    },
 
-    /* �����ǰ״̬��AT_E_CMD_RIGHT_QUOT_STATE��atCheck_quot�ɹ��������AT_E_CMD_RIGHT_QUOT_STATE */
+    /* 如果当前状态是AT_E_CMD_RIGHT_QUOT_STATE，atCheck_quot成功，则进入AT_E_CMD_RIGHT_QUOT_STATE */
     {    At_CheckQuot     ,    AT_E_CMD_RIGHT_QUOT_STATE    },
 
-    /* ��״̬������ */
+    /* 子状态表结束 */
     {    NULL    ,    AT_BUTT_STATE    },
 };
 
-/* AT������״̬�� */
+/* AT命令主状态表 */
 AT_MAIN_STATE_STRU AT_E_CMD_MAIN_STATE_TAB[] =
 {
-    /* �����ǰ״̬��AT_NONE_STATE�������AT_E_CMD_NONE_STATE_TAB��״̬�� */
+    /* 如果当前状态是AT_NONE_STATE，则进入AT_E_CMD_NONE_STATE_TAB子状态表 */
     {    AT_NONE_STATE    ,    AT_E_CMD_NONE_STATE_TAB    },
 
-    /* �����ǰ״̬��AT_E_CMD_NAME_STATE�������AT_E_CMD_NAME_STATE_TAB��״̬�� */
+    /* 如果当前状态是AT_E_CMD_NAME_STATE，则进入AT_E_CMD_NAME_STATE_TAB子状态表 */
     {    AT_E_CMD_NAME_STATE    ,    AT_E_CMD_NAME_STATE_TAB    },
 
-    /* �����ǰ״̬��AT_E_CMD_SET_STATE�������AT_E_CMD_SET_STATE_TAB��״̬�� */
+    /* 如果当前状态是AT_E_CMD_SET_STATE，则进入AT_E_CMD_SET_STATE_TAB子状态表 */
     {    AT_E_CMD_SET_STATE    ,    AT_E_CMD_SET_STATE_TAB    },
 
-    /* �����ǰ״̬��AT_E_CMD_PARA_STATE�������AT_E_CMD_PARA_STATE_TAB��״̬�� */
+    /* 如果当前状态是AT_E_CMD_PARA_STATE，则进入AT_E_CMD_PARA_STATE_TAB子状态表 */
     {    AT_E_CMD_PARA_STATE    ,    AT_E_CMD_PARA_STATE_TAB    },
 
-    /* �����ǰ״̬��AT_E_CMD_COLON_STATE�������AT_E_CMD_COLON_STATE_TAB��״̬�� */
+    /* 如果当前状态是AT_E_CMD_COLON_STATE，则进入AT_E_CMD_COLON_STATE_TAB子状态表 */
     {    AT_E_CMD_COLON_STATE    ,    AT_E_CMD_COLON_STATE_TAB    },
 
-    /* �����ǰ״̬��AT_E_CMD_LEFT_QUOT_STATE�������AT_E_CMD_LEFT_QUOT_STATE_TAB��״̬�� */
+    /* 如果当前状态是AT_E_CMD_LEFT_QUOT_STATE，则进入AT_E_CMD_LEFT_QUOT_STATE_TAB子状态表 */
     {    AT_E_CMD_LEFT_QUOT_STATE    ,    AT_E_CMD_LEFT_QUOT_STATE_TAB    },
 
-    /* �����ǰ״̬��AT_E_CMD_RIGHT_QUOT_STATE�������AT_E_CMD_RIGHT_QUOT_STATE_TAB��״̬�� */
+    /* 如果当前状态是AT_E_CMD_RIGHT_QUOT_STATE，则进入AT_E_CMD_RIGHT_QUOT_STATE_TAB子状态表 */
     {    AT_E_CMD_RIGHT_QUOT_STATE    ,    AT_E_CMD_RIGHT_QUOT_STATE_TAB    },
 
-    /* ��״̬������ */
+    /* 主状态表结束 */
     {    AT_BUTT_STATE    ,    NULL    },
 };
 
 VOS_UINT32 atParseExtendCmd( VOS_UINT8 * pData, VOS_UINT16 usLen)
 {
-    AT_STATE_TYPE_ENUM curr_state = AT_NONE_STATE;  /*  ���ó�ʼ״̬ */
-    AT_STATE_TYPE_ENUM new_state = AT_NONE_STATE;   /*  ���ó�ʼ״̬ */
-    VOS_UINT8 *pucCurrPtr = pData;                  /*  ָ��ǰ���ڴ������ַ�*/
-    VOS_UINT8 *pucCopyPtr = pData;                  /*  �������ݵ���ʼָ�� */
-    VOS_UINT16 usLength = 0;                        /*  ��¼��ǰ�Ѿ��������ַ�����*/
+    AT_STATE_TYPE_ENUM curr_state = AT_NONE_STATE;  /*  设置初始状态 */
+    AT_STATE_TYPE_ENUM new_state = AT_NONE_STATE;   /*  设置初始状态 */
+    VOS_UINT8 *pucCurrPtr = pData;                  /*  指向当前正在处理的字符*/
+    VOS_UINT8 *pucCopyPtr = pData;                  /*  拷贝内容的起始指针 */
+    VOS_UINT16 usLength = 0;                        /*  记录当前已经处理的字符个数*/
 
-    /* ���η����ַ����е�ÿ���ַ�*/
-    while(usLength++ < usLen)                  /* ���αȽ�ÿ���ַ� */
+    /* 依次分析字符串中的每个字符*/
+    while(usLength++ < usLen)                  /* 依次比较每个字符 */
     {
-        curr_state = new_state;                 /* ��ǰ״̬����Ϊ��״̬*/
+        curr_state = new_state;                 /* 当前状态设置为新状态*/
 
-        /*  ���ݵ�ǰ�������ַ��͵�ǰ״̬����õ���״̬*/
+        /*  根据当前处理的字符和当前状态查表得到新状态*/
         new_state = atFindNextMainState(AT_E_CMD_MAIN_STATE_TAB,*pucCurrPtr,curr_state);
 
-        switch(new_state)                       /* ״̬����*/
+        switch(new_state)                       /* 状态处理*/
         {
-        case AT_E_CMD_NAME_STATE:               /* ��չ������״̬*/
-            if(curr_state != new_state)         /* ��״̬���ֲ����ڵ�ǰ״̬*/
+        case AT_E_CMD_NAME_STATE:               /* 扩展命令名状态*/
+            if(curr_state != new_state)         /* 新状态部分不等于当前状态*/
             {
-                g_stATParseCmd.ucCmdFmtType = AT_EXTEND_CMD_TYPE;           /* ������������*/
-                g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_SET_CMD_NO_PARA;   /* ���������������*/
+                g_stATParseCmd.ucCmdFmtType = AT_EXTEND_CMD_TYPE;           /* 设置命令类型*/
+                g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_SET_CMD_NO_PARA;   /* 设置命令操作类型*/
 
-                pucCopyPtr = pucCurrPtr;            /* ׼��������չ����������*/
+                pucCopyPtr = pucCurrPtr;            /* 准备接收扩展类型命令名*/
             }
             break;
 
-        case AT_E_CMD_SET_STATE:                /* AT��չ����Ⱥ�״̬ */
-            /* �洢��������ȫ�ֱ����� */
-            g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_SET_PARA_CMD;  /* ���������������*/
+        case AT_E_CMD_SET_STATE:                /* AT扩展命令等号状态 */
+            /* 存储命令名到全局变量中 */
+            g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_SET_PARA_CMD;  /* 设置命令操作类型*/
             g_stATParseCmd.stCmdName.usCmdNameLen = (VOS_UINT16)(pucCurrPtr - pucCopyPtr);
             if(g_stATParseCmd.stCmdName.usCmdNameLen < sizeof(g_stATParseCmd.stCmdName.aucCmdName))
             {
@@ -201,22 +201,22 @@ VOS_UINT32 atParseExtendCmd( VOS_UINT8 * pData, VOS_UINT16 usLen)
             }
             else
             {
-                return AT_ERROR;                  /* ���ش��� */
+                return AT_ERROR;                  /* 返回错误 */
             }
             break;
 
-        case AT_E_CMD_PARA_STATE:               /* AT��չ�������״̬ */
-        case AT_E_CMD_LEFT_QUOT_STATE:          /* AT��չ����������״̬ */
-            if(curr_state != new_state)         /* ��״̬���ֲ����ڵ�ǰ״̬*/
+        case AT_E_CMD_PARA_STATE:               /* AT扩展命令参数状态 */
+        case AT_E_CMD_LEFT_QUOT_STATE:          /* AT扩展命令左引号状态 */
+            if(curr_state != new_state)         /* 新状态部分不等于当前状态*/
             {
-                pucCopyPtr = pucCurrPtr;            /* ׼�����ղ�������*/
+                pucCopyPtr = pucCurrPtr;            /* 准备接收参数内容*/
             }
             break;
 
-        case AT_E_CMD_COLON_STATE:              /* AT��չ�����״̬ */
-            if((curr_state != new_state) && (AT_E_CMD_SET_STATE != curr_state))         /* ��״̬���ֲ����ڵ�ǰ״̬*/
+        case AT_E_CMD_COLON_STATE:              /* AT扩展命令逗号状态 */
+            if((curr_state != new_state) && (AT_E_CMD_SET_STATE != curr_state))         /* 新状态部分不等于当前状态*/
             {
-                /* �洢������ȫ�ֱ����� */
+                /* 存储参数到全局变量中 */
                 if(ERR_MSP_SUCCESS != atfwParseSaveParam(pucCopyPtr, (VOS_UINT16)(pucCurrPtr - pucCopyPtr)))
                 {
                     return AT_ERROR;
@@ -225,7 +225,7 @@ VOS_UINT32 atParseExtendCmd( VOS_UINT8 * pData, VOS_UINT16 usLen)
             }
             else
             {
-                /*������������,����������*/
+                /*连续两个逗号,参数不存在*/
                 if(ERR_MSP_SUCCESS != atfwParseSaveParam(pucCopyPtr, 0))
                 {
                     return AT_ERROR;
@@ -234,9 +234,9 @@ VOS_UINT32 atParseExtendCmd( VOS_UINT8 * pData, VOS_UINT16 usLen)
             }
             break;
 
-        case AT_E_CMD_READ_STATE:                   /* AT��չ�����ѯ����״̬ */
+        case AT_E_CMD_READ_STATE:                   /* AT扩展命令查询参数状态 */
 
-            /* �洢��������ȫ�ֱ����� */
+            /* 存储命令名到全局变量中 */
             g_stATParseCmd.stCmdName.usCmdNameLen = (VOS_UINT16)(pucCurrPtr - pucCopyPtr);
             if (g_stATParseCmd.stCmdName.usCmdNameLen < sizeof(g_stATParseCmd.stCmdName.aucCmdName))
             {
@@ -244,32 +244,32 @@ VOS_UINT32 atParseExtendCmd( VOS_UINT8 * pData, VOS_UINT16 usLen)
             }
             else
             {
-                return AT_ERROR;                  /* ���ش��� */
+                return AT_ERROR;                  /* 返回错误 */
             }
 
-            g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_READ_CMD;   /* ���������������*/
+            g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_READ_CMD;   /* 设置命令操作类型*/
 
             break;
 
-        case AT_E_CMD_TEST_STATE:                   /* AT��չ������Բ���״̬ */
-            g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_TEST_CMD;   /* ���������������*/
+        case AT_E_CMD_TEST_STATE:                   /* AT扩展命令测试参数状态 */
+            g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_TEST_CMD;   /* 设置命令操作类型*/
             break;
 
-        case AT_BUTT_STATE:                         /* ��Ч״̬ */
-            return AT_ERROR;                      /* ���ش��� */
+        case AT_BUTT_STATE:                         /* 无效状态 */
+            return AT_ERROR;                      /* 返回错误 */
 
         default:
             break;
         }
-        pucCurrPtr++;                                 /* ����������һ���ַ�*/
+        pucCurrPtr++;                                 /* 继续分析下一个字符*/
     }
 
-    switch(new_state)                               /* ��������״̬�ж�*/
+    switch(new_state)                               /* 根据最后的状态判断*/
     {
-    case AT_E_CMD_PARA_STATE:                       /* AT��չ�������״̬ */
-    case AT_E_CMD_RIGHT_QUOT_STATE:                 /* AT��չ����������״̬ */
+    case AT_E_CMD_PARA_STATE:                       /* AT扩展命令参数状态 */
+    case AT_E_CMD_RIGHT_QUOT_STATE:                 /* AT扩展命令右引号状态 */
 
-        /* �洢������ȫ�ֱ����� */
+        /* 存储参数到全局变量中 */
         if (ERR_MSP_SUCCESS != atfwParseSaveParam(pucCopyPtr, (VOS_UINT16)(pucCurrPtr - pucCopyPtr)))
         {
             return AT_ERROR;
@@ -277,9 +277,9 @@ VOS_UINT32 atParseExtendCmd( VOS_UINT8 * pData, VOS_UINT16 usLen)
 
         break;
 
-    case AT_E_CMD_NAME_STATE:                   /* AT��չ�����ѯ����״̬ */
+    case AT_E_CMD_NAME_STATE:                   /* AT扩展命令查询参数状态 */
 
-        /* �洢��������ȫ�ֱ����� */
+        /* 存储命令名到全局变量中 */
         g_stATParseCmd.stCmdName.usCmdNameLen = (VOS_UINT16)(pucCurrPtr - pucCopyPtr);
         if (g_stATParseCmd.stCmdName.usCmdNameLen < sizeof(g_stATParseCmd.stCmdName.aucCmdName))
         {
@@ -287,14 +287,14 @@ VOS_UINT32 atParseExtendCmd( VOS_UINT8 * pData, VOS_UINT16 usLen)
         }
         else
         {
-            return AT_ERROR;                  /* ���ش��� */
+            return AT_ERROR;                  /* 返回错误 */
         }
 
-        g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_SET_CMD_NO_PARA;   /* ���������������*/
+        g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_SET_CMD_NO_PARA;   /* 设置命令操作类型*/
 
         break;
 
-    case AT_E_CMD_COLON_STATE:                      /* AT�����������޲εĶ��� */
+    case AT_E_CMD_COLON_STATE:                      /* AT命令后面跟有无参的逗号 */
 
         if (ERR_MSP_SUCCESS != atfwParseSaveParam(pucCopyPtr, 0))
         {
@@ -303,15 +303,15 @@ VOS_UINT32 atParseExtendCmd( VOS_UINT8 * pData, VOS_UINT16 usLen)
 
         break;
 
-    case AT_E_CMD_SET_STATE:                        /* AT��չ����Ⱥ�״̬ */
-    case AT_E_CMD_TEST_STATE:                       /* AT��չ�����ѯ����״̬ */
-    case AT_E_CMD_READ_STATE:                       /* AT��չ������Բ���״̬ */
+    case AT_E_CMD_SET_STATE:                        /* AT扩展命令等号状态 */
+    case AT_E_CMD_TEST_STATE:                       /* AT扩展命令查询参数状态 */
+    case AT_E_CMD_READ_STATE:                       /* AT扩展命令测试参数状态 */
         break;
 
     default:
-        return AT_ERROR;                          /* ���ش���*/
+        return AT_ERROR;                          /* 返回错误*/
     }
-    return AT_SUCCESS;                              /*  ������ȷ*/
+    return AT_SUCCESS;                              /*  返回正确*/
 }
 
 
@@ -343,14 +343,14 @@ VOS_UINT32 AT_ParseSetDockCmd(
 
     PS_MEM_CPY(pucDataPara, pucData, usLen);
 
-    /* ȥ���ַ����е��˸�� */
+    /* 去掉字符串中的退格符 */
     if (AT_FAILURE == At_ScanDelChar(pucDataPara, &usLen))
     {
         PS_MEM_FREE(WUEPS_PID_AT, pucDataPara);
         return AT_FAILURE;
     }
 
-    /* ���������ַ�������С��"AT^DOCK="����ֱ�ӷ���AT_FAILURE */
+    /* 待处理的字符串长度小于"AT^DOCK="长度直接返回AT_FAILURE */
     usCmdlen = (VOS_UINT16)VOS_StrLen("AT^DOCK=");
     if (usLen < usCmdlen)
     {
@@ -358,10 +358,10 @@ VOS_UINT32 AT_ParseSetDockCmd(
         return AT_FAILURE;
     }
 
-    /* AT����ͷ�ַ�ת��д */
+    /* AT命令头字符转大写 */
     At_UpString(pucDataPara, usCmdlen);
 
-    /* ���������ַ���ͷ������"AT^DOCK="ֱ�ӷ���AT_FAILURE */
+    /* 待处理的字符串头部不是"AT^DOCK="直接返回AT_FAILURE */
     cRet = VOS_StrNiCmp((VOS_CHAR *)pucDataPara, "AT^DOCK=", usCmdlen);
     if (0 != cRet)
     {
@@ -369,7 +369,7 @@ VOS_UINT32 AT_ParseSetDockCmd(
         return AT_FAILURE;
     }
 
-    /* ��ȡ����(����������ǰ׺AT)���Ƽ����� */
+    /* 获取命令(不包含命令前缀AT)名称及长度 */
     ulPos = VOS_StrLen("AT");
     stAtCmdName.usCmdNameLen = (VOS_UINT16)VOS_StrLen("^DOCK");
     PS_MEM_CPY(stAtCmdName.aucCmdName,
@@ -380,13 +380,13 @@ VOS_UINT32 AT_ParseSetDockCmd(
 
     ulPos += VOS_StrLen("=");
 
-    /* ��ȡ����Ĳ����ַ��������� */
+    /* 获取命令的参数字符串及长度 */
     gastAtParaList[0].usParaLen = usLen - (VOS_UINT16)ulPos;
     PS_MEM_CPY(gastAtParaList[0].aucPara,
                (pucDataPara + ulPos),
                gastAtParaList[0].usParaLen);
 
-    /* �����������ͣ��������ͺͲ������� */
+    /* 设置命令类型，操作类型和参数个数 */
     gucAtParaIndex  = 1;
     g_stATParseCmd.ucCmdOptType = AT_CMD_OPT_SET_PARA_CMD;
     gucAtCmdFmtType = AT_EXTEND_CMD_TYPE;

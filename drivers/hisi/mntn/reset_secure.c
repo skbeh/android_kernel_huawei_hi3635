@@ -90,25 +90,25 @@ extern "C" {
 #define FLASH_PAGE_SIZE 2048
 
 
-/* ¶¨ÒåVRLµÄ½âÎö½á¹¹Ìå */
+/* å®šä¹‰VRLçš„è§£æç»“æ„ä½“ */
 struct vrl_parse_stru g_vrl_parse_st;
 
-/* DX°²È«Ğ£ÑéËùĞèµÄbufferÖ¸Õë */
+/* DXå®‰å…¨æ ¡éªŒæ‰€éœ€çš„bufferæŒ‡é’ˆ */
 unsigned long *g_work_space = 0;
 
-/* ¼ÇÂ¼VRLÖĞµÄ×îĞ¡Èí¼ş°æ±¾ºÅ */
+/* è®°å½•VRLä¸­çš„æœ€å°è½¯ä»¶ç‰ˆæœ¬å· */
 unsigned int g_sw_min_version = 0;
 
-/* ¼ÇÂ¼µ±Ç°ĞèÒªÊ¹ÓÃµÄ¹«Ô¿Ë÷Òı */
+/* è®°å½•å½“å‰éœ€è¦ä½¿ç”¨çš„å…¬é’¥ç´¢å¼• */
 unsigned int g_otp_key_index = 0;
 
-/* ·ÀÖ¹´®»õµÄ½á¹¹Ìå */
+/* é˜²æ­¢ä¸²è´§çš„ç»“æ„ä½“ */
 struct oem_stru g_oem_st;
 
-/* °²È«¾µÏñµÄ¼ÓÔØµØÖ· */
+/* å®‰å…¨é•œåƒçš„åŠ è½½åœ°å€ */
 unsigned int g_image_load_addr = 0;
 
-/*ÓÃÓÚ±êÊ¶ÊÇÄÄ¸öÓ³Ïñ*/
+/*ç”¨äºæ ‡è¯†æ˜¯å“ªä¸ªæ˜ åƒ*/
 vrl_id  g_image_id = 0;
 char *g_emmc_read_buf = NULL;
 
@@ -165,9 +165,9 @@ void efuse_power_off(void)
  *****************************************************************************
  * Prototype    : test_bit_value
  * Description  : check bits in register whether are equal to the special value
- * Input        : addr£º  register address
-                  bit_mask£ºbits to be check
-                  bit_value£ºspecial value
+ * Input        : addrï¼š  register address
+                  bit_maskï¼šbits to be check
+                  bit_valueï¼šspecial value
  * Output       : None
  * Return Value : TRUE: equal
                   FALSE:not equal
@@ -176,7 +176,7 @@ void efuse_power_off(void)
  */
 static unsigned int test_bit_value(void* addr, unsigned int bit_mask, unsigned int bit_value)
 {
-#define TIME_DELAY_MAX    1000000       /*×î´óÑÓ³ÙÊ±¼ä,1Ãë*/
+#define TIME_DELAY_MAX    1000000       /*æœ€å¤§å»¶è¿Ÿæ—¶é—´,1ç§’*/
     unsigned int time;
 
     for (time = 0; time < TIME_DELAY_MAX; time++) {
@@ -194,9 +194,9 @@ static unsigned int test_bit_value(void* addr, unsigned int bit_mask, unsigned i
  *****************************************************************************
  * Prototype    : read_efuse
  * Description  : read special group of efuse
- * Input        : group£ºspecial group of efuse
-                  buf£º  data buffer
-                  len£º  length of the group
+ * Input        : groupï¼šspecial group of efuse
+                  bufï¼š  data buffer
+                  lenï¼š  length of the group
  * Output       : None
  * Return Value : OK/ERROR
  * Author       : chenyingguo 61362
@@ -208,7 +208,7 @@ static int read_efuse(unsigned int group, unsigned int *buf, unsigned int len)
     unsigned int cnt;
     void *efuse_base_addr = (void*)ioremap_nocache(EFUSE_BASE_REG, 0x2000);
     void *soc_ao_sc_base_addr = (void*)ioremap_nocache(SOC_AO_SCTRL_BASE_ADDR, 0x2000);
-    /* Èë²ÎÅĞ¶Ï */
+    /* å…¥å‚åˆ¤æ–­ */
     if (0 == buf) {
         goto error;
     }
@@ -218,33 +218,33 @@ static int read_efuse(unsigned int group, unsigned int *buf, unsigned int len)
         goto error;
     }
 
-    /* ´ò¿ªEFUSE clk */
+    /* æ‰“å¼€EFUSE clk */
     SETBITVALUE32(SOC_AO_SCTRL_SC_PERIPH_CLKEN4_ADDR(soc_ao_sc_base_addr), \
                 (1 << SOC_AO_SCTRL_SC_PERIPH_CLKEN4_periph_clken4_10pclk_efusec_START), \
                 (1 << SOC_AO_SCTRL_SC_PERIPH_CLKEN4_periph_clken4_10pclk_efusec_START));
 
-    /*ÉèÖÃEFUSE½Ó¿ÚÊ±ĞòÎªÄÚ²¿²úÉú*/
+    /*è®¾ç½®EFUSEæ¥å£æ—¶åºä¸ºå†…éƒ¨äº§ç”Ÿ*/
     SETBITVALUE32(EFUSEC_CFG(efuse_base_addr), EFUSEC_SIG_SEL_MASK, EFUSEC_SIG_SEL_MASK);
 
-    /* Ñ­»·¶ÁÈ¡EfuseÖµ */
+    /* å¾ªç¯è¯»å–Efuseå€¼ */
     for (cnt = 0; cnt < len; cnt++) {
-        /* ÉèÖÃ¶ÁÈ¡µØÖ· */
+        /* è®¾ç½®è¯»å–åœ°å€ */
         OUTREG32(EFUSE_GROUP(efuse_base_addr), group + cnt);
 
-        /* Ê¹ÄÜ¶Á */
+        /* ä½¿èƒ½è¯» */
         SETBITVALUE32(EFUSEC_CFG(efuse_base_addr), EFUSEC_RD_EN_MASK, EFUSEC_RD_EN_MASK);
 
-        /* µÈ´ı¶ÁÊ¹ÄÜÉèÖÃ³É¹¦£¬¶ÁÊ¹ÄÜ³¬Ê±·µ»Ø´íÎó */
+        /* ç­‰å¾…è¯»ä½¿èƒ½è®¾ç½®æˆåŠŸï¼Œè¯»ä½¿èƒ½è¶…æ—¶è¿”å›é”™è¯¯ */
         if (!test_bit_value(EFUSEC_CFG(efuse_base_addr), EFUSEC_RD_EN_MASK, 0)) {
             goto error;
         }
 
-        /* µÈ´ı¶ÁÍê³É */
+        /* ç­‰å¾…è¯»å®Œæˆ */
         if (!test_bit_value(EFUSEC_STATUS(efuse_base_addr), EFUSEC_RD_STATUS, EFUSEC_RD_STATUS)) {
             goto error;
         }
 
-        /* ¶ÁÈ¡Êı¾İ */
+        /* è¯»å–æ•°æ® */
         *ptmp = INREG32(EFUSEC_DATA(efuse_base_addr));
         ptmp++;
     }
@@ -252,7 +252,7 @@ static int read_efuse(unsigned int group, unsigned int *buf, unsigned int len)
     /* AIB select */
     SETBITVALUE32(EFUSEC_CFG(efuse_base_addr), EFUSEC_SIG_SEL_INNER, 0);
 
-    /* ¹Ø±ÕEFUSE clk */
+    /* å…³é—­EFUSE clk */
     SETBITVALUE32(SOC_AO_SCTRL_SC_PERIPH_CLKDIS4_ADDR(soc_ao_sc_base_addr), \
                 (1 << SOC_AO_SCTRL_SC_PERIPH_CLKEN4_periph_clken4_10pclk_efusec_START), \
                 (1 << SOC_AO_SCTRL_SC_PERIPH_CLKEN4_periph_clken4_10pclk_efusec_START));
@@ -262,7 +262,7 @@ static int read_efuse(unsigned int group, unsigned int *buf, unsigned int len)
     return OK;
 error:
 
-    /* ¹Ø±ÕEFUSE clk */
+    /* å…³é—­EFUSE clk */
     SETBITVALUE32(SOC_AO_SCTRL_SC_PERIPH_CLKDIS4_ADDR(soc_ao_sc_base_addr), \
                 (1 << SOC_AO_SCTRL_SC_PERIPH_CLKEN4_periph_clken4_10pclk_efusec_START), \
                 (1 << SOC_AO_SCTRL_SC_PERIPH_CLKEN4_periph_clken4_10pclk_efusec_START));
@@ -274,20 +274,20 @@ error:
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : get_efuse_value
- ¹¦ÄÜÃèÊö  : »ñÈ¡efuseµÄÖµ£¨Ö§³Ö¿çgroup£©
- ÊäÈë²ÎÊı  : unsigned int start_bit
+ å‡½ æ•° å  : get_efuse_value
+ åŠŸèƒ½æè¿°  : è·å–efuseçš„å€¼ï¼ˆæ”¯æŒè·¨groupï¼‰
+ è¾“å…¥å‚æ•°  : unsigned int start_bit
              unsigned int * buffer
              unsigned int bit_cnt
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê3ÔÂ4ÈÕ
-    ×÷    Õß   : ³ÂÓ­¹ú 61362
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´3æœˆ4æ—¥
+    ä½œ    è€…   : é™ˆè¿å›½ 61362
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 static int get_efuse_value(unsigned int start_bit, unsigned int * buffer, unsigned int bit_cnt)
@@ -403,29 +403,29 @@ int check_secure_mode(void)
     char* ao_base_addr = NULL;
     unsigned int temp;
     static int ret = -1;
-    /* ±ÜÃâÆµ·±µÄ·ÃÎÊefuse */
+    /* é¿å…é¢‘ç¹çš„è®¿é—®efuse */
     if (-1 != ret) {
         return ret;
     }
     ao_base_addr = (char*)ioremap_nocache(SOC_SC_ON_BASE_ADDR, SOC_SC_ON_BASE_SIZE);
 
-    /* ¼ì²éÏµÍ³×´Ì¬¼Ä´æÆ÷£¬¶ÁÈ¡ÆäÖĞµÄ°²È«Ä£Ê½bit */
+    /* æ£€æŸ¥ç³»ç»ŸçŠ¶æ€å¯„å­˜å™¨ï¼Œè¯»å–å…¶ä¸­çš„å®‰å…¨æ¨¡å¼bit */
     p_sc_sys_stat1 = (SOC_AO_SCTRL_SC_SYS_STAT1_UNION *)
       SOC_AO_SCTRL_SC_SYS_STAT1_ADDR(ao_base_addr);
     temp = p_sc_sys_stat1->reg.security_boot_flg;
 
-    /* Èç¹û¸ÃbitÎª0£¬·µ»ØFALSE£¬±íÊ¾ÊÇ·Ç°²È«Ä£Ê½ */
+    /* å¦‚æœè¯¥bitä¸º0ï¼Œè¿”å›FALSEï¼Œè¡¨ç¤ºæ˜¯éå®‰å…¨æ¨¡å¼ */
     if (temp == 0) {
         ret = FALSE;
     }
     else {
-        /* Èç¹û¸ÃbitÎª1£¬ĞèÒª¼ì²éefuseÖĞµÄOEM_IDºÍHW_ID */
+        /* å¦‚æœè¯¥bitä¸º1ï¼Œéœ€è¦æ£€æŸ¥efuseä¸­çš„OEM_IDå’ŒHW_ID */
         if(OK == check_oem_hw()) {
-            /* °²È«Ä£Ê½*/
+            /* å®‰å…¨æ¨¡å¼*/
             ret = TRUE;
         }
         else {
-            /* ·Ç°²È«Ä£Ê½*/
+            /* éå®‰å…¨æ¨¡å¼*/
             ret = FALSE;
         }
     }
@@ -491,7 +491,7 @@ int check_vrl(unsigned int vrl_addr, unsigned int vrl_bk_addr)
     unsigned char *vrl_bk_buf = vrl_buf + VRL_SIZE;
     unsigned int ret;
 
-    /* ¶ÁÈ¡VRLÊı¾İ */
+    /* è¯»å–VRLæ•°æ® */
     ret = sec_emmc_read(vrl_addr, vrl_buf, VRL_SIZE, 0);
     ret |= sec_emmc_read(vrl_bk_addr, vrl_bk_buf, VRL_SIZE, 0);
     if (OK != ret) {
@@ -499,7 +499,7 @@ int check_vrl(unsigned int vrl_addr, unsigned int vrl_bk_addr)
     }
 
     if (1 == g_oem_st.flag) {
-        /* Ğ£ÑéCarrier IDºÍHW ID */
+        /* æ ¡éªŒCarrier IDå’ŒHW ID */
         if ((*(unsigned int *)vrl_buf != g_oem_st.carrier_id ) ||
              (*(unsigned int *)(vrl_buf + 4) != g_oem_st.hw_id)) {
                 printk(KERN_ERR"check Carrier ID and HW ID failed!\n");
@@ -507,7 +507,7 @@ int check_vrl(unsigned int vrl_addr, unsigned int vrl_bk_addr)
          }
     }
 
-    /* ¼ì²éVRLÊÇ·ñÕıÈ· */
+    /* æ£€æŸ¥VRLæ˜¯å¦æ­£ç¡® */
     vrl_header = (VRL_Header_t *)(vrl_buf + ADDITIONAL_DATA_SIZE);
     if (vrl_header->magicNumber != DX_VRL_MAGIC_NUMBER_DEFAULT_VALUE) {
         vrl_header = (VRL_Header_t *)(vrl_bk_buf + ADDITIONAL_DATA_SIZE);
@@ -592,18 +592,18 @@ int check_image_in_emmc(int secure_image_id)
     work_space = g_work_space;
 
 
-    /* ¼ì²é°²È«Ó³ÏñID */
+    /* æ£€æŸ¥å®‰å…¨æ˜ åƒID */
     if ((secure_image_id < 0) || (secure_image_id >= (int)ID_BUTTOM)) {
         printk(KERN_ERR"secure image id 0x%x is invalid!\n", secure_image_id);
         return ERROR;
     }
 
-    /* ´ò¿ªseceng clk */
+    /* æ‰“å¼€seceng clk */
     SETBITVALUE32(SOC_PERI_SCTRL_SC_PERIPH_CLKEN2_ADDR(soc_peri_sc_base_addr), \
             (1 << SOC_PERI_SCTRL_SC_PERIPH_CLKEN2_periph_clken2_seceng_acpu_START), \
             (1 << SOC_PERI_SCTRL_SC_PERIPH_CLKEN2_periph_clken2_seceng_acpu_START));
 
-    /* ¸ù¾İ°²È«Ó³ÏñID£¬ÕÒµ½Ó³Ïñ¶ÔÓ¦µÄVRLÔÚptableÖĞµÄµØÖ· */
+    /* æ ¹æ®å®‰å…¨æ˜ åƒIDï¼Œæ‰¾åˆ°æ˜ åƒå¯¹åº”çš„VRLåœ¨ptableä¸­çš„åœ°å€ */
     vrl_addr  = VRL_AREA1_OFFSET + (unsigned int)secure_image_id*VRL_SIZE;
     vrl_addr2 = VRL_AREA2_OFFSET + (unsigned int)secure_image_id*VRL_SIZE;
     if (ERROR == check_vrl(vrl_addr, vrl_addr2)) {
@@ -611,12 +611,12 @@ int check_image_in_emmc(int secure_image_id)
         return ERROR;
     }
 
-    /* Ìî³ävrlList£¬ÆäÖĞ¶¨ÒåVRLµÄ´æ´¢µØÖ· */
+    /* å¡«å……vrlListï¼Œå…¶ä¸­å®šä¹‰VRLçš„å­˜å‚¨åœ°å€ */
     vrlList[0].VRL_Address = vrl_addr;
     vrlList[0].OTP_Key_Index = g_otp_key_index;
     vrlList[0].Magic_Number = 0;
 
-    /* µ÷ÓÃDX_BIV_SwImageVerification£¬½øĞĞ°²È«Ğ£Ñé*/
+    /* è°ƒç”¨DX_BIV_SwImageVerificationï¼Œè¿›è¡Œå®‰å…¨æ ¡éªŒ*/
     ret = DX_BIV_SwImageVerification((DX_SB_FlashRead)sec_emmc_read,
                                         0,
                                         SOC_SECENG_BASE_ADDR,
@@ -632,7 +632,7 @@ int check_image_in_emmc(int secure_image_id)
     kfree(g_work_space);
     g_work_space = 0;
 
-    /* ¹Ø±Õseceng clk */
+    /* å…³é—­seceng clk */
     OUTREG32(SOC_PERI_SCTRL_SC_PERIPH_CLKDIS2_ADDR(soc_peri_sc_base_addr), \
             (1 << SOC_PERI_SCTRL_SC_PERIPH_CLKEN2_periph_clken2_seceng_acpu_START));
 
@@ -775,14 +775,14 @@ int check_image_in_ram(unsigned int *image_buf)
       printk("check_image_in_ram failed in ioremap physical addr 0x%x\n", SOC_SECENG_BASE_ADDR);
       return ERROR;
     }
-    /* µ÷ÓÃNVM_GetSwVersion»ñÈ¡efuseÖĞµÄ×îĞ¡°æ±¾ºÅ */
+    /* è°ƒç”¨NVM_GetSwVersionè·å–efuseä¸­çš„æœ€å°ç‰ˆæœ¬å· */
     ret = NVM_GetSwVersion((unsigned int)virAddr, &swVersion);
     if(DX_OK != ret) {
         (void)printk("NVM_GetSwVersion failed, return is 0x%x !\n", ret);
         goto error;
     }
 
-    /* µ÷ÓÃDX_BIV_GetPrimaryKeyHash»ñÈ¡efuseÖĞµÄ¹«Ô¿Hash */
+    /* è°ƒç”¨DX_BIV_GetPrimaryKeyHashè·å–efuseä¸­çš„å…¬é’¥Hash */
     ret = DX_BIV_GetPrimaryKeyHash(NVM_ReadHASHPubKey, (unsigned int)virAddr,
                                    pubKeyHASH, 0, 0);
     if(DX_OK != ret) {
@@ -790,7 +790,7 @@ int check_image_in_ram(unsigned int *image_buf)
         goto error;
     }
 
-    /* µ÷ÓÃDX_BIV_VRLParserĞ£Ñéimage_bufÖĞµÄÒ»¼¶VRL£¬Ğ£ÑéÊ±»ñÈ¡µ½¶ş¼¶¹«Ô¿µÄHASH */
+    /* è°ƒç”¨DX_BIV_VRLParseræ ¡éªŒimage_bufä¸­çš„ä¸€çº§VRLï¼Œæ ¡éªŒæ—¶è·å–åˆ°äºŒçº§å…¬é’¥çš„HASH */
     ret = DX_BIV_VRLParser((DxUint8_t)DX_TRUE,
                           (unsigned int) virAddr,
                            pubKeyHASH,
@@ -803,7 +803,7 @@ int check_image_in_ram(unsigned int *image_buf)
         goto error;
     }
 
-    /* ¼ÆËãÒ»¼¶VRLµÄ´óĞ¡ */
+    /* è®¡ç®—ä¸€çº§VRLçš„å¤§å° */
     ret = (unsigned int)parse_vrl(image_buf, &vrl_parse_st.vrl1_size,
                     &image_num, &vrl_parse_st.image_size);
     if(DX_OK != ret) {
@@ -817,7 +817,7 @@ int check_image_in_ram(unsigned int *image_buf)
         goto error;
     }
 
-    /* µ÷ÓÃDX_BIV_VRLParserĞ£Ñéimage_bufÖĞµÄ¶ş¼¶VRL */
+    /* è°ƒç”¨DX_BIV_VRLParseræ ¡éªŒimage_bufä¸­çš„äºŒçº§VRL */
     ret = DX_BIV_VRLParser((DxUint8_t)DX_FALSE,
                            (unsigned int)virAddr,
                            (DxUint32_t *)pubKeyHASH,
@@ -830,7 +830,7 @@ int check_image_in_ram(unsigned int *image_buf)
         goto error;
     }
 
-    /* ¼ÆËã¶ş¼¶VRLµÄ´óĞ¡ */
+    /* è®¡ç®—äºŒçº§VRLçš„å¤§å° */
     ret = (unsigned int)parse_vrl((unsigned int *)((unsigned long)image_buf +
                      vrl_parse_st.vrl1_size),
                      (unsigned int *)&vrl_parse_st.vrl2_size,
@@ -847,7 +847,7 @@ int check_image_in_ram(unsigned int *image_buf)
         goto error;
     }
 
-	/* µ÷ÓÃDX_BIV_SWCompValidationĞ£Ñé¶ş¼¶VRLÖĞ´øµÄÓ³Ïñ */
+	/* è°ƒç”¨DX_BIV_SWCompValidationæ ¡éªŒäºŒçº§VRLä¸­å¸¦çš„æ˜ åƒ */
     ret = DX_BIV_SWCompValidation((DX_SB_FlashRead)sec_ram_read,
                                   0,
                                   (unsigned int)virAddr,

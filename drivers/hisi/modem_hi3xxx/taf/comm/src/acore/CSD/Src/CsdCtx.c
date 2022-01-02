@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include  "CsdCtx.h"
 
@@ -15,7 +15,7 @@ extern "C" {
 
 
 /*****************************************************************************
-    Ğ­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼şºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 
     /*lint -e767 */
@@ -26,13 +26,13 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
 CSD_CTX_STRU                            g_stCsdCtx;
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 VOS_UINT8 CSD_UL_GetAtClientIndex(VOS_VOID)
@@ -56,13 +56,13 @@ VOS_UINT32 CSD_UL_InsertQueueTail(
 
     ulLockLevel = 0;
 
-    /* ¶ÓÁĞ¼ÓËø */
+    /* é˜Ÿåˆ—åŠ é” */
     VOS_SpinLockIntLock(&g_stCsdCtx.stSpinLock, ulLockLevel);
 
-    /* Êı¾İ²åÈë¶ÓÎ² */
+    /* æ•°æ®æ’å…¥é˜Ÿå°¾ */
     IMM_ZcQueueTail(pstQueueHead, pstNode);
 
-    /* ¶ÓÁĞ½âËø */
+    /* é˜Ÿåˆ—è§£é” */
     VOS_SpinUnlockIntUnlock(&g_stCsdCtx.stSpinLock, ulLockLevel);
 
 
@@ -81,13 +81,13 @@ IMM_ZC_STRU  *CSD_UL_GetQueueFrontNode(IMM_ZC_HEAD_STRU *pstQueue)
 
     ulLockLevel = 0;
 
-    /* ¶ÓÁĞ¼ÓËø */
+    /* é˜Ÿåˆ—åŠ é” */
     VOS_SpinLockIntLock(&g_stCsdCtx.stSpinLock, ulLockLevel);
 
-    /* ·µ»Ø¶ÓÎ²½ÚµãÖ¸Õë */
+    /* è¿”å›é˜Ÿå°¾èŠ‚ç‚¹æŒ‡é’ˆ */
     pstNode        = IMM_ZcDequeueHead(pstQueue);
 
-    /* ¶ÓÁĞ½âËø */
+    /* é˜Ÿåˆ—è§£é” */
     VOS_SpinUnlockIntUnlock(&g_stCsdCtx.stSpinLock, ulLockLevel);
 
 
@@ -120,7 +120,7 @@ VOS_UINT32 CSD_UL_FreeQueue(IMM_ZC_HEAD_STRU *pstQueue)
             return VOS_ERR;
         }
 
-        /*ÊÍ·ÅÊı¾İÄÚ´æ*/
+        /*é‡Šæ”¾æ•°æ®å†…å­˜*/
         IMM_ZcFree(pstNode);
 
     }
@@ -187,7 +187,7 @@ VOS_UINT32 CSD_InitSem(VOS_VOID)
     hDLDataSem  = CSD_GetDownLinkDataSem();
     hULDataSem  = CSD_GetUpLinkDataSem();
 
-    /* ³õÊ¼ÏÂĞĞĞÅºÅÁ¿ */
+    /* åˆå§‹ä¸‹è¡Œä¿¡å·é‡ */
     ulRslt      = VOS_SmBCreate("ulDldataSem",
                                 CSD_SEMAPHORE_INIT_CNT,
                                 VOS_SEMA4_FIFO,
@@ -202,7 +202,7 @@ VOS_UINT32 CSD_InitSem(VOS_VOID)
         return VOS_ERR;
     }
 
-    /* ³õÊ¼ÉÏĞĞĞÅºÅÁ¿ */
+    /* åˆå§‹ä¸Šè¡Œä¿¡å·é‡ */
     ulRslt      = VOS_SmBCreate("ulUldataSem",
                                 CSD_SEMAPHORE_INIT_CNT,
                                 VOS_SEMA4_FIFO,
@@ -223,16 +223,16 @@ VOS_UINT32 CSD_InitSem(VOS_VOID)
 VOS_UINT32 CSD_InitCtx(VOS_VOID)
 {
 
-    /*»º´æ¶ÓÁĞÍ·Ö¸Õë³õÊ¼»¯*/
+    /*ç¼“å­˜é˜Ÿåˆ—å¤´æŒ‡é’ˆåˆå§‹åŒ–*/
     CSD_UL_SetQueue(VOS_NULL_PTR);
 
-    /*ÓÃÀ´¼ÇÂ¼×î½ü´¥·¢DICCÖĞ¶ÏµÄÊ±¼ä£¬³õÊ¼Îª0*/
+    /*ç”¨æ¥è®°å½•æœ€è¿‘è§¦å‘DICCä¸­æ–­çš„æ—¶é—´ï¼Œåˆå§‹ä¸º0*/
     CSD_SetCurrTxSlice(CSD_DEFAULT_TX_SLICE);
 
-    /*CSDÄ¬ÈÏÍ¨»°×´Ì¬ÉèÖÃ*/
+    /*CSDé»˜è®¤é€šè¯çŠ¶æ€è®¾ç½®*/
     CSD_SetCallState(AT_CSD_CALL_STATE_OFF);
 
-    /* Ëø³õÊ¼»¯ */
+    /* é”åˆå§‹åŒ– */
     VOS_SpinLockInit(&g_stCsdCtx.stSpinLock);
 
     CSD_UL_SetAtClientIndex(0);

@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "vos.h"
 #include "v_typdef.h"
@@ -24,26 +24,26 @@
 /*lint -e958*/
 
 /*****************************************************************************
-  2 ³£Á¿¶¨Òå
+  2 å¸¸é‡å®šä¹‰
 *****************************************************************************/
 #define THIS_FILE_ID                PS_FILE_ID_TAF_MMIENCODE_C
 
 /*****************************************************************************
-  3 ÀàĞÍ¶¨Òå
+  3 ç±»å‹å®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  4 È«¾Ö±äÁ¿ÉùÃ÷
+  4 å…¨å±€å˜é‡å£°æ˜
 *****************************************************************************/
 /*****************************************************************************
- ±äÁ¿Ãû    : g_stTafSsaEncodeProcFunc
- ½á¹¹ËµÃ÷  : ÏûÏ¢Óë¶ÔÓ¦´¦Àíº¯ÊıµÄÓ³Éä±í
-             usMsgType                       - ´ı±àÂëµÄÏûÏ¢ÀàĞÍ£»
-             TAF_MmiEncodeRegisterMmiString  - ±àÂë´¦Àíº¯Êı
+ å˜é‡å    : g_stTafSsaEncodeProcFunc
+ ç»“æ„è¯´æ˜  : æ¶ˆæ¯ä¸å¯¹åº”å¤„ç†å‡½æ•°çš„æ˜ å°„è¡¨
+             usMsgType                       - å¾…ç¼–ç çš„æ¶ˆæ¯ç±»å‹ï¼›
+             TAF_MmiEncodeRegisterMmiString  - ç¼–ç å¤„ç†å‡½æ•°
 
-  1.ÈÕ    ÆÚ   : 2013Äê05ÔÂ06ÈÕ
-    ×÷    Õß   : ¸µÓ³¾ı/62575
-    ĞŞ¸ÄÄÚÈİ   : SS FDN&Call Control
+  1.æ—¥    æœŸ   : 2013å¹´05æœˆ06æ—¥
+    ä½œ    è€…   : å‚…æ˜ å›/62575
+    ä¿®æ”¹å†…å®¹   : SS FDN&Call Control
 *****************************************************************************/
 TAF_MMI_ENCODE_PROC_FUNC_STRU           g_astTafMmiEncodeSsProcFunc[] = {
     {TAF_MMI_BuildEventType(WUEPS_PID_AT, TAF_MSG_REGISTERSS_MSG),         TAF_MmiEncodeRegisterMmiString},
@@ -76,7 +76,7 @@ TAF_MMI_OPERATION_TABLE_STRU            g_astTafMmiEventOperationTypeTbl[] = {
     {TAF_MMI_BuildEventType(MAPS_STK_PID, STK_SS_INTERROGATESS_REQ),       TAF_MMI_INTERROGATE_SS, {0, 0, 0}},
 };
 
-/* ASCII to ·ÇÑ¹ËõGSM 7bit×ª»»±í(µÚ8bitÉèÖÃÎª0)£¬UE·¢ÆğµÄUSSD Request£¬ÏÈ×ª»»ºóÑ¹Ëõ*/
+/* ASCII to éå‹ç¼©GSM 7bitè½¬æ¢è¡¨(ç¬¬8bitè®¾ç½®ä¸º0)ï¼ŒUEå‘èµ·çš„USSD Requestï¼Œå…ˆè½¬æ¢åå‹ç¼©*/
 LOCAL VOS_UINT8 g_aucTafMmiDefAsciiToAlphaTbl[] =
 {
 0x2E,0x2E,0x2E,0x2E,0x2E,0x2E,0x2E,0x2E,0x2E,0x2E,0x0A,0x2E,0x2E,0x0D,0x2E,0x2E,
@@ -92,7 +92,7 @@ LOCAL VOS_UINT8 g_aucTafMmiDefAsciiToAlphaTbl[] =
 /*lint -save -e958 */
 
 /*****************************************************************************
-  5 º¯ÊıÊµÏÖ
+  5 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -128,7 +128,7 @@ VOS_UINT32 TAF_MmiGetOperationType(
     VOS_UINT32                          ulTableSize;
     TAF_MMI_OPERATION_TABLE_STRU       *pstEventOperationType = VOS_NULL_PTR;
 
-    /* »ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄ²Ù×÷ÀàĞÍ */
+    /* è·å–äº‹ä»¶å¯¹åº”çš„æ“ä½œç±»å‹ */
     ulTableSize           = TAF_MmiGetEventOperationTypeTblSize();
     pstEventOperationType = TAF_MmiGetEventOperationTypeTblAddr();
 
@@ -157,10 +157,10 @@ VOS_UINT32 TAF_MmiEncodeOperationTypeString(
     MN_MMI_OPERATION_TYPE_ENUM_U8       enSsOpType;
     MN_MMI_SS_OP_Tbl_STRU              *pstOperationType      = VOS_NULL_PTR;
 
-    /* »ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄ²Ù×÷ÀàĞÍ */
+    /* è·å–äº‹ä»¶å¯¹åº”çš„æ“ä½œç±»å‹ */
     ulRet = TAF_MmiGetOperationType(ulEventType, &enSsOpType);
 
-    /* »ñÈ¡ÒµÎñ²Ù×÷ÀàĞÍÊ§°Ü£¬·µ»Ø±àÂëÊ§°Ü */
+    /* è·å–ä¸šåŠ¡æ“ä½œç±»å‹å¤±è´¥ï¼Œè¿”å›ç¼–ç å¤±è´¥ */
     if (VOS_FALSE == ulRet)
     {
 
@@ -168,7 +168,7 @@ VOS_UINT32 TAF_MmiEncodeOperationTypeString(
     }
 
 
-    /* »ñÈ¡²¹³äÒµÎñ²Ù×÷ÀàĞÍ×Ö·û´® */
+    /* è·å–è¡¥å……ä¸šåŠ¡æ“ä½œç±»å‹å­—ç¬¦ä¸² */
     ulTableSize       = MMI_GetOporationTypeTblSize();
     pstOperationType  = MMI_GetOporationTypeTblAddr();
     for (ulLoop = 0; ulLoop < ulTableSize; ulLoop++)
@@ -197,7 +197,7 @@ VOS_UINT32 TAF_MmiEncodeBS(
     VOS_UINT32                          ulTableSize;
     MN_MMI_BS_TABLE_STRU               *pstBsType = VOS_NULL_PTR;
 
-    /* »ñÈ¡BS×Ö·û´® */
+    /* è·å–BSå­—ç¬¦ä¸² */
     ulTableSize = MMI_GetBSTblSize();
     pstBsType   = MMI_GetBSTblAddr();
 
@@ -214,7 +214,7 @@ VOS_UINT32 TAF_MmiEncodeBS(
         pstBsType++;
     }
 
-    /* Èç¹ûÔÚBS±íÖĞÃ»ÓĞÕÒµ½¶ÔÓ¦µÄÏî£¬ÈÔÈ»·µ»Ø³É¹¦×öcall control¼ì²é */
+    /* å¦‚æœåœ¨BSè¡¨ä¸­æ²¡æœ‰æ‰¾åˆ°å¯¹åº”çš„é¡¹ï¼Œä»ç„¶è¿”å›æˆåŠŸåšcall controlæ£€æŸ¥ */
     *pulBSLength    = 0;
     *pcOutMmiStr    = VOS_NULL_PTR; 
 
@@ -230,7 +230,7 @@ VOS_UINT32 TAF_MmiEncodeSC(
     VOS_UINT32                          ulTableSize;
     MN_MMI_SC_TABLE_STRU               *pstSCType;
 
-    /* »ñÈ¡SC×Ö·û´® */
+    /* è·å–SCå­—ç¬¦ä¸² */
     ulTableSize = MMI_GetSCTblSize();
     pstSCType   = MMI_GetSCTblAddr();
 
@@ -264,7 +264,7 @@ VOS_VOID TAF_MmiEncodeDN(
 
     VOS_StrNCpy(pcOutMmiStr, (VOS_CHAR *)pstRegisterInfo->aucFwdToNum, ulNumberLength);
 
-    /* ¸ù¾İÄ¿µÄºÅÂëºÍ×ÓºÅÂë×Ö·û´®Êä³ö*DNºÍ³¤¶È */
+    /* æ ¹æ®ç›®çš„å·ç å’Œå­å·ç å­—ç¬¦ä¸²è¾“å‡º*DNå’Œé•¿åº¦ */
     *pulDNLength = ulNumberLength;
 
     return;
@@ -277,7 +277,7 @@ VOS_VOID TAF_MmiEncodePW(
 )
 {
 
-    /* ¹¹ÔìÃÜÂë×Ö·û´® */
+    /* æ„é€ å¯†ç å­—ç¬¦ä¸² */
     PS_MEM_CPY(pcOutMmiStr, pucPassword, ulPasswordLength);
 
     *pulPWLength = ulPasswordLength;
@@ -317,7 +317,7 @@ VOS_UINT32 TAF_MmiEncodeRegisterMmiString(
     TAF_SS_REGISTERSS_REQ_STRU         *pstRegisterInfo = VOS_NULL_PTR;
 
     /*
-    Ö»ÓĞºô½Ğ×ªÒÆĞèÒª×¢²á²Ù×÷£¬Éæ¼°ÃüÁî^CMMI,+CCFC
+    åªæœ‰å‘¼å«è½¬ç§»éœ€è¦æ³¨å†Œæ“ä½œï¼Œæ¶‰åŠå‘½ä»¤^CMMI,+CCFC
         Supplementary   Service     Service Code    SIA     SIB SIC
     22.082
             CFU                     21              DN      BS   -
@@ -332,7 +332,7 @@ VOS_UINT32 TAF_MmiEncodeRegisterMmiString(
     ulPos           = 0;
     pstRegisterInfo = (TAF_SS_REGISTERSS_REQ_STRU *)pPara;
 
-    /* Êä³öÍ¨ÓÃ×¢²á²Ù×÷Ç°×º: ** */
+    /* è¾“å‡ºé€šç”¨æ³¨å†Œæ“ä½œå‰ç¼€: ** */
     ulRet = TAF_MmiEncodeOperationTypeString(ulEventType, pcOutMmiStr, &ulPos);
     if (VOS_TRUE != ulRet)
     {
@@ -340,7 +340,7 @@ VOS_UINT32 TAF_MmiEncodeRegisterMmiString(
         return ulRet;
     }
 
-    /* ×·¼ÓSC×Ö·û´®: */
+    /* è¿½åŠ SCå­—ç¬¦ä¸²: */
     ulRet = TAF_MmiEncodeSC(pstRegisterInfo->SsCode,
                             (pcOutMmiStr + ulPos),
                             &ulStrLength);
@@ -351,8 +351,8 @@ VOS_UINT32 TAF_MmiEncodeRegisterMmiString(
     }
     ulPos += ulStrLength;
 
-    /* ×·¼ÓDN×Ö·û´®: *ºô½Ğ×ªÒÆÖ÷ºÅÂëºÍ×ÓºÅÂë    */
-    /* ¹¹Ôì»ù±¾ÒµÎñ×Ö·û´®¼ä¸ô·û* */
+    /* è¿½åŠ DNå­—ç¬¦ä¸²: *å‘¼å«è½¬ç§»ä¸»å·ç å’Œå­å·ç     */
+    /* æ„é€ åŸºæœ¬ä¸šåŠ¡å­—ç¬¦ä¸²é—´éš”ç¬¦* */
     TAF_MMI_INSERT_SEPERATION_CHAR(pcOutMmiStr, ulPos);
 
     if ((VOS_TRUE == pstRegisterInfo->OP_NumType)
@@ -366,20 +366,20 @@ VOS_UINT32 TAF_MmiEncodeRegisterMmiString(
         return VOS_FALSE;
     }
 
-    /* ¹¹Ôì×ÓºÅÂë×Ö·û´®£¬½âÂëº¯ÊıÃ»ÓĞ×ÓµØÖ·£¬Ğ­ÒéÒ²Ã»ÓĞÃ÷È·µÄ×ÓµØÖ·¸ñÊ½£¬
-    ²»Ìá¹© */
+    /* æ„é€ å­å·ç å­—ç¬¦ä¸²ï¼Œè§£ç å‡½æ•°æ²¡æœ‰å­åœ°å€ï¼Œåè®®ä¹Ÿæ²¡æœ‰æ˜ç¡®çš„å­åœ°å€æ ¼å¼ï¼Œ
+    ä¸æä¾› */
 
-    /* ÎŞÌõ¼ş×ªÒÆ»òÓöÃ¦×ªÒÆÃ»ÓĞBS²ÎÊıÊ±Ö±½Ó×·¼Ó#½áÊø£¬·ñÔò£¬Ã»ÓĞBSÒ²ÒªÌî³ä* */
+    /* æ— æ¡ä»¶è½¬ç§»æˆ–é‡å¿™è½¬ç§»æ²¡æœ‰BSå‚æ•°æ—¶ç›´æ¥è¿½åŠ #ç»“æŸï¼Œå¦åˆ™ï¼Œæ²¡æœ‰BSä¹Ÿè¦å¡«å……* */
     if ((VOS_FALSE == pstRegisterInfo->OP_BsService)
      && (VOS_FALSE == pstRegisterInfo->OP_NoRepCondTime))
     {
-        /* ×·¼Ó#  */
+        /* è¿½åŠ #  */
         *(pcOutMmiStr + ulPos) = '#';
 
         return VOS_TRUE;
     }
 
-    /* ×·¼ÓBS×Ö·û´®: *BS     */
+    /* è¿½åŠ BSå­—ç¬¦ä¸²: *BS     */
     TAF_MMI_INSERT_SEPERATION_CHAR(pcOutMmiStr, ulPos);
 
     if (VOS_TRUE == pstRegisterInfo->OP_BsService)
@@ -396,8 +396,8 @@ VOS_UINT32 TAF_MmiEncodeRegisterMmiString(
     }
 
     /*
-    ºô½Ğ×ªÒÆ£¬ºô½ĞÌõ¼ş×ªÒÆÒÔ¼°ÎŞÓ¦´ğ×ªÒÆĞèÒªÓĞ¶¨Ê±Æ÷´¥·¢ÓÃ»§ÎŞÓ¦´ğ×ªÒÆ
-    ×·¼ÓT×Ö·û´®: *T */
+    å‘¼å«è½¬ç§»ï¼Œå‘¼å«æ¡ä»¶è½¬ç§»ä»¥åŠæ— åº”ç­”è½¬ç§»éœ€è¦æœ‰å®šæ—¶å™¨è§¦å‘ç”¨æˆ·æ— åº”ç­”è½¬ç§»
+    è¿½åŠ Tå­—ç¬¦ä¸²: *T */
     if ((TAF_ALL_FORWARDING_SS_CODE == pstRegisterInfo->SsCode)
      || (TAF_ALL_COND_FORWARDING_SS_CODE == pstRegisterInfo->SsCode)
      || (TAF_CFNRY_SS_CODE == pstRegisterInfo->SsCode))
@@ -421,7 +421,7 @@ VOS_UINT32 TAF_MmiEncodeRegisterMmiString(
         ulPos += ulStrLength;
     }
 
-    /* ×·¼Ó#  */
+    /* è¿½åŠ #  */
     *(pcOutMmiStr + ulPos) = '#';
 
     return VOS_TRUE;
@@ -443,11 +443,11 @@ VOS_UINT32 TAF_MmiEncodeActiveMmiString(
     TAF_SS_ACTIVATESS_REQ_STRU         *pstActiveInfo = VOS_NULL_PTR;
 
     /*
-    Éæ¼°ÃüÁî^CMMI,+CCFC,+CCWA,
+    æ¶‰åŠå‘½ä»¤^CMMI,+CCFC,+CCWA,
     +CLIR,+CLIP,+COLP
-    1)ºô½Ğ×ªÒÆ¼¤»î£¬È¥¼¤»îºÍ²éÑ¯ºÍÉ¾³ı²Ù×÷²Ù×÷²»ĞèÒªDNºÍT²ÎÊı
-      Èç¹û´æÔÚBS²ÎÊı£¬ĞèÒªÎªDN²ÎÊı±£Áô*£¬·ñÔò£¬²»ÌîĞ´*
-    2)»°»ú±ÕËøÒµÎñ¼¤»îºÍÈ¥¼¤»î¸ñÊ½ÈçÏÂ£¬²éÑ¯²Ù×÷²»ĞèÒªÃÜÂë
+    1)å‘¼å«è½¬ç§»æ¿€æ´»ï¼Œå»æ¿€æ´»å’ŒæŸ¥è¯¢å’Œåˆ é™¤æ“ä½œæ“ä½œä¸éœ€è¦DNå’ŒTå‚æ•°
+      å¦‚æœå­˜åœ¨BSå‚æ•°ï¼Œéœ€è¦ä¸ºDNå‚æ•°ä¿ç•™*ï¼Œå¦åˆ™ï¼Œä¸å¡«å†™*
+    2)è¯æœºé—­é”ä¸šåŠ¡æ¿€æ´»å’Œå»æ¿€æ´»æ ¼å¼å¦‚ä¸‹ï¼ŒæŸ¥è¯¢æ“ä½œä¸éœ€è¦å¯†ç 
     22.088
         Supplementary   Service     Service Code    SIA     SIB SIC
             BAOC                    33              PW      BS  -
@@ -459,14 +459,14 @@ VOS_UINT32 TAF_MmiEncodeActiveMmiString(
             all Barring Serv.       330             PW      BS  -
             Outg. Barr. Serv.       333             PW      BS
             Inc. Barr. Serv.        353             PW      BS
-    3)CCBS²éÑ¯²Ù×÷²»ĞèÒªn²ÎÊı
+    3)CCBSæŸ¥è¯¢æ“ä½œä¸éœ€è¦nå‚æ•°
     22.093
             CCBS                    37              n   See Section 4.5.5               where n=1-5
-    4)ºô½ĞµÈ´ıµÄ¼¤»î£¬È¥¼¤»îºÍ²éÑ¯
+    4)å‘¼å«ç­‰å¾…çš„æ¿€æ´»ï¼Œå»æ¿€æ´»å’ŒæŸ¥è¯¢
     22.083
             WAIT                    43              BS      -   -
     */
-    /* Êä³öÍ¨ÓÃ¼¤»î(*)£¬È¥¼¤»î(#)£¬²éÑ¯²Ù×÷Ç°×º(*#)£¬É¾³ı²Ù×÷Ç°×º(##):  */
+    /* è¾“å‡ºé€šç”¨æ¿€æ´»(*)ï¼Œå»æ¿€æ´»(#)ï¼ŒæŸ¥è¯¢æ“ä½œå‰ç¼€(*#)ï¼Œåˆ é™¤æ“ä½œå‰ç¼€(##):  */
     ulPos = 0;
     ulRet = TAF_MmiEncodeOperationTypeString(ulEventType, pcOutMmiStr, &ulPos);
     if (VOS_TRUE != ulRet)
@@ -477,7 +477,7 @@ VOS_UINT32 TAF_MmiEncodeActiveMmiString(
 
     pstActiveInfo = (TAF_SS_ACTIVATESS_REQ_STRU *)pMsg;
 
-    /* ×·¼ÓSC×Ö·û´®: SC */
+    /* è¿½åŠ SCå­—ç¬¦ä¸²: SC */
     ulRet = TAF_MmiEncodeSC(pstActiveInfo->SsCode,
                             (pcOutMmiStr + ulPos),
                             &ulStrLength);
@@ -491,7 +491,7 @@ VOS_UINT32 TAF_MmiEncodeActiveMmiString(
     if ((VOS_FALSE == pstActiveInfo->OP_Password)
      && (VOS_FALSE == pstActiveInfo->OP_BsService))
     {
-        /* ×·¼Ó#  */
+        /* è¿½åŠ #  */
         *(pcOutMmiStr + ulPos) = '#';
         ulPos                  += sizeof('#');
 
@@ -505,7 +505,7 @@ VOS_UINT32 TAF_MmiEncodeActiveMmiString(
         return ulRet;
     }
 
-    /* ×·¼ÓPW×Ö·û´®: *PW */
+    /* è¿½åŠ PWå­—ç¬¦ä¸²: *PW */
     if ((TAF_ALL_BARRING_SS_CODE == (TAF_SS_CODE_MASK & (pstActiveInfo->SsCode)))
       && ((TAF_MMI_ACTIVATE_SS == enSsOpType)
        || (TAF_MMI_DEACTIVATE_SS == enSsOpType)))
@@ -523,13 +523,13 @@ VOS_UINT32 TAF_MmiEncodeActiveMmiString(
         }
     }
 
-    /* ºô½Ğ×ªÒÆ´æÔÚBS²ÎÊıÊ±£¬ĞèÒªÎªDN²ÎÊı±£Áô* */
+    /* å‘¼å«è½¬ç§»å­˜åœ¨BSå‚æ•°æ—¶ï¼Œéœ€è¦ä¸ºDNå‚æ•°ä¿ç•™* */
     if (TAF_ALL_FORWARDING_SS_CODE == (TAF_SS_CODE_MASK & (pstActiveInfo->SsCode)))
     {
         TAF_MMI_INSERT_SEPERATION_CHAR(pcOutMmiStr, ulPos);
     }
 
-    /* ×·¼ÓBS×Ö·û´®: *BS     */
+    /* è¿½åŠ BSå­—ç¬¦ä¸²: *BS     */
     /*  3GPP 22030 6.5.2 Structure of the MMI: 
         Where SI is not applicable according to the definition of the supplementary service, then *SI is omitted. 
         Where its use is optional, but not selected for a particular call set-up, it may be omitted or entered as an extra * 
@@ -553,7 +553,7 @@ VOS_UINT32 TAF_MmiEncodeActiveMmiString(
         ulPos += ulStrLength;
     }
 
-    /* ×·¼Ó#  */
+    /* è¿½åŠ #  */
     *(pcOutMmiStr + ulPos) = '#';
 
     return ulRet;
@@ -573,9 +573,9 @@ VOS_UINT32 TAF_MmiEncodeRegisterPwdMmiString(
     VOS_UINT32                          ulSCLength;
 
     /*
-       Éæ¼°ÃüÁî^CMMI,+CPWD
-       Êä³ö×¢²áĞÂÃÜÂë²Ù×÷Ç°×º: **03£¬´Ë´¦µÄSsCode±êÊ¾±ÕËøÀàĞÍ£¬
-       ²»ÄÜÓÃÓÚÊä³öĞÂÃÜÂë×¢²áĞÅÏ¢£¬ËùÒÔÖ±½Ó¸³Öµ**03
+       æ¶‰åŠå‘½ä»¤^CMMI,+CPWD
+       è¾“å‡ºæ³¨å†Œæ–°å¯†ç æ“ä½œå‰ç¼€: **03ï¼Œæ­¤å¤„çš„SsCodeæ ‡ç¤ºé—­é”ç±»å‹ï¼Œ
+       ä¸èƒ½ç”¨äºè¾“å‡ºæ–°å¯†ç æ³¨å†Œä¿¡æ¯ï¼Œæ‰€ä»¥ç›´æ¥èµ‹å€¼**03
 
     22030 6.5.4 Registration of new password
         * 03 * ZZ * OLD_PASSWORD * NEW_PASSWORD * NEW_PASSWORD #
@@ -592,7 +592,7 @@ VOS_UINT32 TAF_MmiEncodeRegisterPwdMmiString(
 
     pstRegisterPwdInfo = (TAF_SS_REGPWD_REQ_STRU *)pMsg;
 
-    /* ×·¼ÓSC×Ö·û´®: *SC */
+    /* è¿½åŠ SCå­—ç¬¦ä¸²: *SC */
     TAF_MMI_INSERT_SEPERATION_CHAR(pcOutMmiStr, ulPos);
 
     ulRet = TAF_MmiEncodeSC(pstRegisterPwdInfo->SsCode,
@@ -606,25 +606,25 @@ VOS_UINT32 TAF_MmiEncodeRegisterPwdMmiString(
     ulPos += ulSCLength;
 
 
-    /* ×·¼Ó¾ÉPW×Ö·û´®: *OLDPASSWORD    */
+    /* è¿½åŠ æ—§PWå­—ç¬¦ä¸²: *OLDPASSWORD    */
     TAF_MMI_INSERT_SEPERATION_CHAR(pcOutMmiStr, ulPos);
 
     VOS_StrNCpy((VOS_CHAR *)(pcOutMmiStr + ulPos), (VOS_CHAR *)pstRegisterPwdInfo->aucOldPwdStr, TAF_SS_MAX_PASSWORD_LEN);
     ulPos += TAF_SS_MAX_PASSWORD_LEN;
 
-    /* ×·¼ÓĞÂPW×Ö·û´®: *NEWPASSWORD     */
+    /* è¿½åŠ æ–°PWå­—ç¬¦ä¸²: *NEWPASSWORD     */
     TAF_MMI_INSERT_SEPERATION_CHAR(pcOutMmiStr, ulPos);
 
     VOS_StrNCpy((VOS_CHAR *)(pcOutMmiStr + ulPos), (VOS_CHAR *)pstRegisterPwdInfo->aucNewPwdStr, TAF_SS_MAX_PASSWORD_LEN);
     ulPos += TAF_SS_MAX_PASSWORD_LEN;
 
-    /* ×·¼ÓĞÂPWÈ·ÈÏ×Ö·û´®: *NEWPASSWORD     */
+    /* è¿½åŠ æ–°PWç¡®è®¤å­—ç¬¦ä¸²: *NEWPASSWORD     */
     TAF_MMI_INSERT_SEPERATION_CHAR(pcOutMmiStr, ulPos);
 
     VOS_StrNCpy((VOS_CHAR *)(pcOutMmiStr + ulPos), (VOS_CHAR *)pstRegisterPwdInfo->aucNewPwdStrCnf, TAF_SS_MAX_PASSWORD_LEN);
     ulPos += TAF_SS_MAX_PASSWORD_LEN;
 
-    /* ×·¼Ó#  */
+    /* è¿½åŠ #  */
     *(pcOutMmiStr + ulPos) = '#';
 
     return ulRet;
@@ -642,20 +642,20 @@ VOS_UINT32 TAF_MmiEncodeEraseCcEntryMmiString(
     VOS_UINT32                          ulIndexLength;
 
     /*
-       Éæ¼°ÃüÁî^CMMI
-    CCBSÈ¥¼¤»îÖ¸¶¨INDEXµÄCCBS²Ù×÷¸ñÊ½#37*n#
-    CCBSÈ¥¼¤»îCCBS²Ù×÷¸ñÊ½#37#
+       æ¶‰åŠå‘½ä»¤^CMMI
+    CCBSå»æ¿€æ´»æŒ‡å®šINDEXçš„CCBSæ“ä½œæ ¼å¼#37*n#
+    CCBSå»æ¿€æ´»CCBSæ“ä½œæ ¼å¼#37#
         Supplementary   Service     Service Code    SIA     SIB SIC
     22.093
             CCBS                    37              n   See Section 4.5.5               where n=1-5
-            ÒòÎª²»ÔÚÍ¨ÓÃµÄ×¢²á£¬É¾³ı£¬¼¤»îºÍÈ¥¼¤»îÏûÏ¢ÖĞ£¬ËùÒÔ²»µ÷ÓÃÍ¨ÓÃ½Ó¿Ú»ñÈ¡²Ù×÷Âë
+            å› ä¸ºä¸åœ¨é€šç”¨çš„æ³¨å†Œï¼Œåˆ é™¤ï¼Œæ¿€æ´»å’Œå»æ¿€æ´»æ¶ˆæ¯ä¸­ï¼Œæ‰€ä»¥ä¸è°ƒç”¨é€šç”¨æ¥å£è·å–æ“ä½œç 
     */
     VOS_StrCpy(pcOutMmiStr, "#");
     ulPos               = VOS_StrLen("#");
 
     pstEraseCcEntryInfo = (TAF_SS_ERASECC_ENTRY_REQ_STRU *)pPara;
 
-    /* ×·¼ÓSC×Ö·û´®: */
+    /* è¿½åŠ SCå­—ç¬¦ä¸²: */
     ulRet = TAF_MmiEncodeSC(pstEraseCcEntryInfo->SsCode,
                             (pcOutMmiStr + ulPos),
                             &ulSCLength);
@@ -666,12 +666,12 @@ VOS_UINT32 TAF_MmiEncodeEraseCcEntryMmiString(
     }
     ulPos += ulSCLength;
 
-    /* ¸ù¾İOP_CcbsIndexºÍCcbsIndexÉú³É*n    */
+    /* æ ¹æ®OP_CcbsIndexå’ŒCcbsIndexç”Ÿæˆ*n    */
     TAF_MMI_INSERT_SEPERATION_CHAR(pcOutMmiStr, ulPos);
     if (VOS_TRUE == pstEraseCcEntryInfo->OP_CcbsIndex)
     {
 
-        /* ×ª»»Êı×ÖÀàĞÍµÄINDEXÎª×Ö·ûÀàĞÍ */
+        /* è½¬æ¢æ•°å­—ç±»å‹çš„INDEXä¸ºå­—ç¬¦ç±»å‹ */
         ulRet = TAF_MmiEncodeCcbsIndex(pstEraseCcEntryInfo->CcbsIndex,
                                (pcOutMmiStr + ulPos),
                                &ulIndexLength);
@@ -684,7 +684,7 @@ VOS_UINT32 TAF_MmiEncodeEraseCcEntryMmiString(
 
     }
 
-    /* ×·¼Ó#  */
+    /* è¿½åŠ #  */
     *(pcOutMmiStr + ulPos) = '#';
 
     return VOS_TRUE;
@@ -720,11 +720,11 @@ VOS_UINT32 TAF_MmiEncodeMmiString(
     TAF_MMI_ENCODE_PROC_FUNC_STRU      *pstMapTbl    = VOS_NULL_PTR;
     MN_APP_REQ_MSG_STRU                *pstAppReq    = VOS_NULL_PTR;
 
-    /* »ñÈ¡Ö¸¶¨ÏûÏ¢µÄÏûÏ¢´¦Àíº¯Êı */
+    /* è·å–æŒ‡å®šæ¶ˆæ¯çš„æ¶ˆæ¯å¤„ç†å‡½æ•° */
     pstAppReq   = (MN_APP_REQ_MSG_STRU *)pPara;
     ulEventType = TAF_MMI_BuildEventType(pstAppReq->ulSenderPid, pstAppReq->usMsgName);
 
-    /* »ñÈ¡´¦Àíº¯Êı£¬»ñÈ¡µ½LOOPÖµºóÅĞ¶Ïº¯ÊıÖ¸ÕëÊÇ·ñÎª¿Õ */
+    /* è·å–å¤„ç†å‡½æ•°ï¼Œè·å–åˆ°LOOPå€¼ååˆ¤æ–­å‡½æ•°æŒ‡é’ˆæ˜¯å¦ä¸ºç©º */
     ulTableSize = TAF_MmiEncodeSsProcFuncTblSize();
     pstMapTbl   = TAF_MmiEncodeSsProcFuncTblAddr();
 
@@ -766,7 +766,7 @@ VOS_UINT32 TAF_MmiEncodeUssdMessage (
     PS_MEM_SET(aucTemp_buffer, 0 , TAF_SS_MAX_UNPARSE_PARA_LEN);
     ulEncodeLen = 0;
 
-    /* ÅĞ¶ÏÊäÈëµÄ×Ö·û´®ÊÇ·ñ³¬³¤,7bit±àÂëÊ±×î³¤182¸ö×Ö·û */
+    /* åˆ¤æ–­è¾“å…¥çš„å­—ç¬¦ä¸²æ˜¯å¦è¶…é•¿,7bitç¼–ç æ—¶æœ€é•¿182ä¸ªå­—ç¬¦ */
     if (pstPara->usCnt > TAF_SS_MAX_USSDSTRING_LEN)
     {
         MN_WARN_LOG("TAF_MmiEncodeUssdMessage: string is too long");
@@ -781,13 +781,13 @@ VOS_UINT32 TAF_MmiEncodeUssdMessage (
         aucTemp_buffer[i]   = pucCurTransTbl[pstPara->aucUssdStr[i]];
     }
 
-    /* Ñ­»·½á¹¹,×ª»»³É7bit±àÂë·½Ê½ */
+    /* å¾ªç¯ç»“æ„,è½¬æ¢æˆ7bitç¼–ç æ–¹å¼ */
     if (VOS_OK != TAF_STD_Pack7Bit(aucTemp_buffer, pstPara->usCnt, 0, aucTmp, &ulEncodeLen))
     {
         MN_WARN_LOG("TAF_MmiEncodeUssdMessage: TAF_STD_Pack7Bit Error");
     }
 
-    /* ÅĞ¶ÏÊÇ·ñÓĞ7¸öÎ»µÄ¿ÕÓà,Èç¹ûÓĞ¶àÓàµÄ7¸öÎ»ÔòÌî³ä'0001101' */
+    /* åˆ¤æ–­æ˜¯å¦æœ‰7ä¸ªä½çš„ç©ºä½™,å¦‚æœæœ‰å¤šä½™çš„7ä¸ªä½åˆ™å¡«å……'0001101' */
     if (TAF_MMI_BITS_PER_SEPTET == (pstPara->usCnt % TAF_MMI_BITS_PER_OCTET))
     {
        aucTmp[ulEncodeLen - 1] = aucTmp[ulEncodeLen - 1] | TAF_MMI_USSD_7BIT_PAD;

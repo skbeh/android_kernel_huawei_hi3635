@@ -86,7 +86,7 @@
 #include "ppp_input.h"
 #include "ppp_atcmd.h"
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_PPP_FSM_C
 
@@ -260,10 +260,10 @@ fsm_Output(struct fsm *fp, VOS_CHAR code, VOS_CHAR id, VOS_CHAR *ptr, VOS_INT32 
         PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_WARNING, "no mbuf\r\n");
         return;
   }
-    /*Ô¤ÁôÍ·²¿*/
+    /*é¢„ç•™å¤´éƒ¨*/
     bp->m_offset = PPP_RECIEVE_RESERVE_FOR_HEAD;
 
-    /*Í·²¿ÓëÎ²²¿¶¼Áô³öÀ´ÁË*/
+    /*å¤´éƒ¨ä¸Žå°¾éƒ¨éƒ½ç•™å‡ºæ¥äº†*/
     bp->m_len = plen;
 
   PS_MEM_CPY(PPP_MBUF_CTOP(bp), &lh, sizeof(struct fsmheader));
@@ -550,7 +550,7 @@ void FsmRecvConfigReq(struct fsm *fp, struct fsmheader *lhp, struct ppp_mbuf *bp
   VOS_INT32 plen, flen;
   VOS_INT32 ackaction = 0;
   VOS_CHAR *cp;
-  /* lcp±êÖ¾»òipcp pdp¼¤»î³É¹¦µÄ±êÖ¾, ¸Ã±ê¸ËÔÚlcp½×¶Î»òipcp pdp¼¤»î³É¹¦Ö®ºóÖÃ1 */
+  /* lcpæ ‡å¿—æˆ–ipcp pdpæ¿€æ´»æˆåŠŸçš„æ ‡å¿—, è¯¥æ ‡æ†åœ¨lcpé˜¶æ®µæˆ–ipcp pdpæ¿€æ´»æˆåŠŸä¹‹åŽç½®1 */
   VOS_UINT32 lcpOrIpcpAck = 1;
 
   PPP_REQ_CONFIG_INFO_STRU PppReqConfigInfo;
@@ -579,7 +579,7 @@ void FsmRecvConfigReq(struct fsm *fp, struct fsmheader *lhp, struct ppp_mbuf *bp
 
   if(fp->link->phase == PHASE_NETWORK)
   {
-      /* ipcp½×¶Î£¬¸Ã±êÖ¾ÖÃ0 */
+      /* ipcpé˜¶æ®µï¼Œè¯¥æ ‡å¿—ç½®0 */
       lcpOrIpcpAck = 0;
       switch(fp->link->ipcp.stage)
       {
@@ -621,16 +621,16 @@ void FsmRecvConfigReq(struct fsm *fp, struct fsmheader *lhp, struct ppp_mbuf *bp
           PppReqConfigInfo.stIPCP.pIpcp = SendBuffer;
           PppReqConfigInfo.stIPCP.usIpcpLen = (VOS_UINT16)(flen + sizeof(struct fsmheader));
 
-          /*°Ñipcp config req±¨ÎÄµÄÍ·¿½±´½øÈ¥*/
+          /*æŠŠipcp config reqæŠ¥æ–‡çš„å¤´æ‹·è´è¿›åŽ»*/
           PS_MEM_CPY(SendBuffer,lhp,sizeof(struct fsmheader));
-          /*°Ñipcp config req±¨ÎÄµÄoption¿½±´½øÈ¥*/
+          /*æŠŠipcp config reqæŠ¥æ–‡çš„optionæ‹·è´è¿›åŽ»*/
           PS_MEM_CPY((SendBuffer + sizeof(struct fsmheader)),cp,flen);
 
           #if (PPP_FEATURE == PPP_FEATURE_PPP)
-          /* ¿ÉÎ¬¿É²âÐÅÏ¢ÉÏ±¨*/
+          /* å¯ç»´å¯æµ‹ä¿¡æ¯ä¸ŠæŠ¥*/
           Ppp_RcvConfigInfoReqMntnInfo((VOS_UINT16)PPP_LINK_TO_ID(fp->link), &PppReqConfigInfo);
 
-          /*PDP¼¤»îÇëÇó£¬·¢ËÍÓÃ»§Ãû¡¢ÃÜÂë»¹ÓÐIPCPÊý¾Ý°ü*/
+          /*PDPæ¿€æ´»è¯·æ±‚ï¼Œå‘é€ç”¨æˆ·åã€å¯†ç è¿˜æœ‰IPCPæ•°æ®åŒ…*/
           PPP_ProcTeConfigInfo((VOS_UINT16)PPP_LINK_TO_ID(fp->link),&PppReqConfigInfo);
           #else
           PPPoE_PPPSendAuthToGGSN((PPP_ID)(PPP_LINK_TO_ID(fp->link)),&PppReqConfigInfo);
@@ -646,7 +646,7 @@ void FsmRecvConfigReq(struct fsm *fp, struct fsmheader *lhp, struct ppp_mbuf *bp
 
           case IPCP_SUCCESS_FROM_GGSN:
           {
-            /* ipcp½×¶Î£¬PDP¼¤»î³É¹¦¸Ã±êÖ¾ÖÃ1 */
+            /* ipcpé˜¶æ®µï¼ŒPDPæ¿€æ´»æˆåŠŸè¯¥æ ‡å¿—ç½®1 */
             lcpOrIpcpAck = 1;
             PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL, "have receive from ggsn\r\n");
           }
@@ -663,7 +663,7 @@ void FsmRecvConfigReq(struct fsm *fp, struct fsmheader *lhp, struct ppp_mbuf *bp
 
   }
 
-  /* Èç¹ûPDP¼¤»îÎ´³É¹¦,²»È¥½âÖ¡,Ö±½Ó»ØNAK,NAKÀïÃæ²»´øÈÎºÎOPTIONÏî */
+  /* å¦‚æžœPDPæ¿€æ´»æœªæˆåŠŸ,ä¸åŽ»è§£å¸§,ç›´æŽ¥å›žNAK,NAKé‡Œé¢ä¸å¸¦ä»»ä½•OPTIONé¡¹ */
   if (1 == lcpOrIpcpAck)
   {
     (*fp->fn->DecodeConfig)(fp, cp, cp + flen, MODE_REQ, &dec);
@@ -952,7 +952,7 @@ FsmRecvTermReq(struct fsm *fp, struct fsmheader *lhp, struct ppp_mbuf *bp)
     }
 
     #if (PPP_FEATURE == PPP_FEATURE_PPP)
-    /*Í¨ÖªAT½øÐÐPDPÈ¥¼¤»î*/
+    /*é€šçŸ¥ATè¿›è¡ŒPDPåŽ»æ¿€æ´»*/
     PPP_ProcPppRelEvent((VOS_UINT16)PPP_LINK_TO_ID(fp->link));
     #endif
 
@@ -1196,7 +1196,7 @@ FsmRecvIdent(struct fsm *fp, struct fsmheader *lhp, struct ppp_mbuf *bp)
   PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_NORMAL, "FsmRecvIdent\r\n");
 
 #if 0
-  /* identÁ÷³ÌÏÖÔÚ²»ÓÃ */
+  /* identæµç¨‹çŽ°åœ¨ä¸ç”¨ */
   len = VOS_NTOHS(lhp->length) - sizeof *lhp;
   if (len >= 4) {
     bp = ppp_m_pullup(ppp_m_append(bp, "", 1));
@@ -1280,13 +1280,13 @@ fsm_Input(struct fsm *fp, struct ppp_mbuf *bp)
     bp = ppp_m_prepend(bp, &lh, sizeof lh, 0);
     bp = ppp_m_pullup(bp);
     /*
-       ÓÉÓÚPPP state machine´æÔÚopen->stoppingºó²»±Õ»·ÎÊÌâ,
-       ¾­´úÂë·ÖÎöÄ¿Ç°ÄÜ¹»½øÈë´Ë·ÖÖ§µÄÇé¿öÖ»ÓÐÒ»¸ö¹ý³Ì, ÊÕµ½PCµÄcode, UE²»Ö§³Ö,
-       UE·¢³öCode-Reject, PC·¢³öTerminate, UE·¢ËÍTerminate-Ack,
-       Ö®ºóUEÖÐPPP state machineÊ¼ÖÕÍ£ÔÚstopping×´Ì¬, ²»±Õ»·, ½«µ¼ÖÂÓÃ»§²¦ºÅ×ÜÊÇÊ§°Ü,
-       Ö±µ½ÓÃ»§PCÖØÆô
-       Èç¹ûÒªÐÞÕý´ËÎÊÌâ, Ä¿Ç°PPPµÄ¶¨Ê±Æ÷»úÖÆ¿ÉÄÜÐèÒªÖØÐÂÉè¼Æ, ¸Ä¶¯±È½Ï´ó,
-       ¶øÇÒ·¢Éú´Ë´íÎóµÄ¸ÅÂÊ±È½ÏµÍ, ¹ÊÔÝ²»ÐÞ¸Ä, ½öÊÇÍ¨¹ýLOG°ÑÕâÖÖÇé¿öÕç±ð³öÀ´
+       ç”±äºŽPPP state machineå­˜åœ¨open->stoppingåŽä¸é—­çŽ¯é—®é¢˜,
+       ç»ä»£ç åˆ†æžç›®å‰èƒ½å¤Ÿè¿›å…¥æ­¤åˆ†æ”¯çš„æƒ…å†µåªæœ‰ä¸€ä¸ªè¿‡ç¨‹, æ”¶åˆ°PCçš„code, UEä¸æ”¯æŒ,
+       UEå‘å‡ºCode-Reject, PCå‘å‡ºTerminate, UEå‘é€Terminate-Ack,
+       ä¹‹åŽUEä¸­PPP state machineå§‹ç»ˆåœåœ¨stoppingçŠ¶æ€, ä¸é—­çŽ¯, å°†å¯¼è‡´ç”¨æˆ·æ‹¨å·æ€»æ˜¯å¤±è´¥,
+       ç›´åˆ°ç”¨æˆ·PCé‡å¯
+       å¦‚æžœè¦ä¿®æ­£æ­¤é—®é¢˜, ç›®å‰PPPçš„å®šæ—¶å™¨æœºåˆ¶å¯èƒ½éœ€è¦é‡æ–°è®¾è®¡, æ”¹åŠ¨æ¯”è¾ƒå¤§,
+       è€Œä¸”å‘ç”Ÿæ­¤é”™è¯¯çš„æ¦‚çŽ‡æ¯”è¾ƒä½Ž, æ•…æš‚ä¸ä¿®æ”¹, ä»…æ˜¯é€šè¿‡LOGæŠŠè¿™ç§æƒ…å†µç”„åˆ«å‡ºæ¥
     */
     PPP_MNTN_LOG(PS_PID_APP_PPP, 0, PS_PRINT_ERROR, "UE sent Code-Reject!\r\n");
     fsm_Output(fp, CODE_CODEREJ, id++, PPP_MBUF_CTOP(bp), bp->m_len, MB_UNKNOWN);

@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 ͷ�ļ�����
+  1 头文件包含
 *****************************************************************************/
 #include "drv_mailbox.h"
 #include "drv_mailbox_cfg.h"
@@ -20,38 +20,38 @@ extern "C" {
 #ifdef CONFIG_HIFI
 
 /*****************************************************************************
-    ��ά�ɲ���Ϣ�а�����C�ļ���ź궨��
+    可维可测信息中包含的C文件编号宏定义
 *****************************************************************************/
 #undef  _MAILBOX_FILE_
 #define _MAILBOX_FILE_   "table"
 /*****************************************************************************
-  2 ȫ�ֱ�������
+  2 全局变量定义
 *****************************************************************************/
-/*���������Ѵ��ڵĹ����ڴ�ͨ���������ڴ漰Ӳ����Դ���ã�ȫ�ֶ���*/
+/*定义所有已存在的共享内存通道的物理内存及硬件资源配置，全局定义*/
 MAILBOX_EXTERN struct mb_cfg g_mailbox_global_cfg_tbl[] =
 {
 #if 0
-    /*CCPU�������˵�ͨ��*/
+    /*CCPU到其他核的通道*/
     MAILBOX_CHANNEL_COMPOSE(CCPU, MCU,  MSG),
 //    MAILBOX_CHANNEL_COMPOSE(CCPU, MCU,  IFC),
     MAILBOX_CHANNEL_COMPOSE(CCPU, HIFI, MSG),
 //    MAILBOX_CHANNEL_COMPOSE(CCPU, ACPU, IFC),
 //    MAILBOX_CHANNEL_COMPOSE(CCPU, ACPU, MSG),
 
-    /*ACPU�������˵�ͨ��*/
+    /*ACPU到其他核的通道*/
     MAILBOX_CHANNEL_COMPOSE(ACPU, MCU,  MSG),
 //    MAILBOX_CHANNEL_COMPOSE(ACPU, MCU,  IFC),
     MAILBOX_CHANNEL_COMPOSE(ACPU, HIFI, MSG),
 //    MAILBOX_CHANNEL_COMPOSE(ACPU, CCPU, IFC),
 //    MAILBOX_CHANNEL_COMPOSE(ACPU, CCPU, MSG),
     
-    /*MCU�������˵�ͨ��*/
+    /*MCU到其他核的通道*/
     MAILBOX_CHANNEL_COMPOSE(MCU, CCPU,  MSG),
 //    MAILBOX_CHANNEL_COMPOSE(MCU, CCPU,  IFC),
     MAILBOX_CHANNEL_COMPOSE(MCU, ACPU,  MSG),
 //    MAILBOX_CHANNEL_COMPOSE(MCU, ACPU,  IFC),
     
-    /*HIFI�������˵�ͨ��*/
+    /*HIFI到其他核的通道*/
     MAILBOX_CHANNEL_COMPOSE(HIFI, CCPU, MSG),
     MAILBOX_CHANNEL_COMPOSE(HIFI, ACPU, MSG),
 #else
@@ -61,15 +61,15 @@ MAILBOX_EXTERN struct mb_cfg g_mailbox_global_cfg_tbl[] =
     MAILBOX_CHANNEL_COMPOSE(HIFI, CCPU, MSG),
 #endif
 
-    /*������־*/
+    /*结束标志*/
     {MAILBOX_MAILCODE_INVALID,  0,  0, 0}
 
 };
 
-/*ƽ̨����ͨ��������ڴ�ؿռ�*/
+/*平台邮箱通道句柄的内存池空间*/
 MAILBOX_EXTERN struct mb_buff     g_mailbox_channel_handle_pool[MAILBOX_CHANNEL_NUM]; 
  
-/*ƽ̨�����û��ص�������ڴ�ؿռ�*/
+/*平台邮箱用户回调句柄的内存池空间*/
 MAILBOX_EXTERN struct mb_cb    g_mailbox_user_cb_pool[MAILBOX_USER_NUM];
 
 #endif

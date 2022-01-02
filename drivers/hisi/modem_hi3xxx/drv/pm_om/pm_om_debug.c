@@ -49,7 +49,7 @@ void pm_om_wakeup_stat(void)
 		g_pmom_debug.stat.waket_min = delta_slice;
 	}
 
-	/* 32768hz£¬×ª»»³ÉÃë */
+	/* 32768hzï¼Œè½¬æ¢æˆç§’ */
 	delta_slice /= TIME_SLICE_FREQ;
 	g_pmom_debug.stat.wrs_flag = 1;
 	pmom_print("[C SR]pm om wakeup\n");

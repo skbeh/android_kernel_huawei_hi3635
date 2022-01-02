@@ -22,7 +22,7 @@ extern "C" {
 #include  <diag_debug.h>
 /*lint -restore*/
 
-/*lint -save -e767 Ô­Òò:Log´òÓ¡*/
+/*lint -save -e767 åŸå› :Logæ‰“å°*/
 #define    THIS_FILE_ID        MSP_FILE_ID_DIAG_BUF_CTRL_C
 /*lint -restore +e767*/
 /*****************************************************************************
@@ -65,7 +65,7 @@ VOS_UINT32 diag_BufCtrlGlobalInit(VOS_VOID)
     VOS_UINT32 i = 0;
 	VOS_INT32 aulLen[DIAG_CODER_SRC_TYPE_BUTT] = {0,};
 
-    /* ´´½¨ ¿ØÖÆLOGÉÏ±¨µÄĞÅºÅÁ¿,µÚ¶ş¸ö²ÎÊı1±íÊ¾Ò»¿ªÊ¼ÄÜtakeµ½ĞÅºÅÁ¿£¬²»ĞèµÈ´ı£¬0±íÊ¾Ò»¿ªÊ¼take²»µ½*/
+    /* åˆ›å»º æ§åˆ¶LOGä¸ŠæŠ¥çš„ä¿¡å·é‡,ç¬¬äºŒä¸ªå‚æ•°1è¡¨ç¤ºä¸€å¼€å§‹èƒ½takeåˆ°ä¿¡å·é‡ï¼Œä¸éœ€ç­‰å¾…ï¼Œ0è¡¨ç¤ºä¸€å¼€å§‹takeä¸åˆ°*/
     ret = VOS_SmBCreate(NULL, 1, VOS_SEMA4_FIFO,&g_DiagLogSem);
     /*lint -save -e830*/
     if (ERR_MSP_SUCCESS != ret)
@@ -83,7 +83,7 @@ VOS_UINT32 diag_BufCtrlGlobalInit(VOS_VOID)
 
     diag_GetBufLen((VOS_UINT32 *)aulLen);
     /*lint -save -e830*/
-    /* ´´½¨log·¢ËÍ»º³åÇø */
+    /* åˆ›å»ºlogå‘é€ç¼“å†²åŒº */
     for(i = 0 ; i< DIAG_CODER_SRC_TYPE_BUTT; i++)
     {
         if (VOS_OK != diag_CreateLogBuf(&g_stDiagBufCtrl[i], aulLen[i]))
@@ -137,20 +137,20 @@ VOS_UINT8* diag_BuffPhyToVirt(VOS_UINT8 *pucCurPhyAddr, VOS_UINT8 *pucPhyStart, 
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : diag_BuffVirtToPhy
- ¹¦ÄÜÃèÊö  : ¸ù¾İÊäÈëµÄĞéµØÖ·£¬¼ÆËã¶ÔÓ¦µÄÊµµØÖ·
- ÊäÈë²ÎÊı  : pucCurVirtAddr:  µ±Ç°ĞéµØÖ·
-             pucPhyStart: Í¨µÀÅäÖÃÄÚ´æÆğÊ¼µÄÊµµØÖ·
-             pucVirtStart:Í¨µÀÅäÖÃÄÚ´æÆğÊ¼µÄĞéµØÖ·
-             ulBufLen:    Í¨µÀÄÚ´æ¿Õ¼ä´óĞ¡
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : VOS_NULL: ×ª»»Ê§°Ü/other: ĞéµØÖ·µÄÖµ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
- ĞŞ¸ÄÀúÊ·  :
-   1.ÈÕ    ÆÚ  : 2012Äê8ÔÂ8ÈÕ
-     ×÷    Õß  : zhuli
-     ĞŞ¸ÄÄÚÈİ  : Creat Function
+ å‡½ æ•° å  : diag_BuffVirtToPhy
+ åŠŸèƒ½æè¿°  : æ ¹æ®è¾“å…¥çš„è™šåœ°å€ï¼Œè®¡ç®—å¯¹åº”çš„å®åœ°å€
+ è¾“å…¥å‚æ•°  : pucCurVirtAddr:  å½“å‰è™šåœ°å€
+             pucPhyStart: é€šé“é…ç½®å†…å­˜èµ·å§‹çš„å®åœ°å€
+             pucVirtStart:é€šé“é…ç½®å†…å­˜èµ·å§‹çš„è™šåœ°å€
+             ulBufLen:    é€šé“å†…å­˜ç©ºé—´å¤§å°
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : VOS_NULL: è½¬æ¢å¤±è´¥/other: è™šåœ°å€çš„å€¼
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
+ ä¿®æ”¹å†å²  :
+   1.æ—¥    æœŸ  : 2012å¹´8æœˆ8æ—¥
+     ä½œ    è€…  : zhuli
+     ä¿®æ”¹å†…å®¹  : Creat Function
 **************************************************************************** */
 VOS_UINT8* diag_BuffVirtToPhy(VOS_UINT8 *pucCurVirtAddr, VOS_UINT8 *pucVirtStart, VOS_UINT8 *pucPhyStart, VOS_UINT32 ulBufLen)
 {
@@ -173,17 +173,17 @@ VOS_UINT8* diag_BuffVirtToPhy(VOS_UINT8 *pucCurVirtAddr, VOS_UINT8 *pucVirtStart
 }
 VOS_UINT32 diag_CreateLogBuf(DIAG_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lBufSize)
 {
-    /* ²ÎÊı¼ì²â Íâ²¿±£Ö¤ÁË²»Îª¿Õ*/
+    /* å‚æ•°æ£€æµ‹ å¤–éƒ¨ä¿è¯äº†ä¸ä¸ºç©º*/
 
     pstBufCtrl->lAlloc   = 0;
     pstBufCtrl->lRelease = 0;
     pstBufCtrl->lPadding = 0;
     pstBufCtrl->lBufSize = lBufSize;
 
-    /*ÉêÇëuncacheµÄ¶¯Ì¬ÄÚ´æÇø*/
+    /*ç”³è¯·uncacheçš„åŠ¨æ€å†…å­˜åŒº*/
     pstBufCtrl->pucBuf = diag_BuffPhyToVirt(pstBufCtrl->pucRealBuf,(VOS_UINT8*)DIAG_MEM_ADDR_BASE,(VOS_UINT8*)g_DiagMemVirt,(VOS_UINT32)(pstBufCtrl->lBufSize));
 
-    /* ·ÖÅäÄÚ´æÊ§°Ü */
+    /* åˆ†é…å†…å­˜å¤±è´¥ */
     if (VOS_NULL_PTR == pstBufCtrl->pucBuf)
     {
         g_stDiagToHsoErrRecord.usNoMemErr++;
@@ -201,31 +201,31 @@ VOS_UINT8* diag_AllocLogMem(DIAG_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lLen)
     VOS_INT32                           lTmpAlloc;
     VOS_INT32                           lTmpPadding;
 
-    /* ÊäÈë²ÎÊı¼ì²â */
+    /* è¾“å…¥å‚æ•°æ£€æµ‹ */
     if ((lLen >= pstBufCtrl->lBufSize)|| (0 == lLen))
     {
-        diag_printf("diag_AllocLogMem:Èë²Î²»¶Ô!,lLen=%d\n",lLen);
+        diag_printf("diag_AllocLogMem:å…¥å‚ä¸å¯¹!,lLen=%d\n",lLen);
         return VOS_NULL_PTR;
     }
 
     lTmpAlloc       = pstBufCtrl->lAlloc;
     lTmpPadding     = pstBufCtrl->lPadding;
 
-    /* Ã»ÓĞ»Ø¾í */
+    /* æ²¡æœ‰å›å· */
     if (pstBufCtrl->lAlloc >= pstBufCtrl->lRelease)
     {
-        /* »ñÈ¡Ê£ÓàÄÚ´æ´óĞ¡ £¬ÓÃÓÚÇø·Öbuffer¿ÕºÍÂú£¬ĞèÒª-1*/
+        /* è·å–å‰©ä½™å†…å­˜å¤§å° ï¼Œç”¨äºåŒºåˆ†bufferç©ºå’Œæ»¡ï¼Œéœ€è¦-1*/
         if (0 == pstBufCtrl->lRelease)
         {
             lFreeSize = (pstBufCtrl->lBufSize - pstBufCtrl->lAlloc) - 1;
         }
-		 /* »ñÈ¡Ê£ÓàÄÚ´æ´óĞ¡ £¬ÓÃÓÚÇø·Öbuffer¿ÕºÍÂú£¬ÓÉÓÚreleaseÇ°ÃæÓĞ¿Õ¼ä£¬¶ÁĞ´Ö¸Õë²»»áÏàµÈ£¬²»ĞèÒª-1*/
+		 /* è·å–å‰©ä½™å†…å­˜å¤§å° ï¼Œç”¨äºåŒºåˆ†bufferç©ºå’Œæ»¡ï¼Œç”±äºreleaseå‰é¢æœ‰ç©ºé—´ï¼Œè¯»å†™æŒ‡é’ˆä¸ä¼šç›¸ç­‰ï¼Œä¸éœ€è¦-1*/
         else
         {
             lFreeSize = pstBufCtrl->lBufSize - pstBufCtrl->lAlloc;
         }
 
-        /* Âú×ãÓÃ»§ÉêÇëÄÚ´æ´óĞ¡Ôò·µ»Ø */
+        /* æ»¡è¶³ç”¨æˆ·ç”³è¯·å†…å­˜å¤§å°åˆ™è¿”å› */
         if (lFreeSize >= lLen)
         {
             pucAddr = pstBufCtrl->pucBuf + pstBufCtrl->lAlloc;
@@ -238,7 +238,7 @@ VOS_UINT8* diag_AllocLogMem(DIAG_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lLen)
         lTmpAlloc    = 0;
     }
 
-    /* »Ø¾í£¬»ñÈ¡Ê£ÓàÄÚ´æ´óĞ¡ ,ÓÃÓÚÇø·Öbuffer¿ÕºÍÂú*/
+    /* å›å·ï¼Œè·å–å‰©ä½™å†…å­˜å¤§å° ,ç”¨äºåŒºåˆ†bufferç©ºå’Œæ»¡*/
     lFreeSize = (pstBufCtrl->lRelease - lTmpAlloc)-1;
 
     if (lFreeSize >= lLen)
@@ -251,8 +251,8 @@ VOS_UINT8* diag_AllocLogMem(DIAG_BUF_CTRL_STRU *pstBufCtrl, VOS_INT32 lLen)
         return pucAddr;
     }
 
-    /* ·ñÔò·ÖÅäÊ§°Ü£¬·µ»Ø¿ÕÖ¸Õë */
-    //diag_printf("diag_AllocLogMem:¿ÉÓÃ´óĞ¡²»¹»!\n");
+    /* å¦åˆ™åˆ†é…å¤±è´¥ï¼Œè¿”å›ç©ºæŒ‡é’ˆ */
+    //diag_printf("diag_AllocLogMem:å¯ç”¨å¤§å°ä¸å¤Ÿ!\n");
     return VOS_NULL_PTR;
 }
 VOS_UINT32 diag_ReleaseLogMem(DIAG_BUF_CTRL_STRU *pstBufCtrl,VOS_UINT8 *pAddr, VOS_INT32 lLen)
@@ -260,36 +260,36 @@ VOS_UINT32 diag_ReleaseLogMem(DIAG_BUF_CTRL_STRU *pstBufCtrl,VOS_UINT8 *pAddr, V
     VOS_INT32                           lUsedSize;
     VOS_INT32                           lTmpRls;
 
-    /* Èç¹ûµ±Ç°´¦ÓÚÖĞ¶ÏÉÏÏÂÎÄ,Ôò¸´Î»ÏµÍ³,Õï¶Ï½Ó¿Ú²»ÔÊĞíÔÚÖĞ¶ÏÖĞÊ¹ÓÃ*/
+    /* å¦‚æœå½“å‰å¤„äºä¸­æ–­ä¸Šä¸‹æ–‡,åˆ™å¤ä½ç³»ç»Ÿ,è¯Šæ–­æ¥å£ä¸å…è®¸åœ¨ä¸­æ–­ä¸­ä½¿ç”¨*/
     if(VOS_FALSE != VOS_CheckInterrupt())
     {
         DRV_SYSTEM_ERROR(DIAG_CALLED_IN_IRQ, MSP_FILE_ID_DIAG_BUF_CTRL_C, __LINE__, VOS_NULL, 0);/*lint !e569*/
     }
-    /* ÊäÈë²ÎÊı¼ì²â */
+    /* è¾“å…¥å‚æ•°æ£€æµ‹ */
     if ((VOS_NULL_PTR == pstBufCtrl) || (lLen >= pstBufCtrl->lBufSize))
     {
-        diag_printf("diag_ReleaseLogMem:Èë²Î²»¶Ô,lLen=%d!\n",lLen);
+        diag_printf("diag_ReleaseLogMem:å…¥å‚ä¸å¯¹,lLen=%d!\n",lLen);
         return ERR_MSP_FAILURE;
     }
 
-    /* ÊÍ·ÅÄÚ´æµØÖ·½øĞĞ¼ì²â */
+    /* é‡Šæ”¾å†…å­˜åœ°å€è¿›è¡Œæ£€æµ‹ */
     if ((pAddr != (pstBufCtrl->pucBuf + pstBufCtrl->lRelease))
         && (pAddr != pstBufCtrl->pucBuf))
     {
-        diag_printf("diag_ReleaseLogMem:´ıÊÍ·ÅµØÖ·²»¶Ô!pAddr=%p,pstBufCtrl->pucBuf=%p,pstBufCtrl->lRelease=0x%x\n",
+        diag_printf("diag_ReleaseLogMem:å¾…é‡Šæ”¾åœ°å€ä¸å¯¹!pAddr=%p,pstBufCtrl->pucBuf=%p,pstBufCtrl->lRelease=0x%x\n",
                     pAddr,pstBufCtrl->pucBuf,pstBufCtrl->lRelease);
         /*DRV_SYSTEM_ERROR(DIAG_REALSE_POINTER_ERROR, MSP_FILE_ID_DIAG_BUF_CTRL_C, __LINE__, VOS_NULL, 0);*//*lint !e569*/
     }
 
-    /* Î´»Ø¾í */
+    /* æœªå›å· */
     if (pstBufCtrl->lAlloc >= pstBufCtrl->lRelease)
     {
         lUsedSize = pstBufCtrl->lAlloc - pstBufCtrl->lRelease;
 
-        /* ³¤¶È´íÎó */
+        /* é•¿åº¦é”™è¯¯ */
         if (lUsedSize < lLen)
         {
-            diag_printf("diag_ReleaseLogMem:Ê¹ÓÃ³¤¶ÈĞ¡ÓÚ´ıÊÍ·Å³¤¶È!lAlloc=0x%x,lRelease=0x%x,lLen=%d!\n",
+            diag_printf("diag_ReleaseLogMem:ä½¿ç”¨é•¿åº¦å°äºå¾…é‡Šæ”¾é•¿åº¦!lAlloc=0x%x,lRelease=0x%x,lLen=%d!\n",
                         pstBufCtrl->lAlloc,pstBufCtrl->lRelease,lLen);
             return ERR_MSP_FAILURE;
         }
@@ -308,14 +308,14 @@ VOS_UINT32 diag_ReleaseLogMem(DIAG_BUF_CTRL_STRU *pstBufCtrl,VOS_UINT8 *pAddr, V
         lTmpRls = (pAddr - pstBufCtrl->pucBuf + lLen) % pstBufCtrl->lBufSize;
     }
 
-    /* ÊäÈëulLen²»ÕıÈ· */
+    /* è¾“å…¥ulLenä¸æ­£ç¡® */
     if ((lTmpRls > pstBufCtrl->lAlloc) && (lTmpRls < pstBufCtrl->lRelease))
     {
-        diag_printf("diag_ReleaseLogMem:ÓĞ»Ø¾íÇé¿ö£¬´ıÊÍ·ÅµØÖ·²»¶Ô!\n");
+        diag_printf("diag_ReleaseLogMem:æœ‰å›å·æƒ…å†µï¼Œå¾…é‡Šæ”¾åœ°å€ä¸å¯¹!\n");
         return ERR_MSP_FAILURE;
     }
 
-    /* Èç¹û·¢Éú»Ø¾íÔò½«PaddingÖµ¹é0 */
+    /* å¦‚æœå‘ç”Ÿå›å·åˆ™å°†Paddingå€¼å½’0 */
     if (lTmpRls <= pstBufCtrl->lAlloc)
     {
         pstBufCtrl->lPadding = 0;
@@ -330,19 +330,19 @@ VOS_UINT32 diag_GetBufIndex(SOCP_CODER_SRC_ENUM_U32 ulChanID)
     VOS_UINT32 ulIndex = 0;
     if( SOCP_CODER_SRC_LOM_CNF1 ==  ulChanID)
     {
-        ulIndex = DIAG_CODER_SRC_TYPE_CNF;/* [false alarm]:ÆÁ±ÎFortify */
+        ulIndex = DIAG_CODER_SRC_TYPE_CNF;/* [false alarm]:å±è”½Fortify */
     }
     else if( SOCP_CODER_SRC_LOM_IND1 ==  ulChanID)
     {
         ulIndex = DIAG_CODER_SRC_TYPE_IND;
     }
-    else if( SOCP_CODER_SRC_LOM_IND2 ==  ulChanID)/* [false alarm]:ÆÁ±ÎFortify */
+    else if( SOCP_CODER_SRC_LOM_IND2 ==  ulChanID)/* [false alarm]:å±è”½Fortify */
     {
         ulIndex = DIAG_CODER_SRC_TYPE_CNF;
     }
     else if( SOCP_CODER_SRC_LOM_IND3 ==  ulChanID)
     {
-        ulIndex = DIAG_CODER_SRC_TYPE_IND;/* [false alarm]:ÆÁ±ÎFortify */
+        ulIndex = DIAG_CODER_SRC_TYPE_IND;/* [false alarm]:å±è”½Fortify */
     }
     else
     {
@@ -357,7 +357,7 @@ VOS_UINT32 diag_ReleaseLogBuf(SOCP_CODER_SRC_ENUM_U32 ulSrcChanID)
     VOS_UINT32 ulIndex = 0;
     VOS_UINT8  *pucVirtAddr =NULL;
 
-    /* Çå¿ÕËùÓĞÒÑ·¢ËÍRD */
+    /* æ¸…ç©ºæ‰€æœ‰å·²å‘é€RD */
     if (VOS_OK != SCM_RlsSrcRDAll(ulSrcChanID, &ulDataAddr, &ulDataLen))
     {
         g_stDiagToHsoErrRecord.usRlsRdErr++;
@@ -365,7 +365,7 @@ VOS_UINT32 diag_ReleaseLogBuf(SOCP_CODER_SRC_ENUM_U32 ulSrcChanID)
         return ERR_MSP_FAILURE;
     }
 
-    /* ÒÑ¾­Ã»ÓĞRD */
+    /* å·²ç»æ²¡æœ‰RD */
     if ((VOS_NULL == ulDataAddr) || (0 == ulDataLen))
     {
         //diag_printf("diag_ReleaseLogBuf:ulDataAddr=0x%x,ulDataLen=%d\n",ulDataAddr,ulDataLen);
@@ -373,9 +373,9 @@ VOS_UINT32 diag_ReleaseLogBuf(SOCP_CODER_SRC_ENUM_U32 ulSrcChanID)
         return ERR_MSP_SUCCESS;
     }
 
-    /*¸ù¾İÍ¨µÀÀàĞÍ»ñÈ¡ÒªÊÍ·ÅÄÄ¸öBUFÊı¾İ*/
+    /*æ ¹æ®é€šé“ç±»å‹è·å–è¦é‡Šæ”¾å“ªä¸ªBUFæ•°æ®*/
     ulIndex = diag_GetBufIndex(ulSrcChanID);
-    /*´ÓSOCP³öÀ´µÄµØÖ·ÎªÊµµØÖ·£¬ĞèÒª×ª³ÉĞéµØÖ·²Ù×÷*/
+    /*ä»SOCPå‡ºæ¥çš„åœ°å€ä¸ºå®åœ°å€ï¼Œéœ€è¦è½¬æˆè™šåœ°å€æ“ä½œ*/
     pucVirtAddr = diag_BuffPhyToVirt((VOS_UINT8*)ulDataAddr,(VOS_UINT8*)DIAG_MEM_ADDR_BASE,(VOS_UINT8*)g_DiagMemVirt,(VOS_UINT32)(g_stDiagBufCtrl[ulIndex].lBufSize));
 
     if (VOS_NULL_PTR == pucVirtAddr)
@@ -385,7 +385,7 @@ VOS_UINT32 diag_ReleaseLogBuf(SOCP_CODER_SRC_ENUM_U32 ulSrcChanID)
         return ERR_MSP_INVALID_OP;
     }
 
-    /* ¸ù¾İÒÑ·¢ËÍRD×Ü³¤¶ÈÊÍ·ÅÄÚ´æ */
+    /* æ ¹æ®å·²å‘é€RDæ€»é•¿åº¦é‡Šæ”¾å†…å­˜ */
     if (VOS_OK != diag_ReleaseLogMem(&g_stDiagBufCtrl[ulIndex], pucVirtAddr, (VOS_INT32)ulDataLen))
     {
         g_stDiagToHsoErrRecord.usRlsMemErr++;
@@ -412,7 +412,7 @@ VOS_UINT8* diag_GetCoderSrcBuf(VOS_UINT32 ulLen,SOCP_CODER_SRC_ENUM_U32 ulChanID
 #endif
 #endif
 
-    /*clean Ê¹ÓÃ¹ıµÄRDºÍMEM buffer*/
+    /*clean ä½¿ç”¨è¿‡çš„RDå’ŒMEM buffer*/
     ulRet = diag_ReleaseLogBuf(ulChanID);
     if(ERR_MSP_SUCCESS != ulRet)
     {
@@ -427,10 +427,10 @@ VOS_UINT8* diag_GetCoderSrcBuf(VOS_UINT32 ulLen,SOCP_CODER_SRC_ENUM_U32 ulChanID
         return NULL;
     }
 
-    /*¸ù¾İÍ¨µÀÀàĞÍ»ñÈ¡ÒªÉêÇëÄÄ¸öBUFÊı¾İ*/
+    /*æ ¹æ®é€šé“ç±»å‹è·å–è¦ç”³è¯·å“ªä¸ªBUFæ•°æ®*/
     ulIndex = diag_GetBufIndex(ulChanID);
 
-    /*»ñÈ¡±àÂëÔ´Í¨µÀBuf*/
+    /*è·å–ç¼–ç æºé€šé“Buf*/
     aucBuf = diag_AllocLogMem(&g_stDiagBufCtrl[ulIndex], (VOS_INT32)ulLen);
 
     if(aucBuf == NULL)
@@ -453,15 +453,15 @@ VOS_UINT32 diag_SendCoderSrcToSocp(VOS_UINT8 *pBuf,VOS_UINT32 ulLen, SOCP_CODER_
 
     DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_CODE_PACKET_START, ulCodeSrcId, (VOS_UINT32)ulLen, 0);
 
-    /*¸ù¾İÍ¨µÀÀàĞÍ»ñÈ¡ÒªÉêÇëÄÄ¸öBUFÊı¾İ*/
+    /*æ ¹æ®é€šé“ç±»å‹è·å–è¦ç”³è¯·å“ªä¸ªBUFæ•°æ®*/
     ulIndex = diag_GetBufIndex(ulCodeSrcId);
 
-    /*Åä¸øSOCP±ØĞëÎªÊµµØÖ·*/
+    /*é…ç»™SOCPå¿…é¡»ä¸ºå®åœ°å€*/
     pucRealMemAddr = diag_BuffVirtToPhy(pBuf,(VOS_UINT8*)g_DiagMemVirt,(VOS_UINT8*)DIAG_MEM_ADDR_BASE,(VOS_UINT32)(g_stDiagBufCtrl[ulIndex].lBufSize));
     if (VOS_NULL_PTR == pucRealMemAddr)
     {
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_CODE_PACKET_START_ERROR, ulCodeSrcId, (VOS_UINT32)ulLen, 0);
-        /*Èç¹û·¢ËÍÊ§°Ü,½«ÉêÇëµÄbuf¹é»¹*/
+        /*å¦‚æœå‘é€å¤±è´¥,å°†ç”³è¯·çš„bufå½’è¿˜*/
         g_stDiagBufCtrl[ulIndex].lAlloc -= (VOS_INT32)ulLen;
 
         g_stDiagToHsoErrRecord.usSendAddrErr++;
@@ -470,16 +470,16 @@ VOS_UINT32 diag_SendCoderSrcToSocp(VOS_UINT8 *pBuf,VOS_UINT32 ulLen, SOCP_CODER_
     }
 
 #if((VOS_OS_VER == VOS_VXWORKS) || (VOS_OS_VER == VOS_RTOSCK))
-    /*Êı¾İ·¢ËÍÇ°£¬Ë¢cache*/
+    /*æ•°æ®å‘é€å‰ï¼Œåˆ·cache*/
     SCM_FLUSH_CACHE(pBuf, ulLen);
 #endif
 
-    /*½«Êı¾İ·¢¸øSOCP*/
+    /*å°†æ•°æ®å‘ç»™SOCP*/
     ret = SCM_SendCoderSrc(ulCodeSrcId,pucRealMemAddr,ulLen);
     if(ret != ERR_MSP_SUCCESS)
     {
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_CODE_PACKET_START_ERROR, ulCodeSrcId, (VOS_UINT32)ulLen, 1);
-        /*Èç¹û·¢ËÍÊ§°Ü,½«ÉêÇëµÄbuf¹é»¹*/
+        /*å¦‚æœå‘é€å¤±è´¥,å°†ç”³è¯·çš„bufå½’è¿˜*/
 		g_stDiagBufCtrl[ulIndex].lAlloc -= (VOS_INT32)ulLen;
 
         g_stDiagToHsoErrRecord.usSendSocpDataErr++;
@@ -493,31 +493,31 @@ VOS_VOID diag_BufHelp(VOS_VOID)
 {
     VOS_UINT32 i =0;
 
-    vos_printf("ĞÅºÅÁ¿Ëø´ÎÊı=%x:\n",                            g_LockBufTimes);
-    vos_printf("ĞÅºÅÁ¿½âËø´ÎÊı=%x:\n",                          g_UnLockBufTimes);
+    vos_printf("ä¿¡å·é‡é”æ¬¡æ•°=%x:\n",                            g_LockBufTimes);
+    vos_printf("ä¿¡å·é‡è§£é”æ¬¡æ•°=%x:\n",                          g_UnLockBufTimes);
 
     vos_printf("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 
     for(i = 0 ;i< 2 ;i++)
     {
-        vos_printf("±àÂëÔ´BUFÆğÊ¼ĞéÄâµØÖ·=%p:\n",                    g_stDiagBufCtrl[i].pucBuf);
-        vos_printf("±àÂëÔ´BUFÆğÊ¼ÎïÀíµØÖ·=%p:\n",                    g_stDiagBufCtrl[i].pucRealBuf);
-        vos_printf("±àÂëÔ´BUF·ÖÅäµØÖ·Ïà¶ÔÓÚÆğÊ¼ĞéÄâµØÖ·Æ«ÒÆ=0x%x:\n",  g_stDiagBufCtrl[i].lAlloc);
-        vos_printf("±àÂëÔ´BUFÊÍ·ÅµØÖ·Ïà¶ÔÓÚÆğÊ¼ĞéÄâµØÖ·Æ«ÒÆ=0x%x:\n",  g_stDiagBufCtrl[i].lRelease);
-        vos_printf("±àÂëÔ´BUFÌî³äµØÖ·Ïà¶ÔÓÚÆğÊ¼ĞéÄâµØÖ·Æ«ÒÆ=0x%x:\n",  g_stDiagBufCtrl[i].lPadding);
-        vos_printf("±àÂëÔ´BUF´óĞ¡=%d(K):\n",                           (g_stDiagBufCtrl[i].lBufSize)/1024);
+        vos_printf("ç¼–ç æºBUFèµ·å§‹è™šæ‹Ÿåœ°å€=%p:\n",                    g_stDiagBufCtrl[i].pucBuf);
+        vos_printf("ç¼–ç æºBUFèµ·å§‹ç‰©ç†åœ°å€=%p:\n",                    g_stDiagBufCtrl[i].pucRealBuf);
+        vos_printf("ç¼–ç æºBUFåˆ†é…åœ°å€ç›¸å¯¹äºèµ·å§‹è™šæ‹Ÿåœ°å€åç§»=0x%x:\n",  g_stDiagBufCtrl[i].lAlloc);
+        vos_printf("ç¼–ç æºBUFé‡Šæ”¾åœ°å€ç›¸å¯¹äºèµ·å§‹è™šæ‹Ÿåœ°å€åç§»=0x%x:\n",  g_stDiagBufCtrl[i].lRelease);
+        vos_printf("ç¼–ç æºBUFå¡«å……åœ°å€ç›¸å¯¹äºèµ·å§‹è™šæ‹Ÿåœ°å€åç§»=0x%x:\n",  g_stDiagBufCtrl[i].lPadding);
+        vos_printf("ç¼–ç æºBUFå¤§å°=%d(K):\n",                           (g_stDiagBufCtrl[i].lBufSize)/1024);
 
         vos_printf("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
     }
 
-    vos_printf("·ÖÅä uncache mem´íÎó´ÎÊı=%d:\n",                 g_stDiagToHsoErrRecord.usNoMemErr);
-    vos_printf("·ÖÅä BUF´íÎó´ÎÊı=%d:\n",                         g_stDiagToHsoErrRecord.usAllocMemErr);
-    vos_printf("ÊÍ·Å BUF´íÎó´ÎÊı=%d:\n",                         g_stDiagToHsoErrRecord.usRlsMemErr);
-    vos_printf("ÊÍ·Å RD´íÎó´ÎÊı=%d:\n",                          g_stDiagToHsoErrRecord.usRlsRdErr);
-    vos_printf("ÊµµØÖ·×ª»»ĞéµØÖ·´íÎó´ÎÊı=%d:\n",                 g_stDiagToHsoErrRecord.usRlsAddrErr);
-    vos_printf("ĞèµØÖ·×ª»»ÊµµØÖ·´íÎó´ÎÊı=%d:\n",                 g_stDiagToHsoErrRecord.usSendAddrErr);
-    vos_printf("Ğ´ÈëSOCP´íÎó´ÎÊı=%d:\n",                         g_stDiagToHsoErrRecord.usSendSocpDataErr);
-	vos_printf("ÎŞRD¿ÉÇå´ÎÊı=%d:\n",                             g_stDiagToHsoErrRecord.usNoRdNum);
+    vos_printf("åˆ†é… uncache memé”™è¯¯æ¬¡æ•°=%d:\n",                 g_stDiagToHsoErrRecord.usNoMemErr);
+    vos_printf("åˆ†é… BUFé”™è¯¯æ¬¡æ•°=%d:\n",                         g_stDiagToHsoErrRecord.usAllocMemErr);
+    vos_printf("é‡Šæ”¾ BUFé”™è¯¯æ¬¡æ•°=%d:\n",                         g_stDiagToHsoErrRecord.usRlsMemErr);
+    vos_printf("é‡Šæ”¾ RDé”™è¯¯æ¬¡æ•°=%d:\n",                          g_stDiagToHsoErrRecord.usRlsRdErr);
+    vos_printf("å®åœ°å€è½¬æ¢è™šåœ°å€é”™è¯¯æ¬¡æ•°=%d:\n",                 g_stDiagToHsoErrRecord.usRlsAddrErr);
+    vos_printf("éœ€åœ°å€è½¬æ¢å®åœ°å€é”™è¯¯æ¬¡æ•°=%d:\n",                 g_stDiagToHsoErrRecord.usSendAddrErr);
+    vos_printf("å†™å…¥SOCPé”™è¯¯æ¬¡æ•°=%d:\n",                         g_stDiagToHsoErrRecord.usSendSocpDataErr);
+	vos_printf("æ— RDå¯æ¸…æ¬¡æ•°=%d:\n",                             g_stDiagToHsoErrRecord.usNoRdNum);
 }
 
 VOS_VOID diag_BufDebug(VOS_VOID)
@@ -534,7 +534,7 @@ VOS_VOID diag_BufDebug(VOS_VOID)
 		{
 			g_UnNeedMaxBuf[i] = g_stDiagBufCtrl[i].lBufSize - g_stDiagBufCtrl[i].lRelease + g_stDiagBufCtrl[i].lAlloc;
 		}
-		vos_printf("buf[%d]ĞèÒªµÄ×î´ó³¤¶È = %d(k);\n",		i,	g_UnNeedMaxBuf[i]/1024);
+		vos_printf("buf[%d]éœ€è¦çš„æœ€å¤§é•¿åº¦ = %d(k);\n",		i,	g_UnNeedMaxBuf[i]/1024);
     }
 }
 

@@ -1,7 +1,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼ş°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include <linux/kernel.h>
 #include <linux/kthread.h>
@@ -31,7 +31,7 @@ extern "C" {
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 unsigned int phy_img_head = 0;
 unsigned int phy_img_buf = 0;
@@ -44,22 +44,22 @@ extern void dma_free_coherent(struct device *dev, size_t size,
 			 void *vaddr, dma_addr_t dma_handle);
 extern int check_secure_mode(void);
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
 void drv_hifi_power_up(void)
 {
-    /*ĞéÊµµØÖ·×ª»»*/
+    /*è™šå®åœ°å€è½¬æ¢*/
     unsigned long sctrl_on  = (unsigned long)HISI_VA_ADDRESS(SOC_AO_SCTRL_BASE_ADDR);
     unsigned long sctrl_off = (unsigned long)HISI_VA_ADDRESS(SOC_PERI_SCTRL_BASE_ADDR);
 
 #ifdef CONFIG_ARCH_HI6XXX
-    /* ¼ÓÔØÇ°ÏÈ¸´Î»hifi */
+    /* åŠ è½½å‰å…ˆå¤ä½hifi */
     writel(1 << SOC_PERI_SCTRL_SC_PERIPH_RSTEN1_periph_rsten1_hifi_START,
            SOC_PERI_SCTRL_SC_PERIPH_RSTEN1_ADDR(sctrl_off));
 
-    /* PW EN ¼Ä´æÆ÷ÒÑ²»´æÔÚ*/
+    /* PW EN å¯„å­˜å™¨å·²ä¸å­˜åœ¨*/
 
     /* PW ISO DIS */
     writel(1 << SOC_AO_SCTRL_SC_PW_ISODIS0_pw_isodis0_8hifi_START,
@@ -67,19 +67,19 @@ void drv_hifi_power_up(void)
 
     mdelay(1);
 
-    /* ÍâÉèÊ±ÖÓÊ¹ÄÜ */
+    /* å¤–è®¾æ—¶é’Ÿä½¿èƒ½ */
     writel(1 << SOC_PERI_SCTRL_SC_PERIPH_CLKEN1_periph_clken1_hifi_START,
            SOC_PERI_SCTRL_SC_PERIPH_CLKEN1_ADDR(sctrl_off));
 
-    /* ´ò¿ªµôµçÇø×ÜÊ±ÖÓ */
+    /* æ‰“å¼€æ‰ç”µåŒºæ€»æ—¶é’Ÿ */
     writel(1 << SOC_AO_SCTRL_SC_PW_CLKEN0_pw_clken0_8hifi_START,
            SOC_AO_SCTRL_SC_PW_CLKEN0_ADDR(sctrl_on));
 
-    /* ÏÂµçÇø×Ü½â¸´Î» */
+    /* ä¸‹ç”µåŒºæ€»è§£å¤ä½ */
     writel(1 << SOC_AO_SCTRL_SC_PW_RSTDIS0_pw_rstdis0_8hifi_START,
            SOC_AO_SCTRL_SC_PW_RSTDIS0_ADDR(sctrl_on));
 
-    /* ½â¸´Î»IP */
+    /* è§£å¤ä½IP */
     writel(1 << SOC_PERI_SCTRL_SC_PERIPH_RSTDIS1_periph_rstdis1_hifi_START,
            SOC_PERI_SCTRL_SC_PERIPH_RSTDIS1_ADDR(sctrl_off));
 
@@ -87,24 +87,24 @@ void drv_hifi_power_up(void)
 
     unsigned long pmctrl    = (unsigned long)HISI_VA_ADDRESS(SOC_PMCTRL_BASE_ADDR);
 
-    /* ¼ÓÔØÇ°ÏÈ¸´Î»hifi */
+    /* åŠ è½½å‰å…ˆå¤ä½hifi */
     writel(0x1<<6, (void __iomem *)SOC_SCTRL_SC_PERIPH_RSTEN0_ADDR(sctrl_off));
 
-    /* PW EN£¬Ä¬ÈÏÒÑ´ò¿ª */
+    /* PW ENï¼Œé»˜è®¤å·²æ‰“å¼€ */
 
-    /* ¹Ø±ÕÊ±ÖÓ */
+    /* å…³é—­æ—¶é’Ÿ */
     writel(0x1<<27,  (void __iomem *)SOC_SCTRL_SC_PERIPH_CLKDIS12_ADDR(sctrl_off));
 
-    /* Ñ¡ÔñHIFIµÄPLL£¬Ô´×ÔPERIPH_PLL */
+    /* é€‰æ‹©HIFIçš„PLLï¼Œæºè‡ªPERIPH_PLL */
     writel(0x90, (void __iomem *)SOC_PMCTRL_CLKCFG4BIT1_ADDR(pmctrl));
 
-    /* ÅäÖÃ4·ÖÆµ£¬Êä³ö360MHz */
+    /* é…ç½®4åˆ†é¢‘ï¼Œè¾“å‡º360MHz */
     writel(0x83, (void __iomem *)SOC_SCTRL_SC_CLKCFG8BIT4_ADDR(sctrl_off));
 
-    /* ÍâÉèÊ±ÖÓÊ¹ÄÜ */
+    /* å¤–è®¾æ—¶é’Ÿä½¿èƒ½ */
     writel(0x1<<27,  (void __iomem *)SOC_SCTRL_SC_PERIPH_CLKEN12_ADDR(sctrl_off));
 
-    /* ´ò¿ªÏÂµçÇø×ÜÊ±ÖÓ */
+    /* æ‰“å¼€ä¸‹ç”µåŒºæ€»æ—¶é’Ÿ */
     writel(0x1<<8, (void __iomem *)SOC_AO_SCTRL_SC_PW_CLKEN0_ADDR(sctrl_on));
 
     mdelay(1);
@@ -112,10 +112,10 @@ void drv_hifi_power_up(void)
     /* PW ISO DIS */
     writel(0x1<<8,  (void __iomem *)SOC_AO_SCTRL_SC_PW_ISODIS0_ADDR(sctrl_on));
 
-    /* ÏÂµçÇø×Ü½â¸´Î» */
+    /* ä¸‹ç”µåŒºæ€»è§£å¤ä½ */
     writel(0x1<<8,  (void __iomem *)SOC_AO_SCTRL_SC_PW_RSTDIS0_ADDR(sctrl_on));
 
-    /* ½â¸´Î»IP */
+    /* è§£å¤ä½IP */
     writel(0x1<<6, (void __iomem *)SOC_SCTRL_SC_PERIPH_RSTDIS0_ADDR(sctrl_off));
 
     mdelay(1);
@@ -164,10 +164,10 @@ void drv_hifi_init_mem(unsigned int* share_addr_base)
 
     sec_info = (struct drv_hifi_sec_load_info*)share_addr_base;
 
-    /* ¹²ÏíÄÚ´æÖĞÇ°¼Ómagic number 0x55AA55AA */
+    /* å…±äº«å†…å­˜ä¸­å‰åŠ magic number 0x55AA55AA */
     sec_info->sec_magic = MEM_BEGIN_CHECK32_DATA;
 
-    /* ¹²ÏíÄÚ´æÖĞºó¼Ómagic number 0xAA55AA55 */
+    /* å…±äº«å†…å­˜ä¸­ååŠ magic number 0xAA55AA55 */
     *(unsigned int*)((char*)share_addr_base + HIFI_SHARE_ADDR_LENGTH - sizeof(int))
         = MEM_END_CHECK32_DATA;
 }
@@ -188,9 +188,9 @@ int drv_hifi_check_sections(struct drv_hifi_image_head *img_head,
                                  struct drv_hifi_image_sec *img_sec)
 {
 
-    /* ¼ì²éSNºÅ´óÓÚ¶ÎÊıÄ¿
-       »ò ¶Î´óĞ¡¼ÓÔ´Æ«ÒÆÁ¿´óÓÚ¾µÏñ´óĞ¡
-       »ò ¶ÎÊôĞÔºÍÀàĞÍ²»ºÏ·¨*/
+    /* æ£€æŸ¥SNå·å¤§äºæ®µæ•°ç›®
+       æˆ– æ®µå¤§å°åŠ æºåç§»é‡å¤§äºé•œåƒå¤§å°
+       æˆ– æ®µå±æ€§å’Œç±»å‹ä¸åˆæ³•*/
     if ((img_sec->sn >= img_head->sections_num)
         || (img_sec->src_offset + img_sec->size > img_head->image_size)
         || (img_sec->type >= (unsigned char)DRV_HIFI_IMAGE_SEC_TYPE_BUTT)
@@ -204,7 +204,7 @@ int drv_hifi_check_sections(struct drv_hifi_image_head *img_head,
 
 static void *memcpy_local(void *dest, const void *src, unsigned int count)
 {
-/*from soc,zhangguoliang,64bit, hifi itcm²»ÄÜÒ»¸ö×Ö½ÚÒ»¸ö×Ö½Úcopy!!*/
+/*from soc,zhangguoliang,64bit, hifi itcmä¸èƒ½ä¸€ä¸ªå­—èŠ‚ä¸€ä¸ªå­—èŠ‚copy!!*/
 #ifdef CONFIG_ARM64
 	int *tmp = dest;
 	const int *s = src;
@@ -293,7 +293,7 @@ int drv_hifi_load_sec(void *img_buf, unsigned int* share_mem)
             return BSP_RESET_ERROR;
         }
 
-        /*Èç¹û¶ÎµÄÄ¿µÄµØÖ·ÊÇÔÚ0xC0000000µ½0xEFFFFFFF,Ôò½øĞĞhifiĞéÊµµØÖ·×ª»»*/
+        /*å¦‚æœæ®µçš„ç›®çš„åœ°å€æ˜¯åœ¨0xC0000000åˆ°0xEFFFFFFF,åˆ™è¿›è¡Œhifiè™šå®åœ°å€è½¬æ¢*/
         drv_hifi_phy2virt((unsigned int*)(&(head->sections[i].des_addr)));
 
         iviraddr = (unsigned long)(ioremap_wc((head->sections[i].des_addr),head->sections[i].size));
@@ -314,32 +314,32 @@ int drv_hifi_load_sec(void *img_buf, unsigned int* share_mem)
                        (void*)((char*)head + head->sections[i].src_offset),
                        head->sections[i].size);
             printk("drv_hifi_load_sec02:dynamic step2\n");
-            /* Ìî³ä¶ÎĞÅÏ¢Í· */
+            /* å¡«å……æ®µä¿¡æ¯å¤´ */
             dynamic_sec->sec_source_addr
                 = (unsigned long)(&(sec_info->sec_data[sec_data_num]));
             dynamic_sec->sec_length    = head->sections[i].size;
             dynamic_sec->sec_dest_addr = head->sections[i].des_addr;
 
             printk("drv_hifi_load_sec02:dynamic step3\n");
-            /* ¿½±´¶ÎÊı¾İµ½¹²ÏíÄÚ´æ */
+            /* æ‹·è´æ®µæ•°æ®åˆ°å…±äº«å†…å­˜ */
             iviraddr_src = dynamic_sec->sec_source_addr;
             printk("drv_hifi_load_sec02:iviraddr is 0x%p phy addr is 0x%p.\n",(void*)iviraddr_src, (void*)dynamic_sec->sec_source_addr);
             hisi_io_memcpy((void*)iviraddr_src,
                (void*)((char*)head + head->sections[i].src_offset),
                 head->sections[i].size);
 
-            /*±£´æshare_memµÄ¶ÎÊı¾İÔ´µØÖ·µÄÎïÀíµØÖ·£¬¹©mcuÊ¹ÓÃ¼ÓÔØhifi*/
+            /*ä¿å­˜share_memçš„æ®µæ•°æ®æºåœ°å€çš„ç‰©ç†åœ°å€ï¼Œä¾›mcuä½¿ç”¨åŠ è½½hifi*/
             dynamic_sec->sec_source_addr = share_mem_base_addr + data_addr_offset;
             data_addr_offset += head->sections[i].size;
-            /* ¸üĞÂ¶ÎÊı¾İµØÖ· */
+            /* æ›´æ–°æ®µæ•°æ®åœ°å€ */
             sec_data_num += head->sections[i].size;
 
-            /* ¸üĞÂ·Çµ¥´Î¼ÓÔØ¶ÎµÄ¸öÊı */
+            /* æ›´æ–°éå•æ¬¡åŠ è½½æ®µçš„ä¸ªæ•° */
             dynamic_sec_num++;
 
         } else if ((unsigned char)DRV_HIFI_IMAGE_SEC_UNLOAD == head->sections[i].load_attib) {
 
-            /* ²»ĞèÒª¼ÓÔØµÄ¶Î£¬Ìî³äHifiÓÊÏäµØÖ·ĞÅÏ¢ */
+            /* ä¸éœ€è¦åŠ è½½çš„æ®µï¼Œå¡«å……Hifié‚®ç®±åœ°å€ä¿¡æ¯ */
             drv_hifi_fill_mb_info(iviraddr);
 
             printk("drv_hifi_load_sec:hifi unload sections.\n");
@@ -349,10 +349,10 @@ int drv_hifi_load_sec(void *img_buf, unsigned int* share_mem)
         iounmap((void*)iviraddr);
     }
 
-    /* Ìî³ä¶ÎĞÅÏ¢Í·£¬·Çµ¥´Î¼ÓÔØ¶ÎµÄ¸öÊı */
+    /* å¡«å……æ®µä¿¡æ¯å¤´ï¼Œéå•æ¬¡åŠ è½½æ®µçš„ä¸ªæ•° */
     sec_info->sec_num = dynamic_sec_num;
 
-    /*ÅäÖÃÏµÍ³¿ØÖÆÆ÷À­¸ßHiFiµÄÊäÈëĞÅºÅRunStall*/
+    /*é…ç½®ç³»ç»Ÿæ§åˆ¶å™¨æ‹‰é«˜HiFiçš„è¾“å…¥ä¿¡å·RunStall*/
     runstall_val.value             = 0x0;
     runstall_val.reg.hifi_runstall = 0x0;
 
@@ -454,7 +454,7 @@ int  execute_load_hifi(int safe_load, unsigned long share_mem)
 
     if (HIFI_SAFE_LOAD == safe_load)
     {
-        /* Hifi¾µÏñ°²È«Ğ£Ñé */
+        /* Hifié•œåƒå®‰å…¨æ ¡éªŒ */
         ret = image_verification(&img_buf);
         if (ret != 0)
         {
@@ -466,11 +466,11 @@ int  execute_load_hifi(int safe_load, unsigned long share_mem)
     }
     else
     {
-        /* Èç¹ûÃ»ÓĞ°²È«Ğ£Ñé£¬µ÷ÓÃÏÂÃæ½Ó¿Ú¶ÁÈ¡Hifi¾µÏñ */
+        /* å¦‚æœæ²¡æœ‰å®‰å…¨æ ¡éªŒï¼Œè°ƒç”¨ä¸‹é¢æ¥å£è¯»å–Hifié•œåƒ */
         ret = drv_hifi_read_image(img_head, (void **)&img_buf);
         if (ret != 0)
         {
-            /* ¶ÁÈ¡¾µÏñÊ§°Ü */
+            /* è¯»å–é•œåƒå¤±è´¥ */
             printk(KERN_INFO"RESET LOADHIFI: execute_load_hifi:Read image error.\n");
             kfree(img_head);
             vfree(img_buf);
@@ -479,11 +479,11 @@ int  execute_load_hifi(int safe_load, unsigned long share_mem)
         }
     }
 
-    /* µ÷ÓÃdrv_hifi_load_sec£¬½âÎö¸÷¸ö¶Î£¬²¢¼ÓÔØ */
+    /* è°ƒç”¨drv_hifi_load_secï¼Œè§£æå„ä¸ªæ®µï¼Œå¹¶åŠ è½½ */
     ret = drv_hifi_load_sec(img_buf, share_memory);
     if (ret != 0)
     {
-        /* ¼ÓÔØ¾µÏñÊ§°Ü */
+        /* åŠ è½½é•œåƒå¤±è´¥ */
         printk(KERN_INFO"RESET LOADHIFI: execute_load_hifi:Read sections error.\n");
         kfree(img_head);
         iounmap(share_memory);
@@ -498,11 +498,11 @@ int  execute_load_hifi(int safe_load, unsigned long share_mem)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : hifireset_loadhifibin
- ¹¦ÄÜÃèÊö  : ¼ÓÔØhifiÓ³Ïñ
- ÊäÈë²ÎÊı  : ÎŞ
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : int
+ å‡½ æ•° å  : hifireset_loadhifibin
+ åŠŸèƒ½æè¿°  : åŠ è½½hifiæ˜ åƒ
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : int
 *****************************************************************************/
 int hifireset_loadhifibin(void)
 {

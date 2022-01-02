@@ -3,7 +3,7 @@
 
 
 /*****************************************************************************
-  1 Í·ÎÄ¼þ°üº¬
+  1 å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "Fc.h"
 #include "FcInterface.h"
@@ -24,13 +24,13 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_CCORE_FLOW_CTRL_C
 
 
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 VOS_UINT32                              g_ulFcUlRateCpu = FC_HSUPA_RATE_MAX_KBPS;
 VOS_UINT32                              g_ulFcUlRateTmp = FC_HSUPA_RATE_MAX_KBPS;
@@ -46,45 +46,45 @@ FC_TRACE_CPULOAD_STRU                   g_stFcTraceCpuLoad  =
 
 
 /*****************************************************************************
-  3 º¯ÊýÊµÏÖ
+  3 å‡½æ•°å®žçŽ°
 *****************************************************************************/
 /*lint -save -e958 */
 /*****************************************************************************
- º¯ Êý Ãû  : FC_UL_GetRate
- ¹¦ÄÜÃèÊö  : ¿ØÖÆHSUPAÉÏÐÐ·¢ËÍËÙÂÊ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : Á÷¿ØÏÞÖÆ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_UL_GetRate
+ åŠŸèƒ½æè¿°  : æŽ§åˆ¶HSUPAä¸Šè¡Œå‘é€é€ŸçŽ‡
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æµæŽ§é™åˆ¶
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 FC_UL_GetRate( VOS_VOID )
 {
-    /* ·µ»ØÉÏÐÐ·¢ËÍËÙÂÊÏÞÖÆ = MIN(CPUËÙÂÊ£¬ÎÂ±£ËÙÂÊ) */
+    /* è¿”å›žä¸Šè¡Œå‘é€é€ŸçŽ‡é™åˆ¶ = MIN(CPUé€ŸçŽ‡ï¼Œæ¸©ä¿é€ŸçŽ‡) */
     return PS_MIN(g_ulFcUlRateCpu*1024, g_ulFcUlRateTmp*1024);
 }
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_UL_UpRateLimit
- ¹¦ÄÜÃèÊö  : ¼ÓÇ¿HSUPAÉÏÐÐ·¢ËÍËÙÂÊÏÞÖÆ£¬½µµÍ·¢ËÍËÙÂÊ
- ÊäÈë²ÎÊý  : ulSndRate    --  ·¢ËÍËÙÂÊ°Ù·Ö±È
-             ulPolicyMask --  Á÷¿Ø²ßÂÔÑÚÂë
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_UL_UpRateLimit
+ åŠŸèƒ½æè¿°  : åŠ å¼ºHSUPAä¸Šè¡Œå‘é€é€ŸçŽ‡é™åˆ¶ï¼Œé™ä½Žå‘é€é€ŸçŽ‡
+ è¾“å…¥å‚æ•°  : ulSndRate    --  å‘é€é€ŸçŽ‡ç™¾åˆ†æ¯”
+             ulPolicyMask --  æµæŽ§ç­–ç•¥æŽ©ç 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 FC_UL_UpRateLimit( VOS_UINT32 ulUlRate, VOS_UINT32 ulPolicyId )
@@ -92,7 +92,7 @@ VOS_UINT32 FC_UL_UpRateLimit( VOS_UINT32 ulUlRate, VOS_UINT32 ulPolicyId )
     VOS_UINT32                          ulRateLimit;
 
 
-    /* Ç°16Î»¼ÇÂ¼µ±Ç°µµÎ»µÄÁ÷¿Ø°Ù·Ö±È£¬ÓÃÓÚÆôÁ÷¿Ø */
+    /* å‰16ä½è®°å½•å½“å‰æ¡£ä½çš„æµæŽ§ç™¾åˆ†æ¯”ï¼Œç”¨äºŽå¯æµæŽ§ */
     ulRateLimit = ulUlRate >> 16;
 
     if ( FC_POLICY_MASK_CPU_C == FC_POLICY_MASK(ulPolicyId))
@@ -116,19 +116,19 @@ VOS_UINT32 FC_UL_UpRateLimit( VOS_UINT32 ulUlRate, VOS_UINT32 ulPolicyId )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_UL_DownRateLimit
- ¹¦ÄÜÃèÊö  : ¼õÈõHSUPAÉÏÐÐ·¢ËÍËÙÂÊÏÞÖÆ£¬Ìá¸ß·¢ËÍËÙÂÊ
- ÊäÈë²ÎÊý  : ulSndRate    --  ·¢ËÍËÙÂÊ°Ù·Ö±È
-             ulPolicyMask --  Á÷¿Ø²ßÂÔÑÚÂë
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_UL_DownRateLimit
+ åŠŸèƒ½æè¿°  : å‡å¼±HSUPAä¸Šè¡Œå‘é€é€ŸçŽ‡é™åˆ¶ï¼Œæé«˜å‘é€é€ŸçŽ‡
+ è¾“å…¥å‚æ•°  : ulSndRate    --  å‘é€é€ŸçŽ‡ç™¾åˆ†æ¯”
+             ulPolicyMask --  æµæŽ§ç­–ç•¥æŽ©ç 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 FC_UL_DownRateLimit( VOS_UINT32 ulUlRate, VOS_UINT32 ulPolicyId )
@@ -136,7 +136,7 @@ VOS_UINT32 FC_UL_DownRateLimit( VOS_UINT32 ulUlRate, VOS_UINT32 ulPolicyId )
     VOS_UINT32                          ulRateLimit;
 
 
-    /* ºó16Î»¼ÇÂ¼ÏÂÒ»¸ö¸üµÍÏÈ¼¶µµÎ»µÄÁ÷¿Ø°Ù·Ö±È£¬ÓÃÓÚ½âÁ÷¿Ø */
+    /* åŽ16ä½è®°å½•ä¸‹ä¸€ä¸ªæ›´ä½Žå…ˆçº§æ¡£ä½çš„æµæŽ§ç™¾åˆ†æ¯”ï¼Œç”¨äºŽè§£æµæŽ§ */
     ulRateLimit = ulUlRate & FC_DOWN_RATE_LIMIT_MASK;
 
     if ( FC_POLICY_MASK_CPU_C == FC_POLICY_MASK(ulPolicyId))
@@ -160,19 +160,19 @@ VOS_UINT32 FC_UL_DownRateLimit( VOS_UINT32 ulUlRate, VOS_UINT32 ulPolicyId )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_UL_InitFcPoints
- ¹¦ÄÜÃèÊö  : ¿ØÖÆHSUPAÉÏÐÐ·¢ËÍËÙÂÊ
- ÊäÈë²ÎÊý  : ucPolicyId --  ²ßÂÔID
-             pstUlFcCfg --  ²ßÂÔÁ÷¿ØÅäÖÃ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_UL_InitFcPoints
+ åŠŸèƒ½æè¿°  : æŽ§åˆ¶HSUPAä¸Šè¡Œå‘é€é€ŸçŽ‡
+ è¾“å…¥å‚æ•°  : ucPolicyId --  ç­–ç•¥ID
+             pstUlFcCfg --  ç­–ç•¥æµæŽ§é…ç½®
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 FC_UL_InitFcPoints
@@ -196,7 +196,7 @@ VOS_UINT32 FC_UL_InitFcPoints
     {
         enFcId = FC_ID_UL_RATE_1_FOR_TMP;
     }
-    /* Ä¿Ç°£¬Ö»Õë¶ÔCCPUºÍTMPÌá¹©ÁË°´µµÎ»¿ØËÙÂÊ¹¦ÄÜ£¬ÆäËûº¯Êý²»ÄÜÊ¹ÓÃ */
+    /* ç›®å‰ï¼Œåªé’ˆå¯¹CCPUå’ŒTMPæä¾›äº†æŒ‰æ¡£ä½æŽ§é€ŸçŽ‡åŠŸèƒ½ï¼Œå…¶ä»–å‡½æ•°ä¸èƒ½ä½¿ç”¨ */
     else
     {
         FC_LOG1(PS_PRINT_WARNING,
@@ -206,7 +206,7 @@ VOS_UINT32 FC_UL_InitFcPoints
         return VOS_ERR;
     }
 
-    /* NVÏîÖÐCCPUºÍTMPµÄµµÎ»Ô¤ÁôÁË×î´ó11µµ£¬µ«ÊÇÓÅÏÈ¼¶×î¸ßÎªFC_PRI_9£¬ËùÒÔÊ¹ÓÃµµÎ»Ê±Ö»ÓÐÇ°9µµÉúÐ§ */
+    /* NVé¡¹ä¸­CCPUå’ŒTMPçš„æ¡£ä½é¢„ç•™äº†æœ€å¤§11æ¡£ï¼Œä½†æ˜¯ä¼˜å…ˆçº§æœ€é«˜ä¸ºFC_PRI_9ï¼Œæ‰€ä»¥ä½¿ç”¨æ¡£ä½æ—¶åªæœ‰å‰9æ¡£ç”Ÿæ•ˆ */
     for ( ulRateLoop = 0 ; ulRateLoop < pstUlFcCfg->ucRateCnt ; ulRateLoop++ )
     {
         usCurrRate = pstUlFcCfg->ausRate[ulRateLoop];
@@ -216,7 +216,7 @@ VOS_UINT32 FC_UL_InitFcPoints
         stFcRegPoint.enFcId     = enFcId;
         stFcRegPoint.enModemId  = MODEM_ID_0;
 
-        /* ½âÁ÷¿ØÊ±½«ÊýÂÊÏÞÖÆÉèÎªÉÏÒ»µµ */
+        /* è§£æµæŽ§æ—¶å°†æ•°çŽ‡é™åˆ¶è®¾ä¸ºä¸Šä¸€æ¡£ */
         stFcRegPoint.ulParam1   = (((VOS_UINT32)usCurrRate) << 16) | (((VOS_UINT32)usPrevRate) & FC_DOWN_RATE_LIMIT_MASK);
         stFcRegPoint.ulParam2   = enPolicyId;
         stFcRegPoint.pSetFunc   = (FC_SET_FUNC)FC_UL_UpRateLimit;
@@ -242,18 +242,18 @@ VOS_UINT32 FC_UL_InitFcPoints
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_CPUC_UpJudge
- ¹¦ÄÜÃèÊö  : Á½ºË¹²ÓÃCPU¸ºÔØ´¦Àí½Ó¿Ú
- ÊäÈë²ÎÊý  : ulCpuIdleValue  --  µ±Ç°CPU¿ÕÏÐÁ¿0~100
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_CPUC_UpJudge
+ åŠŸèƒ½æè¿°  : ä¸¤æ ¸å…±ç”¨CPUè´Ÿè½½å¤„ç†æŽ¥å£
+ è¾“å…¥å‚æ•°  : ulCpuIdleValue  --  å½“å‰CPUç©ºé—²é‡0~100
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 FC_CPUC_UpJudge
@@ -280,7 +280,7 @@ VOS_UINT32 FC_CPUC_UpJudge
     }
 
 
-    /*================================*//* µ±µÚÒ»´ÎÆðÁ÷¿ØÊ±£¬×öÆ½»¬´¦Àí  */
+    /*================================*//* å½“ç¬¬ä¸€æ¬¡èµ·æµæŽ§æ—¶ï¼Œåšå¹³æ»‘å¤„ç†  */
     g_stFcCpuCCtrl.ulSmoothTimerLen++;
 
     if (g_stFcCpuCCtrl.ulSmoothTimerLen < pstFcCfgCpu->ulSmoothTimerLen)
@@ -295,18 +295,18 @@ VOS_UINT32 FC_CPUC_UpJudge
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_CPUC_DownJudge
- ¹¦ÄÜÃèÊö  : Á½ºË¹²ÓÃCPU¸ºÔØ´¦Àí½Ó¿Ú
- ÊäÈë²ÎÊý  : ulCpuIdleValue  --  µ±Ç°CPU¿ÕÏÐÁ¿0~100
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_CPUC_DownJudge
+ åŠŸèƒ½æè¿°  : ä¸¤æ ¸å…±ç”¨CPUè´Ÿè½½å¤„ç†æŽ¥å£
+ è¾“å…¥å‚æ•°  : ulCpuIdleValue  --  å½“å‰CPUç©ºé—²é‡0~100
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32 FC_CPUC_DownJudge
@@ -333,7 +333,7 @@ VOS_UINT32  FC_CPUC_UpProcess( VOS_VOID )
     FC_POLICY_STRU                     *pFcPolicy;
 
 
-    /*================================*//* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /*================================*//* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pFcPolicy   = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_CPU_C_MODEM_0);
     FC_POLICY_Up(pFcPolicy);
 
@@ -344,7 +344,7 @@ VOS_UINT32  FC_CPUC_DownProcess( VOS_VOID )
     FC_POLICY_STRU                     *pPolicy;
 
 
-    /*================================*//* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /*================================*//* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_CPU_C_MODEM_0);
     FC_POLICY_Down(pPolicy);
 
@@ -352,7 +352,7 @@ VOS_UINT32  FC_CPUC_DownProcess( VOS_VOID )
 }
 VOS_VOID FC_GPRS_FcNotifyProcess( VOS_VOID )
 {
-    /* ¸ù¾Ýµ±Ç°×îÐÂGPRSÁ÷¿Ø×´Ì¬ÆôÍ£Á÷¿Ø */
+    /* æ ¹æ®å½“å‰æœ€æ–°GPRSæµæŽ§çŠ¶æ€å¯åœæµæŽ§ */
     if (R_ITF_FLOW_CTRL_START == g_stRItfFlowCtrl.ulGprsCtrlFlag)
     {
         R_ITF_SetGprsFlowCtrl();
@@ -392,18 +392,18 @@ VOS_UINT32  FC_CPUC_Init( VOS_VOID )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_CPU_Process
- ¹¦ÄÜÃèÊö  : CºËÁ÷¿ØÄ£¿éÌá¹©µÄCPU¸ºÔØ´¦Àí½Ó¿Ú£¬¸Ãº¯ÊýÄ¿Ç°ÔÚÖÐ¶ÏÖÐµ÷ÓÃ£¬²»ÄÜÓÐ×èÈûÐÔ²Ù×÷
- ÊäÈë²ÎÊý  : ulCpuLoad  --  µ±Ç°CPUÕ¼ÓÃÂÊ0~100
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_CPU_Process
+ åŠŸèƒ½æè¿°  : Cæ ¸æµæŽ§æ¨¡å—æä¾›çš„CPUè´Ÿè½½å¤„ç†æŽ¥å£ï¼Œè¯¥å‡½æ•°ç›®å‰åœ¨ä¸­æ–­ä¸­è°ƒç”¨ï¼Œä¸èƒ½æœ‰é˜»å¡žæ€§æ“ä½œ
+ è¾“å…¥å‚æ•°  : ulCpuLoad  --  å½“å‰CPUå ç”¨çŽ‡0~100
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 unsigned int FC_CPU_Process( unsigned int ulCpuLoad )
@@ -413,21 +413,21 @@ unsigned int FC_CPU_Process( unsigned int ulCpuLoad )
     VOS_UINT32                          ulStartCtrl;
 
 
-    /*====================================*//* Ê¹ÄÜ¼ì²é */
+    /*====================================*//* ä½¿èƒ½æ£€æŸ¥ */
     if ( FC_POLICY_MASK_CPU_C != (FC_POLICY_MASK_CPU_C & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* CPUÁ÷¿ØÎ´Ê¹ÄÜ£¬ÔÚÖÐ¶ÏÖÐ±»µ÷ÓÃ£¬¹ÊÊ¹ÓÃLogPrint */
+        /* CPUæµæŽ§æœªä½¿èƒ½ï¼Œåœ¨ä¸­æ–­ä¸­è¢«è°ƒç”¨ï¼Œæ•…ä½¿ç”¨LogPrint */
         LogPrint1("FC_CPU_Process, INFO, CPU FlowCtrl is disabled %d.\r\n", (VOS_INT32)g_stFcCfg.ulFcEnbaleMask );
         return 0;
     }
 
-    /* ¼ÇÂ¼CPU¸ºÔØÊý¾Ýµ½È«¾Ö±äÁ¿ÖÐ */
+    /* è®°å½•CPUè´Ÿè½½æ•°æ®åˆ°å…¨å±€å˜é‡ä¸­ */
     g_stFcTraceCpuLoad.ulCpuLoadRecord   = ulCpuLoad;
 
-    /*================================*//* ²ÎÊý¼ì²é */
+    /*================================*//* å‚æ•°æ£€æŸ¥ */
     if ( 100 < ulCpuLoad )
     {
-        /* ²ÎÊý·Ç·¨£¬ÔÚÖÐ¶ÏÖÐ±»µ÷ÓÃ£¬¹ÊÊ¹ÓÃLogPrint */
+        /* å‚æ•°éžæ³•ï¼Œåœ¨ä¸­æ–­ä¸­è¢«è°ƒç”¨ï¼Œæ•…ä½¿ç”¨LogPrint */
         LogPrint1("FC_CPU_Process, WARNING, Invalid Cpu Load %d.\r\n", (VOS_INT32)ulCpuLoad);
         return 0;
     }
@@ -435,7 +435,7 @@ unsigned int FC_CPU_Process( unsigned int ulCpuLoad )
     pstFcPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_CPU_C_MODEM_0);
     pstFcCfgCpu = &(g_stFcCfg.stFcCfgCpuC);
 
-    /*================================*//* ÊÇ·ñÒª½øÐÐCPUÁ÷¿Ø */
+    /*================================*//* æ˜¯å¦è¦è¿›è¡ŒCPUæµæŽ§ */
     ulStartCtrl = FC_CPUC_UpJudge(ulCpuLoad, pstFcCfgCpu, pstFcPolicy);
     if (VOS_TRUE == ulStartCtrl)
     {
@@ -443,7 +443,7 @@ unsigned int FC_CPU_Process( unsigned int ulCpuLoad )
         return 0;
     }
 
-    /*================================*//* ½øÐÐCPU½âÁ÷¿ØÅÐ¾ö */
+    /*================================*//* è¿›è¡ŒCPUè§£æµæŽ§åˆ¤å†³ */
     ulStartCtrl = FC_CPUC_DownJudge(ulCpuLoad, pstFcCfgCpu, pstFcPolicy);
     if ( VOS_TRUE ==  ulStartCtrl )
     {
@@ -458,7 +458,7 @@ VOS_UINT32  FC_TEMPERATURE_UpProcess( VOS_VOID )
     FC_POLICY_STRU                     *pstFcPolicy;
 
 
-    /*================================*//* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /*================================*//* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pstFcPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_TMP_MODEM_0);
     FC_POLICY_Up(pstFcPolicy);
 
@@ -469,7 +469,7 @@ VOS_UINT32  FC_TEMPERATURE_DownProcess( VOS_VOID )
     FC_POLICY_STRU                     *pPolicy;
 
 
-    /*================================*//* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /*================================*//* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_TMP_MODEM_0);
     FC_POLICY_Down(pPolicy);
 
@@ -480,7 +480,7 @@ VOS_UINT32  FC_TEMPERATURE_RecoverProcess( VOS_VOID )
     FC_POLICY_STRU                     *pPolicy;
 
 
-    /*================================*//* »ñÈ¡CPUÁ÷¿Ø²ßÂÔÊµÌå£¬²¢µ÷ÓÃÍ¨ÓÃÁ÷¿Ø²ßÂÔ */
+    /*================================*//* èŽ·å–CPUæµæŽ§ç­–ç•¥å®žä½“ï¼Œå¹¶è°ƒç”¨é€šç”¨æµæŽ§ç­–ç•¥ */
     pPolicy = FC_POLICY_Get(FC_PRIVATE_POLICY_ID_TMP_MODEM_0);
     FC_POLICY_DownToTargetPri(pPolicy, FC_PRI_NULL);
 
@@ -526,7 +526,7 @@ VOS_UINT32  FC_TEMPERATURE_Init( VOS_VOID )
     VOS_UINT32                          ulResult;
 
 
-    /* ´´½¨ÎÂ±£Á÷¿ØµãÊµÀý */
+    /* åˆ›å»ºæ¸©ä¿æµæŽ§ç‚¹å®žä¾‹ */
     ulResult = FC_UL_InitFcPoints(FC_POLICY_ID_TMP, &(g_stFcCfg.stFcCfgUmUlRateForTmp));
 
     return ulResult;
@@ -534,19 +534,19 @@ VOS_UINT32  FC_TEMPERATURE_Init( VOS_VOID )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_DownUlGradeProcess
- ¹¦ÄÜÃèÊö  : OMÎÂ¿ØÄ£¿é¼ì²âµ½ÎÂ¶È¹ý¸ßÐèÒª½µËÙÊ±£¬µ÷ÓÃ×¢²áµÄ¹ýÎÂ½µËÙ´¦ÀíAPI£¬½µËÙ¼õ¹¦ºÄ¡£
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : OM_DATA_DOWMGRADE_CONTINUE --  ¿ÉÒÔ¼ÌÐø¿Ø
-             OM_DATA_DOWNGRADE_FINISH   --  ²»ÄÜ¼ÌÐø¿Ø
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_DownUlGradeProcess
+ åŠŸèƒ½æè¿°  : OMæ¸©æŽ§æ¨¡å—æ£€æµ‹åˆ°æ¸©åº¦è¿‡é«˜éœ€è¦é™é€Ÿæ—¶ï¼Œè°ƒç”¨æ³¨å†Œçš„è¿‡æ¸©é™é€Ÿå¤„ç†APIï¼Œé™é€Ÿå‡åŠŸè€—ã€‚
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : OM_DATA_DOWMGRADE_CONTINUE --  å¯ä»¥ç»§ç»­æŽ§
+             OM_DATA_DOWNGRADE_FINISH   --  ä¸èƒ½ç»§ç»­æŽ§
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 SPY_DATA_DOWNGRADE_RESULT_ENUM_UINT32 FC_DownUlGradeProcess(VOS_VOID)
@@ -555,7 +555,7 @@ SPY_DATA_DOWNGRADE_RESULT_ENUM_UINT32 FC_DownUlGradeProcess(VOS_VOID)
 
     if ( FC_POLICY_MASK_TMP != (FC_POLICY_MASK_TMP & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÎÂ¿ØÎ´Ê¹ÄÜ */
+        /* æ¸©æŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_DownUlGradeProcess, INFO, TMP FlowCtrl is disabled %d\n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return SPY_DATA_DOWNGRADE_FINISH;
@@ -565,7 +565,7 @@ SPY_DATA_DOWNGRADE_RESULT_ENUM_UINT32 FC_DownUlGradeProcess(VOS_VOID)
 
     if ( pstFcPolicy->enHighestPri <= pstFcPolicy->enDonePri )
     {
-        /* ÒÑ¾­´ïµ½Á÷¿Ø×î¸ß¼¶±ð£¬ÎÞ·¨¼ÌÐøÖ´ÐÐÁ÷¿Ø */
+        /* å·²ç»è¾¾åˆ°æµæŽ§æœ€é«˜çº§åˆ«ï¼Œæ— æ³•ç»§ç»­æ‰§è¡ŒæµæŽ§ */
         return SPY_DATA_DOWNGRADE_FINISH;
     }
 
@@ -576,19 +576,19 @@ SPY_DATA_DOWNGRADE_RESULT_ENUM_UINT32 FC_DownUlGradeProcess(VOS_VOID)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_UpUlGradeProcess
- ¹¦ÄÜÃèÊö  : OMÎÂ¿ØÄ£¿é¼ì²âµ½ÎÂ¶È»Ö¸´¿ÉÒÔÉýËÙÊ±£¬µ÷ÓÃ×¢²áµÄÉýËÙ´¦ÀíAPI
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : OM_DATA_DOWMGRADE_CONTINUE --  ¿ÉÒÔ¼ÌÐø¿Ø
-             OM_DATA_DOWNGRADE_FINISH   --  ²»ÄÜ¼ÌÐø¿Ø
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_UpUlGradeProcess
+ åŠŸèƒ½æè¿°  : OMæ¸©æŽ§æ¨¡å—æ£€æµ‹åˆ°æ¸©åº¦æ¢å¤å¯ä»¥å‡é€Ÿæ—¶ï¼Œè°ƒç”¨æ³¨å†Œçš„å‡é€Ÿå¤„ç†API
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : OM_DATA_DOWMGRADE_CONTINUE --  å¯ä»¥ç»§ç»­æŽ§
+             OM_DATA_DOWNGRADE_FINISH   --  ä¸èƒ½ç»§ç»­æŽ§
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 SPY_DATA_UPGRADE_RESULT_ENUM_UINT32 FC_UpUlGradeProcess(VOS_VOID)
@@ -597,7 +597,7 @@ SPY_DATA_UPGRADE_RESULT_ENUM_UINT32 FC_UpUlGradeProcess(VOS_VOID)
 
     if ( FC_POLICY_MASK_TMP != (FC_POLICY_MASK_TMP & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÎÂ¿ØÎ´Ê¹ÄÜ */
+        /* æ¸©æŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_UpUlGradeProcess, INFO, TMP FlowCtrl is disabled %d\n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return SPY_DATA_UPGRADE_FINISH;
@@ -607,7 +607,7 @@ SPY_DATA_UPGRADE_RESULT_ENUM_UINT32 FC_UpUlGradeProcess(VOS_VOID)
 
     if ( FC_PRI_NULL == pstFcPolicy->enDonePri )
     {
-        /* ÒÑ¾­´ïµ½Á÷¿Ø×îµÍ¼¶±ð£¬ÎÞ·¨¼ÌÐø½âÁ÷¿Ø */
+        /* å·²ç»è¾¾åˆ°æµæŽ§æœ€ä½Žçº§åˆ«ï¼Œæ— æ³•ç»§ç»­è§£æµæŽ§ */
         return SPY_DATA_UPGRADE_FINISH;
     }
 
@@ -618,18 +618,18 @@ SPY_DATA_UPGRADE_RESULT_ENUM_UINT32 FC_UpUlGradeProcess(VOS_VOID)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_RecoverUlGradeProcess
- ¹¦ÄÜÃèÊö  : »Ö¸´ÉÏÐÐËÙÂÊ£¬²»×öÏÞÖÆ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_RecoverUlGradeProcess
+ åŠŸèƒ½æè¿°  : æ¢å¤ä¸Šè¡Œé€ŸçŽ‡ï¼Œä¸åšé™åˆ¶
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê1ÔÂ18ÈÕ
-    ×÷    Õß   : FC_RecoverUlGradeProcess
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´1æœˆ18æ—¥
+    ä½œ    è€…   : FC_RecoverUlGradeProcess
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID  FC_RecoverUlGradeProcess( VOS_VOID )
@@ -639,7 +639,7 @@ VOS_VOID  FC_RecoverUlGradeProcess( VOS_VOID )
 
     if ( FC_POLICY_MASK_TMP != (FC_POLICY_MASK_TMP & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÎÂ¿ØÎ´Ê¹ÄÜ */
+        /* æ¸©æŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_RecoverUlGradeProcess, INFO, TMP FlowCtrl is disabled %d\n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return;
@@ -649,7 +649,7 @@ VOS_VOID  FC_RecoverUlGradeProcess( VOS_VOID )
 
     if ( FC_PRI_NULL == pstFcPolicy->enDonePri )
     {
-        /* ÒÑ¾­»Ö¸´£¬ÎÞÐëÔÙ´¦Àí */
+        /* å·²ç»æ¢å¤ï¼Œæ— é¡»å†å¤„ç† */
         return;
     }
 
@@ -714,17 +714,17 @@ VOS_UINT32  FC_CCORE_RcvIntraMsg( MsgBlock * pMsg )
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_CCORE_RcvTimerExpireMsg
- ¹¦ÄÜÃèÊö  : ½ÓÊÕ¶¨Ê±Æ÷ÏûÏ¢µÄ·Ö·¢´¦Àí
- ÊäÈë²ÎÊý  : REL_TIMER_MSG *pTimerMsg
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_CCORE_RcvTimerExpireMsg
+ åŠŸèƒ½æè¿°  : æŽ¥æ”¶å®šæ—¶å™¨æ¶ˆæ¯çš„åˆ†å‘å¤„ç†
+ è¾“å…¥å‚æ•°  : REL_TIMER_MSG *pTimerMsg
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê10ÔÂ21ÈÕ
-    ×÷    Õß   : caikai
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´10æœˆ21æ—¥
+    ä½œ    è€…   : caikai
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID FC_CCORE_RcvTimerExpireMsg(REL_TIMER_MSG *pTimerMsg)
@@ -735,10 +735,10 @@ VOS_VOID FC_CCORE_RcvTimerExpireMsg(REL_TIMER_MSG *pTimerMsg)
     switch (pTimerMsg->ulName)
     {
         case TIMER_FC_CCPU_TRACE_CPULOAD:
-            /*====================================*//* Êä³ö¿ÉÎ¬¿É²â */
+            /*====================================*//* è¾“å‡ºå¯ç»´å¯æµ‹ */
             FC_MNTN_TraceCpuLoad(ID_FC_MNTN_CPU_C_CPULOAD, g_stFcTraceCpuLoad.ulCpuLoadRecord);
 
-            /* ÖØÆô¶¨Ê±Æ÷ */
+            /* é‡å¯å®šæ—¶å™¨ */
             ulResult = VOS_StartRelTimer(&g_stFcTraceCpuLoad.pstTraceCpuLoadTHandle, UEPS_PID_FLOWCTRL_C,
                                           g_stFcTraceCpuLoad.ulTraceCpuLoadTimerLen,
                                           TIMER_FC_CCPU_TRACE_CPULOAD, 0,
@@ -805,7 +805,7 @@ VOS_UINT32  FC_CCORE_Init( VOS_VOID )
         return VOS_ERR;
     }
 
-    /* ¹Ò½Ó UL_DATA_POOL ÄÚ´æ³ØµÄ¼à²âº¯Êý */
+    /* æŒ‚æŽ¥ UL_DATA_POOL å†…å­˜æ± çš„ç›‘æµ‹å‡½æ•° */
     R_ITF_InitFlowCtrl();
 
     return VOS_OK;
@@ -813,18 +813,18 @@ VOS_UINT32  FC_CCORE_Init( VOS_VOID )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_FidInit
- ¹¦ÄÜÃèÊö  : Á÷¿ØFID³õÊ¼»¯º¯Êý
- ÊäÈë²ÎÊý  : enum VOS_INIT_PHASE_DEFINE enPhase
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_FidInit
+ åŠŸèƒ½æè¿°  : æµæŽ§FIDåˆå§‹åŒ–å‡½æ•°
+ è¾“å…¥å‚æ•°  : enum VOS_INIT_PHASE_DEFINE enPhase
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ14ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ14æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 *****************************************************************************/
 VOS_UINT32 FC_CCORE_FidInit(enum VOS_INIT_PHASE_DEFINE enPhase)
 {

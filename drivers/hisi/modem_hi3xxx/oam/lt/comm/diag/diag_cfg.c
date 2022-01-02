@@ -26,7 +26,7 @@ extern "C" {
 #include "diag_agent.h"
 #endif
 /*lint -restore*/
-/*lint -save -e767 ԭ��:Log��ӡ*/
+/*lint -save -e767 原因:Log打印*/
 #define    THIS_FILE_ID        MSP_FILE_ID_DIAG_CFG_C
 /*lint -restore +e767*/
 
@@ -55,23 +55,23 @@ DIAG_CFG_LOG_CAT_CFG_STRU g_stMsgCfg = {0};
 VOS_VOID diag_CfgResetAllSwt(VOS_VOID)
 {
 
-    /*��տտڿ��ص�״̬�����1����ΪDIAG��ʼ��״̬������*/
+    /*清空空口开关等状态，清成1是因为DIAG初始化状态不能清*/
     g_ulDiagCfgInfo = 0x1;
 
-    /*��ղ�俪��״̬*/
+    /*清空层间开关状态*/
     VOS_MemSet(g_LayerSrcModuleCfg,0,sizeof(g_LayerSrcModuleCfg));
     VOS_MemSet(g_LayerDecModuleCfg,0,sizeof(g_LayerDecModuleCfg));
 
-    /*��մ�ӡ����״̬*/
+    /*清空打印开关状态*/
     VOS_MemSet(g_PrintModuleCfg,0,sizeof(g_PrintModuleCfg));
 
-    /*��մ�ӡ�ܿ���״̬*/
+    /*清空打印总开关状态*/
 	g_PrintTotalCfg = DIAG_CFG_PRINT_TOTAL_MODULE_SWT_NOT_USE;
 
-    /*����û�����Ϣ����״̬*/
+    /*清空用户面消息开关状态*/
     VOS_MemSet(g_stUserPlaneCfg,0,sizeof(g_stUserPlaneCfg));
 
-    /*�����Ϣ���˿���״̬*/
+    /*清空消息过滤开关状态*/
     VOS_MemSet(&g_stMsgCfg,0,sizeof(DIAG_CFG_LOG_CAT_CFG_STRU));
 
 
@@ -81,12 +81,12 @@ VOS_VOID diag_CfgResetAllSwt(VOS_VOID)
 
 VOS_UINT32 diag_CfgSetGlobalBitValue(VOS_UINT32* pstDiagGlobal,ENUM_DIAG_CFG_BIT_U32 enBit,ENUM_DIAG_CFG_SWT_U8 enSwtich)
 {
-    /*����Ϊopen 1ʱ����Ҫʹ��|�����ø�bit Ϊ1*/
+    /*设置为open 1时，需要使用|才能置该bit 为1*/
     if(DIAG_CFG_SWT_OPEN == enSwtich)
     {
         *pstDiagGlobal |=  ((VOS_UINT)1 << enBit);
     }
-    /*����Ϊclose 0ʱ����Ҫʹ��&�����ø�bit Ϊ0*/
+    /*设置为close 0时，需要使用&才能置该bit 为0*/
     else if(DIAG_CFG_SWT_CLOSE == enSwtich)
     {
         /*lint -save -e502*/
@@ -148,13 +148,13 @@ VOS_UINT32 diag_AirCfgProc (VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     /*lint -restore*/
     pstAirSwtReq = (DIAG_CMD_LOG_CAT_AIR_REQ_STRU*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
-    /*����LT�տڿ���ֵ*/
+    /*设置LT空口开关值*/
     enLSwitch = DIAG_GET_CFG_SWT(pstAirSwtReq->ulSwitch);
     enGuSwitch = DIAG_GET_CFG_SWT(pstAirSwtReq->ulGuSwitch);
 
     ulSetRet = diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_LT_AIR_BIT,enLSwitch);
 
-    /*����GU�տڿ���ֵ*/
+    /*设置GU空口开关值*/
     ulSetRet |= diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_GU_AIR_BIT,enGuSwitch);
 
     DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_AIR_CFG, pstAirSwtReq->ulSwitch, ulSetRet, 0);
@@ -169,7 +169,7 @@ VOS_UINT32 diag_AirCfgProc (VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
         stAirSwtCnf.ulRc = ERR_MSP_FAILURE;
     }
 
-    /*�����FW�ظ�*/
+    /*组包给FW回复*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stAirSwtCnf,ulCmdId,sizeof(DIAG_CMD_LOG_CAT_AIR_CNF_STRU));
 #endif
     return ret;
@@ -186,12 +186,12 @@ VOS_UINT32 diag_CfgSetLayerSwt(DIAG_CMD_LOG_CAT_LAYER_REQ_STRU* pstLayerReq, VOS
         return  ERR_MSP_INVALID_PARAMETER;
     }
 
-    /* ����ĳCategory�Ŀ����������б������Ҷ�Ӧ���������������*/
+    /* 遍历某Category的开关配置项列表，查找对应的配置项进行设置*/
     /*lint -save -e830*/
     for(j = 0 ; j< ulCfgSize /sizeof(DIAG_CMD_LOG_CAT_LAYER_REQ_STRU);j++)
     {
 		/*lint -restore*/
-        enSwitch = DIAG_GET_CFG_SWT((pstLayerReq + j)->ulSwitch);/* [false alarm]:����Fortify */
+        enSwitch = DIAG_GET_CFG_SWT((pstLayerReq + j)->ulSwitch);/* [false alarm]:屏蔽Fortify */
 
         /*lint -save -e40 -e63*/
 		if(DIAG_CFG_LAYER_MODULE_IS_INVALID((VOS_INT32)((pstLayerReq + j)->ulModuleId )))
@@ -230,7 +230,7 @@ VOS_UINT32 diag_LayerCfgProc (VOS_UINT8* pstReq, VOS_UINT32 ulCmdId)
     pstLayerSwtReq = (DIAG_CMD_LOG_CAT_LAYER_REQ_STRU*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
 
-    /*���ò��ģ�鿪�ص�ȫ�ֱ�����*/
+    /*设置层间模块开关到全局变量中*/
     ulSetRet = diag_CfgSetLayerSwt(pstLayerSwtReq, pstDiagHead->ulDataSize - sizeof(MSP_DIAG_DATA_REQ_STRU));
 
     DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_LAYER_CFG, ulSetRet, 0, 0);
@@ -239,7 +239,7 @@ VOS_UINT32 diag_LayerCfgProc (VOS_UINT8* pstReq, VOS_UINT32 ulCmdId)
     stLayerSwtCnf.ulRc = ulSetRet;
     stLayerSwtCnf.ulModuleId = pstLayerSwtReq->ulModuleId;
 
-    /*�����FW�ظ�*/
+    /*组包给FW回复*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stLayerSwtCnf,ulCmdId,sizeof(DIAG_CMD_LOG_CAT_LAYER_CNF_STRU));
 #endif
     return ret;
@@ -259,7 +259,7 @@ VOS_UINT32 diag_EventCfgProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     pstEvtSwtReq = (DIAG_CMD_LOG_CAT_EVENT_REQ_STRU*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
-    /*�����¼�����ֵ*/
+    /*设置事件开关值*/
     enSwitch = DIAG_GET_CFG_SWT(pstEvtSwtReq->ulSwitch);
     ulSetRet = diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_EVENT_BIT,enSwitch);
     DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_EVENT_CFG, pstEvtSwtReq->ulSwitch, ulSetRet, 0);
@@ -268,7 +268,7 @@ VOS_UINT32 diag_EventCfgProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     stEvtSwtCnf.ulRc = ulSetRet;
     stEvtSwtCnf.ulSwitch = pstEvtSwtReq->ulSwitch;
 
-    /*�����FW�ظ�*/
+    /*组包给FW回复*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stEvtSwtCnf,ulCmdId,sizeof(DIAG_CMD_LOG_CAT_EVENT_CNF_STRU));
 #endif
     return ret;
@@ -287,10 +287,10 @@ VOS_UINT32 diag_CfgSetUserPlaneSwt(DIAG_CMD_LOG_CAT_USERPLANE_REQ_STRU *pstUserP
         return  ERR_MSP_INVALID_PARAMETER;
     }
 
-    /* ����ĳCategory�Ŀ����������б������Ҷ�Ӧ���������������*/
+    /* 遍历某Category的开关配置项列表，查找对应的配置项进行设置*/
     for(j = 0 ; j< ulCfgSize /sizeof(DIAG_CMD_LOG_CAT_USERPLANE_REQ_STRU);j++)
     {
-        enSwitch = DIAG_GET_CFG_SWT((pstUserPlaneReq + j)->ulSwitch);/* [false alarm]:����Fortify */
+        enSwitch = DIAG_GET_CFG_SWT((pstUserPlaneReq + j)->ulSwitch);/* [false alarm]:屏蔽Fortify */
 
         for(i=0;i<DIAG_CFG_USER_PLANE_ID_NUM;i++)
         {
@@ -329,7 +329,7 @@ VOS_UINT32 diag_UsrPlaneCfgProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     pstUserPlaneSwtReq = (DIAG_CMD_LOG_CAT_USERPLANE_REQ_STRU*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
 
-    /*�����û��濪�ص�ȫ�ֱ�����*/
+    /*设置用户面开关到全局变量中*/
     ulSetRet = diag_CfgSetUserPlaneSwt(pstUserPlaneSwtReq, pstDiagHead->ulDataSize - sizeof(MSP_DIAG_DATA_REQ_STRU));
 	DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_USEPLANE_CFG, ulSetRet, 0, 0);
 #if(VOS_OS_VER == VOS_LINUX)
@@ -337,7 +337,7 @@ VOS_UINT32 diag_UsrPlaneCfgProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     stUserPlaneSwtCnf.ulRc = ulSetRet;
     stUserPlaneSwtCnf.ulMsgId = pstUserPlaneSwtReq->ulMsgId;
 
-    /*�����FW�ظ�*/
+    /*组包给FW回复*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stUserPlaneSwtCnf,ulCmdId,sizeof(DIAG_CMD_LOG_CAT_USERPLANE_CNF_STRU));
 #endif
     return ret;
@@ -352,7 +352,7 @@ VOS_UINT32 diag_CfgSetMsgSwt(DIAG_CMD_LOG_CAT_CFG_REQ_STRU *pstCatCfgReq,VOS_UIN
     VOS_UINT32 ulRst = ERR_MSP_INVALID_PARAMETER;
     DIAG_CFG_LOG_CAT_MSG_CFG_STRU *pstItemCfg =NULL;
     /*lint -restore*/
-    /*�������*/
+    /*参数检查*/
     if((0 == ulCfgSize)||(0 !=ulCfgSize % sizeof(DIAG_CMD_LOG_CAT_CFG_REQ_STRU)))
     {
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_MSG_ERR, ulCfgSize, 0, 0);
@@ -362,7 +362,7 @@ VOS_UINT32 diag_CfgSetMsgSwt(DIAG_CMD_LOG_CAT_CFG_REQ_STRU *pstCatCfgReq,VOS_UIN
     for(j = 0 ; j< ulCfgSize /sizeof(DIAG_CMD_LOG_CAT_CFG_REQ_STRU);j++)
     {
 
-        /*��֧�ֲ����ϢCATEGORY����*/
+        /*仅支持层间消息CATEGORY过滤*/
         if(DIAG_CMD_LOG_CATETORY_LAYER_ID != (pstCatCfgReq + j)->ulCategory)
         {
             DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_MSG_ERR, (pstCatCfgReq + j)->ulCategory, 0, 1);
@@ -371,11 +371,11 @@ VOS_UINT32 diag_CfgSetMsgSwt(DIAG_CMD_LOG_CAT_CFG_REQ_STRU *pstCatCfgReq,VOS_UIN
     }
 
 
-    /* ����ĳCategory�Ŀ����������б������Ҷ�Ӧ���������������*/   /* [false alarm]:����Fortify */
+    /* 遍历某Category的开关配置项列表，查找对应的配置项进行设置*/   /* [false alarm]:屏蔽Fortify */
     /* coverity[unreachable] */
     for(j = 0 ; j< ulCfgSize /sizeof(DIAG_CMD_LOG_CAT_CFG_REQ_STRU);j++)
     {
-        enSwitch = DIAG_GET_CFG_SWT((pstCatCfgReq + j)->ulSwitch);/* [false alarm]:����Fortify */
+        enSwitch = DIAG_GET_CFG_SWT((pstCatCfgReq + j)->ulSwitch);/* [false alarm]:屏蔽Fortify */
 
         for(i = 0; i < g_stMsgCfg.ulCfgCnt; i++)
         {
@@ -390,7 +390,7 @@ VOS_UINT32 diag_CfgSetMsgSwt(DIAG_CMD_LOG_CAT_CFG_REQ_STRU *pstCatCfgReq,VOS_UIN
         }
         if(i >= g_stMsgCfg.ulCfgCnt)
         {
-            /*Ŀǰ��һ��֧��DIAG_CFG_CAT_CFG_NUM����Ϣ����*/
+            /*目前仅一次支持DIAG_CFG_CAT_CFG_NUM个消息过滤*/
             if((g_stMsgCfg.ulCfgCnt < DIAG_CFG_CAT_CFG_NUM))
             {
                 pstItemCfg = g_stMsgCfg.astMsgCfgList + g_stMsgCfg.ulCfgCnt;
@@ -429,7 +429,7 @@ VOS_UINT32 diag_MsgCfgProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
         pstCatCfgReq = (DIAG_CMD_LOG_CAT_CFG_REQ_STRU*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
 
-        /*������Ϣ���˿��ص�ȫ�ֱ�����*/
+        /*设置消息过滤开关到全局变量中*/
         ulSetRet = diag_CfgSetMsgSwt(pstCatCfgReq,pstDiagHead->ulDataSize - sizeof(MSP_DIAG_DATA_REQ_STRU));
 
         DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_MSG, ulSetRet, 0, 0);
@@ -437,7 +437,7 @@ VOS_UINT32 diag_MsgCfgProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
         stCatSwtCnf.ulRc = ulSetRet;
         stCatSwtCnf.ulId = pstCatCfgReq->ulId;
 
-        /*�����FW�ظ�*/
+        /*组包给FW回复*/
         ret = diag_AgentCnfFun((VOS_UINT8*)&stCatSwtCnf,ulCmdId,sizeof(DIAG_CMD_LOG_CAT_CFG_CNF_STRU));
 #endif
         return ret;
@@ -460,10 +460,10 @@ VOS_UINT32 diag_CfgSetPrintSwt(DIAG_CMD_LOG_CAT_PRINT_REQ_STRU* pstPrintReq, VOS
 
     if(DIAG_CFG_PRINT_TOTAL_MODULE == pstPrintReq->ulModuleId)
     {
-        /*����PRINTʱ������������ģ������*/
+        /*设置PRINT时首先重置所有模块设置*/
          VOS_MemSet(g_PrintModuleCfg,0,sizeof(g_PrintModuleCfg));
 
-        /*���ô�ӡ�ܿ���*/
+        /*设置打印总开关*/
         ucLevelFilter = DIAG_GET_PRINT_CFG_SWT(pstPrintReq->ulLevelFilter);
         g_PrintTotalCfg = ucLevelFilter;
     }
@@ -471,10 +471,10 @@ VOS_UINT32 diag_CfgSetPrintSwt(DIAG_CMD_LOG_CAT_PRINT_REQ_STRU* pstPrintReq, VOS
     else
     /*lint -restore*/
     {
-        /* ����PRINT�ܿ���0xFFģ��*/
+        /* 重置PRINT总开关0xFF模块*/
         g_PrintTotalCfg = DIAG_CFG_PRINT_TOTAL_MODULE_SWT_NOT_USE;
 
-        /* ����ĳCategory�Ŀ����������б������Ҷ�Ӧ���������������*/
+        /* 遍历某Category的开关配置项列表，查找对应的配置项进行设置*/
         for(j = 0 ; j< ulCfgSize /sizeof(DIAG_CMD_LOG_CAT_PRINT_REQ_STRU);j++)
         {
               /*lint -save -e40 -e63*/
@@ -511,7 +511,7 @@ VOS_UINT32 diag_PrintCfgProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
     pstPrintSwtReq = (DIAG_CMD_LOG_CAT_PRINT_REQ_STRU*)(DIAG_OFFSET_HEAD_GET_DATA(pstReq));
 
 
-    /*���ô�ӡ���ص�ȫ�ֱ�����*/
+    /*设置打印开关到全局变量中*/
     ulSetRet = diag_CfgSetPrintSwt(pstPrintSwtReq, pstDiagHead->ulDataSize - sizeof(MSP_DIAG_DATA_REQ_STRU));
     DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_PRINT_CFG, ulSetRet, 0, 0);
 #if(VOS_OS_VER == VOS_LINUX)
@@ -520,7 +520,7 @@ VOS_UINT32 diag_PrintCfgProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     stPrintSwtCnf.ulModuleId = pstPrintSwtReq->ulModuleId;
 
-    /*�����FW�ظ�*/
+    /*组包给FW回复*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stPrintSwtCnf,ulCmdId,sizeof(DIAG_CMD_LOG_CAT_PRINT_CNF_STRU));
 #endif
     return ret;
@@ -528,9 +528,9 @@ VOS_UINT32 diag_PrintCfgProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 }
 /*****************************************************************************
  Function Name   : diag_GetTimeStampInitValue
- Description     : �ú�������hidis��ȡ������TL��Gu��ʱ�����ʼֵ����
- Input           : pstReq ����������
-                   ulCmdId ����ID
+ Description     : 该函数处理hidis获取单板中TL和Gu的时间戳初始值请求
+ Input           : pstReq 待处理数据
+                   ulCmdId 命令ID
  Output          : None
  Return          : VOS_UINT32
 *****************************************************************************/
@@ -543,7 +543,7 @@ VOS_UINT32 diag_GetTimeStampInitValue(VOS_UINT8* pstReq , VOS_UINT32 ulCmdId)
     timestampCnf.ulGuTimeStampInitValue = DRV_GET_SLICE();
     timestampCnf.ulTLTimeStampInitValue = diag_GetFrameTime();
     timestampCnf.ulErrcode              = ret;
-    /*�����FW�ظ�*/
+    /*组包给FW回复*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&timestampCnf, ulCmdId,sizeof(DIAG_TIMESTAMP_CNF_STRU));
 #endif
     return (VOS_UINT32)ret;
@@ -588,10 +588,10 @@ VOS_UINT32 diag_ConnProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 	DIAG_CMD_REPLAY_SET_REQ_STRU stReplay={0};
 #endif
 
-    /*�������п���״̬Ϊδ��*/
+    /*重置所有开关状态为未打开*/
     diag_CfgResetAllSwt();
 
-    /*��������״̬����ֵ*/
+    /*设置连接状态开关值*/
     ulCnfRst = diag_CfgSetGlobalBitValue(&g_ulDiagCfgInfo,DIAG_CFG_CONN_BIT,DIAG_CFG_SWT_OPEN);
 
     DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_CONN_CFG, ulCnfRst, 0, 0);
@@ -599,7 +599,7 @@ VOS_UINT32 diag_ConnProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 #if (VOS_OS_VER == VOS_LINUX)
     VOS_MemSet(&(stCnf.stBuildVersion), 0, sizeof(DIAG_CMD_UE_BUILD_VER_STRU));
 
-    /*��ȡ�汾��Ϣ*/
+    /*获取版本信息*/
     pstBuildVer = (UE_SW_BUILD_VER_INFO_STRU *)BSP_GetBuildVersion();
 	if(pstBuildVer!=NULL)
 	{
@@ -613,26 +613,26 @@ VOS_UINT32 diag_ConnProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
         stCnf.stBuildVersion.ulProductNo     = pstBuildVer->ulProductNo;
 	}
 
-    /*��ȡIMEI��*/
+    /*获取IMEI号*/
     ret = diag_GetImei(stCnf.szImei);
     if(ret)
     {
     }
 
-    /*��ȡ�����汾��*/
+    /*获取软件版本号*/
     VOS_MemSet(&stCnf.stUeSoftVersion,0,sizeof(DIAG_CMD_UE_SOFT_VERSION_STRU));
 
-    /*��ȡ���ɻ���ַ*/
+    /*获取数采基地址*/
     stCnf.ulChipBaseAddr = (VOS_UINT32)BSP_OM_GetChipType();
     //stCnf.ulChipBaseAddr = (VOS_UINT32)V7R1_PILOT_CHIP;
 
-    /*·����Ϣ��ȡ*/
+    /*路测信息获取*/
     ret = NVM_Read(EN_NV_ID_AGENT_FLAG,&(stCnf.stAgentFlag),sizeof(NV_ITEM_AGENT_FLAG_STRU));
     if(ret)
     {
     }
 
-    /*��HIDSȷ�ϴ˴�����ʹ��,��׮��������*/
+    /*和HIDS确认此处不再使用,打桩处理即可*/
     stCnf.diag_cfg.CtrlFlag.ulDrxControlFlag = 0;
     /*lint -save -e40*/
 #if (FEATURE_ON == FEATURE_MERGE_OM_CHAN)
@@ -643,23 +643,23 @@ VOS_UINT32 diag_ConnProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 					sizeof(DIAG_CMD_REPLAY_SET_REQ_STRU));
     /*lint -restore  +e40*/
 #if (FEATURE_OFF == FEATURE_MERGE_OM_CHAN)
-    /*��ȡ��ǰ��ȡģʽ*/
+    /*获取当前存取模式*/
     stCnf.ulLpdMode = diag_GetLogSendType();
 #endif
 
-    /*�������*/
+    /*处理结果*/
     stCnf.ulRc = ulCnfRst;
 	VOS_MemCpy(stCnf.szProduct,PRODUCT_FULL_VERSION_STR,sizeof(PRODUCT_FULL_VERSION_STR));
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
     diag_AppAgentConnectCmdProc(DIAG_CONNECT_CMD);
 #endif
-    /*�����FW�ظ�*/
+    /*组包给FW回复*/
     ret = diag_AgentCnfFun((VOS_UINT8*)&stCnf,ulCmdId,sizeof(DIAG_CMD_HOST_CONNECT_CNF_STRU));
 #else
 
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
     /*lint -save -e718 -e746 -e628*/
-    /*��������*/
+    /*工具连接*/
     diag_AgentConnectCmdProc(DIAG_CONNECT_CMD);/*lint !e628*/
     /*lint -restore*/
 #endif
@@ -680,7 +680,7 @@ VOS_UINT32 diag_DisConnProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 #endif
     VOS_UINT32 ulRst = ERR_MSP_SUCCESS;
 
-    /*�������п���״̬Ϊδ��*/
+    /*重置所有开关状态为未打开*/
     diag_CfgResetAllSwt();
 
     DIAG_DEBUG_SDM_FUN(EN_DIAG_DEBUG_DIS_CONN_CFG, 0, 0, 0);
@@ -689,7 +689,7 @@ VOS_UINT32 diag_DisConnProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 
     stCnfDisConn.ulRc = ulRst;
 
-    /*�����FW�ظ�*/
+    /*组包给FW回复*/
     ulRst = diag_AgentCnfFun((VOS_UINT8*)&stCnfDisConn,ulCmdId,sizeof(DIAG_CMD_HOST_DISCONNECT_CNF_STRU));
 #endif
 #if (FEATURE_BSP_LCH_OM == FEATURE_ON)
@@ -697,7 +697,7 @@ VOS_UINT32 diag_DisConnProc(VOS_UINT8* pstReq,VOS_UINT32 ulCmdId)
 #endif
 
 #if(FEATURE_SOCP_ON_DEMAND == FEATURE_ON)
-    /*���߶Ͽ�����*/
+    /*工具断开连接*/
 #if((VOS_OS_VER == VOS_VXWORKS) || (VOS_OS_VER == VOS_RTOSCK))
     diag_AgentConnectCmdProc(DIAG_DISCONNECT_CMD);
 #else

@@ -30,9 +30,9 @@ extern unsigned int omTimerGet(void);
 #endif
 /*===tele_mntn===*/
 
-/* CPU µ±Ç°ÆµÂÊÖµ±£´æ,±ÜÃâÆµ·±·¢ÏûÏ¢»ñÈ¡ 0-3×Ö½Ú:acpu 4-7×Ö½Ú:DDR 8-11×Ö½Ú:GPU*/
+/* CPU å½“å‰é¢‘ç‡å€¼ä¿å­˜,é¿å…é¢‘ç¹å‘æ¶ˆæ¯è·å– 0-3å­—èŠ‚:acpu 4-7å­—èŠ‚:DDR 8-11å­—èŠ‚:GPU*/
 /*****************************************************************************
-  2 È«¾Ö±äÁ¿¶¨Òå
+  2 å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 typedef struct
 {
@@ -52,7 +52,7 @@ typedef struct ACPU_DDR_FREQLINK_DATA
        int acpu_ddr_link_max_running_flag;
 }ACPU_DDR_FREQLINK_DATA_STRU;
 local_t struct wake_lock acpu_freq_lock;
-/*DVFS¹¦ÄÜ¿ª¹Ø±äÁ¿*/
+/*DVFSåŠŸèƒ½å¼€å…³å˜é‡*/
 ST_PWC_SWITCH_STRU * g_stPwcSwitch = NULL;
 local_t s32_t ddr_maxfreq_qos_req_id = DFS_INVALID_ID;
 local_t s32_t ddr_minfreq_qos_req_id = DFS_INVALID_ID;
@@ -66,7 +66,7 @@ extern int pwrctrl_dfs_qos_update(unsigned int dev_id, int* req_id, unsigned int
 extern ACPU_DDR_FREQLINK_DATA_STRU g_acpu_ddr_freqlink;
 
 /*****************************************************************************
-  3 º¯ÊıÊµÏÖ
+  3 å‡½æ•°å®ç°
 *****************************************************************************/
 
 
@@ -591,9 +591,9 @@ int bus_set_func_handle(unsigned int func)
 }
 
 /*
- * SYSNOCµ÷Æµ£¬ACPU²àÊµÏÖ
- * Èç¹ûÖ§³Ö¶àµµµ÷Æµ£¬ĞèÒªÍ¨¹ıÈí¼şµ÷Æµ¿ò¼Ü£¬ÔÚMCU²àÊµÏÖµ÷ÆµÁ÷³Ì£¬A/CºË½øĞĞÍ¶Æ±£¬Í¨¹ıÏûÏ¢·¢ËÍÖÁMCU
- * Èç¹ûÖ»Ö§³ÖÁ½µµ£¬Í¨¹ıÓ²¼şÍ¶Æ±£¬A/CºËÔÚ±¾µØÍ¨¹ıÅäÖÃÍ¶Æ±¼Ä´æÆ÷ÊµÏÖDFS
+ * SYSNOCè°ƒé¢‘ï¼ŒACPUä¾§å®ç°
+ * å¦‚æœæ”¯æŒå¤šæ¡£è°ƒé¢‘ï¼Œéœ€è¦é€šè¿‡è½¯ä»¶è°ƒé¢‘æ¡†æ¶ï¼Œåœ¨MCUä¾§å®ç°è°ƒé¢‘æµç¨‹ï¼ŒA/Cæ ¸è¿›è¡ŒæŠ•ç¥¨ï¼Œé€šè¿‡æ¶ˆæ¯å‘é€è‡³MCU
+ * å¦‚æœåªæ”¯æŒä¸¤æ¡£ï¼Œé€šè¿‡ç¡¬ä»¶æŠ•ç¥¨ï¼ŒA/Cæ ¸åœ¨æœ¬åœ°é€šè¿‡é…ç½®æŠ•ç¥¨å¯„å­˜å™¨å®ç°DFS
  */
 #ifdef BUS_DFS_MULTI_LEVELS_FREQ
 local_t s32_t buslow_minfreq_qos_req_id = DFS_INVALID_ID;
@@ -793,7 +793,7 @@ int pwrctrl_dfs_qos_update(unsigned int dev_id, int* req_id, unsigned int req_va
     {
     	p_freqinfo->dfs_acpu_freq = req_value;
     	ret=pwrctrl_acpu_dfs_cmd();
-    	/*ÖØĞÂÍ¶ĞèÒªµÄDDR Æ±*/
+    	/*é‡æ–°æŠ•éœ€è¦çš„DDR ç¥¨*/
     	if((g_acpu_ddr_freqlink.acpu_not_suspend == 1)&&(g_acpu_ddr_freqlink.acpu_ddr_freq_switch == 1))
         {
         	for(i=0;i<10;i++)
@@ -805,7 +805,7 @@ int pwrctrl_dfs_qos_update(unsigned int dev_id, int* req_id, unsigned int req_va
         	{
         		return -1;
         	}
-                   /*×î´óDDR Æ±´¦Àí*/
+                   /*æœ€å¤§DDR ç¥¨å¤„ç†*/
         	if(g_acpu_ddr_freqlink.acpu_ddr_freqlink_cfg[i].ddr_max_freq_limit != 0)
             {
                 ret=dfs_qos_update(DFS_QOS_ID_DDR_MAXFREQ,&(g_acpu_ddr_freqlink.acpu_ddr_maxfreq_req_id), g_acpu_ddr_freqlink.acpu_ddr_freqlink_cfg[i].ddr_max_freq_limit);
@@ -842,7 +842,7 @@ int pwrctrl_dfs_qos_update(unsigned int dev_id, int* req_id, unsigned int req_va
         		pr_err(" pwrctrl_dfs_qos_update MAX failed .\n");
 
         	}
-                    /*×îĞ¡DDR Æ±´¦Àí*/
+                    /*æœ€å°DDR ç¥¨å¤„ç†*/
             if(g_acpu_ddr_freqlink.acpu_ddr_freqlink_cfg[i].ddr_min_freq_limit != 0)
             {
                 ret=dfs_qos_update(DFS_QOS_ID_DDR_MINFREQ,&(g_acpu_ddr_freqlink.acpu_ddr_minfreq_req_id),g_acpu_ddr_freqlink.acpu_ddr_freqlink_cfg[i].ddr_min_freq_limit);

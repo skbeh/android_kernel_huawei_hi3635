@@ -2,7 +2,7 @@
 
 
 /******************************************************************************
-   1 Í·ÎÄ¼þ°üº¬
+   1 å¤´æ–‡ä»¶åŒ…å«
 ******************************************************************************/
 #include "Fc.h"
 #include "FcInterface.h"
@@ -20,35 +20,35 @@
 
 
 /*****************************************************************************
-    Ð­ÒéÕ»´òÓ¡´òµã·½Ê½ÏÂµÄ.CÎÄ¼þºê¶¨Òå
+    åè®®æ ˆæ‰“å°æ‰“ç‚¹æ–¹å¼ä¸‹çš„.Cæ–‡ä»¶å®å®šä¹‰
 *****************************************************************************/
 #define    THIS_FILE_ID        PS_FILE_ID_FLOW_CTRL_C
 
 
 /******************************************************************************
-   2 ºê¶¨Òå
+   2 å®å®šä¹‰
 ******************************************************************************/
 
 /*****************************************************************************
-   º¯ÊýÉùÃ÷
+   å‡½æ•°å£°æ˜Ž
 *****************************************************************************/
 
 
 /*****************************************************************************
-   È«¾Ö±äÁ¿¶¨Òå
+   å…¨å±€å˜é‡å®šä¹‰
 *****************************************************************************/
 
-/* Á÷¿Ø²ßÂÔÊµÌå */
+/* æµæŽ§ç­–ç•¥å®žä½“ */
 FC_POLICY_STRU                          g_astFcPolicy[FC_PRIVATE_POLICY_ID_BUTT];
 
-/* Á÷¿Øµã¹ÜÀíÊµÌå */
+/* æµæŽ§ç‚¹ç®¡ç†å®žä½“ */
 FC_POINT_MGR_STRU                       g_stFcPointMgr;
 
 
-/* Á÷¿ØÅäÖÃÊµÌå */
+/* æµæŽ§é…ç½®å®žä½“ */
 FC_CFG_STRU                             g_stFcCfg;
 
-/* Á÷¿ØÄÚ²¿²ßÂÔ±í */
+/* æµæŽ§å†…éƒ¨ç­–ç•¥è¡¨ */
 FC_PRIVATE_POLICY_ID_ENUM_UINT8         g_aenPrivatePolicyTbl[FC_MODEM_ID_NUM][FC_POLICY_ID_BUTT] =
 {
     {
@@ -81,7 +81,7 @@ extern VOS_UINT32 OM_AcpuTraceMsgHook(VOS_VOID* pMsg);
 
 
 /******************************************************************************
-   6 º¯ÊýÊµÏÖ
+   6 å‡½æ•°å®žçŽ°
 ******************************************************************************/
 /*lint -save -e958 */
 VOS_VOID     FC_LOG
@@ -199,18 +199,18 @@ VOS_VOID     FC_LOG4
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_MNTN_TraceEvent
- ¹¦ÄÜÃèÊö  : Êä³ö¿ÉÎ¬¿É²â
- ÊäÈë²ÎÊý  : pMsg  --  ¿ÉÎ¬¿É²âÏûÏ¢
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_MNTN_TraceEvent
+ åŠŸèƒ½æè¿°  : è¾“å‡ºå¯ç»´å¯æµ‹
+ è¾“å…¥å‚æ•°  : pMsg  --  å¯ç»´å¯æµ‹æ¶ˆæ¯
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID FC_MNTN_TraceEvent(VOS_VOID *pMsg)
@@ -225,20 +225,20 @@ VOS_VOID FC_MNTN_TraceEvent(VOS_VOID *pMsg)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_MNTN_TracePointFcEvent
- ¹¦ÄÜÃèÊö  : Á÷¿ØÖ´ÐÐ¿ÉÎ¬¿É²â
- ÊäÈë²ÎÊý  : enMsgName  --  Á÷¿Ø»ò½âÁ÷¿ØÏûÏ¢
-             stFcPoint  --  Á÷¿Øµã
-             ulResult   --  Á÷¿ØÖ´ÐÐÇé¿ö
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÎÞ
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_MNTN_TracePointFcEvent
+ åŠŸèƒ½æè¿°  : æµæŽ§æ‰§è¡Œå¯ç»´å¯æµ‹
+ è¾“å…¥å‚æ•°  : enMsgName  --  æµæŽ§æˆ–è§£æµæŽ§æ¶ˆæ¯
+             stFcPoint  --  æµæŽ§ç‚¹
+             ulResult   --  æµæŽ§æ‰§è¡Œæƒ…å†µ
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_VOID FC_MNTN_TracePointFcEvent
@@ -391,7 +391,7 @@ VOS_UINT32 FC_IsPolicyEnable(VOS_UINT32 ulPointPolicyMask, MODEM_ID_ENUM_UINT16 
 {
     VOS_UINT32                          ulPolicyMask;
 
-    /* ¶ÔÓÚModem1,ÄÚ²¿²ßÂÔÔÚÅÐ¶ÏÊ¹ÄÜÊ±£¬ÐèÒªÓÒÒÆFC_POLICY_ID_BUTTºóÔÙÓëNVÏîÖÐÊ¹ÄÜÎ»±È½Ï */
+    /* å¯¹äºŽModem1,å†…éƒ¨ç­–ç•¥åœ¨åˆ¤æ–­ä½¿èƒ½æ—¶ï¼Œéœ€è¦å³ç§»FC_POLICY_ID_BUTTåŽå†ä¸ŽNVé¡¹ä¸­ä½¿èƒ½ä½æ¯”è¾ƒ */
     if ( MODEM_ID_0 ==  enModemId )
     {
         ulPolicyMask = ulPointPolicyMask;
@@ -406,19 +406,19 @@ VOS_UINT32 FC_IsPolicyEnable(VOS_UINT32 ulPointPolicyMask, MODEM_ID_ENUM_UINT16 
 /* add by wangrong */
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_RegPoint
- ¹¦ÄÜÃèÊö  : ÇëÇóÌí¼Ó×¢²áÁ÷¿Øµã,¹©Íâ²¿Ä£¿éµ÷ÓÃ
- ÊäÈë²ÎÊý  : pstFcRegPoint --  Á÷¿Øµã²ÎÊý
- Êä³ö²ÎÊý  :
- ·µ »Ø Öµ  : VOS_OK     --  ³É¹¦
-             VOS_ERR    --  Ê§°Ü
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_RegPoint
+ åŠŸèƒ½æè¿°  : è¯·æ±‚æ·»åŠ æ³¨å†ŒæµæŽ§ç‚¹,ä¾›å¤–éƒ¨æ¨¡å—è°ƒç”¨
+ è¾“å…¥å‚æ•°  : pstFcRegPoint --  æµæŽ§ç‚¹å‚æ•°
+ è¾“å‡ºå‚æ•°  :
+ è¿” å›ž å€¼  : VOS_OK     --  æˆåŠŸ
+             VOS_ERR    --  å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32  FC_RegPoint
@@ -428,7 +428,7 @@ VOS_UINT32  FC_RegPoint
 {
     VOS_UINT32                          ulResult;
 
-    /*²ÎÊý¼ì²é*/
+    /*å‚æ•°æ£€æŸ¥*/
     if ( VOS_NULL_PTR == pstFcRegPoint )
     {
         FC_LOG(PS_PRINT_ERROR, "FC_RegPoint, ERROR, pstFcRegPoint is NULL!\n");
@@ -466,16 +466,16 @@ VOS_UINT32  FC_RegPoint
         return VOS_ERR;
     }
 
-    /* Ê¹ÄÜ¼ì²é */
+    /* ä½¿èƒ½æ£€æŸ¥ */
     if ( FC_POLICY_MASK(pstFcRegPoint->enPolicyId) != (FC_POLICY_MASK(pstFcRegPoint->enPolicyId) & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_RegPoint, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return VOS_OK;
     }
 
-    /* ×¢²áÄÚ´æ²ßÂÔ£¬ÓÅÏÈ¼¶Ö»ÄÜÔÚÄÚ´æÁ÷¿ØÔ¼¶¨µÄ·¶Î§Ö®ÄÚ */
+    /* æ³¨å†Œå†…å­˜ç­–ç•¥ï¼Œä¼˜å…ˆçº§åªèƒ½åœ¨å†…å­˜æµæŽ§çº¦å®šçš„èŒƒå›´ä¹‹å†… */
     if (FC_POLICY_ID_MEM == pstFcRegPoint->enPolicyId)
     {
         if ( (FC_PRI_FOR_MEM_LEV_1 > pstFcRegPoint->enFcPri)
@@ -505,19 +505,19 @@ VOS_UINT32  FC_RegPoint
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_DeRegPoint
- ¹¦ÄÜÃèÊö  : ÇëÇóÈ¥×¢²áÁ÷¿Øµã
- ÊäÈë²ÎÊý  : pulFcId       --  Á÷¿ØµãID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : VOS_OK     --  ³É¹¦
-             VOS_ERR    --  Ê§°Ü
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_DeRegPoint
+ åŠŸèƒ½æè¿°  : è¯·æ±‚åŽ»æ³¨å†ŒæµæŽ§ç‚¹
+ è¾“å…¥å‚æ•°  : pulFcId       --  æµæŽ§ç‚¹ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : VOS_OK     --  æˆåŠŸ
+             VOS_ERR    --  å¤±è´¥
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32  FC_DeRegPoint
@@ -548,18 +548,18 @@ VOS_UINT32  FC_DeRegPoint
     /* add by wangrong */
 
 
-    /* Í¨¹ýÁ÷¿ØµãIDÕÒµ½Á÷¿Øµã½á¹¹ */
+    /* é€šè¿‡æµæŽ§ç‚¹IDæ‰¾åˆ°æµæŽ§ç‚¹ç»“æž„ */
     pstFcPoint    = FC_POINT_Get(enFcId);
     if (VOS_NULL_PTR == pstFcPoint)
     {
-        /* ¸ÃÁ÷¿Ø²ßÂÔÎ´Ê¹ÄÜ£¬Ôò·µ»ØVOS_OK */
+        /* è¯¥æµæŽ§ç­–ç•¥æœªä½¿èƒ½ï¼Œåˆ™è¿”å›žVOS_OK */
         FC_LOG1(PS_PRINT_WARNING, "FC_DeRegPoint, WARNING, This FCPonit = %d didn't Reg!\n",
                 (VOS_INT32)enFcId);
         return VOS_OK;
     }
 
 
-    /* Á÷¿ØµãÉ¾³ý£¬ÐèÒª¶ÔÏàÓ¦µÄÁ÷¿Ø²ßÂÔ½øÐÐ´¦Àí */
+    /* æµæŽ§ç‚¹åˆ é™¤ï¼Œéœ€è¦å¯¹ç›¸åº”çš„æµæŽ§ç­–ç•¥è¿›è¡Œå¤„ç† */
     ulPointPolicyMask   = pstFcPoint->ulPolicyMask;
 
     /* add by wangrong */
@@ -617,10 +617,10 @@ VOS_UINT32  FC_ChangePoint
     }
      /* add by wangrong */
 
-    /* Ê¹ÄÜ¼ì²é */
+    /* ä½¿èƒ½æ£€æŸ¥ */
     if ( FC_POLICY_MASK(enPolicyId) != (FC_POLICY_MASK(enPolicyId) & g_stFcCfg.ulFcEnbaleMask) )
     {
-        /* ÄÚ´æÁ÷¿ØÎ´Ê¹ÄÜ */
+        /* å†…å­˜æµæŽ§æœªä½¿èƒ½ */
         FC_LOG1(PS_PRINT_INFO, "FC_ChangePoint, INFO, MEM FlowCtrl is disabled %d \n",
                 (VOS_INT32)g_stFcCfg.ulFcEnbaleMask);
         return VOS_OK;
@@ -681,12 +681,12 @@ VOS_UINT32  FC_POINT_Add
     {
         if (g_stFcPointMgr.astFcPoint[ulFcPointLoop].enFcId == pstFcRegPoint->enFcId)
         {
-            /*½«¸ÃµãÐÂµÄ²ßÂÔ¼ÓÈëµ½Ô­À´¸ÃµãµÄ²ßÂÔÖÐ*/
+            /*å°†è¯¥ç‚¹æ–°çš„ç­–ç•¥åŠ å…¥åˆ°åŽŸæ¥è¯¥ç‚¹çš„ç­–ç•¥ä¸­*/
             pPoint  = &(g_stFcPointMgr.astFcPoint[ulFcPointLoop]);
             pPoint->ulPolicyMask |=  FC_POLICY_MASK(enFcPrivatePolicyId);
             pPoint->enModemId     =  pstFcRegPoint->enModemId;
 
-            /*´òÓ¡Ò»¸öÌáÊ¾£¬±íÃ÷¸Ãµã±»¶à¸ö²ßÂÔÌí¼Ó*/
+            /*æ‰“å°ä¸€ä¸ªæç¤ºï¼Œè¡¨æ˜Žè¯¥ç‚¹è¢«å¤šä¸ªç­–ç•¥æ·»åŠ */
             FC_LOG1(PS_PRINT_NORMAL, "FC_POINT_Add, NORMAL, The same point has added %d!\n",
                 (VOS_INT32)pstFcRegPoint->enFcId);
 
@@ -700,7 +700,7 @@ VOS_UINT32  FC_POINT_Add
         return VOS_ERR;
     }
 
-    /*Èç¹ûÃ»ÓÐÕÒµ½£¬ÄÇÃ´¾ÍÊÇÒ»¸öÐÂµã£¬ÐèÒª¼ÓÈëµ½¹ÜÀí½á¹¹ÖÐ*/
+    /*å¦‚æžœæ²¡æœ‰æ‰¾åˆ°ï¼Œé‚£ä¹ˆå°±æ˜¯ä¸€ä¸ªæ–°ç‚¹ï¼Œéœ€è¦åŠ å…¥åˆ°ç®¡ç†ç»“æž„ä¸­*/
     pPoint  = &(g_stFcPointMgr.astFcPoint[g_stFcPointMgr.ulPointNum]);
 
     pPoint->enFcId          = pstFcRegPoint->enFcId;
@@ -723,7 +723,7 @@ VOS_UINT32  FC_POINT_Del(FC_ID_ENUM_UINT8 enFcId )
     FC_POINT_STRU                      *pFcPoint;
 
 
-    /* ·ÀÖ¹È«¾Ö±äÁ¿±»²È£¬µ¼ÖÂºóÃæÊý×é·ÃÎÊÔ½½ç */
+    /* é˜²æ­¢å…¨å±€å˜é‡è¢«è¸©ï¼Œå¯¼è‡´åŽé¢æ•°ç»„è®¿é—®è¶Šç•Œ */
     if ( FC_MAX_POINT_NUM < g_stFcPointMgr.ulPointNum)
     {
         FC_LOG(PS_PRINT_WARNING, "FC_POINT_Del, WARNING, g_stFcPointMgr.ulPointNum overflow!\n");
@@ -741,7 +741,7 @@ VOS_UINT32  FC_POINT_Del(FC_ID_ENUM_UINT8 enFcId )
                 PS_MEM_CPY((pFcPoint - 1), pFcPoint, sizeof(FC_POINT_STRU));
             }
 
-            /* ×îºóÒ»¸öÐèÒªÊÖ¶¯Çå³ý */
+            /* æœ€åŽä¸€ä¸ªéœ€è¦æ‰‹åŠ¨æ¸…é™¤ */
             PS_MEM_SET(&(g_stFcPointMgr.astFcPoint[ulFcShiftId-1]), 0, sizeof(FC_POINT_STRU));
 
             g_stFcPointMgr.ulPointNum--;
@@ -755,18 +755,18 @@ VOS_UINT32  FC_POINT_Del(FC_ID_ENUM_UINT8 enFcId )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_PointSetFc
- ¹¦ÄÜÃèÊö  : ÇëÇó¶ÔÓ¦IDµÄÁ÷¿ØµãÆô¶¯Á÷¿Ø
- ÊäÈë²ÎÊý  : enFcId --  Á÷¿ØµãID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ¼ûFC_PRI_OPER_ENUM_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_PointSetFc
+ åŠŸèƒ½æè¿°  : è¯·æ±‚å¯¹åº”IDçš„æµæŽ§ç‚¹å¯åŠ¨æµæŽ§
+ è¾“å…¥å‚æ•°  : enFcId --  æµæŽ§ç‚¹ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : è§FC_PRI_OPER_ENUM_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 FC_PRI_OPER_ENUM_UINT32 FC_POINT_SetFc
@@ -780,7 +780,7 @@ FC_PRI_OPER_ENUM_UINT32 FC_POINT_SetFc
     VOS_UINT32                          ulResult ;
 
 
-    /* ¸ù¾ÝÁ÷¿Øµã,ÅÐ¾öÊÇ·ñÐèÒª½øÐÐÁ÷¿Ø²Ù×÷ */
+    /* æ ¹æ®æµæŽ§ç‚¹,åˆ¤å†³æ˜¯å¦éœ€è¦è¿›è¡ŒæµæŽ§æ“ä½œ */
     ulNeedSet   = PS_FALSE;
     ulResult    = VOS_OK;
 
@@ -791,16 +791,16 @@ FC_PRI_OPER_ENUM_UINT32 FC_POINT_SetFc
     }
 
     /*============================*/
-    /* ÑÚÂë´Ó0µ½·Ç0£¬·¢Éú·­×ª£¬ÐèÒªÖ´ÐÐÁ÷¿Ø²Ù×÷£¬·ñÔòËµÃ÷Ö®Ç°¸ÃÁ÷¿ØµãÒÑ¾­´¦ÓÚÁ÷¿Ø×´Ì¬ */
+    /* æŽ©ç ä»Ž0åˆ°éž0ï¼Œå‘ç”Ÿç¿»è½¬ï¼Œéœ€è¦æ‰§è¡ŒæµæŽ§æ“ä½œï¼Œå¦åˆ™è¯´æ˜Žä¹‹å‰è¯¥æµæŽ§ç‚¹å·²ç»å¤„äºŽæµæŽ§çŠ¶æ€ */
     if (0 == pFcPoint->ulFcMask)
     {
-        /* Ö´ÐÐÁ÷¿Øº¯Êý */
+        /* æ‰§è¡ŒæµæŽ§å‡½æ•° */
         ulNeedSet   = VOS_TRUE;
     }
 
     pFcPoint->ulFcMask  |= ulPolicyMask;
 
-    /* Ö´ÐÐÁ÷¿Ø */
+    /* æ‰§è¡ŒæµæŽ§ */
     if (PS_FALSE == ulNeedSet)
     {
         FC_MNTN_TracePointFcEvent(ID_FC_MNTN_POINT_SET_FC, pFcPoint, ulNeedSet, ulResult);
@@ -819,29 +819,29 @@ FC_PRI_OPER_ENUM_UINT32 FC_POINT_SetFc
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_PointClrFc
- ¹¦ÄÜÃèÊö  : ÇëÇó¶ÔÓ¦IDµÄÁ÷¿Øµã½â³ýÁ÷¿Ø
- ÊäÈë²ÎÊý  : enFcId --  Á÷¿ØµãID
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ¼ûFC_PRI_OPER_ENUM_UINT32
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_PointClrFc
+ åŠŸèƒ½æè¿°  : è¯·æ±‚å¯¹åº”IDçš„æµæŽ§ç‚¹è§£é™¤æµæŽ§
+ è¾“å…¥å‚æ•°  : enFcId --  æµæŽ§ç‚¹ID
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : è§FC_PRI_OPER_ENUM_UINT32
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2011Äê12ÔÂ5ÈÕ
-    ×÷    Õß   :
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2011å¹´12æœˆ5æ—¥
+    ä½œ    è€…   :
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 FC_PRI_OPER_ENUM_UINT32 FC_POINT_ClrFc(VOS_UINT32 ulPolicyMask, FC_ID_ENUM_UINT8 enFcId)
 {
-    /*  ¸ù¾ÝIDÕÒµ½Á÷¿ØµãÊµÀý£¬Ö´ÐÐÊµÀýµÄÁ÷¿Ø½â³ýº¯Êý */
+    /*  æ ¹æ®IDæ‰¾åˆ°æµæŽ§ç‚¹å®žä¾‹ï¼Œæ‰§è¡Œå®žä¾‹çš„æµæŽ§è§£é™¤å‡½æ•° */
     FC_POINT_STRU                      *pFcPoint;
     VOS_UINT32                          ulNeedSet;
     VOS_UINT32                          ulResult;
 
 
-    /* ¸ù¾ÝÁ÷¿Øµã,ÅÐ¾öÊÇ·ñÐèÒª½øÐÐ½â³ýÁ÷¿Ø²Ù×÷ */
+    /* æ ¹æ®æµæŽ§ç‚¹,åˆ¤å†³æ˜¯å¦éœ€è¦è¿›è¡Œè§£é™¤æµæŽ§æ“ä½œ */
     ulNeedSet   = PS_FALSE;
     ulResult    = VOS_OK;
 
@@ -851,7 +851,7 @@ FC_PRI_OPER_ENUM_UINT32 FC_POINT_ClrFc(VOS_UINT32 ulPolicyMask, FC_ID_ENUM_UINT8
         return FC_PRI_CHANGE_AND_CONTINUE;
     }
 
-    /* ²¢Ã»ÓÐÒòÎª¸ÃÖÖÀàÐÍµ¼ÖÂÁ÷¿Ø£¬ÎÞÐë½â³ýÁ÷¿Ø */
+    /* å¹¶æ²¡æœ‰å› ä¸ºè¯¥ç§ç±»åž‹å¯¼è‡´æµæŽ§ï¼Œæ— é¡»è§£é™¤æµæŽ§ */
     if (0 == (pFcPoint->ulFcMask & ulPolicyMask))
     {
         return FC_PRI_CHANGE_AND_CONTINUE;
@@ -861,11 +861,11 @@ FC_PRI_OPER_ENUM_UINT32 FC_POINT_ClrFc(VOS_UINT32 ulPolicyMask, FC_ID_ENUM_UINT8
 
     if ( 0 == pFcPoint->ulFcMask )
     {
-        /* Ö»ÓÐËùÓÐÇé¿ö¶¼½â³ýÁË£¬²ÅÄÜ½â³ýÁ÷¿Ø */
+        /* åªæœ‰æ‰€æœ‰æƒ…å†µéƒ½è§£é™¤äº†ï¼Œæ‰èƒ½è§£é™¤æµæŽ§ */
         ulNeedSet = VOS_TRUE;
     }
 
-    /* Ö´ÐÐ½â³ýÁ÷¿ØµÄ²Ù×÷ */
+    /* æ‰§è¡Œè§£é™¤æµæŽ§çš„æ“ä½œ */
     if (PS_FALSE == ulNeedSet)
     {
         FC_MNTN_TracePointFcEvent(ID_FC_MNTN_POINT_CLR_FC, pFcPoint, ulNeedSet, ulResult);
@@ -894,14 +894,14 @@ VOS_UINT32  FC_POINT_Reg
     /* add by wangrong */
 
 
-    /* Ìí¼ÓÁ÷¿Øµã */
+    /* æ·»åŠ æµæŽ§ç‚¹ */
     if ( VOS_OK != FC_POINT_Add(pstFcRegPoint) )
     {
         FC_LOG(PS_PRINT_ERROR, "FC_POINT_Reg, ERROR, FC_POINT_Add error!\n");
         return VOS_ERR;
     }
 
-    /* Èç¹û¸ÃÁ÷¿Ø²ßÂÔÀïÒÑ¾­´æÔÚ¸ÃÁ÷¿ØID£¬Ö±½Ó·µ»Ø */
+    /* å¦‚æžœè¯¥æµæŽ§ç­–ç•¥é‡Œå·²ç»å­˜åœ¨è¯¥æµæŽ§IDï¼Œç›´æŽ¥è¿”å›ž */
     /* add by wangrong */
     enPri   = FC_POLICY_GetPriWithFcId(enFcPrivatePolicyId, pstFcRegPoint->enFcId);
     /* add by wangrong */
@@ -931,19 +931,19 @@ VOS_UINT32  FC_POINT_DeReg(FC_ID_ENUM_UINT8 enFcId, MODEM_ID_ENUM_UINT16  enMode
     /* add by wangrong */
     VOS_UINT32                          ulPointPolicyMask;
 
-    /* Í¨¹ýÁ÷¿ØµãIDÕÒµ½Á÷¿Øµã½á¹¹ */
+    /* é€šè¿‡æµæŽ§ç‚¹IDæ‰¾åˆ°æµæŽ§ç‚¹ç»“æž„ */
     pFcPoint    = FC_POINT_Get(enFcId);
     if (VOS_NULL_PTR == pFcPoint)
     {
         return VOS_ERR;
     }
-    /* ·ÀÖ¹ÁíÒ»ÕÅ¿¨Îóµ÷ */
+    /* é˜²æ­¢å¦ä¸€å¼ å¡è¯¯è°ƒ */
     if ( enModemId != pFcPoint->enModemId )
     {
         return VOS_ERR;
     }
 
-    /* Á÷¿ØµãÉ¾³ý£¬ÐèÒª¶ÔÏàÓ¦µÄÁ÷¿Ø²ßÂÔ½øÐÐ´¦Àí */
+    /* æµæŽ§ç‚¹åˆ é™¤ï¼Œéœ€è¦å¯¹ç›¸åº”çš„æµæŽ§ç­–ç•¥è¿›è¡Œå¤„ç† */
     ulPointPolicyMask   = pFcPoint->ulPolicyMask;
 
     /* add by wangrong */
@@ -951,7 +951,7 @@ VOS_UINT32  FC_POINT_DeReg(FC_ID_ENUM_UINT8 enFcId, MODEM_ID_ENUM_UINT16  enMode
     {
         if ( 0 != (FC_POLICY_MASK(enPolicyId) & ulPointPolicyMask) )
         {
-            /* Ê¹ÄÜ¼ì²é */
+            /* ä½¿èƒ½æ£€æŸ¥ */
             if ( 0 != FC_IsPolicyEnable(FC_POLICY_MASK(enPolicyId), enModemId) )
             {
                 FC_POLICY_DelPoint(enPolicyId, enFcId);
@@ -960,7 +960,7 @@ VOS_UINT32  FC_POINT_DeReg(FC_ID_ENUM_UINT8 enFcId, MODEM_ID_ENUM_UINT16  enMode
     }
     /* add by wangrong */
 
-    /* ´ÓÁ÷¿Øµã³ØÀïÉ¾³ý¸ÃÁ÷¿Øµã */
+    /* ä»ŽæµæŽ§ç‚¹æ± é‡Œåˆ é™¤è¯¥æµæŽ§ç‚¹ */
     FC_POINT_Del(enFcId);
 
     return VOS_OK;
@@ -1023,13 +1023,13 @@ VOS_VOID  FC_POLICY_TrimInvalidPri( FC_POLICY_STRU *pFcPolicy )
     FC_PRI_STRU                        *pstPri;
     FC_PRI_ENUM_UINT8                  enPri;
 
-    /* Èç¹ûµ±Ç°ÓÅÏÈ¼¶ÎÞÐ§£¬ÔòÖ±½Ó·µ»Ø£¬ÎÞÐè½µ¼¶ */
+    /* å¦‚æžœå½“å‰ä¼˜å…ˆçº§æ— æ•ˆï¼Œåˆ™ç›´æŽ¥è¿”å›žï¼Œæ— éœ€é™çº§ */
     if (FC_PRI_NULL == pFcPolicy->enDonePri)
     {
         return;
     }
 
-    /* ÕÒµ½Ò»¸öÓÐÐ§µÄÓÅÏÈ¼¶£¬ÔòÌø³öÑ­»·£¬²»¸Ä±äµ±Ç°Á÷¿ØÓÅÏÈ¼¶ */
+    /* æ‰¾åˆ°ä¸€ä¸ªæœ‰æ•ˆçš„ä¼˜å…ˆçº§ï¼Œåˆ™è·³å‡ºå¾ªçŽ¯ï¼Œä¸æ”¹å˜å½“å‰æµæŽ§ä¼˜å…ˆçº§ */
     for (enPri = pFcPolicy->enDonePri; enPri > FC_PRI_NULL; enPri--)
     {
         pstPri   = &(pFcPolicy->astFcPri[enPri]);
@@ -1039,7 +1039,7 @@ VOS_VOID  FC_POLICY_TrimInvalidPri( FC_POLICY_STRU *pFcPolicy )
         }
     }
 
-    /* Èç¹ûµ±Ç°ÓÅÏÈ¼¶ÒÔ¼°¸üµÍµÄËùÓÐÓÅÏÈ¼¶¾ùÎªÎÞÐ§£¬Ôò½«µ±Ç°ÓÅÏÈ¼¶Ö±½ÓÖÃÎª×îµÍÓÅÏÈ¼¶ */
+    /* å¦‚æžœå½“å‰ä¼˜å…ˆçº§ä»¥åŠæ›´ä½Žçš„æ‰€æœ‰ä¼˜å…ˆçº§å‡ä¸ºæ— æ•ˆï¼Œåˆ™å°†å½“å‰ä¼˜å…ˆçº§ç›´æŽ¥ç½®ä¸ºæœ€ä½Žä¼˜å…ˆçº§ */
     pFcPolicy->enDonePri    = enPri;
 
     return;
@@ -1108,7 +1108,7 @@ VOS_UINT32 FC_POLICY_Up(FC_POLICY_STRU *pPolicy)
         enPri = (FC_PRI_ENUM_UINT8)(pPolicy->enDonePri + 1);
         pstPri   = &(pPolicy->astFcPri[enPri]);
 
-        /* µ±Ç°ÓÅÏÈ¼¶´æÔÚ£¬Ö´ÐÐµ±Ç°Á÷¿Ø²Ù×÷ */
+        /* å½“å‰ä¼˜å…ˆçº§å­˜åœ¨ï¼Œæ‰§è¡Œå½“å‰æµæŽ§æ“ä½œ */
         if (VOS_TRUE == pstPri->ucValid)
         {
             FC_POLICY_UpWithOnePri(pPolicy, pstPri);
@@ -1143,7 +1143,7 @@ VOS_UINT32  FC_POLICY_UpToTargetPri(FC_POLICY_STRU *pFcPolicy, FC_PRI_ENUM_UINT8
         enPri   = (FC_PRI_ENUM_UINT8)(pFcPolicy->enDonePri + 1);
         pstPri  = &(pFcPolicy->astFcPri[enPri]);
 
-        /* µ±Ç°ÓÅÏÈ¼¶´æÔÚ£¬Ö´ÐÐµ±Ç°Á÷¿Ø²Ù×÷ */
+        /* å½“å‰ä¼˜å…ˆçº§å­˜åœ¨ï¼Œæ‰§è¡Œå½“å‰æµæŽ§æ“ä½œ */
         if (VOS_TRUE == pstPri->ucValid)
         {
             FC_POLICY_UpWithOnePri(pFcPolicy, pstPri);
@@ -1169,7 +1169,7 @@ VOS_UINT32 FC_POLICY_Down(FC_POLICY_STRU *pFcPolicy)
     {
         pstPri   = &(pFcPolicy->astFcPri[pFcPolicy->enDonePri]);
 
-        /* µ±Ç°ÓÅÏÈ¼¶´æÔÚ£¬Ö´ÐÐµ±Ç°ÓÅÏÈ¼¶µÄ½âÁ÷¿Ø²Ù×÷ */
+        /* å½“å‰ä¼˜å…ˆçº§å­˜åœ¨ï¼Œæ‰§è¡Œå½“å‰ä¼˜å…ˆçº§çš„è§£æµæŽ§æ“ä½œ */
         if (VOS_TRUE == pstPri->ucValid)
         {
             FC_POLICY_DownWithOnePri(pFcPolicy, pstPri);
@@ -1180,7 +1180,7 @@ VOS_UINT32 FC_POLICY_Down(FC_POLICY_STRU *pFcPolicy)
         pFcPolicy->enDonePri--;
     }
 
-    /* È¥³ý¶àÓàµÄÎÞÐ§ÓÅÏÈ¼¶ */
+    /* åŽ»é™¤å¤šä½™çš„æ— æ•ˆä¼˜å…ˆçº§ */
     FC_POLICY_TrimInvalidPri(pFcPolicy);
 
     FC_MNTN_TracePolicy(ID_FC_MNTN_POLICY_DOWN, pFcPolicy);
@@ -1203,7 +1203,7 @@ VOS_UINT32  FC_POLICY_DownToTargetPri(FC_POLICY_STRU *pFcPolicy, FC_PRI_ENUM_UIN
     {
         pstPri   = &(pFcPolicy->astFcPri[pFcPolicy->enDonePri]);
 
-        /* µ±Ç°ÓÅÏÈ¼¶´æÔÚ£¬Ö´ÐÐµ±Ç°ÓÅÏÈ¼¶µÄ½âÁ÷¿Ø²Ù×÷ */
+        /* å½“å‰ä¼˜å…ˆçº§å­˜åœ¨ï¼Œæ‰§è¡Œå½“å‰ä¼˜å…ˆçº§çš„è§£æµæŽ§æ“ä½œ */
         if (VOS_TRUE == pstPri->ucValid)
         {
             FC_POLICY_DownWithOnePri(pFcPolicy, pstPri);
@@ -1261,14 +1261,14 @@ VOS_UINT32  FC_POLICY_AddPointForPri
         return VOS_ERR;
     }
 
-    /* Èç¹ûµ±Ç°ÓÅÏÈ¼¶ÒÑ´æÔÚ£¬ÔòÌí¼Ó¸ÃÁ÷¿Øµã */
+    /* å¦‚æžœå½“å‰ä¼˜å…ˆçº§å·²å­˜åœ¨ï¼Œåˆ™æ·»åŠ è¯¥æµæŽ§ç‚¹ */
     if (VOS_TRUE == pFcPri->ucValid)
     {
         for (ulFcIdxLoop = 0; ulFcIdxLoop < pFcPri->ucFcIdCnt; ulFcIdxLoop++)
         {
             if (enFcId == pFcPri->aenFcId[ulFcIdxLoop])
             {
-                /* ÒÑ¾­×¢²á¹ýÏàÍ¬ID£¬Ö±½Ó·µ»Ø */
+                /* å·²ç»æ³¨å†Œè¿‡ç›¸åŒIDï¼Œç›´æŽ¥è¿”å›ž */
                 FC_LOG1(PS_PRINT_WARNING, "FC_POLICY_AddPointForPri, WARNING, add added FcId %d\n",
                     (VOS_INT32)enFcId);
                 return VOS_ERR;
@@ -1278,7 +1278,7 @@ VOS_UINT32  FC_POLICY_AddPointForPri
         pFcPri->aenFcId[pFcPri->ucFcIdCnt]  = enFcId;
         pFcPri->ucFcIdCnt++;
     }
-    /* Èç¹ûµ±Ç°ÓÅÏÈ¼¶²»´æÔÚ£¬Ôò¸ÃÓÅÏÈ¼¶ÖÃÎªÓÐÐ§ */
+    /* å¦‚æžœå½“å‰ä¼˜å…ˆçº§ä¸å­˜åœ¨ï¼Œåˆ™è¯¥ä¼˜å…ˆçº§ç½®ä¸ºæœ‰æ•ˆ */
     else
     {
         pFcPri->aenFcId[0]  = enFcId;
@@ -1312,7 +1312,7 @@ VOS_UINT32  FC_POLICY_DelPointForPri
     {
         if (enFcId == pFcPri->aenFcId[ulFcIdIdxLoop])
         {
-            /* É¾³ýÁ÷¿Øµã£¬½øÐÐÊý×éÒÆÎ» */
+            /* åˆ é™¤æµæŽ§ç‚¹ï¼Œè¿›è¡Œæ•°ç»„ç§»ä½ */
             pFcPri->aenFcId[ulFcIdIdxLoop]  = 0;
             for (ulFcShiftId = (ulFcIdIdxLoop + 1); ulFcShiftId < pFcPri->ucFcIdCnt; ulFcShiftId++)
             {
@@ -1322,7 +1322,7 @@ VOS_UINT32  FC_POLICY_DelPointForPri
 
             pFcPri->ucFcIdCnt--;
 
-            /* ¸ÃÓÅÏÈ¼¶É¾³ýÁËËùÓÐµÄÁ÷¿Øµã£¬ÔòÉ¾³ý¸ÃÓÅÏÈ¼¶ */
+            /* è¯¥ä¼˜å…ˆçº§åˆ é™¤äº†æ‰€æœ‰çš„æµæŽ§ç‚¹ï¼Œåˆ™åˆ é™¤è¯¥ä¼˜å…ˆçº§ */
             if (0 == pFcPri->ucFcIdCnt)
             {
                 pFcPri->ucValid     = PS_FALSE;
@@ -1349,26 +1349,26 @@ VOS_UINT32  FC_POLICY_AddPoint
 
     pPolicy     = FC_POLICY_Get(enPolicyId);
 
-    /* ÏòÁ÷¿Ø²ßÂÔÌí¼ÓÁ÷¿Øµã */
+    /* å‘æµæŽ§ç­–ç•¥æ·»åŠ æµæŽ§ç‚¹ */
     FC_POLICY_AddPointForPri(pPolicy, enFcId, enPointPri);
 
-    /* ¸üÐÂ¸ÃÁ÷¿Ø²ßÂÔ×î¸ßÓÅÏÈ¼¶ */
+    /* æ›´æ–°è¯¥æµæŽ§ç­–ç•¥æœ€é«˜ä¼˜å…ˆçº§ */
     FC_POLICY_UpdateHighestPri(pPolicy);
 
-    /* µ÷ÕûÁ÷¿Ø²ßÂÔ£¬Ôö¼ÓÁ÷¿Øµã£¬°´ÕÕÁ÷¿ØÃÅÏÞ½øÐÐÖØÐÂµ÷Õû */
+    /* è°ƒæ•´æµæŽ§ç­–ç•¥ï¼Œå¢žåŠ æµæŽ§ç‚¹ï¼ŒæŒ‰ç…§æµæŽ§é—¨é™è¿›è¡Œé‡æ–°è°ƒæ•´ */
     if (VOS_NULL_PTR != pPolicy->pAdjustForUpFunc)
     {
         (VOS_VOID)pPolicy->pAdjustForUpFunc(enPointPri, enFcId);
     }
 
-    /* ÐÂÁ÷¿ØµãµÄÁ÷¿ØÅÐ¾ö´¦Àí */
-    /* Èç¹û×¢²áµÄÁ÷¿ØÓÅÏÈ¼¶µÍÓÚµ±Ç°ÓÅÏÈ¼¶£¬ÔòÖ´ÐÐ¸ÃÁ÷¿ØµãµÄÁ÷¿Ø */
+    /* æ–°æµæŽ§ç‚¹çš„æµæŽ§åˆ¤å†³å¤„ç† */
+    /* å¦‚æžœæ³¨å†Œçš„æµæŽ§ä¼˜å…ˆçº§ä½ŽäºŽå½“å‰ä¼˜å…ˆçº§ï¼Œåˆ™æ‰§è¡Œè¯¥æµæŽ§ç‚¹çš„æµæŽ§ */
     if (enPointPri <= pPolicy->enDonePri)
     {
         FC_POINT_SetFc( FC_POLICY_MASK(enPolicyId), enFcId );
     }
 
-    /* Êä³ö¿ÉÎ¬¿É²â */
+    /* è¾“å‡ºå¯ç»´å¯æµ‹ */
     FC_MNTN_TracePolicy(ID_FC_MNTN_POLICY_ADD_POINT, pPolicy);
 
     return VOS_OK;
@@ -1405,7 +1405,7 @@ FC_PRI_ENUM_UINT8  FC_POLICY_GetPriWithFcId
         {
             if (pPri->aenFcId[ulFcIdIndexLoop] == enFcId)
             {
-                /* ´Ó¸ÃÁ÷¿Ø²ßÂÔÀïÉ¾³ý¸ÃÁ÷¿Øµã */
+                /* ä»Žè¯¥æµæŽ§ç­–ç•¥é‡Œåˆ é™¤è¯¥æµæŽ§ç‚¹ */
                 enPointPri  = enPriLoop;
                 return enPointPri;
             }
@@ -1423,10 +1423,10 @@ VOS_UINT32  FC_POLICY_DelPoint
     FC_PRI_ENUM_UINT8                  enPointPri;
     FC_POLICY_STRU                     *pPolicy;
 
-    /*================================*//* ¶ÔÐèÒªÉ¾³ýµÄÁ÷¿Øµã½øÐÐ½â³ýÁ÷¿Ø´¦Àí */
+    /*================================*//* å¯¹éœ€è¦åˆ é™¤çš„æµæŽ§ç‚¹è¿›è¡Œè§£é™¤æµæŽ§å¤„ç† */
     FC_POINT_ClrFc(FC_POLICY_MASK(enPolicyId), enFcId);
 
-    /*================================*//* ¶ÔÏà¹ØÁ¬µÄÁ÷¿Ø²ßÂÔ½øÐÐµ÷Õû */
+    /*================================*//* å¯¹ç›¸å…³è¿žçš„æµæŽ§ç­–ç•¥è¿›è¡Œè°ƒæ•´ */
     enPointPri  = FC_POLICY_GetPriWithFcId(enPolicyId, enFcId);
     if (FC_PRI_BUTT == enPointPri)
     {
@@ -1436,16 +1436,16 @@ VOS_UINT32  FC_POLICY_DelPoint
     pPolicy = FC_POLICY_Get(enPolicyId);
     FC_POLICY_DelPointForPri(pPolicy, enFcId, enPointPri);
 
-    /* ¸üÐÂ¸ÃÁ÷¿Ø²ßÂÔ×î¸ßÓÅÏÈ¼¶ */
+    /* æ›´æ–°è¯¥æµæŽ§ç­–ç•¥æœ€é«˜ä¼˜å…ˆçº§ */
     FC_POLICY_UpdateHighestPri(pPolicy);
 
-    /* Á÷¿Ø²ßÂÔµ÷Õû */
+    /* æµæŽ§ç­–ç•¥è°ƒæ•´ */
     if (VOS_NULL_PTR != pPolicy->pAdjustForDownFunc)
     {
         (VOS_VOID)pPolicy->pAdjustForDownFunc(enPointPri, enFcId);
     }
 
-    /* Êä³ö¿ÉÎ¬¿É²â */
+    /* è¾“å‡ºå¯ç»´å¯æµ‹ */
     FC_MNTN_TracePolicy(ID_FC_MNTN_POLICY_DEL_POINT, pPolicy);
 
     return VOS_OK;
@@ -1462,34 +1462,34 @@ VOS_UINT32  FC_POLICY_ChangePoint
 
     pPolicy = FC_POLICY_Get(enPolicyId);
 
-    /* Ë¢ÐÂ¸ÃÁ÷¿ØµãÔÚÁ÷¿Ø²ßÂÔµÄÁ÷¿ØµãÎ¬»¤ */
+    /* åˆ·æ–°è¯¥æµæŽ§ç‚¹åœ¨æµæŽ§ç­–ç•¥çš„æµæŽ§ç‚¹ç»´æŠ¤ */
     FC_POLICY_DelPointForPri(pPolicy, enFcId, enPointOldPri);
     FC_POLICY_AddPointForPri(pPolicy, enFcId, enPointNewPri);
 
 
-    /* ¸üÐÂ¸ÃÁ÷¿Ø²ßÂÔ×î¸ßÓÅÏÈ¼¶ */
+    /* æ›´æ–°è¯¥æµæŽ§ç­–ç•¥æœ€é«˜ä¼˜å…ˆçº§ */
     FC_POLICY_UpdateHighestPri(pPolicy);
 
-    /* µ÷ÕûÁ÷¿Ø²ßÂÔ£¬¸ü¸ÄÁ÷¿Øµã£¬°´ÕÕÁ÷¿ØÃÅÏÞ½øÐÐÖØÐÂµ÷Õû */
+    /* è°ƒæ•´æµæŽ§ç­–ç•¥ï¼Œæ›´æ”¹æµæŽ§ç‚¹ï¼ŒæŒ‰ç…§æµæŽ§é—¨é™è¿›è¡Œé‡æ–°è°ƒæ•´ */
     if (VOS_NULL_PTR != pPolicy->pAdjustForUpFunc)
     {
         (VOS_VOID)pPolicy->pAdjustForUpFunc(enPointOldPri, enFcId);
     }
 
-    /* Õë¶ÔÓÅÏÈ¼¶µÄ¸ü¸Ä½øÐÐÁ÷¿Øµã×´Ì¬µÄµ÷Õû */
-    /* Èç¹ûÀÏµÄÓÅÏÈ¼¶µÍÓÚµ±Ç°ÓÅÏÈ¼¶£¬ÐÂµÄÓÅÏÈ¼¶¸ßÓÚµ±Ç°ÓÅÏÈ¼¶£¬Ôò½â³ý¸ÃÁ÷¿ØµãµÄÁ÷¿Ø */
+    /* é’ˆå¯¹ä¼˜å…ˆçº§çš„æ›´æ”¹è¿›è¡ŒæµæŽ§ç‚¹çŠ¶æ€çš„è°ƒæ•´ */
+    /* å¦‚æžœè€çš„ä¼˜å…ˆçº§ä½ŽäºŽå½“å‰ä¼˜å…ˆçº§ï¼Œæ–°çš„ä¼˜å…ˆçº§é«˜äºŽå½“å‰ä¼˜å…ˆçº§ï¼Œåˆ™è§£é™¤è¯¥æµæŽ§ç‚¹çš„æµæŽ§ */
     if ( (enPointOldPri < pPolicy->enDonePri) && (enPointNewPri > pPolicy->enDonePri) )
     {
         FC_POINT_ClrFc(FC_POLICY_MASK(pPolicy->enPolicyId), enFcId);
     }
 
-    /* Èç¹ûÀÏµÄÓÅÏÈ¼¶¸ßÓÚµ±Ç°ÓÅÏÈ¼¶£¬ÐÂµÄÓÅÏÈ¼¶µÍÓÚµ±Ç°ÓÅÏÈ¼¶£¬Ôò¶Ô¸ÃÁ÷¿Øµã½øÐÐÁ÷¿Ø */
+    /* å¦‚æžœè€çš„ä¼˜å…ˆçº§é«˜äºŽå½“å‰ä¼˜å…ˆçº§ï¼Œæ–°çš„ä¼˜å…ˆçº§ä½ŽäºŽå½“å‰ä¼˜å…ˆçº§ï¼Œåˆ™å¯¹è¯¥æµæŽ§ç‚¹è¿›è¡ŒæµæŽ§ */
     if ( (enPointOldPri > pPolicy->enDonePri) && (enPointNewPri < pPolicy->enDonePri) )
     {
         FC_POINT_SetFc(FC_POLICY_MASK(pPolicy->enPolicyId), enFcId);
     }
 
-    /* Êä³ö¿ÉÎ¬¿É²â */
+    /* è¾“å‡ºå¯ç»´å¯æµ‹ */
     FC_MNTN_TracePolicy(ID_FC_MNTN_POLICY_CHANGE_POINT, pPolicy);
 
     return VOS_OK;
@@ -1505,7 +1505,7 @@ VOS_UINT32  FC_POLICY_Init( VOS_VOID )
 {
     FC_POLICY_ID_ENUM_UINT8             enPolicyId;
 
-    /*Í¨ÓÃÁ÷¿Ø²ßÂÔ³õÊ¼»¯ */
+    /*é€šç”¨æµæŽ§ç­–ç•¥åˆå§‹åŒ– */
     VOS_MemSet(&g_astFcPolicy[0], 0, sizeof(FC_POLICY_STRU) * FC_PRIVATE_POLICY_ID_BUTT);
 
     for (enPolicyId = 0; enPolicyId < FC_PRIVATE_POLICY_ID_BUTT; enPolicyId++)
@@ -1552,7 +1552,7 @@ VOS_UINT32  FC_CFG_CheckMemParam( FC_CFG_MEM_STRU *pstFcCfgMem )
 
     for ( ulThresholdLoop = 0 ; ulThresholdLoop < pstFcCfgMem->ulThresholdCnt ; ulThresholdLoop++ )
     {
-        /* ÄÚ´æÁ÷¿ØÉèÖÃµÄÊÇ¿ÕÏÐÖµ */
+        /* å†…å­˜æµæŽ§è®¾ç½®çš„æ˜¯ç©ºé—²å€¼ */
         if ( pstFcCfgMem->astThreshold[ulThresholdLoop].ulSetThreshold
              > pstFcCfgMem->astThreshold[ulThresholdLoop].ulStopThreshold )
         {
@@ -1585,8 +1585,8 @@ VOS_UINT32  FC_CFG_CheckUlRateParam( FC_CFG_UM_UL_RATE_STRU *pstFcCfgUmUlRate )
 
 VOS_UINT32  FC_CFG_CheckParam( FC_CFG_STRU *pstFcCfg )
 {
-    /* Éè¼ÆÔ¼Êø£¬AºËÐèÒªÅÐ¶ÏÊÇ·ñÒòÎªËÙ´«ÒýÆðCPUÕ¼ÓÃÂÊ¸ß£¬µÚÒ»´ÎCPUÕ¼ÓÃÂÊ
-       ³¬±êÊ±²ÅÆô¶¯¼ÆËãËÙ´«ËÙÂÊ£¬ËùÒÔÖÁÉÙÐèÒª2´Î */
+    /* è®¾è®¡çº¦æŸï¼ŒAæ ¸éœ€è¦åˆ¤æ–­æ˜¯å¦å› ä¸ºé€Ÿä¼ å¼•èµ·CPUå ç”¨çŽ‡é«˜ï¼Œç¬¬ä¸€æ¬¡CPUå ç”¨çŽ‡
+       è¶…æ ‡æ—¶æ‰å¯åŠ¨è®¡ç®—é€Ÿä¼ é€ŸçŽ‡ï¼Œæ‰€ä»¥è‡³å°‘éœ€è¦2æ¬¡ */
     if (2 > pstFcCfg->stFcCfgCpuA.ulSmoothTimerLen)
     {
         FC_LOG1(PS_PRINT_WARNING, "FC_CFG_CheckParam, WARNING, CPUA flow ctrl ulSmoothTimerLen is %d!\n",
@@ -1738,7 +1738,7 @@ VOS_UINT32  FC_CFG_Init( VOS_VOID )
         return VOS_OK;
     }
 
-    /* ½«NVÅäÖÃÖµ×ª»»³ÉÄÚ²¿½á¹¹±£´æ */
+    /* å°†NVé…ç½®å€¼è½¬æ¢æˆå†…éƒ¨ç»“æž„ä¿å­˜ */
     FC_CFG_SetNvValue(&stFcCfgNv);
 
     ulResult = FC_CFG_CheckParam(&g_stFcCfg);
@@ -1747,7 +1747,7 @@ VOS_UINT32  FC_CFG_Init( VOS_VOID )
     {
         FC_LOG(PS_PRINT_ERROR, "FC_CommInit, ERROR, Check NV parameter fail!\n");
 
-        /* µ±Ç°µÄNVÖµÓÐ´í£¬ÉèÖÃÄ¬ÈÏÖµ·µ»Ø³É¹¦ */
+        /* å½“å‰çš„NVå€¼æœ‰é”™ï¼Œè®¾ç½®é»˜è®¤å€¼è¿”å›žæˆåŠŸ */
         FC_CFG_SetDefaultValue(&g_stFcCfg);
 
         return VOS_OK;
@@ -1774,7 +1774,7 @@ VOS_UINT32 FC_SndCpuMsg
 
     if(VOS_NULL_PTR == pstMsg)
     {
-        /* ¸Ãº¯Êý»áÔÚÖÐ¶ÏÖÐ±»µ÷ÓÃ£¬¹ÊÊ¹ÓÃLogPrint */
+        /* è¯¥å‡½æ•°ä¼šåœ¨ä¸­æ–­ä¸­è¢«è°ƒç”¨ï¼Œæ•…ä½¿ç”¨LogPrint */
         LogPrint("FC_SndIntraCpuMsg, ERROR, Alloc Msg Fail\n");
         return VOS_ERR;
     }
@@ -1790,7 +1790,7 @@ VOS_UINT32 FC_SndCpuMsg
 
     if (VOS_OK != ulResult)
     {
-        /* ¸Ãº¯Êý»áÔÚÖÐ¶ÏÖÐ±»µ÷ÓÃ£¬¹ÊÊ¹ÓÃLogPrint */
+        /* è¯¥å‡½æ•°ä¼šåœ¨ä¸­æ–­ä¸­è¢«è°ƒç”¨ï¼Œæ•…ä½¿ç”¨LogPrint */
         LogPrint("FC_SndIntraCpuMsg, ERROR, Send Msg Fail\n");
         return VOS_ERR;
     }
@@ -1916,13 +1916,13 @@ VOS_UINT32  FC_CommInit( VOS_VOID )
 {
     VOS_UINT32                          ulResult;
 
-    /* Á÷¿Ø²ßÂÔ³õÊ¼»¯ */
+    /* æµæŽ§ç­–ç•¥åˆå§‹åŒ– */
     FC_POLICY_Init();
 
-    /* Á÷¿Øµã³õÊ¼»¯ */
+    /* æµæŽ§ç‚¹åˆå§‹åŒ– */
     FC_POINT_Init();
 
-    /* Á÷¿ØÅäÖÃÏî³õÊ¼»¯ */
+    /* æµæŽ§é…ç½®é¡¹åˆå§‹åŒ– */
     ulResult = FC_CFG_Init();
 
     if (VOS_OK != ulResult)
@@ -1942,18 +1942,18 @@ VOS_UINT32  FC_SetDebugLev( VOS_UINT32 ulLev )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_SetFcEnableMask
- ¹¦ÄÜÃèÊö  : ÉèÖÃÁ÷¿ØÑÚÂëº¯Êý
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_SetFcEnableMask
+ åŠŸèƒ½æè¿°  : è®¾ç½®æµæŽ§æŽ©ç å‡½æ•°
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê2ÔÂ9ÈÕ
-    ×÷    Õß   : FC_RecoverUlGradeProcess
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´2æœˆ9æ—¥
+    ä½œ    è€…   : FC_RecoverUlGradeProcess
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32  FC_SetFcEnableMask( VOS_UINT32 ulEnableMask )
@@ -1965,18 +1965,18 @@ VOS_UINT32  FC_SetFcEnableMask( VOS_UINT32 ulEnableMask )
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_SetThreshold
- ¹¦ÄÜÃèÊö  : ÉèÖÃÃÅÏÞ
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_SetThreshold
+ åŠŸèƒ½æè¿°  : è®¾ç½®é—¨é™
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê2ÔÂ10ÈÕ
-    ×÷    Õß   : ¸ß²Æ
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´2æœˆ10æ—¥
+    ä½œ    è€…   : é«˜è´¢
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32  FC_SetThreshold
@@ -2037,18 +2037,18 @@ VOS_UINT32  FC_SetThreshold
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : FC_Help
- ¹¦ÄÜÃèÊö  : Á÷¿Øµ±Ç°ÐÅÏ¢
- ÊäÈë²ÎÊý  : ÎÞ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  :
- µ÷ÓÃº¯Êý  :
- ±»µ÷º¯Êý  :
+ å‡½ æ•° å  : FC_Help
+ åŠŸèƒ½æè¿°  : æµæŽ§å½“å‰ä¿¡æ¯
+ è¾“å…¥å‚æ•°  : æ— 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  :
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê2ÔÂ9ÈÕ
-    ×÷    Õß   : FC_RecoverUlGradeProcess
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´2æœˆ9æ—¥
+    ä½œ    è€…   : FC_RecoverUlGradeProcess
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 VOS_UINT32  FC_Help( VOS_VOID )
