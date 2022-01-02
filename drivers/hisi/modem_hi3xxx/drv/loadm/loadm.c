@@ -279,11 +279,11 @@ static struct attribute *his_modem_attributes[] = {
         NULL
 };
 
-#if 0
 static const struct attribute_group his_modem_group = {
     .attrs = his_modem_attributes,
 };
 
+#if 0
 /*****************************************************************************
  函 数 名  : his_modem_activate_ccore
  功能描述  : 激活C核

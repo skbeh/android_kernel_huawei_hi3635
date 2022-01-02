@@ -75,9 +75,6 @@ obj-y				+= ipf/
 endif
 obj-y				+= lowpower_mntn/
 
-
-subdir-ccflags-y := -Werror -Wno-error=stringop-truncation
-
 #HSUART_M2M
 ifeq ($(strip $(CFG_CONFIG_M2M_HSUART)),YES)
 obj-y  += dialup_hsuart/
