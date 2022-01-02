@@ -1297,7 +1297,7 @@ static int hs_socp_probe(struct platform_device *pdev)
 
 	memset(&g_stSocpDebugInfo, 0x0, sizeof(SOCP_DEBUG_INFO_S));
 #if 0
-	/* ´ò¿ªSOCPÊ±ÖÓ */
+	/* æ‰“å¼€SOCPæ—¶é’Ÿ */
 	sc_base = INTEGRATOR_SC_BASE;
 	writel(1 << 11, sc_base + 0x0);
 #endif

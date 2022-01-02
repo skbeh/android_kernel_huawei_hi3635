@@ -35,7 +35,7 @@ unsigned int g_mutex_service_ready = 0;
 static DEFINE_MUTEX(start_mutex);
 
 
-/*´æ´¢ËùÓĞÒµÎñ³õÊ¼»¯ĞÅÏ¢µÄÊı×é*/
+/*å­˜å‚¨æ‰€æœ‰ä¸šåŠ¡åˆå§‹åŒ–ä¿¡æ¯çš„æ•°ç»„*/
 static struct operation_data operation_data_array[] = {
     {_HISI_MUTEX_OPERATION(MUTEX_SERVICE_WIFIDIS_ID, MUTEX_SERVICE_WIFI_NAME,   5000, MUTEX_SERVICE_PRIORITY_5, MUTEX_SERVICE_GROUP_ID)},
     {_HISI_MUTEX_OPERATION(MUTEX_SERVICE_MIRROR_ID,  MUTEX_SERVICE_MIRROR_NAME, 5000, MUTEX_SERVICE_PRIORITY_5, MUTEX_SERVICE_GROUP_ID)},
@@ -117,7 +117,7 @@ static int hisi_mutex_register(int cur_id)
 
     struct timeval tv;
 
-    /*»ñÈ¡µ±Ç°Ê±¼ä*/
+    /*è·å–å½“å‰æ—¶é—´*/
     memset(&tv, 0, sizeof(tv));
     do_gettimeofday(&tv);
     cur_operation->now_sec = tv.tv_sec;
@@ -129,20 +129,20 @@ static int hisi_mutex_register(int cur_id)
 
     mut_operation = &operation_data_array[mutex_id];
 
-    /*ÅĞ¶Ï±éÀúµ½µÄ»¥³âÒµÎñÓëµ±Ç°Ê±¼ä´ÁµÄÊ±ÑÓ¹ØÏµ*/
+    /*åˆ¤æ–­éå†åˆ°çš„äº’æ–¥ä¸šåŠ¡ä¸å½“å‰æ—¶é—´æˆ³çš„æ—¶å»¶å…³ç³»*/
     if ( T2 < (cur_operation->now_sec - mut_operation->now_sec) ){		
         mut_operation->status = UN_REGISTER;
         pr_info("%s:%d:mut_operation has been killed, stop & start cur_operation", __func__, __LINE__);
         return START_OK;
     }
 
-    /*±éÀúµ½µÄÒµÎñÓëµ±Ç°ÒµÎñ¹ØÏµÎª ²»µÈÓÚ£¬²»ÄÜÇÀÕ¼*/
+    /*éå†åˆ°çš„ä¸šåŠ¡ä¸å½“å‰ä¸šåŠ¡å…³ç³»ä¸º ä¸ç­‰äºï¼Œä¸èƒ½æŠ¢å */
     if (mut_operation->priority >= cur_operation->priority) {
         pr_err("%s:%d:can not preempt", __func__, __LINE__);
         return START_ERROR;
     }
     else if (mut_operation->priority < cur_operation->priority) {
-        /*ÁÙÊ±ÒµÎñÎªÄÚºËÌ¬ÒµÎñ*/
+        /*ä¸´æ—¶ä¸šåŠ¡ä¸ºå†…æ ¸æ€ä¸šåŠ¡*/
         if (NULL != mut_operation->callback) {
             pr_info("%s:%d:kernel operation ,callback to stop", __func__, __LINE__);
             mut_operation->status = NOTIFY_PREEMPT;
@@ -154,7 +154,7 @@ static int hisi_mutex_register(int cur_id)
             wake_up(&mut_operation->read_wait);
         }
 
-        /*µÈ´ıÁÙÊ±ÒµÎñ±»Í£Ö¹*/
+        /*ç­‰å¾…ä¸´æ—¶ä¸šåŠ¡è¢«åœæ­¢*/
         if (0 == wait_event_timeout(mut_operation->write_wait, mut_operation->status == UN_REGISTER, msecs_to_jiffies(mut_operation->timeout))) {
             pr_err("%s:%d:%d:stop timeout", __func__, __LINE__, mut_operation->status);
             return START_TIMEOUT;
@@ -171,7 +171,7 @@ int hisi_mutex_mng_service_start(int  hisi_id, pPREEMPTFUNC callback)
 
     BUG_ON(!HISI_MUTEX_SERVICE_INIT);
 
-    /*ÒµÎñID²»´æÔÚ*/
+    /*ä¸šåŠ¡IDä¸å­˜åœ¨*/
     if (hisi_id >= LEN_OF_DATA_ARRAY || hisi_id < 0) {
         pr_err("%s:%d:%d:operation_id not exist", __func__, __LINE__, hisi_id);
         return STATUS_INVALID;
@@ -181,10 +181,10 @@ int hisi_mutex_mng_service_start(int  hisi_id, pPREEMPTFUNC callback)
 
     mutex_lock(&start_mutex);
 
-    /*µ±Ç°ÒµÎñÒÑ×¢²á*/
+    /*å½“å‰ä¸šåŠ¡å·²æ³¨å†Œ*/
     if (cur_operation->status == REGISTER) {
 
-	 /*»ñÈ¡µ±Ç°Ê±¼ä*/
+	 /*è·å–å½“å‰æ—¶é—´*/
         memset(&tv, 0, sizeof(tv));
         do_gettimeofday(&tv);
 
@@ -200,7 +200,7 @@ int hisi_mutex_mng_service_start(int  hisi_id, pPREEMPTFUNC callback)
         return ret;
     }
 
-    /*ÒµÎñ×¢²áº¯Êı£¬·µ»Ø×¢²á½á¹û*/
+    /*ä¸šåŠ¡æ³¨å†Œå‡½æ•°ï¼Œè¿”å›æ³¨å†Œç»“æœ*/
     ret = hisi_mutex_register(hisi_id);
 
     if (ret == START_OK) {
@@ -223,20 +223,20 @@ int hisi_mutex_mng_service_stop(int  hisi_id)
 
     BUG_ON(!HISI_MUTEX_SERVICE_INIT);
 
-    /*ÒµÎñID²»´æÔÚ*/
+    /*ä¸šåŠ¡IDä¸å­˜åœ¨*/
     if (hisi_id >= LEN_OF_DATA_ARRAY) {
         pr_err("%s:%d:%d:operation_id not exist", __func__, __LINE__, hisi_id);
         return STOP_ERROR;
     }
     cur_operation = &operation_data_array[hisi_id];
 
-    /*µ±Ç°ÒµÎñÎ´Æô¶¯*/
+    /*å½“å‰ä¸šåŠ¡æœªå¯åŠ¨*/
     if (cur_operation->status == UN_REGISTER) {
         pr_err("%s:%d:%d:operation un_register", __func__, __LINE__, hisi_id);
         return STATUS_INVALID;
     }
 
-    /*´ËÒµÎñÊÇÓÉÓÚ±»ÇÀÕ¼µ¼ÖÂÍ£Ö¹ÒµÎñ*/
+    /*æ­¤ä¸šåŠ¡æ˜¯ç”±äºè¢«æŠ¢å å¯¼è‡´åœæ­¢ä¸šåŠ¡*/
     if (cur_operation->status == NOTIFY_PREEMPT) {
         pr_info("%s:%d:preempt", __func__, __LINE__);
         cur_operation->status = UN_REGISTER;
@@ -256,20 +256,20 @@ int hisi_mutex_mng_notify_alive(int  hisi_id)
 
     BUG_ON(!HISI_MUTEX_SERVICE_INIT);
 
-    /*ÒµÎñID²»´æÔÚ*/
+    /*ä¸šåŠ¡IDä¸å­˜åœ¨*/
     if (hisi_id >= LEN_OF_DATA_ARRAY) {
         pr_err("%s:%d:%d:operation_id not exist", __func__, __LINE__, hisi_id);
         return STATUS_INVALID;
     }
     cur_operation = &operation_data_array[hisi_id];
 
-    /*µ±Ç°ÒµÎñÎ´Æô¶¯*/
+    /*å½“å‰ä¸šåŠ¡æœªå¯åŠ¨*/
     if (cur_operation->status == UN_REGISTER) {
         pr_err("%s:%d:%d:operation un_register", __func__, __LINE__, hisi_id);
         return STATUS_INVALID;
     }
 
-    /*»ñÈ¡µ±Ç°Ê±¼ä*/
+    /*è·å–å½“å‰æ—¶é—´*/
     memset(&tv, 0, sizeof(tv));
     do_gettimeofday(&tv);
     cur_operation->now_sec = tv.tv_sec;
@@ -288,7 +288,7 @@ static ssize_t hisi_app_service_start(struct device *pdev, struct device_attribu
 
     hisi_id = get_id_by_name(buf);
 
-    /*ÒµÎñÃû×Ö²»´æÔÚ*/
+    /*ä¸šåŠ¡åå­—ä¸å­˜åœ¨*/
     if (hisi_id < 0) {
         dev_err(pdev, "%s:%d:operation_name is not exist\n", __func__, __LINE__);
         return STATUS_INVALID;
@@ -297,10 +297,10 @@ static ssize_t hisi_app_service_start(struct device *pdev, struct device_attribu
 
     mutex_lock(&start_mutex);
 
-    /*µ±Ç°ÒµÎñÒÑ×¢²á*/
+    /*å½“å‰ä¸šåŠ¡å·²æ³¨å†Œ*/
     if (cur_operation->status == REGISTER) {
 
-	 /*»ñÈ¡µ±Ç°Ê±¼ä*/
+	 /*è·å–å½“å‰æ—¶é—´*/
         memset(&tv, 0, sizeof(tv));
         do_gettimeofday(&tv);
 
@@ -316,7 +316,7 @@ static ssize_t hisi_app_service_start(struct device *pdev, struct device_attribu
         return ret;
     }
 
-    /*ÒµÎñ×¢²áº¯Êı£¬·µ»Ø×¢²á½á¹û*/
+    /*ä¸šåŠ¡æ³¨å†Œå‡½æ•°ï¼Œè¿”å›æ³¨å†Œç»“æœ*/
     ret = hisi_mutex_register(hisi_id);
 
     if (ret == START_OK) {
@@ -342,7 +342,7 @@ static ssize_t hisi_app_service_stop(struct device *pdev, struct device_attribut
 
     hisi_id = get_id_by_name(buf);
 
-    /*ÒµÎñÃû×Ö²»´æÔÚ*/
+    /*ä¸šåŠ¡åå­—ä¸å­˜åœ¨*/
     if (hisi_id < 0) {
         dev_err(pdev, "%s:%d:operation_name is not exist\n", __func__, __LINE__);
         return STATUS_INVALID;
@@ -350,13 +350,13 @@ static ssize_t hisi_app_service_stop(struct device *pdev, struct device_attribut
 
     cur_operation = &operation_data_array[hisi_id];
 
-    /*µ±Ç°ÒµÎñÎ´Æô¶¯*/
+    /*å½“å‰ä¸šåŠ¡æœªå¯åŠ¨*/
     if (cur_operation->status == UN_REGISTER) {
         dev_err(pdev, "%s:%d:operation un_register\n", __func__, __LINE__);
         return STOP_ERROR;
     }
 
-    /*´ËÒµÎñÊÇÓÉÓÚ±»ÇÀÕ¼µ¼ÖÂÍ£Ö¹ÒµÎñ*/
+    /*æ­¤ä¸šåŠ¡æ˜¯ç”±äºè¢«æŠ¢å å¯¼è‡´åœæ­¢ä¸šåŠ¡*/
     if (cur_operation->status == NOTIFY_PREEMPT) {
         pr_info("%s:%d:operation preempted", __func__, __LINE__);
         cur_operation->status = UN_REGISTER;
@@ -379,7 +379,7 @@ static ssize_t notify_preempt_to_app_mirror(struct device *pdev, struct device_a
 
     cur_operation = &operation_data_array[MUTEX_SERVICE_MIRROR_ID];
 
-    /*µ±Ç°ÒµÎñÎ´Æô¶¯*/
+    /*å½“å‰ä¸šåŠ¡æœªå¯åŠ¨*/
     if (UN_REGISTER== cur_operation->status) {
         dev_err(pdev, "%s:%d:operation un_register\n", __func__, __LINE__);
         return (ssize_t)(-1);
@@ -400,7 +400,7 @@ static ssize_t notify_preempt_to_app_wifidisplay(struct device *pdev, struct dev
     cur_operation = &operation_data_array[MUTEX_SERVICE_WIFIDIS_ID];
 
 
-    /*µ±Ç°ÒµÎñÎ´Æô¶¯*/
+    /*å½“å‰ä¸šåŠ¡æœªå¯åŠ¨*/
     if (UN_REGISTER== cur_operation->status) {
         dev_err(pdev, "%s:%d:operation un_register\n", __func__, __LINE__);
         return (ssize_t)(-1);
@@ -421,7 +421,7 @@ static ssize_t notify_preempt_to_app_hmp(struct device *pdev, struct device_attr
     cur_operation = &operation_data_array[MUTEX_SERVICE_HMP_ID];
 
 
-    /*µ±Ç°ÒµÎñÎ´Æô¶¯*/
+    /*å½“å‰ä¸šåŠ¡æœªå¯åŠ¨*/
     if (UN_REGISTER == cur_operation->status) {
         dev_err(pdev, "%s:%d:operation un_register\n", __func__, __LINE__);
         return (ssize_t)(-1);
@@ -441,13 +441,13 @@ static ssize_t  notify_alive_to_app_mirror(struct device *pdev, struct device_at
 
     cur_operation = &operation_data_array[MUTEX_SERVICE_MIRROR_ID];
 
-    /*µ±Ç°ÒµÎñÎ´Æô¶¯*/
+    /*å½“å‰ä¸šåŠ¡æœªå¯åŠ¨*/
     if (UN_REGISTER == cur_operation->status) {
         dev_err(pdev, "%s:%d:operation un_register\n", __func__, __LINE__);
         return (ssize_t)(-1);
     }
 	
-    /*»ñÈ¡µ±Ç°Ê±¼ä*/
+    /*è·å–å½“å‰æ—¶é—´*/
     memset(&tv, 0, sizeof(tv));
     do_gettimeofday(&tv);
     cur_operation->now_sec = tv.tv_sec;
@@ -466,13 +466,13 @@ static ssize_t  notify_alive_to_app_wifidisplay(struct device *pdev, struct devi
 
     cur_operation = &operation_data_array[MUTEX_SERVICE_WIFIDIS_ID];
 
-    /*µ±Ç°ÒµÎñÎ´Æô¶¯*/
+    /*å½“å‰ä¸šåŠ¡æœªå¯åŠ¨*/
     if (UN_REGISTER == cur_operation->status) {
         dev_err(pdev, "%s:%d:operation un_register\n", __func__, __LINE__);
         return (ssize_t)(-1);
     }
 
-    /*»ñÈ¡µ±Ç°Ê±¼ä*/
+    /*è·å–å½“å‰æ—¶é—´*/
     memset(&tv, 0, sizeof(tv));
     do_gettimeofday(&tv);
     cur_operation->now_sec = tv.tv_sec;
@@ -491,13 +491,13 @@ static ssize_t  notify_alive_to_app_hmp(struct device *pdev, struct device_attri
 
     cur_operation = &operation_data_array[MUTEX_SERVICE_HMP_ID];
 
-    /*µ±Ç°ÒµÎñÎ´Æô¶¯*/
+    /*å½“å‰ä¸šåŠ¡æœªå¯åŠ¨*/
     if (UN_REGISTER == cur_operation->status) {
         dev_err(pdev, "%s:%d:operation un_register\n", __func__, __LINE__);
         return (ssize_t)(-1);
     }
 
-    /*»ñÈ¡µ±Ç°Ê±¼ä*/
+    /*è·å–å½“å‰æ—¶é—´*/
     memset(&tv, 0, sizeof(tv));
     do_gettimeofday(&tv);
     cur_operation->now_sec = tv.tv_sec;
@@ -536,7 +536,7 @@ static int  mutex_service_probe(struct platform_device *pdev)
     struct operation_data *array_head = &operation_data_array[0];
     g_mutex_service_ready = 1;
 
-    /*³õÊ¼»¯Êı×éÖĞµÄÊı¾İ*/
+    /*åˆå§‹åŒ–æ•°ç»„ä¸­çš„æ•°æ®*/
     for (i = 0; i < LEN_OF_DATA_ARRAY; i++) {
         array_head->status = UN_REGISTER;
         array_head->callback = NULL;

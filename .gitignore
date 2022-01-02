@@ -162,7 +162,4 @@ x509.genkey
 # Documentation toolchain
 sphinx_*/
 
-/scripts/basic/fixdep
-/scripts/kconfig/conf
-/scripts/kconfig/mconf
-/scripts/kconfig/zconf.hash.c
+/out

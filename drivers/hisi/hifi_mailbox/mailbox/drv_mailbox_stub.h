@@ -4,7 +4,7 @@
 
 
 /*****************************************************************************
-1 ÆäËûÍ·ÎÄ¼þ°üº¬
+1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 
 #ifdef __cplusplus
@@ -13,13 +13,13 @@ extern "C" {
 #endif
 #endif
 
-/* ÓÊÏäÕ¼ÓÃmemory»ùµØÖ· */
+/* é‚®ç®±å ç”¨memoryåŸºåœ°å€ */
 #define MAILBOX_MEM_BASEADDR			((int)&g_MAILBOX_BST_HEAD0[0])
 
-/* ÓÊÏäÕ¼ÓÃmemoryÔ¤Áô×Ü³¤¶È, °üÀ¨ÓÊÏä¿ØÖÆÍ·ºÍÓÊÏä¶ÓÁÐ»º´æ */
+/* é‚®ç®±å ç”¨memoryé¢„ç•™æ€»é•¿åº¦, åŒ…æ‹¬é‚®ç®±æŽ§åˆ¶å¤´å’Œé‚®ç®±é˜Ÿåˆ—ç¼“å­˜ */
 #define MAILBOX_MEM_LENGTH				mailbox_memory_length()
 
-/*PC²à°ÑÓÊÏäµÄ¹²ÏíÄÚ´æÍ¨µÀ¿Õ¼äÓ³Éäµ½¾²Ì¬Êý×é¿Õ¼ä*/
+/*PCä¾§æŠŠé‚®ç®±çš„å…±äº«å†…å­˜é€šé“ç©ºé—´æ˜ å°„åˆ°é™æ€æ•°ç»„ç©ºé—´*/
 extern	int g_MAILBOX_BST_HEAD0[];
 #define MAILBOX_HEAD_ADDR_MCU2ACPU_MSG			 MAILBOX_MEM_BASEADDR
 #define MAILBOX_HEAD_ADDR_ACPU2MCU_MSG			(MAILBOX_HEAD_ADDR_MCU2ACPU_MSG +  MAILBOX_HEAD_LEN)

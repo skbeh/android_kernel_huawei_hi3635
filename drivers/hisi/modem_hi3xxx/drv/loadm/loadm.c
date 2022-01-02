@@ -32,13 +32,13 @@ static void* g_ccore_entry = NULL;
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : ¼ÓÔØccore¾µÏñ
- ¹¦ÄÜÃèÊö  : load partition image
- ÊäÈë²ÎÊı  : struct ST_PART_TBL *part ¶ÔÓ¦µÄ·ÖÇø
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : åŠ è½½ccoreé•œåƒ
+ åŠŸèƒ½æè¿°  : load partition image
+ è¾“å…¥å‚æ•°  : struct ST_PART_TBL *part å¯¹åº”çš„åˆ†åŒº
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 #ifndef BSP_CONFIG_HI3630
 int his_modem_load_vxworks(char *part_name)
@@ -279,19 +279,19 @@ static struct attribute *his_modem_attributes[] = {
         NULL
 };
 
+#if 0
 static const struct attribute_group his_modem_group = {
     .attrs = his_modem_attributes,
 };
 
-#if 0
 /*****************************************************************************
- º¯ Êı Ãû  : his_modem_activate_ccore
- ¹¦ÄÜÃèÊö  : ¼¤»îCºË
- ÊäÈë²ÎÊı  : ccore_entry_addr:cºËÈë¿ÚµØÖ·
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : ÎŞ
- µ÷ÓÃº¯Êı  :
- ±»µ÷º¯Êı  :
+ å‡½ æ•° å  : his_modem_activate_ccore
+ åŠŸèƒ½æè¿°  : æ¿€æ´»Cæ ¸
+ è¾“å…¥å‚æ•°  : ccore_entry_addr:cæ ¸å…¥å£åœ°å€
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : æ— 
+ è°ƒç”¨å‡½æ•°  :
+ è¢«è°ƒå‡½æ•°  :
 *****************************************************************************/
 static void his_modem_activate_ccore(u32 ccore_entry_addr)
 {
@@ -323,7 +323,7 @@ static int __init his_modem_probe(struct platform_device *pdev)
     u32 image_length = 0;
 extern unsigned int is_load_modem(void);
 
-    /* Èç¹ûÊÇÉı¼¶Ä£Ê½£¬Ôò²»¼¤»îmodem */
+    /* å¦‚æœæ˜¯å‡çº§æ¨¡å¼ï¼Œåˆ™ä¸æ¿€æ´»modem */
     if(!is_load_modem())
     {
         hi_trace(HI_ERR, "upload or charge mode, will not start modem.\r\n");

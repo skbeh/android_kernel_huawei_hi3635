@@ -26,16 +26,16 @@ extern "C" {
 
 static unsigned long g_private_ipc_base = 0;
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_DRV_PRIVATE_IPCIntInit
+* å‡½ æ•° å  : BSP_DRV_PRIVATE_IPCIntInit
 *
-* ¹¦ÄÜÃèÊö  : IPCÄ£¿é³õÊ¼»¯
+* åŠŸèƒ½æè¿°  : IPCæ¨¡å—åˆå§‹åŒ–
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2009Äê3ÔÂ5ÈÕ   wangjing  creat
+* ä¿®æ”¹è®°å½•  : 2009å¹´3æœˆ5æ—¥   wangjing  creat
 *****************************************************************************/
 int BSP_DRV_PRIVATE_IPCIntInit(void)
 {
@@ -53,10 +53,10 @@ int BSP_DRV_PRIVATE_IPCIntInit(void)
     	return -1;
     }
 
-       /*Ğ´È«0ÆÁ±ÎËùÓĞ»¥·¢Ô´*/
+       /*å†™å…¨0å±è”½æ‰€æœ‰äº’å‘æº*/
     BSP_RegWr(SOC_IPC_CPU_INT_MASK_ADDR(g_private_ipc_base, IPC2_NOSEC_CORE_ACPU), 0x0);
 
-    /*Ğ´È«1Çå³ıËùÓĞÖĞ¶Ï*/
+    /*å†™å…¨1æ¸…é™¤æ‰€æœ‰ä¸­æ–­*/
     BSP_RegWr(SOC_IPC_CPU_INT_CLR_ADDR(g_private_ipc_base, IPC2_NOSEC_CORE_ACPU), 0xFFFFFFFF);
 
     return 0;
@@ -69,24 +69,24 @@ void clear_private_ipc_int(unsigned int  enTarget, unsigned int enIntSrc)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_IPC_IntEnable
+* å‡½ æ•° å  : BSP_IPC_IntEnable
 *
-* ¹¦ÄÜÃèÊö  : Ê¹ÄÜÄ³¸öÖĞ¶Ï
+* åŠŸèƒ½æè¿°  : ä½¿èƒ½æŸä¸ªä¸­æ–­
 *
-* ÊäÈë²ÎÊı  :   IPC_INT_CORE_E enCoreNum ÒªÊ¹ÄÜÖĞ¶ÏµÄcore
-                BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :   IPC_INT_CORE_E enCoreNum è¦ä½¿èƒ½ä¸­æ–­çš„core
+                BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : OK&ERROR
+* è¿” å› å€¼  : OK&ERROR
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 int BSP_PRIVATE_IPC_IntEnable (unsigned int ulLvl)
 {
-    /*²ÎÊı¼ì²é*/
+    /*å‚æ•°æ£€æŸ¥*/
     IPC_CHECK_PARA(ulLvl);
 
-    /*Ğ´ÖĞ¶ÏÆÁ±Î¼Ä´æÆ÷*/
+    /*å†™ä¸­æ–­å±è”½å¯„å­˜å™¨*/
     BSP_RegWr(SOC_IPC_CPU_INT_EN_ADDR(g_private_ipc_base, IPC2_NOSEC_CORE_ACPU), (1 << ulLvl));
 
     return 0;
@@ -94,24 +94,24 @@ int BSP_PRIVATE_IPC_IntEnable (unsigned int ulLvl)
 
 
 /*****************************************************************************
- * º¯ Êı Ãû  : BSP_INT_Disable
+ * å‡½ æ•° å  : BSP_INT_Disable
  *
- * ¹¦ÄÜÃèÊö  : È¥Ê¹ÄÜÄ³¸öÖĞ¶Ï
+ * åŠŸèƒ½æè¿°  : å»ä½¿èƒ½æŸä¸ªä¸­æ–­
  *
- * ÊäÈë²ÎÊı  : IPC_INT_CORE_E enCoreNum ÒªÊ¹ÄÜÖĞ¶ÏµÄcore
-                BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : IPC_INT_CORE_E enCoreNum è¦ä½¿èƒ½ä¸­æ–­çš„core
+                BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : OK&ERROR
+ * è¿” å› å€¼  : OK&ERROR
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
 int BSP_PRIVATE_IPC_IntDisable (NOSEC_IPC2_INT_LEV_E ulLvl)
 {
-    /*²ÎÊı¼ì²é*/
+    /*å‚æ•°æ£€æŸ¥*/
     IPC_CHECK_PARA(ulLvl);
 
-    /*Ğ´ÖĞ¶ÏÆÁ±Î¼Ä´æÆ÷*/
+    /*å†™ä¸­æ–­å±è”½å¯„å­˜å™¨*/
     BSP_RegWr(SOC_IPC_CPU_INT_DIS_ADDR(g_private_ipc_base, IPC2_NOSEC_CORE_ACPU), (1 << ulLvl));
 
     return 0;

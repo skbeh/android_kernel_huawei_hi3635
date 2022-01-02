@@ -104,9 +104,9 @@ static void __iomem *EFC_BASE = NULL;
 #define GT_PCLK_EFUSEC			(0x01UL<<30)
 
 
-/* ÉÕĞ´Ê±ĞòÒªÇó, hi3630 asic°æ±¾²»ÄÜÓÃÄ¬ÈÏÖµ
+/* çƒ§å†™æ—¶åºè¦æ±‚, hi3630 asicç‰ˆæœ¬ä¸èƒ½ç”¨é»˜è®¤å€¼
 *  (EFUSEC_COUNT<<2)*Trefclk>120ns,11us<PGM_COUNT*Trefclk+EFUSEC_COUNT*Trefclk<13us,
-*  ÆäÖĞEFUSEC_COUNT>=3
+*  å…¶ä¸­EFUSEC_COUNT>=3
 */
 #define EFUSE_COUNT_CFG     20
 #define PGM_COUNT_CFG       0x500
@@ -124,7 +124,7 @@ static inline void efusec_disable_clk(void)
 
 static void efuse_power_on(void)
 {
-	/* ÅäÖÃVOUT6Êä³ö1.8V, ¸øeFuse¿ØÖÆÆ÷ÉÏµç */
+	/* é…ç½®VOUT6è¾“å‡º1.8V, ç»™eFuseæ§åˆ¶å™¨ä¸Šç”µ */
 	int ret = 0;
 	ret = regulator_bulk_enable(1, &g_efuse_data.regu_burning);
 	if (ret)
@@ -135,7 +135,7 @@ static void efuse_power_on(void)
 
 static void efuse_power_down(void)
 {
-	/* ÅäÖÃVOUT6Êä³ö0V, ¸øeFuse¿ØÖÆÆ÷ÏÂµç */
+	/* é…ç½®VOUT6è¾“å‡º0V, ç»™eFuseæ§åˆ¶å™¨ä¸‹ç”µ */
 	int ret = 0;
 	ret = regulator_bulk_disable(1, &g_efuse_data.regu_burning);
 	if (ret)
@@ -209,13 +209,13 @@ static void display_regtable(void)
 
 /******************************************************************************
 Function:	    bsp_efuse_write
-Description:	    ´ÓÖ¸¶¨WordsÆ«ÒÆ¿ªÊ¼Ğ´ÈëÖ¸¶¨Words¸öÊıµÄeFuseÖµ
-Input:		    buf			- ÊäÈë²ÎÊı£¬´æ·ÅÒªĞ´Èëµ½eFuseÖĞµÄÖµ
-		    size		- ÊäÈë²ÎÊı£¬ÒªĞ´ÈëµÄWords¸öÊı
-		    group		- ÊäÈë²ÎÊı£¬´ÓÖ¸¶¨µÄWordsÆ«ÒÆ´¦¿ªÊ¼Ğ´Èë£¬
-					  ÎÄÖĞ±íÊ¾eFuse·Ö×éĞòºÅgroup
+Description:	    ä»æŒ‡å®šWordsåç§»å¼€å§‹å†™å…¥æŒ‡å®šWordsä¸ªæ•°çš„eFuseå€¼
+Input:		    buf			- è¾“å…¥å‚æ•°ï¼Œå­˜æ”¾è¦å†™å…¥åˆ°eFuseä¸­çš„å€¼
+		    size		- è¾“å…¥å‚æ•°ï¼Œè¦å†™å…¥çš„Wordsä¸ªæ•°
+		    group		- è¾“å…¥å‚æ•°ï¼Œä»æŒ‡å®šçš„Wordsåç§»å¤„å¼€å§‹å†™å…¥ï¼Œ
+					  æ–‡ä¸­è¡¨ç¤ºeFuseåˆ†ç»„åºå·group
 Output:		    none
-Return:		    0: OK  ÆäËû: ERRORÂë
+Return:		    0: OK  å…¶ä»–: ERRORç 
 ******************************************************************************/
 int bsp_efuse_write(const unsigned int* buf,
 		  const unsigned int group,
@@ -230,7 +230,7 @@ int bsp_efuse_write(const unsigned int* buf,
 
 	pr_info("%s enter.(NO TZDRIVER)\n", __func__);
 
-	/* Èë²ÎÅĞ¶Ï */
+	/* å…¥å‚åˆ¤æ–­ */
 	if (NULL == curr_value) {
 		pr_err("bsp_efuse_write: puiValues is NULL!\n" );
 		return ERROR;
@@ -245,40 +245,40 @@ int bsp_efuse_write(const unsigned int* buf,
 		return ERROR;
 	}
 
-	/* Ê¹ÄÜÈí¼şÍ¨Â· */
+	/* ä½¿èƒ½è½¯ä»¶é€šè·¯ */
 	writel(SYS_EFUSE_SOFT_SEL, SCEFUSECTRL(SCTRL_BASE));
 
-	/* ÅäÖÃremapÎª0£¬¿ØÖÆÆ÷»áĞ´ÈëeFuseÆ÷¼şºÍeFuse¾µÏñÖĞ */
+	/* é…ç½®remapä¸º0ï¼Œæ§åˆ¶å™¨ä¼šå†™å…¥eFuseå™¨ä»¶å’ŒeFuseé•œåƒä¸­ */
 	writel(SCPERCTRL0_REMAP_DIS, SCPERCTRL0(SCTRL_BASE));
 
-	/* ¸øeFuse¿ØÖÆÆ÷ÉÏµç */
+	/* ç»™eFuseæ§åˆ¶å™¨ä¸Šç”µ */
 	efuse_power_on();
 
-	/* Ê¹ÄÜefusecÊ±ÖÓ */
+	/* ä½¿èƒ½efusecæ—¶é’Ÿ */
 	efusec_enable_clk();
 
-	/* ÍË³öpower_down×´Ì¬ */
+	/* é€€å‡ºpower_downçŠ¶æ€ */
 	if (ERROR == exit_power_down_mode()) {
 		pr_err("Can't exit power down mode!\n" );
 		result = ERROR_EXIT_PD;
 		goto end1;
 	}
 
-	/* ÅĞ¶ÏÊÇ·ñÔÊĞíÉÕĞ´ */
+	/* åˆ¤æ–­æ˜¯å¦å…è®¸çƒ§å†™ */
 	if ((readl(EFUSEC_HW_CFG(EFC_BASE)) & EFUSEC_APB_PGM_DISABLE_MASK) > 0) {
 		pr_err("APB program is disnable!\n" );
 		result = ERROR_APB_PGM_DIS;
 		goto end1;
 	}
 
-	/* Ñ¡ÔñefuseĞÅºÅÎªapb²Ù×÷efuse */
+	/* é€‰æ‹©efuseä¿¡å·ä¸ºapbæ“ä½œefuse */
 	writel(readl(EFUSEC_CFG(EFC_BASE)) | EFUSEC_APB_SIG_SEL, EFUSEC_CFG(EFC_BASE));
 
-	/* ÅäÖÃÊ±ĞòÒªÇó,hi3630 asic°æ±¾²»ÄÜÊ¹ÓÃÄ¬ÈÏÖµ */
+	/* é…ç½®æ—¶åºè¦æ±‚,hi3630 asicç‰ˆæœ¬ä¸èƒ½ä½¿ç”¨é»˜è®¤å€¼ */
 	writel(EFUSE_COUNT_CFG, EFUSEC_COUNT(EFC_BASE));
 	writel(PGM_COUNT_CFG, EFUSEC_PGM_COUNT(EFC_BASE));
 
-	/* Ê¹ÄÜÔ¤ÉÕĞ´ */
+	/* ä½¿èƒ½é¢„çƒ§å†™ */
 	writel((readl(EFUSEC_CFG(EFC_BASE)) | EFUSEC_PRE_PG),  EFUSEC_CFG(EFC_BASE));
 	loop_count = EFUSE_OP_TIMEOUT_COUNT;
 	while (0 == (readl(EFUSEC_STATUS(EFC_BASE)) & EFUSEC_PGENAB_STATUS_MASK)) {
@@ -293,24 +293,24 @@ int bsp_efuse_write(const unsigned int* buf,
 
 	for (count = 0; count < size; count++) {
 		if (0 == *curr_value) {
-			/* ÉÕĞ´ÏÂÒ»×é */
+			/* çƒ§å†™ä¸‹ä¸€ç»„ */
 			group_index++;
 			curr_value++;
 			continue;
 		}
 
-		/* ÉèÖÃgroup */
+		/* è®¾ç½®group */
 		writel(group_index, EFUSEC_GROUP(EFC_BASE));
 
-		/* ÉèÖÃvalue */
+		/* è®¾ç½®value */
 		writel(*curr_value, EFUSEC_PG_VALUE(EFC_BASE));
 
-		/* Ê¹ÄÜÉÕĞ´ */
+		/* ä½¿èƒ½çƒ§å†™ */
 		writel((readl(EFUSEC_CFG(EFC_BASE)) | EFUSEC_PG_EN),  EFUSEC_CFG(EFC_BASE));
 
 		udelay(500);
 
-		/* ²éÑ¯ÉÕĞ´Íê³É */
+		/* æŸ¥è¯¢çƒ§å†™å®Œæˆ */
 		loop_count = EFUSE_OP_TIMEOUT_COUNT;
 		while (0 == (readl(EFUSEC_STATUS(EFC_BASE)) & EFUSEC_PG_STATUS_MASK)) {
 			pr_debug("Current pg status is not finished.\n");
@@ -324,15 +324,15 @@ int bsp_efuse_write(const unsigned int* buf,
 
 		pr_debug("Current pg status is finished, then write next group.\n");
 
-		/* ÉÕĞ´ÏÂÒ»×é */
+		/* çƒ§å†™ä¸‹ä¸€ç»„ */
 		group_index++;
 		curr_value++;
 	}
 end2:
-	/* ²»Ê¹ÄÜÔ¤ÉÕĞ´ */
+	/* ä¸ä½¿èƒ½é¢„çƒ§å†™ */
 	writel((readl(EFUSEC_CFG(EFC_BASE)) & (~EFUSEC_PRE_PG)), EFUSEC_CFG(EFC_BASE));
 
-	/* ĞŞ¸ÄefuseÄ¬ÈÏµÄÖÙ²ÃÎªAIB */
+	/* ä¿®æ”¹efuseé»˜è®¤çš„ä»²è£ä¸ºAIB */
 	writel(readl(EFUSEC_CFG(EFC_BASE)) & (~EFUSEC_APB_SIG_SEL), EFUSEC_CFG(EFC_BASE));
 end1:
 
@@ -346,10 +346,10 @@ end1:
 		pr_err("bsp_efuse_read failed!\n" );
 	}
 
-	/* ÅäÖÃremapÎª1, ¶ÁÊı¾İÊÇ´ÓeFuse¾µÏñÖĞ»ñµÃ */
+	/* é…ç½®remapä¸º1, è¯»æ•°æ®æ˜¯ä»eFuseé•œåƒä¸­è·å¾— */
 	writel(SCPERCTRL0_REMAP_EN, SCPERCTRL0((SCTRL_BASE)));
 
-	/* ¸øeFuse¿ØÖÆÆ÷ÏÂµç */
+	/* ç»™eFuseæ§åˆ¶å™¨ä¸‹ç”µ */
 	efuse_power_down();
 
 	return result;
@@ -359,15 +359,15 @@ EXPORT_SYMBOL_GPL(bsp_efuse_write);
 
 /******************************************************************************
 Function:	    bsp_efuse_read
-Description:	    ´ÓÖ¸¶¨WordsÆ«ÒÆ¿ªÊ¼¶ÁÈ¡Ö¸¶¨Words¸öÊıµÄeFuseÖµ
-Input:		    buf			- ÊäÈë&Êä³ö²ÎÊı£¬´æ·Å¶ÁÈ¡µ½µÄeFuseÖµ£¬
-					  ÓÉµ÷ÓÃ·½¸ºÔğ·ÖÅäÄÚ´æ
-		    group		- ÊäÈë²ÎÊı£¬´ÓÖ¸¶¨µÄWordsÆ«ÒÆ´¦¿ªÊ¼¶ÁÈ¡£¬
-					  ÎÄÖĞ±íÊ¾eFuse·Ö×éĞòºÅgroup
-		    size		- ÊäÈë²ÎÊı£¬Òª¶ÁÈ¡µÄWords¸öÊı
-Output:		    buf			- Êä³ö²ÎÊı£¬´æ·Å¶ÁÈ¡µ½µÄeFuseÖµ£¬
-					  ÓÉµ÷ÓÃ·½¸ºÔğ·ÖÅäÄÚ´æ
-Return:		    0: OK  ÆäËû: ERRORÂë
+Description:	    ä»æŒ‡å®šWordsåç§»å¼€å§‹è¯»å–æŒ‡å®šWordsä¸ªæ•°çš„eFuseå€¼
+Input:		    buf			- è¾“å…¥&è¾“å‡ºå‚æ•°ï¼Œå­˜æ”¾è¯»å–åˆ°çš„eFuseå€¼ï¼Œ
+					  ç”±è°ƒç”¨æ–¹è´Ÿè´£åˆ†é…å†…å­˜
+		    group		- è¾“å…¥å‚æ•°ï¼Œä»æŒ‡å®šçš„Wordsåç§»å¤„å¼€å§‹è¯»å–ï¼Œ
+					  æ–‡ä¸­è¡¨ç¤ºeFuseåˆ†ç»„åºå·group
+		    size		- è¾“å…¥å‚æ•°ï¼Œè¦è¯»å–çš„Wordsä¸ªæ•°
+Output:		    buf			- è¾“å‡ºå‚æ•°ï¼Œå­˜æ”¾è¯»å–åˆ°çš„eFuseå€¼ï¼Œ
+					  ç”±è°ƒç”¨æ–¹è´Ÿè´£åˆ†é…å†…å­˜
+Return:		    0: OK  å…¶ä»–: ERRORç 
 ******************************************************************************/
 int bsp_efuse_read(unsigned int* buf,
 		  const unsigned int group,
@@ -380,7 +380,7 @@ int bsp_efuse_read(unsigned int* buf,
 
 	pr_info("%s Enter.((NO TZDRIVER))", __func__);
 
-	/* Èë²ÎÅĞ¶Ï */
+	/* å…¥å‚åˆ¤æ–­ */
 	if (NULL == buf) {
 		pr_err("bsp_efuse_read: puiValues is NULL!\n" );
 		return ERROR;
@@ -394,13 +394,13 @@ int bsp_efuse_read(unsigned int* buf,
 		return ERROR;
 	}
 
-	/* Ê¹ÄÜÈí¼şÍ¨Â· */
+	/* ä½¿èƒ½è½¯ä»¶é€šè·¯ */
 	writel(SYS_EFUSE_SOFT_SEL, SCEFUSECTRL(SCTRL_BASE));
 
-	/* Ê¹ÄÜefusecÊ±ÖÓ */
+	/* ä½¿èƒ½efusecæ—¶é’Ÿ */
 	efusec_enable_clk();
 
-	/* ÍË³öpower_down×´Ì¬ */
+	/* é€€å‡ºpower_downçŠ¶æ€ */
 	if (ERROR == exit_power_down_mode()) {
 		pr_err("Can't exit power down mode!\n" );
 		result = ERROR_EXIT_PD;
@@ -408,20 +408,20 @@ int bsp_efuse_read(unsigned int* buf,
 	}
 
 
-	/* Ñ¡ÔñefuseĞÅºÅÎªapb²Ù×÷efuse */
+	/* é€‰æ‹©efuseä¿¡å·ä¸ºapbæ“ä½œefuse */
 	writel(readl(EFUSEC_CFG(EFC_BASE)) | EFUSEC_APB_SIG_SEL, EFUSEC_CFG(EFC_BASE));
 
-	/* Ñ­»·¶ÁÈ¡EfuseÖµ */
+	/* å¾ªç¯è¯»å–Efuseå€¼ */
 	for (count = 0; count < size; count++) {
-		/* ÉèÖÃ¶ÁÈ¡µØÖ· */
+		/* è®¾ç½®è¯»å–åœ°å€ */
 		writel(group + count, EFUSEC_GROUP(EFC_BASE));
 
-		/* Ê¹ÄÜ¶ÁefuseÁ÷³Ì */
+		/* ä½¿èƒ½è¯»efuseæµç¨‹ */
 		writel((readl(EFUSEC_CFG(EFC_BASE)) | EFUSEC_RD_EN),  EFUSEC_CFG(EFC_BASE));
 
 		udelay(10);
 
-		/* µÈ´ı¶ÁÍê³É */
+		/* ç­‰å¾…è¯»å®Œæˆ */
 		loop_count = EFUSE_OP_TIMEOUT_COUNT;
 
 		while (0 == (readl(EFUSEC_STATUS(EFC_BASE)) & EFUSEC_RD_STATUS_MASK)) {
@@ -435,12 +435,12 @@ int bsp_efuse_read(unsigned int* buf,
 		}
 		pr_debug("Current efc read operation is finished, then read next group.\n");
 
-		/* ¶ÁÈ¡Êı¾İ */
+		/* è¯»å–æ•°æ® */
 		*curr_value = readl(EFUSEC_DATA(EFC_BASE));
 		curr_value++;
 	}
 end2:
-	/* ĞŞ¸ÄefuseÄ¬ÈÏµÄÖÙ²ÃÎªAIB */
+	/* ä¿®æ”¹efuseé»˜è®¤çš„ä»²è£ä¸ºAIB */
 	writel(readl(EFUSEC_CFG(EFC_BASE)) & (~EFUSEC_APB_SIG_SEL), EFUSEC_CFG(EFC_BASE));
 end1:
 
@@ -453,13 +453,13 @@ EXPORT_SYMBOL_GPL(bsp_efuse_read);
 #else
 /******************************************************************************
 Function:	    bsp_efuse_write
-Description:	    ´ÓÖ¸¶¨WordsÆ«ÒÆ¿ªÊ¼Ğ´ÈëÖ¸¶¨Words¸öÊıµÄeFuseÖµ
-Input:		    buf			- ÊäÈë²ÎÊı£¬´æ·ÅÒªĞ´Èëµ½eFuseÖĞµÄÖµ
-		    size		- ÊäÈë²ÎÊı£¬ÒªĞ´ÈëµÄWords¸öÊı
-		    group		- ÊäÈë²ÎÊı£¬´ÓÖ¸¶¨µÄWordsÆ«ÒÆ´¦¿ªÊ¼Ğ´Èë£¬
-					  ÎÄÖĞ±íÊ¾eFuse·Ö×éĞòºÅgroup
+Description:	    ä»æŒ‡å®šWordsåç§»å¼€å§‹å†™å…¥æŒ‡å®šWordsä¸ªæ•°çš„eFuseå€¼
+Input:		    buf			- è¾“å…¥å‚æ•°ï¼Œå­˜æ”¾è¦å†™å…¥åˆ°eFuseä¸­çš„å€¼
+		    size		- è¾“å…¥å‚æ•°ï¼Œè¦å†™å…¥çš„Wordsä¸ªæ•°
+		    group		- è¾“å…¥å‚æ•°ï¼Œä»æŒ‡å®šçš„Wordsåç§»å¤„å¼€å§‹å†™å…¥ï¼Œ
+					  æ–‡ä¸­è¡¨ç¤ºeFuseåˆ†ç»„åºå·group
 Output:		    none
-Return:		    0: OK  ÆäËû: ERRORÂë
+Return:		    0: OK  å…¶ä»–: ERRORç 
 ******************************************************************************/
 int bsp_efuse_write(const unsigned int* buf,
 		  const unsigned int group,
@@ -474,7 +474,7 @@ int bsp_efuse_write(const unsigned int* buf,
 	uint32_t cmd_id;
 	uint32_t origin;
 
-	/* Èë²ÎÅĞ¶Ï */
+	/* å…¥å‚åˆ¤æ–­ */
 	if (NULL == buf) {
 		pr_err("bsp_efuse_write: puiValues is NULL!\n" );
 		return ERROR;
@@ -553,15 +553,15 @@ EXPORT_SYMBOL_GPL(bsp_efuse_write);
 
 /******************************************************************************
 Function:	    bsp_efuse_read
-Description:	    ´ÓÖ¸¶¨WordsÆ«ÒÆ¿ªÊ¼¶ÁÈ¡Ö¸¶¨Words¸öÊıµÄeFuseÖµ
-Input:		    buf			- ÊäÈë&Êä³ö²ÎÊı£¬´æ·Å¶ÁÈ¡µ½µÄeFuseÖµ£¬
-					  ÓÉµ÷ÓÃ·½¸ºÔğ·ÖÅäÄÚ´æ
-		    group		- ÊäÈë²ÎÊı£¬´ÓÖ¸¶¨µÄWordsÆ«ÒÆ´¦¿ªÊ¼¶ÁÈ¡£¬
-					  ÎÄÖĞ±íÊ¾eFuse·Ö×éĞòºÅgroup
-		    size		- ÊäÈë²ÎÊı£¬Òª¶ÁÈ¡µÄWords¸öÊı
-Output:		    buf			- Êä³ö²ÎÊı£¬´æ·Å¶ÁÈ¡µ½µÄeFuseÖµ£¬
-					  ÓÉµ÷ÓÃ·½¸ºÔğ·ÖÅäÄÚ´æ
-Return:		    0: OK  ÆäËû: ERRORÂë
+Description:	    ä»æŒ‡å®šWordsåç§»å¼€å§‹è¯»å–æŒ‡å®šWordsä¸ªæ•°çš„eFuseå€¼
+Input:		    buf			- è¾“å…¥&è¾“å‡ºå‚æ•°ï¼Œå­˜æ”¾è¯»å–åˆ°çš„eFuseå€¼ï¼Œ
+					  ç”±è°ƒç”¨æ–¹è´Ÿè´£åˆ†é…å†…å­˜
+		    group		- è¾“å…¥å‚æ•°ï¼Œä»æŒ‡å®šçš„Wordsåç§»å¤„å¼€å§‹è¯»å–ï¼Œ
+					  æ–‡ä¸­è¡¨ç¤ºeFuseåˆ†ç»„åºå·group
+		    size		- è¾“å…¥å‚æ•°ï¼Œè¦è¯»å–çš„Wordsä¸ªæ•°
+Output:		    buf			- è¾“å‡ºå‚æ•°ï¼Œå­˜æ”¾è¯»å–åˆ°çš„eFuseå€¼ï¼Œ
+					  ç”±è°ƒç”¨æ–¹è´Ÿè´£åˆ†é…å†…å­˜
+Return:		    0: OK  å…¶ä»–: ERRORç 
 ******************************************************************************/
 int bsp_efuse_read(unsigned int* buf,
 		  const unsigned int group,
@@ -575,7 +575,7 @@ int bsp_efuse_read(unsigned int* buf,
 	uint32_t cmd_id;
 	uint32_t origin;
 
-	/* Èë²ÎÅĞ¶Ï */
+	/* å…¥å‚åˆ¤æ–­ */
 	if (NULL == buf) {
 		TEEC_Error("bsp_efuse_read: puiValues is NULL!\n" );
 		return ERROR;

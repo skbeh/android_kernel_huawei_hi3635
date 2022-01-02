@@ -1,13 +1,13 @@
 /*************************************************************************
-*   °æÈ¨ËùÓĞ(C) 1987-2011, ÉîÛÚ»ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾.
+*   ç‰ˆæƒæ‰€æœ‰(C) 1987-2011, æ·±åœ³åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸.
 *
-*   ÎÄ ¼ş Ãû :  lowpower_mntn_balong.c
+*   æ–‡ ä»¶ å :  lowpower_mntn_balong.c
 *
-*   ×÷    Õß :  xujingcui
+*   ä½œ    è€… :  xujingcui
 *
-*   Ãè    Êö : ±¾ÎÄ¼şÓÃÓÚµÍ¹¦ºÄ¿ÉÎ½¿É²âĞÅÏ¢µÄ¼ÇÂ¼ºÍÉÏ±¨
+*   æ    è¿° : æœ¬æ–‡ä»¶ç”¨äºä½åŠŸè€—å¯è°“å¯æµ‹ä¿¡æ¯çš„è®°å½•å’Œä¸ŠæŠ¥
 *
-*   ĞŞ¸Ä¼ÇÂ¼ :  2013Äê6ÔÂ10ÈÕ  v1.00 xujingcui´´½¨
+*   ä¿®æ”¹è®°å½• :  2013å¹´6æœˆ10æ—¥  v1.00 xujingcuiåˆ›å»º
 *************************************************************************/
 #include <linux/string.h>
 #include <linux/suspend.h>
@@ -23,7 +23,7 @@ struct lower_power_pmntn_ctrl{
 	void __iomem *pericrg_base;
 	}lp_ctrl={NULL,NULL};
 #endif
-/*¼ÇÂ¼µÍ¹¦ºÄ¹²ÏíµØÖ·*/
+/*è®°å½•ä½åŠŸè€—å…±äº«åœ°å€*/
 void * g_lowpower_shared_addr = NULL;
 
 
@@ -96,7 +96,7 @@ int ccpu_lp_mntn_notify(struct notifier_block *nb, unsigned long event, void *du
     if(event == PM_SUSPEND_PREPARE){
         if(!g_lowpower_shared_addr){
 
-            /*»ñÈ¡DUMP µÍ¹¦ºÄ¹²ÏíÄÚ´æµØÖ·*/
+            /*è·å–DUMP ä½åŠŸè€—å…±äº«å†…å­˜åœ°å€*/
             if(BSP_OK != bsp_dump_get_buffer(DUMP_SAVE_MOD_DRX_CCORE, &dump_base, &dump_length)){
                 printk("*******!get dump buffer failed!******* \n\n");
                 return 0;
@@ -108,7 +108,7 @@ int ccpu_lp_mntn_notify(struct notifier_block *nb, unsigned long event, void *du
 	{
 	    printk("\n############ Ccpu Debug Info,Current Slice 0x%x ############\n",bsp_get_slice_value());
 
-		/*´Ë´¦ÓÃÓÚÔö¼ÓCCPUµÄ´òÓ¡ĞÅÏ¢º¯Êı*/
+		/*æ­¤å¤„ç”¨äºå¢åŠ CCPUçš„æ‰“å°ä¿¡æ¯å‡½æ•°*/
 		print_ccpu_pm_info();
 	}
 	return 0;

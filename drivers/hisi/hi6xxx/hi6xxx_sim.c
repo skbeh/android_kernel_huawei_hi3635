@@ -191,7 +191,7 @@ static int balong_sim_probe(struct platform_device *pdev)
     {
         plat->sim_status = get_sim_status(plat->sim_detection_gpio, g_sim2_present_electrical_lvl);
     }
-    /*ÒÔÏÂ´úÂëÖ»Ö´ĞĞÒ»´Î£¬SIM1ºÍSIM2¹²ÓÃÒ»¸öÈÎÎñ¶ÓÁĞ*/
+    /*ä»¥ä¸‹ä»£ç åªæ‰§è¡Œä¸€æ¬¡ï¼ŒSIM1å’ŒSIM2å…±ç”¨ä¸€ä¸ªä»»åŠ¡é˜Ÿåˆ—*/
     if (!workqueue) {
         /* Initialize works */
         workqueue = create_singlethread_workqueue("balong_sim_workqueue");

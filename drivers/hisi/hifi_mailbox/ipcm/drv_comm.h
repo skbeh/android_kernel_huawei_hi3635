@@ -1,13 +1,13 @@
 /*************************************************************************
-*   °æÈ¨ËùÓÐ(C) 1987-2011, ÉîÛÚ»ªÎª¼¼ÊõÓÐÏÞ¹«Ë¾.
+*   ç‰ˆæƒæ‰€æœ‰(C) 1987-2011, æ·±åœ³åŽä¸ºæŠ€æœ¯æœ‰é™å…¬å¸.
 *
-*   ÎÄ ¼þ Ãû :  DrvInterface.h
+*   æ–‡ ä»¶ å :  DrvInterface.h
 *
-*   ×÷    Õß :  yangzhi
+*   ä½œ    è€… :  yangzhi
 *
-*   Ãè    Êö :  ±¾ÎÄ¼þÃüÃûÎª"DrvInterface.h", ¸ø³öV7R1µ×ÈíºÍÐ­ÒéÕ»Ö®¼äµÄAPI½Ó¿ÚÍ³¼Æ
+*   æ    è¿° :  æœ¬æ–‡ä»¶å‘½åä¸º"DrvInterface.h", ç»™å‡ºV7R1åº•è½¯å’Œåè®®æ ˆä¹‹é—´çš„APIæŽ¥å£ç»Ÿè®¡
 *
-*   ÐÞ¸Ä¼ÇÂ¼ :  2011Äê1ÔÂ18ÈÕ  v1.00  yangzhi´´½¨
+*   ä¿®æ”¹è®°å½• :  2011å¹´1æœˆ18æ—¥  v1.00  yangzhiåˆ›å»º
 *************************************************************************/
 
 #ifndef __DRV_COMM_H__
@@ -16,7 +16,7 @@
 
 
 /*************************GLOBAL BEGIN*****************************/
-/* »ù±¾Êý¾ÝÀàÐÍ¶¨Òå */
+/* åŸºæœ¬æ•°æ®ç±»åž‹å®šä¹‰ */
 #ifndef _WIN32_COMPILE
 typedef signed long long    BSP_S64;
 #else
@@ -138,8 +138,8 @@ typedef BSP_VOID (*VOIDFUNCPTR)(BSP_U32);
 #endif
 
 
-/* ´íÎóÂëºê¶¨Òå */
-#define BSP_ERR_MODULE_OFFSET (0x1000)    /* ·ÀÖ¹ºÍÏµÍ³µÄ´íÎóÂëÖØµþ */
+/* é”™è¯¯ç å®å®šä¹‰ */
+#define BSP_ERR_MODULE_OFFSET (0x1000)    /* é˜²æ­¢å’Œç³»ç»Ÿçš„é”™è¯¯ç é‡å  */
 #define BSP_DEF_ERR( mod, errid) \
     ((((BSP_U32) mod + BSP_ERR_MODULE_OFFSET) << 16) | (errid))
 
@@ -167,18 +167,18 @@ typedef BSP_VOID (*VOIDFUNCPTR)(BSP_U32);
 
 
 /*****************************************************************************
-  1 GU²àÇý¶¯¶ÔÍâ½Ó¿Ú£¬GUPortingÏîÄ¿Ìí¼Ó.
+  1 GUä¾§é©±åŠ¨å¯¹å¤–æŽ¥å£ï¼ŒGUPortingé¡¹ç›®æ·»åŠ .
 *****************************************************************************/
 
 /*****************************************************************************
-  2 ºê¶¨Òå
+  2 å®å®šä¹‰
 *****************************************************************************/
 
 #define DRV_OK                          (0)
 #define DRV_ERROR                       (-1)
 #define DRV_INTERFACE_RSLT_OK           (0)
 
-/* »ù±¾Êý¾ÝÀàÐÍ¶¨Òå */
+/* åŸºæœ¬æ•°æ®ç±»åž‹å®šä¹‰ */
 
 typedef int  (*pFUNCPTR)(void);
 
@@ -186,29 +186,29 @@ typedef unsigned long (*pFUNCPTR2)( unsigned long ulPara1, unsigned long ulPara2
 
 typedef unsigned int tagUDI_DEVICE_ID_UINT32;
 
-/*ÐèÒªÒÆµ½±ðµÄÍ·ÎÄ¼þÖÐ start*/
-/*Éý¼¶FlashÐÅÏ¢*/
+/*éœ€è¦ç§»åˆ°åˆ«çš„å¤´æ–‡ä»¶ä¸­ start*/
+/*å‡çº§Flashä¿¡æ¯*/
 typedef struct
 {
-    BSP_U32 ulblockCount;    /*Block¸öÊý*/
-    BSP_U32 ulpageSize;    /*pageÒ³´óÐ¡*/
-    BSP_U32 ulpgCntPerBlk;    /*Ò»¸öBlockÖÐµÄpage¸öÊý*/
+    BSP_U32 ulblockCount;    /*Blockä¸ªæ•°*/
+    BSP_U32 ulpageSize;    /*pageé¡µå¤§å°*/
+    BSP_U32 ulpgCntPerBlk;    /*ä¸€ä¸ªBlockä¸­çš„pageä¸ªæ•°*/
 }DLOAD_FLASH_STRU;
-/*ÐèÒªÒÆµ½±ðµÄÍ·ÎÄ¼þÖÐ end*/
+/*éœ€è¦ç§»åˆ°åˆ«çš„å¤´æ–‡ä»¶ä¸­ end*/
 
-/* ÉÏÐÐÏßÂ·ÊÕ°üº¯ÊýÖ¸Õë */
+/* ä¸Šè¡Œçº¿è·¯æ”¶åŒ…å‡½æ•°æŒ‡é’ˆ */
 typedef BSP_VOID (*UpLinkRxFunc)(BSP_U8 *buf, BSP_U32 len);
 
-/* °ü·â×°ÊÍ·Åº¯ÊýÖ¸Õë */
+/* åŒ…å°è£…é‡Šæ”¾å‡½æ•°æŒ‡é’ˆ */
 typedef BSP_VOID (*FreePktEncap)(BSP_VOID *PktEncap);
 
-/* GMACµ÷ÓÃÕßÃ¶¾Ù */
+/* GMACè°ƒç”¨è€…æžšä¸¾ */
 typedef enum tagGMAC_OWNER_E
 {
-    GMAC_OWNER_VXWORKS = 0, /* VxworksÍøÂçÐ­ÒéÕ» */
-    GMAC_OWNER_PS,          /* LTEÍøÂçÐ­ÒéÕ» */
+    GMAC_OWNER_VXWORKS = 0, /* Vxworksç½‘ç»œåè®®æ ˆ */
+    GMAC_OWNER_PS,          /* LTEç½‘ç»œåè®®æ ˆ */
     GMAC_OWNER_MSP,         /* MSP */
-    GMAC_OWNER_MAX          /* ±ß½çÖµ */
+    GMAC_OWNER_MAX          /* è¾¹ç•Œå€¼ */
 }GMAC_OWNER_E;
 
 typedef enum tagWDT_TIMEOUT_E

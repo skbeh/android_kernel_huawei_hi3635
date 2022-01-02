@@ -22,9 +22,9 @@
 #define __MUTEX_SERVICE_H__
 #include <hisi/drv_hisi_mutex_service.h>
 
-#define REGISTER 0 /*注册*/
-#define UN_REGISTER 1 /*停止*/
-#define NOTIFY_PREEMPT 2 /*通知抢占*/
+#define REGISTER 0 /*娉ㄥ唽*/
+#define UN_REGISTER 1 /*鍋滄*/
+#define NOTIFY_PREEMPT 2 /*閫氱煡鎶㈠崰*/
 
 #define HISI_MUTEX_SERVICE_INIT (g_mutex_service_ready == 1)
 
@@ -37,7 +37,7 @@
 		.mutex_group_id = gid,
 
 
-/*存储业务数据的结构体*/
+/*瀛樺偍涓氬姟鏁版嵁鐨勭粨鏋勪綋*/
 struct operation_data {
     enum hisi_mutex_service_id operation_id;
     char *operation_name;

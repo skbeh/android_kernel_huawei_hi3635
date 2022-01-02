@@ -4,13 +4,13 @@
 
 //#define SIM_HPD
 
-/*sim¿¨ÔÚÎ»µçÆ½Öµ*/
+/*simå¡åœ¨ä½ç”µå¹³å€¼*/
 #define HIGH_LEVEL 1
 #define LOW_LEVEL 0
 
 #define HISI_SIM_MAX 2
 
-/*GPIO·À¶¶Ê±¼ä*/
+/*GPIOé˜²æŠ–æ—¶é—´*/
 #define SIM_DEBOUNCE_TIME   (10) 
 
 struct balong_sim_plat_data{

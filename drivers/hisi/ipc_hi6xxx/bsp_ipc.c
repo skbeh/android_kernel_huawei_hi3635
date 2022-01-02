@@ -93,16 +93,16 @@ static void ipc_debug_int_record(unsigned int int_no, unsigned int start_slice, 
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : module_ipcInt_init
+* å‡½ æ•° å  : module_ipcInt_init
 *
-* ¹¦ÄÜÃèÊö  : IPCÄ£¿é³õÊ¼»¯
+* åŠŸèƒ½æè¿°  : IPCæ¨¡å—åˆå§‹åŒ–
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2009Äê3ÔÂ5ÈÕ   wangjing  creat
+* ä¿®æ”¹è®°å½•  : 2009å¹´3æœˆ5æ—¥   wangjing  creat
 *****************************************************************************/
 static int __init module_ipcInt_init(void)
 {
@@ -136,14 +136,14 @@ static int __init module_ipcInt_init(void)
 		return -1;
 	}
 
-    /*Ğ´È«0ÆÁ±ÎËùÓĞ»¥·¢Ô´*/
+    /*å†™å…¨0å±è”½æ‰€æœ‰äº’å‘æº*/
 	BSP_RegWr(BSP_IPC_CPU_INT_MASK(g_CoreNum), 0x0);
 	BSP_RegWr(BSP_IPC_SEM_INT_MASK(g_CoreNum), 0x0);
 
-    /*Ğ´È«1Çå³ıËùÓĞÖĞ¶Ï*/
+    /*å†™å…¨1æ¸…é™¤æ‰€æœ‰ä¸­æ–­*/
     BSP_RegWr(BSP_IPC_CPU_INT_CLR_ACPU, UCOM_COMM_UINT32_MAX);
 
-	/* 	¹Ò½Ó×ÜµÄÖĞ¶Ï·şÎñ³ÌĞò£¬°üÀ¨ÖĞ¶Ï»¥·¢µÄÖĞ¶Ï·şÎñ³ÌĞòºÍĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï·şÎñ³ÌĞò*/
+	/* 	æŒ‚æ¥æ€»çš„ä¸­æ–­æœåŠ¡ç¨‹åºï¼ŒåŒ…æ‹¬ä¸­æ–­äº’å‘çš„ä¸­æ–­æœåŠ¡ç¨‹åºå’Œä¿¡å·é‡é‡Šæ”¾ä¸­æ–­æœåŠ¡ç¨‹åº*/
 	ret = request_irq(INT_LEV_IPC_CPU, BSP_DRV_IpcIntHandler, 0, "ipc_irq", NULL);
 	if (ret ) {
 		printk(KERN_ERR "module_ipcInt_init: Unable to register ipc irq ret=%d.\n", ret);
@@ -163,17 +163,17 @@ static int __init module_ipcInt_init(void)
 arch_initcall(module_ipcInt_init);
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_IPC_SemCreate
+* å‡½ æ•° å  : BSP_IPC_SemCreate
 *
-* ¹¦ÄÜÃèÊö  : ³õÊ¼»¯ĞÅºÅÁ¿
+* åŠŸèƒ½æè¿°  : åˆå§‹åŒ–ä¿¡å·é‡
 *
-* ÊäÈë²ÎÊı  :   BSP_U32 u32SignalNum Òª³õÊ¼»¯µÄĞÅºÅÁ¿±àºÅ
+* è¾“å…¥å‚æ•°  :   BSP_U32 u32SignalNum è¦åˆå§‹åŒ–çš„ä¿¡å·é‡ç¼–å·
 
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 int BSP_IPC_SemCreate(unsigned int u32SignalNum)
 {
@@ -184,24 +184,24 @@ int BSP_IPC_SemCreate(unsigned int u32SignalNum)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_IPC_IntEnable
+* å‡½ æ•° å  : BSP_IPC_IntEnable
 *
-* ¹¦ÄÜÃèÊö  : Ê¹ÄÜÄ³¸öÖĞ¶Ï
+* åŠŸèƒ½æè¿°  : ä½¿èƒ½æŸä¸ªä¸­æ–­
 *
-* ÊäÈë²ÎÊı  :   IPC_INT_CORE_E enCoreNum ÒªÊ¹ÄÜÖĞ¶ÏµÄcore
-                BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :   IPC_INT_CORE_E enCoreNum è¦ä½¿èƒ½ä¸­æ–­çš„core
+                BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : OK&ERROR
+* è¿” å› å€¼  : OK&ERROR
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 int BSP_IPC_IntEnable (IPC_INT_LEV_E ulLvl)
 {
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
-	/*Ğ´ÖĞ¶ÏÆÁ±Î¼Ä´æÆ÷*/
+	/*å†™ä¸­æ–­å±è”½å¯„å­˜å™¨*/
     BSP_RegWr(BSP_IPC_CPU_INT_MASK_DIS_ACPU, (1 << ulLvl));
 
 	return 0;
@@ -209,50 +209,50 @@ int BSP_IPC_IntEnable (IPC_INT_LEV_E ulLvl)
 
 
 /*****************************************************************************
- * º¯ Êı Ãû  : BSP_INT_Disable
+ * å‡½ æ•° å  : BSP_INT_Disable
  *
- * ¹¦ÄÜÃèÊö  : È¥Ê¹ÄÜÄ³¸öÖĞ¶Ï
+ * åŠŸèƒ½æè¿°  : å»ä½¿èƒ½æŸä¸ªä¸­æ–­
  *
- * ÊäÈë²ÎÊı  : IPC_INT_CORE_E enCoreNum ÒªÊ¹ÄÜÖĞ¶ÏµÄcore
-                BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : IPC_INT_CORE_E enCoreNum è¦ä½¿èƒ½ä¸­æ–­çš„core
+                BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : OK&ERROR
+ * è¿” å› å€¼  : OK&ERROR
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
 int BSP_IPC_IntDisable (IPC_INT_LEV_E ulLvl)
 {
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
-	/*Ğ´ÖĞ¶ÏÆÁ±Î¼Ä´æÆ÷*/
+	/*å†™ä¸­æ–­å±è”½å¯„å­˜å™¨*/
 	BSP_RegWr(BSP_IPC_CPU_INT_MASK_EN_ACPU, (1 << ulLvl));
 
 	return 0;
 }
 
 /*****************************************************************************
- * º¯ Êı Ãû  : BSP_IPC_IntConnect
+ * å‡½ æ•° å  : BSP_IPC_IntConnect
  *
- * ¹¦ÄÜÃèÊö  : ×¢²áÄ³¸öÖĞ¶Ï
+ * åŠŸèƒ½æè¿°  : æ³¨å†ŒæŸä¸ªä¸­æ–­
  *
- * ÊäÈë²ÎÊı  : IPC_INT_CORE_E enCoreNum ÒªÊ¹ÄÜÖĞ¶ÏµÄcore
-               BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
-               VOIDFUNCPTR routine ÖĞ¶Ï·şÎñ³ÌĞò
- *             BSP_U32 parameter      ÖĞ¶Ï·şÎñ³ÌĞò²ÎÊı
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : IPC_INT_CORE_E enCoreNum è¦ä½¿èƒ½ä¸­æ–­çš„core
+               BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+               VOIDFUNCPTR routine ä¸­æ–­æœåŠ¡ç¨‹åº
+ *             BSP_U32 parameter      ä¸­æ–­æœåŠ¡ç¨‹åºå‚æ•°
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : OK&ERROR
+ * è¿” å› å€¼  : OK&ERROR
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
 int BSP_IPC_IntConnect  (IPC_INT_LEV_E ulLvl, IPCVOIDFUNCPTR routine, unsigned int parameter)
 {
 
 	unsigned long flag = 0;
 
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
 	spin_lock_irqsave(&s_ipc_int_lock, flag);
@@ -264,25 +264,25 @@ int BSP_IPC_IntConnect  (IPC_INT_LEV_E ulLvl, IPCVOIDFUNCPTR routine, unsigned i
 }
 
 /*****************************************************************************
- * º¯ Êı Ãû  : BSP_IPC_IntDisonnect
+ * å‡½ æ•° å  : BSP_IPC_IntDisonnect
  *
- * ¹¦ÄÜÃèÊö  : È¡Ïû×¢²áÄ³¸öÖĞ¶Ï
+ * åŠŸèƒ½æè¿°  : å–æ¶ˆæ³¨å†ŒæŸä¸ªä¸­æ–­
  *
- * ÊäÈë²ÎÊı  :
- *              BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
- *              VOIDFUNCPTR routine ÖĞ¶Ï·şÎñ³ÌĞò
- *             BSP_U32 parameter      ÖĞ¶Ï·şÎñ³ÌĞò²ÎÊı
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  :
+ *              BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+ *              VOIDFUNCPTR routine ä¸­æ–­æœåŠ¡ç¨‹åº
+ *             BSP_U32 parameter      ä¸­æ–­æœåŠ¡ç¨‹åºå‚æ•°
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : OK&ERROR
+ * è¿” å› å€¼  : OK&ERROR
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
  int BSP_IPC_IntDisonnect  (IPC_INT_LEV_E ulLvl,IPCVOIDFUNCPTR routine, unsigned int parameter)
  {
 	unsigned long flag = 0;
 
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
 	spin_lock_irqsave(&s_ipc_int_lock, flag);
@@ -315,16 +315,16 @@ int ffsLsb(int args)
 }
 
  /*****************************************************************************
- * º¯ Êı Ãû  : BSP_DRV_IpcIntHandler
+ * å‡½ æ•° å  : BSP_DRV_IpcIntHandler
  *
- * ¹¦ÄÜÃèÊö  : ÖĞ¶Ï´¦Àíº¯Êı
+ * åŠŸèƒ½æè¿°  : ä¸­æ–­å¤„ç†å‡½æ•°
  *
- * ÊäÈë²ÎÊı  : ÎŞ
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : æ— 
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : ÎŞ
+ * è¿” å› å€¼  : æ— 
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
 static irqreturn_t BSP_DRV_IpcIntHandler(int irq, void *dev_id)
 {
@@ -344,11 +344,11 @@ static irqreturn_t BSP_DRV_IpcIntHandler(int irq, void *dev_id)
     --newLevel;		/* ffsLsb returns numbers from 1, not 0 */
 
 
-    /*ÇåÖĞ¶Ï*/
+    /*æ¸…ä¸­æ–­*/
     BSP_RegWr(BSP_IPC_CPU_INT_CLR(g_CoreNum), (1 << newLevel));
     g_stIpc_debug.u32IntHandleTimes[newLevel]++;
 
-    /*µ÷ÓÃ×¢²áµÄÖĞ¶Ï´¦Àíº¯Êı*/
+    /*è°ƒç”¨æ³¨å†Œçš„ä¸­æ–­å¤„ç†å‡½æ•°*/
     if (NULL != stIpcIntTable[newLevel].routine)
     {
         startSlice = omTimerGet();
@@ -364,25 +364,25 @@ static irqreturn_t BSP_DRV_IpcIntHandler(int irq, void *dev_id)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_IPC_IntSend
+* å‡½ æ•° å  : BSP_IPC_IntSend
 *
-* ¹¦ÄÜÃèÊö  : ·¢ËÍÖĞ¶Ï
+* åŠŸèƒ½æè¿°  : å‘é€ä¸­æ–­
 *
-* ÊäÈë²ÎÊı  :
-                IPC_INT_CORE_E enDstore Òª½ÓÊÕÖĞ¶ÏµÄcore
-                BSP_U32 ulLvl Òª·¢ËÍµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :
+                IPC_INT_CORE_E enDstore è¦æ¥æ”¶ä¸­æ–­çš„core
+                BSP_U32 ulLvl è¦å‘é€çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : OK&ERROR
+* è¿” å› å€¼  : OK&ERROR
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 int BSP_IPC_IntSend(IPC_INT_CORE_E enDstCore, IPC_INT_LEV_E ulLvl)
 {
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
-	/*Ğ´Ô­Ê¼ÖĞ¶Ï¼Ä´æÆ÷,²úÉúÖĞ¶Ï*/
+	/*å†™åŸå§‹ä¸­æ–­å¯„å­˜å™¨,äº§ç”Ÿä¸­æ–­*/
 	BSP_RegWr(BSP_IPC_CPU_RAW_INT(enDstCore), (1 << ulLvl));
 	g_stIpc_debug.u32RecvIntCore = enDstCore;
 	g_stIpc_debug.u32IntSendTimes[ulLvl]++;
@@ -391,17 +391,17 @@ int BSP_IPC_IntSend(IPC_INT_CORE_E enDstCore, IPC_INT_LEV_E ulLvl)
 }
 
 /*****************************************************************************
- * º¯ Êı Ãû  : BSP_MaskInt
+ * å‡½ æ•° å  : BSP_MaskInt
  *
- * ¹¦ÄÜÃèÊö  : ÆÁ±ÎĞÅºÅÁ¿ÉêÇëµÄÖĞ¶ÏÊÍ·Å¼Ä´æÆ÷
+ * åŠŸèƒ½æè¿°  : å±è”½ä¿¡å·é‡ç”³è¯·çš„ä¸­æ–­é‡Šæ”¾å¯„å­˜å™¨
  *
- * ÊäÈë²ÎÊı  :
-                BSP_U32 ulLvl Òª·¢ËÍµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  :
+                BSP_U32 ulLvl è¦å‘é€çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : ÎŞ
+ * è¿” å› å€¼  : æ— 
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
 
 void BSP_MaskInt(unsigned int u32SignalNum)
@@ -413,7 +413,7 @@ void BSP_MaskInt(unsigned int u32SignalNum)
 		return;
 	}
 
-	/*Ğ´ÖĞ¶ÏÆÁ±Î¼Ä´æÆ÷*/
+	/*å†™ä¸­æ–­å±è”½å¯„å­˜å™¨*/
 	u32IntMask = BSP_RegRd(BSP_IPC_SEM_INT_MASK(g_CoreNum));
 	u32IntMask = (unsigned int)(u32IntMask & (~(1 << u32SignalNum))); /*lint !e502*/
 	BSP_RegWr(BSP_IPC_SEM_INT_MASK(g_CoreNum), u32IntMask);
@@ -451,33 +451,33 @@ void TEST_ACPUIDLE_IPC_SEM_REQ(int take_or_give)
 
 
  /*****************************************************************************
- * º¯ Êı Ãû  : BSP_IPC_SemTake
+ * å‡½ æ•° å  : BSP_IPC_SemTake
  *
- * ¹¦ÄÜÃèÊö  : »ñÈ¡ĞÅºÅÁ¿
+ * åŠŸèƒ½æè¿°  : è·å–ä¿¡å·é‡
  *
- * ÊäÈë²ÎÊı  : ÎŞ
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : æ— 
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : ÎŞ
+ * è¿” å› å€¼  : æ— 
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
  int BSP_IPC_SemTake(unsigned int u32SignalNum,int s32timeout)
  {
 	unsigned int u32HsCtrl = 0;
 	unsigned int u32IntMask = 0;
 
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(u32SignalNum);
 
-	/*½«ÉêÇëµÄĞÅºÅÁ¿¶ÔÓ¦µÄÊÍ·ÅÖĞ¶ÏÇåÁã*/
+	/*å°†ç”³è¯·çš„ä¿¡å·é‡å¯¹åº”çš„é‡Šæ”¾ä¸­æ–­æ¸…é›¶*/
 	BSP_RegWr(BSP_IPC_SEM_INT_CLR(g_CoreNum), (1 << u32SignalNum));
 	while (1)
 	{
 		u32HsCtrl = BSP_RegRd(BSP_IPC_HS_CTRL(g_CoreNum, u32SignalNum));
 		if (0 == u32HsCtrl)
 		{
-			/*ĞÅºÅÁ¿ÇÀÕ¼³É¹¦,ÆÁ±ÎÉêÇëºËµÄĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï*/
+			/*ä¿¡å·é‡æŠ¢å æˆåŠŸ,å±è”½ç”³è¯·æ ¸çš„ä¿¡å·é‡é‡Šæ”¾ä¸­æ–­*/
 			BSP_MaskInt(u32SignalNum);
 			g_stIpc_debug.u32SemId = u32SignalNum;
 			g_stIpc_debug.u32SemTakeTimes[u32SignalNum]++;/*lint !e661*/
@@ -485,7 +485,7 @@ void TEST_ACPUIDLE_IPC_SEM_REQ(int take_or_give)
 		}
 		else
 		{
-			/*Ê¹ÄÜĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï*/
+			/*ä½¿èƒ½ä¿¡å·é‡é‡Šæ”¾ä¸­æ–­*/
 			u32IntMask = BSP_RegRd(BSP_IPC_SEM_INT_MASK(g_CoreNum));
 			u32IntMask = (unsigned int)(u32IntMask | ((1 << u32SignalNum)));
 			BSP_RegWr(BSP_IPC_SEM_INT_MASK(g_CoreNum), u32IntMask);
@@ -494,7 +494,7 @@ void TEST_ACPUIDLE_IPC_SEM_REQ(int take_or_give)
 
 			if (0 != down_timeout(&g_semIpcTask[u32SignalNum], msecs_to_jiffies(s32timeout * 10)))
 			{
-				/*È¥Ê¹ÄÜĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï*/
+				/*å»ä½¿èƒ½ä¿¡å·é‡é‡Šæ”¾ä¸­æ–­*/
 				BSP_MaskInt(u32SignalNum);
 				printk(KERN_ERR "semTake timeout!\n");
 				return (-1);
@@ -507,16 +507,16 @@ void TEST_ACPUIDLE_IPC_SEM_REQ(int take_or_give)
  }
 
  /*****************************************************************************
- * º¯ Êı Ãû  : BSP_IPC_SemGive
+ * å‡½ æ•° å  : BSP_IPC_SemGive
  *
- * ¹¦ÄÜÃèÊö  : ÊÍ·ÅĞÅºÅÁ¿
+ * åŠŸèƒ½æè¿°  : é‡Šæ”¾ä¿¡å·é‡
  *
- * ÊäÈë²ÎÊı  : ÎŞ
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : æ— 
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : ÎŞ
+ * è¿” å› å€¼  : æ— 
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
  void BSP_IPC_SemGive(unsigned int u32SignalNum)
  {
@@ -525,21 +525,21 @@ void TEST_ACPUIDLE_IPC_SEM_REQ(int take_or_give)
 		printk("BSP_IPC_SemGive  Parameter error, line:%d\n", __LINE__);
 		return;
 	}
-	/*½«ĞÅºÅÁ¿ÇëÇó¼Ä´æÆ÷Çå0*/
+	/*å°†ä¿¡å·é‡è¯·æ±‚å¯„å­˜å™¨æ¸…0*/
 	BSP_RegWr(BSP_IPC_HS_CTRL(g_CoreNum, u32SignalNum), 0);
 	g_stIpc_debug.u32SemGiveTimes[u32SignalNum]++;
  }
 /*****************************************************************************
- * º¯ Êı Ãû  : BSP_IPC_SemGive_Ccore_All
+ * å‡½ æ•° å  : BSP_IPC_SemGive_Ccore_All
  *
- * ¹¦ÄÜÃèÊö  : ÊÍ·ÅCºËËùÓĞĞÅºÅÁ¿(ÔÚCºËµ¥¶À¸´Î»ÏîÄ¿ÖĞÓÃ)
+ * åŠŸèƒ½æè¿°  : é‡Šæ”¾Cæ ¸æ‰€æœ‰ä¿¡å·é‡(åœ¨Cæ ¸å•ç‹¬å¤ä½é¡¹ç›®ä¸­ç”¨)
  *
- * ÊäÈë²ÎÊı  : ÎŞ
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : æ— 
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : ÎŞ
+ * è¿” å› å€¼  : æ— 
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2013Äê5ÔÂ10ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2013å¹´5æœˆ10æ—¥ wangjing creat
  *****************************************************************************/
  void BSP_IPC_SemGive_Ccore_All(void)
  {
@@ -547,23 +547,23 @@ void TEST_ACPUIDLE_IPC_SEM_REQ(int take_or_give)
 
     for (i = 0;i < INTSRC_NUM;i++)
     {
-    	/*½«ĞÅºÅÁ¿ÇëÇó¼Ä´æÆ÷Çå0*/
+    	/*å°†ä¿¡å·é‡è¯·æ±‚å¯„å­˜å™¨æ¸…0*/
     	BSP_RegWr(BSP_IPC_HS_CTRL(IPC_CORE_CCPU, i), 0);
     	g_stIpc_debug.u32SemGiveTimes[i]++;
 
     }
  }
 /*****************************************************************************
- * º¯ Êı Ãû  : BSP_IPC_SemIntHandler
+ * å‡½ æ•° å  : BSP_IPC_SemIntHandler
  *
- * ¹¦ÄÜÃèÊö  : ĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï´¦Àíº¯Êı
+ * åŠŸèƒ½æè¿°  : ä¿¡å·é‡é‡Šæ”¾ä¸­æ–­å¤„ç†å‡½æ•°
  *
- * ÊäÈë²ÎÊı  : ÎŞ
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : æ— 
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : ÎŞ
+ * è¿” å› å€¼  : æ— 
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
 static irqreturn_t BSP_IPC_SemIntHandler(int irq, void *dev_id)
 {
@@ -578,7 +578,7 @@ static irqreturn_t BSP_IPC_SemIntHandler(int irq, void *dev_id)
     {
         return IRQ_NONE;
     }
-    /*Èç¹ûÓĞĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï£¬Çå³ı¸ÃÖĞ¶Ï*/
+    /*å¦‚æœæœ‰ä¿¡å·é‡é‡Šæ”¾ä¸­æ–­ï¼Œæ¸…é™¤è¯¥ä¸­æ–­*/
     u32SNum = ffsLsb (u32IntStat);
     BSP_RegWr(BSP_IPC_SEM_INT_CLR(g_CoreNum), (1 << --u32SNum));
 
@@ -588,16 +588,16 @@ static irqreturn_t BSP_IPC_SemIntHandler(int irq, void *dev_id)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_IPC_SpinLock
+* å‡½ æ•° å  : BSP_IPC_SpinLock
 *
-* ¹¦ÄÜÃèÊö  : ²éÑ¯µÈ´ı»ñÈ¡ĞÅºÅÁ¿
+* åŠŸèƒ½æè¿°  : æŸ¥è¯¢ç­‰å¾…è·å–ä¿¡å·é‡
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 void BSP_IPC_SpinLock (unsigned int u32SignalNum)
 {
@@ -619,16 +619,16 @@ void BSP_IPC_SpinLock (unsigned int u32SignalNum)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_IPC_SpinUnLock
+* å‡½ æ•° å  : BSP_IPC_SpinUnLock
 *
-* ¹¦ÄÜÃèÊö  : ÊÍ·ÅĞÅºÅÁ¿
+* åŠŸèƒ½æè¿°  : é‡Šæ”¾ä¿¡å·é‡
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 void BSP_IPC_SpinUnLock (unsigned int u32SignalNum)
 {
@@ -637,38 +637,38 @@ void BSP_IPC_SpinUnLock (unsigned int u32SignalNum)
 		printk("BSP_IPC_SpinUnLock  Parameter error, line:%d\n", __LINE__);
 		return;
 	}
-	/*½«ĞÅºÅÁ¿ÇëÇó¼Ä´æÆ÷Çå0*/
+	/*å°†ä¿¡å·é‡è¯·æ±‚å¯„å­˜å™¨æ¸…0*/
 	BSP_RegWr(BSP_IPC_HS_CTRL(g_CoreNum, u32SignalNum), 0);
 }
 
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_IPC_DebugShow
+* å‡½ æ•° å  : BSP_IPC_DebugShow
 *
-* ¹¦ÄÜÃèÊö  : ¿ÉÎ¬¿É²â½Ó¿Ú
+* åŠŸèƒ½æè¿°  : å¯ç»´å¯æµ‹æ¥å£
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 void BSP_IPC_DebugShow(void)
 {
 	unsigned int i;
 
-	printk("\nµ±Ç°Õ¼ÓÃµÄĞÅºÅÁ¿IDÎª       : \t%d\n", g_stIpc_debug.u32SemId);
+	printk("\nå½“å‰å ç”¨çš„ä¿¡å·é‡IDä¸º       : \t%d\n", g_stIpc_debug.u32SemId);
 	for (i = 0; i < INTSRC_NUM; i++)
 	{
-		printk("ĞÅºÅÁ¿%d»ñÈ¡´ÎÊı             : \t%d\n", i, g_stIpc_debug.u32SemTakeTimes[i]);
-		printk("ĞÅºÅÁ¿%dÊÍ·Å´ÎÊı             : \t%d\n", i, g_stIpc_debug.u32SemGiveTimes[i]);
-		printk("·¢ËÍÖĞ¶ÏµÄ´ÎÊıÎª             : \t%d\n", g_stIpc_debug.u32IntSendTimes[i]);
-		printk("½øÈëÖĞ¶Ï´¦ÀíµÄ´ÎÊıÎª         : \t%d\n", g_stIpc_debug.u32IntHandleTimes[i]);
+		printk("ä¿¡å·é‡%dè·å–æ¬¡æ•°             : \t%d\n", i, g_stIpc_debug.u32SemTakeTimes[i]);
+		printk("ä¿¡å·é‡%dé‡Šæ”¾æ¬¡æ•°             : \t%d\n", i, g_stIpc_debug.u32SemGiveTimes[i]);
+		printk("å‘é€ä¸­æ–­çš„æ¬¡æ•°ä¸º             : \t%d\n", g_stIpc_debug.u32IntSendTimes[i]);
+		printk("è¿›å…¥ä¸­æ–­å¤„ç†çš„æ¬¡æ•°ä¸º         : \t%d\n", g_stIpc_debug.u32IntHandleTimes[i]);
 	}
 
-	printk("½ÓÊÕÖĞ¶ÏµÄCore IDÎª          : \t%d\n", g_stIpc_debug.u32RecvIntCore);
+	printk("æ¥æ”¶ä¸­æ–­çš„Core IDä¸º          : \t%d\n", g_stIpc_debug.u32RecvIntCore);
 }
 
 EXPORT_SYMBOL(BSP_IPC_IntEnable);

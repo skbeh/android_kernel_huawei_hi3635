@@ -55,31 +55,31 @@ void hisi_clear_acpu_subsys_powerdown_flag(void)
 void coherent_init(void)
 {
     /*CCI init*/
-    /*Ê¹ÄÜ¸÷MasterºÍSlave½Ó¿ÚµÄ speculative fetch¹¦ÄÜ*/
+    /*ä½¿èƒ½å„Masterå’ŒSlaveæ¥å£çš„ speculative fetchåŠŸèƒ½*/
     writel(0x180003, (g_cci_base + 0x90004));
-    /*Ê¹ÄÜsnoop/DVM/speculative fetch/terminate barrier¹¦ÄÜ*/
+    /*ä½¿èƒ½snoop/DVM/speculative fetch/terminate barrieråŠŸèƒ½*/
     writel(0x18, (g_cci_base + 0x90000));
 }
 
-/*fixme:ClusterÉÏµçÍê³É£¬L2 CacheÊ¹ÄÜºó£¬Æô¶¯SMPÇ°*/
+/*fixme:Clusterä¸Šç”µå®Œæˆï¼ŒL2 Cacheä½¿èƒ½åï¼Œå¯åŠ¨SMPå‰*/
 void coherent_slave_port_config(void)
 {
     /*unsigned int reg_val = 0;*/
 
-    /*CCI slave port config*/ /*S3ºÍS4¶¼ĞèÒªÅäÖÃ*/
-    /*1 ÉèÖÃLatencyÄ¿±êÎª128¸öÖÜÆÚ*/
+    /*CCI slave port config*/ /*S3å’ŒS4éƒ½éœ€è¦é…ç½®*/
+    /*1 è®¾ç½®Latencyç›®æ ‡ä¸º128ä¸ªå‘¨æœŸ*/
     writel(0x500050, (g_cci_base + 0x94130));
     writel(0x500050, (g_cci_base + 0x95130));
 
-    /*2 ÉèÖÃÃ¿256¸öÖÜÆÚQosÔö¼Ó1*/
+    /*2 è®¾ç½®æ¯256ä¸ªå‘¨æœŸQoså¢åŠ 1*/
     writel(0x30003, (g_cci_base + 0x94134));
     writel(0x30003, (g_cci_base + 0x95134));
 
-    /*3 ÉèÖÃACPU×îµÍÓÅÏÈ¼¶Îª1£¬×î¸ßÓÅÏÈ¼¶Îª6*/
+    /*3 è®¾ç½®ACPUæœ€ä½ä¼˜å…ˆçº§ä¸º1ï¼Œæœ€é«˜ä¼˜å…ˆçº§ä¸º6*/
     writel(0x6010601, (g_cci_base + 0x94138));
     writel(0x6010601, (g_cci_base + 0x95138));
 
-    /*4 Ê¹ÄÜQos*/
+    /*4 ä½¿èƒ½Qos*/
     writel(0x3, (g_cci_base + 0x9410c));
     writel(0x3, (g_cci_base + 0x9510c));
 

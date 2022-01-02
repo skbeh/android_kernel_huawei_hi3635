@@ -1,13 +1,13 @@
 /*************************************************************************
-*   °æÈ¨ËùÓĞ(C) 1987-2004, ÉîÛÚ»ªÎª¼¼ÊõÓĞÏŞ¹«Ë¾.
+*   ç‰ˆæƒæ‰€æœ‰(C) 1987-2004, æ·±åœ³åä¸ºæŠ€æœ¯æœ‰é™å…¬å¸.
 *
-*   ÎÄ ¼ş Ãû :  BSP_DRV_IPC.h
+*   æ–‡ ä»¶ å :  BSP_DRV_IPC.h
 *
-*   ×÷    Õß :  wangjing
+*   ä½œ    è€… :  wangjing
 *
-*   Ãè    Êö :  IPCÄ£¿éÓÃ»§½Ó¿ÚÎÄ¼ş
+*   æ    è¿° :  IPCæ¨¡å—ç”¨æˆ·æ¥å£æ–‡ä»¶
 *
-*   ĞŞ¸Ä¼ÇÂ¼ :  2011Äê4ÔÂ11ÈÕ  v1.00  wangjing  ´´½¨
+*   ä¿®æ”¹è®°å½• :  2011å¹´4æœˆ11æ—¥  v1.00  wangjing  åˆ›å»º
 *************************************************************************/
 
 #ifndef _BSP_DRV_IPC_H_
@@ -42,35 +42,35 @@ extern void __iomem *ipc_base;
 #define SOC_IPC_CPU_INT_MASK_EN_ADDR(base, i)         SOC_IPC_CPU_INT_DIS_ADDR(base, i)  
 
 
-#define BSP_IPC_CPU_RAW_INT(i)      (SOC_IPC_CPU_RAW_INT_ADDR((unsigned char*)ipc_base, i))    /* CPU_i¿ìËÙÖĞ¶ÏÔ­Ê¼ÖĞ¶Ï¼Ä´æÆ÷     */
-#define BSP_IPC_CPU_INT_MASK(i)     (SOC_IPC_CPU_INT_MASK_ADDR((unsigned char*)ipc_base, i))   /* CPU_i¿ìËÙÖĞ¶ÏÑÚÂë¼Ä´æÆ÷         */
-#define BSP_IPC_CPU_INT_STAT(i)     (SOC_IPC_CPU_INT_STAT_ADDR((unsigned char*)ipc_base, i))   /* CPU_iÆÁ±ÎºóµÄ¿ìËÙÖĞ¶Ï×´Ì¬¼Ä´æÆ÷ */
-#define BSP_IPC_CPU_INT_CLR(i)      (SOC_IPC_CPU_INT_CLR_ADDR((unsigned char*)ipc_base, i))    /* CPU_i¿ìËÙÖĞ¶ÏÇå³ı¼Ä´æÆ÷         */
-#define BSP_IPC_INT_MASK_EN(i)      (SOC_IPC_CPU_INT_MASK_EN_ADDR((unsigned char*)ipc_base, i))    /* CPU_i¿ìËÙÖĞ¶ÏÊ¹ÄÜ           */
-#define BSP_IPC_INT_MASK_DIS(i)     (SOC_IPC_CPU_INT_MASK_DIS_ADDR((unsigned char*)ipc_base, i))   /* CPU_i¿ìËÙÖĞ¶ÏÈ¥Ê¹ÄÜ         */
+#define BSP_IPC_CPU_RAW_INT(i)      (SOC_IPC_CPU_RAW_INT_ADDR((unsigned char*)ipc_base, i))    /* CPU_iå¿«é€Ÿä¸­æ–­åŸå§‹ä¸­æ–­å¯„å­˜å™¨     */
+#define BSP_IPC_CPU_INT_MASK(i)     (SOC_IPC_CPU_INT_MASK_ADDR((unsigned char*)ipc_base, i))   /* CPU_iå¿«é€Ÿä¸­æ–­æ©ç å¯„å­˜å™¨         */
+#define BSP_IPC_CPU_INT_STAT(i)     (SOC_IPC_CPU_INT_STAT_ADDR((unsigned char*)ipc_base, i))   /* CPU_iå±è”½åçš„å¿«é€Ÿä¸­æ–­çŠ¶æ€å¯„å­˜å™¨ */
+#define BSP_IPC_CPU_INT_CLR(i)      (SOC_IPC_CPU_INT_CLR_ADDR((unsigned char*)ipc_base, i))    /* CPU_iå¿«é€Ÿä¸­æ–­æ¸…é™¤å¯„å­˜å™¨         */
+#define BSP_IPC_INT_MASK_EN(i)      (SOC_IPC_CPU_INT_MASK_EN_ADDR((unsigned char*)ipc_base, i))    /* CPU_iå¿«é€Ÿä¸­æ–­ä½¿èƒ½           */
+#define BSP_IPC_INT_MASK_DIS(i)     (SOC_IPC_CPU_INT_MASK_DIS_ADDR((unsigned char*)ipc_base, i))   /* CPU_iå¿«é€Ÿä¸­æ–­å»ä½¿èƒ½         */
 
-#define BSP_IPC_SEM_RAW_INT(j)      (SOC_IPC_SEM_RAW_INT_ADDR((unsigned char*)ipc_base, j))    /* CPU_jĞÅºÅÁ¿ÊÍ·ÅÔ­Ê¼ÖĞ¶Ï¼Ä´æÆ÷   */
-#define BSP_IPC_SEM_INT_MASK(j)     (SOC_IPC_SEM_INT_MASK_ADDR((unsigned char*)ipc_base, j))   /* CPU_jĞÅºÅÁ¿ÊÍ·ÅÖĞ¶ÏÑÚÂë¼Ä´æÆ÷   */
-#define BSP_IPC_SEM_INT_STAT(j)     (SOC_IPC_SEM_INT_STAT_ADDR((unsigned char*)ipc_base, j))   /* CPU_jĞÅºÅÁ¿ÊÍ·ÅÖĞ¶Ï×´Ì¬¼Ä´æÆ÷   */
-#define BSP_IPC_SEM_INT_CLR(j)      (SOC_IPC_SEM_INT_CLR_ADDR((unsigned char*)ipc_base, j))    /* CPU_jĞÅºÅÁ¿ÊÍ·ÅÖĞ¶ÏÇå³ı¼Ä´æÆ÷   */
-#define BSP_IPC_HS_CTRL(j,k)        (SOC_IPC_HS_CTRL_ADDR((unsigned char*)ipc_base, j, k))     /* CPU_jĞÅºÅÁ¿kÇëÇó¼Ä´æÆ÷      */
-#define BSP_IPC_HS_STAT(j,k)        (SOC_IPC_HS_STAT_ADDR((unsigned char*)ipc_base, j, k))     /* CPU_jĞÅºÅÁ¿k×´Ì¬¼Ä´æÆ÷      */
-
-
-#define BSP_IPC_CPU_RAW_INT_ACPU    (BSP_IPC_CPU_RAW_INT(IPC_CORE_ACPU))           /* ACPU¿ìËÙÖĞ¶ÏÔ­Ê¼ÖĞ¶Ï¼Ä´æÆ÷     */
-#define BSP_IPC_CPU_INT_MASK_ACPU   (BSP_IPC_CPU_INT_MASK(IPC_CORE_ACPU))          /* ACPU¿ìËÙÖĞ¶ÏÑÚÂë¼Ä´æÆ÷         */
-#define BSP_IPC_CPU_INT_STAT_ACPU   (BSP_IPC_CPU_INT_STAT(IPC_CORE_ACPU))          /* ACPUÆÁ±ÎºóµÄ¿ìËÙÖĞ¶Ï×´Ì¬¼Ä´æÆ÷ */
-#define BSP_IPC_CPU_INT_CLR_ACPU    (BSP_IPC_CPU_INT_CLR(IPC_CORE_ACPU))           /* ACPU¿ìËÙÖĞ¶ÏÇå³ı¼Ä´æÆ÷         */
-#define BSP_IPC_CPU_INT_MASK_EN_ACPU    (BSP_IPC_INT_MASK_EN(IPC_CORE_ACPU))       /* ACPU¿ìËÙÖĞ¶ÏÊ¹ÄÜ               */
-#define BSP_IPC_CPU_INT_MASK_DIS_ACPU   (BSP_IPC_INT_MASK_DIS(IPC_CORE_ACPU))      /* ACPU¿ìËÙÖĞ¶ÏÈ¥Ê¹ÄÜ             */
+#define BSP_IPC_SEM_RAW_INT(j)      (SOC_IPC_SEM_RAW_INT_ADDR((unsigned char*)ipc_base, j))    /* CPU_jä¿¡å·é‡é‡Šæ”¾åŸå§‹ä¸­æ–­å¯„å­˜å™¨   */
+#define BSP_IPC_SEM_INT_MASK(j)     (SOC_IPC_SEM_INT_MASK_ADDR((unsigned char*)ipc_base, j))   /* CPU_jä¿¡å·é‡é‡Šæ”¾ä¸­æ–­æ©ç å¯„å­˜å™¨   */
+#define BSP_IPC_SEM_INT_STAT(j)     (SOC_IPC_SEM_INT_STAT_ADDR((unsigned char*)ipc_base, j))   /* CPU_jä¿¡å·é‡é‡Šæ”¾ä¸­æ–­çŠ¶æ€å¯„å­˜å™¨   */
+#define BSP_IPC_SEM_INT_CLR(j)      (SOC_IPC_SEM_INT_CLR_ADDR((unsigned char*)ipc_base, j))    /* CPU_jä¿¡å·é‡é‡Šæ”¾ä¸­æ–­æ¸…é™¤å¯„å­˜å™¨   */
+#define BSP_IPC_HS_CTRL(j,k)        (SOC_IPC_HS_CTRL_ADDR((unsigned char*)ipc_base, j, k))     /* CPU_jä¿¡å·é‡kè¯·æ±‚å¯„å­˜å™¨      */
+#define BSP_IPC_HS_STAT(j,k)        (SOC_IPC_HS_STAT_ADDR((unsigned char*)ipc_base, j, k))     /* CPU_jä¿¡å·é‡kçŠ¶æ€å¯„å­˜å™¨      */
 
 
+#define BSP_IPC_CPU_RAW_INT_ACPU    (BSP_IPC_CPU_RAW_INT(IPC_CORE_ACPU))           /* ACPUå¿«é€Ÿä¸­æ–­åŸå§‹ä¸­æ–­å¯„å­˜å™¨     */
+#define BSP_IPC_CPU_INT_MASK_ACPU   (BSP_IPC_CPU_INT_MASK(IPC_CORE_ACPU))          /* ACPUå¿«é€Ÿä¸­æ–­æ©ç å¯„å­˜å™¨         */
+#define BSP_IPC_CPU_INT_STAT_ACPU   (BSP_IPC_CPU_INT_STAT(IPC_CORE_ACPU))          /* ACPUå±è”½åçš„å¿«é€Ÿä¸­æ–­çŠ¶æ€å¯„å­˜å™¨ */
+#define BSP_IPC_CPU_INT_CLR_ACPU    (BSP_IPC_CPU_INT_CLR(IPC_CORE_ACPU))           /* ACPUå¿«é€Ÿä¸­æ–­æ¸…é™¤å¯„å­˜å™¨         */
+#define BSP_IPC_CPU_INT_MASK_EN_ACPU    (BSP_IPC_INT_MASK_EN(IPC_CORE_ACPU))       /* ACPUå¿«é€Ÿä¸­æ–­ä½¿èƒ½               */
+#define BSP_IPC_CPU_INT_MASK_DIS_ACPU   (BSP_IPC_INT_MASK_DIS(IPC_CORE_ACPU))      /* ACPUå¿«é€Ÿä¸­æ–­å»ä½¿èƒ½             */
 
-#define UCOM_COMM_UINT32_MAX                (0xffffffff)                          /*32bitÎŞ·ûºÅÊı×î´óÖµ*/
+
+
+#define UCOM_COMM_UINT32_MAX                (0xffffffff)                          /*32bitæ— ç¬¦å·æ•°æœ€å¤§å€¼*/
 #define BSP_IPC_MAX_INT_NUM                 (32)                                  /*  */
-#define IPC_MASK						0xFFFFFF0F       /*ÓÃÓÚÆÁ±Î[4:7]bitÎ»*/
+#define IPC_MASK						0xFFFFFF0F       /*ç”¨äºå±è”½[4:7]bitä½*/
 
-/*ºóĞøĞèÒªĞ´µ½ARM_paxb.hÖĞ*/
+/*åç»­éœ€è¦å†™åˆ°ARM_paxb.hä¸­*/
 #define INT_LEV_IPC_CPU				(IRQ_IPC0_S)
 #define INT_LEV_IPC_SEM				(IRQ_IPC1_S)
 

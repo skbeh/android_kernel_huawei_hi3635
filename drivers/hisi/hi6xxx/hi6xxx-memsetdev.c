@@ -118,7 +118,7 @@ static int __init hisi_memset_init(void)
 	struct class *memset_class;
 	struct device *pdevice;
 
-	/*´´½¨×Ö·ûÐÍÉè±¸ÎÄ¼þ½Úµã*/
+	/*åˆ›å»ºå­—ç¬¦åž‹è®¾å¤‡æ–‡ä»¶èŠ‚ç‚¹*/
 	pr_info("memset init begin");
 	major = register_chrdev(0, MEMSET_DEV_NAME, &hisi_memset_fops);
 	if (major <= 0) {

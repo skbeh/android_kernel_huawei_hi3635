@@ -4,7 +4,7 @@
 
 
 /*****************************************************************************
-  1 ÆäËûÍ·ÎÄ¼ş°üº¬
+  1 å…¶ä»–å¤´æ–‡ä»¶åŒ…å«
 *****************************************************************************/
 #include "drv_mailbox_platform.h"
 #include "drv_mailbox_debug.h"
@@ -17,43 +17,43 @@ extern "C" {
 
 #define MAILBOX_GLOBAL_CHANNEL_NUM	(4)
 
-	/*ÓÊÏäIDºÅ×é³ÉºÍ»ñÈ¡µÄÏµÁĞ×ª»»ºê*/
-#define MAILBOX_SINGLE_ID_MASK						(0xFF)	/*ÓÊÏäºÅµÄµ±¸öÔªËØºÅ(8bit)ÆÁ±ÎÎ»*/
-#define mailbox_get_channel_id(id)					  ((id) & (~MAILBOX_SINGLE_ID_MASK))	/*ÓÉÓÊ¼şID»ñµÃÓÊÏäID*/
+	/*é‚®ç®±IDå·ç»„æˆå’Œè·å–çš„ç³»åˆ—è½¬æ¢å®*/
+#define MAILBOX_SINGLE_ID_MASK						(0xFF)	/*é‚®ç®±å·çš„å½“ä¸ªå…ƒç´ å·(8bit)å±è”½ä½*/
+#define mailbox_get_channel_id(id)					  ((id) & (~MAILBOX_SINGLE_ID_MASK))	/*ç”±é‚®ä»¶IDè·å¾—é‚®ç®±ID*/
 
-	/*ÓÉÓÊ¼şID»ñµÃÔ´CPUID*/
+	/*ç”±é‚®ä»¶IDè·å¾—æºCPUID*/
 #define mailbox_get_src_id(id)	(unsigned char)(((id) >> MAILBOX_ID_SRC_CPU_OFFSET) & MAILBOX_SINGLE_ID_MASK)
 
-	/*ÓÉÓÊ¼şID»ñµÃÄ¿µÄCPUID*/
+	/*ç”±é‚®ä»¶IDè·å¾—ç›®çš„CPUID*/
 #define mailbox_get_dst_id(id)	(unsigned char)(((id) >> MAILBOX_ID_DST_CPU_OFFSET) & MAILBOX_SINGLE_ID_MASK)
 
-	/*ÓÉÓÊ¼şID»ñµÃÍ¨µÀµÄÎïÀíÔØÌåID*/
+	/*ç”±é‚®ä»¶IDè·å¾—é€šé“çš„ç‰©ç†è½½ä½“ID*/
 #define mailbox_get_carrier_id(id)	(unsigned char)(((id) >> MAILBOX_ID_CHANNEL_OFFSET) & MAILBOX_SINGLE_ID_MASK)
 
-	/*ÓÉÓÊ¼şID»ñµÃÓÊ¼şÓ¦ÓÃID*/
+	/*ç”±é‚®ä»¶IDè·å¾—é‚®ä»¶åº”ç”¨ID*/
 #define mailbox_get_use_id(id)	(unsigned char)((id) & MAILBOX_SINGLE_ID_MASK )
 
-	/*±íÊ¾ÓÊÏäÒÑ¾­³õÊ¼»¯µÄÄ§¹íÊı×Ö*/
+	/*è¡¨ç¤ºé‚®ç®±å·²ç»åˆå§‹åŒ–çš„é­”é¬¼æ•°å­—*/
 #define MAILBOX_INIT_MAGIC							(0x87654312)
 
-/*a°´p×Ö½Ú¶ÔÆë*/
+/*aæŒ‰på­—èŠ‚å¯¹é½*/
 #define MAILBOX_ALIGN                                sizeof(unsigned int)
 #define mailbox_align_size(a,p)                     (((a)+((p)-1)) & ~((p)-1))
 
-/*Ğ´ÎïÀíµØÖ·*/
+/*å†™ç‰©ç†åœ°å€*/
 #define mailbox_write_reg(Addr, Value)                  (*((volatile unsigned int *)(Addr)) = Value)
 
-	/* ¶¨ÒåCPU¸öÊı */
+	/* å®šä¹‰CPUä¸ªæ•° */
 #define MAILBOX_CPU_NUM 							(MAILBOX_CPUID_BUTT)
 
-	/* ¶¨Òåchannel¸öÊı */
-#define MAILBOX_CHANNEL_BUTT(src, dst)	(MAILBOX_CHANNEL_##src##2##dst##_BUTT  & 0xff) /*& 0xff Ïûpclint*/
+	/* å®šä¹‰channelä¸ªæ•° */
+#define MAILBOX_CHANNEL_BUTT(src, dst)	(MAILBOX_CHANNEL_##src##2##dst##_BUTT  & 0xff) /*& 0xff æ¶ˆpclint*/
 
-/* ¶¨Òåuser idµÄÉÏÏŞÖµ */
+/* å®šä¹‰user idçš„ä¸Šé™å€¼ */
 #define MAILBOX_USER_BUTT(src, dst, channel)    \
     ((unsigned int)MAILBOX_MAILCODE_ITEM_END(src, dst, channel) & 0xff)
 
-/*¶¨ÒåÊı¾İ½á¹¹ struct mb_cfg ÖĞµÄÔªËØ*/
+/*å®šä¹‰æ•°æ®ç»“æ„ struct mb_cfg ä¸­çš„å…ƒç´ */
 #define MAILBOX_CHANNEL_COMPOSE(src, dst, ch)                   \
     /*channel*/                                                 \
     {(unsigned int)MAILBOX_MAILCODE_ITEM_END(src, dst, ch),    \
@@ -71,41 +71,41 @@ extern "C" {
 
 #define MAILBOX_USER_QUEUE(mbuf)   (&((struct mb_buff *)(mbuf))->usr_queue)
 
-	/*¼ÆËãÓÊÏäÊ£Óà¿Õ¼ä£¬ÎªÁË·ÀÖ¹¶ÓÁĞÍ·Î²ÖØµşÈ¥³ıÁË4byte¿Õ¼äÎ´Ê¹ÓÃ£¬µ¥Î»byte*/
+	/*è®¡ç®—é‚®ç®±å‰©ä½™ç©ºé—´ï¼Œä¸ºäº†é˜²æ­¢é˜Ÿåˆ—å¤´å°¾é‡å å»é™¤äº†4byteç©ºé—´æœªä½¿ç”¨ï¼Œå•ä½byte*/
 #define mailbox_queue_left(Rear, Front, Length) \
            (((Rear) > (Front)) ? ((Rear) - (Front) - sizeof(unsigned int)): \
            ((Length) - ((Front) - (Rear)) - sizeof(unsigned int)))
 
 /*****************************************************************************
-  3 Ã¶¾Ù¶¨Òå
+  3 æšä¸¾å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  4 ÏûÏ¢Í·¶¨Òå
+  4 æ¶ˆæ¯å¤´å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  5 ÏûÏ¢¶¨Òå
+  5 æ¶ˆæ¯å®šä¹‰
 *****************************************************************************/
 
 
 /*****************************************************************************
-  6 STRUCT¶¨Òå
+  6 STRUCTå®šä¹‰
 *****************************************************************************/
 typedef struct mb_queue
 {
-    unsigned long               base;            /* ¶ÓÁĞ»ùµØÖ·       */
-    unsigned int               length;          /* ¶ÓÁĞ×Ü³¤¶È£¬µ¥Î»byte */
-    unsigned long               front;           /* ¶ÓÁĞĞ´Ö¸Õë, ¾ø¶ÔµØÖ·£¬in   */
-    unsigned long               rear;            /* ¶ÓÁĞ¶ÁÖ¸Õë, ¾ø¶ÔµØÖ·£¬out  */
-    unsigned int               size;        /* ´Ë¶ÓÁĞµ¥´Î¶ÁÈ¡µÄ³¤¶È, ÓÃÓÚÓ¦ÓÃ²ã»Øµ÷Í¨Öª¶ÁÈ¡º¯Êı*/
+    unsigned long               base;            /* é˜Ÿåˆ—åŸºåœ°å€       */
+    unsigned int               length;          /* é˜Ÿåˆ—æ€»é•¿åº¦ï¼Œå•ä½byte */
+    unsigned long               front;           /* é˜Ÿåˆ—å†™æŒ‡é’ˆ, ç»å¯¹åœ°å€ï¼Œin   */
+    unsigned long               rear;            /* é˜Ÿåˆ—è¯»æŒ‡é’ˆ, ç»å¯¹åœ°å€ï¼Œout  */
+    unsigned int               size;        /* æ­¤é˜Ÿåˆ—å•æ¬¡è¯»å–çš„é•¿åº¦, ç”¨äºåº”ç”¨å±‚å›è°ƒé€šçŸ¥è¯»å–å‡½æ•°*/
 }mailbox_queue_stru ;
 
 /*****************************************************************************
- ½á¹¹Ãû    : DRV_MAILBOX_ID_ST
- ½á¹¹ËµÃ÷  : ÓÊÏäÓÊ¼şIDºÅµÄÊı¾İ½á¹¹¶¨Òå MAILBOX_MAIL_ID_E
+ ç»“æ„å    : DRV_MAILBOX_ID_ST
+ ç»“æ„è¯´æ˜  : é‚®ç®±é‚®ä»¶IDå·çš„æ•°æ®ç»“æ„å®šä¹‰ MAILBOX_MAIL_ID_E
  ****************************************************************************/
 struct mailbox_id_stru
 {
@@ -116,96 +116,96 @@ struct mailbox_id_stru
 };
 
 /*****************************************************************************
-  ÓÊÏäÍ¨µÀ´«ËÍuse id ¹ì¼£Êı¾İ½á¹¹
+  é‚®ç®±é€šé“ä¼ é€use id è½¨è¿¹æ•°æ®ç»“æ„
 *****************************************************************************/
 
 struct mb_cb
 {
     void (*func)(void *mbuf, void *handle, void *data);
-    void                *handle;         /*±£´æÓÃ»§Êı¾İ*/
-    void                *data;           /*±£´æÓÃ»§Êı¾İ*/
+    void                *handle;         /*ä¿å­˜ç”¨æˆ·æ•°æ®*/
+    void                *data;           /*ä¿å­˜ç”¨æˆ·æ•°æ®*/
 };
 
 /*****************************************************************************
- ÊµÌåÃû³Æ  : struct mb_cfg
- ¹¦ÄÜÃèÊö  : Mailbox Ä³¸öÎïÀíÓÊÏäÍ¨µÀµÄÓ²¼ş×ÊÔ´ÅäÖÃ
+ å®ä½“åç§°  : struct mb_cfg
+ åŠŸèƒ½æè¿°  : Mailbox æŸä¸ªç‰©ç†é‚®ç®±é€šé“çš„ç¡¬ä»¶èµ„æºé…ç½®
 *****************************************************************************/
 typedef struct mb_cfg
 {
-    unsigned int               butt_id;     /*ÓÊÏäIDµÄ½áÊøºÅ£¬°üº¬×î´óµ±Ç°ÓÊÏäµÄ×î´óIDĞÅÏ¢  */
-    unsigned int               data_size;   /*ÓÊÏäÊı¾İ´óĞ¡*/
-    unsigned int               single_max;  /*µ¥´ÎÓÊ¼ş·¢ËÍ×î´ó´óĞ¡*/
-    unsigned long               head_addr;   /*ÓÊÏäÍ·ÄÚ´æµØÖ·  */
-    unsigned long               data_addr;   /*ÓÊÏäÊı¾İÄÚ´æµØÖ·*/
-    unsigned int               int_src;     /*ÓÊÏäÎïÀíÍ¨µÀID¶ÔÓ¦µÄºË¼äÖĞ¶Ï×ÊÔ´ºÅ*/
+    unsigned int               butt_id;     /*é‚®ç®±IDçš„ç»“æŸå·ï¼ŒåŒ…å«æœ€å¤§å½“å‰é‚®ç®±çš„æœ€å¤§IDä¿¡æ¯  */
+    unsigned int               data_size;   /*é‚®ç®±æ•°æ®å¤§å°*/
+    unsigned int               single_max;  /*å•æ¬¡é‚®ä»¶å‘é€æœ€å¤§å¤§å°*/
+    unsigned long               head_addr;   /*é‚®ç®±å¤´å†…å­˜åœ°å€  */
+    unsigned long               data_addr;   /*é‚®ç®±æ•°æ®å†…å­˜åœ°å€*/
+    unsigned int               int_src;     /*é‚®ç®±ç‰©ç†é€šé“IDå¯¹åº”çš„æ ¸é—´ä¸­æ–­èµ„æºå·*/
 }MAILBOX_CHANNEL_CFG_STRU;
 
 /*****************************************************************************
-  ÓÊÏäÍ¨µÀµÄ²Ù×÷×ÊÔ´¼¯ºÏ
+  é‚®ç®±é€šé“çš„æ“ä½œèµ„æºé›†åˆ
 *****************************************************************************/
 struct mb_buff
 {
-    unsigned int               channel_id;  /*ÓÊÏäÍ¨µÀID£¬ÓÉÓÊÏäÁ½¸öºËÖ®¼äµÄÁ´Â·£¬Á´Â··½Ïò£¬ºÍÎïÀíÍ¨µÀºÅÈıÕßÈ·¶¨*/
-    unsigned int               mailcode;    /*ÓÊ¼şID£¬ÓÉÓÊÏäÁ½¸öºËÖ®¼äµÄÁ´Â·£¬Á´Â··½Ïò£¬ÎïÀíÍ¨µÀºÅ£¬ºÍÓ¦ÓÃºÅËÄ¸ö·½ÃæÈ·¶¨*/
-    unsigned int               seq_num;     /*ÓÊÏäÏûÏ¢ĞòÁĞºÅ(SNºÅ)¼ÇÂ¼È«¾Ö±äÁ¿*/
-    void                       *mutex;       /*»¥³â»úÖÆ£¬·ÀÖ¹¶à¸öÏß³ÌÍ¬Ê±·¢ËÍÊı¾İµ½ÏàÍ¬ÓÊÏä*/
+    unsigned int               channel_id;  /*é‚®ç®±é€šé“IDï¼Œç”±é‚®ç®±ä¸¤ä¸ªæ ¸ä¹‹é—´çš„é“¾è·¯ï¼Œé“¾è·¯æ–¹å‘ï¼Œå’Œç‰©ç†é€šé“å·ä¸‰è€…ç¡®å®š*/
+    unsigned int               mailcode;    /*é‚®ä»¶IDï¼Œç”±é‚®ç®±ä¸¤ä¸ªæ ¸ä¹‹é—´çš„é“¾è·¯ï¼Œé“¾è·¯æ–¹å‘ï¼Œç‰©ç†é€šé“å·ï¼Œå’Œåº”ç”¨å·å››ä¸ªæ–¹é¢ç¡®å®š*/
+    unsigned int               seq_num;     /*é‚®ç®±æ¶ˆæ¯åºåˆ—å·(SNå·)è®°å½•å…¨å±€å˜é‡*/
+    void                       *mutex;       /*äº’æ–¥æœºåˆ¶ï¼Œé˜²æ­¢å¤šä¸ªçº¿ç¨‹åŒæ—¶å‘é€æ•°æ®åˆ°ç›¸åŒé‚®ç®±*/
     struct mb                  *mb;
-    struct mb_cb               *read_cb;    /*´ËÓÊÏäÍ¨µÀµÄ¹¦ÄÜ»Øµ÷º¯Êı¶ÓÁĞ*/
-    struct mb_cfg      *config;             /*´ËÓÊÏäµÄ¹²ÏíÄÚ´æÍ¨µÀĞÅÏ¢*/
+    struct mb_cb               *read_cb;    /*æ­¤é‚®ç®±é€šé“çš„åŠŸèƒ½å›è°ƒå‡½æ•°é˜Ÿåˆ—*/
+    struct mb_cfg      *config;             /*æ­¤é‚®ç®±çš„å…±äº«å†…å­˜é€šé“ä¿¡æ¯*/
 #ifdef MAILBOX_OPEN_MNTN
-	struct mb_mntn				mntn;		/*´ËÓÊÏäÍ¨µÀµÄ¿ÉÎ¬¿É²âÊı¾İ*/
+	struct mb_mntn				mntn;		/*æ­¤é‚®ç®±é€šé“çš„å¯ç»´å¯æµ‹æ•°æ®*/
 #endif
-	struct mb_queue 			mail_queue; /*ÓÃÓÚ´Ë¹²ÏíÄÚ´æÓÊÏäÊı¾İ´¦ÀíµÄ»·ĞÎ¶ÓÁĞ²Ù×÷¾ä±ú*/
-	struct mb_queue 			usr_queue;	/*¸øÓÃ»§Ê¹ÓÃµÄÊı¾İ£¬ÊÇÌø³ıÓÊ¼şÍ·´óĞ¡µÄmail_queue*/
+	struct mb_queue 			mail_queue; /*ç”¨äºæ­¤å…±äº«å†…å­˜é‚®ç®±æ•°æ®å¤„ç†çš„ç¯å½¢é˜Ÿåˆ—æ“ä½œå¥æŸ„*/
+	struct mb_queue 			usr_queue;	/*ç»™ç”¨æˆ·ä½¿ç”¨çš„æ•°æ®ï¼Œæ˜¯è·³é™¤é‚®ä»¶å¤´å¤§å°çš„mail_queue*/
 };
 
 /*****************************************************************************
-  µ¥¸öÓÊÏäÍ¨µÀÅäÖÃ±íÏî
+  å•ä¸ªé‚®ç®±é€šé“é…ç½®è¡¨é¡¹
 *****************************************************************************/
 typedef struct mb_link
 {
-    unsigned int          carrier_butt;    /*µ±Ç°CPUÁ¬½ÓÓĞ¶àÉÙ¸öÓÊÏäÍ¨µÀ*/
-    struct mb_buff        *channel_buff;    /*´ËÓÊÏäµÄ¿ØÖÆ×ÊÔ´¼¯ºÏ*/
+    unsigned int          carrier_butt;    /*å½“å‰CPUè¿æ¥æœ‰å¤šå°‘ä¸ªé‚®ç®±é€šé“*/
+    struct mb_buff        *channel_buff;    /*æ­¤é‚®ç®±çš„æ§åˆ¶èµ„æºé›†åˆ*/
 }MAILBOX_LINK_STRU ;
 
 /*****************************************************************************
-  ÓÊÏäÄ£¿éµÄÕûÌå¿ØÖÆ¾ä±úÊı¾İ½á¹¹,ÓÊÏäÈºµÄ¿ØÖÆ¾ä±ú¼¯ºÏ
+  é‚®ç®±æ¨¡å—çš„æ•´ä½“æ§åˆ¶å¥æŸ„æ•°æ®ç»“æ„,é‚®ç®±ç¾¤çš„æ§åˆ¶å¥æŸ„é›†åˆ
 *****************************************************************************/
 typedef struct mb
 {
-    unsigned int               local_id;                           /*µ±Ç°CPUµÄID*/
-    unsigned int               init_flag;                          /*³õÊ¼»¯±êÖ¾*/
-    unsigned int               log_prob;                           /*Ö¸ÏòÏÂÒ»Ìõ´íÎó¼ÇÂ¼*/
-    struct mb_log               log_array[MAILBOX_ERRO_ARRAY_NUM];  /*¼ÇÂ¼×î½üµÄ¼¸´Î´íÎóĞÅÏ¢*/
-    struct mb_link              send_tbl[MAILBOX_CPUID_BUTT];       /*ÓÊÏä·¢ËÍÍ¨µÀ¿ØÖÆ×ÊÔ´ÁĞ±í*/
-    struct mb_link              recv_tbl[MAILBOX_CPUID_BUTT];       /*ÓÊÏä½ÓÊÕÍ¨µÀ¿ØÖÆ×ÊÔ´ÁĞ±í*/
+    unsigned int               local_id;                           /*å½“å‰CPUçš„ID*/
+    unsigned int               init_flag;                          /*åˆå§‹åŒ–æ ‡å¿—*/
+    unsigned int               log_prob;                           /*æŒ‡å‘ä¸‹ä¸€æ¡é”™è¯¯è®°å½•*/
+    struct mb_log               log_array[MAILBOX_ERRO_ARRAY_NUM];  /*è®°å½•æœ€è¿‘çš„å‡ æ¬¡é”™è¯¯ä¿¡æ¯*/
+    struct mb_link              send_tbl[MAILBOX_CPUID_BUTT];       /*é‚®ç®±å‘é€é€šé“æ§åˆ¶èµ„æºåˆ—è¡¨*/
+    struct mb_link              recv_tbl[MAILBOX_CPUID_BUTT];       /*é‚®ç®±æ¥æ”¶é€šé“æ§åˆ¶èµ„æºåˆ—è¡¨*/
 }MAILBOX_STRU;
 
 /*****************************************************************************
-  7 UNION¶¨Òå
+  7 UNIONå®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  8 OTHERS¶¨Òå
+  8 OTHERSå®šä¹‰
 *****************************************************************************/
 
 /*****************************************************************************
-  9 È«¾Ö±äÁ¿ÉùÃ÷
+  9 å…¨å±€å˜é‡å£°æ˜
 *****************************************************************************/
 
-/*¶¨ÒåËùÓĞÒÑ´æÔÚµÄ¹²ÏíÄÚ´æÍ¨µÀµÄÎïÀíÄÚ´æ¼°Ó²¼ş×ÊÔ´ÅäÖÃ£¬È«¾Ö¶¨Òå*/
+/*å®šä¹‰æ‰€æœ‰å·²å­˜åœ¨çš„å…±äº«å†…å­˜é€šé“çš„ç‰©ç†å†…å­˜åŠç¡¬ä»¶èµ„æºé…ç½®ï¼Œå…¨å±€å®šä¹‰*/
 extern MAILBOX_EXTERN struct mb_cfg g_mailbox_global_cfg_tbl[];
 
-/*Æ½Ì¨ÓÊÏäÍ¨µÀ¾ä±úµÄÄÚ´æ³Ø¿Õ¼ä*/
+/*å¹³å°é‚®ç®±é€šé“å¥æŸ„çš„å†…å­˜æ± ç©ºé—´*/
 extern MAILBOX_EXTERN struct mb_buff  g_mailbox_channel_handle_pool[MAILBOX_CHANNEL_NUM];
 
-/*Æ½Ì¨ÓÊÏäÓÃ»§»Øµ÷¾ä±úµÄÄÚ´æ³Ø¿Õ¼ä*/
+/*å¹³å°é‚®ç®±ç”¨æˆ·å›è°ƒå¥æŸ„çš„å†…å­˜æ± ç©ºé—´*/
 extern MAILBOX_EXTERN struct mb_cb	  g_mailbox_user_cb_pool[MAILBOX_USER_NUM];
 
-/*ÓÊÏäÄ£¿é×Ü¿ØÖÆ¾ä±ú*/
+/*é‚®ç®±æ¨¡å—æ€»æ§åˆ¶å¥æŸ„*/
 extern MAILBOX_EXTERN struct mb g_mailbox_handle;
 /*****************************************************************************
-  10 º¯ÊıÉùÃ÷
+  10 å‡½æ•°å£°æ˜
 *****************************************************************************/
 MAILBOX_EXTERN struct mb *mailbox_get_mb(void);
 

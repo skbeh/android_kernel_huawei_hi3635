@@ -82,7 +82,7 @@ static char* g_efusec_attributions[]={
 }while(0)
 
 #ifndef CONFIG_ATFDRIVER
-/*IFC ºË¼äº¯Êýµ÷ÓÃ*/
+/*IFC æ ¸é—´å‡½æ•°è°ƒç”¨*/
 IFC_GEN_CALL2(MAILBOX_IFC_ACPU_TO_CCPU_GET_EFUSE_DIEID, get_efuse_dieid_value,
 	          IFC_BIVAR, unsigned char *, pu8Buf, 0,
 	          IFC_INCNT, unsigned int, uiLength, 0)
@@ -1024,7 +1024,7 @@ static int __init hisi_efusec_init(void)
 
     efuse_print_info(log_level_debug, "g_efuse_group_max=%d, parse the dts configuration success\n", g_efuse_group_max);
 
-	/*´´½¨×Ö·ûÐÍÉè±¸ÎÄ¼þ½Úµã*/
+	/*åˆ›å»ºå­—ç¬¦åž‹è®¾å¤‡æ–‡ä»¶èŠ‚ç‚¹*/
 	major = register_chrdev(0, EFUSE_DEV_NAME, &efusec_fops);
 	if (major <= 0)
 	{

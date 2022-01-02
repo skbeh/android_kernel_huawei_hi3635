@@ -46,7 +46,7 @@ spinlock_t g_ipc_int_lock = __SPIN_LOCK_UNLOCKED("ipc");
 #define K3_IPC_MODE_IDLE                        (4)
 #define K3_IPC_MODE_AUTOACK                 (0)
 
-/*************************************hifiÏµÍ³ipc******************************************/
+/*************************************hifiç³»ç»Ÿipc******************************************/
 #define K3_SYS_IPC_BASE_ADDR_S      (unsigned long)(0xe8610000)
 #define K3_SYS_IPC_BASE_ADDR_NS    (unsigned long)(0xe8611000)
 #define K3_SYS_IPC_REG_SIZE     (0xA00)
@@ -70,7 +70,7 @@ spinlock_t g_ipc_int_lock = __SPIN_LOCK_UNLOCKED("ipc");
 #define K3_SYS_IPC_CORE_LPM3                      (3)
 #define K3_SYS_IPC_CORE_HIFI                        (4)
 
-	/*************************************hifiÄÚ²¿ipc******************************************/
+	/*************************************hifiå†…éƒ¨ipc******************************************/
 #define K3_HIFI_IPC_BASE_ADDR      (unsigned long)(0xE804C000)
 #define K3_HIFI_IPC_REG_SIZE        (0x1000)
 
@@ -78,7 +78,7 @@ spinlock_t g_ipc_int_lock = __SPIN_LOCK_UNLOCKED("ipc");
 #define K3_ASP_CFG_GATE_EN(base)                       WORD_REF(base + 0x0c)
 
 enum {
-    /*hifiÄÚ²¿µÄipcÄ¿µÄºËap¡¢lpm3¡¢iom3¶¼ÊÇ¶ÔÓ¦µÄµÚ0±ÈÌØ*/
+    /*hifiå†…éƒ¨çš„ipcç›®çš„æ ¸apã€lpm3ã€iom3éƒ½æ˜¯å¯¹åº”çš„ç¬¬0æ¯”ç‰¹*/
     K3_HIFI_IPC_CORE_AP_LPM3_IOM3 = 0,
     K3_HIFI_IPC_CORE_MODEM_A9 = 1,
     K3_HIFI_IPC_CORE_MODEM_BBE = 2,
@@ -95,17 +95,17 @@ typedef enum {
 } K3_IPC;
 
 typedef struct {
-	/*Ê¹ÓÃÏµÍ³ipc»¹ÊÇaudio ipc*/
+	/*ä½¿ç”¨ç³»ç»Ÿipcè¿˜æ˜¯audio ipc*/
 	K3_IPC ipcMode;
-	/*Ó³ÉäºóµÄipc»ùÖ·*/
+	/*æ˜ å°„åçš„ipcåŸºå€*/
 	void __iomem *ipcBase;
-	/*ÓÊÏäºÅ*/
+	/*é‚®ç®±å·*/
 	int mailBoxNum;
-	/*ÖĞ¶ÏºÅ*/
+	/*ä¸­æ–­å·*/
 	int intNum;
-	/*Ô´ºË±àºÅ*/
+	/*æºæ ¸ç¼–å·*/
 	int sourceCore;
-	/*Ä¿±êºË±àºÅ*/
+	/*ç›®æ ‡æ ¸ç¼–å·*/
 	int destCore;
 } K3_IPC_CONFIG;
 
@@ -115,9 +115,9 @@ enum {
     K3_IPC_CORE_IS_UNKNOEN,
 };
 
-/*Ã¿¸öºËÓ¦¸ÃÓĞÁ½¸ö½á¹¹Ìå£¬ÊÕ·¢¸÷Ò»¸ö*/
+/*æ¯ä¸ªæ ¸åº”è¯¥æœ‰ä¸¤ä¸ªç»“æ„ä½“ï¼Œæ”¶å‘å„ä¸€ä¸ª*/
 static K3_IPC_CONFIG k3IpcConfig[K3_IPC_CORE_IS_UNKNOEN] = {
-	/*±¾ºË×÷Îªsend ipc·½*/
+	/*æœ¬æ ¸ä½œä¸ºsend ipcæ–¹*/
 	{
 		K3_UNSEC_SYS_IPC,
 		NULL,
@@ -127,7 +127,7 @@ static K3_IPC_CONFIG k3IpcConfig[K3_IPC_CORE_IS_UNKNOEN] = {
 		K3_SYS_IPC_CORE_HIFI
 	},
 
-/*±¾ºË×÷Îªrec ipc·½*/
+/*æœ¬æ ¸ä½œä¸ºrec ipcæ–¹*/
 #ifdef USE_HIFI_IPC
 	{
 		K3_HIFI_IPC,
@@ -138,7 +138,7 @@ static K3_IPC_CONFIG k3IpcConfig[K3_IPC_CORE_IS_UNKNOEN] = {
 		K3_HIFI_IPC_CORE_AP_LPM3_IOM3
 	}
 #else
-	/*±¾ºË×÷Îªrec ipc·½*/
+	/*æœ¬æ ¸ä½œä¸ºrec ipcæ–¹*/
 	{
 		K3_UNSEC_SYS_IPC,
 		NULL,
@@ -258,18 +258,18 @@ static irqreturn_t DRV_k3IpcIntHandler_ack(int irq, void *dev_id)
 	BSP_U32 source = k3IpcConfig[myRole].sourceCore;
 	void __iomem *ipcBase = k3IpcConfig[myRole].ipcBase;
 
-	/*¶ÁÈ¡A15µÄÖĞ¶Ï×´Ì¬*/
+	/*è¯»å–A15çš„ä¸­æ–­çŠ¶æ€*/
 	u32IntStat = K3_IPC_CPUIMST(ipcBase, source);
 
-	/*Ó¦´ğÖĞ¶ÏÖ»¹ØĞÄA15·¢¸øhifiÍ¨ĞÅµÄ18ºÅÓÊÏä*/
+	/*åº”ç­”ä¸­æ–­åªå…³å¿ƒA15å‘ç»™hifié€šä¿¡çš„18å·é‚®ç®±*/
 	if (u32IntStat & BIT_ENABLE(mailBoxNum)) {
-		/*Èç¹û´ËÓÊÏäÊÕµ½Ó¦´ğÖĞ¶Ï£¬ÊÍ·ÅÓÊÏä*/
+		/*å¦‚æœæ­¤é‚®ç®±æ”¶åˆ°åº”ç­”ä¸­æ–­ï¼Œé‡Šæ”¾é‚®ç®±*/
 		if (K3_IPC_MODE(ipcBase, mailBoxNum) & BIT_ENABLE(K3_IPC_MODE_ACK)) {
 			printk("func:%s: Receive ack int\n", __func__);
 
 			K3_IPC_SOURCE(ipcBase, mailBoxNum) = BIT_ENABLE(source);
 		}
-		/*ÇåÖĞ¶Ï*/
+		/*æ¸…ä¸­æ–­*/
 		K3_IPC_DCLR(ipcBase, mailBoxNum) = 0;
 	}
 
@@ -280,16 +280,16 @@ static irqreturn_t DRV_k3IpcIntHandler_ack(int irq, void *dev_id)
 
 
 /*****************************************************************************
-* º¯ Êı Ãû  : DRV_IPCIntInit
+* å‡½ æ•° å  : DRV_IPCIntInit
 *
-* ¹¦ÄÜÃèÊö  : IPCÄ£¿é³õÊ¼»¯
+* åŠŸèƒ½æè¿°  : IPCæ¨¡å—åˆå§‹åŒ–
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2009Äê3ÔÂ5ÈÕ   wangjing  creat
+* ä¿®æ”¹è®°å½•  : 2009å¹´3æœˆ5æ—¥   wangjing  creat
 *****************************************************************************/
 BSP_S32 DRV_IPCIntInit(void)
 {
@@ -311,7 +311,7 @@ BSP_S32 DRV_IPCIntInit(void)
 
 	memset((void*)stIpcIntTable, 0x0, (INTSRC_NUM * sizeof(BSP_IPC_ENTRY) ));
 
-	/************************************·¢ËÍ·½****************************************/
+	/************************************å‘é€æ–¹****************************************/
 	myRole = K3_IPC_CORE_IS_SEND;
 	if (K3_UNSEC_SYS_IPC == k3IpcConfig[myRole].ipcMode) {
 		k3IpcConfig[myRole].ipcBase = ioremap(K3_SYS_IPC_BASE_ADDR_NS, K3_SYS_IPC_REG_SIZE);
@@ -333,11 +333,11 @@ BSP_S32 DRV_IPCIntInit(void)
 		}
 	}
 
-	/*¼Ä´æÆ÷½âËø*/
+	/*å¯„å­˜å™¨è§£é”*/
 	K3_IPC_LOCK(k3IpcConfig[myRole].ipcBase) = 0x1ACCE551;
 	/************************************end****************************************/
 
-	/************************************½ÓÊÕ·½****************************************/
+	/************************************æ¥æ”¶æ–¹****************************************/
 	myRole = K3_IPC_CORE_IS_RECEIVE;
 	if (K3_UNSEC_SYS_IPC == k3IpcConfig[myRole].ipcMode) {
 		k3IpcConfig[myRole].ipcBase = ioremap(K3_SYS_IPC_BASE_ADDR_NS, K3_SYS_IPC_REG_SIZE);
@@ -358,11 +358,11 @@ BSP_S32 DRV_IPCIntInit(void)
 			return -1;
 		}
 	}
-	/*¼Ä´æÆ÷½âËø*/
+	/*å¯„å­˜å™¨è§£é”*/
 	K3_IPC_LOCK(k3IpcConfig[myRole].ipcBase) = 0x1ACCE551;
 	/************************************end****************************************/
 #ifdef USE_HIFI_IPC
-	/*¹Ò½Ó°²È«Ä£Ê½ÖĞ¶Ï´¦Àí³ÌĞò*/
+	/*æŒ‚æ¥å®‰å…¨æ¨¡å¼ä¸­æ–­å¤„ç†ç¨‹åº*/
 	ret = request_irq(k3IpcConfig[K3_IPC_CORE_IS_RECEIVE].intNum,
 	                  DRV_k3IpcIntHandler_ipc, 0, "k3IpcIntHandler_ipc", NULL);
 	if (ret ) {
@@ -382,7 +382,7 @@ BSP_S32 DRV_IPCIntInit(void)
 	printk(KERN_ERR "BSP_DRV_IPCIntInit line = %d\n", __LINE__);
 #endif
 
-	/*¹Ò½Ó·Ç°²È«Ä£Ê½ÖĞ¶Ï´¦Àí³ÌĞò*/
+	/*æŒ‚æ¥éå®‰å…¨æ¨¡å¼ä¸­æ–­å¤„ç†ç¨‹åº*/
 	g_stIpcDev.bInit = BSP_TRUE;
 
 	printk(KERN_ERR "BSP_DRV_IPCIntInit end.\n");
@@ -392,21 +392,21 @@ BSP_S32 DRV_IPCIntInit(void)
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : IPC_IntEnable
+* å‡½ æ•° å  : IPC_IntEnable
 *
-* ¹¦ÄÜÃèÊö  : Ê¹ÄÜÄ³¸öÖĞ¶Ï
+* åŠŸèƒ½æè¿°  : ä½¿èƒ½æŸä¸ªä¸­æ–­
 *
-* ÊäÈë²ÎÊı  :   IPC_INT_CORE_E enCoreNum ÒªÊ¹ÄÜÖĞ¶ÏµÄcore
-                BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :   IPC_INT_CORE_E enCoreNum è¦ä½¿èƒ½ä¸­æ–­çš„core
+                BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : OK&ERROR
+* è¿” å› å€¼  : OK&ERROR
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 BSP_S32 IPC_IntEnable (IPC_INT_LEV_E ulLvl)
 {
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
 	return BSP_OK;
@@ -414,47 +414,47 @@ BSP_S32 IPC_IntEnable (IPC_INT_LEV_E ulLvl)
 
 
 /*****************************************************************************
- * º¯ Êı Ãû  : BSP_INT_Disable
+ * å‡½ æ•° å  : BSP_INT_Disable
  *
- * ¹¦ÄÜÃèÊö  : È¥Ê¹ÄÜÄ³¸öÖĞ¶Ï
+ * åŠŸèƒ½æè¿°  : å»ä½¿èƒ½æŸä¸ªä¸­æ–­
  *
- * ÊäÈë²ÎÊı  : IPC_INT_CORE_E enCoreNum ÒªÊ¹ÄÜÖĞ¶ÏµÄcore
-                BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : IPC_INT_CORE_E enCoreNum è¦ä½¿èƒ½ä¸­æ–­çš„core
+                BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : OK&ERROR
+ * è¿” å› å€¼  : OK&ERROR
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
 BSP_S32 IPC_IntDisable (IPC_INT_LEV_E ulLvl)
 {
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
 	return BSP_OK;
 }
 
 /*****************************************************************************
- * º¯ Êı Ãû  : IPC_IntConnect
+ * å‡½ æ•° å  : IPC_IntConnect
  *
- * ¹¦ÄÜÃèÊö  : ×¢²áÄ³¸öÖĞ¶Ï
+ * åŠŸèƒ½æè¿°  : æ³¨å†ŒæŸä¸ªä¸­æ–­
  *
- * ÊäÈë²ÎÊı  : IPC_INT_CORE_E enCoreNum ÒªÊ¹ÄÜÖĞ¶ÏµÄcore
-               BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
-               VOIDFUNCPTR routine ÖĞ¶Ï·şÎñ³ÌĞò
- *             BSP_U32 parameter      ÖĞ¶Ï·şÎñ³ÌĞò²ÎÊı
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  : IPC_INT_CORE_E enCoreNum è¦ä½¿èƒ½ä¸­æ–­çš„core
+               BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+               VOIDFUNCPTR routine ä¸­æ–­æœåŠ¡ç¨‹åº
+ *             BSP_U32 parameter      ä¸­æ–­æœåŠ¡ç¨‹åºå‚æ•°
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : OK&ERROR
+ * è¿” å› å€¼  : OK&ERROR
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
 BSP_S32 IPC_IntConnect  (IPC_INT_LEV_E ulLvl, VOIDFUNCPTR routine, BSP_U32 parameter)
 {
 
 	unsigned long flag = 0;
 
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
 	spin_lock_irqsave(&g_ipc_int_lock, flag);
@@ -466,25 +466,25 @@ BSP_S32 IPC_IntConnect  (IPC_INT_LEV_E ulLvl, VOIDFUNCPTR routine, BSP_U32 param
 }
 
 /*****************************************************************************
- * º¯ Êı Ãû  : IPC_IntDisonnect
+ * å‡½ æ•° å  : IPC_IntDisonnect
  *
- * ¹¦ÄÜÃèÊö  : È¡Ïû×¢²áÄ³¸öÖĞ¶Ï
+ * åŠŸèƒ½æè¿°  : å–æ¶ˆæ³¨å†ŒæŸä¸ªä¸­æ–­
  *
- * ÊäÈë²ÎÊı  :
- *              BSP_U32 ulLvl ÒªÊ¹ÄÜµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
- *              VOIDFUNCPTR routine ÖĞ¶Ï·şÎñ³ÌĞò
- *             BSP_U32 parameter      ÖĞ¶Ï·şÎñ³ÌĞò²ÎÊı
- * Êä³ö²ÎÊı  : ÎŞ
+ * è¾“å…¥å‚æ•°  :
+ *              BSP_U32 ulLvl è¦ä½¿èƒ½çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+ *              VOIDFUNCPTR routine ä¸­æ–­æœåŠ¡ç¨‹åº
+ *             BSP_U32 parameter      ä¸­æ–­æœåŠ¡ç¨‹åºå‚æ•°
+ * è¾“å‡ºå‚æ•°  : æ— 
  *
- * ·µ »Ø Öµ  : OK&ERROR
+ * è¿” å› å€¼  : OK&ERROR
  *
- * ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+ * ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
  *****************************************************************************/
  BSP_S32 IPC_IntDisonnect  (IPC_INT_LEV_E ulLvl,VOIDFUNCPTR routine, BSP_U32 parameter)
  {
 	unsigned long flag = 0;
 
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
 	spin_lock_irqsave(&g_ipc_int_lock, flag);
@@ -496,16 +496,16 @@ BSP_S32 IPC_IntConnect  (IPC_INT_LEV_E ulLvl, VOIDFUNCPTR routine, BSP_U32 param
 }
 
 /*****************************************************************************
-* º¯ Êı Ãû  : BSP_DRV_k3IpcIntHandler_S
+* å‡½ æ•° å  : BSP_DRV_k3IpcIntHandler_S
 *
-* ¹¦ÄÜÃèÊö  : k3µÄIPC°²È«Ä£Ê½ÏÂÖĞ¶Ï´¦Àíº¯Êı
+* åŠŸèƒ½æè¿°  : k3çš„IPCå®‰å…¨æ¨¡å¼ä¸‹ä¸­æ–­å¤„ç†å‡½æ•°
 *
-* ÊäÈë²ÎÊı  : ÎŞ
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  : æ— 
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : ÎŞ
+* è¿” å› å€¼  : æ— 
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 #ifdef USE_HIFI_IPC
 static irqreturn_t DRV_k3IpcIntHandler_ipc(int irq, void *dev_id)
@@ -519,22 +519,22 @@ static irqreturn_t DRV_k3IpcIntHandler_ipc(int irq, void *dev_id)
 	BSP_U32 dest = k3IpcConfig[myRole].destCore;
 	void __iomem *ipcBase = k3IpcConfig[myRole].ipcBase;
 
-	/*¶ÁÈ¡APµÄÖĞ¶Ï×´Ì¬*/
+	/*è¯»å–APçš„ä¸­æ–­çŠ¶æ€*/
 	u32IntStat = K3_IPC_CPUIRST(ipcBase, dest);
 
 	printk("func:%s: destCore = %d intStatus = %d BIT_ENABLE = %d\n", __func__, dest, u32IntStat, BIT_ENABLE(mailBoxNum));
 
-	/*IPCÖ»¹ØĞÄhifi·¢¸øAPµÄ0ºÅÓÊÏä*/
+	/*IPCåªå…³å¿ƒhifiå‘ç»™APçš„0å·é‚®ç®±*/
 	if (u32IntStat & BIT_ENABLE(mailBoxNum)) {
-		/*¶ÁÈ¡0ºÅÓÊÏäµÄÊı¾İ¼Ä´æÆ÷£¬»ñÈ¡Ä¿±êºËºÍusage*/
+		/*è¯»å–0å·é‚®ç®±çš„æ•°æ®å¯„å­˜å™¨ï¼Œè·å–ç›®æ ‡æ ¸å’Œusage*/
 		newLevel = K3_IPC_DATA(ipcBase, mailBoxNum, 0);
 
 		printk("func:%s: newLevel = %d\n", __func__,  newLevel);
 
-		/*ÇåÖĞ¶ÏÍ¬Ê±hifi²à²úÉúÓ¦´ğÖĞ¶Ï*/
+		/*æ¸…ä¸­æ–­åŒæ—¶hifiä¾§äº§ç”Ÿåº”ç­”ä¸­æ–­*/
 		K3_IPC_ICLR(ipcBase, mailBoxNum) = BIT_ENABLE(dest);
 
-		/*µ÷ÓÃ×¢²áµÄÖĞ¶Ï´¦Àíº¯Êı*/
+		/*è°ƒç”¨æ³¨å†Œçš„ä¸­æ–­å¤„ç†å‡½æ•°*/
 		if (newLevel < INTSRC_NUM) {
 			g_stIpc_debug.u32IntHandleTimes[newLevel]++;
 
@@ -554,7 +554,7 @@ static int DRV_k3IpcIntHandler_ipc(struct notifier_block *nb, unsigned long len,
 
 	newLevel = _msg[0];
 
-	/*µ÷ÓÃ×¢²áµÄÖĞ¶Ï´¦Àíº¯Êı*/
+	/*è°ƒç”¨æ³¨å†Œçš„ä¸­æ–­å¤„ç†å‡½æ•°*/
 	if (newLevel < INTSRC_NUM) {
 		g_stIpc_debug.u32IntHandleTimes[newLevel]++;
 
@@ -568,18 +568,18 @@ static int DRV_k3IpcIntHandler_ipc(struct notifier_block *nb, unsigned long len,
 #endif
 
 /*****************************************************************************
-* º¯ Êı Ãû  : IPC_IntSend
+* å‡½ æ•° å  : IPC_IntSend
 *
-* ¹¦ÄÜÃèÊö  : ·¢ËÍÖĞ¶Ï
+* åŠŸèƒ½æè¿°  : å‘é€ä¸­æ–­
 *
-* ÊäÈë²ÎÊı  :
-                IPC_INT_CORE_E enDstore Òª½ÓÊÕÖĞ¶ÏµÄcore
-                BSP_U32 ulLvl Òª·¢ËÍµÄÖĞ¶ÏºÅ£¬È¡Öµ·¶Î§0¡«31
-* Êä³ö²ÎÊı  : ÎŞ
+* è¾“å…¥å‚æ•°  :
+                IPC_INT_CORE_E enDstore è¦æ¥æ”¶ä¸­æ–­çš„core
+                BSP_U32 ulLvl è¦å‘é€çš„ä¸­æ–­å·ï¼Œå–å€¼èŒƒå›´0ï½31
+* è¾“å‡ºå‚æ•°  : æ— 
 *
-* ·µ »Ø Öµ  : OK&ERROR
+* è¿” å› å€¼  : OK&ERROR
 *
-* ĞŞ¸Ä¼ÇÂ¼  : 2011Äê4ÔÂ11ÈÕ wangjing creat
+* ä¿®æ”¹è®°å½•  : 2011å¹´4æœˆ11æ—¥ wangjing creat
 *****************************************************************************/
 BSP_S32 IPC_IntSend(IPC_INT_CORE_E enDstCore, IPC_INT_LEV_E ulLvl)
 {
@@ -594,19 +594,19 @@ BSP_S32 IPC_IntSend(IPC_INT_CORE_E enDstCore, IPC_INT_LEV_E ulLvl)
 	void __iomem *ipcBase = k3IpcConfig[myRole].ipcBase;
 #endif
 
-	/*²ÎÊı¼ì²é*/
+	/*å‚æ•°æ£€æŸ¥*/
 	IPC_CHECK_PARA(ulLvl);
 
-	/*Èç¹ûÊÇ¸úhifiÍ¨ĞÅ£¬Ê¹ÓÃk3×Ô¼ºµÄsys ipc£¬ulLvlÊ¹ÓÃÊı¾İ¼Ä´æÆ÷ÊµÏÖ*/
+	/*å¦‚æœæ˜¯è·Ÿhifié€šä¿¡ï¼Œä½¿ç”¨k3è‡ªå·±çš„sys ipcï¼ŒulLvlä½¿ç”¨æ•°æ®å¯„å­˜å™¨å®ç°*/
 	if (IPC_CORE_HiFi == enDstCore) {
 #ifdef USE_HISI_MAILBOX
 		ipcMsg[0] = (source << 24) | (ulLvl << 8);
-#if 0	//k3 delete  ipcÏûÏ¢¸ñÊ½±ä»¯£¬½öÊ¹ÓÃµÚÒ»¸öÊı¾İ¼Ä´æÆ÷
+#if 0	//k3 delete  ipcæ¶ˆæ¯æ ¼å¼å˜åŒ–ï¼Œä»…ä½¿ç”¨ç¬¬ä¸€ä¸ªæ•°æ®å¯„å­˜å™¨
 		ipcMsg[1] = ulLvl;
 #endif
 		hisi_hifi_send_ipc((mbox_msg_t *)ipcMsg, 2);
 #else
-		/*ÅĞ¶ÏÓÊÏäÊÇ·ñ¿ÕÏĞ*/
+		/*åˆ¤æ–­é‚®ç®±æ˜¯å¦ç©ºé—²*/
 		while(0 == (K3_IPC_MODE(ipcBase, mailBoxNum) & BIT_ENABLE(K3_IPC_MODE_IDLE))) {
 			printk("func:%s: mailbox is busy mode = 0x%x\n", __func__, K3_IPC_MODE(ipcBase, mailBoxNum));
 		}
@@ -614,24 +614,24 @@ BSP_S32 IPC_IntSend(IPC_INT_CORE_E enDstCore, IPC_INT_LEV_E ulLvl)
 		K3_IPC_SOURCE(ipcBase, mailBoxNum) = BIT_ENABLE(source);
 		K3_IPC_DEST(ipcBase, mailBoxNum) = BIT_ENABLE(dest);
 
-		/*¿ìËÙÓÊÏäÄ¿µÄÎªhifi£¬ÎŞĞèÅäÖÃ*/
+		/*å¿«é€Ÿé‚®ç®±ç›®çš„ä¸ºhifiï¼Œæ— éœ€é…ç½®*/
 
-		/*ÆÁ±ÎÆäËû*/
+		/*å±è”½å…¶ä»–*/
 		K3_IPC_IMASK(ipcBase, mailBoxNum) = ~(BIT_ENABLE(source)|BIT_ENABLE(dest));
 
-		/*×Ô¶¯Ó¦´ğ*/
+		/*è‡ªåŠ¨åº”ç­”*/
 		K3_IPC_MODE(ipcBase, mailBoxNum) = BIT_ENABLE(K3_IPC_MODE_AUTOACK);
 
-		/*ÉèÖÃÊı¾İ¼Ä´æÆ÷*/
+		/*è®¾ç½®æ•°æ®å¯„å­˜å™¨*/
 		K3_IPC_DATA(ipcBase, mailBoxNum, 0) = source;
 		K3_IPC_DATA(ipcBase, mailBoxNum, 1) = ulLvl;
 
-		/*ÅäÖÃ·¢ËÍ¼Ä´æÆ÷*/
+		/*é…ç½®å‘é€å¯„å­˜å™¨*/
 		K3_IPC_SEND(ipcBase, mailBoxNum) = BIT_ENABLE(source);
 
 #endif
 	} else {
-		/*Ğ´Ô­Ê¼ÖĞ¶Ï¼Ä´æÆ÷,²úÉúÖĞ¶Ï*/
+		/*å†™åŸå§‹ä¸­æ–­å¯„å­˜å™¨,äº§ç”Ÿä¸­æ–­*/
 		BSP_RegWr(BSP_IPC_CPU_RAW_INT(enDstCore), 1 << ulLvl);
 	}
 

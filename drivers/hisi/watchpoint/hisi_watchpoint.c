@@ -266,7 +266,7 @@ static ssize_t wp_state_read(struct file *file, char __user *user_buf,
 }
 
 /*
-watchpoint config ˵��
+watchpoint config 说明
 */
 static ssize_t wp_config_read(struct file *file, char __user *user_buf,
                       size_t count, loff_t *ppos)
@@ -362,7 +362,7 @@ static ssize_t wp_config_write(struct file *file, const char __user *user_buf, s
         }
 
     } else {
-        /* �쳣 */
+        /* 异常 */
         byte_writen = -EINVAL;
     }
 
@@ -477,7 +477,7 @@ static ssize_t wp_tgetmem_write(struct file *file, const char __user *user_buf, 
         }
 
     } else {
-        /* �쳣 */
+        /* 异常 */
         byte_writen = -EINVAL;
     }
 
@@ -576,7 +576,7 @@ static ssize_t wp_taccess_write(struct file *file, const char __user *user_buf, 
         tacc_value = *(volatile unsigned int*)tget_mem_addr;
 
     } else {
-        /* �쳣 */
+        /* 异常 */
         byte_writen = -EINVAL;
     }
 
